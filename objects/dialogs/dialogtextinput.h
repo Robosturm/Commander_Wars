@@ -8,14 +8,14 @@
 #include "objects/base/textbox.h"
 
 class DialogTextInput;
-using spDialogTextInput = oxygine::intrusive_ptr<DialogTextInput>;
+using spDialogTextInput = std::shared_ptr<DialogTextInput>;
 
 class DialogTextInput final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogTextInput(QString text, bool showCancel, QString startInput);
-   virtual ~DialogTextInput() = default;
+    ~DialogTextInput() = default;
 
 signals:
     void sigTextChanged(QString text);

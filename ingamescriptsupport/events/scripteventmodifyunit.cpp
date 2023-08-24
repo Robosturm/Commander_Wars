@@ -49,31 +49,31 @@ void ScriptEventModifyUnit::readEvent(QTextStream& rStream, QString line)
 
 void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     qint32 width = 300;
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = spSpinBox::create(300, 0, 9999);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, 0, 9999);
     spinBox->setTooltipText(tr("X Location at which the unit gets modified."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_x);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventModifyUnit::setX, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, 0, 9999);
+    spinBox = MemoryManagement::create<SpinBox>(300, 0, 9999);
     spinBox->setTooltipText(tr("Y Location at which the unit gets modified."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_y);
@@ -81,12 +81,12 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(spinBox);
 
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Modify HP: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, -10, 10);
+    spinBox = MemoryManagement::create<SpinBox>(300, -10, 10);
     spinBox->setInfinityValue(-200000);
     spinBox->setTooltipText(tr("HP change for the unit."));
     spinBox->setPosition(width, 110);
@@ -94,12 +94,12 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventModifyUnit::setHpChange, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Modify Ammo 1: "));
     pText->setPosition(30, 150);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, -100, 100);
+    spinBox = MemoryManagement::create<SpinBox>(300, -100, 100);
     spinBox->setInfinityValue(-200000);
     spinBox->setTooltipText(tr("Ammo 1 change for the unit."));
     spinBox->setPosition(width, 150);
@@ -107,12 +107,12 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventModifyUnit::setAmmo1Change, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Modify Ammo 2: "));
     pText->setPosition(30, 190);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, -100, 100);
+    spinBox = MemoryManagement::create<SpinBox>(300, -100, 100);
     spinBox->setInfinityValue(-200000);
     spinBox->setTooltipText(tr("Ammo 2 change for the unit."));
     spinBox->setPosition(width, 190);
@@ -120,12 +120,12 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventModifyUnit::setAmmo2Change, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Modify Fuel: "));
     pText->setPosition(30, 230);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, -100, 100);
+    spinBox = MemoryManagement::create<SpinBox>(300, -100, 100);
     spinBox->setInfinityValue(-200000);
     spinBox->setTooltipText(tr("Fuel change for the unit."));
     spinBox->setPosition(width, 230);

@@ -13,7 +13,7 @@
 #include "objects/coinfoactor.h"
 
 class COInfoDialog;
-using spCOInfoDialog = oxygine::intrusive_ptr<COInfoDialog>;
+using spCOInfoDialog = std::shared_ptr<COInfoDialog>;
 
 class COInfoDialog final : public QObject, public oxygine::Actor
 {
@@ -22,7 +22,7 @@ public:
     explicit COInfoDialog(spCO pCO, spPlayer pPlayer,
                           std::function<void (spCO& m_CurrrentCO, spPlayer& pPlayer, qint32 direction)> stepFunction,
                           bool ingame);
-   virtual ~COInfoDialog() = default;
+    ~COInfoDialog() = default;
     /**
      * @brief showCO
      */

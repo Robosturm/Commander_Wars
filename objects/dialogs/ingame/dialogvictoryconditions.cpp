@@ -26,7 +26,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -53,7 +53,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = true;
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
+    spPanel pPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
                                      QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110));
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
@@ -62,7 +62,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     GameRules* pRules = pMap->getGameRules();
 
     qint32 y = 10;
-    spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 40);
+    spLabel pLabel = MemoryManagement::create<Label>(pPanel->getScaledWidth() - 40);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Victory info"));
     pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, y);
@@ -70,7 +70,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     y += pLabel->getHeight() + 10;
     QString info = pMap->getGameScript()->getVictoryInfo();
 
-    oxygine::spTextField pTextfield = oxygine::spTextField::create();
+    oxygine::spTextField pTextfield = MemoryManagement::create<oxygine::TextField>();
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(info);
     pTextfield->setWidth(oxygine::Stage::getStage()->getWidth() - 90);
@@ -82,7 +82,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
         VictoryRule* pVictoryRule = pRules->getVictoryRuleAtIndex(i);
         info = pVictoryRule->getRuleDescription();
 
-        pTextfield = oxygine::spTextField::create();
+        pTextfield = MemoryManagement::create<oxygine::TextField>();
         pTextfield->setStyle(style);
         pTextfield->setWidth(oxygine::Stage::getStage()->getWidth() - 90);
         pTextfield->setHtmlText(info);
@@ -105,13 +105,13 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
                 }
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
                 info = QString(tr("Player %1: %2/%3")).arg(i2 + 1).arg(playerValue).arg(ruleValue);
-                spBuilding building = spBuilding::create("HQ", pMap);
+                spBuilding building = MemoryManagement::create<Building>("HQ", pMap);
                 building->setOwner(pPlayer);
                 building->setPosition(x, y);
                 building->setTooltipText(pPlayer->getPlayerNameId());
                 pPanel->addItem(building);
 
-                spLabel pLabel = spLabel::create(stepWidth - GameMap::getImageSize() - 10);
+                spLabel pLabel = MemoryManagement::create<Label>(stepWidth - GameMap::getImageSize() - 10);
                 pLabel->setStyle(style);
                 pLabel->setHtmlText(info);
                 pLabel->setTooltipText(pPlayer->getPlayerNameId());
@@ -152,7 +152,7 @@ void DialogVictoryConditions::showPopup(QString rule)
         BaseGamemenu* pMenu = m_pMap->getMenu();
         if (pMenu != nullptr && !VictoryRulePopup::exists(rule))
         {
-            spVictoryRulePopup pPopup = spVictoryRulePopup::create(m_pMap, rule, 180, 250);
+            spVictoryRulePopup pPopup = MemoryManagement::create<VictoryRulePopup>(m_pMap, rule, 180, 250);
             pPopup->setY(oxygine::Stage::getStage()->getHeight() - pPopup->getScaledHeight());
             pMenu->addChild(pPopup);
         }

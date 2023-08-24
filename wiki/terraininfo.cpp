@@ -41,7 +41,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     }
     // no the fun begins create checkboxes and stuff and a panel down here
     qint32 y = 0;
-    oxygine::spTextField pLabel = oxygine::spTextField::create();
+    oxygine::spTextField pLabel = MemoryManagement::create<oxygine::TextField>();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText((tr("Terrain Information ") + name));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().width() / 2, 0);
@@ -54,7 +54,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     Building* pTerrainBuildiong = pTerrain->getBuilding();
     if (pTerrainBuildiong != nullptr)
     {
-        spBuilding pBuilding = spBuilding::create(pTerrainBuildiong->getBuildingID(), nullptr);
+        spBuilding pBuilding = MemoryManagement::create<Building>(pTerrainBuildiong->getBuildingID(), nullptr);
         pIconTerrain->setBuilding(pBuilding);
         pBuilding->setOwner(pTerrainBuildiong->getOwner());
         pBuilding->scaleAndShowOnSingleTile();
@@ -63,7 +63,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     addChild(pIconTerrain);
     y += pIconTerrain->getScaledHeight() + 30;
 
-    pLabel = oxygine::spTextField::create();
+    pLabel = MemoryManagement::create<oxygine::TextField>();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(description);
@@ -73,13 +73,13 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
 
     qint32 xOffset = 200;
     // Income
-    pLabel = oxygine::spTextField::create();
+    pLabel = MemoryManagement::create<oxygine::TextField>();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Defense:"));
     pLabel->setPosition(0, y);
     addChild(pLabel);
-    pLabel = oxygine::spTextField::create();
+    pLabel = MemoryManagement::create<oxygine::TextField>();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText((QString::number(pTerrain->getDefense(nullptr))));
@@ -90,13 +90,13 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     if (pBuilding != nullptr)
     {
         // Income
-        pLabel = oxygine::spTextField::create();
+        pLabel = MemoryManagement::create<oxygine::TextField>();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Income:"));
         pLabel->setPosition(0, y);
         addChild(pLabel);
-        pLabel = oxygine::spTextField::create();
+        pLabel = MemoryManagement::create<oxygine::TextField>();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText((QString::number(pBuilding->getIncome())));
@@ -107,7 +107,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
         QStringList productionList = pBuilding->getConstructionList();
         if (productionList.size() > 0)
         {
-            pLabel = oxygine::spTextField::create();
+            pLabel = MemoryManagement::create<oxygine::TextField>();
             pLabel->setStyle(headerStyle);
             if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
             {
@@ -122,7 +122,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
         if (productionList.size() > 0 ||
             repairList.size() > 0)
         {
-            pLabel = oxygine::spTextField::create();
+            pLabel = MemoryManagement::create<oxygine::TextField>();
             pLabel->setStyle(headerStyle);
             pLabel->setHtmlText(tr("Supplies"));
             pLabel->setPosition(width / 2 - pLabel->getTextRect().width() / 2, y);
@@ -142,7 +142,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
         }
     }
 
-    pLabel = oxygine::spTextField::create();
+    pLabel = MemoryManagement::create<oxygine::TextField>();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Movement Costs"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().width() / 2, y);
@@ -156,13 +156,13 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
         QString name = pMovementTableManager->getName(pMovementTableManager->getID(i));
         qint32 costs = pMovementTableManager->getBaseMovementPoints(pMovementTableManager->getID(i), pTerrain, pTerrain, nullptr);
 
-        pLabel = oxygine::spTextField::create();
+        pLabel = MemoryManagement::create<oxygine::TextField>();
         pLabel->setWidth(width);
         pLabel->setStyle(style);
         pLabel->setHtmlText((name + ":"));
         pLabel->setPosition(x, y);
         addChild(pLabel);
-        pLabel = oxygine::spTextField::create();
+        pLabel = MemoryManagement::create<oxygine::TextField>();
         pLabel->setWidth(width);
         pLabel->setStyle(style);
         if (costs >= 0)
@@ -204,12 +204,12 @@ void TerrainInfo::showUnitList(QStringList productionList, qint32& y, qint32 wid
     }
     if (m_pPlayer.get() == nullptr)
     {
-        m_pPlayer = spPlayer::create(m_pMap);
+        m_pPlayer = MemoryManagement::create<Player>(m_pMap);
         m_pPlayer->init();
     }
     for (qint32 i = 0; i < productionList.size(); i++)
     {
-        spUnit pDummy = spUnit::create(productionList[i], m_pPlayer.get(), false, m_pMap);
+        spUnit pDummy = MemoryManagement::create<Unit>(productionList[i], m_pPlayer.get(), false, m_pMap);
         pDummy->setPosition(x, y);
         QString id = productionList[i];
         pDummy->addClickListener([this, id](oxygine::Event*)

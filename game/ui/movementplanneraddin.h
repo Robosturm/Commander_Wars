@@ -10,14 +10,14 @@
 class MovementPlanner;
 class GameMap;
 class MovementPlannerAddIn;
-using spMovementPlannerAddIn = oxygine::intrusive_ptr<MovementPlannerAddIn>;
+using spMovementPlannerAddIn = std::shared_ptr<MovementPlannerAddIn>;
 
 class MovementPlannerAddIn final : public CreatedGui
 {
     Q_OBJECT
 public:
     explicit MovementPlannerAddIn(QString addIn, GameMap* pMap, MovementPlanner* pPlanner);
-   virtual ~MovementPlannerAddIn() = default;
+    ~MovementPlannerAddIn() = default;
 
     QString getAddIn() const;
     /**

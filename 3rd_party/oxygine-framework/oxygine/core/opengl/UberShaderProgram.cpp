@@ -119,7 +119,7 @@ namespace oxygine
             VideoDriver* driver = VideoDriver::instance.get();
             const VertexDeclaration* decl = driver->getVertexDeclaration();
 
-            spShaderProgram pgl = spShaderProgram::create(vs, fs, decl);
+            spShaderProgram pgl = MemoryManagement::create<ShaderProgram>(vs, fs, decl);
             driver->setShaderProgram(pgl.get());
             driver->setUniformInt("base_texture", UberShaderProgram::SAMPLER_BASE);
             driver->setUniformInt("colorTable", UberShaderProgram::SAMPLER_TABLE);
@@ -134,7 +134,7 @@ namespace oxygine
         for (qint32 i = 0; i < _SIZE; ++i)
         {
             shader& s = m_shaders[i];
-            s.program.free();
+            s.program.reset();
         }
     }
 

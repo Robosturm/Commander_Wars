@@ -15,7 +15,7 @@
 
 class BaseGamemenu;
 class Chat;
-using spChat = oxygine::intrusive_ptr<Chat>;
+using spChat = std::shared_ptr<Chat>;
 
 class Chat final : public QObject, public oxygine::Actor
 {

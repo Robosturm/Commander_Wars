@@ -6,7 +6,7 @@
 
 class GameMenue;
 class Viewplayer;
-using spViewplayer = oxygine::intrusive_ptr<Viewplayer>;
+using spViewplayer = std::shared_ptr<Viewplayer>;
 
 class Viewplayer final : public Player
 {
@@ -20,7 +20,7 @@ public:
     };
 
     explicit Viewplayer(GameMenue* pMenu, GameMap* pMap);
-   virtual ~Viewplayer() = default;
+    ~Viewplayer() = default;
     /**
      * @brief getColorTableAnim
      * @return

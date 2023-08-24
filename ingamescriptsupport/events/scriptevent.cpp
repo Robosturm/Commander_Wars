@@ -61,91 +61,91 @@ spScriptEvent ScriptEvent::createReadEvent(GameMap* pMap, QTextStream& rStream, 
     spScriptEvent ret;
     if (line.endsWith(EventDialog))
     {
-         ret = spScriptEventDialog::create(pMap);
+         ret = MemoryManagement::create<ScriptEventDialog>(pMap);
     }
     else if (line.endsWith(EventSpawnUnit))
     {
-         ret = spScriptEventSpawnUnit::create(pMap);
+         ret = MemoryManagement::create<ScriptEventSpawnUnit>(pMap);
     }
     else if (line.endsWith(EventDefeatPlayer))
     {
-         ret = spScriptEventDefeatPlayer::create(pMap);
+         ret = MemoryManagement::create<ScriptEventDefeatPlayer>(pMap);
     }
     else if (line.endsWith(EventAddFunds))
     {
-         ret = spScriptEventAddFunds::create(pMap);
+         ret = MemoryManagement::create<ScriptEventAddFunds>(pMap);
     }
     else if (line.endsWith(EventChangeBuildlist))
     {
-         ret = spScriptEventChangeBuildlist::create(pMap);
+         ret = MemoryManagement::create<ScriptEventChangeBuildlist>(pMap);
     }
     else if (line.endsWith(EventChangeWeather))
     {
-         ret = spScriptEventChangeWeather::create(pMap);
+         ret = MemoryManagement::create<ScriptEventChangeWeather>(pMap);
     }
     else if (line.endsWith(EventChangeCOBar))
     {
-         ret = spScriptEventChangeCOBar::create(pMap);
+         ret = MemoryManagement::create<ScriptEventChangeCOBar>(pMap);
     }
     else if (line.endsWith(EventModifyTerrain))
     {
-         ret = spScriptEventModifyTerrain::create(pMap);
+         ret = MemoryManagement::create<ScriptEventModifyTerrain>(pMap);
     }
     else if (line.endsWith(EventModifyUnit))
     {
-         ret = spScriptEventModifyUnit::create(pMap);
+         ret = MemoryManagement::create<ScriptEventModifyUnit>(pMap);
     }
     else if (line.endsWith(EventAnimation))
     {
-         ret = spScriptEventAnimation::create(pMap);
+         ret = MemoryManagement::create<ScriptEventAnimation>(pMap);
     }
     else if (line.endsWith(EventVictoryInfo))
     {
-         ret = spScriptEventVictoryInfo::create(pMap);
+         ret = MemoryManagement::create<ScriptEventVictoryInfo>(pMap);
     }
     else if (line.endsWith(EventModifyVariable))
     {
-         ret = spScriptEventModifyVariable::create(pMap);
+         ret = MemoryManagement::create<ScriptEventModifyVariable>(pMap);
     }
     else if (line.endsWith(EventChangeUnitAI))
     {
-        ret = spScriptEventChangeUnitAI::create(pMap);
+        ret = MemoryManagement::create<ScriptEventChangeUnitAI>(pMap);
     }
     else if (line.endsWith(EventChangeBuildingOwner))
     {
-        ret = spScriptEventChangeBuildingOwner::create(pMap);
+        ret = MemoryManagement::create<ScriptEventChangeBuildingOwner>(pMap);
     }
     else if (line.endsWith(EventChangeUnitOwner))
     {
-        ret = spScriptEventChangeUnitOwner::create(pMap);
+        ret = MemoryManagement::create<ScriptEventChangeUnitOwner>(pMap);
     }
     else if (line.endsWith(EventChangePlayerTeam))
     {
-        ret = spScriptEventChangePlayerTeam::create(pMap);
+        ret = MemoryManagement::create<ScriptEventChangePlayerTeam>(pMap);
     }
     else if (line.endsWith(EventSpawnBuilding))
     {
-        ret = spScriptEventSpawnBuilding::create(pMap);
+        ret = MemoryManagement::create<ScriptEventSpawnBuilding>(pMap);
     }
     else if (line.endsWith(EventCenterMap))
     {
-        ret = spScriptEventCenterMap::create(pMap);
+        ret = MemoryManagement::create<ScriptEventCenterMap>(pMap);
     }    
     else if (line.endsWith(EventPlaySound))
     {
-        ret = spScriptEventPlaySound::create(pMap);
+        ret = MemoryManagement::create<ScriptEventPlaySound>(pMap);
     }
     else if (line.endsWith(EventBuildingFireCounter))
     {
-        ret = spScriptEventBuildingFireCounter::create(pMap);
+        ret = MemoryManagement::create<ScriptEventBuildingFireCounter>(pMap);
     }
     else if (line.endsWith(EventVolcanFire))
     {
-        ret = spScriptEventVolcanFire::create(pMap);
+        ret = MemoryManagement::create<ScriptEventVolcanFire>(pMap);
     }
     else if (line.endsWith(EventExtendMap))
     {
-        ret = spScriptEventExtendMap::create(pMap);
+        ret = MemoryManagement::create<ScriptEventExtendMap>(pMap);
     }
     if (ret.get() != nullptr)
     {
@@ -163,91 +163,91 @@ spScriptEvent ScriptEvent::createEvent(GameMap* pMap, EventType type)
     {
         case EventType::dialog:
         {
-            return spScriptEventDialog::create(pMap);
+            return MemoryManagement::create<ScriptEventDialog>(pMap);
         }
         case EventType::spawnUnit:
         {
-            return spScriptEventSpawnUnit::create(pMap);
+            return MemoryManagement::create<ScriptEventSpawnUnit>(pMap);
         }
         case EventType::defeatPlayer:
         {
-            return spScriptEventDefeatPlayer::create(pMap);
+            return MemoryManagement::create<ScriptEventDefeatPlayer>(pMap);
         }
         case EventType::addFunds:
         {
-            return spScriptEventAddFunds::create(pMap);
+            return MemoryManagement::create<ScriptEventAddFunds>(pMap);
         }
         case EventType::changeCOBar:
         {
-            return spScriptEventChangeCOBar::create(pMap);
+            return MemoryManagement::create<ScriptEventChangeCOBar>(pMap);
         }
         case EventType::changeWeather:
         {
-            return spScriptEventChangeWeather::create(pMap);
+            return MemoryManagement::create<ScriptEventChangeWeather>(pMap);
         }
         case EventType::changeBuildlist:
         {
-            return spScriptEventChangeBuildlist::create(pMap);
+            return MemoryManagement::create<ScriptEventChangeBuildlist>(pMap);
         }
         case EventType::modifyTerrain:
         {
-            return spScriptEventModifyTerrain::create(pMap);
+            return MemoryManagement::create<ScriptEventModifyTerrain>(pMap);
         }
         case EventType::modifyUnit:
         {
-            return spScriptEventModifyUnit::create(pMap);
+            return MemoryManagement::create<ScriptEventModifyUnit>(pMap);
         }
         case EventType::animation:
         {
-            return spScriptEventAnimation::create(pMap);
+            return MemoryManagement::create<ScriptEventAnimation>(pMap);
         }
         case EventType::victoryInfo:
         {
-            return spScriptEventVictoryInfo::create(pMap);
+            return MemoryManagement::create<ScriptEventVictoryInfo>(pMap);
         }
         case EventType::modifyVariable:
         {
-            return spScriptEventModifyVariable::create(pMap);
+            return MemoryManagement::create<ScriptEventModifyVariable>(pMap);
         }
         case EventType::ChangeUnitAI:
         {
-            return spScriptEventChangeUnitAI::create(pMap);
+            return MemoryManagement::create<ScriptEventChangeUnitAI>(pMap);
         }
         case EventType::ChangeBuildingOwner:
         {
-            return spScriptEventChangeBuildingOwner::create(pMap);
+            return MemoryManagement::create<ScriptEventChangeBuildingOwner>(pMap);
         }
         case EventType::ChangeUnitOwner:
         {
-            return spScriptEventChangeUnitOwner::create(pMap);
+            return MemoryManagement::create<ScriptEventChangeUnitOwner>(pMap);
         }
         case EventType::ChangePlayerTeam:
         {
-            return spScriptEventChangePlayerTeam::create(pMap);
+            return MemoryManagement::create<ScriptEventChangePlayerTeam>(pMap);
         }
         case EventType::SpawnBuilding:
         {
-            return spScriptEventSpawnBuilding::create(pMap);
+            return MemoryManagement::create<ScriptEventSpawnBuilding>(pMap);
         }
         case EventType::CenterMap:
         {
-            return spScriptEventCenterMap::create(pMap);
+            return MemoryManagement::create<ScriptEventCenterMap>(pMap);
         }
         case EventType::PlayGameSound:
         {
-            return spScriptEventPlaySound::create(pMap);
+            return MemoryManagement::create<ScriptEventPlaySound>(pMap);
         }
         case EventType::BuildingFireCounter:
         {
-            return spScriptEventBuildingFireCounter::create(pMap);
+            return MemoryManagement::create<ScriptEventBuildingFireCounter>(pMap);
         }
         case EventType::VolcanFire:
         {
-            return spScriptEventVolcanFire::create(pMap);
+            return MemoryManagement::create<ScriptEventVolcanFire>(pMap);
         }
         case EventType::ExtendMap:
         {
-            return spScriptEventExtendMap::create(pMap);
+            return MemoryManagement::create<ScriptEventExtendMap>(pMap);
         }
     }        
     return spScriptEvent();

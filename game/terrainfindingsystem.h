@@ -7,7 +7,7 @@
 
 class GameMap;
 class TerrainFindingSystem;
-using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
+using spTerrainFindingSystem = std::shared_ptr<TerrainFindingSystem>;
 
 class TerrainFindingSystem final : public PathFindingSystem
 {
@@ -24,7 +24,7 @@ class TerrainFindingSystem final : public PathFindingSystem
 public:
     explicit TerrainFindingSystem(GameMap* pMap, QString terrainID, qint32 startX, qint32 startY);
     explicit TerrainFindingSystem(GameMap* pMap, QStringList terrainIDs, qint32 startX, qint32 startY);
-   virtual ~TerrainFindingSystem() = default;
+    ~TerrainFindingSystem() = default;
     /**
      * @brief getRemainingCost
      * @param x

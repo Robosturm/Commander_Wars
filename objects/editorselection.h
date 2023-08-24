@@ -12,10 +12,8 @@
 #include "game/player.h"
 #include "game/unit.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
 class EditorSelection;
-using spEditorSelection = oxygine::intrusive_ptr<EditorSelection>;
+using spEditorSelection = std::shared_ptr<EditorSelection>;
 
 class EditorSelection final : public QObject, public oxygine::Actor
 {
@@ -24,28 +22,28 @@ public:
     /**
      * @brief The EditorMode enum describes what we want to place at the moment
      */
-    ENUM_CLASS EditorMode
+    enum class EditorMode
     {
         All = -1,
-                Terrain = 0,
-                Building,
-                Unit,
+        Terrain = 0,
+        Building,
+        Unit,
     };
     /**
      * @brief The PlacementSize enum describes how terrain is placed
      */
-    ENUM_CLASS PlacementSize
+    enum class PlacementSize
     {
         None = 0,
-                Small,
-                Medium,
-                BigSquare,
-                Big,
-                Fill
+        Small,
+        Medium,
+        BigSquare,
+        Big,
+        Fill
     };
 
     explicit EditorSelection(qint32 width, bool smallScreen, GameMap* pMap);
-   virtual ~EditorSelection() = default;
+    ~EditorSelection() = default;
     inline EditorMode getCurrentMode() const
     {
         return m_Mode;
@@ -232,7 +230,7 @@ private:
     /**
      * @brief current selected player
      */
-    spPlayer m_currentPlayer{nullptr};
+    Player* m_currentPlayer{nullptr};
     qint32 m_playerStartIndex{0};
     QVector<spBuilding> m_Players;
     GameMap* m_pMap{nullptr};

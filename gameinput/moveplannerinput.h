@@ -3,13 +3,13 @@
 #include "gameinput/humanplayerinput.h"
 
 class MoveplannerInput;
-using spMoveplannerInput = oxygine::intrusive_ptr<MoveplannerInput>;
+using spMoveplannerInput = std::shared_ptr<MoveplannerInput>;
 
 class MoveplannerInput final : public HumanPlayerInput
 {
 public:
     explicit MoveplannerInput(GameMap* pMap);
-   virtual ~MoveplannerInput() = default;
+    ~MoveplannerInput() = default;
     /**
      * @brief getPerformingPlayer
      * @return

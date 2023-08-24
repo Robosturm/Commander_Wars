@@ -19,7 +19,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCanc
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -32,7 +32,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCanc
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    m_Text = oxygine::spTextField::create();
+    m_Text = MemoryManagement::create<oxygine::TextField>();
     m_Text->setHtmlText((text + ".  "));
     m_Text->setStyle(style);
     m_Text->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_Text->getTextRect().width() / 2, oxygine::Stage::getStage()->getHeight() / 2 - 40);

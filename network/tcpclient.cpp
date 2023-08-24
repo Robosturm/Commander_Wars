@@ -14,7 +14,7 @@ TCPClient::TCPClient(QObject* pParent)
     m_isServer = false;
 }
 
-TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, quint64 socketId)
+TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, std::shared_ptr<QTcpSocket> pSocket, quint64 socketId)
     : NetworkInterface(pParent),
       m_pRXTask(pRXTask),
       m_pTXTask(pTXTask),
@@ -54,11 +54,11 @@ void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdres
     connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
     m_pSocket->connectToHost(address, port);
     // Start RX-Task
-    m_pRXTask = spRxTask::create(m_pSocket.get(), 0, this, false);
+    m_pRXTask = MemoryManagement::create<RxTask>(m_pSocket.get(), 0, this, false);
     connect(m_pSocket.get(), &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task
-    m_pTXTask = spTxTask::create(m_pSocket.get(), 0, this, false);
+    m_pTXTask = MemoryManagement::create<TxTask>(m_pSocket.get(), 0, this, false);
     connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
     CONSOLE_PRINT("Client is running and connecting to \"" + address + "\" and port " + QString::number(port), GameConsole::eLogLevels::eDEBUG);
     m_connectedAdress = address;
@@ -90,8 +90,8 @@ void TCPClient::disconnectTCP()
             {
                 m_pTXTask->close();
             }
-            m_pRXTask.free();
-            m_pTXTask.free();
+            m_pRXTask.reset();
+            m_pTXTask.reset();
             m_pSocket->disconnect();
             m_pSocket->close();
             m_pSocket = nullptr;

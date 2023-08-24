@@ -44,10 +44,10 @@ public slots:
      */
     QString getBuildingGroupName(qint32 group);
 protected:
-    friend RessourceManagement<BuildingSpriteManager>;
+    friend MemoryManagement;
     BuildingSpriteManager();
 private:
-   virtual ~BuildingSpriteManager() = default;
+    ~BuildingSpriteManager() = default;
 };
 
 Q_DECLARE_INTERFACE(BuildingSpriteManager, "BuildingSpriteManager");

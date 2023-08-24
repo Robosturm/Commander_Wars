@@ -1,6 +1,7 @@
 #include "ai/decisiontree/decisionquestion.h"
 
 #include "coreengine/interpreter.h"
+#include "coreengine/memorymanagement.h"
 
 DecisionQuestion::DecisionQuestion()
 {
@@ -34,7 +35,7 @@ void DecisionQuestion::deserializeObject(QDataStream& pStream)
     m_Questions.clear();
     for (qint32 i = 0; i < size; i++)
     {
-        m_Questions.append(spQuestion::create());
+        m_Questions.append(MemoryManagement::create<Question>());
         m_Questions[i]->deserializeObject(pStream);
     }
 }

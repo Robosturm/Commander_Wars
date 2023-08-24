@@ -4,13 +4,13 @@
 #include "menue/basemenu.h"
 
 class GeneratorMenu;
-using spGeneratorMenu = oxygine::intrusive_ptr<GeneratorMenu>;
+using spGeneratorMenu = std::shared_ptr<GeneratorMenu>;
 
 class GeneratorMenu final : public Basemenu
 {
 public:
     explicit GeneratorMenu(const QString & generatorUi);
-   virtual ~GeneratorMenu() = default;
+    ~GeneratorMenu() = default;
 
 public slots:
     void exitMenue(const QString & mainMenuXml = "ui/menu/playermenu.xml");

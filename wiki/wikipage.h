@@ -7,7 +7,7 @@
 #include "objects/base/panel.h"
 
 class Wikipage;
-using spWikipage = oxygine::intrusive_ptr<Wikipage>;
+using spWikipage = std::shared_ptr<Wikipage>;
 
 class Wikipage : public QObject, public oxygine::Actor
 {

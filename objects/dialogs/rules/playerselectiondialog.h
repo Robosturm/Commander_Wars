@@ -10,14 +10,14 @@
 
 class GameMap;
 class PlayerSelectionDialog;
-using spPlayerSelectionDialog = oxygine::intrusive_ptr<PlayerSelectionDialog>;
+using spPlayerSelectionDialog = std::shared_ptr<PlayerSelectionDialog>;
 
 class PlayerSelectionDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit PlayerSelectionDialog(GameMap* pMap);
-   virtual ~PlayerSelectionDialog() = default;
+    ~PlayerSelectionDialog() = default;
 signals:
     void sigPlayersChanged();
 private slots:

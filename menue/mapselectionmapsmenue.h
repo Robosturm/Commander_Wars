@@ -10,18 +10,17 @@
 #include "objects/playerselection.h"
 #include "objects/ruleselection.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
 #include "menue/basemenu.h"
 
 class GameMap;
 class MapSelectionMapsMenue;
-using spMapSelectionMapsMenue = oxygine::intrusive_ptr<MapSelectionMapsMenue>;
+using spMapSelectionMapsMenue = std::shared_ptr<MapSelectionMapsMenue>;
 
 class MapSelectionMapsMenue : public Basemenu
 {
     Q_OBJECT
 public:
-    ENUM_CLASS MapSelectionStep
+    enum class MapSelectionStep
     {
         selectMap,
         selectRules,

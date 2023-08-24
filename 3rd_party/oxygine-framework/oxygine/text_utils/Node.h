@@ -1,7 +1,6 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Aligner.h"
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
 
 #include <QDomElement>
@@ -22,17 +21,17 @@ namespace oxygine
     namespace text
     {
         class Node;
-        using spNode = oxygine::intrusive_ptr<Node>;
+        using spNode = std::shared_ptr<Node>;
         class DivNode;
-        using spDivNode = intrusive_ptr<DivNode>;
+        using spDivNode = std::shared_ptr<DivNode>;
         class BrNode;
-        using spBrNode = intrusive_ptr<BrNode>;
+        using spBrNode = std::shared_ptr<BrNode>;
         class TextNode;
-        using spTextNode = oxygine::intrusive_ptr<TextNode>;
+        using spTextNode = std::shared_ptr<TextNode>;
         class WigglyNode;
-        using spWigglyNode = oxygine::intrusive_ptr<WigglyNode>;
+        using spWigglyNode = std::shared_ptr<WigglyNode>;
 
-        class Node : public oxygine::ref_counter
+        class Node
         {
         public:
             explicit Node() = default;
@@ -99,7 +98,7 @@ namespace oxygine
         {
         public:
             explicit WigglyNode(QDomElement& reader, const QString & v);
-            virtual ~WigglyNode() = default;
+            ~WigglyNode() = default;
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
         private:
             qint32 m_step{0};
@@ -113,7 +112,7 @@ namespace oxygine
         {
         public:
             explicit DivNode(QDomElement& reader);
-           virtual ~DivNode() = default;
+            ~DivNode() = default;
             virtual void resize(Aligner& rd) override;
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
         private:
@@ -124,7 +123,7 @@ namespace oxygine
         {
         public:
             explicit BrNode() = default;
-            virtual ~BrNode() = default;
+            ~BrNode() = default;
             void xresize(Aligner& rd) override
             {
                 rd.nextLine(0, 0);

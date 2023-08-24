@@ -18,7 +18,7 @@
 #include "objects/loadingscreen.h"
 
 const char* const RANDOMMAPGENERATORNAME = "RANDOMMAPGENERATOR";
-qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth, qint32 playerCount,
+qint32 RandomMapGenerator::randomMap(spGameMap pMap, qint32 width, qint32 heigth, qint32 playerCount,
                                      bool roadSupport, qint32 seed,
                                      const QVector<std::tuple<QString, float>> & terrains,
                                      const QVector<std::tuple<QString, float>> & buildings,
@@ -32,7 +32,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
                                      bool mirrored)
 {
     
-    if (pMap == nullptr)
+    if (pMap.get() == nullptr)
     {
         return 0;
     }
@@ -120,7 +120,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
         {
             QJSValueList args =
             {
-                pInterpreter->newQObject(pMap),
+                pInterpreter->newQObject(pMap.get()),
             };
 
             float terrainChance = std::get<1>(terrains[i]);
@@ -130,7 +130,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
             QJSValue terrainType = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "CreateType", args);
             if (list.size() == chances.size())
             {
-                randomMapPlaceTerain(pMap, terrainID, startWidth, startHeigth, terrainChance / 100.0f,
+                randomMapPlaceTerain(pMap.get(), terrainID, startWidth, startHeigth, terrainChance / 100.0f,
                                      distribution.toVariant().toPoint(), list, chances,
                                      static_cast<GameEnums::RandomMapTerrainType>(terrainType.toInt()), randInt);
             }
@@ -164,12 +164,12 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
     QVector<QPoint> basePoints;
     if (mirrored)
     {
-        basePoints = randomMapCreateBuildings(pMap, startWidth, startHeigth, fieldChance, randInt, buildings, ownedBaseSize,
+        basePoints = randomMapCreateBuildings(pMap.get(), startWidth, startHeigth, fieldChance, randInt, buildings, ownedBaseSize,
                                               startBaseSize, progress, maxSteps, mirrorX, mirrorY);
     }
     else
     {
-        basePoints = randomMapCreateBuildings(pMap, fieldChance, randInt, buildings, ownedBaseSize,
+        basePoints = randomMapCreateBuildings(pMap.get(), fieldChance, randInt, buildings, ownedBaseSize,
                                               startBaseSize, progress, maxSteps);
     }
 
@@ -179,14 +179,14 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
         ++progress;
         if (mirrorX != MirrorMode::none || mirrorY != MirrorMode::none)
         {
-            randomMapCreateRoad(pMap, startWidth, startHeigth, randInt, basePoints, mirrorX, mirrorY);
+            randomMapCreateRoad(pMap.get(), startWidth, startHeigth, randInt, basePoints, mirrorX, mirrorY);
         }
         else
         {
-            randomMapCreateRoad(pMap, randInt, basePoints);
+            randomMapCreateRoad(pMap.get(), randInt, basePoints);
         }
     }
-    randomMapPlaceUnits(pMap, units, unitCount, startBaseUnitSize, unitDistribution, basePoints, unitsDistributed, progress, maxSteps, randInt, mirrorX, mirrorY);
+    randomMapPlaceUnits(pMap.get(), units, unitCount, startBaseUnitSize, unitDistribution, basePoints, unitsDistributed, progress, maxSteps, randInt, mirrorX, mirrorY);
 
     pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "customStep");
 
@@ -623,7 +623,7 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
     qint32 minimalDistance = static_cast<qint32>((mapWidth + mapHeigth) / (pMap->getPlayerCount()) * 0.65);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getHQBaseTerrainID");
-    spUnit pUnit = spUnit::create("INFANTRY", pMap->getPlayer(0), false, pMap);
+    spUnit pUnit = MemoryManagement::create<Unit>("INFANTRY", pMap->getPlayer(0), false, pMap);
     pUnit->setIgnoreUnitCollision(true);
     qint32 days = minimalDistance / 2;
     LoadingScreen::getInstance()->setWorktext(QObject::tr("Generating ") + "HQ's");
@@ -662,7 +662,7 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
 
         pMap->replaceTerrain(erg.toString(), position.x(), position.y());
         playerPositions.push_back(position);
-        spBuilding pBuilding = spBuilding::create("HQ", pMap);
+        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", pMap);
         pBuilding->setOwner(pMap->getPlayer(i));
         pMap->getTerrain(position.x(), position.y())->setBuilding(pBuilding);
     }
@@ -692,7 +692,7 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
         if ((x >= 0) && (y >= 0))
         {
             pMap->replaceTerrain(erg.toString(), x, y);
-            spBuilding pBuilding = spBuilding::create("FACTORY", pMap);
+            spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", pMap);
             pBuilding->setOwner(pMap->getPlayer(i));
             pMap->getTerrain(x, y)->setBuilding(pBuilding);
         }
@@ -773,7 +773,7 @@ void RandomMapGenerator::randomMapPlaceBuildings(GameMap* pMap, QString building
         if (pMap->onMap(x, y))
         {
             pMap->replaceTerrain(baseTerrainID, x, y);
-            spBuilding pBuilding = spBuilding::create(buildingId, pMap);
+            spBuilding pBuilding = MemoryManagement::create<Building>(buildingId, pMap);
             for (qint32 i2 = 0; i2 < ownedBaseSize.size(); i2++)
             {
                 if ((i < playerBuldings && i2 == 0) ||
@@ -848,7 +848,7 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
     qint32 minimalDistance = static_cast<qint32>((width * xDistance + heigth * yDistance) / (playerCount) * 0.65);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getHQBaseTerrainID");
-    spUnit pUnit = spUnit::create("INFANTRY", pMap->getPlayer(0), false, pMap);
+    spUnit pUnit = MemoryManagement::create<Unit>("INFANTRY", pMap->getPlayer(0), false, pMap);
     pUnit->setIgnoreUnitCollision(true);
     qint32 days = minimalDistance / 2;
     LoadingScreen::getInstance()->setWorktext(QObject::tr("Generating ") + "HQ's");
@@ -894,7 +894,7 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
         {
             QPoint mirrorPosition = getMirroredPosition(pMap, i3, position, mirrorX, mirrorY);
             pMap->replaceTerrain(erg.toString(), mirrorPosition.x(), mirrorPosition.y());
-            spBuilding pBuilding = spBuilding::create("HQ", pMap);
+            spBuilding pBuilding = MemoryManagement::create<Building>("HQ", pMap);
             pBuilding->setOwner(pMap->getPlayer(getMirroredPlayer(pMap, i, i3, mirrorX, mirrorY)));
             playerPositions.push_back(mirrorPosition);
             pMap->getTerrain(mirrorPosition.x(), mirrorPosition.y())->setBuilding(pBuilding);
@@ -929,7 +929,7 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint
             {
                 QPoint mirrorPosition = getMirroredPosition(pMap, i3, QPoint(x, y), mirrorX, mirrorY);
                 pMap->replaceTerrain(erg.toString(), mirrorPosition.x(), mirrorPosition.y());
-                spBuilding pBuilding = spBuilding::create("FACTORY", pMap);
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", pMap);
                 pBuilding->setOwner(pMap->getPlayer(getMirroredPlayer(pMap, i, i3, mirrorX, mirrorY)));
                 pMap->getTerrain(mirrorPosition.x(), mirrorPosition.y())->setBuilding(pBuilding);
             }
@@ -1030,7 +1030,7 @@ void RandomMapGenerator::randomMapPlaceBuildings(GameMap* pMap, qint32 width, qi
                 QPoint mirrorPosition = getMirroredPosition(pMap, i3, QPoint(x, y), mirrorX, mirrorY);
 
                 pMap->replaceTerrain(baseTerrainID, mirrorPosition.x(), mirrorPosition.y());
-                spBuilding pBuilding = spBuilding::create(buildingId, pMap);
+                spBuilding pBuilding = MemoryManagement::create<Building>(buildingId, pMap);
                 qint32 rotation = i % playerCount;
                 qint32 player = getMirroredPlayer(pMap, rotation, i3, mirrorX, mirrorY);
                 if (ownerBuildings[player] > 0)
@@ -1211,7 +1211,7 @@ void RandomMapGenerator::randomMapSpawnUnit(GameMap* pMap, QString unitId, qint3
     qint32 mapHeigth = pMap->getMapHeight();
     qint32 minimalDistance = static_cast<qint32>((mapWidth * 2 + mapHeigth * 2) / (pMap->getPlayerCount()) * 0.7);
     qint32 maximumUnitTry = 2000;
-    spUnit pDummyUnit = spUnit::create(unitId, pMap->getPlayer(0), false, pMap);
+    spUnit pDummyUnit = MemoryManagement::create<Unit>(unitId, pMap->getPlayer(0), false, pMap);
     qint32 x = 0;
     qint32 y = 0;
     for (qint32 i2 = 0; i2 < maximumUnitTry; ++i2)

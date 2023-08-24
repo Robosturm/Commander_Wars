@@ -62,19 +62,20 @@ bool Mainapp::m_trainingSession{false};
 const char* const Mainapp::GAME_CONTEXT = "GAME";
 
 Mainapp::Mainapp()
-    : m_aiProcessPipe(spAiProcessPipe::create())
+    : m_aiProcessPipe(MemoryManagement::create<AiProcessPipe>())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Mainapp");
 #endif
     Interpreter::setCppOwnerShip(this);
     m_pMainapp = this;
-    m_Workerthread.reset(new QThread());
-    m_Networkthread.reset(new QThread());
-    m_GameServerThread.reset(new QThread());
-    m_aiSubProcess.reset(new QProcess());
+    MemoryManagement::getInstance().moveToThread(QThread::currentThread());
+    m_Workerthread = MemoryManagement::create<QThread>();
+    m_Networkthread = MemoryManagement::create<QThread>();
+    m_GameServerThread = MemoryManagement::create<QThread>();
+    m_aiSubProcess = MemoryManagement::create<QProcess>();
 #ifdef AUDIOSUPPORT
-    m_audioThread.reset(new QThread());
+    m_audioThread = MemoryManagement::create<QThread>();
     m_audioThread->setObjectName("Audiothread");
 #endif
 #ifdef GRAPHICSUPPORT
@@ -82,7 +83,7 @@ Mainapp::Mainapp()
     m_Networkthread->setObjectName("Networkthread");
     m_GameServerThread->setObjectName("GameServerThread");
 #endif
-    m_Worker = new WorkerThread();
+    m_Worker = MemoryManagement::create<WorkerThread>();
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
@@ -105,8 +106,15 @@ void Mainapp::createLineEdit()
     {
         CONSOLE_PRINT("Mainapp::createLineEdit", GameConsole::eDEBUG);
     }
-    m_pLineEdit = new EventTextEdit();
+    m_pLineEdit = MemoryManagement::create<EventTextEdit>();
     m_pLineEdit->setVisible(false);
+#endif
+}
+
+void Mainapp::resetLineEdit()
+{
+#ifdef GRAPHICSUPPORT
+    m_pLineEdit.reset();
 #endif
 }
 
@@ -228,9 +236,9 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
-            m_AudioManager = spAudioManager::create(m_noAudio);
+            m_AudioManager = MemoryManagement::create<AudioManager>(m_noAudio);
 #ifdef AUDIOSUPPORT
-            m_audioThread->start(QThread::Priority::HighestPriority);
+            m_audioThread->start(QThread::Priority::TimeCriticalPriority);
             m_AudioManager->moveToThread(m_audioThread.get());
             m_AudioManager->initAudio();
             m_AudioManager->clearPlayList();
@@ -259,7 +267,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                     updateStep == GameUpdater::MODE_INSTALL)
                 {
                     automaticNextStep = false;
-                    m_gameUpdater = spGameUpdater::create();
+                    m_gameUpdater = MemoryManagement::create<GameUpdater>();
                 }
             }
             break;
@@ -268,7 +276,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::ObjectManager:
         {
 #ifdef UPDATESUPPORT
-            m_gameUpdater.free();
+            m_gameUpdater.reset();
 #endif
             ObjectManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading Building Textures ..."), step  * stepProgress);
@@ -404,13 +412,25 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_Workerthread->setObjectName("WorkerThread");
 #endif
             m_Networkthread->start(QThread::Priority::NormalPriority);
+#ifdef GRAPHICSUPPORT
+            if (!m_noUi)
+            {
+                m_Workerthread->start(QThread::Priority::HighestPriority);
+            }
+            else
+            {
+                m_Workerthread->start(QThread::Priority::NormalPriority);
+            }
+#else
             m_Workerthread->start(QThread::Priority::NormalPriority);
+#endif
             redrawUi();
             if (!m_noUi)
             {
                 // refresh timer cycle before using it.
                 Settings::getInstance()->setFramesPerSecond(Settings::getInstance()->getFramesPerSecond());
-                m_Timer.start(m_timerCycle, this);
+                m_timer.setInterval(m_timerCycle);
+                m_timer.start();
             }
             GameConsole::getInstance()->moveToThread(Mainapp::getWorkerthread());
             if (m_Worker != nullptr)
@@ -453,7 +473,18 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                 if (Settings::getInstance()->getServer() && !m_slave)
                 {
                     MainServer::getInstance();
-                    m_GameServerThread->start(QThread::Priority::NormalPriority);
+#ifdef GRAPHICSUPPORT
+                    if (m_noUi)
+                    {
+                        m_GameServerThread->start(QThread::Priority::HighestPriority);
+                    }
+                    else
+                    {
+                        m_GameServerThread->start(QThread::Priority::NormalPriority);
+                    }
+#else
+                    m_GameServerThread->start(QThread::Priority::HighestPriority);
+#endif
                 }
                 if (m_slave && m_initScript.isEmpty())
                 {
@@ -773,7 +804,7 @@ void Mainapp::showCrashReport(const QString & log)
 void Mainapp::setNoUi()
 {
     m_noUi = true;
-    m_Timer.stop();
+    m_timer.stop();
 }
 
 void Mainapp::setNoAudio()
@@ -786,7 +817,7 @@ void Mainapp::actAsSlave()
     setSlave(true);
     Settings::getInstance()->setServer(false);
     Settings::getInstance()->setUsername("Server");
-    m_slaveClient = spTCPClient::create(nullptr);
+    m_slaveClient = MemoryManagement::create<TCPClient>(nullptr);
     m_slaveClient->moveToThread(getInstance()->getNetworkThread());
     CONSOLE_PRINT("Running as slave with name : " + Settings::getInstance()->getSlaveServerName(), GameConsole::eDEBUG);
 }
@@ -870,27 +901,36 @@ void Mainapp::onQuit()
     if (m_Workerthread->isRunning())
     {
         m_Workerthread->quit();
-        m_Workerthread->wait();
+        while (!m_Workerthread->wait(1))
+        {
+            QCoreApplication::processEvents();
+        }
     }
     QCoreApplication::processEvents();
-    m_aiProcessPipe.free();
+    m_aiProcessPipe.reset();
 #ifdef AUDIOSUPPORT
     if (m_AudioManager.get() != nullptr)
     {
         m_AudioManager->stopAudio();
-        m_AudioManager.free();
+        m_AudioManager.reset();
     }
     if (m_audioThread->isRunning())
     {
         m_audioThread->quit();
-        m_audioThread->wait();
+        while (!m_audioThread->wait(1))
+        {
+            QCoreApplication::processEvents();
+        }
     }
 #endif
     QCoreApplication::processEvents();
     if (m_Networkthread->isRunning())
     {
         m_Networkthread->quit();
-        m_Networkthread->wait();
+        while (!m_Networkthread->wait(1))
+        {
+            QCoreApplication::processEvents();
+        }
     }
     QCoreApplication::processEvents();
     CONSOLE_PRINT("Shutting down game server", GameConsole::eDEBUG);
@@ -901,7 +941,10 @@ void Mainapp::onQuit()
             MainServer::getInstance()->release();
         }
         m_GameServerThread->quit();
-        m_GameServerThread->wait();
+        while (!m_GameServerThread->wait(1))
+        {
+            QCoreApplication::processEvents();
+        }
     }
     QCoreApplication::processEvents();
 }

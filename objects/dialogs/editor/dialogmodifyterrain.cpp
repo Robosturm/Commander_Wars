@@ -27,7 +27,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     Interpreter::setCppOwnerShip(this);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -46,7 +46,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
         emit sigFinished();
     });
 
-    m_pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
+    m_pPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
                                      QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
@@ -70,26 +70,26 @@ void DialogModifyTerrain::load()
     oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getMainFont48());
     auto style3 = style2;
     style3.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
-    spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 50);
+    spLabel pLabel = MemoryManagement::create<Label>(m_pPanel->getScaledWidth() - 50);
     pLabel->setStyle(style3);
     pLabel->setHtmlText(tr("Edit terrain"));
     pLabel->setPosition(25, y);
     m_pPanel->addItem(pLabel);
     y += pLabel->getHeight() + 10;
 
-    pLabel = spLabel::create(m_pPanel->getScaledWidth() - 50);
+    pLabel = MemoryManagement::create<Label>(m_pPanel->getScaledWidth() - 50);
     pLabel->setStyle(style2);
     pLabel->setHtmlText(tr("Information"));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     y += pLabel->getHeight() + 10;
 
-    pLabel = spLabel::create(190);
+    pLabel = MemoryManagement::create<Label>(190);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Name:"));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    spTextbox pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 115 - pLabel->getScaledWidth());
+    spTextbox pTextbox = MemoryManagement::create<Textbox>(m_pPanel->getContentWidth() - 115 - pLabel->getScaledWidth());
     pTextbox->setTooltipText(tr("Custom Name of the Terrain. Empty name equals the default name."));
     pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
     pTextbox->setCurrentText(m_pTerrain->getTerrainName());
@@ -100,11 +100,11 @@ void DialogModifyTerrain::load()
     m_pPanel->addItem(pTextbox);
     y += pLabel->getHeight() + 10;
 
-    pLabel = spLabel::create(190);
+    pLabel = MemoryManagement::create<Label>(190);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Description:"));
     pLabel->setPosition(10, y);
-    pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 115 - pLabel->getScaledWidth());
+    pTextbox = MemoryManagement::create<Textbox>(m_pPanel->getContentWidth() - 115 - pLabel->getScaledWidth());
     pTextbox->setTooltipText(tr("Custom Description of the Terrain. Empty description equals the default description."));
     pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
     pTextbox->setCurrentText(m_pTerrain->getTerrainDescription());
@@ -115,11 +115,11 @@ void DialogModifyTerrain::load()
 
     if (m_pTerrain->getHp() > 0)
     {
-        pLabel = spLabel::create(190);
+        pLabel = MemoryManagement::create<Label>(190);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("HP:"));
         pLabel->setPosition(10, y);
-        spSlider pSlider = spSlider::create(oxygine::Stage::getStage()->getWidth() - 100 - 200 - pLabel->getScaledWidth(), 1, 9999, tr("HP"), 200);
+        spSlider pSlider = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 100 - 200 - pLabel->getScaledWidth(), 1, 9999, tr("HP"), 200);
         pSlider->setTooltipText(tr("Selects the HP of the current terraub. This is immediately applied."));
         pSlider->setPosition(200 + 20 + pLabel->getX(), y);
         pSlider->setCurrentValue(m_pTerrain->getHp());
@@ -133,12 +133,12 @@ void DialogModifyTerrain::load()
         y += pLabel->getHeight() + 10;
     }
 
-    pLabel = spLabel::create(190);
+    pLabel = MemoryManagement::create<Label>(190);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Palette:"));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    spDropDownmenu pDropDownmenu = spDropDownmenu::create(400, Terrain::getPaletteNames());
+    spDropDownmenu pDropDownmenu = MemoryManagement::create<DropDownmenu>(400, Terrain::getPaletteNames());
     pDropDownmenu->setTooltipText(tr("Changes the palette used by the terrain."));
     pDropDownmenu->setPosition(200 + 20 + pLabel->getX(), y);
     if (m_selectedPalette >=  0)
@@ -158,12 +158,12 @@ void DialogModifyTerrain::load()
     m_pPanel->addItem(pDropDownmenu);
     y += pLabel->getHeight() + 10;
 
-    pLabel = spLabel::create(190);
+    pLabel = MemoryManagement::create<Label>(190);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Terrain Style"));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    m_pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 115 - pLabel->getScaledWidth());
+    m_pTextbox = MemoryManagement::create<Textbox>(m_pPanel->getContentWidth() - 115 - pLabel->getScaledWidth());
     m_pTextbox->setTooltipText(tr("Current select terrain image or terrain path or empty for default selection."));
     m_pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
     connect(m_pTextbox.get(), &Textbox::sigTextChanged, this, [this](QString text)
@@ -214,7 +214,7 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
     oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getMainFont48());
 
     QStringList pTerrainStyles = pTerrain->getTerrainSprites();
-    spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 50);
+    spLabel pLabel = MemoryManagement::create<Label>(m_pPanel->getScaledWidth() - 50);
     pLabel->setStyle(style2);
     pLabel->setHtmlText(tr("Base image"));
     pLabel->setPosition(10, y);
@@ -278,7 +278,7 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
         oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getMainFont48());
 
         QStringList selectedOverlayTerrainStyles = pTerrain->getCustomOverlays();
-        spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 50);
+        spLabel pLabel = MemoryManagement::create<Label>(m_pPanel->getScaledWidth() - 50);
         pLabel->setStyle(style2);
         pLabel->setHtmlText(tr("Overlays"));
         pLabel->setPosition(10, y);
@@ -294,15 +294,15 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
             if (pAnim != nullptr)
             {
                 constexpr qint32 scale = 2;
-                oxygine::spColorRectSprite pRect = oxygine::spColorRectSprite::create();
+                oxygine::spColorRectSprite pRect = MemoryManagement::create<oxygine::ColorRectSprite>();
                 pRect->setPosition(x, y);
                 pRect->setSize(GameMap::getImageSize() * scale, GameMap::getImageSize() * scale);
                 pRect->setColor(QColor(100, 100, 100, 100));
 
-                oxygine::spSprite pSprite = oxygine::spSprite::create();
+                oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
                 if (!palette.isEmpty())
                 {
-                    oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(palette, oxygine::error_policy::ep_ignore_error));
+                    oxygine::spResAnim pPaletteAnim = pTerrainManager->getSpResAnim(palette, oxygine::error_policy::ep_ignore_error);
                     if (pPaletteAnim.get() != nullptr)
                     {
                         pSprite->setColorTable(pPaletteAnim, true);
@@ -315,7 +315,7 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
                 m_pPanel->addItem(pRect);
 
                 bool selected = selectedOverlayTerrainStyles.contains(id);
-                spCheckbox pCheckbox = spCheckbox::create();
+                spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();
                 pCheckbox->setPosition(x + pRect->getScaledWidth() + 10, y + pRect->getScaledHeight() / 2 - pCheckbox->getScaledHeight() / 2);
                 pCheckbox->setChecked(selected);
                 connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, id](bool checked)
@@ -354,7 +354,7 @@ void DialogModifyTerrain::showLoadDialog()
     QStringList wildcards;
     wildcards.append("*.png");
     QString path = Settings::getInstance()->getUserPath() + "customTerrainImages";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, m_pMap->getMapName(), true, tr("Load"));
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, m_pMap->getMapName(), true, tr("Load"));
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogModifyTerrain::loadCustomSprite, Qt::QueuedConnection);
     addChild(fileDialog);    
 }

@@ -12,12 +12,13 @@
 #include "network/NetworkInterface.h"
 
 #include "multiplayer/password.h"
+#include "multiplayer/networkcommands.h"
 
 #include "objects/base/chat.h"
 #include "objects/dialogs/dialogconnecting.h"
 
 class Multiplayermenu;
-using spMultiplayermenu = oxygine::intrusive_ptr<Multiplayermenu>;
+using spMultiplayermenu = std::shared_ptr<Multiplayermenu>;
 
 class Multiplayermenu final : public MapSelectionMapsMenue
 {
@@ -33,7 +34,7 @@ public:
     explicit Multiplayermenu(const QString & address, const QString & secondaryAddress, quint16 port, const QString & password, NetworkMode networkMode);
     explicit Multiplayermenu(const QString & address, quint16 port, const Password * password, NetworkMode networkMode);
     explicit Multiplayermenu(spNetworkInterface pNetworkInterface, const QString & password, NetworkMode networkMode);
-   virtual ~Multiplayermenu() = default;
+    ~Multiplayermenu() = default;
 
     /**
      * @brief existsMap

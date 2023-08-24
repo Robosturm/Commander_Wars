@@ -4,22 +4,22 @@
 namespace oxygine
 {
 
-    struct atlas_data;
+struct atlas_data;
 
-    class ResAtlasGeneric;
-    using spResAtlasGeneric = intrusive_ptr<ResAtlasGeneric>;
+class ResAtlasGeneric;
+using spResAtlasGeneric = std::shared_ptr<ResAtlasGeneric>;
 
-    class ResAtlasGeneric : public ResAtlas
-    {
-    public:
-        explicit ResAtlasGeneric() = default;
-        virtual ~ResAtlasGeneric() = default;
-        void loadAtlas(CreateResourceContext& context);
-    protected:
-        virtual void _load() override;
-        virtual void _unload() override;
+class ResAtlasGeneric : public ResAtlas
+{
+public:
+    explicit ResAtlasGeneric() = default;
+    virtual ~ResAtlasGeneric() = default;
+    void loadAtlas(CreateResourceContext& context);
+protected:
+    virtual void _load() override;
+    virtual void _unload() override;
 
-    private:
-        qint32 m_current{0};
-    };
+private:
+    qint32 m_current{0};
+};
 }

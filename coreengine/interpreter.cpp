@@ -3,6 +3,8 @@
 #include "coreengine/audiomanager.h"
 #include "coreengine/userdata.h"
 #include "coreengine/workerthread.h"
+#include "coreengine/gameconsole.h"
+
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
 #include "resource_management/terrainmanager.h"
@@ -18,21 +20,36 @@
 spInterpreter Interpreter::m_pInstance{nullptr};
 QString Interpreter::m_runtimeData;
 
+Interpreter* Interpreter::createInstance()
+{
+    if (m_pInstance.get() == nullptr)
+    {
+        m_pInstance = MemoryManagement::create<Interpreter>();
+        m_pInstance->init();
+    }
+    else
+    {
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "illegal interpreter creation");
+    }
+    return m_pInstance.get();
+}
+
 Interpreter::Interpreter()
-    : QJSEngine(Mainapp::getInstance()->getWorker())
+    : QQmlEngine(Mainapp::getInstance()->getWorker())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Interpreter");
 #endif
     setCppOwnerShip(this);
     connect(this, &Interpreter::sigNetworkGameFinished, this, &Interpreter::networkGameFinished, Qt::QueuedConnection);
+    installExtensions(QJSEngine::Extension::AllExtensions);
 }
 
 bool Interpreter::reloadInterpreter(const QString runtime)
 {
     CONSOLE_PRINT_MODULE("Reloading interpreter", GameConsole::eDEBUG, GameConsole::eJavaScript);
-    m_pInstance.free();
-    m_pInstance = spInterpreter::create();
+    m_pInstance.reset();
+    m_pInstance = MemoryManagement::create<Interpreter>();
     m_pInstance->init();
     bool success = m_pInstance->loadScript(runtime, "Interpreter Runtime");
     if (!success)
@@ -55,7 +72,7 @@ Interpreter::~Interpreter()
 void Interpreter::release()
 {
     m_pInstance->m_jsObjects.clear();
-    m_pInstance.free();
+    m_pInstance.reset();
 }
 
 void Interpreter::init()
@@ -168,11 +185,10 @@ bool Interpreter::loadScript(const QString & content, const QString & script)
 
 QJSValue Interpreter::doString(const QString & task)
 {
-#ifdef GAMEDEBUG
-    OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
-#endif
+    clearJsStack();
     ++m_inJsCall;
     QJSValue value = evaluate(task, "GameCode");
+    collectGarbage();
     exitJsCall();
     if (value.isError())
     {
@@ -311,15 +327,15 @@ bool Interpreter::getInJsCall() const
     return m_inJsCall > 0;
 }
 
-void Interpreter::trackJsObject(oxygine::ref_counter* pObj)
+void Interpreter::trackJsObject(std::shared_ptr<QObject> pObj)
 {
-    if (m_inJsCall == 0)
-    {
-        m_jsObjects.clear();
-    }
     if (m_inJsCall > 0)
     {
-        oxygine::intrusive_ptr pPtr(pObj);
-        m_jsObjects.push_back(pPtr);
+        m_jsObjects.push_back(pObj);
     }
+}
+
+void Interpreter::printError(const QString & msg)
+{
+    CONSOLE_PRINT_MODULE(msg, GameConsole::eERROR, GameConsole::eJavaScript);
 }

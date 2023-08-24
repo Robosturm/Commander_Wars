@@ -14,6 +14,11 @@
 #include <QAudioDevice>
 #endif
 
+SoundData::SoundData()
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
 AudioManager::AudioManager(bool noAudio)
     :
 #ifdef AUDIOSUPPORT
@@ -219,7 +224,7 @@ void AudioManager::createPlayer()
     if (!m_noAudio)
     {
         CONSOLE_PRINT_MODULE("AudioThread::createPlayer()", GameConsole::eDEBUG, GameConsole::eAudio);
-        m_player.reset(new Player(this));
+        m_player = MemoryManagement::create<Player>(this);
         m_player->m_player.setAudioOutput(&m_audioOutput);
         connect(&m_player->m_player, &QMediaPlayer::mediaStatusChanged, this, &AudioManager::mediaStatusChanged, Qt::QueuedConnection);
         connect(&m_player->m_player, &QMediaPlayer::playbackStateChanged, this, &AudioManager::mediaPlaybackStateChanged, Qt::QueuedConnection);
@@ -463,7 +468,7 @@ void AudioManager::slotSetMuteInternal(bool value)
     m_audioOutput.setMuted(m_internalMuted);
     for (auto & soundEffect : m_soundEffectData)
     {
-        if (!soundEffect.sound.isNull())
+        if (soundEffect.sound.get() != nullptr)
         {
             soundEffect.sound->setMuted(m_internalMuted);
         }
@@ -619,7 +624,7 @@ void AudioManager::SlotCheckMusicEnded(qint64 duration)
         if (loopPos > 0 && duration >= loopPos && m_player->m_currentMedia == m_player->m_nextMedia)
         {
             CONSOLE_PRINT_MODULE("Player reached loop end desired position " + QString::number(loopPos) + " actual loop position " + QString::number(duration) + " for player", GameConsole::eDEBUG, GameConsole::eAudio);
-            // shuffle load new media
+            // shuffle load media
             SlotPlayRandom();
         }
     }

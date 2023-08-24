@@ -10,27 +10,24 @@
 #include <QSemaphore>
 #include <QNetworkInterface>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/LUPDATE_MACROS.h"
 
 class Serializable;
 class NetworkInterface;
-using spNetworkInterface = oxygine::intrusive_ptr<NetworkInterface>;
+using spNetworkInterface = std::shared_ptr<NetworkInterface>;
 
 /**
  * @brief The NetworkInterface class use this in the Context of a Network-Task
  */
-class NetworkInterface : public QObject, public oxygine::ref_counter
+class NetworkInterface : public QObject
 {
     Q_OBJECT
 public:
     /**
       * @brief this enum contains all message recievers of the network
       */
-    ENUM_CLASS NetworkSerives
+    enum class NetworkSerives
     {
         None = -1,
         Game,                   /**< used for game stream data */

@@ -11,7 +11,7 @@ class Timer final : public QTimer
     Q_OBJECT
 public:
     explicit Timer(QObject* pParent);
-   virtual ~Timer() = default;
+    ~Timer() = default;
 public slots:
     void pause();
     void resume();

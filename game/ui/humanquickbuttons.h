@@ -5,12 +5,12 @@
 
 class GameMenue;
 class HumanQuickButtons;
-using spHumanQuickButtons = oxygine::intrusive_ptr<HumanQuickButtons>;
+using spHumanQuickButtons = std::shared_ptr<HumanQuickButtons>;
 
 class HumanQuickButtons final : public CreatedGui
 {
 public:
     explicit HumanQuickButtons(GameMenue* pMenu);
-   virtual ~HumanQuickButtons();
+    ~HumanQuickButtons();
 };
 

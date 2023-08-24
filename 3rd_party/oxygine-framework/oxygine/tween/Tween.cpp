@@ -90,16 +90,6 @@ namespace oxygine
         m_elapsed = elapsed;
     }
 
-    void Tween::removeFromActor()
-    {
-        oxygine::spActor pClient = oxygine::spActor(getClient());
-        if (pClient.get() != nullptr)
-        {
-            spTween pTween(this);
-            pClient->removeTween(pTween);
-        }
-    }
-
     void Tween::complete(timeMS deltaTime)
     {
         if (m_loops == -1)
@@ -148,16 +138,6 @@ namespace oxygine
 
     void Tween::__start(Actor& actor, const UpdateState& us)
     {
-        TweenEvent ev(this, &us);
-        ev.currentTarget = spEventDispatcher(&actor);
-        ev.target = ev.currentTarget;
-        ev.m_tween = this;
-        ev.type = TweenEvent::START;
-        if (m_cbStart.isSet())
-        {
-            m_cbStart(&ev);
-        }
-        dispatchEvent(&ev);
         _start(*m_client);
         m_status = status_started;
     }
@@ -232,7 +212,7 @@ namespace oxygine
         }
 
         TweenEvent ev(this, &us);
-        ev.currentTarget = spEventDispatcher(&actor);
+        ev.currentTarget = actor.getSharedPtrFromWeak<Actor>();
         ev.target = ev.currentTarget;
         ev.m_tween = this;
 

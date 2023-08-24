@@ -9,12 +9,13 @@
 #include <game/GameEnums.h>
 
 class GameMap;
+using spGameMap = std::shared_ptr<GameMap>;
 
 class RandomMapGenerator final
 {
 public:
     RandomMapGenerator() = delete;
-   virtual ~RandomMapGenerator() = delete;
+    ~RandomMapGenerator() = delete;
 
     enum class MirrorMode
     {
@@ -36,7 +37,7 @@ public:
      * @param buildingchance
      * @return seed used to create the map
      */
-    static qint32 randomMap(GameMap* pMap, qint32 width, qint32 heigth, qint32 playerCount,
+    static qint32 randomMap(spGameMap pMap, qint32 width, qint32 heigth, qint32 playerCount,
                             bool roadSupport, qint32 seed,
                             const QVector<std::tuple<QString, float>> & terrains,
                             const QVector<std::tuple<QString, float>> & buildings,

@@ -7,7 +7,7 @@
 namespace oxygine
 {
     class TextField;
-    using spTextField = intrusive_ptr<TextField>;
+    using spTextField = std::shared_ptr<TextField>;
     class TextField : public Actor
     {
     public:
@@ -62,7 +62,8 @@ namespace oxygine
         using TweenColor = Property<QColor, const QColor&, TextField, &TextField::getStyleColor, &TextField::setStyleColor>;
     protected:
         virtual void sizeChanged(const QSize& size) override;
-        void rebuildText(bool lock = true);
+        friend MemoryManagement;
+        void rebuildText();
 
     protected:
 #ifdef GRAPHICSUPPORT

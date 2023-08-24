@@ -62,11 +62,11 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
 void VeryEasyAI::process()
 {
     AI_CONSOLE_PRINT("VeryEasyAI::process()", GameConsole::eDEBUG);
-    spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
-    spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
+    spQmlVectorBuilding pBuildings = m_pPlayer->getSpBuildings();
+    spQmlVectorUnit pUnits = m_pPlayer->getSpUnits();
     pUnits->randomize();
-    spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
-    spQmlVectorBuilding pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
+    spQmlVectorUnit pEnemyUnits = m_pPlayer->getSpEnemyUnits();
+    spQmlVectorBuilding pEnemyBuildings = m_pPlayer->getSpEnemyBuildings();
     prepareEnemieData(pUnits, pEnemyUnits, pEnemyBuildings);
     pBuildings->sortClosestToEnemy(pEnemyUnits);
 
@@ -178,7 +178,7 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
             {
                 if (pUnit->getCapturePoints() > 0)
                 {
-                    spGameAction pAction = spGameAction::create(ACTION_CAPTURE, m_pMap);
+                    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_CAPTURE, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     if (pAction->canBePerformed())
                     {
@@ -188,7 +188,7 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
                 }
                 else
                 {
-                    spGameAction pAction = spGameAction::create(ACTION_CAPTURE, m_pMap);
+                    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_CAPTURE, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     UnitPathFindingSystem pfs(m_pMap, pUnit);
                     pfs.explore();
@@ -291,7 +291,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
     if (pUnit->hasAction(CoreAI::ACTION_FIRE))
     {
         // try to perform an attack
-        spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
+        spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_FIRE, m_pMap);
         pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
         UnitPathFindingSystem pfs(m_pMap, pUnit);
         pfs.explore();
@@ -363,7 +363,7 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
         {
             std::vector<QVector3D> targets;
             std::vector<QVector3D> transporterTargets;
-            spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+            spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
             // find possible targets for this unit
             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
 
@@ -423,7 +423,7 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
             // wooohooo it's a transporter
             if (pUnit->getLoadedUnitCount() > 0)
             {
-                spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
                 QStringList actions = pUnit->getActionList();
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 // find possible targets for this unit
@@ -465,7 +465,7 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
             }
             else
             {
-                spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
                 QStringList actions = pUnit->getActionList();
                 // find possible targets for this unit
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -503,7 +503,7 @@ bool VeryEasyAI::loadUnits(spQmlVectorUnit & pUnits)
         {
             std::vector<QVector3D> targets;
             std::vector<QVector3D> transporterTargets;
-            spGameAction pAction = spGameAction::create(ACTION_LOAD, m_pMap);
+            spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_LOAD, m_pMap);
             QStringList actions = pUnit->getActionList();
             // find possible targets for this unit
             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -727,7 +727,7 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
                     if (pBuilding->isProductionBuilding() &&
                         pBuilding->getTerrain()->getUnit() == nullptr)
                     {
-                        spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS, m_pMap);
+                        spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_BUILD_UNITS, m_pMap);
                         pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
                         if (pAction->canBePerformed())
                         {

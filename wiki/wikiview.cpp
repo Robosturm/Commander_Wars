@@ -24,12 +24,12 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
 
     qint32 y = 10;
     qint32 width = 150;
-    spLabel pTextfield = spLabel::create(width - 10, true);
+    spLabel pTextfield = MemoryManagement::create<Label>(width - 10, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Search: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
-    m_SearchString = spTextbox::create(viewWidth - 380);
+    m_SearchString = MemoryManagement::create<Textbox>(viewWidth - 380);
     m_SearchString->setTooltipText(tr("Text that will be searched for in the title of each wikipage."));
     m_SearchString->setPosition(150, y);
     connect(m_SearchString.get(), &Textbox::sigTextChanged, this, &WikiView::searchChanged, Qt::QueuedConnection);
@@ -44,12 +44,12 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     connect(this, &WikiView::sigSearch, this, &WikiView::search, Qt::QueuedConnection);
     y += pTextfield->getScaledHeight() + 10;
 
-    pTextfield = spLabel::create(width - 10, true);
+    pTextfield = MemoryManagement::create<Label>(width - 10, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Tags: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
-    m_Tags = spDropDownmenu::create(300, WikiDatabase::getInstance()->getTags());
+    m_Tags = MemoryManagement::create<DropDownmenu>(300, WikiDatabase::getInstance()->getTags());
     m_Tags->setTooltipText(tr("Shows all pages grouped under a given tag. A page can be grouped in several groups at once."));
     m_Tags->setPosition(150, y);
     connect(m_Tags.get(), &DropDownmenu::sigItemChanged, this, &WikiView::tagChanged, Qt::QueuedConnection);
@@ -58,7 +58,7 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     y += pTextfield->getScaledHeight() + 10;
 
     QSize size(viewWidth - 20, viewHeigth - y - 50);
-    m_MainPanel = spPanel::create(true, size, size);
+    m_MainPanel = MemoryManagement::create<Panel>(true, size, size);
     m_MainPanel->setPosition(10, y);
     addChild(m_MainPanel);
 
@@ -88,13 +88,13 @@ void WikiView::search(bool onlyTag)
     {
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
-        oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+        oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
         pBox->setResAnim(pAnim);
         pBox->setSize(m_MainPanel->getScaledWidth() - 70, 40);
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
-        spLabel textField = spLabel::create(pBox->getScaledWidth() - 18);
+        spLabel textField = MemoryManagement::create<Label>(pBox->getScaledWidth() - 18);
         textField->setStyle(style);
         textField->setHeight(40);
         textField->setX(13);
@@ -133,10 +133,13 @@ void WikiView::showWikipage(const PageData * page)
 
 void WikiView::showPage(QString id)
 {
-    PageData page;
-    page.m_id = id;
-    m_lastPage = WikiDatabase::getInstance()->getPage(&page);
-    addChild(m_lastPage);
+   Mainapp* pApp = Mainapp::getInstance();
+   pApp->pauseRendering();
+   PageData page;
+   page.m_id = id;
+   m_lastPage = WikiDatabase::getInstance()->getPage(&page);
+   addChild(m_lastPage);
+   pApp->continueRendering();
 }
 
 void WikiView::hideLastPage()
@@ -144,7 +147,7 @@ void WikiView::hideLastPage()
     if (m_lastPage.get() != nullptr)
     {
         m_lastPage->detach();
-        m_lastPage.free();
+        m_lastPage.reset();
     }
 }
 

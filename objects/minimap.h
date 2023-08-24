@@ -9,7 +9,7 @@
 class GameMap;
 class GameMenue;
 class Minimap;
-using spMinimap = oxygine::intrusive_ptr<Minimap>;
+using spMinimap = std::shared_ptr<Minimap>;
 
 class Minimap final : public QObject, public oxygine::Actor
 {
@@ -17,7 +17,7 @@ class Minimap final : public QObject, public oxygine::Actor
 public:
     static const qint32 IMAGE_SIZE{4};
     explicit Minimap();
-   virtual ~Minimap() = default;
+    ~Minimap() = default;
 
     void clear();    
     void setMenu(GameMenue* pMenu);

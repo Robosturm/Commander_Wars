@@ -29,7 +29,7 @@ namespace oxygine
             if (me->mouseButton == MouseButton_Left)
             {
                 event->phase = Event::phase_target;
-                event->target = spEventDispatcher(this);
+                event->target = getSharedPtr<EventDispatcher>();
             }
             else
             {
@@ -75,7 +75,7 @@ namespace oxygine
                 {
                     m_btnPressed = me->index;
                     setState(statePressed);
-                    m_touchUpCbId = addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Button::_mouseEvent));
+                    m_touchUpCbId = addEventListenerWithId(TouchEvent::TOUCH_UP, EventCallback(this, &Button::_mouseEvent));
                 }
             }
             break;

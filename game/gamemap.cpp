@@ -43,7 +43,7 @@ qint32 GameMap::getFrameTime()
 
 GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create(this))
+    m_gameRules(MemoryManagement::create<GameRules>(this))
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
@@ -57,7 +57,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 
 GameMap::GameMap(QDataStream& stream, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create(this)),
+      m_gameRules(MemoryManagement::create<GameRules>(this)),
       m_savegame(savegame)
 {
 #ifdef GRAPHICSUPPORT
@@ -71,7 +71,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
 
 GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create(this)),
+      m_gameRules(MemoryManagement::create<GameRules>(this)),
       m_savegame(savegame)
 {
 #ifdef GRAPHICSUPPORT
@@ -129,13 +129,13 @@ void GameMap::loadMapData()
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
 
-     m_markedFieldsLayer = oxygine::spActor::create();
+     m_markedFieldsLayer = MemoryManagement::create<oxygine::Actor>();
      m_markedFieldsLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
      addChild(m_markedFieldsLayer);
-     m_moveArrowLayer = oxygine::spActor::create();
+     m_moveArrowLayer = MemoryManagement::create<oxygine::Actor>();
      m_moveArrowLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::MoveArrow));
      addChild(m_moveArrowLayer);
-     m_unitsLayer = oxygine::spActor::create();
+     m_unitsLayer = MemoryManagement::create<oxygine::Actor>();
      m_unitsLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::Units));
      addChild(m_unitsLayer);
 
@@ -166,7 +166,7 @@ qint32 GameMap::getUniqueIdCounter()
     {
         m_headerInfo.m_uniqueIdCounter++;
     }
-    CONSOLE_PRINT("Getting new unique id counter " + QString::number(m_headerInfo.m_uniqueIdCounter), GameConsole::eDEBUG);
+    CONSOLE_PRINT("Getting unique id counter " + QString::number(m_headerInfo.m_uniqueIdCounter), GameConsole::eDEBUG);
     return m_headerInfo.m_uniqueIdCounter;
 }
 
@@ -208,8 +208,8 @@ void GameMap::applyBiomeToArea(const QRect area, qint32 newBiome)
         auto* terrain = getTerrain(x, y);
         const auto currentTerrain = terrain->getID();
         spUnit currentUnit = terrain->getSpUnit();
-        QJSValueList args = {currentTerrain,
-                             newBiome};
+        QJSValueList args = {QJSValue(currentTerrain),
+                             QJSValue(newBiome)};
         auto erg = pInterpreter->doFunction("TERRAIN", "getTerrainBiomeMappingId", args);
         QString newTerrain = erg.toString();
         if (!newTerrain.isEmpty() &&
@@ -253,10 +253,9 @@ bool GameMap::anyPlayerAlive()
     return false;
 }
 
-QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh)
+spQmlVectorPoint GameMap::getSpVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh)
 {
-
-    QmlVectorPoint* pRet = new QmlVectorPoint();
+    spQmlVectorPoint pRet = MemoryManagement::create<QmlVectorPoint>();
     if (maxVisionRange > 0)
     {
         if (visionHigh < 0)
@@ -308,30 +307,30 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
                         {
                             switch (i)
                             {
-                                case 0:
-                                {
-                                    nextX = current.x() + 1;
-                                    nextY = current.y();
-                                    break;
-                                }
-                                case 1:
-                                {
-                                    nextX = current.x() - 1;
-                                    nextY = current.y();
-                                    break;
-                                }
-                                case 2:
-                                {
-                                    nextX = current.x();
-                                    nextY = current.y() + 1;
-                                    break;
-                                }
-                                case 3:
-                                {
-                                    nextX = current.x();
-                                    nextY = current.y() - 1;
-                                    break;
-                                }
+                            case 0:
+                            {
+                                nextX = current.x() + 1;
+                                nextY = current.y();
+                                break;
+                            }
+                            case 1:
+                            {
+                                nextX = current.x() - 1;
+                                nextY = current.y();
+                                break;
+                            }
+                            case 2:
+                            {
+                                nextX = current.x();
+                                nextY = current.y() + 1;
+                                break;
+                            }
+                            case 3:
+                            {
+                                nextX = current.x();
+                                nextY = current.y() - 1;
+                                break;
+                            }
                             }
                             // not evaluated yet
                             if (onMap(nextX, nextY))
@@ -358,6 +357,15 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
         }
     }
     return pRet;
+}
+
+QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh)
+{
+    auto pRet = getSpVisionCircle(x, y, minVisionRange, maxVisionRange, visionHigh);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(pRet);
+    return pRet.get();
 }
 
 bool GameMap::isUnitInArea(const QRect area, qint32 unitID)
@@ -516,7 +524,7 @@ QString GameMap::getMapTagsText()
     return ret;
 }
 
-spPlayer GameMap::getspPlayer(qint32 player)
+spPlayer GameMap::getSpPlayer(qint32 player)
 {
     if (player >= 0 && player < m_players.size())
     {
@@ -548,6 +556,11 @@ Player* GameMap::getCurrentPlayer() const
 spPlayer GameMap::getSpCurrentPlayer()
 {
     return m_CurrentPlayer;
+}
+
+spGameRules GameMap::getSpGameRules()
+{
+    return m_gameRules;
 }
 
 void GameMap::setCurrentPlayer(qint32 player)
@@ -663,7 +676,7 @@ void GameMap::updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints
     {
         if (applyRulesPalette)
         {
-            m_fields[y][x]->setTerrainPaletteGroup(m_Rules->getMapPalette());
+            m_fields[y][x]->setTerrainPaletteGroup(m_gameRules->getMapPalette());
         }
         m_fields[y][x]->loadSprites();
     }
@@ -688,7 +701,7 @@ void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints, bool applyRulesPalet
         {
             if (pTerrain->getHasFlowDirection())
             {
-                spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, pTerrain->getFlowTiles(), pos.x(), pos.y());
+                spTerrainFindingSystem pPfs = MemoryManagement::create<TerrainFindingSystem>(this, pTerrain->getFlowTiles(), pos.x(), pos.y());
                 pPfs->explore();
                 pTerrain->updateFlowSprites(pPfs.get(), applyRulesPalette);
                 auto points = pPfs->getAllNodePointsFast();
@@ -713,9 +726,9 @@ void GameMap::finishUpdateSprites(bool showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading weather for snowy times"), 95);
     }
-    if (m_Rules.get() != nullptr)
+    if (m_gameRules.get() != nullptr)
     {
-        m_Rules->createWeatherSprites();
+        m_gameRules->createWeatherSprites();
     }
     if (m_pMenu != nullptr)
     {
@@ -869,19 +882,19 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
             }
         }
 
-        qint32 unitLimit = m_Rules->getUnitLimit();
+        qint32 unitLimit = m_gameRules->getUnitLimit();
         qint32 unitCount = pPlayer->getUnitCount();
         if (unitLimit > 0 && unitCount >= unitLimit)
         {
             CONSOLE_PRINT("Didn't spawn unit " + unitID + " cause unit limit is reached", GameConsole::eDEBUG);
             return nullptr;
         }
-        spUnit pUnit = spUnit::create(unitID, pPlayer.get(), true, this);
+        spUnit pUnit = MemoryManagement::create<Unit>(unitID, pPlayer.get(), true, this);
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
         QString movementType = pUnit->getMovementType();
         if (onMap(x, y))
         {
-            spTerrain pTerrain = spTerrain(getTerrain(x, y));
+            spTerrain pTerrain = getSpTerrain(x, y);
             if (pTerrain.get() != nullptr &&
                 (pTerrain->getUnit() == nullptr) &&
                 (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -906,7 +919,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
                 y2 += 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = spTerrain(getTerrain(x + x2 - currentRadius, y + y2));
+                    spTerrain pTerrain = getSpTerrain(x + x2 - currentRadius, y + y2);
                     if (pTerrain.get() != nullptr &&
                         (pTerrain->getUnit() == nullptr) &&
                         (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -922,7 +935,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
                 y2 -= 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
+                    spTerrain pTerrain = getSpTerrain(x + x2, y + y2);
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
                         (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -938,7 +951,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
                 y2 -= 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
+                    spTerrain pTerrain = getSpTerrain(x + x2, y + y2);
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
                         (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -954,7 +967,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
                 y2 += 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
+                    spTerrain pTerrain = getSpTerrain(x + x2, y + y2);
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
                         (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -1264,7 +1277,7 @@ void GameMap::replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bo
             (changePalette && pTerrainOld->getPalette() != palette))
         {
             pTerrainOld->removeBuilding();
-            spUnit pUnit = spUnit(pTerrainOld->getUnit());
+            spUnit pUnit = pTerrainOld->getSpUnit();
 
             spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID(), this, pTerrainOld->getPalette());
 
@@ -1335,7 +1348,7 @@ void GameMap::replaceBuilding(const QString buildingID, qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
-        spBuilding pBuilding = spBuilding::create(buildingID, this);
+        spBuilding pBuilding = MemoryManagement::create<Building>(buildingID, this);
         Terrain* pTerrain = getTerrain(x, y);
         if (pBuilding->canBuildingBePlaced(pTerrain))
         {
@@ -1432,7 +1445,7 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
             m_fields[y][x]->serializeObject(pStream, forHash);
         }
     }
-    m_Rules->serializeObject(pStream, forHash);
+    m_gameRules->serializeObject(pStream, forHash);
     if (!forHash)
     {
         m_Recorder->serializeObject(pStream);
@@ -1612,7 +1625,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
          CONSOLE_PRINT("Loading player " + QString::number(i), GameConsole::eDEBUG);
         // create player
-        m_players.append(spPlayer::create(this));
+        m_players.append(MemoryManagement::create<Player>(this));
         // get player data from stream
         m_players[i]->deserializer(pStream, fast);
     }
@@ -1629,7 +1642,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     m_rowSprites.reserve(m_headerInfo.m_heigth);
     for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
     {
-        auto pActor = oxygine::spActor::create();
+        auto pActor = MemoryManagement::create<oxygine::Actor>();
         pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         m_rowSprites.push_back(pActor);
         addChild(pActor);
@@ -1663,14 +1676,14 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         }
     }
     setCurrentPlayer(currentPlayerIdx);
-    m_Rules = spGameRules::create(this);
+    m_gameRules = MemoryManagement::create<GameRules>(this);
     if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading Rules"), 80);
     }
     if (m_headerInfo.m_Version > 2)
     {
-        m_Rules->deserializer(pStream, fast);
+        m_gameRules->deserializer(pStream, fast);
     }
     if (!fast)
     {
@@ -1692,7 +1705,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_GameScript = spGameScript::create(this);
+            m_GameScript = MemoryManagement::create<GameScript>(this);
         }
         if (showLoadingScreen)
         {
@@ -1704,7 +1717,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             pStream >> exists;
             if (exists)
             {
-                m_Campaign = spCampaign::create();
+                m_Campaign = MemoryManagement::create<Campaign>();
                 m_Campaign->deserializeObject(pStream);
             }
         }
@@ -1823,7 +1836,7 @@ void GameMap::showDamageCalculator()
 void GameMap::startGame()
 {
     CONSOLE_PRINT("GameMap::startGame()", GameConsole::eDEBUG);
-    m_Recorder = spGameRecorder::create(this);
+    m_Recorder = MemoryManagement::create<GameRecorder>(this);
     for (qint32 y = 0; y < m_fields.size(); y++)
     {
         for (qint32 x = 0; x < m_fields[y].size(); x++)
@@ -1847,7 +1860,7 @@ void GameMap::startGame()
         HumanPlayerInput* pHuman = dynamic_cast<HumanPlayerInput*>(m_players[i]->getBaseGameInput());
         if (pAI != nullptr)
         {
-            pAI->setEnableNeutralTerrainAttack(m_Rules->getAiAttackTerrain());
+            pAI->setEnableNeutralTerrainAttack(m_gameRules->getAiAttackTerrain());
             CONSOLE_PRINT("Player " + QString::number(i) + " uses ai " + QString::number(m_players[i]->getBaseGameInput()->getAiType()), GameConsole::eDEBUG);
         }
         else if (pHuman != nullptr)
@@ -1891,8 +1904,8 @@ void GameMap::clearMap()
     m_rowSprites.clear();
     m_fields.clear();
     m_players.clear();
-    m_Rules->resetWeatherSprites();
-    m_Rules->resetFogSprites();
+    m_gameRules->resetWeatherSprites();
+    m_gameRules->resetFogSprites();
     m_headerInfo = MapHeaderInfo();
 }
 
@@ -2147,7 +2160,8 @@ void GameMap::endOfTurnPlayer(Player* pPlayer)
 }
 
 void GameMap::startOfTurn(Player* pPlayer)
-{    
+{
+    Mainapp::getInstance()->pauseRendering();
     if (pPlayer != nullptr)
     {
         pPlayer->startOfTurn();
@@ -2160,11 +2174,13 @@ void GameMap::startOfTurn(Player* pPlayer)
     else
     {
         startOfTurnNeutral();
-    }
+    }    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::startOfTurnNeutral()
-{
+{    
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Doing start of turn for neutrals", GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -2185,11 +2201,13 @@ void GameMap::startOfTurnNeutral()
                 pBuilding->startOfTurn();
             }
         }
-    }
+    }    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::startOfTurnPlayer(Player* pPlayer)
-{
+{    
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Doing start of turn for player " + QString::number(pPlayer->getPlayerID()), GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -2237,7 +2255,8 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
                 }
             }
         }
-    }
+    }    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::centerOnPlayer(Player* pPlayer)
@@ -2371,11 +2390,11 @@ Unit* GameMap::getUnitFromTansportUnit(Unit* pUnit, qint32 uniqueID)
     return nullptr;
 }
 
-QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
+spQmlVectorUnit GameMap::getSpUnits(Player* pPlayer)
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
-    QmlVectorUnit* ret = new QmlVectorUnit();
+    spQmlVectorUnit ret = MemoryManagement::create<QmlVectorUnit>();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -2393,21 +2412,40 @@ QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
     return ret;
 }
 
-QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer, QString id)
+QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
+{
+    auto ret = getSpUnits(pPlayer);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(ret);
+    return ret.get();
+}
+
+spQmlVectorBuilding GameMap::getSpBuildings(Player* pPlayer, QString id)
 {
     QStringList ids;
     if (!id.isEmpty())
     {
         ids.append(id);
     }
-    return getBuildingsListCount(pPlayer, ids);
+    return getSpBuildingsListCount(pPlayer, ids);
 }
 
-QmlVectorBuilding* GameMap::getBuildingsListCount(Player* pPlayer, const QStringList ids)
+
+QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer, QString id)
+{
+    auto ret = getSpBuildings(pPlayer, id);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(ret);
+    return ret.get();
+}
+
+spQmlVectorBuilding GameMap::getSpBuildingsListCount(Player* pPlayer, const QStringList ids)
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
-    QmlVectorBuilding* ret = new QmlVectorBuilding();
+    spQmlVectorBuilding ret = MemoryManagement::create<QmlVectorBuilding>();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -2426,6 +2464,15 @@ QmlVectorBuilding* GameMap::getBuildingsListCount(Player* pPlayer, const QString
     return ret;
 }
 
+QmlVectorBuilding* GameMap::getBuildingsListCount(Player* pPlayer, const QStringList ids)
+{
+    auto ret = getSpBuildingsListCount(pPlayer, ids);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(ret);
+    return ret.get();
+}
+
 QString GameMap::getMapName() const
 {
     return m_headerInfo.m_mapName;
@@ -2440,15 +2487,16 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
 {
     if (anyPlayerAlive())
     {
+        Mainapp::getInstance()->pauseRendering();
         CONSOLE_PRINT("GameMap::nextTurn", GameConsole::eDEBUG);
-        m_Rules->checkVictory();
+        m_gameRules->checkVictory();
         endOfTurn(m_CurrentPlayer.get());
         bool nextDay = nextPlayer();
         bool permanent = false;
         bool found = false;
         auto* baseGameInput = m_CurrentPlayer->getBaseGameInput();
-        if ((m_Rules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
-             m_Rules->getFogMode() != GameEnums::Fog::Fog_Off) &&
+        if ((m_gameRules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
+             m_gameRules->getFogMode() != GameEnums::Fog::Fog_Off) &&
             baseGameInput != nullptr)
         {
             if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)
@@ -2490,7 +2538,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         {
             if (m_pMenu != nullptr)
             {
-                spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(this, m_CurrentPlayer.get(), GameMap::frameTime, true);
+                spGameAnimationNextDay pAnim = MemoryManagement::create<GameAnimationNextDay>(this, m_CurrentPlayer.get(), GameMap::frameTime, true);
                 m_pMenu->addChild(pAnim);
             }
         }
@@ -2503,12 +2551,12 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
             startOfTurn(nullptr);
             m_Recorder->newDay();
         }
-        m_Rules->startOfTurn(nextDay);
+        m_gameRules->startOfTurn(nextDay);
         m_CurrentPlayer->earnMoney();
         startOfTurn(m_CurrentPlayer.get());
         checkFuel(m_CurrentPlayer.get());
         m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
-        m_Rules->initRoundTime();
+        m_gameRules->initRoundTime();
         auto* pMenu = dynamic_cast<GameMenue*>(m_pMenu);
         if (pMenu != nullptr)
         {
@@ -2522,6 +2570,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioManager()->playSound("player_turn.wav");
         }
+        Mainapp::getInstance()->continueRendering();
     }
 }
 
@@ -2547,8 +2596,8 @@ void GameMap::playMusic()
 void GameMap::initPlayersAndSelectCOs()
 {
     CONSOLE_PRINT("GameMap::initPlayersAndSelectCOs", GameConsole::eDEBUG);
-    bool singleCO = m_Rules->getSingleRandomCO();
-    QStringList bannList = m_Rules->getCOBannlist();
+    bool singleCO = m_gameRules->getSingleRandomCO();
+    QStringList bannList = m_gameRules->getCOBannlist();
     for (qint32 i = 0; i < getPlayerCount(); i++)
     {
         Player* pPlayer = getPlayer(i);
@@ -2574,7 +2623,7 @@ void GameMap::initPlayersAndSelectCOs()
         if (pPlayer->getBaseGameInput() == nullptr)
         {
             CONSOLE_PRINT("Forcing AI for player " + QString::number(i) + " to human.", GameConsole::eDEBUG);
-            pPlayer->setBaseGameInput(spHumanPlayerInput::create(this));
+            pPlayer->setBaseGameInput(MemoryManagement::create<HumanPlayerInput>(this));
         }
         // resolve CO 1 beeing set and CO 0 not
         if ((pPlayer->getCO(0) == nullptr) &&
@@ -2697,11 +2746,11 @@ void GameMap::showGrid(bool show)
         qint32 mapHeight = getMapHeight();
         QColor gridColor = getGridColor();
         m_gridSprites.reserve(mapWidth + mapHeight + 1);
-        oxygine::spColorRectSprite pActor = oxygine::spColorRectSprite::create();
+        oxygine::spColorRectSprite pActor = MemoryManagement::create<oxygine::ColorRectSprite>();
         pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
         for (qint32 x = 1; x < mapWidth; ++x)
         {
-            oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
+            oxygine::spColorRectSprite pSprite = MemoryManagement::create<oxygine::ColorRectSprite>();
             pSprite->setSize(1, mapHeight * m_imagesize);
             pSprite->setColor(gridColor);
             pSprite->setPosition(x * m_imagesize, 0);
@@ -2710,7 +2759,7 @@ void GameMap::showGrid(bool show)
         }
         for (qint32 y = 1; y < mapHeight; ++y)
         {
-            oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
+            oxygine::spColorRectSprite pSprite = MemoryManagement::create<oxygine::ColorRectSprite>();
             pSprite->setSize(mapWidth * m_imagesize, 1);
             pSprite->setPosition(0, y * m_imagesize);
             pSprite->setColor(gridColor);
@@ -2735,14 +2784,14 @@ void GameMap::showMiddleCrossGrid(bool show)
         float mapWidth = getMapWidth();
         float mapHeight = getMapHeight();
         QColor gridColor = getGridColor();
-        oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
+        oxygine::spColorRectSprite pSprite = MemoryManagement::create<oxygine::ColorRectSprite>();
         pSprite->setSize(3, mapHeight * m_imagesize);
         pSprite->setColor(gridColor);
         pSprite->setPosition(mapWidth * 0.5f * m_imagesize - 1, 0);
         pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
         addChild(pSprite);
         m_middleCrossGridSprites.append(pSprite);
-        pSprite = oxygine::spColorRectSprite::create();
+        pSprite = MemoryManagement::create<oxygine::ColorRectSprite>();
         pSprite->setSize(mapWidth * m_imagesize, 3);
         pSprite->setPosition(0, mapHeight * 0.5f * m_imagesize - 1);
         pSprite->setColor(gridColor);

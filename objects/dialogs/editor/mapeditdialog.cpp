@@ -24,7 +24,7 @@ MapEditDialog::MapEditDialog(MapEditInfo info, const QString & confirmMessage)
     Interpreter::setCppOwnerShip(this);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -58,7 +58,7 @@ void MapEditDialog::finished()
 {
     if (!m_confirmMessage.isEmpty())
     {
-        spDialogMessageBox pDialogConfirm = spDialogMessageBox::create(m_confirmMessage, true);
+        spDialogMessageBox pDialogConfirm = MemoryManagement::create<DialogMessageBox>(m_confirmMessage, true);
         connect(pDialogConfirm.get(), &DialogMessageBox::sigOk, this, &MapEditDialog::onConfirm, Qt::QueuedConnection);
         addChild(pDialogConfirm);
     }
@@ -191,7 +191,7 @@ void MapEditDialog::scriptFileChanged(QString file)
     file = GlobalUtils::makePathRelative(file);
     for (auto & item : m_factoryUiItem)
     {
-        spTextbox pText = oxygine::dynamic_pointer_cast<Textbox>(item);
+        spTextbox pText = std::dynamic_pointer_cast<Textbox>(item);
         if (pText.get() != nullptr &&
             pText->objectName() == "ScriptTextbox")
         {
@@ -206,7 +206,7 @@ void MapEditDialog::showSelectScript()
     QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getInstance()->getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapEditDialog::scriptFileChanged, Qt::QueuedConnection);    
 }

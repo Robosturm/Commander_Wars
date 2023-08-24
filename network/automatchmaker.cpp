@@ -1,5 +1,6 @@
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QJsonDocument>
 
 #include "network/automatchmaker.h"
 #include "network/mainserver.h"

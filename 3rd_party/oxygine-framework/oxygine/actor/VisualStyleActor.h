@@ -7,7 +7,7 @@
 namespace oxygine
 {
     class VStyleActor;
-    using spVStyleActor = intrusive_ptr<VStyleActor>;
+    using spVStyleActor = std::shared_ptr<VStyleActor>;
     class VStyleActor : public Actor
     {
     public:

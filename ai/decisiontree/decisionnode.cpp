@@ -1,6 +1,7 @@
 #include "ai/decisiontree/decisionnode.h"
 #include "ai/decisiontree/leaf.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/memorymanagement.h"
 
 DecisionNode::DecisionNode(spDecisionQuestion & pQuestion, const std::vector<spDecisionNode> & pNodes)
 	: m_pQuestion(pQuestion),
@@ -46,7 +47,7 @@ void DecisionNode::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
-    m_pQuestion = spDecisionQuestion::create();
+    m_pQuestion = MemoryManagement::create<DecisionQuestion>();
     m_pQuestion->deserializeObject(pStream);
     qint32 size = 0;
     pStream >> size;
@@ -57,12 +58,12 @@ void DecisionNode::deserializeObject(QDataStream& pStream)
         pStream >> isNode;
         if (isNode)
         {
-            m_pNodes.push_back(spDecisionNode::create());
+            m_pNodes.push_back(MemoryManagement::create<DecisionNode>());
             m_pNodes[i]->deserializeObject(pStream);
         }
         else
         {
-            m_pNodes.push_back(spLeaf::create());
+            m_pNodes.push_back(MemoryManagement::create<Leaf>());
             m_pNodes[i]->deserializeObject(pStream);
         }
     }

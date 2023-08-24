@@ -28,7 +28,7 @@ ScriptEventSpawnBuilding::ScriptEventSpawnBuilding(GameMap* pMap)
     }
     m_Items[0].creator = [](QString item)
     {
-        spBuilding pBuilding = spBuilding::create(item, nullptr);
+        spBuilding pBuilding = MemoryManagement::create<Building>(item, nullptr);
         pBuilding->setTooltipText(pBuilding->getName());
         pBuilding->updateBuildingSprites(false);
         pBuilding->scaleAndShowOnSingleTile();

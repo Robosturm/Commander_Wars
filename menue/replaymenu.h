@@ -13,7 +13,7 @@
 #include "game/gameanimation/animationskipper.h"
 
 class ReplayMenu;
-using spReplayMenu = oxygine::intrusive_ptr<ReplayMenu>;
+using spReplayMenu = std::shared_ptr<ReplayMenu>;
 
 class ReplayMenu final : public GameMenue
 {
@@ -21,7 +21,7 @@ class ReplayMenu final : public GameMenue
     static constexpr qint32 actionPixelSize = 5;
 public:
     ReplayMenu(QString filename);
-   virtual ~ReplayMenu();
+    ~ReplayMenu();
     /**
      * @brief getCurrentViewPlayer
      * @return

@@ -9,7 +9,7 @@
 #include <QTextStream>
 #include <QStandardPaths>
 
-QScopedPointer<CrashReporter> CrashReporter::m_instance;
+std::shared_ptr<CrashReporter> CrashReporter::m_instance;
 
 void CrashReporter::_writeLog( const QString &inSignal)
 {
@@ -62,13 +62,13 @@ void CrashReporter::_writeLog( const QString &inSignal)
 
 void CrashReporter::setSignalHandler(logWrittenCallback inLogWrittenCallback )
 {
-    m_instance.reset(new CrashReporter);
+    m_instance = MemoryManagement::create<CrashReporter>();
     m_instance->sProgramName = QCoreApplication::arguments().at(0);
     m_instance->sCrashReportDirPath = QCoreApplication::applicationDirPath() + "/logs";
     m_instance->sLogWrittenCallback = inLogWrittenCallback;
     if (m_instance->sProcess == nullptr)
     {
-        m_instance->sProcess = new QProcess();
+        m_instance->sProcess = MemoryManagement::create<QProcess>();
 #ifdef GRAPHICSUPPORT
         m_instance->sProcess->setObjectName("CrashreporterProcess");
 #endif

@@ -1,7 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+#include "coreengine/refobject.h"
 #include <vector>
 
 namespace oxygine
@@ -24,33 +24,27 @@ namespace oxygine
     };
 
     class EventDispatcher;
-    using spEventDispatcher = intrusive_ptr<EventDispatcher>;
-    class EventDispatcher : public IClosureOwner, public ref_counter
+    using spEventDispatcher = std::shared_ptr<EventDispatcher>;
+    class EventDispatcher : public IClosureOwner, public RefObject<EventDispatcher>
     {
     public:
         explicit EventDispatcher() = default;
         virtual ~EventDispatcher() = default;
 
-        qint32 addEventListener(eventType, const EventCallback&);
+        void addEventListener(eventType, const EventCallback);
+        qint32 addEventListenerWithId(eventType, const EventCallback&);
 
         /**remove by ID, where is ID returned from addEventListener*/
         void removeEventListener(qint32 id);
 
         /**removes all added event listeners by THIS used in Closure(this, ...)*/
-        void removeEventListeners(IClosureOwner* CallbackThis);
-
-        /**removes all added event listeners by THIS used in Closure(this, ...)*/
-        void removeEventListenersByType(eventType);
-
-        /**removes all added event listeners*/
-        void removeAllEventListeners();
+        void removeEventListeners(IClosureOwner* callbackThis);
 
         virtual void dispatchEvent(Event* event);
         void dispatchEvent(Event& event)
         {
             dispatchEvent(&event);
         }
-        qint32 getListenersCount() const;
         qint32 getLastListenerID() const
         {
             return m_lastID;
@@ -61,6 +55,10 @@ namespace oxygine
         }
         bool getEnabled() const;
         virtual void setEnabled(bool enabled);
+
+    protected:
+        bool detached() const;
+        bool requiresThreadChange() const;
 
     protected:
         struct listener

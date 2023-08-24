@@ -37,7 +37,7 @@ void MovementPlannerAddIn::addSprite(QString spriteID, qint32 x, qint32 y, float
     }
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim->getTotalFrames() > 1)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);
@@ -95,6 +95,6 @@ void MovementPlannerAddIn::show()
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(AddIn, pInterpreter->newQObject(this));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
-    m_pPlanner->addChild(oxygine::spActor(this));
+    m_pPlanner->addChild(getSharedPtr<oxygine::Actor>());
     m_pPlanner->setFocused(false);
 }

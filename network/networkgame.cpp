@@ -1,6 +1,7 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 
 #include "network/networkgame.h"
 #include "network/JsonKeys.h"

@@ -17,7 +17,7 @@ CustomDialog::CustomDialog(const QString & jsName, const QString & uiXml, Baseme
     Interpreter::setCppOwnerShip(this);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -80,12 +80,12 @@ void CustomDialog::remove()
 
 void CustomDialog::createDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu)
 {
-    spCustomDialog pDialog = spCustomDialog::create(jsName, uiXml, pBaseMenu);
+    spCustomDialog pDialog = MemoryManagement::create<CustomDialog>(jsName, uiXml, pBaseMenu);
     pBaseMenu->addChild(pDialog);
 }
 
 void CustomDialog::showMessageBox(QString text, bool withCancel, QString confirmText, QString cancelText)
 {
-    spDialogMessageBox pDialog = spDialogMessageBox::create(text, withCancel, confirmText, cancelText);
+    spDialogMessageBox pDialog = MemoryManagement::create<DialogMessageBox>(text, withCancel, confirmText, cancelText);
     m_pBaseMenu->addChild(pDialog);
 }

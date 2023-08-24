@@ -55,7 +55,7 @@ void WorkerThread::start()
     GameConsole::print("Loading worker thread", GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
-    spConsole pConsole = spConsole(GameConsole::getInstance());
+    spConsole pConsole = GameConsole::getSpInstance();
     // create the initial menue no need to store the object
     // it will add itself to the current stage
     oxygine::Stage::getStage()->addChild(pConsole);
@@ -131,7 +131,9 @@ void WorkerThread::start()
     AchievementManager* pAchievementManager = AchievementManager::getInstance();
     pAchievementManager->loadAll();
     Player::getNeutralTableAnim();
-    pInterpreter->doFunction("Global", "finalizeLoading");
+    const QString obj = "Global";
+    const QString func = "finalizeLoading";
+    pInterpreter->doFunction(obj, func);
     if(!Settings::getInstance()->getAiSlave())
     {
         if (pApp->getSlave())
@@ -150,40 +152,10 @@ void WorkerThread::start()
             pInterpreter->openScript("init.js", true);
         }
     }
-    connect(pApp, &Mainapp::sigMousePressEvent, this, &WorkerThread::mousePressEvent, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerThread::mouseReleaseEvent, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
     pLoadingScreen->hide();
     m_started = true;
     CONSOLE_PRINT("WorkerThread::start Finalizing", GameConsole::eDEBUG);
     emit pApp->sigNextStartUpStep(Mainapp::StartupPhase::Finalizing);
-}
-
-void WorkerThread::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y)
-{
-    oxygine::Input* input = &oxygine::Input::getInstance();
-    input->sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
-                                  oxygine::TouchEvent::TOUCH_DOWN, input->getPointerMouse());
-}
-
-void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y)
-{
-    oxygine::Input* input = &oxygine::Input::getInstance();
-    input->sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
-                                  oxygine::TouchEvent::TOUCH_UP, input->getPointerMouse());
-}
-
-void WorkerThread::wheelEvent(qint32 x, qint32 y)
-{
-    oxygine::Input* input = &oxygine::Input::getInstance();
-    input->sendPointerWheelEvent(oxygine::Stage::getStage(), QPoint(x, y), input->getPointerMouse());
-}
-
-void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
-{
-    oxygine::Input* input = &oxygine::Input::getInstance();
-    input->sendPointerMotionEvent(oxygine::Stage::getStage(), x, y, 1.0f, input->getPointerMouse());
 }
 
 void WorkerThread::showMainwindow()
@@ -195,7 +167,7 @@ void WorkerThread::showMainwindow()
 
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
-    auto window = spMainwindow::create("ui/menu/mainmenu.xml");
+    auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
 }
 

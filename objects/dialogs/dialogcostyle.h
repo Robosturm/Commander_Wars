@@ -13,14 +13,14 @@
 #include "objects/base/dropdownmenu.h"
 
 class DialogCOStyle;
-using spDialogCOStyle = oxygine::intrusive_ptr<DialogCOStyle>;
+using spDialogCOStyle = std::shared_ptr<DialogCOStyle>;
 
 class DialogCOStyle final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogCOStyle(QString coid);
-   virtual ~DialogCOStyle() = default;
+    ~DialogCOStyle() = default;
 
     void addCOStyle(QString style, bool select);
 signals:

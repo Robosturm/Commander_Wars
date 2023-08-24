@@ -7,14 +7,14 @@
 #include "game/co.h"
 
 class GameAnimationPower;
-using spGameAnimationPower = oxygine::intrusive_ptr<GameAnimationPower>;
+using spGameAnimationPower = std::shared_ptr<GameAnimationPower>;
 
 class GameAnimationPower final : public GameAnimation
 {
     Q_OBJECT
 public:
     static spGameAnimationPower createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO, GameMap * pMap);
-   virtual ~GameAnimationPower();
+    ~GameAnimationPower();
     virtual void restart() override;
     virtual void stop() override;
     Q_INVOKABLE void createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop);
@@ -30,7 +30,7 @@ public slots:
 protected slots:
     virtual void start() override;
 private:
-    friend class oxygine::intrusive_ptr<GameAnimationPower>;
+    friend class MemoryManagement;
     GameAnimationPower(quint32 frameTime, CO* pCO, GameMap * pMap);
 
 private:

@@ -6,7 +6,7 @@
 #include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventDefeatPlayer;
-using spScriptEventDefeatPlayer = oxygine::intrusive_ptr<ScriptEventDefeatPlayer>;
+using spScriptEventDefeatPlayer = std::shared_ptr<ScriptEventDefeatPlayer>;
 
 class ScriptEventDefeatPlayer final : public ScriptEvent
 {

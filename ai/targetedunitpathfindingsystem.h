@@ -4,7 +4,7 @@
 #include "game/unitpathfindingsystem.h"
 
 class TargetedUnitPathFindingSystem;
-using spTargetedUnitPathFindingSystem = oxygine::intrusive_ptr<TargetedUnitPathFindingSystem>;
+using spTargetedUnitPathFindingSystem = std::shared_ptr<TargetedUnitPathFindingSystem>;
 
 class TargetedUnitPathFindingSystem final : public UnitPathFindingSystem
 {
@@ -19,7 +19,7 @@ class TargetedUnitPathFindingSystem final : public UnitPathFindingSystem
 
 public:
     explicit TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, std::vector<QVector3D>& targets, std::vector<std::vector<std::tuple<qint32, bool>>>* pMoveCostMap, qint32 maxTargets = 40);
-   virtual ~TargetedUnitPathFindingSystem() = default;
+    ~TargetedUnitPathFindingSystem() = default;
     /**
      * @brief getRemainingCost
      * @param x

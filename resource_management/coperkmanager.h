@@ -51,10 +51,10 @@ public slots:
      */
     void removeRessource(QString id);
 protected:
-    friend RessourceManagement<COPerkManager>;
+    friend MemoryManagement;
     COPerkManager();
 private:
-   virtual ~COPerkManager() = default;
+    ~COPerkManager() = default;
 };
 
 Q_DECLARE_INTERFACE(COPerkManager, "COPerkManager");

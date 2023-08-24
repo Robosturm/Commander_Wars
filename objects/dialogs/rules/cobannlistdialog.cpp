@@ -28,7 +28,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
-    m_pSpriteBox = oxygine::spBox9Sprite::create();
+    m_pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -42,7 +42,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     style.multiline = false;
 
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
+    spPanel pPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
                                      QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150));    pPanel->setPosition(30, 30);
     m_pSpriteBox->addChild(pPanel);
 
@@ -50,7 +50,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 40);
+    spLabel pLabel = MemoryManagement::create<Label>(pPanel->getScaledWidth() - 40);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("CO banlist"));
     pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
@@ -66,7 +66,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     auto coGroups = pCOSpriteManager->getCoGroups(m_COIDs);
     for (const auto & group : coGroups)
     {
-        spLabel textField = spLabel::create(pPanel->getScaledWidth() - 40);
+        spLabel textField = MemoryManagement::create<Label>(pPanel->getScaledWidth() - 40);
         textField->setStyle(headerStyle);
         textField->setHtmlText(group.name);
         textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().width() / 2, y);
@@ -77,17 +77,17 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         {
             QString coID = group.cos[i];
             oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((coID.toLower() + "+face"));
-            oxygine::spSprite pCo = oxygine::spSprite::create();
+            oxygine::spSprite pCo = MemoryManagement::create<oxygine::Sprite>();
             pCo->setResAnim(pAnim, 0, 0);
 
-            pLabel = spLabel::create(250);
+            pLabel = MemoryManagement::create<Label>(250);
             pLabel->setStyle(style);
             pLabel->setHtmlText(pCOSpriteManager->getName(coID));
             pLabel->setPosition(x + 90, y);
             pCo->setPosition(x + 45, y);
             pCo->setScale(0.75f);
 
-            spCheckbox pCheckbox = spCheckbox::create();
+            spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();
             pCheckbox->setPosition(x, y);
             m_Checkboxes.append(pCheckbox);
             if (m_CurrentCOBannList.contains(coID))
@@ -263,7 +263,7 @@ void COBannListDialog::setCOBannlist(qint32 item)
 
 void COBannListDialog::showSaveBannlist()
 {    
-    spDialogTextInput pSaveInput = spDialogTextInput::create(tr("Banlist Name"), true, "");
+    spDialogTextInput pSaveInput = MemoryManagement::create<DialogTextInput>(tr("Banlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &COBannListDialog::saveBannlist, Qt::QueuedConnection);
     addChild(pSaveInput);    
 }
@@ -293,7 +293,7 @@ void COBannListDialog::showDeleteBannlist()
     if (QFile::exists(FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
     {
         QString file = FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
-        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to delete the co bannlist: ") + file + "?", true);
+        spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to delete the co bannlist: ") + file + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
         {
             emit sigDeleteBannlist(file);
@@ -312,7 +312,7 @@ void COBannListDialog::saveBannlist(QString filename)
 {
     if (QFile::exists(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING))
     {
-        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the co bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
+        spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to overwrite the co bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, filename]
         {
             emit sigDoSaveBannlist(filename);
@@ -339,7 +339,7 @@ void COBannListDialog::updatePredefinedList()
     }
 
     auto items = getNameList();
-    m_PredefinedLists = spDropDownmenu::create(260, items);
+    m_PredefinedLists = MemoryManagement::create<DropDownmenu>(260, items);
     m_PredefinedLists->setPosition(oxygine::Stage::getStage()->getWidth() / 2  - m_PredefinedLists->getScaledWidth() - 10,
                                    oxygine::Stage::getStage()->getHeight() - 75 - m_ToggleAll->getScaledHeight());
     m_pSpriteBox->addChild(m_PredefinedLists);

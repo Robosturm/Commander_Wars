@@ -13,7 +13,7 @@
 #include "objects/base/dropdownmenu.h"
 
 class FolderDialog;
-using spFolderDialog = oxygine::intrusive_ptr<FolderDialog>;
+using spFolderDialog = std::shared_ptr<FolderDialog>;
 
 /**
  * @brief The FolderDialog class folder dialog for accessing folders.
@@ -29,7 +29,7 @@ public:
      * @param startFolder initial folder of the file dialog
      */
     explicit FolderDialog(QString startFolder);
-   virtual ~FolderDialog() = default;
+    ~FolderDialog() = default;
 
 signals:
     void sigFolderSelected(QString file);

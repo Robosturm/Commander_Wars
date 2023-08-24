@@ -30,7 +30,7 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    m_pSpriteBox = oxygine::spBox9Sprite::create();
+    m_pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -43,7 +43,7 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
+    spPanel pPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
                                      QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150));
     pPanel->setPosition(30, 30);
     m_pSpriteBox->addChild(pPanel);
@@ -52,7 +52,7 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 60);
+    spLabel pLabel = MemoryManagement::create<Label>(pPanel->getScaledWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Build List"));
     pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
@@ -65,7 +65,7 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
 
     for (const auto & group : unitGroups)
     {
-        spLabel textField = spLabel::create(pPanel->getScaledWidth() - 40);
+        spLabel textField = MemoryManagement::create<Label>(pPanel->getScaledWidth() - 40);
         textField->setStyle(headerStyle);
         textField->setHtmlText(group.name);
         textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().width() / 2, y);
@@ -75,14 +75,14 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
         for (qint32 i = 0; i < group.units.size(); ++i)
         {
             QString unitID = group.units[i];
-            spUnit pUnit = spUnit::create(unitID, m_pMap->getPlayer(player), false, m_pMap);
-            pLabel = spLabel::create(250);
+            spUnit pUnit = MemoryManagement::create<Unit>(unitID, m_pMap->getPlayer(player), false, m_pMap);
+            pLabel = MemoryManagement::create<Label>(250);
             pLabel->setStyle(style);
             pLabel->setHtmlText(pUnit->getName());
             pLabel->setPosition(x + 90, y);
             pUnit->setPosition(x + 45, y);
             pUnit->setScale(pUnit->getScale() * 1.25f);
-            spCheckbox pCheckbox = spCheckbox::create();
+            spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();
             pCheckbox->setPosition(x, y);
             m_Checkboxes.append(pCheckbox);
             if (m_CurrentBuildList.contains(unitID))
@@ -294,7 +294,7 @@ void BuildListDialog::setBuildlist(qint32 item)
 
 void BuildListDialog::showSaveBannlist()
 {    
-    spDialogTextInput pSaveInput = spDialogTextInput::create(tr("Banlist Name"), true, "");
+    spDialogTextInput pSaveInput = MemoryManagement::create<DialogTextInput>(tr("Banlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &BuildListDialog::saveBannlist, Qt::QueuedConnection);
     addChild(pSaveInput);    
 }
@@ -304,7 +304,7 @@ void BuildListDialog::showDeleteBannlist()
     if (QFile::exists(FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
     {
         QString file = FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
-        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to delete the build bannlist: ") + file + "?", true);
+        spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to delete the build bannlist: ") + file + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
         {
             emit sigDeleteBannlist(file);
@@ -343,7 +343,7 @@ void BuildListDialog::saveBannlist(QString filename)
 {
     if (QFile::exists(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING))
     {
-        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the build bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
+        spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to overwrite the build bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, filename]
         {
             emit sigDoSaveBannlist(filename);
@@ -360,7 +360,7 @@ void BuildListDialog::doSaveBannlist(QString filename)
 {
     Filesupport::storeList(filename, m_CurrentBuildList, FILEPATH);
     updatePredefinedList();
-    spDialogMessageBox pMessageBox = spDialogMessageBox::create(tr("Do you want to make the saved build list the default ruleset?"), true, tr("Yes"), tr("No"));
+    spDialogMessageBox pMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Do you want to make the saved build list the default ruleset?"), true, tr("Yes"), tr("No"));
     addChild(pMessageBox);
     connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
     {
@@ -376,7 +376,7 @@ void BuildListDialog::updatePredefinedList()
         m_PredefinedLists->detach();
     }
     auto items = getNameList();
-    m_PredefinedLists = spDropDownmenu::create(300, items);
+    m_PredefinedLists = MemoryManagement::create<DropDownmenu>(300, items);
 
     m_PredefinedLists->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_PredefinedLists->getScaledWidth() - 10,
                                    oxygine::Stage::getStage()->getHeight() - 75 - m_ToggleAll->getScaledHeight());

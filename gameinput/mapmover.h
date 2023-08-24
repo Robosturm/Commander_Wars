@@ -4,14 +4,13 @@
 #include <QObject>
 #include <QTimer>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 class BaseGamemenu;
 class MapMover;
-using spMapMover = oxygine::intrusive_ptr<MapMover>;
+using spMapMover = std::shared_ptr<MapMover>;
 
-class MapMover final : public QObject, public oxygine::ref_counter
+class MapMover final : public QObject
 {
     Q_OBJECT
     enum Keys
@@ -30,7 +29,7 @@ class MapMover final : public QObject, public oxygine::ref_counter
     };
 public:
     explicit MapMover(BaseGamemenu* pOwner);
-   virtual ~MapMover() = default;
+    ~MapMover() = default;
 public slots:
     void mouseWheel(float direction);
     void autoScroll();

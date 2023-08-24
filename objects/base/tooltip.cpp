@@ -89,7 +89,7 @@ Tooltip::~Tooltip()
     if (m_Tooltip.get() != nullptr)
     {
         m_Tooltip->detach();
-        m_Tooltip.free();
+        m_Tooltip.reset();
     }
 }
 
@@ -154,7 +154,7 @@ void Tooltip::showTooltip()
             hideTooltip();
             CONSOLE_PRINT("Showing tooltip", GameConsole::eDEBUG);
             QPoint curPos = pApp->mapPosFromGlobal(pApp->cursor().pos());
-            m_Tooltip = oxygine::spActor::create();
+            m_Tooltip = MemoryManagement::create<oxygine::Actor>();
             m_Tooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Tooltip));
 
             oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
@@ -162,13 +162,13 @@ void Tooltip::showTooltip()
             style.multiline = true;
 
             ObjectManager* pObjectManager = ObjectManager::getInstance();
-            oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+            oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
             oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
             pSpriteBox->setResAnim(pAnim);
             m_Tooltip->addChild(pSpriteBox);
             pSpriteBox->setPosition(0, 0);
             pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-            oxygine::spTextField pText = oxygine::spTextField::create();
+            oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
             pText->setHtmlText(m_tooltipText);
             pText->setWidth(oxygine::Stage::getStage()->getWidth() / 3);
             pText->setStyle(style);
@@ -231,7 +231,7 @@ void Tooltip::removeTooltip()
         Mainapp* pApp = Mainapp::getInstance();
         pApp->pauseRendering();
         m_Tooltip->detach();
-        m_Tooltip.free();
+        m_Tooltip.reset();
         pApp->continueRendering();
     }
 }

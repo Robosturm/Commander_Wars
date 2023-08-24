@@ -15,20 +15,20 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    m_HScrollbar = spH_Scrollbar::create(size.height() - sliderSize, contentSize.height());
+    m_HScrollbar = MemoryManagement::create<H_Scrollbar>(size.height() - sliderSize, contentSize.height());
     addChild(m_HScrollbar);
     m_HScrollbar->setX(size.width() - m_HScrollbar->getWidth());
     connect(m_HScrollbar.get(), &H_Scrollbar::sigScrollValueChanged, this, &Panel::scrolledY, Qt::QueuedConnection);
 
-    m_VScrollbar = spV_Scrollbar::create(size.width() - sliderSize, contentSize.width());
+    m_VScrollbar = MemoryManagement::create<V_Scrollbar>(size.width() - sliderSize, contentSize.width());
     addChild(m_VScrollbar);
     m_VScrollbar->setY(size.height() - m_VScrollbar->getScaledHeight());
     connect(m_VScrollbar.get(), &V_Scrollbar::sigScrollValueChanged, this, &Panel::scrolledX, Qt::QueuedConnection);
 
-    m_ClipRect = oxygine::spClipRectActor::create();
+    m_ClipRect = MemoryManagement::create<oxygine::ClipRectActor>();
     if (useBox)
     {
-        m_Panelbox = oxygine::spBox9Sprite::create();
+        m_Panelbox = MemoryManagement::create<oxygine::Box9Sprite>();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim(resAnim);
         m_Panelbox->setResAnim(pAnim);
         m_Panelbox->setSize(size.width() - m_HScrollbar->getScaledWidth(),
@@ -45,8 +45,8 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
         m_ClipRect->setSize(size.width() - m_HScrollbar->getScaledWidth(),
                             size.height() - m_VScrollbar->getScaledHeight());
     }
-    m_ContentRect = oxygine::spActor::create();
-    m_SlidingActor = oxygine::spSlidingActor::create();
+    m_ContentRect = MemoryManagement::create<oxygine::Actor>();
+    m_SlidingActor = MemoryManagement::create<oxygine::SlidingActor>();
     m_SlidingActor->setSize(contentSize.width(), contentSize.height());
     m_ContentRect->setSize(contentSize.width(), contentSize.height());
     m_SlidingActor->setContent(m_ContentRect);
@@ -162,21 +162,23 @@ void Panel::setSubComponent(bool subComponent)
 
 void Panel::hideItems()
 {
+    Mainapp::getInstance()->pauseRendering();
     auto & children = m_ContentRect->getChildren();
     for (auto & child : children)
     {
-        Tooltip* pTooltip = dynamic_cast<Tooltip*>(child.get());
-        DropDownmenuBase* pDropDownmenuBase = dynamic_cast<DropDownmenuBase*>(child.get());
-        if (pTooltip != nullptr)
+        spTooltip pTooltip = std::dynamic_pointer_cast<Tooltip>(child);
+        if (pTooltip.get() != nullptr)
         {
             pTooltip->hideTooltip();
         }
-        if (pDropDownmenuBase != nullptr)
+        spDropDownmenuBase pDropDownmenuBase = std::dynamic_pointer_cast<DropDownmenuBase>(child);
+        if (pDropDownmenuBase.get() != nullptr)
         {
             pDropDownmenuBase->hideDropDown();
         }
         hideChildItems(child);
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Panel::hideChildItems(oxygine::spActor parent)
@@ -185,11 +187,11 @@ void Panel::hideChildItems(oxygine::spActor parent)
     for (auto & child : children)
     {
         Tooltip* pTooltip = dynamic_cast<Tooltip*>(child.get());
-        DropDownmenuBase* pDropDownmenuBase = dynamic_cast<DropDownmenuBase*>(child.get());
         if (pTooltip != nullptr)
         {
             pTooltip->hideTooltip();
         }
+        DropDownmenuBase* pDropDownmenuBase = dynamic_cast<DropDownmenuBase*>(child.get());
         if (pDropDownmenuBase != nullptr)
         {
             pDropDownmenuBase->hideDropDown();

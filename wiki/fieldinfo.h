@@ -9,14 +9,14 @@
 #include "game/terrain.h"
 
 class FieldInfo;
-using spFieldInfo = oxygine::intrusive_ptr<FieldInfo>;
+using spFieldInfo = std::shared_ptr<FieldInfo>;
 
 class FieldInfo final : public Wikipage
 {
     Q_OBJECT
 public:
-    explicit FieldInfo(Terrain* pTerrain, Unit* pUnit);
-   virtual ~FieldInfo() = default;
+    explicit FieldInfo(spTerrain pTerrain, spUnit pUnit);
+    ~FieldInfo() = default;
 };
 
 #endif // FIELDINFO_H

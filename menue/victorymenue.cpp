@@ -65,7 +65,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
+    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("victorymenu");
     if (pBackground != nullptr)
@@ -82,7 +82,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     pApp->getAudioManager()->playRandom();
 
     GameManager* pGameManager = GameManager::getInstance();
-    m_pGraphBackground = oxygine::spBox9Sprite::create();
+    m_pGraphBackground = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("graph");
     if (pAnim != nullptr)
     {
@@ -125,7 +125,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     qint32 graphDays = m_pGraphBackground->getScaledWidth() / 100;
     for (qint32 i = 0; i < graphDays; i++)
     {
-        oxygine::spTextField pDayText = oxygine::spTextField::create();
+        oxygine::spTextField pDayText = MemoryManagement::create<oxygine::TextField>();
         pDayText->setY(m_pGraphBackground->getScaledHeight());
         pDayText->setX(i * 100);
         pDayText->setStyle(style);
@@ -136,7 +136,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     qint32 graphHeigth = m_pGraphBackground->getScaledHeight() / 100;
     for (qint32 i = 0; i < graphHeigth; i++)
     {
-        m_YGraphItems.append(oxygine::spTextField::create());
+        m_YGraphItems.append(MemoryManagement::create<oxygine::TextField>());
         m_YGraphItems[i]->setY(i * 100);
         m_YGraphItems[i]->setX(-100);
         m_YGraphItems[i]->setStyle(style);
@@ -163,11 +163,11 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     {
         for (qint32 i2 = 0; i2 < m_pMap->getPlayerCount(); i2++)
         {
-            m_PlayerGraphs[i].append(oxygine::spActor::create());
+            m_PlayerGraphs[i].append(MemoryManagement::create<oxygine::Actor>());
             m_pGraphBackground->addChild(m_PlayerGraphs[i][i2]);
         }
 
-        oxygine::spColorRectSprite pProgressLine = oxygine::spColorRectSprite::create();
+        oxygine::spColorRectSprite pProgressLine = MemoryManagement::create<oxygine::ColorRectSprite>();
         pProgressLine->setColor(255, 0, 0, 255);
         pProgressLine->setSize(5, m_pGraphBackground->getScaledHeight());
         pProgressLine->setPriority(10);
@@ -223,12 +223,13 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     m_ProgressTimer.setSingleShot(false);
     m_ProgressTimer.setInterval(getStepTime());
     connect(&m_ProgressTimer, &QTimer::timeout, this, &VictoryMenue::updateGraph, Qt::QueuedConnection);
-    spPanel panel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - pButtonExit->getScaledWidth() - 30, 105), QSize(oxygine::Stage::getStage()->getWidth() - pButtonExit->getX() - 20, 40));
+    spPanel panel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - pButtonExit->getScaledWidth() - 30, 105), QSize(oxygine::Stage::getStage()->getWidth() - pButtonExit->getX() - 20, 40));
 
     if (Settings::getInstance()->getSmallScreenDevice())
     {
         panel->setPosition(10, oxygine::Stage::getStage()->getHeight() - 1);
-        auto moveInButton = spMoveInButton::create(panel.get(), panel->getScaledHeight(), -1, -1, 2.0f, true);
+        auto moveInButton = MemoryManagement::create<MoveInButton>(panel.get(), panel->getScaledHeight(), -1, -1, 2.0f, true);
+        panel->addChild(moveInButton);
     }
     else
     {
@@ -309,7 +310,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     }
 
     style = oxygine::TextStyle(FontManager::getMainFont24());
-    m_Textfield = oxygine::spTextField::create();
+    m_Textfield = MemoryManagement::create<oxygine::TextField>();
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     m_Textfield->setStyle(headerStyle);
     if (Settings::getInstance()->getSmallScreenDevice())
@@ -318,23 +319,24 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     }
     addChild(m_Textfield);
 
-    m_PlayerSelectPanel = spPanel::create(true, QSize(200, m_pGraphBackground->getScaledHeight()), QSize(200, 100));
+    m_PlayerSelectPanel = MemoryManagement::create<Panel>(true, QSize(200, m_pGraphBackground->getScaledHeight()), QSize(200, 100));
     m_PlayerSelectPanel->setPosition(5, m_pGraphBackground->getY());
     if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_PlayerSelectPanel->setX(-m_PlayerSelectPanel->getScaledWidth() + 1);
-        auto moveButton = spMoveInButton::create(m_PlayerSelectPanel.get(), m_PlayerSelectPanel->getScaledWidth(), 1, -1);
+        auto moveButton = MemoryManagement::create<MoveInButton>(m_PlayerSelectPanel.get(), m_PlayerSelectPanel->getScaledWidth(), 1, -1);
+        m_PlayerSelectPanel->addChild(moveButton);
     }
     addChild(m_PlayerSelectPanel);
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        oxygine::spTextField pTextfield = oxygine::spTextField::create();
+        oxygine::spTextField pTextfield = MemoryManagement::create<oxygine::TextField>();
         pTextfield->setStyle(style);
         pTextfield->setX(5);
         pTextfield->setY(50 * i + 5);
         pTextfield->setHtmlText((tr("Player: ") + QString::number(i + 1)));
-        spCheckbox pCheckbox = spCheckbox::create();
+        spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();
         pCheckbox->setChecked(true);
         pCheckbox->setPosition(15 + pTextfield->getTextRect().width(), pTextfield->getY());
         connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, i](bool value)
@@ -353,7 +355,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         oxygine::TextStyle style48 = oxygine::TextStyle(FontManager::getMainFont48());
         style48.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style48.multiline = true;
-        m_VictoryPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 10, oxygine::Stage::getStage()->getHeight() - 115),
+        m_VictoryPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 10, oxygine::Stage::getStage()->getHeight() - 115),
                                    QSize(oxygine::Stage::getStage()->getWidth() - 10, oxygine::Stage::getStage()->getHeight() - 115));
         m_VictoryPanel->setPosition(5, 5);
         addChild(m_VictoryPanel);
@@ -362,22 +364,22 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         {
             startX = 900;
         }
-        oxygine::spTextField pHeaders = oxygine::spTextField::create();
+        oxygine::spTextField pHeaders = MemoryManagement::create<oxygine::TextField>();
         pHeaders->setStyle(style48);
         pHeaders->setHtmlText(tr("Speed"));
         pHeaders->setPosition(startX, 5);
         m_VictoryPanel->addItem(pHeaders);
-        pHeaders = oxygine::spTextField::create();
+        pHeaders = MemoryManagement::create<oxygine::TextField>();
         pHeaders->setStyle(style48);
         pHeaders->setHtmlText(tr("Force"));
         pHeaders->setPosition(startX + 160 * 1, 5);
         m_VictoryPanel->addItem(pHeaders);
-        pHeaders = oxygine::spTextField::create();
+        pHeaders = MemoryManagement::create<oxygine::TextField>();
         pHeaders->setStyle(style48);
         pHeaders->setHtmlText(tr("Tech."));
         pHeaders->setPosition(startX + 160 * 2, 5);
         m_VictoryPanel->addItem(pHeaders);
-        pHeaders = oxygine::spTextField::create();
+        pHeaders = MemoryManagement::create<oxygine::TextField>();
         pHeaders->setStyle(style48);
         pHeaders->setHtmlText(tr("Total"));
         pHeaders->setPosition(startX + 160 * 3, 5);
@@ -413,7 +415,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                     pAnim = pGameManager->getResAnim("dialogfield+mask");
                     if (pAnim != nullptr)
                     {
-                        oxygine::spSprite  pTextMask = oxygine::spSprite::create();
+                        oxygine::spSprite  pTextMask = MemoryManagement::create<oxygine::Sprite>();
                         pTextMask->setWidth(sentenceWidth);
                         pTextMask->setScaleX(static_cast<float>(pTextMask->getScaledWidth()) / static_cast<float>(pAnim->getWidth()));
                         pTextMask->setResAnim(pAnim);
@@ -423,7 +425,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                         m_VictoryPanel->addItem(pTextMask);
                     }
 
-                    oxygine::spSprite pWinLooseSprite = oxygine::spSprite::create();
+                    oxygine::spSprite pWinLooseSprite = MemoryManagement::create<oxygine::Sprite>();
                     pAnim = pGameManager->getResAnim("dialogfield");
                     if (pAnim != nullptr)
                     {
@@ -433,11 +435,11 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                         pWinLooseSprite->setPosition(5, 5 + y);
                         m_VictoryPanel->addItem(pWinLooseSprite);
                     }
-                    oxygine::spSprite pCOSprite = oxygine::spSprite::create();
+                    oxygine::spSprite pCOSprite = MemoryManagement::create<oxygine::Sprite>();
                     pCOSprite->setScale(scale);
                     pCOSprite->setPosition(5, 11 + y);
-                    QString resAnim = pCO->getCoID().toLower() + "+face";
-                    pAnim = pCO->getResAnim(resAnim);
+                    QString resAnim = pCO->getCoID() + "+face";
+                    pAnim = pCO->getResAnim(resAnim.toLower());
                     QString sentence = "";
                     if (pAnim != nullptr)
                     {
@@ -458,7 +460,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                     dialogStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
                     dialogStyle.multiline = true;
 
-                    spLabel winLooseText = spLabel::create(sentenceWidth - 110);
+                    spLabel winLooseText = MemoryManagement::create<Label>(sentenceWidth - 110);
                     style.multiline = true;
                     winLooseText->setStyle(dialogStyle);
                     winLooseText->setHeight(pWinLooseSprite->getScaledHeight());
@@ -476,22 +478,22 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                     }
                     style.multiline = false;
                     m_VictoryTexts.append(QVector<oxygine::spTextField>());
-                    m_VictoryTexts[i].append(oxygine::spTextField::create());
+                    m_VictoryTexts[i].append(MemoryManagement::create<oxygine::TextField>());
                     m_VictoryTexts[i][0]->setPosition(startX, y - 48 * scale);
                     m_VictoryTexts[i][0]->setStyle(style48);
                     m_VictoryTexts[i][0]->setHtmlText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][0]);
-                    m_VictoryTexts[i].append(oxygine::spTextField::create());
+                    m_VictoryTexts[i].append(MemoryManagement::create<oxygine::TextField>());
                     m_VictoryTexts[i][1]->setPosition(startX + 160 * 1, y - 48 * scale);
                     m_VictoryTexts[i][1]->setStyle(style48);
                     m_VictoryTexts[i][1]->setHtmlText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][1]);
-                    m_VictoryTexts[i].append(oxygine::spTextField::create());
+                    m_VictoryTexts[i].append(MemoryManagement::create<oxygine::TextField>());
                     m_VictoryTexts[i][2]->setPosition(startX + 160 * 2, y - 48 * scale);
                     m_VictoryTexts[i][2]->setStyle(style48);
                     m_VictoryTexts[i][2]->setHtmlText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][2]);
-                    m_VictoryTexts[i].append(oxygine::spTextField::create());
+                    m_VictoryTexts[i].append(MemoryManagement::create<oxygine::TextField>());
                     m_VictoryTexts[i][3]->setPosition(startX + 160 * 3, y - 48 * scale);
                     m_VictoryTexts[i][3]->setStyle(style48);
                     m_VictoryTexts[i][3]->setHtmlText("0");
@@ -650,7 +652,7 @@ void VictoryMenue::createStatisticsView()
 {
     
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    m_statisticsBox = oxygine::spBox9Sprite::create();
+    m_statisticsBox = MemoryManagement::create<oxygine::Box9Sprite>();
     if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_statisticsBox->setSize(oxygine::Stage::getStage()->getWidth() - 10, oxygine::Stage::getStage()->getHeight() - 110);
@@ -670,7 +672,7 @@ void VictoryMenue::createStatisticsView()
     {
         items.append(tr("Player ") + QString::number(i + 1));
     }
-    m_pStatisticPlayer = spDropDownmenu::create(250, items);
+    m_pStatisticPlayer = MemoryManagement::create<DropDownmenu>(250, items);
     m_pStatisticPlayer->setTooltipText(tr("Select which player's statistics you'd like to see."));
     m_pStatisticPlayer->setPosition(10, 10);
     m_statisticsBox->addChild(m_pStatisticPlayer);
@@ -702,7 +704,7 @@ void VictoryMenue::addShopMoney()
     {
         CONSOLE_PRINT("Adding points to userdata.", GameConsole::eDEBUG);
         Userdata* pUserdata = Userdata::getInstance();
-        spDialogValueCounter pDialogValueCounter = spDialogValueCounter::create(pUserdata->getCredtis(), highestScore);
+        spDialogValueCounter pDialogValueCounter = MemoryManagement::create<DialogValueCounter>(pUserdata->getCredtis(), highestScore);
         connect(pDialogValueCounter.get(), &DialogValueCounter::sigFinished, this, &VictoryMenue::onProgressTimerStart, Qt::QueuedConnection);
         addChild(pDialogValueCounter);
         pUserdata->addCredtis(highestScore);
@@ -847,16 +849,16 @@ void VictoryMenue::exitMenue()
 {
     CONSOLE_PRINT("Leaving Victory Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    m_pNetworkInterface.free();
+    m_pNetworkInterface.reset();
     spCampaign campaign = m_pMap->getSpCampaign();
     if (campaign.get() != nullptr && campaign->getCampaignFinished() == false && !m_isReplay)
     {
         bool multiplayer = m_pNetworkInterface.get() != nullptr;
-        oxygine::Stage::getStage()->addChild(spCampaignMenu::create(campaign, multiplayer, true));
+        oxygine::Stage::getStage()->addChild(MemoryManagement::create<CampaignMenu>(campaign, multiplayer, true));
     }
     else
     {
-        auto window = spMainwindow::create("ui/menu/mainmenu.xml");
+        auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
     }
     m_pMap->detach();
@@ -865,7 +867,7 @@ void VictoryMenue::exitMenue()
 
 oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor color)
 {
-    oxygine::spActor pRet = oxygine::spActor::create();
+    oxygine::spActor pRet = MemoryManagement::create<oxygine::Actor>();
     float m = static_cast<float>(end.y()) / static_cast<float>(end.x());
     qint32 width = lineWidth;
     if (end.y() != 0)
@@ -874,14 +876,14 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
     }
 
     // initial rect
-    oxygine::spColorRectSprite rect = oxygine::spColorRectSprite::create();
+    oxygine::spColorRectSprite rect = MemoryManagement::create<oxygine::ColorRectSprite>();
     rect->setColor(color);
     rect->setPosition(-1, 0);
     rect->setSize(lineWidth + 1, lineWidth);
     pRet->addChild(rect);
     // tilted rect
     double angle = 0;
-    rect = oxygine::spColorRectSprite::create();
+    rect = MemoryManagement::create<oxygine::ColorRectSprite>();
     rect->setColor(color);
     qint32 x = end.x() - width;
     if (x > 0)
@@ -906,7 +908,7 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
     rect->setRotation(angle);
     pRet->addChild(rect);
     // finishing rect
-    rect = oxygine::spColorRectSprite::create();
+    rect = MemoryManagement::create<oxygine::ColorRectSprite>();
     rect->setColor(color);
     rect->setPosition(end.x() - lineWidth, end.y());
     rect->setSize(lineWidth + 1, lineWidth);
@@ -952,7 +954,7 @@ void VictoryMenue::updateGraph()
                         qint32 sum = static_cast<qint32>(m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z());
                         GameRecorder::Rang rang = m_pMap->getGameRecorder()->getRank(sum);
                         pAnim = m_pMap->getGameRecorder()->getRankAnim(rang);
-                        oxygine::spSprite pRankSprite = oxygine::spSprite::create();
+                        oxygine::spSprite pRankSprite = MemoryManagement::create<oxygine::Sprite>();
                         pRankSprite->setResAnim(pAnim);
                         pRankSprite->setScale(1.5f);
                         pRankSprite->setPosition(m_VictoryPanel->getContentWidth() - 120, m_VictoryTexts[i][0]->getY());
@@ -1080,7 +1082,7 @@ void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
         SpecialEvent* pEvent = pStartRecord->getSpecialEvent(event);
         if (pEvent->getOwner() == player)
         {
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
             oxygine::ResAnim* pAnim = nullptr;
             switch (pEvent->getEvent())
             {
@@ -1117,11 +1119,13 @@ void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
                 {
                     if (progress >= 0)
                     {
+                        Mainapp::getInstance()->pauseRendering();
                         oxygine::spActor pActor = m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][player]->getLastChild();
                         if (pActor.get() != nullptr)
                         {
                             startPoint.setY(pActor->getY());
                         }
+                        Mainapp::getInstance()->continueRendering();
                     }
                 }
                 pSprite->setPosition(startPoint.x() - pAnim->getWidth(), startPoint.y() - pAnim->getHeight());
@@ -1217,11 +1221,11 @@ void VictoryMenue::showPlayerStatistic(qint32 player)
         const auto & playerdata = data[player];
         if (Settings::getInstance()->getSmallScreenDevice())
         {
-            m_statisticsView = spUnitStatisticView::create(playerdata, oxygine::Stage::getStage()->getWidth() - 30, oxygine::Stage::getStage()->getHeight() - 180, m_pMap->getPlayer(player), m_pMap.get());
+            m_statisticsView = MemoryManagement::create<UnitStatisticView>(playerdata, oxygine::Stage::getStage()->getWidth() - 30, oxygine::Stage::getStage()->getHeight() - 180, m_pMap->getPlayer(player), m_pMap.get());
         }
         else
         {
-            m_statisticsView = spUnitStatisticView::create(playerdata, oxygine::Stage::getStage()->getWidth() - 30, oxygine::Stage::getStage()->getHeight() - 280, m_pMap->getPlayer(player), m_pMap.get());
+            m_statisticsView = MemoryManagement::create<UnitStatisticView>(playerdata, oxygine::Stage::getStage()->getWidth() - 30, oxygine::Stage::getStage()->getHeight() - 280, m_pMap->getPlayer(player), m_pMap.get());
         }
         m_statisticsView->setPosition(10, 60);
         m_statisticsBox->addChild(m_statisticsView);

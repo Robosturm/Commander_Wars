@@ -17,9 +17,9 @@ class CO;
 class BattleAnimation;
 
 class GameAnimationFactory;
-using spGameAnimationFactory = oxygine::intrusive_ptr<GameAnimationFactory>;
+using spGameAnimationFactory = std::shared_ptr<GameAnimationFactory>;
 
-class GameAnimationFactory final : public QObject, public oxygine::ref_counter
+class GameAnimationFactory final : public QObject
 {
     Q_OBJECT
 public:
@@ -28,7 +28,7 @@ public:
      * @return the singleton of the factory
      */
     static GameAnimationFactory* getInstance();
-   virtual ~GameAnimationFactory() = default;
+    ~GameAnimationFactory() = default;
     void release();
     /**
      * @brief queueAnimation queues the given animation by removing it from the execution
@@ -55,7 +55,8 @@ public:
      * @param skipping
      * @param removeFromQueue
      */
-    static void removeAnimation(GameAnimation* pAnimation, bool skipping, bool removeFromQueue);
+    static void removeAnimation(spGameAnimation pAnimation, bool skipping, bool removeFromQueue);
+    static spGameAnimation createSpAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
 signals:
     void animationsFinished();
 public slots:
@@ -196,7 +197,7 @@ public:
       */
     Q_INVOKABLE static void printActiveAnimations();
 private:
-    friend class oxygine::intrusive_ptr<GameAnimationFactory>;
+    friend class MemoryManagement;
     explicit GameAnimationFactory();
     /**
      * @brief createOverworldBattleAnimation

@@ -7,7 +7,7 @@
 #include "objects/base/panel.h"
 
 class CloseablePopUp;
-using spCloseablePopUp = oxygine::intrusive_ptr<CloseablePopUp>;
+using spCloseablePopUp = std::shared_ptr<CloseablePopUp>;
 
 class CloseablePopUp : public QObject, public oxygine::Actor
 {

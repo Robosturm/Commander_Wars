@@ -9,7 +9,7 @@
 #include "game/GameEnums.h"
 
 class GameAnimationDialog;
-using spGameAnimationDialog = oxygine::intrusive_ptr<GameAnimationDialog>;
+using spGameAnimationDialog = std::shared_ptr<GameAnimationDialog>;
 
 class GameAnimationDialog final : public GameAnimation
 {
@@ -17,7 +17,7 @@ class GameAnimationDialog final : public GameAnimation
 public:
     static const qint32 dialogHeigth = 96;
     explicit GameAnimationDialog(quint32 frameTime, GameMap* pMap);
-   virtual ~GameAnimationDialog() = default;
+    ~GameAnimationDialog() = default;
     virtual void restart() override;
     void finishDialog();
     void updateShownText();

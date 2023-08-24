@@ -7,21 +7,18 @@
 #include <QVector>
 #include <QPoint>
 
-
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/fileserializable.h"
 
 class ScriptVariable;
-using spScriptVariable = oxygine::intrusive_ptr<ScriptVariable>;
+using spScriptVariable = std::shared_ptr<ScriptVariable>;
 
-class ScriptVariable final : public QObject, public FileSerializable, public oxygine::ref_counter
+class ScriptVariable final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
     explicit ScriptVariable(QString id);
     explicit ScriptVariable();
-   virtual ~ScriptVariable() = default;
+    ~ScriptVariable() = default;
 
     /**
      * @brief serialize stores the object
@@ -125,7 +122,7 @@ public slots:
      * @brief writeDataListInt32
      * @param data writes a QList<qint32> to the action data
      */
-    void writeDataListInt32(const QVector<qint32> data)
+    void writeDataListInt32(const QVector<qint32> & data)
     {
         writeList(data);
     }
@@ -149,7 +146,7 @@ public slots:
      * @brief writeDataListString
      * @param data writes a QList<QString> to the action data
      */
-    void writeDataListString(const QStringList data)
+    void writeDataListString(const QStringList & data)
     {
         writeList(data);
     }
@@ -157,7 +154,7 @@ public slots:
      * @brief writeDataString adds a string to the action data
      * @param data
      */
-    void writeDataString(const QString data)
+    void writeDataString(const QString & data)
     {
         m_buffer.seek(0);
         m_actionData << data;

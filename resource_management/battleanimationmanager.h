@@ -7,10 +7,10 @@ class BattleAnimationManager final : public QObject, public RessourceManagement<
 {
     Q_OBJECT
 protected:
-    friend RessourceManagement<BattleAnimationManager>;
+    friend MemoryManagement;
     BattleAnimationManager();
 private:
-   virtual ~BattleAnimationManager() = default;
+    ~BattleAnimationManager() = default;
 };
 
 #endif // BATTLEANIMATIONMANAGER_H

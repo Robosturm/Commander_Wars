@@ -7,10 +7,10 @@ class BackgroundManager final : public QObject, public RessourceManagement<Backg
 {
     Q_OBJECT
 protected:
-    friend RessourceManagement<BackgroundManager>;
+    friend MemoryManagement;
     BackgroundManager();
 private:
-   virtual ~BackgroundManager() = default;
+    ~BackgroundManager() = default;
 };
 
 #endif // BACKGROUNDMANAGER_H

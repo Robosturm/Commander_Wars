@@ -13,7 +13,7 @@
 #include "objects/base/dropdownmenu.h"
 
 class FileDialog;
-using spFileDialog = oxygine::intrusive_ptr<FileDialog>;
+using spFileDialog = std::shared_ptr<FileDialog>;
 
 /**
  * @brief The FileDialog class file dialog for accessing folder and files.
@@ -30,7 +30,7 @@ public:
      * @param wildcards wildcard items will be split at ;
      */
     explicit FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
-   virtual ~FileDialog() = default;
+    ~FileDialog() = default;
 
     bool getPreview() const;
     void setPreview(bool preview);

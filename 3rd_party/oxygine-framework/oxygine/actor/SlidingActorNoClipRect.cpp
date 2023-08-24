@@ -17,7 +17,7 @@ namespace oxygine
     {
         removeChildren();
         m_drag.destroy();
-        m_content.free();
+        m_content.reset();
     }
 
     SlidingActorNoClipRect::~SlidingActorNoClipRect()
@@ -61,9 +61,9 @@ namespace oxygine
             m_drag.destroy();
             m_content->detach();
         }
-        m_touchDownId = content->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
-        m_touchUpId = content->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
-        m_touchMoveId = content->addEventListener(TouchEvent::MOVE, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
+        m_touchDownId = content->addEventListenerWithId(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
+        m_touchUpId = content->addEventListenerWithId(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
+        m_touchMoveId = content->addEventListenerWithId(TouchEvent::MOVE, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
 
         m_current = 0;
         m_lastIterTime = timeMS(0);
@@ -73,7 +73,7 @@ namespace oxygine
         {
             m_prev[i].tm = timeMS(0);
         }
-        m_holded.free();
+        m_holded.reset();
         m_finger = 0;
         m_speed = QPoint(0, 0);
 
@@ -176,11 +176,6 @@ namespace oxygine
 
     }
 
-    void SlidingActorNoClipRect::handleEvent(Event* event)
-    {
-        Actor::handleEvent(event);
-    }
-
     void SlidingActorNoClipRect::_newEvent(Event* event)
     {
         if (!m_content || !m_enabled)
@@ -225,7 +220,7 @@ namespace oxygine
                         m_finger = 0;
                         auto pos = m_content->getPosition();
 
-                        m_holded.free();
+                        m_holded.reset();
 
                         const iter* old = 0;
                         const iter* mid = 0;
@@ -331,10 +326,18 @@ namespace oxygine
                                     act->dispatchEvent(&ev);
 
                                 }
-                                act = spActor(act->getParent());
+                                auto* parent = act->getParent();
+                                if (parent != nullptr)
+                                {
+                                    act = parent->getSharedPtrFromWeak<Actor>();
+                                }
+                                else
+                                {
+                                    act.reset();
+                                }
                             }
 
-                            m_holded.free();
+                            m_holded.reset();
                         }
                     }
                     break;

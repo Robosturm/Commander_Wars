@@ -259,8 +259,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/core/oxygine.cpp 3rd_party/oxygine-framework/oxygine/core/oxygine.h
     3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h
     3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp 3rd_party/oxygine-framework/oxygine/core/gamewindow.h
-    3rd_party/oxygine-framework/oxygine/core/ref_counter.cpp 3rd_party/oxygine-framework/oxygine/core/ref_counter.h
-    3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h
     3rd_party/oxygine-framework/oxygine/core/VideoDriver.h
     # actor
     3rd_party/oxygine-framework/oxygine/actor/Actor.cpp 3rd_party/oxygine-framework/oxygine/actor/Actor.h
@@ -561,6 +559,8 @@ set(${PROJECT_NAME}_SRCS
     coreengine/GamepadShared.cpp coreengine/Gamepad.h
     coreengine/commandlineparser.cpp coreengine/commandlineparser.h
     coreengine/JsCallback.h
+    coreengine/memorymanagement.h coreengine/memorymanagement.cpp
+    coreengine/refobject.h
 
     # network engine
     network/smtpmailsender.h network/smtpmailsender.cpp

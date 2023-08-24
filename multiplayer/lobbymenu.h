@@ -16,7 +16,7 @@
 #include "menue/basemenu.h"
 
 class LobbyMenu;
-using spLobbyMenu = oxygine::intrusive_ptr<LobbyMenu>;
+using spLobbyMenu = std::shared_ptr<LobbyMenu>;
 
 class LobbyMenu final : public Basemenu
 {
@@ -31,7 +31,7 @@ public:
     };
 
     explicit LobbyMenu();
-   virtual ~LobbyMenu() = default;
+    ~LobbyMenu() = default;
     Q_INVOKABLE bool getServerRequestNewPassword() const;
     Q_INVOKABLE void setServerRequestNewPassword(bool newServerRequestNewPassword);
     Q_INVOKABLE void onLogin();

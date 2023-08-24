@@ -5,14 +5,14 @@
 #include "ui_reader/createdgui.h"
 
 class DialogExtendMap;
-using spDialogExtendMap = oxygine::intrusive_ptr<DialogExtendMap>;
+using spDialogExtendMap = std::shared_ptr<DialogExtendMap>;
 
 class DialogExtendMap final : public CreatedGui
 {
     Q_OBJECT
 public:
     explicit DialogExtendMap();
-   virtual ~DialogExtendMap() = default;
+    ~DialogExtendMap() = default;
     Q_INVOKABLE QString getMapFile() const;
     Q_INVOKABLE void setMapFile(const QString newMapFile);
     Q_INVOKABLE GameEnums::Directions getDirection() const;

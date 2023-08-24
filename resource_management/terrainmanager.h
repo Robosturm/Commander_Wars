@@ -53,10 +53,10 @@ public:
      */
     Q_INVOKABLE QString getFittingResAnim(const QString spriteIdStart, const QString spriteIdEnd) const;
 protected:
-    friend RessourceManagement<TerrainManager>;
+    friend MemoryManagement;
     TerrainManager();
 private:
-   virtual ~TerrainManager() = default;
+    ~TerrainManager() = default;
 };
 
 Q_DECLARE_INTERFACE(TerrainManager, "TerrainManager");

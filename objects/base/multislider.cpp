@@ -20,7 +20,7 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
     qint32 sliderX = startX;
     for (qint32 i = 0; i < texts.size(); i++)
     {
-        m_Textfields.append(spLabel::create(100));
+        m_Textfields.append(MemoryManagement::create<Label>(100));
         m_Textfields[i]->setStyle(style);
         m_Textfields[i]->setHtmlText(texts[i]);
         m_Textfields[i]->setY(i * 40);
@@ -45,7 +45,7 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     for (qint32 i = 0; i < texts.size(); i++)
     {
-        m_Slider.append(spSlider::create(width, 0, 100));
+        m_Slider.append(MemoryManagement::create<Slider>(width, 0, 100));
         m_Slider[i]->setX(sliderX);
         m_Slider[i]->setY(i * 40);
         if (values.size() != texts.size() && texts.size() > 0)
@@ -65,7 +65,7 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
         addChild(m_Slider[i]);
 
         oxygine::spButton pLockButton = pObjectManager->createIconButton("unlock", 40);
-        oxygine::Sprite* pSprite = oxygine::safeCast<Sprite*>(pLockButton->getFirstChild().get());
+        oxygine::spSprite pSprite = oxygine::safeSpCast<Sprite>(pLockButton->getFirstChild());
 
 
         qint32 x = m_Slider[i]->getX() + m_Slider[i]->getScaledWidth() + 10;

@@ -93,11 +93,11 @@ void GameRules::reset()
             m_COBannlist.append(coid);
         }
     }
-    m_weatherMaster = oxygine::spSprite::create();
+    m_weatherMaster = MemoryManagement::create<oxygine::Sprite>();
     m_weatherMaster->setPriority(static_cast<qint32>(Mainapp::ZOrder::Weather));
     m_pMap->addChild(m_weatherMaster);
 
-    m_fogMaster = oxygine::spSprite::create();
+    m_fogMaster = MemoryManagement::create<oxygine::Sprite>();
     m_fogMaster->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
     m_pMap->addChild(m_fogMaster);
 
@@ -197,7 +197,7 @@ void GameRules::onGameStart()
     }
 }
 
-void GameRules::addGameRule(const QString rule)
+void GameRules::addGameRule(const QString & rule)
 {
     bool found = false;
     for (qint32 i = 0; i < m_GameRules.size(); i++)
@@ -210,20 +210,26 @@ void GameRules::addGameRule(const QString rule)
     }
     if (!found)
     {
-        m_GameRules.append(spGameRule::create(rule));
+        m_GameRules.append(MemoryManagement::create<GameRule>(rule));
     }
 }
 
-GameRule* GameRules::getGameRule(const QString rule)
+
+spGameRule GameRules::getSpGameRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_GameRules.size(); i++)
     {
         if (m_GameRules[i]->getRuleID() == rule)
         {
-            return m_GameRules[i].get();
+            return m_GameRules[i];
         }
     }
-    return nullptr;
+    return spGameRule();
+}
+
+GameRule* GameRules::getGameRule(const QString & rule)
+{
+    return getSpGameRule(rule).get();
 }
 
 void GameRules::addGameRule(spGameRule rule)
@@ -243,7 +249,7 @@ void GameRules::addGameRule(spGameRule rule)
     }
 }
 
-bool GameRules::hasGameRule(const QString rule)
+bool GameRules::hasGameRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -255,7 +261,7 @@ bool GameRules::hasGameRule(const QString rule)
     return false;
 }
 
-void GameRules::removeGameRule(const QString rule)
+void GameRules::removeGameRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_GameRules.size(); i++)
     {
@@ -267,7 +273,7 @@ void GameRules::removeGameRule(const QString rule)
     }
 }
 
-bool GameRules::hasVictoryRule(const QString rule)
+bool GameRules::hasVictoryRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -279,7 +285,7 @@ bool GameRules::hasVictoryRule(const QString rule)
     return false;
 }
 
-void GameRules::addVictoryRule(const QString rule)
+void GameRules::addVictoryRule(const QString & rule)
 {
     bool found = false;
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
@@ -292,20 +298,25 @@ void GameRules::addVictoryRule(const QString rule)
     }
     if (!found)
     {
-        m_VictoryRules.append(spVictoryRule::create(rule, m_pMap));
+        m_VictoryRules.append(MemoryManagement::create<VictoryRule>(rule, m_pMap));
     }
 }
 
-VictoryRule* GameRules::getVictoryRule(const QString rule)
+spVictoryRule GameRules::getSpVictoryRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
         if (m_VictoryRules[i]->getRuleID() == rule)
         {
-            return m_VictoryRules[i].get();
+            return m_VictoryRules[i];
         }
     }
-    return nullptr;
+    return spVictoryRule();
+}
+
+VictoryRule* GameRules::getVictoryRule(const QString & rule)
+{
+    return getSpVictoryRule(rule).get();
 }
 
 void GameRules::addVictoryRule(spVictoryRule rule)
@@ -325,7 +336,7 @@ void GameRules::addVictoryRule(spVictoryRule rule)
     }
 }
 
-void GameRules::removeVictoryRule(const QString rule)
+void GameRules::removeVictoryRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -439,7 +450,7 @@ void GameRules::checkVictory()
     }
 }
 
-void GameRules::addWeather(const QString weatherId, qint32 weatherChance)
+void GameRules::addWeather(const QString & weatherId, qint32 weatherChance)
 {
     bool found = false;
     for (qint32 i = 0; i < m_Weathers.size(); i++)
@@ -453,12 +464,12 @@ void GameRules::addWeather(const QString weatherId, qint32 weatherChance)
     }
     if (!found)
     {
-        m_Weathers.append(spWeather::create(weatherId, m_pMap));
+        m_Weathers.append(MemoryManagement::create<Weather>(weatherId, m_pMap));
         m_WeatherChances.append(weatherChance);
     }
 }
 
-void GameRules::changeWeatherChanceByName(QString weatherId, qint32 weatherChance)
+void GameRules::changeWeatherChanceByName(const QString & weatherId, qint32 weatherChance)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
@@ -499,7 +510,7 @@ Weather* GameRules::getWeather(qint32 index)
     return nullptr;
 }
 
-Weather* GameRules::getWeather(const QString weatherId)
+Weather* GameRules::getWeather(const QString & weatherId)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
@@ -511,7 +522,7 @@ Weather* GameRules::getWeather(const QString weatherId)
     return nullptr;
 }
 
-qint32 GameRules::getWeatherChance(const QString weatherId)
+qint32 GameRules::getWeatherChance(const QString & weatherId)
 {
     for (qint32 i = 0; i < m_WeatherChances.size(); i++)
     {
@@ -598,7 +609,7 @@ void GameRules::setStartWeather(qint32 index)
     m_StartWeather = index;
 }
 
-void GameRules::changeWeather(const QString weatherId, qint32 duration, qint32 startDay)
+void GameRules::changeWeather(const QString & weatherId, qint32 duration, qint32 startDay)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
@@ -722,7 +733,7 @@ void GameRules::createWeatherSprites()
                 {
                     for (qint32 y = 0; y < heigth; y++)
                     {
-                        oxygine::spSprite pSprite = oxygine::spSprite::create();
+                        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
                         if (pAnim->getTotalFrames() > 1)
                         {
                             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
@@ -751,7 +762,7 @@ void GameRules::resetWeatherSprites()
         if (sprite.get() != nullptr)
         {
             sprite->detach();
-            sprite.free();
+            sprite.reset();
         }
     }
     m_WeatherSprites.clear();
@@ -766,7 +777,7 @@ void GameRules::resetFogSprites()
             if (sprite.get() != nullptr)
             {
                 sprite->detach();
-                sprite.free();
+                sprite.reset();
             }
         }
     }
@@ -882,7 +893,7 @@ void GameRules::createFieldFogClear(qint32 x, qint32 y, Player* pPlayer)
     if (m_FogSprites[x][y].get() != nullptr)
     {
         m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y].free();
+        m_FogSprites[x][y].reset();
     }
     if (pUnit != nullptr)
     {
@@ -902,7 +913,7 @@ void GameRules::createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor f
     if (m_FogSprites[x][y].get() != nullptr)
     {
         m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y].free();
+        m_FogSprites[x][y].reset();
     }
     if (pUnit != nullptr)
     {
@@ -918,7 +929,7 @@ void GameRules::createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor f
         if (m_FogSprites[x][y].get() == nullptr)
         {
             // create fog of war sprite
-            oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+            oxygine::spColorRectSprite sprite = MemoryManagement::create<oxygine::ColorRectSprite>();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfMistColor);
             sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
@@ -930,7 +941,7 @@ void GameRules::createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor f
     else if (m_FogSprites[x][y].get() != nullptr)
     {
         m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y].free();
+        m_FogSprites[x][y].reset();
     }
 }
 
@@ -957,7 +968,7 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fo
         if (m_FogSprites[x][y].get() == nullptr)
         {
             // create fog of war sprite
-            oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+            oxygine::spColorRectSprite sprite = MemoryManagement::create<oxygine::ColorRectSprite>();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfWarColor);
             sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
@@ -969,7 +980,7 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fo
     else if (m_FogSprites[x][y].get() != nullptr)
     {
         m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y].free();
+        m_FogSprites[x][y].reset();
     }
 }
 
@@ -991,7 +1002,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
     if (m_FogSprites[x][y].get() != nullptr)
     {
         m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y].free();
+        m_FogSprites[x][y].reset();
     }
     switch (visible)
     {
@@ -1014,7 +1025,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
                 pBuilding->updatePlayerColor(false);
             }
             // create fog of war sprite
-            oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+            oxygine::spColorRectSprite sprite = MemoryManagement::create<oxygine::ColorRectSprite>();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfWarColor);
             sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
@@ -1032,7 +1043,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
                 pBuilding->setVisible(false);
             }
             // create fog of war sprite
-            oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+            oxygine::spColorRectSprite sprite = MemoryManagement::create<oxygine::ColorRectSprite>();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(0, 0, 0, 255);
             sprite->setPriority(static_cast<qint32>(Terrain::DrawPriority::Shroud));
@@ -1044,7 +1055,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
         case GameEnums::VisionType_Mist:
         {
             // create fog of war sprite
-            oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+            oxygine::spColorRectSprite sprite = MemoryManagement::create<oxygine::ColorRectSprite>();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfMistColor);
             sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
@@ -1142,7 +1153,7 @@ QString GameRules::getMatchType() const
     return m_matchType;
 }
 
-void GameRules::setMatchType(const QString newMatchType)
+void GameRules::setMatchType(const QString & newMatchType)
 {
     m_matchType = newMatchType;
 }
@@ -1307,7 +1318,7 @@ QString GameRules::getDescription() const
     return m_description;
 }
 
-void GameRules::setDescription(const QString description)
+void GameRules::setDescription(const QString & description)
 {
     m_description = description;
 }
@@ -1322,7 +1333,7 @@ QString GameRules::getPasswordText() const
     return m_password.getPasswordText();
 }
 
-void GameRules::setPassword(const QString password)
+void GameRules::setPassword(const QString & password)
 {
     m_password.setPassword(password);
 }
@@ -1342,7 +1353,7 @@ QStringList GameRules::getAllowedActions() const
     return m_allowedActions;
 }
 
-void GameRules::setAllowedActions(const QStringList allowedActions)
+void GameRules::setAllowedActions(const QStringList & allowedActions)
 {
     m_allowedActions = allowedActions;
     m_actionBannlistEdited = true;
@@ -1353,7 +1364,7 @@ QStringList GameRules::getAllowedPerks() const
     return m_allowedPerks;
 }
 
-void GameRules::setAllowedPerks(const QStringList allowedPerks)
+void GameRules::setAllowedPerks(const QStringList & allowedPerks)
 {
     m_allowedPerks = allowedPerks;
     m_perkBannlistEdited = true;
@@ -1434,7 +1445,7 @@ QStringList GameRules::getCOBannlist() const
     return m_COBannlist;
 }
 
-void GameRules::setCOBannlist(const QStringList COBannlist)
+void GameRules::setCOBannlist(const QStringList & COBannlist)
 {
     m_COBannlist = COBannlist;
     m_COBannlistEdited = true;
@@ -1577,7 +1588,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
-        m_VictoryRules.append(spVictoryRule::create(m_pMap));
+        m_VictoryRules.append(MemoryManagement::create<VictoryRule>(m_pMap));
         m_VictoryRules[i]->deserializeObject(pStream);
     }
     qint32 ruleItem = 0;
@@ -1595,7 +1606,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
-        spWeather pWeather = spWeather::create(m_pMap);
+        spWeather pWeather = MemoryManagement::create<Weather>(m_pMap);
         pWeather->deserializeObject(pStream);
         qint32 chance = 0;
         pStream >> chance;
@@ -1816,7 +1827,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         pStream >> size;
         for (qint32 i = 0; i < size; i++)
         {
-            m_GameRules.append(spGameRule::create());
+            m_GameRules.append(MemoryManagement::create<GameRule>());
             m_GameRules[i]->deserializeObject(pStream);
         }
     }

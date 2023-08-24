@@ -4,7 +4,7 @@
 #include <QObject>
 
 class LockTableItem;
-using spLockTableItem = oxygine::intrusive_ptr<LockTableItem>;
+using spLockTableItem = std::shared_ptr<LockTableItem>;
 
 class LockTableItem final : public BaseTableItem
 {

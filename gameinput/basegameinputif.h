@@ -5,8 +5,6 @@
 #include <QVector>
 #include <QMap>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/fileserializable.h"
 
 #include "game/GameEnums.h"
@@ -16,9 +14,9 @@ class Player;
 class GameAction;
 class GameMenue;
 class BaseGameInputIF;
-using spBaseGameInputIF = oxygine::intrusive_ptr<BaseGameInputIF>;
+using spBaseGameInputIF = std::shared_ptr<BaseGameInputIF>;
 
-class BaseGameInputIF : public QObject, public FileSerializable, public oxygine::ref_counter
+class BaseGameInputIF : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

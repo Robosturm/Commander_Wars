@@ -6,7 +6,7 @@
 #include "objects/base/textbox.h"
 
 class ScriptEventAnimation;
-using spScriptEventAnimation = oxygine::intrusive_ptr<ScriptEventAnimation>;
+using spScriptEventAnimation = std::shared_ptr<ScriptEventAnimation>;
 
 class ScriptEventAnimation final : public ScriptEvent
 {

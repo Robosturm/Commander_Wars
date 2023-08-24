@@ -40,10 +40,9 @@ namespace oxygine
         {
             return;
         }
-        if (GameWindow::getWindow()->isWorker())
+        else if (requiresThreadChange())
         {
-            QMutexLocker lock(&m_Locked);
-            changeAddColor(color);
+            emit MemoryManagement::getInstance().sigSetAddColor(getSharedPtr<VStyleActor>(), color);
         }
         else
         {

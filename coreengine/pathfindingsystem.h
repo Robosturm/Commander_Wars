@@ -7,14 +7,12 @@
 #include <QPoint>
 #include <QList>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/qmlvector.h"
 
 class PathFindingSystem;
-using spPathFindingSystem = oxygine::intrusive_ptr<PathFindingSystem>;
+using spPathFindingSystem = std::shared_ptr<PathFindingSystem>;
 
-class PathFindingSystem : public QObject, public oxygine::ref_counter
+class PathFindingSystem : public QObject
 {
     Q_OBJECT
 public:
@@ -245,9 +243,9 @@ protected:
     QPoint m_StartPoint;
     qint32 m_width;
     qint32 m_heigth;
-    qint32 *m_costs;
-    Directions* m_DirectionMap;
-    std::array<qint32, Directions::Max> *m_movecosts;
+    qint32 * m_costs;
+    Directions * m_DirectionMap;
+    std::array<qint32, Directions::Max> * m_movecosts;
     std::list<Node> m_OpenList;
     qint32 m_FinishNode = -1;
     qint32 m_FinishNodeX = -1;

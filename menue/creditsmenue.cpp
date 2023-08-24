@@ -30,7 +30,7 @@ CreditsMenue::CreditsMenue()
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
+    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("creditsmenu");
     if (pBackground != nullptr)
@@ -100,7 +100,7 @@ CreditsMenue::CreditsMenue()
             }
         }
     }
-    m_creditsActor = oxygine::spActor::create();
+    m_creditsActor = MemoryManagement::create<oxygine::Actor>();
     addChild(m_creditsActor);
     m_creditsActor->setY(oxygine::Stage::getStage()->getHeight());
     qint32 y = 0;
@@ -116,7 +116,7 @@ CreditsMenue::CreditsMenue()
     oxygine::spTextField pTextfield;
     for (qint32 i = 0; i < m_Headlines.size(); i++)
     {
-        pTextfield = oxygine::spTextField::create();
+        pTextfield = MemoryManagement::create<oxygine::TextField>();
         pTextfield->setStyle(headstyle);
         pTextfield->setHtmlText(m_Headlines[i]);
         pTextfield->setPosition(x - pTextfield->getTextRect().width() / 2, y);
@@ -124,7 +124,7 @@ CreditsMenue::CreditsMenue()
         y += pTextfield->getTextRect().height() + 10;
         for (qint32 i2 = 0; i2 < m_Authors[i].size(); i2++)
         {
-            pTextfield = oxygine::spTextField::create();
+            pTextfield = MemoryManagement::create<oxygine::TextField>();
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(m_Authors[i][i2]);
             pTextfield->setPosition(x - pTextfield->getTextRect().width() / 2.0f, y);
@@ -170,7 +170,7 @@ void CreditsMenue::exitMenue()
 {    
     CONSOLE_PRINT("Leaving Credits Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    auto window = spMainwindow::create("ui/menu/mainoptionmenu.xml");
+    auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainoptionmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
 }

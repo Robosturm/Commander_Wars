@@ -19,8 +19,8 @@ namespace oxygine
     spResource ResAtlas::create(CreateResourceContext& context)
     {
         context.m_walker.checkSetAttributes();
-        spResAtlas ra = spResAtlas();
-        spResAtlasGeneric rs = spResAtlasGeneric::create();
+        spResAtlas ra;
+        spResAtlasGeneric rs = MemoryManagement::create<ResAtlasGeneric>();
         rs->loadAtlas(context);
         ra = rs;
 
@@ -66,7 +66,7 @@ namespace oxygine
 
     spResAnim ResAtlas::createEmpty(const XmlWalker& walker, CreateResourceContext& context)
     {
-        spResAnim ra = spResAnim::create(this);
+        spResAnim ra = MemoryManagement::create<ResAnim>(this);
         ra->init(nullptr, 0, 0, walker.getScaleFactor());
         init_resAnim(ra, "", walker.getNode());
         ra->setParent(this);

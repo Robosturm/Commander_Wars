@@ -4,7 +4,7 @@
 #include <QObject>
 
 class XofYTableItem;
-using spXofYTableItem = oxygine::intrusive_ptr<XofYTableItem>;
+using spXofYTableItem = std::shared_ptr<XofYTableItem>;
 
 class XofYTableItem final : public BaseTableItem
 {

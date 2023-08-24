@@ -46,24 +46,24 @@ void WikiDatabase::load()
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
     {
-        m_Entries.append(spPageData::create(pCOSpriteManager->getName(i), pCOSpriteManager->getID(i), QStringList({tr("CO")})));
+        m_Entries.append(MemoryManagement::create<PageData>(pCOSpriteManager->getName(i), pCOSpriteManager->getID(i), QStringList({tr("CO")})));
     }
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
     for (const auto& terrainId : sortedTerrains)
     {
-        m_Entries.append(spPageData::create(pTerrainManager->getName(terrainId), terrainId, QStringList({tr("Terrain")})));
+        m_Entries.append(MemoryManagement::create<PageData>(pTerrainManager->getName(terrainId), terrainId, QStringList({tr("Terrain")})));
     }
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        m_Entries.append(spPageData::create(pBuildingSpriteManager->getName(i), pBuildingSpriteManager->getID(i), QStringList({tr("Building")})));
+        m_Entries.append(MemoryManagement::create<PageData>(pBuildingSpriteManager->getName(i), pBuildingSpriteManager->getID(i), QStringList({tr("Building")})));
     }
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     for (const auto& unitId : sortedUnits)
     {
-        m_Entries.append(spPageData::create(pUnitSpriteManager->getName(unitId), unitId, QStringList({tr("Unit")})));
+        m_Entries.append(MemoryManagement::create<PageData>(pUnitSpriteManager->getName(unitId), unitId, QStringList({tr("Unit")})));
     }
 
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -71,7 +71,7 @@ void WikiDatabase::load()
     QStringList  actions = pGameManager->getLoadedRessources();
     for (const auto& action : actions)
     {
-        m_Entries.append(spPageData::create(pGameManager->getName(action), action, QStringList({tr("Action")})));
+        m_Entries.append(MemoryManagement::create<PageData>(pGameManager->getName(action), action, QStringList({tr("Action")})));
         QJSValue count = pInterpreter->doFunction(action, "getSubWikiInfoCount");
         if (count.isNumber())
         {
@@ -80,7 +80,7 @@ void WikiDatabase::load()
             {
                 QJSValueList args;
                 args.append(i);
-                m_Entries.append(spPageData::create(pInterpreter->doFunction(action, "getSubWikiInfoName", args).toString(),
+                m_Entries.append(MemoryManagement::create<PageData>(pInterpreter->doFunction(action, "getSubWikiInfoName", args).toString(),
                                           pInterpreter->doFunction(action, "getSubWikiInfoId", args).toString(),
                                           QStringList({tr("Action")}),
                                           action,
@@ -93,10 +93,10 @@ void WikiDatabase::load()
     QStringList perks = pCOPerkManager->getLoadedRessources();
     for (const auto& perk : perks)
     {
-        m_Entries.append(spPageData::create(pCOPerkManager->getName(perk), perk, QStringList({tr("Perk")})));
+        m_Entries.append(MemoryManagement::create<PageData>(pCOPerkManager->getName(perk), perk, QStringList({tr("Perk")})));
     }
 
-    m_Entries.append(spPageData::create(tr("Damage Table"), DAMAGE_TABLE_NAME, QStringList({tr("Others")})));
+    m_Entries.append(MemoryManagement::create<PageData>(tr("Damage Table"), DAMAGE_TABLE_NAME, QStringList({tr("Others")})));
 
     // load general wiki page
     QStringList searchPaths;
@@ -127,7 +127,7 @@ void WikiDatabase::load()
                 QStringList tags;
                 erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "getTags");
                 tags = erg.toVariant().toStringList();
-                m_Entries.append(spPageData::create(name, file, tags));
+                m_Entries.append(MemoryManagement::create<PageData>(name, file, tags));
             }
         }
     }
@@ -240,11 +240,11 @@ spWikipage WikiDatabase::getPage(const PageData * data)
     // select page loader and create wiki page
     if (pCOSpriteManager->exists(data->m_id))
     {
-        spPlayer pPlayer = spPlayer::create(nullptr);
+        spPlayer pPlayer = MemoryManagement::create<Player>(nullptr);
         pPlayer->init();
-        spCO pCO = spCO::create(data->m_id, pPlayer.get(), nullptr);
-        ret = spWikipage::create(data->m_id);
-        spCOInfoActor pInfo = spCOInfoActor::create(nullptr, ret->getPanel()->getScaledWidth());
+        spCO pCO = MemoryManagement::create<CO>(data->m_id, pPlayer.get(), nullptr);
+        ret = MemoryManagement::create<Wikipage>(data->m_id);
+        spCOInfoActor pInfo = MemoryManagement::create<COInfoActor>(nullptr, ret->getPanel()->getScaledWidth());
         pInfo->showCO(pCO, pPlayer);
         ret->getPanel()->addItem(pInfo);
         ret->getPanel()->setContentHeigth(pInfo->getScaledHeight());
@@ -252,34 +252,34 @@ spWikipage WikiDatabase::getPage(const PageData * data)
     else if (pTerrainManager->exists(data->m_id))
     {
         spTerrain pTerrain = Terrain::createTerrain(data->m_id, -1, -1, "", nullptr);
-        ret = spFieldInfo::create(pTerrain.get(), nullptr);
+        ret = MemoryManagement::create<FieldInfo>(pTerrain, spUnit());
     }
     else if (pBuildingSpriteManager->exists(data->m_id))
     {
         spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", nullptr);
-        spBuilding pBuilding = spBuilding::create(data->m_id, nullptr);
+        spBuilding pBuilding = MemoryManagement::create<Building>(data->m_id, nullptr);
         pTerrain->setBuilding(pBuilding);
-        ret = spFieldInfo::create(pTerrain.get(), nullptr);
+        ret = MemoryManagement::create<FieldInfo>(pTerrain, spUnit());
     }
     else if (pUnitSpriteManager->exists(data->m_id))
     {
-        spPlayer pPlayer = spPlayer::create(nullptr);
+        spPlayer pPlayer = MemoryManagement::create<Player>(nullptr);
         pPlayer->init();
-        spUnit pUnit = spUnit::create(data->m_id, pPlayer.get(), false, nullptr);
-        ret = spFieldInfo::create(nullptr, pUnit.get());
+        spUnit pUnit = MemoryManagement::create<Unit>(data->m_id, pPlayer.get(), false, nullptr);
+        ret = MemoryManagement::create<FieldInfo>(spTerrain(), pUnit);
     }
     else if (data->m_id == DAMAGE_TABLE_NAME)
     {
-        ret = spDamageTablePage::create(DAMAGE_TABLE_NAME);
+        ret = MemoryManagement::create<DamageTablePage>(DAMAGE_TABLE_NAME);
     }
     else if (!data->m_mainId.isEmpty() || pGameManager->exists(data->m_id))
     {
-        ret = spActionWikipage::create<const PageData *>(data);
+        ret = MemoryManagement::create<ActionWikipage, const PageData *>(data);
     }
     else if (QFile::exists(data->m_id))
     {
         // default loader
-        ret = spWikipage::create(data->m_id);
+        ret = MemoryManagement::create<Wikipage>(data->m_id);
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->openScript(data->m_id, false);
         QJSValueList args({pInterpreter->newQObject(ret.get())});
@@ -287,7 +287,7 @@ spWikipage WikiDatabase::getPage(const PageData * data)
     }
     else
     {
-        ret = spDefaultWikipage::create(data->m_id);
+        ret = MemoryManagement::create<DefaultWikipage>(data->m_id);
     }
     ret->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     return ret;
@@ -295,7 +295,7 @@ spWikipage WikiDatabase::getPage(const PageData * data)
 
 oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size, Player* pIconPlayer)
 {
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     if (pAnim == nullptr)
     {
@@ -333,11 +333,11 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
         {
             if (pFinalIconPlayer == nullptr)
             {
-                pPlayer = spPlayer::create(nullptr);
+                pPlayer = MemoryManagement::create<Player>(nullptr);
                 pPlayer->init();
                 pFinalIconPlayer = pPlayer.get();
             }
-            spUnit pUnit = spUnit::create(file, pFinalIconPlayer, false, pMap);
+            spUnit pUnit = MemoryManagement::create<Unit>(file, pFinalIconPlayer, false, pMap);
             if (GameMap::getImageSize() > 0)
             {
                 pUnit->setScale(static_cast<float>(size) / static_cast<float>(GameMap::getImageSize()));
@@ -352,11 +352,11 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
             {
                 if (pMap != nullptr)
                 {
-                    pPlayer = spPlayer(pMap->getCurrentPlayer());
+                    pPlayer = pMap->getSpCurrentPlayer();
                 }
                 pFinalIconPlayer = pPlayer.get();
             }
-            spBuilding pBuilding = spBuilding::create(file, pMap);
+            spBuilding pBuilding = MemoryManagement::create<Building>(file, pMap);
             pBuilding->setOwner(pFinalIconPlayer);
             pBuilding->scaleAndShowOnSingleTile();
             return pBuilding;

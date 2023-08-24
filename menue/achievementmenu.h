@@ -8,7 +8,7 @@
 #include "objects/base/dropdownmenu.h"
 
 class Achievementmenu;
-using spAchievementmenu = oxygine::intrusive_ptr<Achievementmenu>;
+using spAchievementmenu = std::shared_ptr<Achievementmenu>;
 
 class Achievementmenu final : public Basemenu
 {
@@ -22,7 +22,7 @@ class Achievementmenu final : public Basemenu
 public:
 
     explicit Achievementmenu();
-   virtual ~Achievementmenu() = default;
+    ~Achievementmenu() = default;
 signals:
     void sigExitMenue();
     void sigSearch();

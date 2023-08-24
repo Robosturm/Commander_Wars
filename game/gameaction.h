@@ -7,8 +7,6 @@
 #include <QBuffer>
 #include <QDataStream>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "gameinput/menudata.h"
 #include "gameinput/markedfielddata.h"
 #include "gameinput/cursordata.h"
@@ -20,9 +18,9 @@
 
 class GameMap;
 class GameAction;
-using spGameAction = oxygine::intrusive_ptr<GameAction>;
+using spGameAction = std::shared_ptr<GameAction>;
 
-class GameAction final : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameAction final : public QObject, public FileSerializable
 {
     Q_OBJECT
 
@@ -38,7 +36,7 @@ public:
 
     explicit GameAction(GameMap* pMap);
     explicit GameAction(const QString & actionID, GameMap* pMap);
-   virtual ~GameAction() = default;
+    ~GameAction() = default;
     /**
      * @brief setTarget sets the target for the current action
      * @param point
@@ -188,7 +186,7 @@ public:
      * @param actionID id of the action we want to check
      * @return
      */
-    Q_INVOKABLE bool canBePerformed(const QString actionID, bool emptyField = false, Player* pUsingPlayer = nullptr);
+    Q_INVOKABLE bool canBePerformed(const QString & actionID, bool emptyField = false, Player* pUsingPlayer = nullptr);
     /**
      * @brief isFinalStep
      * @return true if we have all data to perform this action
@@ -199,7 +197,7 @@ public:
      * @param actionID id of the action we want to perform
      * @return true if we have all data to perform this action
      */
-    Q_INVOKABLE bool isFinalStep(const QString actionID);
+    Q_INVOKABLE bool isFinalStep(const QString & actionID);
     /**
      * @brief getTargetUnit the unit that will perform the action
      * @return
@@ -285,7 +283,7 @@ public:
      * @brief writeDataString adds a string to the action data
      * @param data
      */
-    Q_INVOKABLE void writeDataString(const QString data)
+    Q_INVOKABLE void writeDataString(const QString & data)
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
@@ -388,7 +386,7 @@ public:
     /**
      * @brief revertLastInputStep
      */
-    Q_INVOKABLE void revertLastInputStep(const QString stepType);
+    Q_INVOKABLE void revertLastInputStep(const QString & stepType);
 protected:
     void printAction();
 private:

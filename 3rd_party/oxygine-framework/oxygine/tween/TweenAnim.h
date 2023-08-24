@@ -6,7 +6,7 @@ namespace oxygine
     /** A TweenAnim class
     *   use for playing per frame animation
     \code
-    spSprite sprite = spSprite::create();
+    spSprite sprite = MemoryManagement::create<Sprite>();
     sprite->addTween(TweenAnim(res.getResAnim("anim")), 500, -1);
     \endcode
     */
@@ -18,8 +18,8 @@ namespace oxygine
         explicit TweenAnim(const ResAnim* resAnim, qint32 row = 0);
         explicit TweenAnim(const ResAnim* resAnim, float initFrame, qint32 row);
         /**Frames mode. Play animation in interval [start, end]*/
-        explicit TweenAnim(const ResAnim* resAnim, qint32 startFrame, qint32 endFrame);        
-       virtual ~TweenAnim() = default;
+        explicit TweenAnim(const ResAnim* resAnim, qint32 startFrame, qint32 endFrame);
+        ~TweenAnim() = default;
 
         void init(Sprite& actor);
         void done(Sprite&)

@@ -53,10 +53,11 @@ public:
      */
     QStringList getDefaultActionbBannlist();
 protected:
-    friend RessourceManagement<GameManager>;
+    friend MemoryManagement;
     GameManager();
 private:
-   virtual ~GameManager() = default;
+    ~GameManager() = default;
+private:
     oxygine::spSprite getIconSprite(const QString & icon);
     QStringList m_loadedHeavyAis;
     QStringList m_loadedNormalAis;

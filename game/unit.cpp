@@ -201,47 +201,46 @@ void Unit::setTerrain(Terrain* pTerrain)
 }
 
 void Unit::addShineTween()
-{    
+{
+    Mainapp::getInstance()->pauseRendering();
     removeShineTween();
     for (auto & child : m_children)
     {
-        oxygine::spVStyleActor pActor = oxygine::dynamic_pointer_cast<oxygine::VStyleActor>(child);
+        oxygine::spVStyleActor pActor = std::dynamic_pointer_cast<oxygine::VStyleActor>(child);
         if (pActor.get() != nullptr)
         {
             oxygine::spTween shineTween = oxygine::createTween(oxygine::VStyleActor::TweenAddColor(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
             pActor->addTween(shineTween);
             m_ShineTweens.append(shineTween);
+            m_shineOwner.append(pActor);
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Unit::removeShineTween()
 {
+    Mainapp::getInstance()->pauseRendering();
     QColor addColor(0, 0, 0, 0);
     for (qint32 i = 0; i < m_ShineTweens.size(); ++i)
     {
-        if (m_ShineTweens[i].get() != nullptr)
+        if (m_ShineTweens[i].get() != nullptr &&
+            m_shineOwner[i].get() != nullptr )
         {
-            oxygine::spActor pActor = oxygine::spActor(m_ShineTweens[i]->getClient());
-            if (pActor.get() != nullptr)
-            {
-                m_ShineTweens[i]->removeFromActor();
-                oxygine::spVStyleActor pVStyle = oxygine::dynamic_pointer_cast<oxygine::VStyleActor>(pActor);
-                if (pVStyle.get() != nullptr)
-                {
-                    pVStyle->setAddColor(addColor);
-                }
-            }
+            m_shineOwner[i]->removeTween(m_ShineTweens[i]);
+            m_shineOwner[i]->setAddColor(addColor);
         }
     }
-    m_ShineTweens.clear();
-    for (auto & pUunit : m_TransportUnits)
+    m_ShineTweens.clear();    
+    m_shineOwner.clear();
+    for (auto & pUnit : m_TransportUnits)
     {
-        pUunit->removeShineTween();
+        pUnit->removeShineTween();
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
-void Unit::loadSprite(const QString spriteID, bool addPlayerColor, bool flipSprite, qint32 frameTime)
+void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite, qint32 frameTime)
 {
     if (addPlayerColor)
     {
@@ -253,14 +252,14 @@ void Unit::loadSprite(const QString spriteID, bool addPlayerColor, bool flipSpri
     }
 }
 
-void Unit::loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, bool flipSprite, qint32 frameTime)
+void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite, qint32 frameTime)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        oxygine::spSprite pWaitSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+        oxygine::spSprite pWaitSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim->getTotalFrames() > 1)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);
@@ -321,27 +320,15 @@ void Unit::syncAnimation(oxygine::timeMS syncTime)
 #ifdef GRAPHICSUPPORT
     for (auto & sprite : m_pUnitSprites)
     {
-        auto & tweens = sprite->getTweens();
-        for (auto & pTween : tweens)
-        {
-            pTween->setElapsed(syncTime);
-        }
+        sprite->syncAllTweens(syncTime);
     }
     for (auto & sprite : m_pUnitWaitSprites)
     {
-        auto & tweens = sprite->getTweens();
-        for (auto & pTween : tweens)
-        {
-            pTween->setElapsed(syncTime);
-        }
+        sprite->syncAllTweens(syncTime);
     }
-    for (auto & icons : m_pIconSprites)
+    for (auto & sprite : m_pIconSprites)
     {
-        auto & tweens = icons->getTweens();
-        for (auto & pTween : tweens)
-        {
-            pTween->setElapsed(syncTime);
-        }
+        sprite->syncAllTweens(syncTime);
     }
 #endif
 }
@@ -615,7 +602,7 @@ qint32 Unit::getVision(QPoint position)
     return points;
 }
 
-qint32 Unit::getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString))
+qint32 Unit::getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString &))
 {
 
     qint32 bonus = 0;
@@ -1167,49 +1154,53 @@ bool Unit::canMoveAndFire(QPoint position)
 
 void Unit::loadUnit(Unit* pUnit, qint32 index)
 {
-    bool loaded = false;
-    if (m_TransportUnits.size() < getLoadingPlace() && index < 0)
+    if (pUnit != nullptr)
     {
-        m_TransportUnits.append(spUnit(pUnit));
-        loaded = true;
-    }
-    else if (index < getLoadingPlace())
-    {
-        if (index < m_TransportUnits.size())
+        spUnit pLoadUnit = pUnit->getSharedPtrFromWeak<Unit>();
+        bool loaded = false;
+        if (m_TransportUnits.size() < getLoadingPlace() && index < 0)
         {
-            m_TransportUnits[index] = spUnit(pUnit);
+            m_TransportUnits.append(pLoadUnit);
+            loaded = true;
         }
-        else
+        else if (index < getLoadingPlace())
         {
-            m_TransportUnits.append(spUnit(pUnit));
+            if (index < m_TransportUnits.size())
+            {
+                m_TransportUnits[index] = pLoadUnit;
+            }
+            else
+            {
+                m_TransportUnits.append(pLoadUnit);
+            }
+            loaded = true;
         }
-        loaded = true;
-    }
-    if (loaded)
-    {
-        pUnit->removeUnit(false);
-        if (m_pMap != nullptr)
+        if (loaded)
         {
-            updateIcons(m_pMap->getCurrentViewPlayer());
-        }
-        else
-        {
-            updateIcons(nullptr);
+            pUnit->removeUnit(false);
+            if (m_pMap != nullptr)
+            {
+                updateIcons(m_pMap->getCurrentViewPlayer());
+            }
+            else
+            {
+                updateIcons(nullptr);
+            }
         }
     }
 }
 
-void Unit::loadSpawnedUnit(const QString unitId)
+void Unit::loadSpawnedUnit(const QString & unitId)
 {
     CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, GameConsole::eDEBUG);
-    spUnit pUnit = spUnit::create(unitId, m_pOwner, true, m_pMap);
+    spUnit pUnit = MemoryManagement::create<Unit>(unitId, m_pOwner, true, m_pMap);
     if (canTransportUnit(pUnit.get()))
     {
         loadUnit(pUnit.get());
     }
 }
 
-Unit* Unit::spawnUnit(const QString unitID)
+Unit* Unit::spawnUnit(const QString & unitID)
 {
     CONSOLE_PRINT("Unit::spawnUnit " + unitID, GameConsole::eDEBUG);
 
@@ -1221,7 +1212,7 @@ Unit* Unit::spawnUnit(const QString unitID)
         {
             return nullptr;
         }
-        spUnit pUnit = spUnit::create(unitID, m_pOwner, true, m_pMap);
+        spUnit pUnit = MemoryManagement::create<Unit>(unitID, m_pOwner, true, m_pMap);
         m_TransportUnits.append(pUnit);
         updateIcons(m_pMap->getCurrentViewPlayer());
         return pUnit.get();
@@ -1245,7 +1236,7 @@ void Unit::unloadUnit(Unit* pUnit, QPoint position)
     {
         for (qint32 i = 0; i < m_TransportUnits.size(); i++)
         {
-            if (m_TransportUnits[i] == pUnit)
+            if (m_TransportUnits[i].get() == pUnit)
             {
                 m_pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[i]);
                 m_TransportUnits[i]->updateIcons(m_pMap->getCurrentViewPlayer());
@@ -2199,7 +2190,7 @@ QString Unit::getWeapon2ID() const
     return m_weapon2ID;
 }
 
-void Unit::setWeapon2ID(const QString value)
+void Unit::setWeapon2ID(const QString & value)
 {
     m_weapon2ID = value;
 }
@@ -2260,7 +2251,7 @@ QString Unit::getWeapon1ID() const
     return m_weapon1ID;
 }
 
-void Unit::setWeapon1ID(const QString value)
+void Unit::setWeapon1ID(const QString & value)
 {
     m_weapon1ID = value;
 }
@@ -2550,7 +2541,7 @@ qint32 Unit::getLoadingPlace()
     }
 }
 
-QString Unit::getUnitID()
+const QString Unit::getUnitID()
 {
     return m_UnitID;
 }
@@ -2574,7 +2565,7 @@ QString Unit::getUnitDamageID()
     return m_UnitID;
 }
 
-qreal Unit::getUnitDamage(const QString weaponID)
+qreal Unit::getUnitDamage(const QString & weaponID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitDamage";
@@ -2886,11 +2877,11 @@ QVector<QVector3D> Unit::getVisionFields(QPoint position)
     Terrain* pTerrain = m_pMap->getTerrain(position.x(), position.y());
     if (visionBlock)
     {
-        pCircle = spQmlVectorPoint(m_pMap->getVisionCircle(position.x(), position.y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh()));
+        pCircle = m_pMap->getSpVisionCircle(position.x(), position.y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh());
     }
     else
     {
-        pCircle = spQmlVectorPoint(GlobalUtils::getCircle(0, visionRange));
+        pCircle = GlobalUtils::getSpCircle(0, visionRange);
     }
     for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
     {
@@ -2930,7 +2921,7 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
     // teleport unit to target position
     m_pMap->getTerrain(x, y)->setUnit(pUnit);
     showRanges();
-    pUnit.free();
+    pUnit.reset();
     
 }
 
@@ -3029,7 +3020,7 @@ qint32 Unit::getCaptureRate(QPoint position)
     return getHpRounded() + modifier;
 }
 
-void Unit::loadIcon(const QString iconID, qint32 x, qint32 y, qint32 duration, qint32 player)
+void Unit::loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration, qint32 player)
 {
     if (iconID.isEmpty())
     {
@@ -3060,7 +3051,7 @@ void Unit::loadIcon(const QString iconID, qint32 x, qint32 y, qint32 duration, q
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim->getTotalFrames() > 1)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
@@ -3083,12 +3074,12 @@ void Unit::loadIcon(const QString iconID, qint32 x, qint32 y, qint32 duration, q
 
 UnitPathFindingSystem* Unit::createUnitPathFindingSystem(Player* pPlayer)
 {
-    UnitPathFindingSystem* pPfs = new UnitPathFindingSystem(m_pMap, this, pPlayer);
+    auto* pPfs = MemoryManagement::createAndTrackJsObject<UnitPathFindingSystem>(m_pMap, this, pPlayer);
     pPfs->explore();
     return pPfs;
 }
 
-void Unit::unloadIconAndDuration(const QString iconID)
+void Unit::unloadIconAndDuration(const QString & iconID)
 {
     qint32 i = 0;
     while (i < m_IconDurations.size())
@@ -3105,7 +3096,7 @@ void Unit::unloadIconAndDuration(const QString iconID)
     unloadIcon(iconID);
 }
 
-void Unit::unloadIcon(const QString iconID)
+void Unit::unloadIcon(const QString & iconID)
 {
     
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
@@ -3202,7 +3193,7 @@ QString Unit::getCustomName() const
     return m_customName;
 }
 
-void Unit::setCustomName(const QString customName)
+void Unit::setCustomName(const QString & customName)
 {
     m_customName = customName;
 }
@@ -3361,7 +3352,7 @@ void Unit::updateIconTweens()
     
 }
 
-void Unit::setMovementType(const QString movementType)
+void Unit::setMovementType(const QString & movementType)
 {
     m_MovementType = movementType;
 }
@@ -3557,7 +3548,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
         if (isStatusStealthed() ||
             hasTerrainHide(pPlayer))
         {
-            spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+            spQmlVectorPoint pPoints = GlobalUtils::getSpCircle(1, 1);
             for (qint32 i = 0; i < pPoints->size(); i++)
             {
                 QPoint point = pPoints->at(i);
@@ -3824,7 +3815,7 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
         pStream >> units;
         for (qint32 i = 0; i < units; i++)
         {
-            m_TransportUnits.append(spUnit::create(m_pMap));
+            m_TransportUnits.append(MemoryManagement::create<Unit>(m_pMap));
             m_TransportUnits[m_TransportUnits.size() - 1]->deserializer(pStream, fast);
             if (!m_TransportUnits[m_TransportUnits.size() - 1]->isValid())
             {
@@ -4118,7 +4109,7 @@ void Unit::showRanges()
     updateCustomRangeActors();
 }
 
-void Unit::showCustomRange(const QString id, qint32 range, QColor color)
+void Unit::showCustomRange(const QString & id, qint32 range, QColor color)
 {
     bool found = false;
     for (auto & customRangeInfo : m_customRangeInfo)
@@ -4149,7 +4140,7 @@ void Unit::showCustomRange(const QString id, qint32 range, QColor color)
     }
 }
 
-void Unit::removeCustomRange(const QString id)
+void Unit::removeCustomRange(const QString & id)
 {
     for (qint32 i = 0; i < m_customRangeInfo.size(); ++i)
     {
@@ -4180,7 +4171,7 @@ void Unit::updateCustomRangeActors()
     }
 }
 
-void Unit::transformUnit(const QString unitID)
+void Unit::transformUnit(const QString & unitID)
 {
     for (auto & sprite : m_pUnitWaitSprites)
     {
@@ -4226,7 +4217,7 @@ void Unit::updateRangeActor(oxygine::spActor & pActor, qint32 range, QString res
 {
     if (pActor.get() == nullptr)
     {
-        pActor = oxygine::spActor::create();
+        pActor = MemoryManagement::create<oxygine::Actor>();
     }
     else
     {

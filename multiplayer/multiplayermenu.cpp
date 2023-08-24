@@ -20,7 +20,6 @@
 #include "multiplayer/password.h"
 
 #include "network/tcpclient.h"
-#include "network/tcpserver.h"
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
 
@@ -38,7 +37,7 @@
 #include "resource_management/fontmanager.h"
 
 Multiplayermenu::Multiplayermenu(const QString & address, const QString & secondaryAddress, quint16 port, const QString & password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
+    : MapSelectionMapsMenue(MemoryManagement::create<MapSelectionView>(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
       m_password(password)
@@ -64,7 +63,7 @@ Multiplayermenu::Multiplayermenu(const QString & address, const QString & second
 }
 
 Multiplayermenu::Multiplayermenu(const QString & address, quint16 port, const Password * password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
+    : MapSelectionMapsMenue(MemoryManagement::create<MapSelectionView>(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
       m_password(*password)
@@ -74,7 +73,7 @@ Multiplayermenu::Multiplayermenu(const QString & address, quint16 port, const Pa
 }
 
 Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, const QString & password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
+    : MapSelectionMapsMenue(MemoryManagement::create<MapSelectionView>(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(false),
       m_password(password)
@@ -87,14 +86,14 @@ Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, const QSt
     }
     else
     {
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
+        oxygine::safeSpCast<Label>(m_pButtonStart->getFirstChild())->setHtmlText(tr("Ready"));
         m_pPlayerSelection->setIsServerGame(true);
     }
 }
 
 void Multiplayermenu::initClientConnection(const QString & address, const QString & secondaryAddress, quint16 port)
 {
-    m_pNetworkInterface = spTCPClient::create(nullptr);
+    m_pNetworkInterface = MemoryManagement::create<TCPClient>(nullptr);
     m_pNetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
     m_pNetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
     m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
@@ -112,7 +111,7 @@ void Multiplayermenu::initClientAndWaitForConnection()
     if (m_networkMode == NetworkMode::Client)
     {
         m_pReadyAndLeave->setVisible(true);
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
+        oxygine::safeSpCast<Label>(m_pButtonStart->getFirstChild())->setHtmlText(tr("Ready"));
     }
     else if (m_networkMode == NetworkMode::Observer)
     {
@@ -123,7 +122,7 @@ void Multiplayermenu::initClientAndWaitForConnection()
 
     connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     // wait 10 minutes till timeout
-    spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Connecting"), 1000 * 60 * 5);
+    spDialogConnecting pDialogConnecting = MemoryManagement::create<DialogConnecting>(tr("Connecting"), 1000 * 60 * 5);
     addChild(pDialogConnecting);
     connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     connect(this, &Multiplayermenu::sigConnected, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
@@ -271,22 +270,22 @@ void Multiplayermenu::readyAndLeave()
     {
         message = tr("Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?");
     }
-    spDialogMessageBox pDialogAccept = spDialogMessageBox::create(message, true);
+    spDialogMessageBox pDialogAccept = MemoryManagement::create<DialogMessageBox>(message, true);
     connect(pDialogAccept.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::doReadyAndLeave, Qt::QueuedConnection);
     addChild(pDialogAccept);
 }
 
 void Multiplayermenu::showIPs()
 {
-    spGenericBox pGenericBox = spGenericBox::create();
+    spGenericBox pGenericBox = MemoryManagement::create<GenericBox>();
     QStringList items = NetworkInterface::getIPAdresses();
     QSize size(oxygine::Stage::getStage()->getWidth() - 40, oxygine::Stage::getStage()->getHeight() - 80);
-    spPanel pPanel = spPanel::create(true, size, size);
+    spPanel pPanel = MemoryManagement::create<Panel>(true, size, size);
     pPanel->setPosition(20, 20);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
-    oxygine::spTextField info = oxygine::spTextField::create();
+    oxygine::spTextField info = MemoryManagement::create<oxygine::TextField>();
     info->setStyle(style);
     info->setHtmlText((tr("Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses") +
                        tr(" may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work")));
@@ -296,7 +295,7 @@ void Multiplayermenu::showIPs()
     qint32 starty = 10 + info->getTextRect().height();
     for (qint32 i = 0; i < items.size(); i++)
     {
-        oxygine::spTextField text = oxygine::spTextField::create();
+        oxygine::spTextField text = MemoryManagement::create<oxygine::TextField>();
         text->setStyle(style);
         text->setHtmlText((tr("Host Adress: ") + items[i]));
         text->setPosition(10, starty + i * 40);
@@ -312,7 +311,7 @@ void Multiplayermenu::showLoadSaveGameDialog()
     QStringList wildcards;
     wildcards.append("*.msav");
     QString path = Settings::getInstance()->getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
+    spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Multiplayermenu::loadSaveGame, Qt::QueuedConnection);
 }
@@ -531,14 +530,14 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         else if (messageType == NetworkCommands::SERVERINVALIDMODCONFIG)
         {
             spDialogMessageBox pDialogMessageBox;
-            pDialogMessageBox = spDialogMessageBox::create(tr("Server doesn't have the given mods installed."));
+            pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Server doesn't have the given mods installed."));
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
         }
         else if (messageType == NetworkCommands::SERVERNOGAMESLOTSAVAILABLE)
         {
             spDialogMessageBox pDialogMessageBox;
-            pDialogMessageBox = spDialogMessageBox::create(tr("Server doesn't have any more slots for players."));
+            pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Server doesn't have any more slots for players."));
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
         }
@@ -616,12 +615,12 @@ void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject &
         tr("Connection failed. Reason: Player with same username already connected to the game."),
     };
     NetworkCommands::DisconnectReason type = static_cast<NetworkCommands::DisconnectReason>(objData.value(JsonKeys::JSONKEY_DISCONNECTREASON).toInt());
-    spDialogMessageBox pDialog = spDialogMessageBox::create(reasons[type]);
+    spDialogMessageBox pDialog = MemoryManagement::create<DialogMessageBox>(reasons[type]);
     addChild(pDialog);
     if (m_pDialogConnecting.get() != nullptr)
     {
         m_pDialogConnecting->detach();
-        m_pDialogConnecting.free();
+        m_pDialogConnecting.reset();
     }
     emit m_pNetworkInterface->sigDisconnectClient(socketID);
     buttonBack();
@@ -785,7 +784,7 @@ void Multiplayermenu::connectToSlave(const QJsonObject & objData, quint64 socket
     QString secondarySlaveAddress = objData.value(JsonKeys::JSONKEY_SECONDARYADDRESS).toString();
     quint16 port = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
     disconnectNetworkSlots();
-    m_pNetworkInterface = spTCPClient::create(nullptr);
+    m_pNetworkInterface = MemoryManagement::create<TCPClient>(nullptr);
     m_pNetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
     m_pNetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
     m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
@@ -836,9 +835,9 @@ void Multiplayermenu::relaunchRunningGame(quint64 socketID, const QString & save
 {
     CONSOLE_PRINT("Relaunching running game on slave with savefile " + savefile, GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    spGameMap pMap = spGameMap::create(savefile, false, false, true);
+    spGameMap pMap = MemoryManagement::create<GameMap>(savefile, false, false, true);
     pMap->initProxyAis();
-    spGameMenue pMenu = spGameMenue::create(pMap, true, m_pNetworkInterface, false, true);
+    spGameMenue pMenu = MemoryManagement::create<GameMenue>(pMap, true, m_pNetworkInterface, false, true);
     oxygine::Stage::getStage()->addChild(pMenu);
     sendSlaveRelaunched(socketID);
     oxygine::Actor::detach();
@@ -892,7 +891,7 @@ void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 sock
         pMap->detach();
     }
     m_pMapSelectionView->setCurrentMap(spGameMap());
-    pMap = spGameMap::create<QDataStream &, bool>(stream, true);
+    pMap = MemoryManagement::create<GameMap, QDataStream &, bool>(stream, true);
     if (m_password.areEqualPassword(pMap->getGameRules()->getPassword()))
     {
         pMap->updateSprites(-1, -1, false, true);
@@ -932,7 +931,7 @@ void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 sock
         CONSOLE_PRINT("Entered password hash: " + GlobalUtils::getByteArrayString(m_password.getHash()), GameConsole::eDEBUG);
         CONSOLE_PRINT("Host    password hash: " + GlobalUtils::getByteArrayString(m_pMapSelectionView->getCurrentMap()->getGameRules()->getPassword().getHash()), GameConsole::eDEBUG);
         spDialogMessageBox pDialogMessageBox;
-        pDialogMessageBox = spDialogMessageBox::create(tr("Wrong password entered for joining the game."));
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Wrong password entered for joining the game."));
         connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
         addChild(pDialogMessageBox);
     }
@@ -983,7 +982,7 @@ void Multiplayermenu::startRejoinedGame(qint64 syncCounter)
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     CONSOLE_PRINT("Leaving Map Selection Menue and rejoining game with sync counter " + QString::number(syncCounter), GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    auto window = spGameMenue::create(pMap, true, m_pNetworkInterface, true);
+    auto window = MemoryManagement::create<GameMenue>(pMap, true, m_pNetworkInterface, true);
     window->getActionPerformer().setSyncCounter(syncCounter);
     oxygine::Stage::getStage()->addChild(window);
 
@@ -1088,7 +1087,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
             CONSOLE_PRINT("Entered password hash: " + GlobalUtils::getByteArrayString(m_password.getHash()), GameConsole::eDEBUG);
             CONSOLE_PRINT("Host    password hash: " + GlobalUtils::getByteArrayString(m_pMapSelectionView->getCurrentMap()->getGameRules()->getPassword().getHash()), GameConsole::eDEBUG);
             spDialogMessageBox pDialogMessageBox;
-            pDialogMessageBox = spDialogMessageBox::create(tr("Wrong password entered for joining the game."));
+            pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Wrong password entered for joining the game."));
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
         }
@@ -1098,7 +1097,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
             stream >> campaign;
             if (campaign)
             {
-                m_pMapSelectionView->getCurrentMap()->setCampaign(spCampaign::create());
+                m_pMapSelectionView->getCurrentMap()->setCampaign(MemoryManagement::create<Campaign>());
                 m_pMapSelectionView->getCurrentMap()->getCampaign()->deserializeObject(stream);
             }
             CONSOLE_PRINT("Reading players count: " + QString::number(m_pMapSelectionView->getCurrentMap()->getPlayerCount()), GameConsole::eDEBUG);
@@ -1272,7 +1271,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
             {
                 QString command = QString(NetworkCommands::REQUESTRULE);
                 CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
-                spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
+                spGameMap pMap = MemoryManagement::create<GameMap, QDataStream &, bool>(stream, m_saveGame);
                 m_pMapSelectionView->setCurrentMap(pMap);
                 loadMultiplayerMap();
                 QByteArray sendData;
@@ -1332,11 +1331,11 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
     spDialogMessageBox pDialogMessageBox;
     if (differentHash)
     {
-        pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different version of a mod or the game resource folder has been modified by one of the games."));
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Host has a different version of a mod or the game resource folder has been modified by one of the games."));
     }
     else  if (!sameVersion)
     {
-        pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different game version. Leaving the game again."));
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Host has a different game version. Leaving the game again."));
     }
     else if (!sameMods)
     {
@@ -1350,11 +1349,11 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
         {
             myModsInfo += Settings::getInstance()->getModName(myMods[i]) + " " + myVersions[i]  + "\n";
         }
-        pDialogMessageBox = spDialogMessageBox::create(tr("Host has different mods. Leaving the game again.\nHost mods:\n") + hostModsInfo + "\nYour Mods:\n" + myModsInfo);
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Host has different mods. Leaving the game again.\nHost mods:\n") + hostModsInfo + "\nYour Mods:\n" + myModsInfo);
     }
     else
     {
-        pDialogMessageBox = spDialogMessageBox::create(tr("Failed to join game due to unknown verification failure."));
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Failed to join game due to unknown verification failure."));
     }
     connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     addChild(pDialogMessageBox);
@@ -1418,7 +1417,7 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
         if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) ||
             mapFile.startsWith(NetworkCommands::SERVERMAPIDENTIFIER))
         {
-            pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
+            pMap = MemoryManagement::create<GameMap, QDataStream &, bool>(stream, m_saveGame);
         }
         else
         {
@@ -1457,18 +1456,18 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
                         {
                             CONSOLE_PRINT("Unable to write downloaded script-file", GameConsole::eDEBUG);
                             spDialogMessageBox pDialogMessageBox;
-                            pDialogMessageBox = spDialogMessageBox::create(tr("Unable to download script file from host."));
+                            pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Unable to download script file from host."));
                             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
                             addChild(pDialogMessageBox);
                         }
                     }
-                    pMap = spGameMap::create(mapFile, true, false, m_saveGame);
+                    pMap = MemoryManagement::create<GameMap>(mapFile, true, false, m_saveGame);
                 }
                 else
                 {
                     CONSOLE_PRINT("Unable to write downloaded map-file", GameConsole::eDEBUG);
                     spDialogMessageBox pDialogMessageBox;
-                    pDialogMessageBox = spDialogMessageBox::create(tr("Unable to download map file from host."));
+                    pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Unable to download map file from host."));
                     connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
                     addChild(pDialogMessageBox);
                 }
@@ -1497,7 +1496,7 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
     Filesupport::readByteArray(stream); // minimap data
-    spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
+    spGameMap pMap = MemoryManagement::create<GameMap, QDataStream &, bool>(stream, m_saveGame);
     stream >> m_saveGame;    
     CONSOLE_PRINT("Is save game" + QString::number(m_saveGame), GameConsole::eDEBUG);
     m_pPlayerSelection->setSaveGame(m_saveGame);
@@ -1556,7 +1555,7 @@ void Multiplayermenu::slotCancelHostConnection()
 
 void Multiplayermenu::slotHostGameLaunched()
 {
-    m_pDialogConnecting.free();
+    m_pDialogConnecting.reset();
     // we're hosting a game so we get the same rights as a local host
     m_pNetworkInterface->setIsServer(true);
     createChat();
@@ -1579,7 +1578,7 @@ spGameMap Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFi
     mapData = Filesupport::readByteArray(stream);
     Filesupport::writeBytes(mapFilestream, mapData);
     map.close();
-    pNewMap = spGameMap::create(mapFile, true, false, m_saveGame);
+    pNewMap = MemoryManagement::create<GameMap>(mapFile, true, false, m_saveGame);
     if (!scriptFile.isEmpty())
     {
         QFile script(scriptFile);
@@ -1663,7 +1662,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     // start game
     m_pNetworkInterface->setIsServer(false);
     CONSOLE_PRINT("Leaving Map Selection Menue and init client game", GameConsole::eDEBUG);
-    auto window = spGameMenue::create(pMap, m_saveGame, m_pNetworkInterface, false);
+    auto window = MemoryManagement::create<GameMenue>(pMap, m_saveGame, m_pNetworkInterface, false);
     oxygine::Stage::getStage()->addChild(window);
     // send game started
     QString command = QString(NetworkCommands::CLIENTINITGAME);
@@ -1748,7 +1747,7 @@ bool Multiplayermenu::findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, b
         QByteArray myHashArray = myHash.result();
         if (hash == myHashArray)
         {
-            spGameMap pMap = spGameMap::create(file, true, false, m_saveGame);
+            spGameMap pMap = MemoryManagement::create<GameMap>(file, true, false, m_saveGame);
             m_pMapSelectionView->setCurrentMap(pMap);
             loadMultiplayerMap();
             found = true;
@@ -1764,7 +1763,7 @@ void Multiplayermenu::showRuleSelection()
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    m_pRuleSelectionView = spRuleSelection::create(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, RuleSelection::Mode::Multiplayer);
+    m_pRuleSelectionView = MemoryManagement::create<RuleSelection>(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, RuleSelection::Mode::Multiplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &Multiplayermenu::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 40);
@@ -1784,7 +1783,7 @@ void Multiplayermenu::exitMenu()
 {
     CONSOLE_PRINT("Leaving Map Selection Menue and going back to main menu", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    spMainwindow window = spMainwindow::create("ui/menu/mainmenu.xml");
+    spMainwindow window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -1794,7 +1793,7 @@ void Multiplayermenu::exitMenuToLobby()
     CONSOLE_PRINT("Leaving Map Selection Menue and going back to lobby menu", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
     disconnectNetwork();
-    oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
+    oxygine::Stage::getStage()->addChild(MemoryManagement::create<LobbyMenu>());
     oxygine::Actor::detach();
 }
 
@@ -1822,7 +1821,7 @@ void Multiplayermenu::disconnected(quint64 socket)
         CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
         m_onEnterTimer.stop();
         disconnectNetwork();
-        oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
+        oxygine::Stage::getStage()->addChild(MemoryManagement::create<LobbyMenu>());
         oxygine::Actor::detach();
     }
 }
@@ -1865,7 +1864,7 @@ void Multiplayermenu::buttonBack()
         if (m_Chat.get() != nullptr)
         {
             m_Chat->detach();
-            m_Chat.free();
+            m_Chat.reset();
         }
         disconnectNetwork();
         MapSelectionMapsMenue::buttonBack();
@@ -1880,7 +1879,7 @@ void Multiplayermenu::buttonBack()
 
 void Multiplayermenu::showInformingServer()
 {
-    spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Informing server"), 1000 * 60 * 5, false);
+    spDialogConnecting pDialogConnecting = MemoryManagement::create<DialogConnecting>(tr("Informing server"), 1000 * 60 * 5, false);
     addChild(pDialogConnecting);
     connect(this, &Multiplayermenu::sigServerResponded, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
 }
@@ -1894,7 +1893,7 @@ void Multiplayermenu::buttonNext()
         m_password.setPassword(pMap->getGameRules()->getPassword());
         if (m_local)
         {
-            m_pNetworkInterface = spTCPServer::create(nullptr);
+            m_pNetworkInterface = MemoryManagement::create<TCPServer>(nullptr);
             m_pNetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
             m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
             createChat();
@@ -1964,7 +1963,7 @@ void Multiplayermenu::startGameOnServer()
     sendStream << m_saveGame;
     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
 
-    m_pDialogConnecting = spDialogConnecting::create(tr("Launching game on server"), 1000 * 60 * 5);
+    m_pDialogConnecting = MemoryManagement::create<DialogConnecting>(tr("Launching game on server"), 1000 * 60 * 5);
     addChild(m_pDialogConnecting);
     connect(m_pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
     connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);    
@@ -1980,16 +1979,16 @@ void Multiplayermenu::createChat()
     }
     if (Settings::getInstance()->getSmallScreenDevice())
     {
-        m_Chat = spChat::create(m_pNetworkInterface,
+        m_Chat = MemoryManagement::create<Chat>(m_pNetworkInterface,
                                 QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 90),
                                 NetworkInterface::NetworkSerives::GameChat, nullptr);
         m_Chat->setPosition(-m_Chat->getScaledWidth() + 1, 10);
-        auto moveButton = spMoveInButton::create(m_Chat.get(), m_Chat->getScaledWidth(), 1, -1, 1.0f);
+        auto moveButton = MemoryManagement::create<MoveInButton>(m_Chat.get(), m_Chat->getScaledWidth(), 1, -1, 1.0f);
         m_Chat->addChild(moveButton);
     }
     else
     {
-        m_Chat = spChat::create(m_pNetworkInterface,
+        m_Chat = MemoryManagement::create<Chat>(m_pNetworkInterface,
                                 QSize(oxygine::Stage::getStage()->getWidth() - 20, 150),
                                 NetworkInterface::NetworkSerives::GameChat, nullptr);
         m_Chat->setPosition(10, oxygine::Stage::getStage()->getHeight() - 210);
@@ -2005,10 +2004,10 @@ void Multiplayermenu::disconnectNetwork()
         if (m_Chat.get())
         {
             m_Chat->detach();
-            m_Chat.free();
+            m_Chat.reset();
         }
         m_pPlayerSelection->attachNetworkInterface(spNetworkInterface());
-        m_pNetworkInterface.free();
+        m_pNetworkInterface.reset();
     }    
 }
 
@@ -2090,11 +2089,11 @@ void Multiplayermenu::changeButtonText()
 {
     if (m_pPlayerSelection->getPlayerReady())
     {
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Not Ready"));
+        oxygine::safeSpCast<Label>(m_pButtonStart->getFirstChild())->setHtmlText(tr("Not Ready"));
     }
     else
     {
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
+        oxygine::safeSpCast<Label>(m_pButtonStart->getFirstChild())->setHtmlText(tr("Ready"));
     }
 }
 
@@ -2189,7 +2188,7 @@ void Multiplayermenu::countdown()
             // start game
             CONSOLE_PRINT("Leaving Map Selection Menue after countdown", GameConsole::eDEBUG);
             m_onEnterTimer.stop();
-            auto window = spGameMenue::create(pMap, m_saveGame, m_pNetworkInterface, false);
+            auto window = MemoryManagement::create<GameMenue>(pMap, m_saveGame, m_pNetworkInterface, false);
             oxygine::Stage::getStage()->addChild(window);
             CONSOLE_PRINT("Suspending thread shortly before informing slaves to launch game.", GameConsole::eDEBUG);
             QThread::msleep(200);

@@ -4,7 +4,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 class BaseTableItem;
-using spBaseTableItem = oxygine::intrusive_ptr<BaseTableItem>;
+using spBaseTableItem = std::shared_ptr<BaseTableItem>;
 
 class BaseTableItem : public QObject, public oxygine::Actor
 {

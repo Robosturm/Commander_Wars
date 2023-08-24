@@ -1,3 +1,5 @@
+#include <QJsonArray>
+
 #include "multiplayer/dialogotherlobbyinfo.h"
 #include "multiplayer/lobbymenu.h"
 

@@ -14,7 +14,6 @@
 #include "ai/productionSystem/simpleproductionsystem.h"
 
 #include "coreengine/qmlvector.h"
-#include "coreengine/LUPDATE_MACROS.h"
 #include "coreengine/pathfindingsystem.h"
 
 #include <functional>
@@ -33,7 +32,7 @@ class CoreAI : public BaseGameInputIF
 {
     Q_OBJECT
 public:
-    ENUM_CLASS ThreadLevel
+    enum class ThreadLevel
     {
         Normal,
         High,
@@ -41,14 +40,14 @@ public:
         Max,
     };
 
-    ENUM_CLASS CircleReturns
+    enum class CircleReturns
     {
         Stop,
         Fail,
         Success,
     };
 
-    ENUM_CLASS TargetDistance
+    enum class TargetDistance
     {
         NoTarget,
         FarTarget,
@@ -69,7 +68,7 @@ public:
 
     struct IniData
     {
-        IniData(QString name, QString group, double * value, double defaultValue, double minValue, double maxValue)
+        IniData(const QString & name, const QString & group, double * value, double defaultValue, double minValue, double maxValue)
             : m_name(name),
               m_group(group),
               m_value(value),
@@ -106,7 +105,7 @@ public:
     /**
      * @brief The AISteps enum
      */
-    ENUM_CLASS AISteps
+    enum class AISteps
     {
         moveUnits = 0,
                 moveToTargets,
@@ -454,7 +453,7 @@ public:
      * @param y1
      * @return
      */
-    Q_INVOKABLE bool onSameIsland(const QString movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
+    Q_INVOKABLE bool onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
     /**
      * @brief onSameIsland
      * @param islandIdx
@@ -504,7 +503,7 @@ public:
      * @param movementType
      * @param unitID
      */
-    Q_INVOKABLE void createIslandMap(const QString movementType, const QString unitID);
+    Q_INVOKABLE void createIslandMap(const QString & movementType, const QString & unitID);
     /**
      * @brief needsRefuel
      * @param pUnit
@@ -516,7 +515,7 @@ public:
      * @param actionList
      * @return
      */
-    Q_INVOKABLE bool isRefuelUnit(const QStringList actionList) const;
+    Q_INVOKABLE bool isRefuelUnit(const QStringList & actionList) const;
     /**
      * @brief isMoveableBuilding
      * @param pBuilding
@@ -542,7 +541,7 @@ public:
      * @param unitIds
      * @return
      */
-    Q_INVOKABLE qint32 getUnitCount(QmlVectorUnit * pUnits, const QStringList unitIds, float minHp = 0.0f, qint32 minFuel = 0);
+    Q_INVOKABLE qint32 getUnitCount(QmlVectorUnit * pUnits, const QStringList & unitIds, float minHp = 0.0f, qint32 minFuel = 0);
     /**
      * @brief getFilteredUnits
      * @param pUnits
@@ -551,7 +550,7 @@ public:
      * @param minFuel
      * @return
      */
-    Q_INVOKABLE QmlVectorUnit* getFilteredUnits(QmlVectorUnit * pUnits, const QStringList unitIds, float minHp = 0.0f, qint32 minFuel = 0);
+    Q_INVOKABLE QmlVectorUnit* getFilteredUnits(QmlVectorUnit * pUnits, const QStringList & unitIds, float minHp = 0.0f, qint32 minFuel = 0);
     /**
      * @brief getEnemyUnitCountNearOwnUnits
      * @param pUnits
@@ -587,7 +586,7 @@ public:
      * @param pEnemyBuildings
      * @return
      */
-    Q_INVOKABLE qint32 getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList unitIds, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
+    Q_INVOKABLE qint32 getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitIds, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
     /**
      * @brief shareIslandWithEnemy
      * @param pUnits

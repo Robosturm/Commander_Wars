@@ -6,19 +6,17 @@
 
 #include "coreengine/fileserializable.h"
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 class PlayerRecord;
-using spPlayerRecord = oxygine::intrusive_ptr<PlayerRecord>;
+using spPlayerRecord = std::shared_ptr<PlayerRecord>;
 
-class PlayerRecord final : public QObject, public FileSerializable, public oxygine::ref_counter
+class PlayerRecord final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
     explicit PlayerRecord();
     explicit PlayerRecord(qint32 day, qint32 player, qint32 funds, qint32 income,
                           qint32 buildings, qint32 units, qint32 playerStrength);
-   virtual ~PlayerRecord() = default;
+    ~PlayerRecord() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

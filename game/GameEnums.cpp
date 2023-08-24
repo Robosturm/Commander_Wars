@@ -4,10 +4,18 @@
 
 #include "coreengine/interpreter.h"
 
+GameEnums GameEnums::m_instance;
+
+GameEnums::GameEnums()
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
 void GameEnums::registerEnums()
 {
+
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue value = pInterpreter->newQObject(new GameEnums());
+    QJSValue value = pInterpreter->newQObject(&m_instance);
     value.setProperty("Alliance_Friend", Alliance_Friend);
     value.setProperty("Alliance_Enemy", Alliance_Enemy);
 

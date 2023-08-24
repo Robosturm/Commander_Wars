@@ -24,7 +24,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -46,46 +46,46 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     {
         emit sigFinished();
     });
-    spPanel pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
+    spPanel pPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
                                QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150));
     pPanel->setPosition(30, 70);
     pSpriteBox->addChild(pPanel);
 
     qint32 y = 30;
 
-    spLabel pText = spLabel::create(140);
+    spLabel pText = MemoryManagement::create<Label>(140);
     pText->setStyle(style);
     pText->setHtmlText(tr("HP"));
     pText->setPosition(160 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
 
-    pText = spLabel::create(140);
+    pText = MemoryManagement::create<Label>(140);
     pText->setStyle(style);
     pText->setHtmlText(tr("Fuel"));
     pText->setPosition(310 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
-    pText = spLabel::create(140);
+    pText = MemoryManagement::create<Label>(140);
     pText->setStyle(style);
     pText->setHtmlText(tr("Ammo 1"));
     pText->setPosition(460 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
-    pText = spLabel::create(140);
+    pText = MemoryManagement::create<Label>(140);
     pText->setStyle(style);
     pText->setHtmlText(tr("Ammo 2"));
     pText->setPosition(610 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     y += pText->getHeight() + 10;
-    spQmlVectorUnit pUnits = spQmlVectorUnit(pPlayer->getUnits());
+    spQmlVectorUnit pUnits = pPlayer->getSpUnits();
 
     GameMap* pMap = pPlayer->getMap();
     y = 10;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
-        pText = spLabel::create(140);
+        pText = MemoryManagement::create<Label>(140);
         pText->setStyle(style);
         pText->setHtmlText(QString::number(i + 1));
         pText->setPosition(10, y);
@@ -97,25 +97,25 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         Building* pBuilding = pTerrain->getBuilding();
         if (pBuilding != nullptr)
         {
-            spBuilding pTerrainBuilding = spBuilding::create(pBuilding->getBuildingID(), pMap);
+            spBuilding pTerrainBuilding = MemoryManagement::create<Building>(pBuilding->getBuildingID(), pMap);
             pTerrainBuilding->setOwner(pBuilding->getOwner());
             pTerrainBuilding->scaleAndShowOnSingleTile();
             pActor->addChild(pTerrainBuilding);
         }
 
-        spUnit pDummy = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false, pMap);
+        spUnit pDummy = MemoryManagement::create<Unit>(pUnit->getUnitID(), pUnit->getOwner(), false, pMap);
         pDummy->setHasMoved(pUnit->getHasMoved());
         pActor->addChild(pDummy);
         pActor->setPosition(100, y + 8);
         pPanel->addItem(pActor);
 
-        pText = spLabel::create(140);
+        pText = MemoryManagement::create<Label>(140);
         pText->setStyle(style);
         pText->setHtmlText(QString::number(pUnit->getHpRounded()));
         pText->setPosition(150, y);
         pPanel->addItem(pText);
 
-        pText = spLabel::create(140);
+        pText = MemoryManagement::create<Label>(140);
         pText->setStyle(style);
         if (pUnit->getMaxFuel() > 0)
         {
@@ -128,7 +128,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         pText->setPosition(300, y);
         pPanel->addItem(pText);
 
-        pText = spLabel::create(140);
+        pText = MemoryManagement::create<Label>(140);
         pText->setStyle(style);
         if (pUnit->getMaxAmmo1() > 0)
         {
@@ -141,7 +141,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         pText->setPosition(450, y);
         pPanel->addItem(pText);
 
-        pText = spLabel::create(140);
+        pText = MemoryManagement::create<Label>(140);
         pText->setStyle(style);
         if (pUnit->getMaxAmmo2() > 0)
         {

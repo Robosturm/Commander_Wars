@@ -9,14 +9,14 @@
 #include "objects/base/label.h"
 
 class DialogValueCounter;
-using spDialogValueCounter = oxygine::intrusive_ptr<DialogValueCounter>;
+using spDialogValueCounter = std::shared_ptr<DialogValueCounter>;
 
 class DialogValueCounter final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd);
-   virtual ~DialogValueCounter() = default;
+    ~DialogValueCounter() = default;
 signals:
     void sigFinished();
 private slots:

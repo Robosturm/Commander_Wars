@@ -35,7 +35,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
+    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("campaignmenu");
     if (pBackground != nullptr)
@@ -100,15 +100,15 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
 void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
 {
     QStringList filter = {".map"};
-    m_pMapSelectionView = spMapSelectionView::create(filter, oxygine::Stage::getStage()->getHeight() / 3 - 30);
+    m_pMapSelectionView = MemoryManagement::create<MapSelectionView>(filter, oxygine::Stage::getStage()->getHeight() / 3 - 30);
     m_pMapSelectionView->setCurrentSetCampaign(campaign);
     GameManager* pGameManager = GameManager::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
     campaign->getCampaignMapData(m_campaignData);
-    m_pSlidingActor = oxygine::spSlidingActor::create();
+    m_pSlidingActor = MemoryManagement::create<oxygine::SlidingActor>();
     m_pSlidingActor->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(m_pSlidingActor);
-    m_campaignBackground = oxygine::spSingleResAnim::create();
+    m_campaignBackground = MemoryManagement::create<oxygine::SingleResAnim>();
     QString path = Settings::getInstance()->getUserPath() + m_campaignData.getMapBackground();
     if (!QFile::exists(path))
     {
@@ -116,7 +116,7 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
     }
     QImage background(path);
     pApp->loadResAnim(m_campaignBackground, background, 1, 1, 1.0f);
-    m_pMapBackground = oxygine::spSprite::create();
+    m_pMapBackground = MemoryManagement::create<oxygine::Sprite>();
     m_pMapBackground->setResAnim(m_campaignBackground.get());
     m_pMapBackground->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* event)
     {
@@ -156,7 +156,7 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
     for (qint32 i = 0; i < positions.size(); ++i)
     {
         const auto & position = positions[i];
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setPosition(position.x() * width, position.y() * height);
         oxygine::ResAnim* pAnim = pGameManager->getResAnim("campaignFlagDone");
         if (pAnim->getTotalFrames() > 1)
@@ -171,7 +171,7 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
         m_pMapBackground->addChild(pSprite);
         if (i == newlyWonMap)
         {
-            pSprite = oxygine::spSprite::create();
+            pSprite = MemoryManagement::create<oxygine::Sprite>();
             qint32 flagHeight = pAnim->getHeight();
             oxygine::ResAnim* pAnim = pGameManager->getResAnim("campaignMapDone");
             pSprite->setPosition(position.x() * width - pAnim->getWidth() / 2, position.y() * height + flagHeight - pAnim->getHeight());
@@ -202,10 +202,10 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
         }
         else
         {
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
             const auto & position = positions[i];
             pSprite->setPosition(position.x() * width, position.y() * height);
-            flagAppeared(pSprite.get(), i);
+            flagAppeared(pSprite, i);
         }
     }
     connect(this, &CampaignMenu::sigMapSelected, this, &CampaignMenu::mapSelected, Qt::QueuedConnection);
@@ -224,7 +224,7 @@ void CampaignMenu::playNextEvent(qint32 event)
         GameManager* pGameManager = GameManager::getInstance();
         oxygine::ResAnim* pAnim = pGameManager->getResAnim("campaignFlagAppear");
         Mainapp::getInstance()->getAudioManager()->playSound("flagAppear.wav");
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         qint32 width = m_pMapBackground->getScaledWidth();
         qint32 height = m_pMapBackground->getScaledHeight();
         qint32 index = newMapPosition[event];
@@ -233,11 +233,10 @@ void CampaignMenu::playNextEvent(qint32 event)
         focusOnPosition(pSprite->getPosition());
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::Sprite* pPtrSprite = pSprite.get();
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), 1);
-            tween->addDoneCallback([this, pPtrSprite, event, index](oxygine::Event* pEvent)
+            tween->addDoneCallback([this, pSprite, event, index](oxygine::Event* pEvent)
             {
-                emit sigFlagAppeared(pPtrSprite, index);
+                emit sigFlagAppeared(pSprite, index);
                 emit sigEventPlayed(event + 1);
             });
             pSprite->addTween(tween);
@@ -252,20 +251,21 @@ void CampaignMenu::focusOnPosition(QPoint position)
     m_pSlidingActor->snap();
 }
 
-void CampaignMenu::flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map)
+void CampaignMenu::flagAppeared(oxygine::spSprite pSprite, qint32 map)
 {
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("campaignFlag");
     if (pAnim->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
-        pPtrSprite->addTween(tween);
+        pSprite->addTween(tween);
     }
     else
     {
-        pPtrSprite->setResAnim(pAnim);
+        pSprite->setResAnim(pAnim);
     }
-    pPtrSprite->addClickListener([this, map, pPtrSprite](oxygine::Event* event)
+    auto* pPtrSprite = pSprite.get();
+    pSprite->addClickListener([this, map, pPtrSprite](oxygine::Event* event)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(event);
         if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
@@ -281,9 +281,9 @@ void CampaignMenu::flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map)
             emit sigShowMinimap();
         }
     });
-    if (pPtrSprite->getParent() == nullptr)
+    if (pSprite->getParent() == nullptr)
     {
-        m_pMapBackground->addChild(oxygine::spSprite(pPtrSprite));
+        m_pMapBackground->addChild(pSprite);
     }
 }
 
@@ -413,7 +413,7 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
 void CampaignMenu::createMapSelection(spCampaign & campaign)
 {
     QStringList filter = {".map"};
-    m_pMapSelectionView = spMapSelectionView::create(filter);
+    m_pMapSelectionView = MemoryManagement::create<MapSelectionView>(filter);
     m_pMapSelectionView->setCurrentSetCampaign(campaign);
     addChild(m_pMapSelectionView);
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &CampaignMenu::mapSelectionItemChanged, Qt::QueuedConnection);
@@ -427,8 +427,8 @@ void CampaignMenu::exitMenue()
     QStringList filter = {".jsm"};
     CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    auto mapSelectionView = spMapSelectionView::create(filter);
-    auto window = spMapSelectionMapsMenue::create(mapSelectionView);
+    auto mapSelectionView = MemoryManagement::create<MapSelectionView>(filter);
+    auto window = MemoryManagement::create<MapSelectionMapsMenue>(mapSelectionView);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
 }
@@ -491,7 +491,7 @@ void CampaignMenu::slotButtonNext()
             pMap->updateSprites();
             // start game
             CONSOLE_PRINT("Leaving Campaign Menue", GameConsole::eDEBUG);
-            auto window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
+            auto window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
             oxygine::Stage::getStage()->addChild(window);
             oxygine::Actor::detach();
         }
@@ -501,7 +501,7 @@ void CampaignMenu::slotButtonNext()
         }
         else
         {
-            auto window = spMapSelectionMapsMenue::create(m_pMapSelectionView);
+            auto window = MemoryManagement::create<MapSelectionMapsMenue>(m_pMapSelectionView);
             oxygine::Stage::getStage()->addChild(window);
             oxygine::Actor::detach();
         }
@@ -513,7 +513,7 @@ void CampaignMenu::showSaveCampaign()
     QStringList wildcards;
     wildcards.append("*.camp");
     QString path = Settings::getInstance()->getUserPath() + "savegames";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignMenu::saveCampaign, Qt::QueuedConnection);    
 }

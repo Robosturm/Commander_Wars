@@ -18,10 +18,10 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     setHeight(40);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");
-    m_Box = oxygine::spBox9Sprite::create();
+    m_Box = MemoryManagement::create<oxygine::Box9Sprite>();
     m_Box->setResAnim(pAnim);
     m_Box->setSize(width, 40);
-    m_pClipActor = oxygine::spClipRectActor::create();
+    m_pClipActor = MemoryManagement::create<oxygine::ClipRectActor>();
     m_Box->addChild(m_pClipActor);
     m_pClipActor->setSize(m_Box->getScaledWidth() - 20 - 45, m_Box->getScaledHeight());
     m_pClipActor->setX(10);
@@ -41,11 +41,11 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     {
         scrollHeigth = (itemcount + 1) * 40;
     }
-    m_Panel = spPanel::create(false, QSize(width, scrollHeigth), QSize(width, itemcount * 40));
+    m_Panel = MemoryManagement::create<Panel>(false, QSize(width, scrollHeigth), QSize(width, itemcount * 40));
     m_Panel->setSubComponent(true);
     m_Panel->setVisible(false);
     addChild(m_Panel);
-    m_pArrowDown = oxygine::spButton::create();
+    m_pArrowDown = MemoryManagement::create<oxygine::Button>();
     m_Box->addChild(m_pArrowDown);
     m_pArrowDown->setPosition(m_Box->getScaledWidth() - 45, 10);
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
@@ -89,6 +89,7 @@ void DropDownmenuBase::showDropDown()
 {
 #ifdef GRAPHICSUPPORT
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
+    m_Panel->setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     auto transform = computeGlobalTransform();
     if (transform.m32() > oxygine::Stage::getStage()->getHeight() / 2)
@@ -138,7 +139,7 @@ const QSize& DropDownmenuBase::addDropDownItem(oxygine::spActor item, qint32 id)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
-    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pBox->setResAnim(pAnim);
     pBox->addChild(item);
     pBox->setSize(getWidth() - 33, 40);

@@ -7,14 +7,14 @@
 #include "objects/base/spinbox.h"
 
 class Slider;
-using spSlider = oxygine::intrusive_ptr<Slider>;
+using spSlider = std::shared_ptr<Slider>;
 
 class Slider final : public V_Scrollbar
 {
     Q_OBJECT
 public:
     explicit Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit = "%", qint32 spinBoxWidth = 150);
-   virtual ~Slider() = default;
+    ~Slider() = default;
 
     virtual void setEnabled(bool value) override;
     Q_INVOKABLE qint32 getCurrentValue() const;

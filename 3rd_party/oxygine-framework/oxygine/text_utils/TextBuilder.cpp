@@ -1,6 +1,8 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 
+#include "coreengine/memorymanagement.h"
+
 #include <QDomDocument>
 
 namespace oxygine
@@ -130,33 +132,33 @@ namespace oxygine
                 QString name = element.tagName();
                 if (name == "div")
                 {
-                    tn = text::spDivNode::create(element);
+                    tn = MemoryManagement::create<text::DivNode>(element);
                     QString text = element.text();
                     ReplaceXmlSignsToSigns(text);
-                    tn->appendNode(text::spTextNode::create(text));
+                    tn->appendNode(MemoryManagement::create<text::TextNode>(text));
                 }
                 else if (name == "br")
                 {
-                    tn = text::spBrNode::create();
+                    tn = MemoryManagement::create<text::BrNode>();
                     QString text = element.text();
                     ReplaceXmlSignsToSigns(text);
-                    tn->appendNode(text::spTextNode::create(text));
+                    tn->appendNode(MemoryManagement::create<text::TextNode>(text));
                 }
                 else if (name == "r")
                 {
                     QString text = element.text();
                     ReplaceXmlSignsToSigns(text);
-                    tn = text::spTextNode::create(text);
+                    tn = MemoryManagement::create<text::TextNode>(text);
                 }
                 else if (name == "wiggly")
                 {
                     QString text = element.text();
                     ReplaceXmlSignsToSigns(text);
-                    tn = text::spWigglyNode::create(element, text);
+                    tn = MemoryManagement::create<text::WigglyNode>(element, text);
                 }
                 else if (name == "data")
                 {
-                    tn = text::spNode::create();
+                    tn = MemoryManagement::create<text::Node>();
                 }
                 else
                 {
@@ -181,7 +183,7 @@ namespace oxygine
             }
             else
             {
-                return text::spNode::create();
+                return MemoryManagement::create<text::Node>();
             }
         }
 
@@ -202,7 +204,7 @@ namespace oxygine
             QDomElement root = doc.documentElement();
             QDomNode node = root.firstChild();
             // loop through root childs
-            auto tn = text::spNode::create();
+            auto tn = MemoryManagement::create<text::Node>();
             while(!node.isNull())
             {
                 text::spNode tnchild = create(node);

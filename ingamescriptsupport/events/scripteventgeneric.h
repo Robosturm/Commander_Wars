@@ -9,7 +9,7 @@
 #include "objects/base/textbox.h"
 
 class ScriptEventGeneric;
-using spScriptEventGeneric = oxygine::intrusive_ptr<ScriptEventGeneric>;
+using spScriptEventGeneric = std::shared_ptr<ScriptEventGeneric>;
 
 class ScriptEventGeneric : public ScriptEvent
 {

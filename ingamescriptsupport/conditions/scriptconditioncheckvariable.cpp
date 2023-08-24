@@ -101,7 +101,7 @@ void ScriptConditionCheckVariable::writePostCondition(QTextStream& rStream)
 
 void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -109,12 +109,12 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
 
     qint32 width = 300;
 
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Variable: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spTextbox textBox = spTextbox::create(500);
+    spTextbox textBox = MemoryManagement::create<Textbox>(500);
     textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, 30);
     textBox->setCurrentText(m_Variable);
@@ -125,13 +125,13 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     });
     pBox->addItem(textBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Compare: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     QStringList items = {"===", "!==", "&gt;=", "&lt;="};
-    spDropDownmenu dropDown = spDropDownmenu::create(150, items);
+    spDropDownmenu dropDown = MemoryManagement::create<DropDownmenu>(150, items);
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant.\n=== equal\n!== unequal\n>= greater or equal\n<= smaller or equal"));
     dropDown->setPosition(width, 70);
     dropDown->setCurrentItemText(m_Compare);
@@ -142,12 +142,12 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     });
     pBox->addItem(dropDown);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Value: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spSpinBox spinBox = spSpinBox::create(300, -999999, 999999);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, -999999, 999999);
     spinBox->setTooltipText(tr("The value that the variable gets checked against."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_value);
@@ -158,12 +158,12 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     });
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Campaign Variable: "));
     pText->setPosition(30, 150);
     pBox->addItem(pText);
-    spCheckbox checkBox = spCheckbox::create();
+    spCheckbox checkBox = MemoryManagement::create<Checkbox>();
     checkBox->setTooltipText(tr("If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign."));
     checkBox->setPosition(width, 150);
     checkBox->setChecked(m_CampaignVariable);

@@ -6,14 +6,14 @@
 namespace oxygine
 {
     class SlidingActorNoClipRect;
-    using spSlidingActorNoClipRect = intrusive_ptr<SlidingActorNoClipRect>;
+    using spSlidingActorNoClipRect = std::shared_ptr<SlidingActorNoClipRect>;
     class SlidingActorNoClipRect final : public Actor
     {
         public:
             static void setDefaultTouchThreshold(float val);
 
             explicit SlidingActorNoClipRect();
-           virtual ~SlidingActorNoClipRect();
+            ~SlidingActorNoClipRect();
 
             spActor getContent() const
             {
@@ -37,7 +37,6 @@ namespace oxygine
 
         protected:
             void destroy();
-            virtual void handleEvent(Event* event) override;
             virtual void sizeChanged(const QSize& size) override;
             virtual void doUpdate(const UpdateState& us) override;
 

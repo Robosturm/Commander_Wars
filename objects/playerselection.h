@@ -14,14 +14,14 @@
 
 class DropDownmenu;
 class PlayerSelection;
-using spPlayerSelection = oxygine::intrusive_ptr<PlayerSelection>;
+using spPlayerSelection = std::shared_ptr<PlayerSelection>;
 
 class PlayerSelection final : public CreatedGui, public FileSerializable
 {
     Q_OBJECT
 public:
     explicit PlayerSelection(qint32 width, qint32 heigth);
-   virtual ~PlayerSelection() = default;
+    ~PlayerSelection() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

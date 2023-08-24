@@ -10,16 +10,16 @@
 class Unit;
 class GameMap;
 class Player;
-using spPlayer = oxygine::intrusive_ptr<Player>;
+using spPlayer = std::shared_ptr<Player>;
 class DialogModifyUnit;
-using spDialogModifyUnit = oxygine::intrusive_ptr<DialogModifyUnit>;
+using spDialogModifyUnit = std::shared_ptr<DialogModifyUnit>;
 
 class DialogModifyUnit final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogModifyUnit(GameMap* pMap, Unit* pUnit);
-   virtual ~DialogModifyUnit() = default;
+    ~DialogModifyUnit() = default;
 signals:
     void sigFinished();
     void sigUpdateData();

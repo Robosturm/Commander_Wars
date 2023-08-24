@@ -8,14 +8,14 @@
 #include "game/player.h"
 
 class GameAnimationCapture;
-using spGameAnimationCapture = oxygine::intrusive_ptr<GameAnimationCapture>;
+using spGameAnimationCapture = std::shared_ptr<GameAnimationCapture>;
 
 class GameAnimationCapture final : public GameAnimation
 {
     Q_OBJECT
 public:
     explicit GameAnimationCapture(qint32 startPoints, qint32 endPoints, qint32 maxPoints, GameMap* pMap);
-   virtual ~GameAnimationCapture() = default;
+    ~GameAnimationCapture() = default;
     /**
      * @brief addBackgroundSprite adds a background sprite with no functionality. Besides looking pretty.
      * @param spriteID string id of the sprite in the res file

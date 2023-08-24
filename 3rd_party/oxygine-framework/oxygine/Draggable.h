@@ -4,7 +4,7 @@
 
 namespace oxygine
 {
-    class Draggable : public IClosureOwner
+    class Draggable final : public IClosureOwner
     {
     public:
         enum
@@ -13,7 +13,7 @@ namespace oxygine
         };
 
         explicit Draggable() = default;
-        virtual ~Draggable();
+        ~Draggable();
 
         void init(Actor* actor);
 

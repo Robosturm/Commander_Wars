@@ -10,7 +10,7 @@
 #include "objects/base/tooltip.h"
 
 class V_Scrollbar;
-using spV_Scrollbar = oxygine::intrusive_ptr<V_Scrollbar>;
+using spV_Scrollbar = std::shared_ptr<V_Scrollbar>;
 
 class V_Scrollbar : public Tooltip
 {

@@ -5,6 +5,7 @@
 #include "coreengine/interpreter.h"
 
 #include <QDirIterator>
+#include <QJsonArray>
 
 MatchMakingCoordinator::MatchMakingCoordinator(MainServer *parent)
     : QObject{parent},
@@ -30,7 +31,7 @@ void MatchMakingCoordinator::deserializeObject(QDataStream& stream)
     stream >> size;
     for (qint32 i = 0; i < size; ++i)
     {
-        spAutoMatchMaker matchMaker = spAutoMatchMaker::create("", m_mainServer);
+        spAutoMatchMaker matchMaker = MemoryManagement::create<AutoMatchMaker>("", m_mainServer);
         matchMaker->deserializeObject(stream);
         m_autoMatchMakers.insert(matchMaker->getMatchId(), matchMaker);
     }
@@ -181,7 +182,7 @@ void MatchMakingCoordinator::loadAutomatches(QString & path, bool running)
         {
             QString filePath = dirIter.fileInfo().filePath();
             pInterpreter->openScript(filePath, true);
-            m_autoMatchMakers[id] = spAutoMatchMaker::create(id, m_mainServer);
+            m_autoMatchMakers[id] = MemoryManagement::create<AutoMatchMaker>(id, m_mainServer);
             m_autoMatchMakers[id]->setRunning(running);
             m_autoMatchMakers[id]->setActiveMatch(true);
         }

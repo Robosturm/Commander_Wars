@@ -11,7 +11,7 @@
 
 class GameMap;
 class COSelectionDialog;
-using spCOSelectionDialog = oxygine::intrusive_ptr<COSelectionDialog>;
+using spCOSelectionDialog = std::shared_ptr<COSelectionDialog>;
 
 
 class COSelectionDialog final : public QObject, public oxygine::Actor
@@ -19,7 +19,7 @@ class COSelectionDialog final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit COSelectionDialog(GameMap* pMap, QString coid, QColor color, qint32 player, QStringList coids = {});
-   virtual ~COSelectionDialog() = default;
+    ~COSelectionDialog() = default;
 signals:
     void editFinished(QString coid, qint32 player);
     void canceled();

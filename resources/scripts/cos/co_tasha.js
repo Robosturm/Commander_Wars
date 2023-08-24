@@ -267,7 +267,7 @@ var Constructor = function()
         {
             return 6;
         }
-        return 0;
+        return 1;
     };
     this.getCOUnits = function(co, building, map)
     {

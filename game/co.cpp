@@ -21,7 +21,7 @@
 
 static constexpr double DOUBLE_PRECISION = 100000000.0;
 
-CO::CO(QString coID, Player* owner, GameMap* pMap)
+CO::CO(const QString & coID, Player* owner, GameMap* pMap)
     : m_pOwner(owner),
       m_coID(coID),
       m_pMap{pMap}
@@ -52,7 +52,7 @@ bool CO::isValid()
     return COSpriteManager::getInstance()->exists(m_coID);
 }
 
-qreal CO::getUnitBuildValue(const QString unitID)
+qreal CO::getUnitBuildValue(const QString & unitID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitBuildValue";
@@ -68,7 +68,7 @@ qreal CO::getUnitBuildValue(const QString unitID)
     return ergValue;
 }
 
-bool CO::isJsFunctionEnabled(QString perk) const
+bool CO::isJsFunctionEnabled(const QString & perk) const
 {
     
     return perk != m_coID || // perks are always enabled
@@ -115,7 +115,14 @@ void CO::setCOUnit(Unit* pUnit)
             }
         }
     }
-    m_pCOUnit = spUnit(pUnit);
+    if (pUnit != nullptr)
+    {
+        m_pCOUnit = pUnit->getSharedPtrFromWeak<Unit>();
+    }
+    else
+    {
+        m_pCOUnit.reset();
+    }
 }
 
 qreal CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
@@ -135,7 +142,7 @@ qreal CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system
     return ret;
 }
 
-QString CO::getCoID() const
+const QString CO::getCoID() const
 {
     return m_coID;
 }
@@ -850,7 +857,7 @@ void CO::buildedUnit(Unit* pUnit)
     }
 }
 
-qint32 CO::getCostModifier(const QString id, qint32 baseCost, QPoint position)
+qint32 CO::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCostModifier";
@@ -875,7 +882,7 @@ qint32 CO::getCostModifier(const QString id, qint32 baseCost, QPoint position)
     return ergValue;
 }
 
-qint32 CO::getEnemyCostModifier(const QString id, qint32 baseCost, QPoint position)
+qint32 CO::getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getEnemyCostModifier";
@@ -1135,7 +1142,7 @@ qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint at
     return ergValue;
 }
 
-qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString function)
+qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
@@ -1447,7 +1454,7 @@ bool CO::inCORange(QPoint position, Unit* pUnit)
         {
             return true;
         }
-        else if (pUnit == m_pCOUnit)
+        else if (pUnit == m_pCOUnit.get())
         {
             return true;
         }
@@ -1667,7 +1674,7 @@ QStringList CO::getPerkList()
     return ret;
 }
 
-void CO::setPerkList(const QStringList perks)
+void CO::setPerkList(const QStringList & perks)
 {
     m_perkList.clear();
     m_perkList.append(m_coID);
@@ -1675,7 +1682,7 @@ void CO::setPerkList(const QStringList perks)
     m_perkList.append(perks);
 }
 
-void CO::addPerk(const QString perk)
+void CO::addPerk(const QString & perk)
 {
     if (!m_perkList.contains(perk))
     {
@@ -1683,7 +1690,7 @@ void CO::addPerk(const QString perk)
     }
 }
 
-void CO::removePerk(const QString perk)
+void CO::removePerk(const QString & perk)
 {
     m_perkList.removeAll(perk);
 }
@@ -1712,7 +1719,8 @@ GameAnimationDialog* CO::createPowerSentence()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
                       pInterpreter->newQObject(m_pMap)});
-    QStringList sentences = pInterpreter->doFunction(m_coID, "getPowerSentences", args).toVariant().toStringList();
+    const QString func = "getPowerSentences";
+    QStringList sentences = pInterpreter->doFunction(m_coID, func, args).toVariant().toStringList();
     QString sentence = "No sentence found.";
     if (sentences.length() > 0)
     {
@@ -1733,7 +1741,8 @@ QString CO::getDefeatSentence()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
                       pInterpreter->newQObject(m_pMap)});
-    QStringList sentences = pInterpreter->doFunction(m_coID, "getDefeatSentences", args).toVariant().toStringList();
+    const QString func = "getDefeatSentences";
+    QStringList sentences = pInterpreter->doFunction(m_coID, func, args).toVariant().toStringList();
     QString sentence = "";
     if (sentences.size() > 0)
     {
@@ -1747,7 +1756,8 @@ QString CO::getVictorySentence()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
                       pInterpreter->newQObject(m_pMap)});
-    QStringList sentences = pInterpreter->doFunction(m_coID, "getVictorySentences", args).toVariant().toStringList();
+    const QString func = "getVictorySentences";
+    QStringList sentences = pInterpreter->doFunction(m_coID, func, args).toVariant().toStringList();
     QString sentence = "";
     if (sentences.size() > 0)
     {
@@ -2207,7 +2217,7 @@ void CO::setCoStyleFromUserdata()
     }
 }
 
-void CO::setCoStyle(QString file, qint32 style)
+void CO::setCoStyle(const QString & file, qint32 style)
 {
     m_customCOStyles.clear();
     QImage colorTable;
@@ -2231,7 +2241,7 @@ QString CO::getActiveCoStyle()
     return "";
 }
 
-void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
+void CO::loadResAnim(const QString & coid, const QString & file, QImage & colorTable, QImage & maskTable, bool useColorBox)
 {
     CONSOLE_PRINT("Loading sprites for CO " + coid, GameConsole::eDEBUG);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -2240,7 +2250,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
     QString coidLower = coid.toLower();
     QStringList filenameList = file.split("/");
     QString filename = filenameList[filenameList.size() - 1];
-    oxygine::spResAnim pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+face", oxygine::error_policy::ep_ignore_error));
+    oxygine::spResAnim pAnim = pCOSpriteManager->oxygine::Resources::getSpResAnim(filename + "+face", oxygine::error_policy::ep_ignore_error);
     oxygine::spResAnim pCOAnim;
     if (pAnim.get() != nullptr)
     {
@@ -2250,8 +2260,8 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+face", pCOAnim));
         }
     }
-    pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error));
-    pCOAnim.free();
+    pAnim = pCOSpriteManager->oxygine::Resources::getSpResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error);
+    pCOAnim.reset();
     if (pAnim.get() != nullptr)
     {
         oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
@@ -2260,8 +2270,8 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+info", pCOAnim));
         }
     }
-    pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error));
-    pCOAnim.free();
+    pAnim = pCOSpriteManager->oxygine::Resources::getSpResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error);
+    pCOAnim.reset();
     if (pAnim.get() != nullptr)
     {
         oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
@@ -2270,7 +2280,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+nrm", pCOAnim));
         }
     }
-    pCOAnim.free();
+    pCOAnim.reset();
     if (m_pMenu != nullptr)
     {
         m_pMenu->updatePlayerinfo();

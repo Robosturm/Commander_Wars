@@ -5,7 +5,7 @@
 
 namespace oxygine
 {
-    QScopedPointer<MaterialCache> MaterialCache::mcache;
+    std::shared_ptr<MaterialCache> MaterialCache::mcache;
 
     spMaterial MaterialCache::clone_(const Material& other)
     {
@@ -17,7 +17,7 @@ namespace oxygine
         {
             if (sec->compare(sec.get(), &other))
             {
-                return spMaterial(sec);
+                return sec;
             }
         }
         ++m_addCounter;
@@ -37,7 +37,7 @@ namespace oxygine
         materials fresh;
         for (const auto & material : qAsConst(m_materials))
         {
-            if (material->getRefCounter() > 1)
+            if (material.use_count() > 1)
             {
                 fresh.insert(material->m_hash, material);
             }
@@ -66,9 +66,9 @@ namespace oxygine
 
     MaterialCache& MaterialCache::mc()
     {
-        if (mcache.isNull())
+        if (mcache.get() == nullptr)
         {
-            mcache.reset(new MaterialCache());
+            mcache = MemoryManagement::create<MaterialCache>();
         }
         return *mcache.get();
     }

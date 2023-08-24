@@ -8,8 +8,6 @@
 #include "game/gameaction.h"
 #include "game/gamemap.h"
 
-#include "resource_management/unitspritemanager.h"
-#include "resource_management/weaponmanager.h"
 #include "resource_management/movementtablemanager.h"
 
 // code for building units is here
@@ -45,7 +43,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
         CONSOLE_PRINT("HeavyAi::buildUnits " + item.buildingDataInput[item.m_selectedData].unitId + " with scored value " + QString::number(bestScore), GameConsole::eDEBUG);
         m_updatePoints.push_back(item.m_action->getTarget());
         emit sigPerformAction(item.m_action);
-        item.m_action.free();
+        item.m_action.reset();
         item.m_score = 0;
         if (item.buildingDataInput[item.m_selectedData].unitBuildingDataInput[BuildingEntry::CanAttackImmuneUnitRatio] > 0 ||
             item.buildingDataInput[item.m_selectedData].unitBuildingDataInput[BuildingEntry::UnitsToTransportRatio] > 0)
@@ -92,7 +90,7 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
     double bestScore = 0.0;
     std::vector<qint32> bestItems;
     std::vector<double> scores;
-    building.m_action.free();
+    building.m_action.reset();
     building.m_score = 0;
     qint32 coCount = m_pPlayer->getCoCount();
     qint32 maxCoCount = m_pPlayer->getMaxCoCount();
@@ -160,7 +158,7 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
         qint32 item = GlobalUtils::randInt(0, bestItems.size() - 1);
         building.m_score = scores[item];
         building.m_selectedData = bestItems[item];
-        building.m_action = spGameAction::create(CoreAI::ACTION_BUILD_UNITS, m_pMap);
+        building.m_action = MemoryManagement::create<GameAction>(CoreAI::ACTION_BUILD_UNITS, m_pMap);
         building.m_action->setTarget(QPoint(building.m_pBuilding->Building::getX(), building.m_pBuilding->Building::getY()));
         CoreAI::addMenuItemData(building.m_action, building.buildingDataInput[building.m_selectedData].unitId, building.buildingDataInput[building.m_selectedData].cost);
     }
@@ -172,7 +170,7 @@ void HeavyAi::createUnitBuildData(BuildingData & building, std::vector<double> &
     // create new
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     spTerrain pDummyTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", m_pMap);
-    spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS, m_pMap);
+    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_BUILD_UNITS, m_pMap);
     qint32 x = building.m_pBuilding->Building::getX();
     qint32 y = building.m_pBuilding->Building::getY();
     pAction->setTarget(QPoint(x, y));

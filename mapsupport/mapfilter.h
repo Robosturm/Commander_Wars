@@ -21,7 +21,7 @@ class MapFilter final
 
 public:
     explicit MapFilter() = default;
-   virtual ~MapFilter() = default;
+    ~MapFilter() = default;
 
     void setFlagActive(GameEnums::MapFilterFlags flag, bool isOptional);
     bool getFlagActive(GameEnums::MapFilterFlags flag);

@@ -2,6 +2,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.h"
 
+#include "coreengine/memorymanagement.h"
+
 namespace oxygine
 {
     spVideoDriver VideoDriver::instance{nullptr};
@@ -29,7 +31,7 @@ namespace oxygine
 
     VideoDriver::VideoDriver()
     {
-        m_rt = spTexture::create();
+        m_rt = MemoryManagement::create<Texture>();
     }
 
     VideoDriver::~VideoDriver()
@@ -220,7 +222,7 @@ namespace oxygine
 
     spTexture VideoDriver::createTexture()
     {
-        return spTexture::create();
+        return MemoryManagement::create<Texture>();
     }
 
     void VideoDriver::reset()

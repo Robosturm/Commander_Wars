@@ -27,12 +27,12 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // first vertical line
-    oxygine::spColorRectSprite firstLine = oxygine::spColorRectSprite::create();
+    oxygine::spColorRectSprite firstLine = MemoryManagement::create<oxygine::ColorRectSprite>();
     firstLine->setSize(width, 5);
     firstLine->setColor(color);
     addChild(firstLine);
     // first horizontal line
-    oxygine::spColorRectSprite secondLine = oxygine::spColorRectSprite::create();
+    oxygine::spColorRectSprite secondLine = MemoryManagement::create<oxygine::ColorRectSprite>();
     secondLine->setSize(5, 40);
     secondLine->setColor(color);
     secondLine->setY(5);
@@ -41,7 +41,7 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
     for (qint32 i = 0; i < header.size(); i++)
     {
         // header label
-        spLabel pTextfield = spLabel::create(m_widths[i] - 10);
+        spLabel pTextfield = MemoryManagement::create<Label>(m_widths[i] - 10);
         pTextfield->setPosition(x + 5, 13);
         pTextfield->setStyle(style);
         pTextfield->setHtmlText(header[i]);
@@ -49,14 +49,14 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
         m_Labels.append(pTextfield);
         x += widths[i];
         // following horizintal line
-        oxygine::spColorRectSprite line = oxygine::spColorRectSprite::create();
+        oxygine::spColorRectSprite line = MemoryManagement::create<oxygine::ColorRectSprite>();
         line->setSize(5, 40);
         line->setColor(color);
         line->setPosition(x, 5);
         addChild(line);
     }
     // vertical line after header
-    oxygine::spColorRectSprite line = oxygine::spColorRectSprite::create();
+    oxygine::spColorRectSprite line = MemoryManagement::create<oxygine::ColorRectSprite>();
     line->setSize(width, 5);
     line->setColor(color);
     line->setY(5 + 40);
@@ -66,21 +66,21 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
     for (qint32 i = 0; i < data.size(); i++)
     {
         // vertical line below the item
-        line = oxygine::spColorRectSprite::create();
+        line = MemoryManagement::create<oxygine::ColorRectSprite>();
         line->setSize(width, 5);
         line->setColor(color);
         line->setY(5 + 40 * (i + 2));
         addChild(line);
         m_VLines.append(line);
         // initial horizontal line
-        line = oxygine::spColorRectSprite::create();
+        line = MemoryManagement::create<oxygine::ColorRectSprite>();
         line->setSize(5, 40);
         line->setColor(color);
         line->setY(5 + (i + 1) * 40);
         addChild(line);
         m_HLines.append(line);
         // final horizontal line
-        oxygine::spColorRectSprite line = oxygine::spColorRectSprite::create();
+        oxygine::spColorRectSprite line = MemoryManagement::create<oxygine::ColorRectSprite>();
         line->setSize(5, 40);
         line->setColor(color);
         line->setPosition(width - 5, 5 + (i + 1) * 40);
@@ -105,7 +105,7 @@ void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable, const QVe
 
     if (i2 < m_data[i].size() - 1)
     {
-        oxygine::spColorRectSprite line = oxygine::spColorRectSprite::create();
+        oxygine::spColorRectSprite line = MemoryManagement::create<oxygine::ColorRectSprite>();
         line->setSize(5, 40);
         line->setColor(color);
         line->setPosition(x + m_widths[i2], 5 + (i + 1) * 40);
@@ -119,7 +119,7 @@ void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable, const QVe
             });
         }
     }
-    spLabel pTextfield = spLabel::create(m_widths[i2] - 10);
+    spLabel pTextfield = MemoryManagement::create<Label>(m_widths[i2] - 10);
     pTextfield->setStyle(style);
     pTextfield->setText(m_data[i][i2]);
     if (!tooltips[i][i2].isEmpty())

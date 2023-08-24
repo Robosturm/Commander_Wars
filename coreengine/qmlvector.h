@@ -5,22 +5,21 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
-
 #include "game/unit.h"
 #include "game/building.h"
 
 #include "coreengine/globalutils.h"
+#include "coreengine/refobject.h"
 
 class QmlVectorPoint;
-using spQmlVectorPoint = oxygine::intrusive_ptr<QmlVectorPoint>;
+using spQmlVectorPoint = std::shared_ptr<QmlVectorPoint>;
 
-class QmlVectorPoint final : public QObject, public oxygine::ref_counter
+class QmlVectorPoint final : public QObject, public RefObject<QmlVectorPoint>
 {
     Q_OBJECT
 public:
     explicit QmlVectorPoint();
-    virtual ~QmlVectorPoint() = default;
+    ~QmlVectorPoint() = default;
     const std::vector<QPoint> & getVector() const
     {
         return m_Vector;
@@ -51,13 +50,13 @@ private:
 Q_DECLARE_INTERFACE(QmlVectorPoint, "QmlVectorPoint");
 
 class QmlVectorUnit;
-using spQmlVectorUnit = oxygine::intrusive_ptr<QmlVectorUnit>;
-class QmlVectorUnit final : public QObject, public oxygine::ref_counter
+using spQmlVectorUnit = std::shared_ptr<QmlVectorUnit>;
+class QmlVectorUnit final : public QObject
 {
     Q_OBJECT
 public:
     explicit QmlVectorUnit();
-    virtual ~QmlVectorUnit() = default;
+    ~QmlVectorUnit() = default;
     void clone(QmlVectorUnit* source);
     const std::vector<spUnit> & getVector() const
     {
@@ -76,7 +75,10 @@ public:
     }
     Q_INVOKABLE inline void append(Unit* t)
     {
-        m_Vector.push_back(spUnit(t));
+        if (t != nullptr)
+        {
+            m_Vector.push_back(t->getSharedPtrFromWeak<Unit>());
+        }
     }
     Q_INVOKABLE inline qint32 size() const
     {
@@ -103,7 +105,7 @@ public:
      * @param unitId
      * @return
      */
-    Q_INVOKABLE qint32 getUnitCount(const QString unitId);
+    Q_INVOKABLE qint32 getUnitCount(const QString & unitId);
 private:
     std::vector<spUnit> m_Vector;
 };
@@ -111,13 +113,13 @@ private:
 Q_DECLARE_INTERFACE(QmlVectorUnit, "QmlVectorUnit");
 
 class QmlVectorBuilding;
-using spQmlVectorBuilding = oxygine::intrusive_ptr<QmlVectorBuilding>;
-class QmlVectorBuilding final : public QObject, public oxygine::ref_counter
+using spQmlVectorBuilding = std::shared_ptr<QmlVectorBuilding>;
+class QmlVectorBuilding final : public QObject
 {
     Q_OBJECT
 public:
     explicit QmlVectorBuilding();
-    virtual ~QmlVectorBuilding() = default;
+    ~QmlVectorBuilding() = default;
     void clone(QmlVectorBuilding * source);
     const std::vector<spBuilding> & getVector() const
     {
@@ -141,14 +143,17 @@ public:
     }
     Q_INVOKABLE inline void append(Building* t)
     {
-        m_Vector.push_back(spBuilding(t));
+        if (t != nullptr)
+        {
+            m_Vector.push_back(t->getSharedPtrFromWeak<Building>());
+        }
     }
     Q_INVOKABLE inline qint32 size() const
     {
         return m_Vector.size();
     }
-    Q_INVOKABLE qint32 getBuildingCount(const QString buildingId);
-    Q_INVOKABLE qint32 getBuildingGroupCount(const QStringList buildingIds, bool onlyEmpty);
+    Q_INVOKABLE qint32 getBuildingCount(const QString & buildingId);
+    Q_INVOKABLE qint32 getBuildingGroupCount(const QStringList & buildingIds, bool onlyEmpty);
     Q_INVOKABLE void remove()
     {
     }

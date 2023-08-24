@@ -5,13 +5,12 @@
 class MovementPlannerAddInManager final : public QObject, public RessourceManagement<MovementPlannerAddInManager>
 {
     Q_OBJECT
-public:
 
 protected:
-    friend RessourceManagement<MovementPlannerAddInManager>;
+    friend MemoryManagement;
     MovementPlannerAddInManager();
 
 private:
-   virtual ~MovementPlannerAddInManager() = default;
+    ~MovementPlannerAddInManager() = default;
 };
 

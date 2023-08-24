@@ -1,9 +1,11 @@
 #include "game/ui/humanquickbuttons.h"
-#include "coreengine/interpreter.h"
 
 #include "ui_reader/uifactory.h"
 
 #include "menue/gamemenue.h"
+
+#include "coreengine/interpreter.h"
+#include "coreengine/mainapp.h"
 
 constexpr const char* const quickButtonsMenu = "quickButtonsMenu";
 

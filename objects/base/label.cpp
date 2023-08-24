@@ -20,18 +20,18 @@ Label::Label(qint32 width, bool showBox)
     {
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");
-        oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+        oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
         pBox->setResAnim(pAnim);
         pBox->setSize(width, 40);
         addChild(pBox);
         xOffset = 5;
         yOffset = 5;
     }
-    m_clipRect = oxygine::spClipRectActor::create();
+    m_clipRect = MemoryManagement::create<oxygine::ClipRectActor>();
     m_clipRect->setWidth(width);
     m_clipRect->setHeight(28);
     m_clipRect->setPosition(xOffset, yOffset);
-    m_textField = oxygine::spTextField::create();
+    m_textField = MemoryManagement::create<oxygine::TextField>();
     m_textField->setWidth(width);
     Label::setWidth(width);
     m_clipRect->addChild(m_textField);

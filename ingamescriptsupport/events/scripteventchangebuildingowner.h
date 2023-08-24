@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/events/scripteventgeneric.h"
 
 class ScriptEventChangeBuildingOwner;
-using spScriptEventChangeBuildingOwner = oxygine::intrusive_ptr<ScriptEventChangeBuildingOwner>;
+using spScriptEventChangeBuildingOwner = std::shared_ptr<ScriptEventChangeBuildingOwner>;
 
 class ScriptEventChangeBuildingOwner final : public ScriptEventGeneric
 {

@@ -11,15 +11,15 @@
 class QTcpSocket;
 
 class TCPClient;
-using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
+using spTCPClient = std::shared_ptr<TCPClient>;
 
 class TCPClient final : public NetworkInterface
 {
     Q_OBJECT
 public:
     TCPClient(QObject* pParent);
-    TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, quint64 socketId);
-   virtual ~TCPClient();
+    TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, std::shared_ptr<QTcpSocket> pSocket, quint64 socketId);
+    ~TCPClient();
     /**
      * @brief moveClientToThread
      * @param pThread

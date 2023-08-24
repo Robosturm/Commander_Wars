@@ -1,6 +1,7 @@
 #include <QTextStream>
 #include <QFile>
 
+#include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
 
 #include "game/gamemap.h"
@@ -129,7 +130,7 @@ void GameMap::importTxtMap(QString file)
             else if (line.startsWith("SPIELER|"))
             {
                 QStringList data = line.split("|");
-                m_players.append(spPlayer::create(this));
+                m_players.append(MemoryManagement::create<Player>(this));
                 qint32 idx = m_players.size() - 1;
                 m_players[idx]->setFundsModifier(static_cast<float>(data[1].toInt()) / 1000.0f);
                 m_players[idx]->setFunds(data[2].toInt());
@@ -146,7 +147,7 @@ void GameMap::importTxtMap(QString file)
                 for (qint32 y = 0; y < heigth; y++)
                 {
                     m_fields.push_back(std::vector<spTerrain>(width, spTerrain()));
-                    auto pActor = oxygine::spActor::create();
+                    auto pActor = MemoryManagement::create<oxygine::Actor>();
                     pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
                     m_rowSprites.push_back(pActor);
                     addChild(pActor);
@@ -191,7 +192,7 @@ void GameMap::importTxtMap(QString file)
                     {
                         if (buildingIdMapping[i][0] == buildingID)
                         {
-                            spBuilding pBuilding = spBuilding::create(buildingIdMapping[i][1], this);
+                            spBuilding pBuilding = MemoryManagement::create<Building>(buildingIdMapping[i][1], this);
                             qint32 player = data[5].toInt();
                             if (player > 0)
                             {
@@ -239,7 +240,7 @@ void GameMap::importTxtMap(QString file)
                         if (unitIdMapping[i][0] == unitID)
                         {
                             qint32 player = data[8].toInt();
-                            spUnit pUnit = spUnit::create(unitIdMapping[i][1], getPlayer(player - 1), false, this);
+                            spUnit pUnit = MemoryManagement::create<Unit>(unitIdMapping[i][1], getPlayer(player - 1), false, this);
                             pUnit->setFuel(data[6].toInt());
                             pUnit->setHp(data[7].toInt());
                             pTerrain->setUnit(pUnit);

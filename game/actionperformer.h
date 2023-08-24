@@ -47,7 +47,7 @@ public:
      * @param newActionRunning
      */
     void setActionRunning(bool newActionRunning);
-    bool getExit() const;
+    Q_INVOKABLE bool getExit() const;
     void setExit(bool newExit);
     /**
      * @brief centerMapOnAction
@@ -62,7 +62,7 @@ public:
      * @brief performAction performs the given action and deletes it afterwards.
      * @param pGameAction
      */
-    void performAction(spGameAction pGameAction, bool fromAiPipe = false);
+    Q_INVOKABLE void performAction(spGameAction pGameAction, bool fromAiPipe = false);
     /**
      * @brief isTrap
      * @param pAction
@@ -71,7 +71,7 @@ public:
      * @param previousPoint
      * @return
      */
-    bool isTrap(const QString function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
+    bool isTrap(const QString & function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
     /**
      * @brief finsihActionPerformed
      */
@@ -88,22 +88,23 @@ public:
     /**
      * @brief delayedActionPerformed
      */
-    void delayedActionPerformed();
+    Q_INVOKABLE void delayedActionPerformed();
     /**
      * @brief getActionRunning
      * @return
      */
-    bool getActionRunning() const;
+    Q_INVOKABLE bool getActionRunning() const;
     /**
      * @brief getSyncCounter
      * @return
      */
-    qint64 getSyncCounter() const;
+    Q_INVOKABLE qint64 getSyncCounter() const;
     /**
      * @brief nextTurnPlayerTimeout
      */
-    void nextTurnPlayerTimeout();
+    Q_INVOKABLE void nextTurnPlayerTimeout();
 signals:
+    void sigPerformAction(spGameAction pGameAction, bool fromAiPipe = false);
     void sigActionPerformed();
     void sigAiProcesseSendAction(spGameAction pGameAction);
 

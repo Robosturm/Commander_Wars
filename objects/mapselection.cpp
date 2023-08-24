@@ -27,7 +27,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
     connect(&m_itemChangedTimer, &QTimer::timeout, this, &MapSelection::itemChangeTimerExpired, Qt::QueuedConnection);
     connect(this, &MapSelection::sigStartItemChangeTimer, this, &MapSelection::startItemChangeTimer, Qt::QueuedConnection);
 
-    oxygine::spButton pArrowUp = oxygine::spButton::create();
+    oxygine::spButton pArrowUp = MemoryManagement::create<oxygine::Button>();
     oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
 
     pArrowUp->setResAnim(pAnim);
@@ -69,7 +69,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     pAnim = pObjectManager->getResAnim("mapSelectionTop");
-    oxygine::spBox9Sprite pBackground = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pBackground = MemoryManagement::create<oxygine::Box9Sprite>();
     pBackground->setResAnim(pAnim);
     if (pAnim != nullptr)
     {
@@ -90,7 +90,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
     createItemContainer(y, width, m_itemHeigth * m_itemCount);
 
     pAnim = pObjectManager->getResAnim("mapSelectionSelectedMap");
-    m_SelectedItem = oxygine::spBox9Sprite::create();
+    m_SelectedItem = MemoryManagement::create<oxygine::Box9Sprite>();
     m_SelectedItem->setResAnim(pAnim);
     m_SelectedItem->setSize(width - 12, m_itemHeigth);
     m_SelectedItem->setPosition(5, y);
@@ -112,13 +112,13 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
     for (qint32 i = 0; i < m_itemCount; i++)
     {
         pAnim = pObjectManager->getResAnim("mapSelectionItem");
-        pBackground = oxygine::spBox9Sprite::create();
+        pBackground = MemoryManagement::create<oxygine::Box9Sprite>();
         pBackground->setResAnim(pAnim);
         pBackground->setSize(width, m_itemHeigth);
         pBackground->setPosition(0, y - m_ItemContainer->getY());
-        oxygine::spClipRectActor pClipActor = oxygine::spClipRectActor::create();
+        oxygine::spClipRectActor pClipActor = MemoryManagement::create<oxygine::ClipRectActor>();
         pBackground->addChild(pClipActor);
-        oxygine::spTextField pTextfield = oxygine::spTextField::create();
+        oxygine::spTextField pTextfield = MemoryManagement::create<oxygine::TextField>();
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
@@ -163,7 +163,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
         y += m_itemHeigth;
     }
     pAnim = pObjectManager->getResAnim("mapSelectionBottom");
-    pBackground = oxygine::spBox9Sprite::create();
+    pBackground = MemoryManagement::create<oxygine::Box9Sprite>();
     pBackground->setResAnim(pAnim);
     if (pAnim != nullptr)
     {
@@ -175,7 +175,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
         y += pAnim->getHeight();
     }
     addChild(pBackground);
-    oxygine::spButton pArrowDown = oxygine::spButton::create();
+    oxygine::spButton pArrowDown = MemoryManagement::create<oxygine::Button>();
     pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
     pArrowDown->setResAnim(pAnim);
     pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -220,7 +220,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
 
 void MapSelection::createItemContainer(qint32 y, qint32 width, qint32 height)
 {
-    m_ItemContainer = oxygine::spActor::create();
+    m_ItemContainer = MemoryManagement::create<oxygine::Actor>();
     m_ItemContainer->setPosition(0, y);
     m_ItemContainer->setSize(width, height);
     addChild(m_ItemContainer);

@@ -10,10 +10,10 @@
 #include "game/unit.h"
 #include "game/co.h"
 
-GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath, GameMap* pMap)
+GameAnimationWalk::GameAnimationWalk(spUnit pUnit, const QVector<QPoint> & movePath, GameMap* pMap)
     : GameAnimation(static_cast<quint32>(GameMap::frameTime), pMap),
-      m_pUnit(pUnit),
-      m_movePath(movePath)
+    m_pUnit(pUnit),
+    m_movePath(movePath)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationWalk");
@@ -37,7 +37,7 @@ void GameAnimationWalk::start()
         {
             setVisible(true);
         }
-        m_previousAnimation.free();
+        m_previousAnimation.reset();
         doPreAnimationCall();
         AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         auto speed = Settings::getInstance()->getWalkAnimationSpeed();
@@ -118,9 +118,9 @@ void GameAnimationWalk::loadSpriteV2(const QString spriteID, GameEnums::Recolori
     if (pAnim != nullptr)
     {
         Player* pPlayer = m_pMap->getCurrentViewPlayer();
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
-        oxygine::spTweenQueue queueMoving = oxygine::spTweenQueue::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+        oxygine::spTweenQueue queueAnimating = MemoryManagement::create<oxygine::TweenQueue>();
+        oxygine::spTweenQueue queueMoving = MemoryManagement::create<oxygine::TweenQueue>();
         pSprite->setPosition(m_pUnit->Unit::getX() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::getImageSize()) / 2.0f),
                              m_pUnit->Unit::getY() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::getImageSize()) / 2.0f));
         setSize(pAnim->getSize());
@@ -157,9 +157,9 @@ void GameAnimationWalk::loadSpriteV2(const QString spriteID, GameEnums::Recolori
                         isVisible = false;
                     }
                     tween1->addDoneCallback([this, isVisible](oxygine::Event *)
-                    {
-                        setVisible(isVisible);
-                    });
+                                            {
+                                                setVisible(isVisible);
+                                            });
                 }
 
                 queueMoving->add(tween1);
@@ -169,30 +169,30 @@ void GameAnimationWalk::loadSpriteV2(const QString spriteID, GameEnums::Recolori
                 {
                     switch (direction)
                     {
-                        case GameEnums::Directions_North:
-                        {
-                            row = 1;
-                            break;
-                        }
-                        case GameEnums::Directions_South:
-                        {
-                            row = 0;
-                            break;
-                        }
-                        case GameEnums::Directions_East:
-                        {
-                            row = 2;
-                            break;
-                        }
-                        case GameEnums::Directions_West:
-                        {
-                            row = 3;
-                            break;
-                        }
-                        default:
-                        {
-                            break;
-                        }
+                    case GameEnums::Directions_North:
+                    {
+                        row = 1;
+                        break;
+                    }
+                    case GameEnums::Directions_South:
+                    {
+                        row = 0;
+                        break;
+                    }
+                    case GameEnums::Directions_East:
+                    {
+                        row = 2;
+                        break;
+                    }
+                    case GameEnums::Directions_West:
+                    {
+                        row = 3;
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
                     }
                 }
                 oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, row), oxygine::timeMS(m_frameTime * pAnim->getRows()), 1);
@@ -203,9 +203,9 @@ void GameAnimationWalk::loadSpriteV2(const QString spriteID, GameEnums::Recolori
                     {
                         m_finishQueued = true;
                         queueMoving->addDoneCallback([this](oxygine::Event *)->void
-                        {
-                            emitFinished();
-                        });
+                                                     {
+                                                         emitFinished();
+                                                     });
                     }
                 }
             }
@@ -217,9 +217,9 @@ void GameAnimationWalk::loadSpriteV2(const QString spriteID, GameEnums::Recolori
             {
                 m_finishQueued = true;
                 queueMoving->addDoneCallback([this](oxygine::Event *)->void
-                {
-                    emitFinished();
-                });
+                                             {
+                                                 emitFinished();
+                                             });
             }
         }
         pSprite->addTween(queueMoving);

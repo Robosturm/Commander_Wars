@@ -5,15 +5,14 @@
 
 #include "ai/neuralnetwork/neural/edge.h"
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "coreengine/fileserializable.h"
 
 class Layer;
 
 class Neuron;
-using spNeuron = oxygine::intrusive_ptr<Neuron>;
+using spNeuron = std::shared_ptr<Neuron>;
 
-class Neuron final : public FileSerializable, public oxygine::ref_counter
+class Neuron final : public FileSerializable
 {
 public:
 
@@ -28,7 +27,7 @@ public:
     };
 
     Neuron(qint32 id_neuron, Layer* layer, ActivationFunction function = ActivationFunction::LINEAR, bool is_bias = false);
-   virtual ~Neuron() = default;
+    ~Neuron() = default;
 
     void trigger();
     double output();

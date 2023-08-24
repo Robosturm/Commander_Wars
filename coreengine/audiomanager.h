@@ -14,10 +14,10 @@
 #include <QTimer>
 #include <QUrl>
 
-#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
+#include "coreengine/memorymanagement.h"
 
 class AudioManager;
-using spAudioManager = oxygine::intrusive_ptr<AudioManager>;
+using spAudioManager = std::shared_ptr<AudioManager>;
 
 struct SoundData : public QObject
 {
@@ -26,11 +26,12 @@ struct SoundData : public QObject
     QUrl cacheUrl;
     QVector<qint32> m_usedSounds;
     qint32 m_maxUseCount{0};
+    SoundData();
 };
 
 Q_DECLARE_INTERFACE(SoundData, "SoundData");
 
-class AudioManager final : public QObject, public oxygine::ref_counter
+class AudioManager final : public QObject
 {
     static constexpr qint32 MAX_PARALLEL_SOUNDS = 200;
     Q_OBJECT
@@ -49,7 +50,7 @@ private:
 #endif
 public:
     explicit AudioManager(bool noAudio);
-   virtual ~AudioManager() = default;
+    ~AudioManager() = default;
     /**
      * @brief getLoadBaseGameFolders
      * @return
@@ -276,7 +277,7 @@ private:
     };
     QTimer m_positionChangedTimer;
 #ifdef AUDIOSUPPORT
-    QScopedPointer<Player> m_player;
+    std::shared_ptr<Player> m_player;
     QVector<PlaylistData> m_PlayListdata;
     // sound playback data
     QMap<QString, std::shared_ptr<SoundData>> m_soundCaches;
@@ -288,9 +289,9 @@ private:
         SoundEffect(QObject* owner)
             : timer(owner)
         {
-            sound.reset(new QSoundEffect(owner));
+            sound = MemoryManagement::create<QSoundEffect>(owner);
         }
-        QScopedPointer<QSoundEffect> sound;
+        std::shared_ptr<QSoundEffect> sound;
         QTimer timer;
     };
     SoundEffect m_soundEffectData[MAX_PARALLEL_SOUNDS]{SoundEffect(this),

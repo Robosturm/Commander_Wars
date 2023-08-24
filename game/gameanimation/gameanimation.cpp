@@ -38,12 +38,12 @@ void GameAnimation::restart()
     if (m_pMap != nullptr)
     {
         m_stopped = false;
-        m_previousAnimation.free();
+        m_previousAnimation.reset();
         for (auto & tween : m_stageTweens)
         {
             oxygine::Stage::getStage()->addTween(tween);
         }
-        m_pMap->addChild(spGameAnimation(this));
+        m_pMap->addChild(getSharedPtr<Actor>());
         start();
     }
 }
@@ -54,7 +54,7 @@ void GameAnimation::start()
     {
         m_started = true;
         setVisible(true);
-        m_previousAnimation.free();
+        m_previousAnimation.reset();
         doPreAnimationCall();
         AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         for (auto & data : m_SoundData)
@@ -91,7 +91,7 @@ void GameAnimation::stop()
     setVisible(false);
 }
 
-qint32 GameAnimation::getFontWidth(const QString font, const QString text) const
+qint32 GameAnimation::getFontWidth(const QString & font, const QString & text) const
 {
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getInstance()->getFont(font));
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -109,9 +109,12 @@ void GameAnimation::setRotation(float angle)
 
 void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
 {
-    pGameAnimation->setPreviousAnimation(this);
-    m_QueuedAnimations.append(spGameAnimation(pGameAnimation));
-    GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
+    if (pGameAnimation != nullptr)
+    {
+        pGameAnimation->setPreviousAnimation(getSharedPtr<GameAnimation>());
+        m_QueuedAnimations.append(pGameAnimation->getSharedPtrFromWeak<GameAnimation>());
+        GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
+    }
 }
 
 void GameAnimation::queueAnimationBefore(GameAnimation* pGameAnimation)
@@ -173,9 +176,9 @@ void GameAnimation::setVisible(bool vis)
     oxygine::Sprite::setVisible(vis);
 }
 
-void GameAnimation::setPreviousAnimation(GameAnimation *previousAnimation)
+void GameAnimation::setPreviousAnimation(spGameAnimation previousAnimation)
 {
-    m_previousAnimation = spGameAnimation(previousAnimation);
+    m_previousAnimation = previousAnimation;
 }
 
 void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish, float scale, qint32 delay, qint32 loops)
@@ -230,7 +233,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
             CONSOLE_PRINT_MODULE("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
             return;
         }
-        oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
+        oxygine::spSingleResAnim pAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         Mainapp::getInstance()->loadResAnim(pAnim, img, 1, frames, 1);
         m_resAnims.append(pAnim);
         loadSpriteAnim(pAnim.get(), offsetX, offsetY, color, sleepAfterFinish, scaleX, scaleY, delay, loops, easeType);
@@ -243,8 +246,8 @@ void GameAnimation::addBox(QString spriteID, float offsetX, float offsetY, qint3
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
-        m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
+        oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
+        m_lastCreatedTweenQueue = MemoryManagement::create<oxygine::TweenQueue>();
         pBox->setResAnim(pAnim);
         pBox->setSize(width, heigth);
         setSize(width, heigth);
@@ -283,8 +286,8 @@ void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, 
 {
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        oxygine::spTweenQueue queuedAnim = oxygine::spTweenQueue::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+        oxygine::spTweenQueue queuedAnim = MemoryManagement::create<oxygine::TweenQueue>();
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * m_frameTime), 1, false, oxygine::timeMS(static_cast<qint64>(static_cast<float>(delay) / Settings::getInstance()->getAnimationSpeed())));
         queuedAnim->add(tween);
         if (sleepAfterFinish > 0)
@@ -321,8 +324,8 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
 {
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+        m_lastCreatedTweenQueue = MemoryManagement::create<oxygine::TweenQueue>();
         qint32 totalFrames = 0;
         if (pAnim != nullptr)
         {
@@ -373,7 +376,7 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
     style.color = color;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    oxygine::spTextField pTextfield = oxygine::spTextField::create();
+    oxygine::spTextField pTextfield = MemoryManagement::create<oxygine::TextField>();
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(text);
     pTextfield->setPosition(offsetX, offsetY);
@@ -391,19 +394,16 @@ bool GameAnimation::onFinished(bool skipping)
     {
         m_finished = true;
         m_skipping |= skipping;
-        GameAnimationFactory::removeAnimationFromQueue(spGameAnimation(this));
+        GameAnimationFactory::removeAnimationFromQueue(getSharedPtr<GameAnimation>());
         if (!m_started)
         {
             doPreAnimationCall();
         }
-        else
+        for (auto & data : m_SoundData)
         {
-            for (auto & data : m_SoundData)
+            if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
             {
-                if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
-                {
-                    Mainapp::getInstance()->getAudioManager()->stopSound(data.soundFile);
-                }
+                Mainapp::getInstance()->getAudioManager()->stopSound(data.soundFile);
             }
         }
         GameAnimationFactory* pGameAnimationFactory = GameAnimationFactory::getInstance();
@@ -425,7 +425,7 @@ bool GameAnimation::onFinished(bool skipping)
             tween->complete();
         }
         m_stageTweens.clear();
-        GameAnimationFactory::removeAnimation(this, m_skipping, false);
+        GameAnimationFactory::removeAnimation(getSharedPtr<GameAnimation>(), m_skipping, false);
         if (!skipping && GameAnimationFactory::getAnimationCount() > 0)
         {
             GameAnimationFactory::skipAllAnimations();

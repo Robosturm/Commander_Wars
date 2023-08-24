@@ -65,9 +65,9 @@ CommandLineParser::CommandLineParser()
       m_noAudio(ARG_NOAUDIO, tr("If the exe is started muted and sound can't be turned on")),
       m_iniScript(ARG_INITSCRIPT, tr("Path to a js script that gets triggered by the game to automate or test things"), tr("script"), ""),
       m_createSlaveLogs(ARG_CREATESLAVELOGS, tr("If the game should create logs for spawned slave processes")),
-      m_slaveAddress(ARG_SLAVEADDRESS, tr("Address on which the game will listen for new clients"), tr("ip-adress"), ""),
-      m_secondarySlaveAddress(ARG_SLAVESECONDARYADDRESS, tr("Secondary address on which the game will listen for new clients"), tr("ip-address"), ""),
-      m_slavePort(ARG_SLAVEPORT, tr("Port on which the game will listen for new clients"), tr("port"), "0"),
+      m_slaveAddress(ARG_SLAVEADDRESS, tr("Address on which the game will listen for clients"), tr("ip-adress"), ""),
+      m_secondarySlaveAddress(ARG_SLAVESECONDARYADDRESS, tr("Secondary address on which the game will listen for clients"), tr("ip-address"), ""),
+      m_slavePort(ARG_SLAVEPORT, tr("Port on which the game will listen for clients"), tr("port"), "0"),
       m_masterAddress(ARG_MASTERADDRESS, tr("Address on which the game will connect to the hosting server to exchange data"), "ip-address", "::1"),
       m_masterPort(ARG_MASTERPORT, tr("Port on which the game will connect to the hosting server to exchange data"), tr("port"), ""),
       m_slaveName(ARG_SLAVENAME, tr("Unique name to identify the slave on the server side"), tr("name"), "SlaveLog"),
@@ -419,9 +419,9 @@ void CommandLineParser::startSlaveGame() const
     {
         MainServer::initDatabase();
         // init multiplayer menu
-        spTCPServer pServer = spTCPServer::create(nullptr);
+        spTCPServer pServer = MemoryManagement::create<TCPServer>(nullptr);
         pServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", Multiplayermenu::NetworkMode::Host);
+        spMultiplayermenu pMenu = MemoryManagement::create<Multiplayermenu>(pServer, "", Multiplayermenu::NetworkMode::Host);
         pMenu->connectNetworkSlots();
         oxygine::Stage::getStage()->addChild(pMenu);
         emit pServer->sig_connect(slaveAddress, slavePort, secondarySlaveAddress);

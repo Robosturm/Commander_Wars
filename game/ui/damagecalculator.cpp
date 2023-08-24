@@ -40,7 +40,7 @@ DamageCalculator::DamageCalculator(GameMap * pMap)
     }
     qint32 x = 10;
     qint32 y = 10;
-    spLabel pLabel = spLabel::create(getContentWidth());
+    spLabel pLabel = MemoryManagement::create<Label>(getContentWidth());
     pLabel->setPosition(0, y);
     auto style = pLabel->getStyle();
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
@@ -53,7 +53,7 @@ DamageCalculator::DamageCalculator(GameMap * pMap)
     pCOSpriteManager->getCoGroups(coIds);
     coIds.push_front("");
 
-    m_dropDownPlayer = spPlayer::create(&m_map);
+    m_dropDownPlayer = MemoryManagement::create<Player>(&m_map);
     m_dropDownPlayer->init();
 
     QStringList rankItems;
@@ -124,7 +124,7 @@ void DamageCalculator::loadCoData(qint32 & x, qint32 & y, CosData & cosData,
         {
             pAnim = pCOSpriteManager->getResAnim(id + "+info");
         }
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim != nullptr)
         {
             pSprite->setResAnim(pAnim);
@@ -148,22 +148,22 @@ void DamageCalculator::loadCoData(qint32 & x, qint32 & y, CosData & cosData,
     {
         x = startX;
 
-        coData.m_co = spDropDownmenuSprite::create(150, coIds, coCreator);
+        coData.m_co = MemoryManagement::create<DropDownmenuSprite>(150, coIds, coCreator);
         coData.m_co->setTooltipText(tr("CO for the player."));
         coData.m_co->setPosition(x, y);
         addItem(coData.m_co);
         x += coData.m_co->getScaledWidth() + xAdvance;
-        coData.m_powerMode = spDropDownmenuSprite::create(110, powers, powerCreator);
+        coData.m_powerMode = MemoryManagement::create<DropDownmenuSprite>(110, powers, powerCreator);
         coData.m_powerMode->setTooltipText(tr("Power level of the co."));
         coData.m_powerMode->setPosition(x, y);
         addItem(coData.m_powerMode);
         x += coData.m_powerMode->getScaledWidth() + xAdvance;
-        spLabel pLabel = spLabel::create(60);
+        spLabel pLabel = MemoryManagement::create<Label>(60);
         pLabel->setPosition(x, y);
         pLabel->setHtmlText(tr("Zone"));
         addItem(pLabel);
         x += pLabel->getScaledWidth();
-        coData.m_inCoRange = spCheckbox::create();
+        coData.m_inCoRange = MemoryManagement::create<Checkbox>();
         coData.m_inCoRange->setPosition(x, y);
         coData.m_inCoRange->setTooltipText(tr("If the unit is in the co-zone of this co."));
         addItem(coData.m_inCoRange);
@@ -180,10 +180,10 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     Player* pPlayer = m_dropDownPlayer.get();
     auto unitCreator = [this, pPlayer](QString id)
     {
-        spUnit pSprite = spUnit::create(id, pPlayer, false, &m_map);
+        spUnit pSprite = MemoryManagement::create<Unit>(id, pPlayer, false, &m_map);
         return pSprite;
     };
-    unitData.m_unit = spDropDownmenuSprite::create(105, unitIds, unitCreator, 30);
+    unitData.m_unit = MemoryManagement::create<DropDownmenuSprite>(105, unitIds, unitCreator, 30);
     unitData.m_unit->setTooltipText(tr("Unit to be used."));
     unitData.m_unit->setPosition(x, y);
     addItem(unitData.m_unit);
@@ -202,7 +202,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
         oxygine::spSprite pRet = pTerrain;
         if (isBuilding)
         {
-            spBuilding pBuilding = spBuilding::create(id, &m_map);
+            spBuilding pBuilding = MemoryManagement::create<Building>(id, &m_map);
             pBuilding->setTooltipText(pBuilding->getName());
             pBuilding->updateBuildingSprites(false);
             pBuilding->scaleAndShowOnSingleTile();
@@ -210,7 +210,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
         }
         return pRet;
     };
-    unitData.m_Terrain = spDropDownmenuSprite::create(105, terrainIds, terrainCreator, -1, false);
+    unitData.m_Terrain = MemoryManagement::create<DropDownmenuSprite>(105, terrainIds, terrainCreator, -1, false);
     unitData.m_Terrain->setTooltipText(tr("Terrain the unit is currently sitting on."));
     unitData.m_Terrain->setPosition(x, y);
     addItem(unitData.m_Terrain);
@@ -226,7 +226,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
         {
             pAnim = UnitSpriteManager::getInstance()->getResAnim(id);
         }
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim != nullptr)
         {
             pSprite->setResAnim(pAnim);
@@ -236,48 +236,48 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
         return pSprite;
     };
 
-    unitData.m_unitRank = spDropDownmenuSprite::create(105, rankItems, unitRankCreator, 30);
+    unitData.m_unitRank = MemoryManagement::create<DropDownmenuSprite>(105, rankItems, unitRankCreator, 30);
     unitData.m_unitRank->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediately applied."));
     unitData.m_unitRank->setCurrentItem(-GameEnums::UnitRank_CO1);
     unitData.m_unitRank->setPosition(x, y);
     addItem(unitData.m_unitRank);
     x = startX;
     y += unitData.m_unitRank->getScaledHeight();
-    spLabel pLabel = spLabel::create(150);
+    spLabel pLabel = MemoryManagement::create<Label>(150);
     pLabel->setPosition(x, y);
     pLabel->setHtmlText(tr("HP:"));
     addItem(pLabel);
-    unitData.m_hp = spSpinBox::create(200, 1, 10);
+    unitData.m_hp = MemoryManagement::create<SpinBox>(200, 1, 10);
     unitData.m_hp->setCurrentValue(10);
     unitData.m_hp->setTooltipText(tr("HP of the unit."));
     unitData.m_hp->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
     addItem(unitData.m_hp);
     y += pLabel->getScaledHeight() + 5;
-    pLabel = spLabel::create(150);
+    pLabel = MemoryManagement::create<Label>(150);
     pLabel->setPosition(x, y);
     pLabel->setHtmlText(tr("Towers:"));
     addItem(pLabel);
-    unitData.m_towers = spSpinBox::create(200, 0, maxBuildingCount);
+    unitData.m_towers = MemoryManagement::create<SpinBox>(200, 0, maxBuildingCount);
     unitData.m_towers->setCurrentValue(0);
     unitData.m_towers->setTooltipText(tr("Amount of towers owned by the player."));
     unitData.m_towers->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
     addItem(unitData.m_towers);
     y += pLabel->getScaledHeight() + 5;
-    pLabel = spLabel::create(150);
+    pLabel = MemoryManagement::create<Label>(150);
     pLabel->setPosition(x, y);
     pLabel->setHtmlText(tr("Towns:"));
     addItem(pLabel);
-    unitData.m_buildings = spSpinBox::create(200, 0, maxBuildingCount);
+    unitData.m_buildings = MemoryManagement::create<SpinBox>(200, 0, maxBuildingCount);
     unitData.m_buildings->setCurrentValue(0);
     unitData.m_buildings->setTooltipText(tr("Amount of towns owned by the player."));
     unitData.m_buildings->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
     addItem(unitData.m_buildings);
     y += pLabel->getScaledHeight() + 5;
-    pLabel = spLabel::create(150);
+    pLabel = MemoryManagement::create<Label>(150);
     pLabel->setPosition(x, y);
     pLabel->setHtmlText(tr("Funds:"));
     addItem(pLabel);
-    unitData.m_funds = spSpinBox::create(200, 0, 9999999);
+    unitData.m_funds = MemoryManagement::create<SpinBox>(200, 0, 9999999);
     unitData.m_funds->setCurrentValue(0);
     unitData.m_funds->setTooltipText(tr("Amount of funds owned by the player."));
     unitData.m_funds->setPosition(x + pLabel->getScaledWidth() + xAdvance, y);
@@ -288,58 +288,58 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
 
-    pLabel = spLabel::create(150);
+    pLabel = MemoryManagement::create<Label>(150);
     pLabel->setHtmlText(tr("Battle"));
     pLabel->setPosition(x + 60, y + 50);
     pLabel->setStyle(style);
     addItem(pLabel);
 
-    pLabel = spLabel::create(59);
+    pLabel = MemoryManagement::create<Label>(59);
     pLabel->setHtmlText(tr("Min:"));
     pLabel->setPosition(x, y + 80);
     addItem(pLabel);
-    pLabel = spLabel::create(59);
+    pLabel = MemoryManagement::create<Label>(59);
     pLabel->setHtmlText(tr("Avg:"));
     pLabel->setPosition(x, y + 110);
     addItem(pLabel);
-    pLabel = spLabel::create(59);
+    pLabel = MemoryManagement::create<Label>(59);
     pLabel->setHtmlText(tr("Max:"));
     pLabel->setPosition(x, y + 140);
     addItem(pLabel);
 
-    unitData.m_minBattleDamage = spLabel::create(150);
+    unitData.m_minBattleDamage = MemoryManagement::create<Label>(150);
     unitData.m_minBattleDamage->setHtmlText("");
     unitData.m_minBattleDamage->setPosition(x + 60, y + 80);
     unitData.m_minBattleDamage->setStyle(style);
     addItem(unitData.m_minBattleDamage);
-    unitData.m_avgBattleDamage = spLabel::create(150);
+    unitData.m_avgBattleDamage = MemoryManagement::create<Label>(150);
     unitData.m_avgBattleDamage->setHtmlText("");
     unitData.m_avgBattleDamage->setPosition(x + 60, y + 110);
     unitData.m_avgBattleDamage->setStyle(style);
     addItem(unitData.m_avgBattleDamage);
-    unitData.m_maxBattleDamage = spLabel::create(150);
+    unitData.m_maxBattleDamage = MemoryManagement::create<Label>(150);
     unitData.m_maxBattleDamage->setHtmlText("");
     unitData.m_maxBattleDamage->setPosition(x + 60, y + 140);
     unitData.m_maxBattleDamage->setStyle(style);
     addItem(unitData.m_maxBattleDamage);
 
-    pLabel = spLabel::create(150);
+    pLabel = MemoryManagement::create<Label>(150);
     pLabel->setHtmlText(tr("Post battle"));
     pLabel->setPosition(x + 210, y + 50);
     pLabel->setStyle(style);
     addItem(pLabel);
 
-    unitData.m_minPostbattleDamage = spLabel::create(150);
+    unitData.m_minPostbattleDamage = MemoryManagement::create<Label>(150);
     unitData.m_minPostbattleDamage->setHtmlText("");
     unitData.m_minPostbattleDamage->setPosition(x + 210, y + 80);
     unitData.m_minPostbattleDamage->setStyle(style);
     addItem(unitData.m_minPostbattleDamage);
-    unitData.m_avgPostbattleDamage = spLabel::create(150);
+    unitData.m_avgPostbattleDamage = MemoryManagement::create<Label>(150);
     unitData.m_avgPostbattleDamage->setHtmlText("");
     unitData.m_avgPostbattleDamage->setPosition(x + 210, y + 110);
     unitData.m_avgPostbattleDamage->setStyle(style);
     addItem(unitData.m_avgPostbattleDamage);
-    unitData.m_maxPostbattleDamage = spLabel::create(150);
+    unitData.m_maxPostbattleDamage = MemoryManagement::create<Label>(150);
     unitData.m_maxPostbattleDamage->setHtmlText("");
     unitData.m_maxPostbattleDamage->setPosition(x + 210, y + 140);
     unitData.m_maxPostbattleDamage->setStyle(style);
@@ -416,7 +416,7 @@ void DamageCalculator::updateMapData(QPoint & defPos, bool forceDirect)
             pCO->setPowerMode(static_cast<GameEnums::PowerMode>(m_atkCos[i].m_powerMode->getCurrentItem()));
         }
     }
-    spUnit pAttacker = spUnit::create(m_atkUnit.m_unit->getCurrentItemText(), pPlayer, false, &m_map);
+    spUnit pAttacker = MemoryManagement::create<Unit>(m_atkUnit.m_unit->getCurrentItemText(), pPlayer, false, &m_map);
     pAttacker->setHp(m_atkUnit.m_hp->getCurrentValue());
     pAttacker->setUnitRank(m_atkUnit.m_unitRank->getCurrentItem() + GameEnums::UnitRank_CO1);
     // defender
@@ -432,7 +432,7 @@ void DamageCalculator::updateMapData(QPoint & defPos, bool forceDirect)
             pCO->setPowerMode(static_cast<GameEnums::PowerMode>(m_defCos[i].m_powerMode->getCurrentItem()));
         }
     }
-    spUnit pDefender = spUnit::create(m_defUnit.m_unit->getCurrentItemText(), pPlayer, false, &m_map);
+    spUnit pDefender = MemoryManagement::create<Unit>(m_defUnit.m_unit->getCurrentItemText(), pPlayer, false, &m_map);
     pDefender->setHp(m_defUnit.m_hp->getCurrentValue());
     pDefender->setUnitRank(m_defUnit.m_unitRank->getCurrentItem() + GameEnums::UnitRank_CO1);
 

@@ -44,24 +44,24 @@ namespace oxygine
     class Font;
     class CreateResourceContext;
     class Event;
+    class VStyleActor;
 
-    template <class T>
-    class intrusive_ptr;
-    using spClock = intrusive_ptr<Clock>;
-    using spTexture = intrusive_ptr<Texture>;
-    using spActor = intrusive_ptr<Actor>;
-    using spSprite = intrusive_ptr<Sprite>;
-    using spTextField = intrusive_ptr<TextField>;
-    using spStage = intrusive_ptr<Stage>;
-    using spClipRectActor = intrusive_ptr<ClipRectActor>;
-    using spButton = intrusive_ptr<Button>;
-    using spBox9Sprite = intrusive_ptr<Box9Sprite>;
-    using spColorRectSprite = intrusive_ptr<ColorRectSprite>;
-    using spEventDispatcher = intrusive_ptr<EventDispatcher>;
-    using spSlidingActor = intrusive_ptr<SlidingActor>;
-    using spSlidingActorNoClipRect = intrusive_ptr<SlidingActorNoClipRect>;
-    using spResAnim = intrusive_ptr<ResAnim>;
-    using spTween = intrusive_ptr<Tween>;
+    using spClock = std::shared_ptr<Clock>;
+    using spTexture = std::shared_ptr<Texture>;
+    using spActor = std::shared_ptr<Actor>;
+    using spSprite = std::shared_ptr<Sprite>;
+    using spTextField = std::shared_ptr<TextField>;
+    using spStage = std::shared_ptr<Stage>;
+    using spClipRectActor = std::shared_ptr<ClipRectActor>;
+    using spButton = std::shared_ptr<Button>;
+    using spBox9Sprite = std::shared_ptr<Box9Sprite>;
+    using spColorRectSprite = std::shared_ptr<ColorRectSprite>;
+    using spEventDispatcher = std::shared_ptr<EventDispatcher>;
+    using spSlidingActor = std::shared_ptr<SlidingActor>;
+    using spSlidingActorNoClipRect = std::shared_ptr<SlidingActorNoClipRect>;
+    using spResAnim = std::shared_ptr<ResAnim>;
+    using spTween = std::shared_ptr<Tween>;
+    using spVStyleActor = std::shared_ptr<VStyleActor>;
 
     using EventCallback = OwnedClosure<void, Event*>;
     using eventType = qint32;

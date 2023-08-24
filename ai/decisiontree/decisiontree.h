@@ -16,7 +16,7 @@ public:
     DecisionTree(spDecisionNode & pRootNode);
     DecisionTree(std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions);
     DecisionTree(const QString & treeFile, const QString & trainingDataFile);
-   virtual ~DecisionTree() = default;
+    ~DecisionTree() = default;
 
     spDecisionNode train(std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions);
 

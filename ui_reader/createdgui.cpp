@@ -38,7 +38,7 @@ void CreatedGui::setEnabled(bool value)
 {
     for (auto & item : m_factoryUiItem)
     {
-        spMoveInButton pMoveInButton = oxygine::dynamic_pointer_cast<MoveInButton>(item);
+        spMoveInButton pMoveInButton = std::dynamic_pointer_cast<MoveInButton>(item);
         if (pMoveInButton.get() == nullptr)
         {
             item->setEnabled(value);
@@ -73,9 +73,9 @@ void CreatedGui::setObjectEnabled(const QString id, bool value)
     }
 }
 
-void CreatedGui::showFileDialog(const QStringList wildcards, const QString startFolder, bool isSaveDialog, const QString jsObject, const QString jsCallback, QString startFile, bool preview, QString acceptButtonName)
+void CreatedGui::showFileDialog(const QStringList & wildcards, const QString & startFolder, bool isSaveDialog, const QString & jsObject, const QString & jsCallback, const QString & startFile, bool preview, const QString & acceptButtonName)
 {
-    spFileDialog fileDialog = spFileDialog::create(startFolder, wildcards, isSaveDialog, startFile, preview, acceptButtonName);
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(startFolder, wildcards, isSaveDialog, startFile, preview, acceptButtonName);
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, [this, jsObject, jsCallback](QString filename)
     {
@@ -86,9 +86,9 @@ void CreatedGui::showFileDialog(const QStringList wildcards, const QString start
     }, Qt::QueuedConnection);
 }
 
-void CreatedGui::showFolderDialog(const QString startFolder, const QString jsObject, const QString jsCallback)
+void CreatedGui::showFolderDialog(const QString & startFolder, const QString & jsObject, const QString & jsCallback)
 {
-    spFolderDialog folderDialog = spFolderDialog::create(startFolder);
+    spFolderDialog folderDialog = MemoryManagement::create<FolderDialog>(startFolder);
     addChild(folderDialog);
     connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, [this, jsObject, jsCallback](QString foldername)
     {
@@ -99,9 +99,9 @@ void CreatedGui::showFolderDialog(const QString startFolder, const QString jsObj
     }, Qt::QueuedConnection);
 }
 
-void CreatedGui::showTextInputDialog(const QString text, bool showCancel, const QString startInput, const QString jsObject, const QString jsCallback)
+void CreatedGui::showTextInputDialog(const QString & text, bool showCancel, const QString & startInput, const QString & jsObject, const QString & jsCallback)
 {
-    spDialogTextInput pDialogTextInput = spDialogTextInput::create(text, showCancel, startInput);
+    spDialogTextInput pDialogTextInput = MemoryManagement::create<DialogTextInput>(text, showCancel, startInput);
     addChild(pDialogTextInput);
     connect(pDialogTextInput.get(),  &DialogTextInput::sigTextChanged, this, [this, jsObject, jsCallback](QString foldername)
     {
@@ -136,9 +136,9 @@ qint32 CreatedGui::getUiHeight() const
     return getHeight();
 }
 
-void CreatedGui::createSubUi(const QString uiXml, CreatedGui* pBaseUi)
+void CreatedGui::createSubUi(const QString & uiXml, CreatedGui* pBaseUi)
 {
-    spCreatedGui pUi = spCreatedGui::create();
+    spCreatedGui pUi = MemoryManagement::create<CreatedGui>();
     pUi->m_pBaseUi = pBaseUi;
     pUi->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     UiFactory::getInstance().createUi(uiXml, pUi.get());

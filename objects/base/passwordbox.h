@@ -4,14 +4,14 @@
 #include "objects/base/textbox.h"
 
 class Passwordbox;
-using spPasswordbox = oxygine::intrusive_ptr<Passwordbox>;
+using spPasswordbox = std::shared_ptr<Passwordbox>;
 
 class Passwordbox final : public Textbox
 {
     Q_OBJECT
 public:
     explicit Passwordbox(qint32 width, qint32 heigth = -1);
-   virtual ~Passwordbox() = default;
+    ~Passwordbox() = default;
     virtual void update(const oxygine::UpdateState& us) override;
 
 private:

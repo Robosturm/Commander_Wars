@@ -16,7 +16,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -28,13 +28,13 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    oxygine::spTextField pText = oxygine::spTextField::create();
+    oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
     pText->setHtmlText(text);
     pText->setStyle(style);
     pText->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pText->getTextRect().width() / 2, oxygine::Stage::getStage()->getHeight() / 2 - 40);
     pSpriteBox->addChild(pText);
 
-    m_pTextbox = spTextbox::create(300);
+    m_pTextbox = MemoryManagement::create<Textbox>(300);
     m_pTextbox->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pTextbox->getScaledWidth() / 2, oxygine::Stage::getStage()->getHeight() / 2);
     m_pTextbox->setCurrentText(startInput);
     pSpriteBox->addChild(m_pTextbox);

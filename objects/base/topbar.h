@@ -11,14 +11,14 @@
 #include "objects/base/focusableobject.h"
 
 class Topbar;
-using spTopbar = oxygine::intrusive_ptr<Topbar>;
+using spTopbar = std::shared_ptr<Topbar>;
 
 class Topbar final : public FocusableObject
 {
     Q_OBJECT
 public:
     explicit Topbar(qint32 x, qint32 width);
-   virtual ~Topbar() = default;
+    ~Topbar() = default;
     /**
      * @brief addItem adds an item to the bar
      * @param text the text shown for this item

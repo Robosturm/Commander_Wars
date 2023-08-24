@@ -13,7 +13,7 @@
 namespace oxygine
 {
 
-    class TweenOptions
+    class TweenOptions final
     {
     public:
         explicit TweenOptions(timeMS duration = timeMS(500))
@@ -26,7 +26,7 @@ namespace oxygine
               m_detach(false)
         {
         }
-        virtual ~TweenOptions() = default;
+        ~TweenOptions() = default;
         TweenOptions& duration(timeMS duration)
         {
             m_duration = duration;
@@ -79,7 +79,7 @@ namespace oxygine
     };
 
     class Actor;
-    using spActor = intrusive_ptr<Actor>;
+    using spActor = std::shared_ptr<Actor>;
     class Actor: public EventDispatcher
     {
     public:
@@ -88,25 +88,21 @@ namespace oxygine
         using children = std::vector<spActor>;
         using tweens = std::vector<spTween>;
 
-        children& getChildren()
+        children & getChildren()
         {
+            OXY_ASSERT(!requiresThreadChange());
             return m_children;
         }
         oxygine::spActor getFirstChild()
         {
+            OXY_ASSERT(!requiresThreadChange());
             return m_children.front();
         }
         oxygine::spActor getLastChild()
         {
+            OXY_ASSERT(!requiresThreadChange());
             return m_children.back();
         }
-
-#ifdef GRAPHICSUPPORT
-        tweens& getTweens()
-        {
-            return m_tweens;
-        }
-#endif
 
         const QPoint& getPosition() const
         {
@@ -273,6 +269,9 @@ namespace oxygine
 
         void setClock(spClock & clock);
 
+        void restartAllTweens();
+        void syncAllTweens(oxygine::timeMS syncTime);
+
         /**Show/Hide actor and children. Invisible Actor doesn't receive Touch events.*/
         virtual void setVisible(bool vis)
         {
@@ -315,7 +314,7 @@ namespace oxygine
         bool isDescendant(const Actor* actor) const;
         void addChild(spActor actor);
         /**Remove one child*/
-        void removeChild(spActor & actor);
+        void removeChild(spActor actor);
         /**Removes all children from Actor*/
         void removeChildren();
         /**detaches actor from parent and returns parent. return NULL If actor doesn't have parent*/
@@ -323,37 +322,36 @@ namespace oxygine
         /**Dispatches an event into the event flow. The event target is the EventDispatcher object upon which the dispatchEvent() method is called.*/
         virtual void dispatchEvent(Event* event) override;
 
-        spTween addTween(spTween);
+        void addTween(spTween);
         template<class TProperty>
-        spTween addTween(const TProperty& property, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), QEasingCurve::Type ease = QEasingCurve::Linear)
+        void addTween(const TProperty& property, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), QEasingCurve::Type ease = QEasingCurve::Linear)
         {
             return addTween(createTween(property, duration, loops, twoSides, delay, ease));
         }
         /**short syntax version of actor->addEventListener(TouchEvent::CLICK, ...);*/
-        qint32 addClickListener(const EventCallback& cb)
+        void addClickListener(const EventCallback& cb)
         {
-            return addEventListener(TouchEvent::CLICK, cb);
+            addEventListener(TouchEvent::CLICK, cb);
         }
         /**short syntax version of actor->addEventListener(TouchEvent::TOUCH_DOWN, ...);*/
-        qint32 addTouchDownListener(const EventCallback& cb)
+        void addTouchDownListener(const EventCallback& cb)
         {
-            return addEventListener(TouchEvent::TOUCH_DOWN, cb);
+            addEventListener(TouchEvent::TOUCH_DOWN, cb);
         }
         /**short syntax version of actor->addEventListener(TouchEvent::TOUCH_UP, ...);*/
-        qint32 addTouchUpListener(const EventCallback& cb)
+        void addTouchUpListener(const EventCallback& cb)
         {
-            return addEventListener(TouchEvent::TOUCH_UP, cb);
+            addEventListener(TouchEvent::TOUCH_UP, cb);
         }
 
-        void removeTween(spTween);
-        /**remove all tweens and call Tween::complete to them if callComplete == true*/
-        void removeTweens(bool callComplete = false);
+        void removeTween(spTween tween);
+        void removeTweens();
 
         /**Updates this actor, children and all tweens.*/
         virtual void update(const UpdateState& us);
         /**Renders this actor and children.*/
         virtual void render(const RenderState& rs);
-        virtual void handleEvent(Event* event);
+        void handleEvent(Event* event);
         virtual void doRender(const RenderState&) {}
 
         //converts position in parent space to local space
@@ -366,7 +364,7 @@ namespace oxygine
         QPoint stage2local(const QPoint& pos = QPoint(), Actor* stage = nullptr) const;
 
         /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
-        Stage* __getStage();
+        Stage* __getStage() const;
 
         void setNotPressed(MouseButton b);
 
@@ -392,11 +390,9 @@ namespace oxygine
         using TweenScaleX = Property<qreal, qreal, Actor, &Actor::getScaleX, &Actor::setScaleX>;
         using TweenScaleY = Property<qreal, qreal, Actor, &Actor::getScaleY, &Actor::setScaleY>;
         using TweenAlpha = Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>;
-#ifdef GRAPHICSUPPORT
-        QMutex* getLocked();
-#endif
 
     protected:
+        virtual void handleEventImpl(Event* event);
         void added2stage(Stage*);
         void removedFromStage();
         static void setParent(Actor* actor, Actor* parent);
@@ -404,7 +400,6 @@ namespace oxygine
         void _onGlobalTouchMoveEvent(Event*);
         void __setSize(const QSize&);
         virtual void sizeChanged(const QSize& size);
-        spTween __addTween(spTween tween, bool rel);
         bool prepareRender(RenderState& rs, const RenderState& parentRS);
         void markTranformDirty();
         void updateTransform() const;
@@ -434,7 +429,6 @@ namespace oxygine
         mutable QTransform m_transform;
         mutable QTransform m_transformInvert;
         tweens m_tweens;
-        QMutex m_Locked;
 #else
         static QPoint m_dummyPoint;
         static QSize m_dummySize;

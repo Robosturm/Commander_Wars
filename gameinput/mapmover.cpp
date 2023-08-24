@@ -1,5 +1,7 @@
 #include <QDateTime>
 
+#include "coreengine/mainapp.h"
+
 #include "gameinput/mapmover.h"
 
 #include "game/gamemap.h"

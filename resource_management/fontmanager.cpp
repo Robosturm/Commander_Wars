@@ -6,12 +6,11 @@ const char* const FontManager::MAINFONT = "main";
 const char* const FontManager::LOGOFONT = "logo";
 const char* const FontManager::MENUFONT = "menu";
 
-FontManager* FontManager::m_pInstance{nullptr};
+spFontManager FontManager::m_pInstance;
 
 FontManager::FontManager()
 {
 #ifdef GRAPHICSUPPORT
-    m_pInstance = this;
     Interpreter::setCppOwnerShip(this);
     setObjectName("FontManager");
     QStringList searchFolders;

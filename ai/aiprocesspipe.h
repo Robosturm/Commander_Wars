@@ -9,13 +9,13 @@
 
 class GameMap;
 class GameAction;
-using spGameAction = oxygine::intrusive_ptr<GameAction>;
+using spGameAction = std::shared_ptr<GameAction>;
 class GameMenue;
-using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
+using spGameMenue = std::shared_ptr<GameMenue>;
 class AiProcessPipe;
-using spAiProcessPipe = oxygine::intrusive_ptr<AiProcessPipe>;
+using spAiProcessPipe = std::shared_ptr<AiProcessPipe>;
 
-class AiProcessPipe final : public QObject, public oxygine::ref_counter
+class AiProcessPipe final : public QObject
 {
     Q_OBJECT
 public:
@@ -28,7 +28,7 @@ public:
         Ingame,
     };
     explicit AiProcessPipe();
-   virtual ~AiProcessPipe();
+    ~AiProcessPipe();
 
     void onGameStarted(GameMenue* pMenu);
     void onQuitGame();
@@ -64,7 +64,7 @@ private:
     QList<spGameAction> m_ActionBuffer;
     QMutex m_ActionMutex;
     GameMap* m_pMap{nullptr};
-    spGameMenue m_pMenu;
+    std::weak_ptr<oxygine::EventDispatcher> m_pMenu;
 };
 
 #endif // AIPROCESSPIPE_H

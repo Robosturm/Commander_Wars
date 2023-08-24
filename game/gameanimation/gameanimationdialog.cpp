@@ -31,13 +31,13 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     {
         emitFinished();
     });
-    m_BackgroundSprite = oxygine::spSprite::create();
+    m_BackgroundSprite = MemoryManagement::create<oxygine::Sprite>();
     m_BackgroundSprite->setPriority(-1);
     addChild(m_BackgroundSprite);
 
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("dialogfield+mask");
-    m_TextMask = oxygine::spSprite::create();
+    m_TextMask = MemoryManagement::create<oxygine::Sprite>();
     if (pAnim != nullptr)
     {
         m_TextMask->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pAnim->getWidth()));
@@ -46,7 +46,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     addChild(m_TextMask);
 
     pAnim = pGameManager->getResAnim("dialogfield");
-    m_TextBackground = oxygine::spSprite::create();
+    m_TextBackground = MemoryManagement::create<oxygine::Sprite>();
     if (pAnim != nullptr)
     {
         m_TextBackground->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pAnim->getWidth()));
@@ -59,11 +59,11 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 
-    oxygine::spClipRectActor pRect = oxygine::spClipRectActor::create();
+    oxygine::spClipRectActor pRect = MemoryManagement::create<oxygine::ClipRectActor>();
     pRect->setPosition(48 * 2 + 5, 6);
     pRect->setSize(oxygine::Stage::getStage()->getWidth() - pRect->getX() - 5, 96);
 
-    m_TextField = oxygine::spTextField::create();
+    m_TextField = MemoryManagement::create<oxygine::TextField>();
     m_TextField->setPosition(0, 0);
     m_TextField->setSize(pRect->getScaledWidth() - 5,
                          pRect->getScaledHeight());
@@ -72,7 +72,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     pRect->setPriority(1);
     addChild(pRect);
 
-    m_COSprite = oxygine::spSprite::create();
+    m_COSprite = MemoryManagement::create<oxygine::Sprite>();
     m_COSprite->setScale(2.0f);
     m_COSprite->setY(6);
     m_COSprite->setPriority(1);
@@ -257,8 +257,8 @@ void GameAnimationDialog::setDialog(const QString text)
 void GameAnimationDialog::setCO(const QString coid, GameEnums::COMood mood)
 {
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    QString resAnim = coid.toLower() + "+face";
-    oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(resAnim);
+    QString resAnim = coid + "+face";
+    oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(resAnim.toLower());
     if (pAnim != nullptr)
     {
         if (pAnim->getColumns() > 0)
@@ -283,8 +283,8 @@ void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMoo
             CO* pCo = m_pMap->getPlayer(player)->getCO(co);
             if (pCo != nullptr)
             {
-                QString resAnim = pCo->getCoID().toLower() + "+face";
-                oxygine::ResAnim* pAnim = pCo->getResAnim(resAnim);
+                QString resAnim = pCo->getCoID() + "+face";
+                oxygine::ResAnim* pAnim = pCo->getResAnim(resAnim.toLower());
                 if (pAnim != nullptr)
                 {
                     m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
@@ -316,7 +316,7 @@ void GameAnimationDialog::restart()
         if (pMenu != nullptr)
         {
             m_stopped = false;
-            pMenu->addChild(spGameAnimationDialog(this));
+            pMenu->addChild(getSharedPtr<oxygine::Actor>());
         }
     }
 }
@@ -334,7 +334,7 @@ void GameAnimationDialog::loadBackground(const QString file)
         {
             img = QImage(oxygine::Resource::RCC_PREFIX_PATH + file);
         }
-        oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
+        oxygine::spSingleResAnim pAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1);
         m_BackgroundAnim = pAnim;
         m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
@@ -357,7 +357,7 @@ void GameAnimationDialog::loadCoSprite(const QString coid, float offsetX, float 
         oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(coid + "+nrm", oxygine::error_policy::ep_ignore_error);
         if (pAnim != nullptr)
         {
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
             pSprite->setSize(pAnim->getSize());
             pSprite->setFlippedX(flippedX);
             pSprite->setScale(scale);

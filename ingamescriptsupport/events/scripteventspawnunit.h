@@ -6,7 +6,7 @@
 #include "game/player.h"
 
 class ScriptEventSpawnUnit;
-using spScriptEventSpawnUnit = oxygine::intrusive_ptr<ScriptEventSpawnUnit>;
+using spScriptEventSpawnUnit = std::shared_ptr<ScriptEventSpawnUnit>;
 
 class ScriptEventSpawnUnit final : public ScriptEvent
 {

@@ -10,7 +10,7 @@
 #include "objects/base/dropdownmenu.h"
 
 class COBannListDialog;
-using spCOBannListDialog = oxygine::intrusive_ptr<COBannListDialog>;
+using spCOBannListDialog = std::shared_ptr<COBannListDialog>;
 
 class COBannListDialog final : public QObject, public oxygine::Actor
 {
@@ -18,7 +18,7 @@ class COBannListDialog final : public QObject, public oxygine::Actor
     static const char* const FILEPATH;
 public:
     explicit COBannListDialog(QStringList cobannlist);
-   virtual ~COBannListDialog() = default;
+    ~COBannListDialog() = default;
 signals:
     void editFinished(QStringList cobannlist);
     void canceled();

@@ -13,8 +13,6 @@
 
 #include "game/unitpathfindingsystem.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
 #include "menue/gamemenue.h"
 
 class GameMap;
@@ -22,14 +20,14 @@ class GameAction;
 class UnitPathFindingSystem;
 
 class HumanPlayerInput;
-using spHumanPlayerInput = oxygine::intrusive_ptr<HumanPlayerInput>;
+using spHumanPlayerInput = std::shared_ptr<HumanPlayerInput>;
 
 
 class HumanPlayerInput : public BaseGameInputIF
 {
     Q_OBJECT
 public:
-    ENUM_CLASS Arrows
+    enum class Arrows
     {
         LeftRight = 0,
         UpDown,

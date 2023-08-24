@@ -13,14 +13,14 @@
 #include "mapsupport/mapfilter.h"
 
 class MapSelection;
-using spMapSelection = oxygine::intrusive_ptr<MapSelection>;
+using spMapSelection = std::shared_ptr<MapSelection>;
 
 class MapSelection final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit MapSelection(qint32 heigth, qint32 width, QString folder, const QStringList & filter);
-   virtual ~MapSelection() = default;
+    ~MapSelection() = default;
 
     QString getCurrentFolder()
     {

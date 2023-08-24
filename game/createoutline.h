@@ -7,7 +7,7 @@ class CreateOutline final
 {
 public:
     CreateOutline() = delete;
-   virtual ~CreateOutline() = delete;
+    ~CreateOutline() = delete;
 
     static void addCursorRangeOutline(oxygine::spActor pOutlineSprite, const QString & prefix, qint32 range, QColor color);
 private:

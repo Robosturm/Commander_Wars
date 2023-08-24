@@ -20,10 +20,11 @@ TextInput::TextInput()
         emit pApp->sigCreateLineEdit();
     }
     m_lineEdit = pApp->getLastCreateLineEdit();
+    pApp->resetLineEdit();
     if (m_lineEdit != nullptr)
     {
-        connect(m_lineEdit, &EventTextEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
-        connect(this, &TextInput::sigSetText, m_lineEdit, &EventTextEdit::setPlainText, Qt::BlockingQueuedConnection);
+        connect(m_lineEdit.get(), &EventTextEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
+        connect(this, &TextInput::sigSetText, m_lineEdit.get(), &EventTextEdit::setPlainText, Qt::BlockingQueuedConnection);
     }
     m_toggle.start();
 }

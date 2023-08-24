@@ -18,10 +18,10 @@ public slots:
     qint32 getBaseMovementPoints(const QString & movementID, Terrain* pTerrain, Terrain* pCurrentTerrain, Unit* pUnit, bool trapChecking = false);
     bool getSupportsFastPfs(const QString & movementID);
 protected:
-    friend RessourceManagement<MovementTableManager>;
+    friend MemoryManagement;
     MovementTableManager();
 private:
-   virtual ~MovementTableManager() = default;
+    ~MovementTableManager() = default;
 };
 
 #endif // MOVEMENTTABLEMANAGER_H

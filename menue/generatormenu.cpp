@@ -40,7 +40,7 @@ void GeneratorMenu::onEnter()
 
 void GeneratorMenu::exitMenue(const QString & mainMenuXml)
 {
-    auto window = spMainwindow::create(mainMenuXml);
+    auto window = MemoryManagement::create<Mainwindow>(mainMenuXml);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }

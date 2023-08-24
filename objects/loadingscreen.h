@@ -11,14 +11,14 @@
 #include "objects/base/label.h"
 
 class LoadingScreen;
-using spLoadingScreen = oxygine::intrusive_ptr<LoadingScreen>;
+using spLoadingScreen = std::shared_ptr<LoadingScreen>;
 
 class LoadingScreen final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     static spLoadingScreen getInstance();
-   virtual ~LoadingScreen();
+    ~LoadingScreen();
     /**w
      * @brief show
      */
@@ -40,7 +40,7 @@ public:
     void hide();
 
 private:
-    friend class oxygine::intrusive_ptr<LoadingScreen>;
+    friend class MemoryManagement;
     explicit LoadingScreen();
 private:
     spLabel m_workText;

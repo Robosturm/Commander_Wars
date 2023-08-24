@@ -13,7 +13,7 @@
 #include "objects/base/label.h"
 
 class COSelection;
-using spCOSelection = oxygine::intrusive_ptr<COSelection>;
+using spCOSelection = std::shared_ptr<COSelection>;
 
 class COSelection final : public QObject, public oxygine::Actor
 {
@@ -22,7 +22,7 @@ class COSelection final : public QObject, public oxygine::Actor
     static constexpr float scale = 1.5f;
 public:
     explicit COSelection(QPoint Position, QSize maxSize, QStringList coids = {});
-   virtual ~COSelection() = default;
+    ~COSelection() = default;
     const QStringList &getCoids() const;
 
 signals:

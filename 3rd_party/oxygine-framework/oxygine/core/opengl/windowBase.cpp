@@ -23,25 +23,19 @@ namespace oxygine
         }
         // init oxygine engine
         CONSOLE_PRINT("initialize oxygine", GameConsole::eDEBUG);
-        VideoDriver::instance = spVideoDriver::create();
+        VideoDriver::instance = MemoryManagement::create<VideoDriver>();
         VideoDriver::instance->setDefaultSettings();
         rsCache().setDriver(VideoDriver::instance.get());
 
         STDRenderer::initialize();
 
-        STDRenderer::instance = spSTDRenderer::create();
-        RenderDelegate::instance = spRenderDelegate::create();
-        Material::null = spMaterial::create();
+        STDRenderer::instance = MemoryManagement::create<STDRenderer>();
+        RenderDelegate::instance = MemoryManagement::create<RenderDelegate>();
+        Material::null = MemoryManagement::create<Material>();
         Material::current = Material::null;
 
         STDRenderer::current = STDRenderer::instance;
         launchGame();
-    }
-
-    void WindowBase::timerEvent(QTimerEvent *)
-    {
-        // Request an update
-        update();
     }
 
     void WindowBase::redrawUi()
@@ -85,9 +79,16 @@ namespace oxygine
 
     void WindowBase::paintGL()
     {
-        updateData();
-        if (m_pauseMutex.tryLock())
+        // check for termination
+        if (m_quit)
         {
+            m_terminating = true;
+            CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
+            QCoreApplication::exit();
+        }
+        if (!m_terminating && m_pausedCounter == 0)
+        {
+            updateData();
             if (oxygine::Stage::getStage().get() != nullptr)
             {
                 oxygine::Stage::getStage()->updateStage();
@@ -102,21 +103,6 @@ namespace oxygine
                     m_repeatedFramesDropped = 0;
                 }
             }
-            m_pauseMutex.unlock();
-        }
-        else
-        {
-            ++m_repeatedFramesDropped;
-            if (m_repeatedFramesDropped > 10)
-            {
-                update();
-            }
-        }
-        // check for termination
-        if (m_quit)
-        {
-            CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
-            QCoreApplication::exit();
         }
     }
 }

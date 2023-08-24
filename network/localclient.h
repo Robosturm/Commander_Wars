@@ -8,14 +8,14 @@
 class QLocalSocket;
 
 class LocalClient;
-using spLocalClient = oxygine::intrusive_ptr<LocalClient>;
+using spLocalClient = std::shared_ptr<LocalClient>;
 
 class LocalClient final : public NetworkInterface
 {
     Q_OBJECT
 public:
     LocalClient(QObject* pParent);
-    virtual ~LocalClient();
+    ~LocalClient();
 public slots:
     virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress) override;
     virtual void disconnectTCP() override;
@@ -26,7 +26,7 @@ protected slots:
 private:
     spRxTask m_pRXTask;
     spTxTask m_pTXTask;
-    QLocalSocket* m_pSocket;
+    std::shared_ptr<QLocalSocket> m_pSocket;
 };
 
 #endif // LOCALCLIENT_H

@@ -5,13 +5,13 @@
 
 class GameMap;
 class VictoryRulePopup;
-using spVictoryRulePopup = oxygine::intrusive_ptr<VictoryRulePopup>;
+using spVictoryRulePopup = std::shared_ptr<VictoryRulePopup>;
 
 class VictoryRulePopup final : public CloseablePopUp
 {
 public:
     VictoryRulePopup(GameMap* pMap, QString rule, qint32 width, qint32 heigth);
-   virtual ~VictoryRulePopup();
+    ~VictoryRulePopup();
     static bool exists(QString rule)
     {
         return m_popUps.contains(rule);

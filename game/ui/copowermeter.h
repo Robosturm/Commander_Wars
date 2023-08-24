@@ -8,14 +8,14 @@
 #include "game/co.h"
 
 class CoPowermeter;
-using spCoPowermeter = oxygine::intrusive_ptr<CoPowermeter>;
+using spCoPowermeter = std::shared_ptr<CoPowermeter>;
 
 class CoPowermeter final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit CoPowermeter(GameMap* pMap, CO* pCO);
-   virtual ~CoPowermeter() = default;
+    ~CoPowermeter() = default;
     /**
      * @brief drawPowerMeter
      */

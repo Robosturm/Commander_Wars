@@ -22,7 +22,7 @@ QImage Player::m_neutralTableImage;
 
 void Player::releaseStaticData()
 {
-    m_neutralTableAnim.free();
+    m_neutralTableAnim.reset();
 }
 
 Player::Player(GameMap* pMap)
@@ -32,7 +32,7 @@ Player::Player(GameMap* pMap)
     setObjectName("Player");
 #endif
     Interpreter::setCppOwnerShip(this);
-    m_pBaseGameInput.free();
+    m_pBaseGameInput.reset();
     // for older versions we allow all loaded units to be buildable
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)
@@ -61,7 +61,7 @@ QString Player::getPlayerNameId() const
     return m_playerNameId;
 }
 
-void Player::setPlayerNameId(const QString newDisplayName)
+void Player::setPlayerNameId(const QString & newDisplayName)
 {
     m_playerNameId = newDisplayName;
 }
@@ -71,12 +71,12 @@ QString Player::getUniqueIdentifier() const
     return m_uniqueIdentifier;
 }
 
-void Player::setUniqueIdentifier(const QString newUniqueIdentifier)
+void Player::setUniqueIdentifier(const QString & newUniqueIdentifier)
 {
     m_uniqueIdentifier = newUniqueIdentifier;
 }
 
-qreal Player::getUnitBuildValue(const QString unitID)
+qreal Player::getUnitBuildValue(const QString & unitID)
 {
     qreal modifier = 0.0;
     for(auto & pCO : m_playerCOs)
@@ -181,7 +181,7 @@ void Player::setColor(QColor color, qint32 table)
         createTable(m_Color);
     }
 #ifdef GRAPHICSUPPORT
-    m_ColorTableAnim = oxygine::spSingleResAnim::create();
+    m_ColorTableAnim = MemoryManagement::create<oxygine::SingleResAnim>();
     Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1);
 #endif
 }
@@ -190,8 +190,8 @@ bool Player::loadTable(qint32 table)
 {
     CONSOLE_PRINT("Player::loadTable", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({table,
-                      pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({QJSValue(table),
+                       pInterpreter->newQObject(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorTable", args);
     QString tablename;
     bool found = false;
@@ -441,7 +441,7 @@ void Player::createTable(QColor baseColor)
     }
     for (qint32 i = 0; i < size; i++)
     {
-        QJSValueList args({i,
+        QJSValueList args({QJSValue(i),
                            pInterpreter->newQObject(m_pMap)});
         QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorForTable", args);
         qint32 value = 100;
@@ -486,7 +486,7 @@ void Player::createTable(QColor baseColor)
 #endif
 }
 
-void Player::setPlayerArmy(const QString value)
+void Player::setPlayerArmy(const QString & value)
 {
     m_playerArmy = value;
 }
@@ -519,7 +519,7 @@ oxygine::spResAnim Player::getNeutralTableAnim()
 {
     if (m_neutralTableAnim.get() == nullptr)
     {
-        m_neutralTableAnim = oxygine::spSingleResAnim::create();
+        m_neutralTableAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         QStringList searchPaths;
         for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
         {
@@ -691,7 +691,7 @@ qint32 Player::getFunds() const
     return m_funds;
 }
 
-qint32 Player::getBuildingCount(const QString buildingID)
+qint32 Player::getBuildingCount(const QString & buildingID)
 {
     qint32 ret = 0;
     if (m_pMap != nullptr)
@@ -701,7 +701,7 @@ qint32 Player::getBuildingCount(const QString buildingID)
     return ret;
 }
 
-qint32 Player::getBuildingListCount(const QStringList list, bool whitelist)
+qint32 Player::getBuildingListCount(const QStringList & list, bool whitelist)
 {
     qint32 ret = 0;
     
@@ -734,7 +734,7 @@ qint32 Player::getBuildingListCount(const QStringList list, bool whitelist)
     return ret;
 }
 
-qint32 Player::getUnitCount(const QString unitID) const
+qint32 Player::getUnitCount(const QString & unitID) const
 {
     qint32 ret = 0;
     
@@ -759,7 +759,7 @@ qint32 Player::getUnitCount(const QString unitID) const
     return ret;
 }
 
-qint32 Player::getUnitCount(Unit* pUnit, const QString unitID) const
+qint32 Player::getUnitCount(Unit* pUnit, const QString & unitID) const
 {
     qint32 ret = 0;
     for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
@@ -777,7 +777,7 @@ qint32 Player::getUnitCount(Unit* pUnit, const QString unitID) const
     return ret;
 }
 
-qint32 Player::getCoBonus(QPoint position, Unit* pUnit, const QString function)
+qint32 Player::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
 {
     qint32 ret = 0;
     for(auto & pCO : m_playerCOs)
@@ -829,7 +829,7 @@ void Player::defeatPlayer(Player* pPlayer, bool units)
 
         }
     }
-    spQmlVectorUnit pUnits = spQmlVectorUnit(getUnits());
+    spQmlVectorUnit pUnits = getSpUnits();
     for (qint32 i = 0; i < pUnits->size(); ++i)
     {
         Unit* pUnit = pUnits->at(i);
@@ -943,7 +943,7 @@ qint32 Player::calcIncome(qreal modifier) const
 
 qint32 Player::calcArmyValue()
 {
-    spQmlVectorUnit pUnits = spQmlVectorUnit(m_pMap->getUnits(this));
+    spQmlVectorUnit pUnits = m_pMap->getSpUnits(this);
     qint32 armyValue = 0;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -957,7 +957,7 @@ void Player::earnMoney(qreal modifier)
     setFunds(m_funds + calcIncome(modifier));
 }
 
-qint32 Player::getCostModifier(const QString id, qint32 baseCost, QPoint position)
+qint32 Player::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
 {
     
     qint32 costModifier = 0;
@@ -1065,13 +1065,13 @@ QStringList Player::getTransportUnits(Unit* pUnit)
     return ret;
 }
 
-void Player::setBuildList(const QStringList BuildList)
+void Player::setBuildList(const QStringList & BuildList)
 {
     m_BuildList = BuildList;
     m_BuildlistChanged = true;
 }
 
-void Player::changeBuildlist(const QString unitID, bool remove)
+void Player::changeBuildlist(const QString & unitID, bool remove)
 {
     if (remove)
     {
@@ -1194,11 +1194,11 @@ void Player::updatePlayerVision(bool reduceTimer)
                     spQmlVectorPoint pPoints;
                     if (visionBlock)
                     {
-                        pPoints = spQmlVectorPoint(m_pMap->getVisionCircle(x, y, 0, visionRange, pTerrain->getTotalVisionHigh()));
+                        pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange, pTerrain->getTotalVisionHigh());
                     }
                     else
                     {
-                        pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, visionRange));
+                        pPoints = GlobalUtils::getSpCircle(0, visionRange);
                     }
                     for (auto & point : pPoints->getVector())
                     {
@@ -1229,11 +1229,11 @@ void Player::updatePlayerVision(bool reduceTimer)
                         spQmlVectorPoint pPoints;
                         if (visionBlock)
                         {
-                            pPoints = spQmlVectorPoint(m_pMap->getVisionCircle(x, y, 0, visionRange, pBuilding->getTotalVisionHigh()));
+                            pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange, pBuilding->getTotalVisionHigh());
                         }
                         else
                         {
-                            pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, visionRange));
+                            pPoints = GlobalUtils::getSpCircle(0, visionRange);
                         }
                         for (auto & point : pPoints->getVector())
                         {
@@ -1263,16 +1263,16 @@ void Player::updatePlayerVision(bool reduceTimer)
                     {
                         if (pBuilding != nullptr)
                         {
-                            pPoints = spQmlVectorPoint(m_pMap->getVisionCircle(x, y, 0, visionRange,  pUnit->getTotalVisionHigh()));
+                            pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange,  pUnit->getTotalVisionHigh());
                         }
                         else
                         {
-                            pPoints = spQmlVectorPoint(m_pMap->getVisionCircle(x, y, 0, visionRange,  pUnit->getVisionHigh() + pTerrain->getVisionHigh()));
+                            pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange,  pUnit->getVisionHigh() + pTerrain->getVisionHigh());
                         }
                     }
                     else
                     {
-                        pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, visionRange));
+                        pPoints = GlobalUtils::getSpCircle(0, visionRange);
                     }
                     for (auto & point : pPoints->getVector())
                     {
@@ -1384,7 +1384,7 @@ bool Player::getFieldDirectVisible(qint32 x, qint32 y)
     }
 }
 
-qint32 Player::getCosts(const QString id, QPoint position)
+qint32 Player::getCosts(const QString & id, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue ret = pInterpreter->doFunction(id, "getBaseCost");
@@ -1594,17 +1594,27 @@ void Player::endOfTurn()
     }
 }
 
-QmlVectorUnit* Player::getUnits()
+spQmlVectorUnit Player::getSpUnits()
 {
-    
+    spQmlVectorUnit ret;
     if (m_pMap != nullptr)
     {
-        return m_pMap->getUnits(this);
+        ret = m_pMap->getSpUnits(this);
     }
     else
     {
-        return new QmlVectorUnit();
+        ret = MemoryManagement::create<QmlVectorUnit>();
     }
+    return ret;
+}
+
+QmlVectorUnit* Player::getUnits()
+{
+    auto ret = getSpUnits();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(ret);
+    return ret.get();
 }
 
 qint32 Player::getEnemyCount()
@@ -1621,9 +1631,9 @@ qint32 Player::getEnemyCount()
     return ret;
 }
 
-QmlVectorUnit* Player::getEnemyUnits()
-{    
-    QmlVectorUnit* ret = new QmlVectorUnit();
+spQmlVectorUnit Player::getSpEnemyUnits()
+{
+    spQmlVectorUnit ret = MemoryManagement::create<QmlVectorUnit>();
     if (m_pMap)
     {
         qint32 heigth = m_pMap->getMapHeight();
@@ -1646,9 +1656,18 @@ QmlVectorUnit* Player::getEnemyUnits()
     return ret;
 }
 
-QmlVectorUnit* Player::getAlliedUnits()
+QmlVectorUnit* Player::getEnemyUnits()
 {
-    QmlVectorUnit* ret = new QmlVectorUnit();
+    auto ret = getSpEnemyUnits();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(ret);
+    return ret.get();
+}
+
+spQmlVectorUnit Player::getSpAlliedUnits()
+{
+    spQmlVectorUnit ret = MemoryManagement::create<QmlVectorUnit>();
     if (m_pMap)
     {
         qint32 heigth = m_pMap->getMapHeight();
@@ -1672,34 +1691,18 @@ QmlVectorUnit* Player::getAlliedUnits()
     return ret;
 }
 
-QVector<spUnit> Player::getSpEnemyUnits()
+QmlVectorUnit* Player::getAlliedUnits()
 {
-    
-    QVector<spUnit> ret;
-    if (m_pMap)
-    {
-        qint32 heigth = m_pMap->getMapHeight();
-        qint32 width = m_pMap->getMapWidth();
-        for (qint32 y = 0; y < heigth; y++)
-        {
-            for (qint32 x = 0; x < width; x++)
-            {
-                spUnit pUnit = m_pMap->getTerrain(x, y)->getSpUnit();
-                if (pUnit.get() != nullptr &&
-                    !pUnit->getOwner()->getIsDefeated() &&
-                    isEnemyUnit(pUnit.get()))
-                {
-                    ret.append(pUnit);
-                }
-            }
-        }
-    }
-    return ret;
+    auto ret = getSpEnemyUnits();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(ret);
+    return ret.get();
 }
 
-QmlVectorBuilding* Player::getEnemyBuildings()
-{    
-    QmlVectorBuilding* ret = new QmlVectorBuilding();
+spQmlVectorBuilding Player::getSpEnemyBuildings()
+{
+    spQmlVectorBuilding ret = MemoryManagement::create<QmlVectorBuilding>();
     if (m_pMap)
     {
         qint32 heigth = m_pMap->getMapHeight();
@@ -1721,12 +1724,26 @@ QmlVectorBuilding* Player::getEnemyBuildings()
     return ret;
 }
 
-QmlVectorBuilding* Player::getBuildings(const QString id)
+QmlVectorBuilding* Player::getEnemyBuildings()
+{
+    auto ret = getSpEnemyBuildings();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(ret);
+    return ret.get();
+}
+
+spQmlVectorBuilding Player::getSpBuildings(const QString & id)
+{
+    return m_pMap->getSpBuildings(this, id);
+}
+
+QmlVectorBuilding* Player::getBuildings(const QString & id)
 {
     return m_pMap->getBuildings(this, id);
 }
 
-QmlVectorBuilding* Player::getBuildingsListCount(const QStringList ids)
+QmlVectorBuilding* Player::getBuildingsListCount(const QStringList & ids)
 {
     return m_pMap->getBuildingsListCount(this, ids);
 }
@@ -1762,7 +1779,7 @@ void Player::setBaseGameInput(spBaseGameInputIF pBaseGameInput)
     }
 }
 
-spCO Player::getspCO(quint8 id)
+spCO Player::getSpCO(quint8 id)
 {
     if (id <= 1)
     {
@@ -1791,17 +1808,17 @@ qint32 Player::getMaxCoCount() const
     return m_playerCOs.max_size();
 }
 
-void Player::setCO(QString coId, quint8 idx)
+void Player::setCO(const QString & coId, quint8 idx)
 {
     if (idx < m_playerCOs.max_size())
     {
         if (coId.isEmpty())
         {
-            m_playerCOs[idx].free();
+            m_playerCOs[idx].reset();
         }
         else
         {
-            m_playerCOs[idx] = spCO::create(coId, this, m_pMap);
+            m_playerCOs[idx] = MemoryManagement::create<CO>(coId, this, m_pMap);
         }
 
     }
@@ -1836,7 +1853,7 @@ qreal Player::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* sy
 QPoint Player::getRockettarget(qint32 radius, qint32 damage, qreal ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
 {
     
-    spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, radius));
+    spQmlVectorPoint pPoints = GlobalUtils::getSpCircle(0, radius);
     qint32 highestDamage = -1;
     QVector<QPoint> targets;
     if (pSearchArea == nullptr)
@@ -1895,7 +1912,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, qreal ownUnitValue,
 
 QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, qreal ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
 {    
-    spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, radius));
+    spQmlVectorPoint pPoints = GlobalUtils::getSpCircle(0, radius);
     highestDamage = -1;
     QVector<QPoint> targets;
     if (pSearchArea == nullptr)
@@ -2248,11 +2265,11 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             pStream >> hasC0;
             if (hasC0)
             {
-                m_playerCOs[co] = spCO::create("", this, m_pMap);
+                m_playerCOs[co] = MemoryManagement::create<CO>("", this, m_pMap);
                 m_playerCOs[co]->deserializer(pStream, fast);
                 if (!m_playerCOs[co]->isValid())
                 {
-                    m_playerCOs[co].free();
+                    m_playerCOs[co].reset();
                 }
             }
             ++co;
@@ -2272,7 +2289,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_pBaseGameInput = spHumanPlayerInput::create(m_pMap);
+            m_pBaseGameInput = MemoryManagement::create<HumanPlayerInput>(m_pMap);
             m_pBaseGameInput->setPlayer(this);
         }
         m_FogVisionFields.clear();
@@ -2393,7 +2410,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         {
 #ifdef GRAPHICSUPPORT
             CONSOLE_PRINT("Loading colortable", GameConsole::eDEBUG);
-            m_ColorTableAnim = oxygine::spSingleResAnim::create();
+            m_ColorTableAnim = MemoryManagement::create<oxygine::SingleResAnim>();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1);
 #endif
         }
@@ -2408,7 +2425,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         {
 #ifdef GRAPHICSUPPORT
             CONSOLE_PRINT("Loading colortable", GameConsole::eDEBUG);
-            m_ColorTableAnim = oxygine::spSingleResAnim::create();
+            m_ColorTableAnim = MemoryManagement::create<oxygine::SingleResAnim>();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1);
 #endif
         }

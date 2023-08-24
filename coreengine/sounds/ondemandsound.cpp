@@ -101,7 +101,7 @@ void AudioManager::stopSoundInternal(qint32 soundIndex)
 {
     CONSOLE_PRINT_MODULE("Stopping sound at index " + QString::number(soundIndex), GameConsole::eDEBUG, GameConsole::eAudio);
     m_soundEffectData[soundIndex].timer.stop();
-    m_soundEffectData[soundIndex].sound.reset(new QSoundEffect(this));
+    m_soundEffectData[soundIndex].sound = MemoryManagement::create<QSoundEffect>(this);
     m_soundEffectData[soundIndex].sound->setObjectName("SoundEffect" + QString::number(soundIndex));
     connect(m_soundEffectData[soundIndex].sound.get(), &QSoundEffect::statusChanged, this, [this, soundIndex]()
     {

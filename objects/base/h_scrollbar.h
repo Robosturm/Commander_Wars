@@ -9,7 +9,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 class H_Scrollbar;
-using spH_Scrollbar = oxygine::intrusive_ptr<H_Scrollbar>;
+using spH_Scrollbar = std::shared_ptr<H_Scrollbar>;
 
 class H_Scrollbar final : public Tooltip
 {
@@ -21,7 +21,7 @@ public:
      * @param contentHeigth heigth of the area you can scroll with this scrollbar. Needed for the arrows to calculate the add value. :)
      */
     explicit H_Scrollbar(qint32 heigth, qint32 contentHeigth);
-   virtual ~H_Scrollbar() = default;
+    ~H_Scrollbar() = default;
     /**
      * @brief setContentHeigth
      * @param heigth

@@ -7,7 +7,7 @@
 namespace oxygine
 {
     class Box9Sprite;
-    using spBox9Sprite = intrusive_ptr<Box9Sprite>;
+    using spBox9Sprite = std::shared_ptr<Box9Sprite>;
     class Box9Sprite : public Sprite
     {
     public:

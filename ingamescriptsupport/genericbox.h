@@ -6,14 +6,14 @@
 #include "objects/base/panel.h"
 
 class GenericBox;
-using spGenericBox = oxygine::intrusive_ptr<GenericBox>;
+using spGenericBox = std::shared_ptr<GenericBox>;
 
 class GenericBox final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit GenericBox(bool cancel = false);
-   virtual ~GenericBox() = default;
+    ~GenericBox() = default;
     /**
      * @brief addItem
      * @param pActor

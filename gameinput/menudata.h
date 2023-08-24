@@ -9,14 +9,14 @@
 class Unit;
 class GameMap;
 class MenuData;
-using spMenuData = oxygine::intrusive_ptr<MenuData>;
+using spMenuData = std::shared_ptr<MenuData>;
 
-class MenuData final : public QObject, public oxygine::ref_counter
+class MenuData final : public QObject
 {
     Q_OBJECT
 public:
     explicit MenuData(GameMap* pMap);
-   virtual ~MenuData();
+    ~MenuData();
     QStringList getTexts()
     {
         return m_texts;

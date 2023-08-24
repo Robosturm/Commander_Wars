@@ -13,14 +13,14 @@
 #include "game/unit.h"
 
 class COInfoActor;
-using spCOInfoActor = oxygine::intrusive_ptr<COInfoActor>;
+using spCOInfoActor = std::shared_ptr<COInfoActor>;
 
 class COInfoActor final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit COInfoActor(GameMap* pMap, qint32 width);
-   virtual ~COInfoActor() = default;
+    ~COInfoActor() = default;
     /**
      * @brief showCO
      * @param pCO

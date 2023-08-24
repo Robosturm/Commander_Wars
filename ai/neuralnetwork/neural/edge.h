@@ -3,7 +3,6 @@
 
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "coreengine/fileserializable.h"
 
 class NeuralNetwork;
@@ -11,15 +10,15 @@ class Neuron;
 class Layer;
 class Edge;
 
-using spNeuron = oxygine::intrusive_ptr<Neuron>;
-using spEdge = oxygine::intrusive_ptr<Edge>;
+using spNeuron = std::shared_ptr<Neuron>;
+using spEdge = std::shared_ptr<Edge>;
 
 //Edge between two neurons
-class Edge final : public FileSerializable, public oxygine::ref_counter
+class Edge final : public FileSerializable
 {
 public:
-    Edge(Neuron* nextNeuron, Neuron* previousNeuron, double weight);    
-   virtual ~Edge() = default;
+    Edge(Neuron* nextNeuron, Neuron* previousNeuron, double weight);
+    ~Edge() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

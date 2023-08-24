@@ -18,7 +18,7 @@ Cursor::Cursor(GameMap* pMap)
     Interpreter::setCppOwnerShip(this);
     changeCursor("cursor+default");
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Cursor));
-    m_cursorRangeOutline = oxygine::spActor::create();
+    m_cursorRangeOutline = MemoryManagement::create<oxygine::Actor>();
     addChild(m_cursorRangeOutline);
 }
 
@@ -28,10 +28,10 @@ void Cursor::changeCursor(const QString & spriteID, qint32 xOffset, qint32 yOffs
     if (m_CurrentCursor.get() != nullptr)
     {
         m_CurrentCursor->detach();
-        m_CurrentCursor.free();
+        m_CurrentCursor.reset();
     }
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteID);
-    m_CurrentCursor = oxygine::spSprite::create();
+    m_CurrentCursor = MemoryManagement::create<oxygine::Sprite>();
     if (pAnim != nullptr)
     {
         if (pAnim->getTotalFrames() > 1)

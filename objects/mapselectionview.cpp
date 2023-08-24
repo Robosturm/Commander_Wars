@@ -46,10 +46,10 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
         width = oxygine::Stage::getStage()->getWidth() / 2;
     }
 
-    m_pMapSelection = spMapSelection::create(oxygine::Stage::getStage()->getHeight() - 40, width, "", m_filter);
+    m_pMapSelection = MemoryManagement::create<MapSelection>(oxygine::Stage::getStage()->getHeight() - 40, width, "", m_filter);
     m_pMapSelection->setPosition(10, 10);
     addChild(m_pMapSelection);
-    m_pMinimap = spMinimap::create();
+    m_pMinimap = MemoryManagement::create<Minimap>();
     m_pMinimap->setPosition(0, 0);
     m_pMinimap->setScale(2.0f);
 
@@ -60,7 +60,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     {
         size.setHeight(oxygine::Stage::getStage()->getHeight() - buildingInfoHeight - 15);
     }
-    m_MinimapPanel = spPanel::create(true, size, size);
+    m_MinimapPanel = MemoryManagement::create<Panel>(true, size, size);
     m_MinimapPanel->setPosition(width + 50, 10);
     m_MinimapPanel->addItem(m_pMinimap);
     addChild(m_MinimapPanel);
@@ -77,11 +77,11 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
         size.setHeight(mapInfoHeight);
     }
     // map info text
-    m_MapInfo = spPanel::create(true, size, size);
+    m_MapInfo = MemoryManagement::create<Panel>(true, size, size);
     if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_MapInfo->setPosition(oxygine::Stage::getStage()->getWidth() - 1, 10);
-        m_MapInfo->addChild(spMoveInButton::create(m_MapInfo.get(), m_MapInfo->getScaledWidth()));
+        m_MapInfo->addChild(MemoryManagement::create<MoveInButton>(m_MapInfo.get(), m_MapInfo->getScaledWidth()));
     }
     else
     {
@@ -90,40 +90,40 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     addChild(m_MapInfo);
     qint32 y = 10;
 
-    oxygine::spTextField pTextfield = oxygine::spTextField::create();
+    oxygine::spTextField pTextfield = MemoryManagement::create<oxygine::TextField>();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Name: "));
     m_MapInfo->addItem(pTextfield);
-    m_MapName = oxygine::spTextField::create();
+    m_MapName = MemoryManagement::create<oxygine::TextField>();
     m_MapName->setStyle(style);
     m_MapName->setPosition(150, y);
     m_MapInfo->addItem(m_MapName);
     y += 40;
 
-    pTextfield = oxygine::spTextField::create();
+    pTextfield = MemoryManagement::create<oxygine::TextField>();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Author: "));
     m_MapInfo->addItem(pTextfield);
-    m_MapAuthor = oxygine::spTextField::create();
+    m_MapAuthor = MemoryManagement::create<oxygine::TextField>();
     m_MapAuthor->setStyle(style);
     m_MapAuthor->setPosition(150, y);
     m_MapInfo->addItem(m_MapAuthor);
     y += 40;
 
-    pTextfield = oxygine::spTextField::create();
+    pTextfield = MemoryManagement::create<oxygine::TextField>();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Player: "));
     m_MapInfo->addItem(pTextfield);
-    m_MapPlayerCount = oxygine::spTextField::create();
+    m_MapPlayerCount = MemoryManagement::create<oxygine::TextField>();
     m_MapPlayerCount->setStyle(style);
     m_MapPlayerCount->setPosition(150, y);
     m_MapInfo->addItem(m_MapPlayerCount);
     y += 40;
 
-    pTextfield = oxygine::spTextField::create();
+    pTextfield = MemoryManagement::create<oxygine::TextField>();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Description "));
@@ -131,20 +131,20 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     y += 40;
 
     style.multiline = true;
-    m_MapDescription = oxygine::spTextField::create();
+    m_MapDescription = MemoryManagement::create<oxygine::TextField>();
     m_MapDescription->setStyle(style);
     m_MapDescription->setWidth(m_MapInfo->getContentWidth() - 80);
     m_MapDescription->setPosition(10, y);
     m_MapInfo->addItem(m_MapDescription);
     y += 40;
 
-    m_pVictoryInfo = oxygine::spActor::create();
+    m_pVictoryInfo = MemoryManagement::create<oxygine::Actor>();
     m_pVictoryInfo->setPosition(10, y);
     m_MapInfo->addItem(m_pVictoryInfo);
     loadMapVictoryInfo();
     y += 55 * Userdata::MAX_VICTORY_INFO_PER_MAP;
 
-    m_MapTags = oxygine::spTextField::create();
+    m_MapTags = MemoryManagement::create<oxygine::TextField>();
     m_MapTags->setStyle(style);
     m_MapTags->setWidth(m_MapInfo->getContentWidth() - 80);
     m_MapTags->setPosition(10, y);
@@ -153,7 +153,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
 
     // building count
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
-    m_pBuildingBackground = oxygine::spBox9Sprite::create();
+    m_pBuildingBackground = MemoryManagement::create<oxygine::Box9Sprite>();
     m_pBuildingBackground->setResAnim(pAnim);
     m_pBuildingBackground->setSize(oxygine::Stage::getStage()->getWidth() - width - 100, GameMap::getImageSize() * 1.2f + 32);
     m_pBuildingBackground->setPosition(m_MapInfo->getX(),
@@ -162,18 +162,18 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     styleMain16.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     styleMain16.multiline = false;
 
-    m_contentSlider = oxygine::spSlidingActor::create();
+    m_contentSlider = MemoryManagement::create<oxygine::SlidingActor>();
     m_contentSlider->setSize(m_pBuildingBackground->getScaledWidth() - 20, 100);
-    m_content = oxygine::spActor::create();
+    m_content = MemoryManagement::create<oxygine::Actor>();
     m_content->setSize(pBuildingSpriteManager->getCount()* (GameMap::getImageSize() + 12), 100);
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spBuilding building = spBuilding::create(pBuildingSpriteManager->getID(i), nullptr);
+        spBuilding building = MemoryManagement::create<Building>(pBuildingSpriteManager->getID(i), nullptr);
         building->updateBuildingSprites(false);
         building->setVisible(false);
         m_content->addChild(building);
         m_BuildingCountSprites.push_back(building);
-        oxygine::spTextField pText = oxygine::spTextField::create();
+        oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
         pText->setHtmlText("0");
         pText->setPosition(2 + i * (GameMap::getImageSize() + 12), 12 + GameMap::getImageSize() * 1.2f);
         pText->setStyle(styleMain16);
@@ -186,7 +186,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     m_pBuildingBackground->addChild(m_contentSlider);
     addChild(m_pBuildingBackground);
 
-    oxygine::spButton pButtonTop = oxygine::spButton::create();
+    oxygine::spButton pButtonTop = MemoryManagement::create<oxygine::Button>();
     pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
     pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = pButtonTop.get();
@@ -215,7 +215,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     pButtonTop->setPosition(m_MapInfo->getX() - 25, m_MapInfo->getY() + m_MapInfo->getScaledHeight() + 30);
     addChild(pButtonTop);
 
-    pButtonTop = oxygine::spButton::create();
+    pButtonTop = MemoryManagement::create<oxygine::Button>();
     pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
     pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     auto* ptr2 = pButtonTop.get();
@@ -261,15 +261,15 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
             (info.fileName().endsWith(".map") ||
              info.fileName().endsWith(".msav")))
         {
-            m_CurrentLoadedCampaign.free();
+            m_CurrentLoadedCampaign.reset();
             if (m_pCurrentMap.get() != nullptr)
             {
                 m_pCurrentMap->detach();
-                m_pCurrentMap.free();
+                m_pCurrentMap.reset();
             }
             bool savegame = info.fileName().endsWith(".msav");
             QString file = info.canonicalFilePath();
-            m_pCurrentMap = spGameMap::create(file, true, fast, savegame);
+            m_pCurrentMap = MemoryManagement::create<GameMap>(file, true, fast, savegame);
             m_pCurrentMap->setMapPath(GlobalUtils::makePathRelative(file, false));
             m_pCurrentMap->getGameScript()->init();
             m_pMinimap->clear();
@@ -320,11 +320,11 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
             {
                 m_pCurrentMap->detach();
                 m_currentMapFile = QFileInfo();
-                m_pCurrentMap.free();
+                m_pCurrentMap.reset();
             }
             m_pMinimap->updateMinimap(nullptr);
-            m_CurrentLoadedCampaign.free();
-            m_CurrentLoadedCampaign = spCampaign::create(info.canonicalFilePath());
+            m_CurrentLoadedCampaign.reset();
+            m_CurrentLoadedCampaign = MemoryManagement::create<Campaign>(info.canonicalFilePath());
             m_MapDescription->setHtmlText(m_CurrentLoadedCampaign->getDescription());
             m_MapAuthor->setHtmlText(m_CurrentLoadedCampaign->getAuthor());
             m_MapPlayerCount->setVisible(false);
@@ -337,9 +337,9 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
         if (m_pCurrentMap.get() != nullptr)
         {
             m_pCurrentMap->detach();
-            m_pCurrentMap.free();
+            m_pCurrentMap.reset();
         }
-        m_CurrentLoadedCampaign.free();
+        m_CurrentLoadedCampaign.reset();
         m_currentMapFile = info;
     }
     qint32 maxWidth = m_MapDescription->getX() + m_MapDescription->getTextRect().width();
@@ -364,7 +364,7 @@ void MapSelectionView::loadMapVictoryInfo()
     qint32 posY = 0;
     for (qint32 i = 0; i < Userdata::MAX_VICTORY_INFO_PER_MAP; ++i)
     {
-        oxygine::spTextField pText = oxygine::spTextField::create();
+        oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
         pText->setHtmlText(QString::number(i + 1) + ".");
         pText->setPosition(10, posY + 10);
         pText->setStyle(style);
@@ -379,13 +379,13 @@ void MapSelectionView::loadMapVictoryInfo()
                 qint32 score = info->score[i];
                 oxygine::ResAnim* pAnim = nullptr;
                 COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-                oxygine::spSprite pSprite = oxygine::spSprite::create();
+                oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
                 pSprite->setPosition(110, posY + 10);
                 auto rank = GameRecorder::getRank(score);
                 pAnim = GameRecorder::getRankAnim(rank);
                 pSprite->setResAnim(pAnim);
                 m_pVictoryInfo->addChild(pSprite);
-                pSprite = oxygine::spSprite::create();
+                pSprite = MemoryManagement::create<oxygine::Sprite>();
                 if (!co1.isEmpty())
                 {
                     pAnim = pCOSpriteManager->getResAnim(co1 + "+info", oxygine::ep_ignore_error);
@@ -416,7 +416,7 @@ void MapSelectionView::loadMapVictoryInfo()
                     {
                         pAnim = pCOSpriteManager->getResAnim("no_co+info", oxygine::ep_ignore_error);
                     }
-                    pSprite = oxygine::spSprite::create();
+                    pSprite = MemoryManagement::create<oxygine::Sprite>();
                     if (pAnim != nullptr)
                     {
                         pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
@@ -529,5 +529,5 @@ void MapSelectionView::deserializeObject(QDataStream& stream)
     {
         m_CurrentLoadedCampaign->deserializeObject(stream);
     }
-    m_pCurrentMap = spGameMap::create<QDataStream&, bool>(stream, false);
+    m_pCurrentMap = MemoryManagement::create<GameMap, QDataStream&, bool>(stream, false);
 }

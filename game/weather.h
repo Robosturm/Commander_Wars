@@ -3,8 +3,6 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/scriptvariables.h"
 #include "coreengine/fileserializable.h"
 
@@ -13,15 +11,15 @@
 
 class GameMap;
 class Weather;
-using spWeather = oxygine::intrusive_ptr<Weather>;
+using spWeather = std::shared_ptr<Weather>;
 
-class Weather final : public QObject, public FileSerializable, public oxygine::ref_counter
+class Weather final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
     explicit Weather(GameMap* pMap);
     explicit Weather(QString weatherId, GameMap* pMap);
-   virtual ~Weather() = default;
+    ~Weather() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

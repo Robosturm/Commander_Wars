@@ -22,7 +22,7 @@ FolderDialog::FolderDialog(QString startFolder)
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -32,13 +32,13 @@ FolderDialog::FolderDialog(QString startFolder)
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     // current folder
-    m_CurrentFolder = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 60);
+    m_CurrentFolder = MemoryManagement::create<Textbox>(oxygine::Stage::getStage()->getWidth() - 60);
     m_CurrentFolder->setPosition(30, 30);
     pSpriteBox->addChild(m_CurrentFolder);
     m_CurrentFolder->setCurrentText(startFolder);
     connect(m_CurrentFolder.get(), &Textbox::sigTextChanged, this, &FolderDialog::showFolder, Qt::QueuedConnection);
     // folder file selection
-    m_MainPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150), QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 300));
+    m_MainPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150), QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 300));
     m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getScaledHeight() + 10);
     pSpriteBox->addChild(m_MainPanel);
 
@@ -145,12 +145,12 @@ void FolderDialog::showFolder(QString folder)
         }
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
-        oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+        oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
         pBox->setResAnim(pAnim);
         pBox->setSize(m_MainPanel->getScaledWidth() - 70, 40);
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
-        spLabel textField = spLabel::create(pBox->getScaledWidth() - 18);
+        spLabel textField = MemoryManagement::create<Label>(pBox->getScaledWidth() - 18);
         textField->setX(13);
         textField->setY(5);
         pBox->addChild(textField);
@@ -228,7 +228,7 @@ void FolderDialog::KeyInput(oxygine::KeyEvent event)
                 if (QFile::exists(m_CurrentFolder->getCurrentText()))
                 {
                     m_focused = false;
-                    spDialogMessageBox pSurrender = spDialogMessageBox::create(tr("Do you want to delete the folder ") + m_CurrentFolder->getCurrentText() + "?", true);
+                    spDialogMessageBox pSurrender = MemoryManagement::create<DialogMessageBox>(tr("Do you want to delete the folder ") + m_CurrentFolder->getCurrentText() + "?", true);
                     connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &FolderDialog::deleteItem, Qt::QueuedConnection);
                     connect(pSurrender.get(), &DialogMessageBox::sigCancel, this, [this]()
                     {

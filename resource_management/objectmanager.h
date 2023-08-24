@@ -11,10 +11,10 @@ public:
     static oxygine::spButton createIconButton(QString icon, qint32 size);
     static oxygine::spButton createIconButton(oxygine::spSprite pSprite, qint32 size);
 protected:
-    friend RessourceManagement<ObjectManager>;
+    friend MemoryManagement;
     ObjectManager();
 private:
-   virtual ~ObjectManager() = default;
+    ~ObjectManager() = default;
 };
 
 

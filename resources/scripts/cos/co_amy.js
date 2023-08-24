@@ -277,7 +277,7 @@ var Constructor = function()
         {
             return 3;
         }
-        return 0;
+        return 1;
     };
 
     // CO - Intel

@@ -69,7 +69,7 @@ void ScriptEventGeneric::writeEvent(QTextStream& rStream)
 
 void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
     load(pBox);
     pScriptEditor->addChild(pBox);
     connect(pBox.get(), &GenericBox::sigFinished, pScriptEditor.get(), &ScriptEditor::updateEvents, Qt::QueuedConnection);
@@ -86,7 +86,7 @@ void ScriptEventGeneric::load(spGenericBox pBox)
     qint32 y = 30;
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
-        spLabel pText = spLabel::create(width - 10);
+        spLabel pText = MemoryManagement::create<Label>(width - 10);
         pText->setStyle(style);
         pText->setHtmlText(m_Items[i].labelText);
         pText->setPosition(30, y);
@@ -142,7 +142,7 @@ void ScriptEventGeneric::load(spGenericBox pBox)
 
 void ScriptEventGeneric::addFloatEditor(spGenericBox & pBox, qint32 i, qint32 & y)
 {
-    spSpinBox spinBox = spSpinBox::create(300, m_Items[i].min, m_Items[i].max, SpinBox::Mode::Float);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, m_Items[i].min, m_Items[i].max, SpinBox::Mode::Float);
     spinBox->setInfinityValue(m_Items[i].infinite);
     spinBox->setTooltipText(m_Items[i].tooltip);
     spinBox->setPosition(width, y);
@@ -157,7 +157,7 @@ void ScriptEventGeneric::addFloatEditor(spGenericBox & pBox, qint32 i, qint32 & 
 
 void ScriptEventGeneric::addIntegerEditor(spGenericBox & pBox, qint32 i, qint32 & y)
 {
-    spSpinBox spinBox = spSpinBox::create(300, m_Items[i].min, m_Items[i].max);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, m_Items[i].min, m_Items[i].max);
     spinBox->setInfinityValue(m_Items[i].infinite);
     spinBox->setTooltipText(m_Items[i].tooltip);
     spinBox->setPosition(width, y);
@@ -172,7 +172,7 @@ void ScriptEventGeneric::addIntegerEditor(spGenericBox & pBox, qint32 i, qint32 
 
 void ScriptEventGeneric::addStringEditor(spGenericBox & pBox, qint32 i, qint32 & y)
 {
-    spTextbox textBox = spTextbox::create(300);
+    spTextbox textBox = MemoryManagement::create<Textbox>(300);
     textBox->setTooltipText(m_Items[i].tooltip);
     textBox->setPosition(width, y);
     textBox->setCurrentText(m_Items[i].item);
@@ -186,7 +186,7 @@ void ScriptEventGeneric::addStringEditor(spGenericBox & pBox, qint32 i, qint32 &
 
 void ScriptEventGeneric::addBoolEditor(spGenericBox & pBox, qint32 i, qint32 & y)
 {
-    spCheckbox checkBox = spCheckbox::create();
+    spCheckbox checkBox = MemoryManagement::create<Checkbox>();
     checkBox->setTooltipText(m_Items[i].tooltip);
     checkBox->setPosition(width, y);
     QVariant var = m_Items[i].item;
@@ -203,7 +203,7 @@ void ScriptEventGeneric::addBoolEditor(spGenericBox & pBox, qint32 i, qint32 & y
 
 void ScriptEventGeneric::addSelectionEditor(spGenericBox & pBox, qint32 i, qint32 & y)
 {
-    spDropDownmenu dropDown = spDropDownmenu::create(300, m_Items[i].items);
+    spDropDownmenu dropDown = MemoryManagement::create<DropDownmenu>(300, m_Items[i].items);
     dropDown->setTooltipText(m_Items[i].tooltip);
     dropDown->setPosition(width, y);
     for (qint32 i2  = 0; i2 < m_Items[i].data.size(); i2++)
@@ -223,7 +223,7 @@ void ScriptEventGeneric::addSelectionEditor(spGenericBox & pBox, qint32 i, qint3
 void ScriptEventGeneric::addFileEditor(spGenericBox & pBox, qint32 i, qint32 & y)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    spTextbox pTextbox = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 220 - width);
+    spTextbox pTextbox = MemoryManagement::create<Textbox>(oxygine::Stage::getStage()->getWidth() - 220 - width);
     pTextbox->setTooltipText(m_Items[i].tooltip);
     pTextbox->setCurrentText(m_Items[i].item);
     pTextbox->setPosition(width, y);
@@ -235,16 +235,15 @@ void ScriptEventGeneric::addFileEditor(spGenericBox & pBox, qint32 i, qint32 & y
     oxygine::spButton pButtonSelect = pObjectManager->createButton(tr("Select"), 150);
     pButtonSelect->setPosition(10 + pTextbox->getX() + pTextbox->getScaledWidth(), y);
     pBox->addChild(pButtonSelect);
-    auto* pPtrTextbox = pTextbox.get();
-    pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this, i, pPtrTextbox](oxygine::Event*)
+    pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this, i, pTextbox](oxygine::Event*)
     {
-        emit sigShowSelectFile (m_Items[i].filter, m_Items[i].startFolder, m_Items[i].item, spTextbox(pPtrTextbox));
+        emit sigShowSelectFile (m_Items[i].filter, m_Items[i].startFolder, m_Items[i].item, pTextbox);
     });
 }
 
 void ScriptEventGeneric::addIconEditor(spGenericBox & pBox, qint32 i, qint32 & y)
 {
-    spDropDownmenuSprite dropDown = spDropDownmenuSprite::create(105, m_Items[i].items, m_Items[i].creator, -1, false);
+    spDropDownmenuSprite dropDown = MemoryManagement::create<DropDownmenuSprite>(105, m_Items[i].items, m_Items[i].creator, -1, false);
     dropDown->setTooltipText(m_Items[i].tooltip);
     dropDown->setPosition(width, y);
     for (qint32 i2  = 0; i2 < m_Items[i].data.size(); i2++)
@@ -300,7 +299,7 @@ void ScriptEventGeneric::addPointListEditor(spGenericBox pBox, qint32 i, qint32 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     for (qint32 i2 = 0; i2 < m_Items[i].pointData.size(); ++i2)
     {
-        spSpinBox spinBox = spSpinBox::create(300, m_Items[i].min, m_Items[i].max);
+        spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, m_Items[i].min, m_Items[i].max);
         spinBox->setInfinityValue(m_Items[i].infinite);
         spinBox->setTooltipText(m_Items[i].tooltip);
         spinBox->setPosition(10, y);
@@ -312,7 +311,7 @@ void ScriptEventGeneric::addPointListEditor(spGenericBox pBox, qint32 i, qint32 
             m_Items[i].pointData[i2] = QVariant(point);
         });
         pBox->addItem(spinBox);
-        spinBox = spSpinBox::create(300, m_Items[i].min, m_Items[i].max);
+        spinBox = MemoryManagement::create<SpinBox>(300, m_Items[i].min, m_Items[i].max);
         spinBox->setInfinityValue(m_Items[i].infinite);
         spinBox->setTooltipText(m_Items[i].tooltip);
         spinBox->setPosition(20 + spinBox->getWidth(), y);
@@ -343,7 +342,7 @@ void ScriptEventGeneric::showSelectFile(QString filter, QString startFolder, QSt
     QStringList wildcards;
     wildcards.append(filter);
     QString path = Settings::getInstance()->getUserPath() + startFolder;
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, currentFile, false, tr("Select"));
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, currentFile, false, tr("Select"));
     Textbox* pBox = pTextbox.get();
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, [=](QString id)
     {

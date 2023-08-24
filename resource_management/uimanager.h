@@ -6,8 +6,8 @@ class UiManager final : public QObject, public RessourceManagement<UiManager>
 {
     Q_OBJECT
 protected:
-    friend RessourceManagement<UiManager>;
+    friend MemoryManagement;
     UiManager();
 private:
-   virtual ~UiManager() = default;
+    ~UiManager() = default;
 };

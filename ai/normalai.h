@@ -13,7 +13,7 @@ class QmlVectorPoint;
 class Building;
 
 class NormalAi;
-using spNormalAi = oxygine::intrusive_ptr<NormalAi>;
+using spNormalAi = std::shared_ptr<NormalAi>;
 
 class NormalAi final : public CoreAI
 {
@@ -112,8 +112,8 @@ public:
         Max,
     };
 
-    explicit NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType, QString jsName);
-   virtual ~NormalAi() = default;
+    explicit NormalAi(GameMap* pMap, const QString & configurationFile, GameEnums::AiTypes aiType, const QString & jsName);
+    ~NormalAi() = default;
 
     virtual void resetToTurnStart() override;
 public slots:
@@ -467,7 +467,7 @@ protected:
      * @param data
      * @param enemy
      */
-    void createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, double moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always = false);
+    void createUnitData(spUnit pUnit, MoveUnitData & data, bool enemy, double moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always = false);
     /**
      * @brief createUnitInfluenceMap
      */

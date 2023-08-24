@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionCheckVariable;
-using spScriptConditionCheckVariable = oxygine::intrusive_ptr<ScriptConditionCheckVariable>;
+using spScriptConditionCheckVariable = std::shared_ptr<ScriptConditionCheckVariable>;
 
 class ScriptConditionCheckVariable final : public ScriptCondition
 {

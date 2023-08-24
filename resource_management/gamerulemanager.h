@@ -115,9 +115,9 @@ public slots:
         return m_loadedGameRules.contains(ruleID);
     }
 protected:
-    friend RessourceManagement<GameRuleManager>;
+    friend MemoryManagement;
     GameRuleManager();
-   virtual ~GameRuleManager() = default;
+    ~GameRuleManager() = default;
 
 private:
     QStringList m_loadedWeather;

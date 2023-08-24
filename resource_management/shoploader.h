@@ -11,11 +11,11 @@ public:
     virtual void loadAll() override;
     void onItemBought(qint32 itemType, QString key);
 protected:
-    friend RessourceManagement<ShopLoader>;
+    friend MemoryManagement;
     ShopLoader();
 
 private:
-   virtual ~ShopLoader() = default;
+    ~ShopLoader() = default;
 };
 
 #endif // SHOPLOADER_H

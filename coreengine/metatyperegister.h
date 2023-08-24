@@ -6,7 +6,7 @@ public:
     static void registerInterfaceData();
 private:
     MetaTypeRegister() = delete;
-   virtual ~MetaTypeRegister() = delete;
+    ~MetaTypeRegister() = delete;
 };
 
 

@@ -16,7 +16,7 @@
 class Player;
 class GameMap;
 class GameAnimation;
-using spGameAnimation = oxygine::intrusive_ptr<GameAnimation>;
+using spGameAnimation = std::shared_ptr<GameAnimation>;
 
 class GameAnimation : public QObject, public oxygine::Sprite
 {
@@ -38,7 +38,7 @@ public:
      * @param text
      * @return
      */
-    Q_INVOKABLE qint32 getFontWidth(const QString font, const QString text) const;
+    Q_INVOKABLE qint32 getFontWidth(const QString & font, const QString & text) const;
     /**
      * @brief getMap
      * @return
@@ -361,7 +361,7 @@ private:
      * @brief setPreviousAnimation
      * @param previousAnimation
      */
-    void setPreviousAnimation(GameAnimation *previousAnimation);
+    void setPreviousAnimation(spGameAnimation previousAnimation);
     /**
      * @brief removeQueuedAnimation
      * @param pGameAnimation

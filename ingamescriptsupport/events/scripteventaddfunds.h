@@ -5,7 +5,7 @@
 #include "scriptevent.h"
 
 class ScriptEventAddFunds;
-using spScriptEventAddFunds = oxygine::intrusive_ptr<ScriptEventAddFunds>;
+using spScriptEventAddFunds = std::shared_ptr<ScriptEventAddFunds>;
 
 class ScriptEventAddFunds final : public ScriptEvent
 {

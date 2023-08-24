@@ -15,7 +15,7 @@ public:
     };
     static const char* const LIST_FILENAME_ENDING;
     Filesupport() = delete;
-   virtual ~Filesupport() = delete;
+    ~Filesupport() = delete;
     /**
      * @brief getRuntimeHash
      * @return

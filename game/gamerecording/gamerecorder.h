@@ -6,23 +6,20 @@
 
 #include "game/gamerecording/daytodayrecord.h"
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
-
-#include "coreengine/LUPDATE_MACROS.h"
 
 class GameMap;
 
 class GameRecorder;
-using spGameRecorder = oxygine::intrusive_ptr<GameRecorder>;
+using spGameRecorder = std::shared_ptr<GameRecorder>;
 
 class AttackReport;
-using spAttackReport = oxygine::intrusive_ptr<AttackReport>;
+using spAttackReport = std::shared_ptr<AttackReport>;
 
 /**
  * @brief The AttackReport struct
  */
-class AttackReport final : public oxygine::ref_counter
+class AttackReport final
 {
 public:
     qint32 day{0};
@@ -80,7 +77,7 @@ public:
 
 Q_DECLARE_INTERFACE(AttackReport, "AttackReport");
 
-class GameRecorder final : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameRecorder final : public QObject, public FileSerializable
 {
     Q_OBJECT    
 public:
@@ -97,7 +94,7 @@ public:
         QVector<UnitData> lostUnits;
         QVector<UnitData> killedUnits;
     };
-    ENUM_CLASS Rang
+    enum class Rang
     {
         S,
         A,
@@ -107,7 +104,7 @@ public:
     };
 
     explicit GameRecorder(GameMap* pMap);
-   virtual ~GameRecorder() = default;
+    ~GameRecorder() = default;
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -267,8 +264,8 @@ public:
      * @param defenderOwnerID
      */
     Q_INVOKABLE void logAttack(qint32 day,
-                   qint32 attackerDamage, qint32 attackerX, qint32 attackerY, const QString attackerID, qint32 attackerOwnerID, bool attackerKilled,
-                   qint32 defenderDamage, qint32 defenderX, qint32 defenderY, const QString defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker = true);
+                               qint32 attackerDamage, qint32 attackerX, qint32 attackerY, const QString attackerID, qint32 attackerOwnerID, bool attackerKilled,
+                               qint32 defenderDamage, qint32 defenderX, qint32 defenderY, const QString defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker = true);
 private:
     void saveUnitVector(QDataStream& pStream, const QVector<UnitData> & data) const;
     void loadUnitVector(QDataStream& pStream, QVector<UnitData> & data);

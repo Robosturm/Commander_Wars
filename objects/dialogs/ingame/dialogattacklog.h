@@ -10,17 +10,17 @@ class Player;
 class GameMap;
 
 class AttackReport;
-using spAttackReport = oxygine::intrusive_ptr<AttackReport>;
+using spAttackReport = std::shared_ptr<AttackReport>;
 
 class DialogAttackLog;
-using spDialogAttackLog = oxygine::intrusive_ptr<DialogAttackLog>;
+using spDialogAttackLog = std::shared_ptr<DialogAttackLog>;
 
 class DialogAttackLog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogAttackLog(GameMap* pMap, Player* pPlayer);
-   virtual ~DialogAttackLog() = default;
+    ~DialogAttackLog() = default;
 signals:
     void sigFinished();
     void sigShowAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAtk, qint32 posDefX, qint32 posDefY, qint32 playerDef);

@@ -13,7 +13,6 @@
 #include "objects/base/EventTextEdit.h"
 
 #include "coreengine/settings.h"
-#include "coreengine/LUPDATE_MACROS.h"
 #include "coreengine/Gamepad.h"
 #include "coreengine/commandlineparser.h"
 
@@ -25,14 +24,14 @@
 
 class BaseGamemenu;
 class WorkerThread;
-using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
+using spWorkerThread = std::shared_ptr<WorkerThread>;
 class AudioManager;
-using spAudioManager = oxygine::intrusive_ptr<AudioManager>;
-using spAudioThread = oxygine::intrusive_ptr<AudioManager>;
+using spAudioManager = std::shared_ptr<AudioManager>;
+using spAudioThread = std::shared_ptr<AudioManager>;
 class TCPClient;
-using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
+using spTCPClient = std::shared_ptr<TCPClient>;
 class AiProcessPipe;
-using spAiProcessPipe = oxygine::intrusive_ptr<AiProcessPipe>;
+using spAiProcessPipe = std::shared_ptr<AiProcessPipe>;
 class Minimap;
 
 class Mainapp final : public oxygine::GameWindow
@@ -71,35 +70,35 @@ public:
     /**
      * @brief The ZOrder enum for z-order of actors directly attached to the game map or the menu
      */
-    ENUM_CLASS ZOrder
-        {
-            Background = std::numeric_limits<qint32>::min(),
-            Map,
-            Terrain,
-            // gap for stacking the terrain sprites
+    enum class ZOrder
+    {
+        Background = std::numeric_limits<qint32>::min(),
+        Map,
+        Terrain,
+        // gap for stacking the terrain sprites
 
-            CORange = std::numeric_limits<qint32>::max() - 200,
-            GridLayout,
-            FogFields,
-            MarkedFields,
-            Units,
-            MoveArrow,
-            Weather,
-            Cursor,
-            Animation,
-            Objects,
-            FocusedObjects = Objects + 2,
-            AnimationFullScreen,
-            DropDownList,
-            Dialogs,
-            Tooltip,
-            Loadingscreen,
-            Achievement,
-            Console,
-        };
+        CORange = std::numeric_limits<qint32>::max() - 200,
+        GridLayout,
+        FogFields,
+        MarkedFields,
+        Units,
+        MoveArrow,
+        Weather,
+        Cursor,
+        Animation,
+        Objects,
+        FocusedObjects = Objects + 2,
+        AnimationFullScreen,
+        DropDownList,
+        Dialogs,
+        Tooltip,
+        Loadingscreen,
+        Achievement,
+        Console,
+    };
 
     explicit Mainapp();
-    virtual ~Mainapp();
+    ~Mainapp();
     virtual void shutdown() override;
     static inline Mainapp* getInstance()
     {
@@ -153,7 +152,7 @@ public:
      */
     static WorkerThread* getWorker()
     {
-        return getInstance()->m_Worker;
+        return getInstance()->m_Worker.get();
     }
     static QProcess & GetAiSubProcess()
     {
@@ -171,7 +170,7 @@ public:
      * @brief getLastCreateLineEdit
      * @return
      */
-    EventTextEdit* getLastCreateLineEdit() const
+    std::shared_ptr<EventTextEdit> getLastCreateLineEdit() const
     {
         return m_pLineEdit;
     }
@@ -285,6 +284,7 @@ public slots:
      * @brief createLineEdit
      */
     void createLineEdit();
+    void resetLineEdit();
     void doMapshot(BaseGamemenu* pMenu);
     /**
      * @brief saveMapAsImage
@@ -322,18 +322,18 @@ protected:
     virtual void onQuit() override;
 
 private:
-    EventTextEdit* m_pLineEdit{nullptr};
+    std::shared_ptr<EventTextEdit> m_pLineEdit;
 
     static Mainapp* m_pMainapp;
     static bool m_slave;
     static bool m_trainingSession;
     QMutex m_crashMutex;
-    QScopedPointer<QThread> m_Workerthread;
-    QScopedPointer<QThread> m_Networkthread;
-    QScopedPointer<QThread> m_GameServerThread;
-    QScopedPointer<QThread> m_audioThread;
-    QScopedPointer<QProcess> m_aiSubProcess;
-    WorkerThread* m_Worker;
+    std::shared_ptr<QThread> m_Workerthread;
+    std::shared_ptr<QThread> m_Networkthread;
+    std::shared_ptr<QThread> m_GameServerThread;
+    std::shared_ptr<QThread> m_audioThread;
+    std::shared_ptr<QProcess> m_aiSubProcess;
+    std::shared_ptr<WorkerThread> m_Worker;
     spAudioManager m_AudioManager;
     spAiProcessPipe m_aiProcessPipe;
     spTCPClient m_slaveClient;

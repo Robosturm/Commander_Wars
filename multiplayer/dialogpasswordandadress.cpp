@@ -11,7 +11,7 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
 {
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -24,24 +24,24 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::spTextField pText = oxygine::spTextField::create();
+    oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
     pText->setHtmlText(text);
     pText->setStyle(style);
     pText->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pText->getTextRect().width() / 2, oxygine::Stage::getStage()->getHeight() / 2 - 80);
     pSpriteBox->addChild(pText);
 
-    m_pTextbox = spTextbox::create(300);
+    m_pTextbox = MemoryManagement::create<Textbox>(300);
     m_pTextbox->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pTextbox->getScaledWidth() / 2, oxygine::Stage::getStage()->getHeight() / 2 - 40);
     m_pTextbox->setCurrentText("");
     pSpriteBox->addChild(m_pTextbox);
 
-    pText = oxygine::spTextField::create();
+    pText = MemoryManagement::create<oxygine::TextField>();
     pText->setHtmlText(tr("Password"));
     pText->setStyle(style);
     pText->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pText->getTextRect().width() / 2, oxygine::Stage::getStage()->getHeight() / 2);
     pSpriteBox->addChild(pText);
 
-    m_pPasswordbox = spPasswordbox::create(300);
+    m_pPasswordbox = MemoryManagement::create<Passwordbox>(300);
     m_pPasswordbox->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pTextbox->getScaledWidth() / 2, oxygine::Stage::getStage()->getHeight() / 2 + 40);
     m_pPasswordbox->setCurrentText("");
     pSpriteBox->addChild(m_pPasswordbox);

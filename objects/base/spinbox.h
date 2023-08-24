@@ -11,7 +11,7 @@
 #include "objects/base/textinput.h"
 
 class SpinBox;
-using spSpinBox = oxygine::intrusive_ptr<SpinBox>;
+using spSpinBox = std::shared_ptr<SpinBox>;
 
 class SpinBox final : public TextInput
 {
@@ -25,7 +25,7 @@ public:
     };
 
     explicit SpinBox(qint32 width, qreal min = 0, qreal max = 100, Mode mode = Mode::Int);
-   virtual ~SpinBox() = default;
+    ~SpinBox() = default;
 
     virtual void update(const oxygine::UpdateState& us) override;
     virtual void setEnabled(bool value) override;

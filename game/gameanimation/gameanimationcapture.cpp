@@ -41,11 +41,11 @@ void GameAnimationCapture::addBuildingSprite(const QString spriteID, Player* sta
 
         if (m_buildingSprites.get() == nullptr)
         {
-            m_buildingSprites = oxygine::spSprite::create();
+            m_buildingSprites = MemoryManagement::create<oxygine::Sprite>();
             addChild(m_buildingSprites);
             createBuildingAnimation(pAnim, startPlayer, capturedPlayer);
-            m_buildingResAnim = oxygine::spSingleResAnim::create();
-            m_captureBuildingResAnim = oxygine::spSingleResAnim::create();
+            m_buildingResAnim = MemoryManagement::create<oxygine::SingleResAnim>();
+            m_captureBuildingResAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         }
         QString path = Settings::getInstance()->getUserPath() + pAnim->getResPath();
         if (!QFile::exists(path))
@@ -125,8 +125,8 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
         float startPosition = (startPercent) * movingHeight + m_BuildingStartPos;
         m_buildingSprites->setPosition(0, startPosition);
         m_buildingSprites->setScaleY(1.0f - startPercent);
-        oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
-        oxygine::spTweenQueue queueMoving = oxygine::spTweenQueue::create();
+        oxygine::spTweenQueue queueAnimating = MemoryManagement::create<oxygine::TweenQueue>();
+        oxygine::spTweenQueue queueMoving = MemoryManagement::create<oxygine::TweenQueue>();
         // going down of the building
         oxygine::timeMS jumpingDuration = oxygine::timeMS(m_frameTime * m_jumpSprites * m_jumpingCount + m_frameTime * m_ayeAyeSprites);
         // dummy tween doing nothing except sync the animation
@@ -205,11 +205,11 @@ void GameAnimationCapture::addSoldierSprite(const QString spriteID, Player*  pPl
         float startPosition = unitOffsetY + qCeil(unitOffset * (1.0f - startPercentDone)) + qCeil(startPercentDone * buildingHigh);
         float endPosition = unitOffsetY + qCeil(unitOffset * ( 1.0f - percentDone)) + qCeil(percentDone * buildingHigh);
 
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim->getTotalFrames() > 1)
         {
             // jumping
-            oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
+            oxygine::spTweenQueue queueAnimating = MemoryManagement::create<oxygine::TweenQueue>();
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, 0, m_jumpSprites - 1), oxygine::timeMS(m_jumpSprites * m_frameTime), m_jumpingCount);
             if (!m_audioJumpAdded)
             {
@@ -290,7 +290,7 @@ void GameAnimationCapture::addBackgroundSprite(const QString spriteID)
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(0);
         addChild(pSprite);

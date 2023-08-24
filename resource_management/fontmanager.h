@@ -6,6 +6,10 @@
 
 #include "resource_management/ressourcemanagement.h"
 
+class MemoryManagement;
+class FontManager;
+using spFontManager = std::shared_ptr<FontManager>;
+
 class FontManager final : public QObject
 {
     Q_OBJECT
@@ -19,9 +23,9 @@ public:
     {
         if (m_pInstance == nullptr)
         {
-            m_pInstance = new FontManager();
+            m_pInstance = MemoryManagement::create<FontManager>();
         }
-        return m_pInstance;
+        return m_pInstance.get();
     }
     /**
      * @brief getMainFont16
@@ -128,12 +132,12 @@ public slots:
      */
     static QColor getFontColor();
 protected:
-    friend RessourceManagement<FontManager>;
+    friend MemoryManagement;
     explicit FontManager();
-   virtual ~FontManager() = default;
+    ~FontManager() = default;
 
 private:
-    static FontManager* m_pInstance;
+    static spFontManager m_pInstance;
     QMap<QString, oxygine::Font> m_fonts;
     QColor m_defaultColor{QColor(250, 210, 0)};
 };

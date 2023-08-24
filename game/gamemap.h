@@ -20,14 +20,14 @@
 #include "coreengine/qmlvector.h"
 
 class GameAction;
-using spGameAction = oxygine::intrusive_ptr<GameAction>;
+using spGameAction = std::shared_ptr<GameAction>;
 
 class GameMap;
-using spGameMap = oxygine::intrusive_ptr<GameMap>;
+using spGameMap = std::shared_ptr<GameMap>;
 
 class EditorMenue;
 class BaseGamemenu;
-using spBaseGamemenu = oxygine::intrusive_ptr<BaseGamemenu>;
+using spBaseGamemenu = std::shared_ptr<BaseGamemenu>;
 
 class GameMap final : public QObject, public FileSerializable, public oxygine::Actor
 {
@@ -68,8 +68,7 @@ public:
      * @param map path to the map which should be loaded
      */
     explicit GameMap(QString map, bool onlyLoad, bool fast, bool savegame);
-    void loadMap(QString map, bool onlyLoad, bool fast, bool savegame);
-   virtual ~GameMap();
+    ~GameMap();
     /**
      * @brief newMap
      * @param width
@@ -121,12 +120,17 @@ public:
      * @param player index of the player
      * @return smart pointer to the selected player
      */
-    spPlayer getspPlayer(qint32 player);
+    spPlayer getSpPlayer(qint32 player);
     /**
      * @brief getSpCurrentPlayer the current player
      * @return
      */
     spPlayer getSpCurrentPlayer();
+    /**
+     * @brief getSpGameRules
+     * @return
+     */
+    spGameRules getSpGameRules();
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -320,6 +324,35 @@ public:
      * @param showLoadingScreen
      */
     void updateSpritesOfTiles(const QVector<QPoint> & points, bool editor = false, bool showLoadingScreen = false);
+    /**
+     * @brief getSpVisionCircle
+     * @param x
+     * @param y
+     * @param minVisionRange
+     * @param maxVisionRange
+     * @param visionHigh
+     * @return
+     */
+    spQmlVectorPoint getSpVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh);
+    /**
+     * @brief getSpUnits
+     * @param pPlayer
+     * @return
+     */
+    spQmlVectorUnit getSpUnits(Player* pPlayer);
+    /**
+     * @brief getBuildings
+     * @param pPlayer
+     * @return
+     */
+    spQmlVectorBuilding getSpBuildings(Player* pPlayer, QString id = "");
+    /**
+     * @brief getBuildingsListCount
+     * @param pPlayer
+     * @param ids
+     * @return
+     */
+    spQmlVectorBuilding getSpBuildingsListCount(Player* pPlayer, const QStringList ids);
 signals:
     void signalExitGame();
     void sigSaveGame();
@@ -810,7 +843,7 @@ public:
     Q_INVOKABLE void setMapName(const QString value);
     Q_INVOKABLE inline GameRules* getGameRules() const
     {
-        return m_Rules.get();
+        return m_gameRules.get();
     }
     /**
      * @brief updateUnitIcons
@@ -874,6 +907,7 @@ public:
 private slots:
     void zoomChanged();
 private:
+    void loadMap(QString map, bool onlyLoad, bool fast, bool savegame);
     /**
      * @brief updateFlowTiles
      * @param flowPoints
@@ -903,10 +937,10 @@ private:
     QVector<oxygine::spColorRectSprite> m_middleCrossGridSprites;
     spPlayer m_CurrentPlayer;
     qint32 m_currentDay{0};
-    spGameRules m_Rules;
+    spGameRules m_gameRules;
     spCampaign m_Campaign;
-    spGameRecorder m_Recorder{spGameRecorder::create(this)};
-    spGameScript m_GameScript{spGameScript::create(this)};
+    spGameRecorder m_Recorder{MemoryManagement::create<GameRecorder>(this)};
+    spGameScript m_GameScript{MemoryManagement::create<GameScript>(this)};
     static const char* const m_GameAnimationFactory;
     bool m_loaded{false};
     QString m_mapMusic;

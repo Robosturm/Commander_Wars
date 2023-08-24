@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventModifyTerrain;
-using spScriptEventModifyTerrain = oxygine::intrusive_ptr<ScriptEventModifyTerrain>;
+using spScriptEventModifyTerrain = std::shared_ptr<ScriptEventModifyTerrain>;
 
 class ScriptEventModifyTerrain final : public ScriptEvent
 {

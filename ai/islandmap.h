@@ -7,15 +7,15 @@
 class Player;
 class GameMap;
 class IslandMap;
-using spIslandMap = oxygine::intrusive_ptr<IslandMap>;
+using spIslandMap = std::shared_ptr<IslandMap>;
 
-class IslandMap final : public QObject, public oxygine::ref_counter
+class IslandMap final : public QObject
 {
     Q_OBJECT
     static constexpr qint32 UNKNOWN = -1;
 public:
-    explicit IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, QString movementType = "");
-   virtual ~IslandMap() = default;
+    explicit IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, const QString & movementType = "");
+    ~IslandMap() = default;
     /**
      * @brief getValueOnIsland
      * @param island

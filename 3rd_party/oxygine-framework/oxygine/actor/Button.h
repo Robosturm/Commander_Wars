@@ -7,14 +7,14 @@
 namespace oxygine
 {
     class Button;
-    using spButton = intrusive_ptr<Button>;
-    class Button : public QObject, public Box9Sprite
+    using spButton = std::shared_ptr<Button>;
+    class Button final : public QObject, public Box9Sprite
     {
         Q_OBJECT
     public:
 
         explicit Button();
-        virtual ~Button() = default;
+        ~Button() = default;
 
         qint32 getRow() const
         {

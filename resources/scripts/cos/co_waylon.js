@@ -252,7 +252,7 @@ var Constructor = function()
         {
             return 6;
         }
-        return 0;
+        return 1;
     };
     // CO - Intel
     this.getBio = function(co)

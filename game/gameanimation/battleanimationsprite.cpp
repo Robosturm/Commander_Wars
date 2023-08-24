@@ -48,7 +48,7 @@ BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, Unit* pUnit, Terrain
     m_nextFrameTimer.setSingleShot(true);
     setUnitFrameDelay(75);
 
-    m_Actor = oxygine::spClipRectActor::create();
+    m_Actor = MemoryManagement::create<oxygine::ClipRectActor>();
     m_Actor->setSize(127, 192);
     setSize(m_Actor->getScaledWidth(), m_Actor->getScaledHeight());
     addChild(m_Actor);
@@ -595,7 +595,7 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
                                                bool _invertFlipX, qint32 frameTime, qint32 frames, qint32 startFrame,
                                                float rotation, quint8 alpha)
 {
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnim != nullptr)
     {
         if (frames < 0)
@@ -620,7 +620,7 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
         {
             tween->addDoneCallback([this](oxygine::Event * pEvent)
             {
-                oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
+                oxygine::spActor pTarget = std::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
                 if (pTarget.get() != nullptr)
                 {
                     emit sigDetachChild(pTarget);
@@ -681,7 +681,7 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
             {
                 moveTween->addDoneCallback([this](oxygine::Event * pEvent)
                 {
-                    oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
+                    oxygine::spActor pTarget = std::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
                     if (pTarget.get() != nullptr)
                     {
                         emit sigDetachChild(pTarget);
@@ -1033,21 +1033,25 @@ void BattleAnimationSprite::setBackgroundSprite(oxygine::spSprite newBackgroundS
 
 float BattleAnimationSprite::getBackgroundSpeed()
 {
-    return oxygine::safeSpCast<oxygine::SlidingSprite>(m_pBackgroundSprite->getFirstChild())->getSpeedX();
+    oxygine::spActor base = m_pBackgroundSprite->getFirstChild();
+    oxygine::spSlidingSprite background = oxygine::safeSpCast<oxygine::SlidingSprite>(base);
+    return background->getSpeedX();
 }
 
 void BattleAnimationSprite::setBackgroundSpeed(float speed)
 {
+    Mainapp::getInstance()->pauseRendering();
     m_backgroundSpeed = getBackgroundSpeed();
     auto & childs = m_pBackgroundSprite->getChildren();
     for (auto & child : childs)
     {
-        auto sprite = oxygine::dynamic_pointer_cast<oxygine::SlidingSprite>(child);
+        auto sprite = std::dynamic_pointer_cast<oxygine::SlidingSprite>(child);
         if (sprite.get() != nullptr)
         {
             sprite->setSpeedX(speed);
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void BattleAnimationSprite::restoreBackgroundSpeed()

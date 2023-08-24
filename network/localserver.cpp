@@ -19,9 +19,9 @@ LocalServer::~LocalServer()
 
 void LocalServer::connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress)
 {
-    m_pTCPServer = new QLocalServer(this);
+    m_pTCPServer = MemoryManagement::create<QLocalServer>(this);
     m_pTCPServer->listen(primaryAdress);
-    connect(m_pTCPServer, &QLocalServer::newConnection, this, &LocalServer::onConnect, Qt::QueuedConnection);
+    connect(m_pTCPServer.get(), &QLocalServer::newConnection, this, &LocalServer::onConnect, Qt::QueuedConnection);
     connect(this, &LocalServer::sigDisconnectClient, this, &LocalServer::disconnectClient, Qt::QueuedConnection);
     connect(this, &LocalServer::sigDisconnectTCP, this, &LocalServer::disconnectTCP, Qt::QueuedConnection);
     connect(this, &LocalServer::sigForwardData, this, &LocalServer::forwardData, Qt::QueuedConnection);
@@ -48,7 +48,7 @@ void LocalServer::disconnectTCP()
     if (m_pTCPServer != nullptr)
     {
         m_pTCPServer->close();
-        m_pTCPServer = nullptr;
+        m_pTCPServer.reset();
     }
 }
 
@@ -84,12 +84,12 @@ void LocalServer::onConnect()
         connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
         m_idCounter++;
         // Start RX-Task
-        spRxTask pRXTask = spRxTask::create(nextSocket, m_idCounter, this, true);
+        spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket, m_idCounter, this, true);
         m_pRXTasks.append(pRXTask);
         connect(nextSocket, &QLocalSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
         // start TX-Task
-        spTxTask pTXTask = spTxTask::create(nextSocket, m_idCounter, this, true);
+        spTxTask pTXTask = MemoryManagement::create<TxTask>(nextSocket, m_idCounter, this, true);
         m_pTXTasks.append(pTXTask);
         connect(this, &LocalServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
         quint64 socket = m_idCounter;
@@ -97,7 +97,7 @@ void LocalServer::onConnect()
         {
             emit sigDisconnectClient(socket);
         });
-        CONSOLE_PRINT("New Client connection.", GameConsole::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("Client connection.", GameConsole::eLogLevels::eDEBUG);
         emit sigConnected(m_idCounter);
     }
 }

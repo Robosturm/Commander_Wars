@@ -28,7 +28,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    m_pSpriteBox = oxygine::spBox9Sprite::create();
+    m_pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -99,14 +99,14 @@ DialogCOStyle::DialogCOStyle(QString coid)
     qint32 colorSelectorWidth = 0;
     if (!Settings::getInstance()->getSmallScreenDevice())
     {
-        m_pColorSelector = spColorSelector::create(Qt::white, pixelSize);
+        m_pColorSelector = MemoryManagement::create<ColorSelector>(Qt::white, pixelSize);
         m_pColorSelector->setPosition(30, 30);
         m_pSpriteBox->addChild(m_pColorSelector);
         connect(m_pColorSelector.get(), &ColorSelector::sigSelecetedColorChanged, this, &DialogCOStyle::selecetedColorChanged, Qt::QueuedConnection);
         colorSelectorWidth = m_pColorSelector->getScaledWidth();
     }
     QSize size(oxygine::Stage::getStage()->getWidth() - colorSelectorWidth - 75, heigth);
-    m_pCOPanel = spPanel::create(true, size, size);
+    m_pCOPanel = MemoryManagement::create<Panel>(true, size, size);
     m_pCOPanel->setPosition(oxygine::Stage::getStage()->getWidth() - size.width() - 30, 30);
     m_pSpriteBox->addChild(m_pCOPanel);
 
@@ -138,7 +138,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
 
     if (!Settings::getInstance()->getSmallScreenDevice())
     {
-        oxygine::spTextField textField = oxygine::spTextField::create();
+        oxygine::spTextField textField = MemoryManagement::create<oxygine::TextField>();
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
@@ -151,7 +151,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     connect(this, &DialogCOStyle::sigCOStyleChanged, this, &DialogCOStyle::changeCOStyle, Qt::QueuedConnection);
 
     QSize size2(oxygine::Stage::getStage()->getWidth() - 60, 100);
-    m_pPixelPanel = spPanel::create(true, size2, size2);
+    m_pPixelPanel = MemoryManagement::create<Panel>(true, size2, size2);
     m_pPixelPanel->setPosition(30, oxygine::Stage::getStage()->getHeight() - 175);
     if (Settings::getInstance()->getSmallScreenDevice())
     {
@@ -212,7 +212,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         if (m_pPredefinedStyles.get() != nullptr)
         {
             m_pPredefinedStyles->detach();
-            m_pPredefinedStyles.free();
+            m_pPredefinedStyles.reset();
         }
         oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + "+nrm"));
         QString filePath = GlobalUtils::makePathRelative(pAnim->getResPath());
@@ -228,7 +228,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             qint32 y = 10;
             qint32 xStep = 0;
 
-            m_PixelsSelector = oxygine::spColorRectSprite::create();
+            m_PixelsSelector = MemoryManagement::create<oxygine::ColorRectSprite>();
             m_PixelsSelector->setColor(QColor(32, 200, 32, 255));
             m_PixelsSelector->setSize(20, 20);
             m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, 10 - 2);
@@ -236,7 +236,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             m_pPixelPanel->addItem(m_PixelsSelector);
             for (qint32 i = 0; i < m_maskTable.width(); i++)
             {
-                oxygine::spColorRectSprite pixel = oxygine::spColorRectSprite::create();
+                oxygine::spColorRectSprite pixel = MemoryManagement::create<oxygine::ColorRectSprite>();
                 pixel->setSize(16, 16);
                 QColor color = m_maskTable.pixelColor(i, 0);
                 pixel->setColor(color.red(), color.green(), color.blue(), 255);
@@ -324,7 +324,7 @@ void DialogCOStyle::loadAltsForStyle()
         m_pDeleteButton->setEnabled(false);
     }
 
-    m_pPredefinedStyles = spDropDownmenu::create(200, items);
+    m_pPredefinedStyles = MemoryManagement::create<DropDownmenu>(200, items);
     m_pSpriteBox->addChild(m_pPredefinedStyles);
     if (Settings::getInstance()->getSmallScreenDevice())
     {
@@ -369,7 +369,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
-    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pBox->setResAnim(pAnim);
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+nrm", oxygine::ep_ignore_error);
     if (pAnim != nullptr)
@@ -406,7 +406,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
             }
             pBox->setAddColor(QColor(32, 200, 32, 0));
         }
-        oxygine::spSprite pCO = oxygine::spSprite::create();
+        oxygine::spSprite pCO = MemoryManagement::create<oxygine::Sprite>();
         pCO->setResAnim(pAnim);
         pCO->setScale(scale);
         pCO->setPosition(10, 10);
@@ -414,7 +414,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         m_pCOPanel->setContentWidth(pBox->getX() + pBox->getScaledWidth() + 50);
 
         pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+mini", oxygine::ep_ignore_error);
-        oxygine::spSprite pMiniCO = oxygine::spSprite::create();        
+        oxygine::spSprite pMiniCO = MemoryManagement::create<oxygine::Sprite>();        
         pMiniCO->setResAnim(pAnim);
         if (pAnim != nullptr)
         {
@@ -424,7 +424,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         }
 
         pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+face", oxygine::ep_ignore_error);
-        oxygine::spSprite pFaceCO = oxygine::spSprite::create();
+        oxygine::spSprite pFaceCO = MemoryManagement::create<oxygine::Sprite>();
         pFaceCO->setResAnim(pAnim);
         pFaceCO->setScale(1.0f);
         pFaceCO->setPosition(pBox->getScaledWidth() - 10 - pAnim->getWidth(), pBox->getScaledHeight() - pAnim->getHeight() - 10);

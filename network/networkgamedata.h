@@ -11,7 +11,7 @@ class NetworkGameData final
 {
 public:
     explicit NetworkGameData() = default;
-   virtual ~NetworkGameData() = default;
+    ~NetworkGameData() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

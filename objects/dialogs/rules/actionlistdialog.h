@@ -11,7 +11,7 @@
 
 class GameMap;
 class ActionListDialog;
-using spActionListDialog = oxygine::intrusive_ptr<ActionListDialog>;
+using spActionListDialog = std::shared_ptr<ActionListDialog>;
 
 class ActionListDialog final : public QObject, public oxygine::Actor
 {
@@ -19,7 +19,7 @@ class ActionListDialog final : public QObject, public oxygine::Actor
     static const char* const FILEPATH;
 public:
     explicit ActionListDialog(QStringList bannlist, GameMap* pMap);
-   virtual ~ActionListDialog() = default;
+    ~ActionListDialog() = default;
 signals:
     void editFinished(QStringList actionList);
     void canceled();

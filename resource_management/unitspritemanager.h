@@ -49,10 +49,10 @@ public slots:
         return m_loadedRessources.size();
     }
 protected:
-    friend RessourceManagement<UnitSpriteManager>;
+    friend MemoryManagement;
     UnitSpriteManager();
 private:
-   virtual ~UnitSpriteManager() = default;
+    ~UnitSpriteManager() = default;
 };
 
 Q_DECLARE_INTERFACE(UnitSpriteManager, "UnitSpriteManager");

@@ -7,12 +7,13 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/settings.h"
 
 #include "game/gamemap.h"
 
 static constexpr double DOUBLE_EPSILON = 0.5;
 static constexpr float FLOAT_EPSILON = 0.5f;
-QScopedPointer<GlobalUtils> GlobalUtils::m_pInstace;
+std::shared_ptr<GlobalUtils> GlobalUtils::m_pInstace;
 
 GlobalUtils::GlobalUtils()
 {
@@ -21,7 +22,7 @@ GlobalUtils::GlobalUtils()
 
 void GlobalUtils::setup()
 {
-    m_pInstace.reset(new GlobalUtils());
+    m_pInstace = MemoryManagement::create<GlobalUtils>();
     srand(static_cast<unsigned>(time(nullptr)));
     Interpreter::setCppOwnerShip(m_pInstace.get());
     quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
@@ -168,9 +169,9 @@ qint32 GlobalUtils::roundDown(qreal value)
     return roundDown;
 }
 
-QmlVectorPoint* GlobalUtils::getCircle(qint32 min, qint32 max)
+spQmlVectorPoint GlobalUtils::getSpCircle(qint32 min, qint32 max)
 {
-    QmlVectorPoint* ret = new QmlVectorPoint();
+    spQmlVectorPoint ret = MemoryManagement::create<QmlVectorPoint>();
     for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
     {
         if (currentRadius == 0)
@@ -210,9 +211,18 @@ QmlVectorPoint* GlobalUtils::getCircle(qint32 min, qint32 max)
     return ret;
 }
 
+QmlVectorPoint* GlobalUtils::getCircle(qint32 min, qint32 max)
+{
+    auto ret = getSpCircle(min, max);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(ret);
+    return ret.get();
+}
+
 QmlVectorPoint* GlobalUtils::getShotFields(qint32 min, qint32 max, qint32 xDirection, qint32 yDirection)
 {
-    QmlVectorPoint* ret = new QmlVectorPoint();
+    QmlVectorPoint* ret = MemoryManagement::createAndTrackJsObject<QmlVectorPoint>();
     for (qint32 i = min; i <= max; i++)
     {
         if (xDirection > 0)
@@ -265,7 +275,7 @@ qint32 GlobalUtils::getDistance(qint32 x1, qint32 y1, qint32 x2, qint32 y2)
 
 QmlVectorPoint* GlobalUtils::getEmptyPointArray()
 {
-    return new QmlVectorPoint();
+    return MemoryManagement::createAndTrackJsObject<QmlVectorPoint>();
 }
 
 bool GlobalUtils::isEven(qint32 value)

@@ -4,18 +4,16 @@
 #include <QObject>
 #include <QTextStream>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
-#include "coreengine/LUPDATE_MACROS.h"
+#include "coreengine/refobject.h"
 
 class GameMap;
 class ScriptEvent;
-using spScriptEvent = oxygine::intrusive_ptr<ScriptEvent>;
+using spScriptEvent = std::shared_ptr<ScriptEvent>;
 
 class ScriptEditor;
-using spScriptEditor = oxygine::intrusive_ptr<ScriptEditor>;
+using spScriptEditor = std::shared_ptr<ScriptEditor>;
 
-class ScriptEvent : public QObject, public oxygine::ref_counter
+class ScriptEvent : public QObject, public RefObject<ScriptEvent>
 {
     Q_OBJECT
 public:
@@ -43,7 +41,7 @@ public:
     static const char* const EventExtendMap;
 
 
-    ENUM_CLASS EventType
+    enum class EventType
     {
         dialog,
         spawnUnit,

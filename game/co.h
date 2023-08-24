@@ -15,7 +15,7 @@
 
 class SimpleProductionSystem;
 class Unit;
-using spUnit = oxygine::intrusive_ptr<Unit>;
+using spUnit = std::shared_ptr<Unit>;
 class Terrain;
 class Player;
 class Building;
@@ -25,8 +25,8 @@ class GameAction;
 class GameMap;
 class GameMenue;
 class CO;
-using spCO = oxygine::intrusive_ptr<CO>;
-using spUnit = oxygine::intrusive_ptr<Unit>;
+using spCO = std::shared_ptr<CO>;
+using spUnit = std::shared_ptr<Unit>;
 
 class CO final : public QObject, public oxygine::Actor, public FileSerializable
 {
@@ -35,8 +35,8 @@ public:
     static constexpr const char* const CO_RANDOM = "CO_RANDOM";
     static constexpr qint32 MAX_CO_UNIT_VALUE = 20;
 
-    explicit CO(QString coID, Player* owner, GameMap* pMap);
-   virtual ~CO() = default;
+    explicit CO(const QString & coID, Player* owner, GameMap* pMap);
+    ~CO() = default;
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -146,7 +146,7 @@ public:
      * @param function
      * @return
      */
-    Q_INVOKABLE qint32 getCoBonus(QPoint position, Unit* pUnit, const QString function);
+    Q_INVOKABLE qint32 getCoBonus(QPoint position, Unit* pUnit, const QString & function);
     /**
      * @brief getCoRangeEnabled
      * @return
@@ -172,7 +172,7 @@ public:
      * @param unitID
      * @return
      */
-    Q_INVOKABLE qreal getUnitBuildValue(const QString unitID);
+    Q_INVOKABLE qreal getUnitBuildValue(const QString & unitID);
     /**
      * @brief getCOName
      * @return
@@ -403,7 +403,7 @@ public:
      * @brief getCoID our co id
      * @return
      */
-    Q_INVOKABLE QString getCoID() const;
+    Q_INVOKABLE const QString getCoID() const;
     /**
      * @brief getPowerStars stars needed to activate our power
      * @return
@@ -480,7 +480,7 @@ public:
      * @param baseCost
      * @return
      */
-    Q_INVOKABLE qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
+    Q_INVOKABLE qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
     /**
      * @brief getEnemyCostModifier
      * @param id
@@ -488,7 +488,7 @@ public:
      * @param position
      * @return
      */
-    Q_INVOKABLE qint32 getEnemyCostModifier(const QString id, qint32 baseCost, QPoint position);
+    Q_INVOKABLE qint32 getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint position);
     /**
      * @brief getCOArmy
      */
@@ -676,17 +676,17 @@ public:
      * @brief setPerkList
      * @param perks
      */
-    Q_INVOKABLE void setPerkList(const QStringList perks);
+    Q_INVOKABLE void setPerkList(const QStringList & perks);
     /**
      * @brief addPerk
      * @param perk
      */
-    Q_INVOKABLE void addPerk(const QString perk);
+    Q_INVOKABLE void addPerk(const QString & perk);
     /**
      * @brief addPerk
      * @param perk
      */
-    Q_INVOKABLE void removePerk(const QString perk);
+    Q_INVOKABLE void removePerk(const QString & perk);
     /**
      * @brief getBio
      * @return
@@ -751,7 +751,7 @@ public:
      * @param file path to the co style relative to the commander wars exe
      * @param style index in the related predefined styles
      */
-    Q_INVOKABLE void setCoStyle(QString file, qint32 style);
+    Q_INVOKABLE void setCoStyle(const QString & file, qint32 style);
     /**
      * @brief postAction
      * @param pAction
@@ -790,13 +790,13 @@ protected:
     void limitPowerbar(qreal previousValue);
 
 private:
-    void loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
+    void loadResAnim(const QString & coid, const QString & file, QImage & colorTable, QImage & maskTable, bool useColorBox);
     /**
      * @brief isJsFunctionEnabled
      * @param objectId
      * @return
      */
-    bool isJsFunctionEnabled(QString perk) const;
+    bool isJsFunctionEnabled(const QString & perk) const;
 private:
     Player* m_pOwner;
     QString m_coID;

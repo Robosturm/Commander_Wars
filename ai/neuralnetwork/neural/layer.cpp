@@ -1,4 +1,5 @@
 #include "ai/neuralnetwork/neural/layer.h"
+#include "coreengine/memorymanagement.h"
 
 const char* const Layer::LAYER_PARAMETER_SIZE = "SIZE";
 const char* const Layer::LAYER_PARAMETER_TYPE = "TYPE";
@@ -21,7 +22,7 @@ void Layer::extend(quint32 count, bool randomize)
     {
         for (qint32 i_neuron = 0; i_neuron < count; ++i_neuron)
         {
-            m_neurons.insert(m_neurons.cbegin(), spNeuron::create(size + i_neuron, this, m_activation, false));
+            m_neurons.insert(m_neurons.cbegin(), MemoryManagement::create<Neuron>(size + i_neuron, this, m_activation, false));
         }
     }
     if (m_previousLayer != nullptr)
@@ -57,7 +58,7 @@ void Layer::initLayer()
         for (qint32 i_neuron = 0; i_neuron < m_parameters[LAYER_PARAMETER_SIZE]; ++i_neuron)
         {
             bool isBias = i_neuron == (m_neurons.size() - 1);
-            m_neurons[i_neuron] = spNeuron::create(i_neuron, this, m_activation, isBias);
+            m_neurons[i_neuron] = MemoryManagement::create<Neuron>(i_neuron, this, m_activation, isBias);
         }
 	}
     else if (m_type == LayerType::OUTPUT)
@@ -65,7 +66,7 @@ void Layer::initLayer()
         m_neurons.reserve(static_cast<int>(m_parameters[LAYER_PARAMETER_SIZE]));
         for (qint32 i_neuron = 0; i_neuron < m_parameters[LAYER_PARAMETER_SIZE]; ++i_neuron)
         {
-            m_neurons.push_back(spNeuron::create(i_neuron, this, m_activation));
+            m_neurons.push_back(MemoryManagement::create<Neuron>(i_neuron, this, m_activation));
         }
 	}
 }
@@ -209,7 +210,7 @@ void Layer::deserializeObject(QDataStream& pStream)
     pStream >> size;
     for (qint32 i = 0; i < size; ++i)
     {
-        spNeuron pNeuron = spNeuron::create(i, this, m_activation, false);
+        spNeuron pNeuron = MemoryManagement::create<Neuron>(i, this, m_activation, false);
         pNeuron->deserializeObject(pStream);
         m_neurons.push_back(pNeuron);
     }

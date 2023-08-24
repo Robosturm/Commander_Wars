@@ -5,14 +5,14 @@
 #include "objects/coselection.h"
 
 class COStyleMenu;
-using spCOStyleMenu = oxygine::intrusive_ptr<COStyleMenu>;
+using spCOStyleMenu = std::shared_ptr<COStyleMenu>;
 
 class COStyleMenu final : public Basemenu
 {
     Q_OBJECT
 public:
     explicit COStyleMenu();
-   virtual ~COStyleMenu() = default;
+    ~COStyleMenu() = default;
 signals:
     void sigExitMenue();
     void sigEditCOStyle();

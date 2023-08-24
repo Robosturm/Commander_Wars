@@ -314,7 +314,7 @@ void InfluenceFrontMap::show()
             if (m_InfluenceMap[x][y].owners.size() == 1)
             {
                 qint32 owner = m_InfluenceMap[x][y].owners[0];
-                oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+                oxygine::spColorRectSprite sprite = MemoryManagement::create<oxygine::ColorRectSprite>();
                 sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
                 QColor color = m_pMap->getPlayer(owner)->getColor();
                 color.setAlphaF(0.5f);
@@ -338,7 +338,7 @@ void InfluenceFrontMap::showPfs(UnitPathFindingSystem* pPfs)
             qint32 cost = pPfs->getTargetCosts(x, y);
             if (cost >= 0)
             {
-                oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+                oxygine::spColorRectSprite sprite = MemoryManagement::create<oxygine::ColorRectSprite>();
                 sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
                 QColor color = m_pMap->getCurrentPlayer()->getColor();
                 if (cost > 0)
@@ -379,7 +379,7 @@ void InfluenceFrontMap::showFrontlines()
             for (qint32 i = 0; i < info.frontOwners.size(); ++i)
             {
                 qint32 owner = info.frontOwners[i];
-                oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+                oxygine::spColorRectSprite sprite = MemoryManagement::create<oxygine::ColorRectSprite>();
                 sprite->setSize(size, GameMap::getImageSize());
                 QColor color = m_pMap->getPlayer(owner)->getColor();
                 color.setAlphaF(0.5f);
@@ -389,7 +389,7 @@ void InfluenceFrontMap::showFrontlines()
                 m_pMap->addChild(sprite);
                 m_info.push_back(sprite);
             }
-            spLabel pTextfield = spLabel::create(GameMap::getImageSize());
+            spLabel pTextfield = MemoryManagement::create<Label>(GameMap::getImageSize());
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(QString::number(count));
             pTextfield->setPosition(field.x() * GameMap::getImageSize(), field.y() * GameMap::getImageSize());
@@ -420,7 +420,7 @@ void InfluenceFrontMap::calculateGlobalData()
 void InfluenceFrontMap::findFrontLineTiles()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::findFrontLineTiles()", GameConsole::eDEBUG);
-    spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+    spQmlVectorPoint circle = GlobalUtils::getSpCircle(1, 1);
     
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();
@@ -492,7 +492,7 @@ void InfluenceFrontMap::addFrontLineMoveTypes(InfluenceInfo & info, qint32 x1, q
 void InfluenceFrontMap::createFrontLine()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::createFrontLine()", GameConsole::eDEBUG);
-    spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+    spQmlVectorPoint circle = GlobalUtils::getSpCircle(1, 1);
     
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();
@@ -538,7 +538,7 @@ void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInf
 void InfluenceFrontMap::updateHighestInfluence()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::updateHighestInfluence()", GameConsole::eDEBUG);
-    spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));    
+    spQmlVectorPoint circle = GlobalUtils::getSpCircle(1, 1);
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < width; ++x)

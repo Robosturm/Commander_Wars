@@ -13,14 +13,14 @@
 #include "menue/basemenu.h"
 
 class Shopmenu;
-using spShopmenu = oxygine::intrusive_ptr<Shopmenu>;
+using spShopmenu = std::shared_ptr<Shopmenu>;
 
 class Shopmenu final : public Basemenu
 {
     Q_OBJECT
 public:
     explicit Shopmenu();
-   virtual ~Shopmenu() = default;
+    ~Shopmenu() = default;
 signals:
     void sigExitMenue();
     void sigUpdateItemCosts(qint32 costChange);

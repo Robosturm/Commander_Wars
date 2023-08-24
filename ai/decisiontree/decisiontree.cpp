@@ -115,7 +115,7 @@ spDecisionNode DecisionTree::train(std::vector<std::vector<float>>& trainingData
     spDecisionQuestion pQuestion = findBestSplit(trainingData, gain, questions);
 	if (gain <= 0.0f)
 	{
-        return spLeaf::create(trainingData);
+        return MemoryManagement::create<Leaf>(trainingData);
 	}
     std::vector<std::vector<std::vector<float>>> splitData;
     seperateData(trainingData, pQuestion, splitData);
@@ -125,7 +125,7 @@ spDecisionNode DecisionTree::train(std::vector<std::vector<float>>& trainingData
     {
         pNodes.push_back(train(splitData[i], questions));
     }
-    return spDecisionNode::create(pQuestion, pNodes);
+    return MemoryManagement::create<DecisionNode>(pQuestion, pNodes);
 }
 
 std::vector<qint32> DecisionTree::countClassItems(std::vector<std::vector<float>>& trainingData)
@@ -255,7 +255,7 @@ void DecisionTree::deserializeObject(QDataStream& pStream)
     // never assume this as a leaf -> pointless
     bool isNode = false;
     pStream >> isNode;
-    m_pRootNode = spDecisionNode::create();
+    m_pRootNode = MemoryManagement::create<DecisionNode>();
     m_pRootNode->deserializeObject(pStream);
 }
 
@@ -345,7 +345,7 @@ void DecisionTree::readTrainingFile(QTextStream& stream, bool& questionsFound, Q
                 QStringList items = line.split(" ");
                 for (qint32 i = 1; i < items.size(); i++)
                 {
-                    readQuestions.push_back(spDecisionQuestion::create());
+                    readQuestions.push_back(MemoryManagement::create<DecisionQuestion>());
                     qint32 index = types.size();
                     QString typeLine = items[i];
                     if (typeLine.startsWith("NUMBER:"))
@@ -366,22 +366,22 @@ void DecisionTree::readTrainingFile(QTextStream& stream, bool& questionsFound, Q
                                 float value = questionData[0].toFloat();
                                 if (questionData[1] == "<")
                                 {
-                                    readQuestions[i - 1]->appendQuestion(spQuestion::create(value, index, GameEnums::AIQuestionType_Greater));
+                                    readQuestions[i - 1]->appendQuestion(MemoryManagement::create<Question>(value, index, GameEnums::AIQuestionType_Greater));
                                 }
                                 else if (questionData[1] == ">")
                                 {
-                                    readQuestions[i - 1]->appendQuestion(spQuestion::create(value, index, GameEnums::AIQuestionType_Smaler));
+                                    readQuestions[i - 1]->appendQuestion(MemoryManagement::create<Question>(value, index, GameEnums::AIQuestionType_Smaler));
                                 }
                                 else if (questionData[1] == "=")
                                 {
-                                    readQuestions[i - 1]->appendQuestion(spQuestion::create(value, index, GameEnums::AIQuestionType_Equal));
+                                    readQuestions[i - 1]->appendQuestion(MemoryManagement::create<Question>(value, index, GameEnums::AIQuestionType_Equal));
                                 }
                             }
                             else if (questionData.size() == 3)
                             {
                                 float value1 = questionData[0].toFloat();
                                 float value2 = questionData[2].toFloat();
-                                readQuestions[i - 1]->appendQuestion(spQuestion::create(value1, value2, index, GameEnums::AIQuestionType_Between));
+                                readQuestions[i - 1]->appendQuestion(MemoryManagement::create<Question>(value1, value2, index, GameEnums::AIQuestionType_Between));
                             }
                         }
                         types.append("NUMBER");
@@ -392,25 +392,25 @@ void DecisionTree::readTrainingFile(QTextStream& stream, bool& questionsFound, Q
                         {
                             for (qint32 i2 = 0; i2 < pCOSpriteManager->getCount(); i2++)
                             {
-                                readQuestions[i - 1]->appendQuestion(spQuestion::create(i2, index, GameEnums::AIQuestionType_Equal));
+                                readQuestions[i - 1]->appendQuestion(MemoryManagement::create<Question>(i2, index, GameEnums::AIQuestionType_Equal));
                             }
-                            readQuestions[i - 1]->appendQuestion(spQuestion::create(-1, index, GameEnums::AIQuestionType_Equal));
+                            readQuestions[i - 1]->appendQuestion(MemoryManagement::create<Question>(-1, index, GameEnums::AIQuestionType_Equal));
                         }
                         else if (items[i] == "BUILDING")
                         {
                             for (qint32 i2 = 0; i2 < pBuildingSpriteManager->getCount(); i2++)
                             {
-                                readQuestions[i - 1]->appendQuestion(spQuestion::create(i2, index, GameEnums::AIQuestionType_Equal));
+                                readQuestions[i - 1]->appendQuestion(MemoryManagement::create<Question>(i2, index, GameEnums::AIQuestionType_Equal));
                             }
-                            readQuestions[i - 1]->appendQuestion(spQuestion::create(-1, index, GameEnums::AIQuestionType_Equal));
+                            readQuestions[i - 1]->appendQuestion(MemoryManagement::create<Question>(-1, index, GameEnums::AIQuestionType_Equal));
                         }
                         else if (items[i] == "UNIT")
                         {
                             for (qint32 i2 = 0; i2 < pUnitSpriteManager->getCount(); i2++)
                             {
-                                readQuestions[i - 1]->appendQuestion(spQuestion::create(i2, index, GameEnums::AIQuestionType_Equal));
+                                readQuestions[i - 1]->appendQuestion(MemoryManagement::create<Question>(i2, index, GameEnums::AIQuestionType_Equal));
                             }
-                            readQuestions[i - 1]->appendQuestion(spQuestion::create(-1, index, GameEnums::AIQuestionType_Equal));
+                            readQuestions[i - 1]->appendQuestion(MemoryManagement::create<Question>(-1, index, GameEnums::AIQuestionType_Equal));
                         }
                         types.append(items[i]);
                     }

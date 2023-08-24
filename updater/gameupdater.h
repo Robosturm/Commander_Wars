@@ -1,14 +1,13 @@
 #pragma once
 
 #include <QObject>
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "updater/filedownloader.h"
 #include "updater/zipSupport/qzipreader.h"
 
 class GameUpdater;
-using spGameUpdater = oxygine::intrusive_ptr<GameUpdater>;
+using spGameUpdater = std::shared_ptr<GameUpdater>;
 
-class GameUpdater final : public QObject, public oxygine::ref_counter
+class GameUpdater final : public QObject
 {
     Q_OBJECT
 public:

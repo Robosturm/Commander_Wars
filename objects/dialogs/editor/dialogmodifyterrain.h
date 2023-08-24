@@ -11,14 +11,14 @@
 class GameMap;
 class Terrain;
 class DialogModifyTerrain;
-using spDialogModifyTerrain = oxygine::intrusive_ptr<DialogModifyTerrain>;
+using spDialogModifyTerrain = std::shared_ptr<DialogModifyTerrain>;
 
 class DialogModifyTerrain final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain);
-   virtual ~DialogModifyTerrain() = default;
+    ~DialogModifyTerrain() = default;
 signals:
     void sigFinished();
     void sigTerrainClicked(QString id);

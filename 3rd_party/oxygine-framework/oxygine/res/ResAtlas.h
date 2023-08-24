@@ -6,24 +6,24 @@
 
 namespace oxygine
 {
-    class ResAtlas;
-    using spResAtlas = intrusive_ptr<ResAtlas>;
+class ResAtlas;
+using spResAtlas = std::shared_ptr<ResAtlas>;
 
-    class ResAtlas: public Resource
-    {
-    public:
-        static spResource create(CreateResourceContext& context);
-        explicit ResAtlas() = default;
-        virtual ~ResAtlas() = default;
-    protected:
-        virtual void _load() = 0;
-        virtual void _unload() = 0;
-        spResAnim createEmpty(const XmlWalker& walker, CreateResourceContext& context);
-        static void init_resAnim(spResAnim & rs, const QString & file, const QDomElement & node);
-        void loadBase(QDomElement node);
-    protected:
-        //settings from xml
-        quint32 m_linearFilter{0};
-        bool m_clamp2edge{true};
-    };
+class ResAtlas : public Resource
+{
+public:
+    static spResource create(CreateResourceContext& context);
+    explicit ResAtlas() = default;
+    virtual ~ResAtlas() = default;
+protected:
+    virtual void _load() = 0;
+    virtual void _unload() = 0;
+    spResAnim createEmpty(const XmlWalker& walker, CreateResourceContext& context);
+    static void init_resAnim(spResAnim & rs, const QString & file, const QDomElement & node);
+    void loadBase(QDomElement node);
+protected:
+    //settings from xml
+    quint32 m_linearFilter{0};
+    bool m_clamp2edge{true};
+};
 }

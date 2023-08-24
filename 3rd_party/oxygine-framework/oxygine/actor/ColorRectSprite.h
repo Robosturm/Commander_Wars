@@ -5,12 +5,12 @@
 namespace oxygine
 {
     class ColorRectSprite;
-    using spColorRectSprite = intrusive_ptr<ColorRectSprite>;
+    using spColorRectSprite = std::shared_ptr<ColorRectSprite>;
     class ColorRectSprite final : public Sprite
     {
     public:
         explicit ColorRectSprite();
-       virtual ~ColorRectSprite() = default;
+        ~ColorRectSprite() = default;
         virtual void doRender(const RenderState&) override;
         virtual bool isOn(const QPoint& localPosition) override;
     protected:

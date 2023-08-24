@@ -6,14 +6,14 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 class Label;
-using spLabel = oxygine::intrusive_ptr<Label>;
+using spLabel = std::shared_ptr<Label>;
 
 class Label final : public Tooltip
 {
     Q_OBJECT
 public:
     explicit Label(qint32 width, bool showBox = false);
-   virtual ~Label() = default;
+    ~Label() = default;
     /**
      * @brief setStyle
      * @param st

@@ -3,12 +3,15 @@
 
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
+#include "coreengine/interpreter.h"
+
 namespace oxygine
 {
 GLuint Texture::m_highestTextureCount = 0;
 
 Texture::Texture()
 {
+    Interpreter::setCppOwnerShip(this);
     moveToThread(GameWindow::getWindow()->getMainThread());
 }
 

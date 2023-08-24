@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionEachDay;
-using spScriptConditionEachDay = oxygine::intrusive_ptr<ScriptConditionEachDay>;
+using spScriptConditionEachDay = std::shared_ptr<ScriptConditionEachDay>;
 
 class ScriptConditionEachDay final : public ScriptCondition
 {

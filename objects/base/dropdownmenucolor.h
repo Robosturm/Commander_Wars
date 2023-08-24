@@ -9,14 +9,14 @@
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenuColor;
-using spDropDownmenuColor = oxygine::intrusive_ptr<DropDownmenuColor>;
+using spDropDownmenuColor = std::shared_ptr<DropDownmenuColor>;
 
 class DropDownmenuColor final : public DropDownmenuBase
 {
     Q_OBJECT
 public:
     explicit DropDownmenuColor(qint32 width, QVector<QColor> items);
-   virtual ~DropDownmenuColor() = default;
+    ~DropDownmenuColor() = default;
     /**
      * @brief getCurrentItem color of the current item
      * @return

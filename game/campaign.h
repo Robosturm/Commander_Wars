@@ -6,14 +6,12 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 class GameMap;
 class CampaignMapData;
 class Campaign;
-using spCampaign = oxygine::intrusive_ptr<Campaign>;
+using spCampaign = std::shared_ptr<Campaign>;
 
-class Campaign final : public QObject, public FileSerializable, public oxygine::ref_counter
+class Campaign final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -30,7 +28,7 @@ public:
     static const char* const scriptName;
     explicit Campaign(QString file);
     explicit Campaign();
-   virtual ~Campaign() = default;
+    ~Campaign() = default;
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -74,7 +72,7 @@ public:
      * @param folder
      * @param files
      */
-    void addDeveloperMaps(QString prefix, QString folder, QStringList & files);
+    void addDeveloperMaps(const QString & prefix, const QString & folder, QStringList & files);
     /**
      * @brief getCampaignMapData
      * @param pCampaignMapData

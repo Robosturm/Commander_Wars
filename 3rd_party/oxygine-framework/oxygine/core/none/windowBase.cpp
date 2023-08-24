@@ -70,7 +70,7 @@ namespace oxygine
         return false;
     }
 
-    void WindowBase::timerEvent(QTimerEvent *)
+    void WindowBase::update()
     {
     }
 }

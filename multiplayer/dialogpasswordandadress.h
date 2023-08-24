@@ -9,14 +9,14 @@
 #include "objects/base/passwordbox.h"
 
 class DialogPasswordAndAdress;
-using spDialogPasswordAndAdress = oxygine::intrusive_ptr<DialogPasswordAndAdress>;
+using spDialogPasswordAndAdress = std::shared_ptr<DialogPasswordAndAdress>;
 
 class DialogPasswordAndAdress final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit DialogPasswordAndAdress(QString text);
-   virtual ~DialogPasswordAndAdress() = default;
+    ~DialogPasswordAndAdress() = default;
 
 signals:
     void sigTextChanged(QString text, QString password);

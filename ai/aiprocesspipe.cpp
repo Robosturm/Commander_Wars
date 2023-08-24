@@ -47,12 +47,12 @@ void AiProcessPipe::startPipe()
     if (Settings::getInstance()->getAiSlave())
     {
         m_animationSkipper.startSeeking();
-        m_pClient = spLocalClient::create(this);
+        m_pClient = MemoryManagement::create<LocalClient>(this);
         m_pActiveConnection = m_pClient.get();
     }
     else if (Settings::getInstance()->getSpawnAiProcess())
     {
-        m_pServer = spLocalServer::create(this);
+        m_pServer = MemoryManagement::create<LocalServer>(this);
         m_pActiveConnection = m_pServer.get();
     }
     if (m_pActiveConnection != nullptr)
@@ -76,7 +76,8 @@ void AiProcessPipe::onConnected(quint64 socket)
 
 void AiProcessPipe::onGameStarted(GameMenue* pMenu)
 {
-    if (m_pActiveConnection != nullptr &&
+    if (pMenu != nullptr &&
+        m_pActiveConnection != nullptr &&
         Settings::getInstance()->getSpawnAiProcess() &&
         !Settings::getInstance()->getAiSlave())
     {
@@ -90,11 +91,11 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         m_ActionBuffer.clear();
         CONSOLE_PRINT("AI-Pipe preparing the game", GameConsole::eDEBUG);
         m_pipeState = PipeState::PreparingGame;
-        m_pMenu = spGameMenue(pMenu);
+        m_pMenu = pMenu->getWeakPtr();
         m_pMap = pMenu->getMap();
-        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToSlave, Qt::QueuedConnection);
-        connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
-        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
+        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToSlave, Qt::QueuedConnection);
+        connect(this, &AiProcessPipe::sigPerformAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
+        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
         QString command = QString(STARTGAME);
         CONSOLE_PRINT("AI-Pipe sending command " + command, GameConsole::eDEBUG);
         auto seed = GlobalUtils::getSeed();
@@ -125,7 +126,7 @@ void AiProcessPipe::onQuitGame()
     {
         QMutexLocker locker(&m_ActionMutex);
         m_pipeState = PipeState::Ready;
-        m_pMenu.free();
+        m_pMenu.reset();
         m_pMap = nullptr;
         m_ActionBuffer.clear();
         QString command = QString(QUITGAME);
@@ -143,8 +144,8 @@ void AiProcessPipe::quit()
     if (m_pActiveConnection != nullptr)
     {
         m_pActiveConnection->disconnectTCP();
-        m_pServer.free();
-        m_pClient.free();
+        m_pServer.reset();
+        m_pClient.reset();
         m_pActiveConnection = nullptr;
     }
 }
@@ -234,16 +235,17 @@ void AiProcessPipe::onNewActionForMaster(QDataStream & stream)
 void AiProcessPipe::onNewAction(QDataStream & stream)
 {
     QMutexLocker locker(&m_ActionMutex);
-    spGameAction pAction = spGameAction::create(m_pMap);
+    spGameAction pAction = MemoryManagement::create<GameAction>(m_pMap);
     pAction->deserializeObject(stream);
     m_ActionBuffer.append(pAction);
     if (m_pipeState == PipeState::Ingame)
     {
-        if (m_pMenu.get() != nullptr &&
-            !m_pMenu->getActionRunning())
+        spGameMenue pMenu = std::static_pointer_cast<GameMenue>(m_pMenu.lock());
+        if (pMenu.get() != nullptr &&
+            !pMenu->getActionRunning())
         {
             spGameAction pAction = m_ActionBuffer.front();
-            if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
+            if (pAction->getSyncCounter() == pMenu->getSyncCounter() + 1)
             {
                 m_ActionBuffer.pop_front();
                 CONSOLE_PRINT("AI-Pipe emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
@@ -263,25 +265,25 @@ void AiProcessPipe::onStartGame(QDataStream & stream)
     CONSOLE_PRINT("Using seed " + QString::number(seed), GameConsole::eDEBUG);
     GlobalUtils::seed(seed);
     GlobalUtils::setUseSeed(true);
-    spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, false);
+    spGameMap pMap = MemoryManagement::create<GameMap, QDataStream &, bool>(stream, false);
     QByteArray mapHash = Filesupport::readByteArray(stream);
     if (mapHash == pMap->getMapHash())
     {
-        spGameMenue pMenu = spGameMenue::create(pMap, false, spNetworkInterface());
+        spGameMenue pMenu = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface());
         oxygine::Stage::getStage()->addChild(pMenu);
         m_pMap = pMap.get();
-        m_pMenu = pMenu;
+        m_pMenu = pMenu->getWeakPtr();
         m_pipeState = PipeState::Ingame;
         QString command = QString(GAMESTARTED);
-        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToMaster, Qt::QueuedConnection);
+        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToMaster, Qt::QueuedConnection);
         CONSOLE_PRINT("AI-Pipe sending command " + command +  " current player=" + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), GameConsole::eDEBUG);
         QByteArray data;
         QDataStream outStream(&data, QIODevice::WriteOnly);
         outStream.setVersion(QDataStream::Version::Qt_6_5);
         outStream << command;
         emit m_pActiveConnection->sig_sendData(0, data, NetworkInterface::NetworkSerives::AiPipe, false);
-        connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
-        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
+        connect(this, &AiProcessPipe::sigPerformAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
+        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
     }
     else
     {
@@ -293,11 +295,14 @@ void AiProcessPipe::quitGame()
 {
     QMutexLocker locker(&m_ActionMutex);
     m_pipeState = PipeState::Ready;
-    if (m_pMenu.get() != nullptr)
     {
-        m_pMenu->exitGame();
+        spGameMenue pMenu = std::static_pointer_cast<GameMenue>(m_pMenu.lock());
+        if (pMenu.get() != nullptr)
+        {
+            pMenu->exitGame();
+        }
     }
-    m_pMenu.free();
+    m_pMenu.reset();
     m_pMap = nullptr;
     m_ActionBuffer.clear();
 }
@@ -319,13 +324,14 @@ void AiProcessPipe::nextAction()
     if (m_pipeState == PipeState::Ingame)
     {
         QMutexLocker locker(&m_ActionMutex);
-        if (m_pMenu.get() != nullptr &&
-            !m_pMenu->getActionRunning())
+        spGameMenue pMenu = std::static_pointer_cast<GameMenue>(m_pMenu.lock());
+        if (pMenu.get() != nullptr &&
+            !pMenu->getActionRunning())
         {
             if (m_ActionBuffer.size() > 0)
             {
                 spGameAction pAction = m_ActionBuffer.front();
-                if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
+                if (pAction->getSyncCounter() == pMenu->getSyncCounter() + 1)
                 {
                     m_ActionBuffer.pop_front();
                     CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +

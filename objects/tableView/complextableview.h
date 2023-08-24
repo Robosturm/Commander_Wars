@@ -10,7 +10,7 @@
 #include "objects/base/panel.h"
 
 class ComplexTableView;
-using spComplexTableView = oxygine::intrusive_ptr<ComplexTableView>;
+using spComplexTableView = std::shared_ptr<ComplexTableView>;
 
 class ComplexTableView final : public QObject, public oxygine::Actor
 {

@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventModifyUnit;
-using spScriptEventModifyUnit = oxygine::intrusive_ptr<ScriptEventModifyUnit>;
+using spScriptEventModifyUnit = std::shared_ptr<ScriptEventModifyUnit>;
 
 class ScriptEventModifyUnit final : public ScriptEvent
 {

@@ -80,8 +80,8 @@ namespace oxygine
 
     void Sprite::flipActorsX(oxygine::spActor pActor, bool flippedX)
     {
-        oxygine::Sprite* pActorSprite = dynamic_cast<oxygine::Sprite*>(pActor.get());
-        if (pActorSprite != nullptr)
+        oxygine::spSprite pActorSprite = std::dynamic_pointer_cast<oxygine::Sprite>(pActor);
+        if (pActorSprite.get() != nullptr)
         {
             if (pActorSprite->getInvertFlipX())
             {
@@ -95,8 +95,8 @@ namespace oxygine
         auto & children = pActor->getChildren();
         for (auto & child : children)
         {
-            oxygine::Sprite* pSprite1 = dynamic_cast<oxygine::Sprite*>(child.get());
-            if (pSprite1 != nullptr)
+            oxygine::spSprite pSprite1 = std::dynamic_pointer_cast<oxygine::Sprite>(child);
+            if (pSprite1.get() != nullptr)
             {
                 if (pSprite1->getInvertFlipX())
                 {
@@ -109,8 +109,8 @@ namespace oxygine
             }
             else
             {
-                oxygine::SlidingSprite* pSprite2 = dynamic_cast<oxygine::SlidingSprite*>(child.get());
-                if (pSprite2 != nullptr)
+                oxygine::spSlidingSprite pSprite2 = std::dynamic_pointer_cast<oxygine::SlidingSprite>(child);
+                if (pSprite2.get() != nullptr)
                 {
                     if (pSprite2->getFlippedX())
                     {
@@ -194,27 +194,33 @@ namespace oxygine
     void Sprite::setColorTable(const oxygine::spResAnim pAnim, bool matrix)
     {
 #ifdef GRAPHICSUPPORT
-        QMutexLocker lock(&m_Locked);
-        m_colorTable = pAnim;
-        if (pAnim.get() != nullptr)
+        if (requiresThreadChange())
         {
-            const auto & frame = pAnim->getFrame(0, 0);
-            if (m_mat->m_table != frame.getTexture())
+            emit MemoryManagement::getInstance().sigSetColorTable(getSharedPtr<Sprite>(), pAnim, matrix);
+        }
+        else
+        {
+            m_colorTable = pAnim;
+            if (pAnim.get() != nullptr)
+            {
+                const auto & frame = pAnim->getFrame(0, 0);
+                if (m_mat->m_table != frame.getTexture())
+                {
+                    m_mat = m_mat->clone();
+                    m_mat->m_table = frame.getTexture();
+                    m_mat->setMatrixMode(matrix);
+                    m_mat = MaterialCache::mc().cache(*m_mat.get());
+                    matChanged();
+                }
+            }
+            else if (m_mat->m_table.get() != nullptr)
             {
                 m_mat = m_mat->clone();
-                m_mat->m_table = frame.getTexture();
+                m_mat->m_table.reset();
                 m_mat->setMatrixMode(matrix);
                 m_mat = MaterialCache::mc().cache(*m_mat.get());
                 matChanged();
             }
-        }
-        else if (m_mat->m_table.get() != nullptr)
-        {
-            m_mat = m_mat->clone();
-            m_mat->m_table.free();
-            m_mat->setMatrixMode(matrix);
-            m_mat = MaterialCache::mc().cache(*m_mat.get());
-            matChanged();
         }
 #endif
     }
@@ -243,53 +249,51 @@ namespace oxygine
     void Sprite::changeAnimFrame(const AnimationFrame& frame)
     {
 #ifdef GRAPHICSUPPORT
-        if (m_flags & flag_manageResAnim)
+        if (requiresThreadChange())
         {
-            ResAnim* rs = m_frame.getResAnim();
-            if (rs)
-            {
-                rs->getAtlas()->unload();
-            }
-
-            rs = frame.getResAnim();
-            if (rs)
-            {
-                rs->getAtlas()->load();
-            }
-        }
-
-        bool flipX = (m_flags & flag_flipX) != 0;
-        bool flipY = (m_flags & flag_flipY) != 0;
-        if (flipX || flipY)
-        {
-            m_frame = frame.getFlipped(flipY, flipX);
+            emit MemoryManagement::getInstance().sigChangeAnimFrame(getSharedPtr<Sprite>(), frame);
         }
         else
         {
-            m_frame = frame;
-        }
-        __setSize(m_frame.getSize());
-
-
-        const spTexture& texture = m_frame.getTexture();
-        if (texture != m_mat->m_base)
-        {
-
-            spMaterial mat = m_mat->clone();
-            mat->m_base  = texture;
-            if (GameWindow::getWindow()->isWorker())
+            if (m_flags & flag_manageResAnim)
             {
-                QMutexLocker lock(&m_Locked);
-                auto newMat = MaterialCache::mc().cache(*mat.get());
-                setMaterial(newMat);
+                ResAnim* rs = m_frame.getResAnim();
+                if (rs)
+                {
+                    rs->getAtlas()->unload();
+                }
+
+                rs = frame.getResAnim();
+                if (rs)
+                {
+                    rs->getAtlas()->load();
+                }
+            }
+
+            bool flipX = (m_flags & flag_flipX) != 0;
+            bool flipY = (m_flags & flag_flipY) != 0;
+            if (flipX || flipY)
+            {
+                m_frame = frame.getFlipped(flipY, flipX);
             }
             else
             {
+                m_frame = frame;
+            }
+            __setSize(m_frame.getSize());
+
+
+            const spTexture& texture = m_frame.getTexture();
+            if (texture != m_mat->m_base)
+            {
+
+                spMaterial mat = m_mat->clone();
+                mat->m_base  = texture;
                 auto newMat = MaterialCache::mc().cache(*mat.get());
                 setMaterial(newMat);
             }
+            animFrameChanged(m_frame);
         }
-        animFrameChanged(m_frame);
 #endif
     }
 

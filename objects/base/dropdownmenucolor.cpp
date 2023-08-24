@@ -14,14 +14,14 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
 #endif
     setWidth(width);
 
-    oxygine::spColorRectSprite colorField = oxygine::spColorRectSprite::create();
+    oxygine::spColorRectSprite colorField = MemoryManagement::create<oxygine::ColorRectSprite>();
     colorField->setColor(Qt::black);
     colorField->setWidth(m_pClipActor->getScaledWidth() - 10);
     colorField->setHeight(m_pClipActor->getScaledHeight() - 13);
     colorField->setY(7);
     m_pClipActor->addChild(colorField);
 
-    m_Colorfield = oxygine::spColorRectSprite::create();
+    m_Colorfield = MemoryManagement::create<oxygine::ColorRectSprite>();
     if (!Settings::getInstance()->getSmallScreenDevice())
     {
         m_Colorfield->addClickListener([this](oxygine::Event* event)
@@ -79,9 +79,9 @@ QColor DropDownmenuColor::getCurrentItemColor()
 
 void DropDownmenuColor::addDropDownColor(QColor color, qint32 id)
 {
-    oxygine::spColorRectSprite colorField1 = oxygine::spColorRectSprite::create();
+    oxygine::spColorRectSprite colorField1 = MemoryManagement::create<oxygine::ColorRectSprite>();
     colorField1->setColor(Qt::black);
-    oxygine::spColorRectSprite colorField2 = oxygine::spColorRectSprite::create();
+    oxygine::spColorRectSprite colorField2 = MemoryManagement::create<oxygine::ColorRectSprite>();
     colorField2->setColor(color.red(), color.green(), color.blue(), 255);
     colorField1->addChild(colorField2);
     auto size = addDropDownItem(colorField1, id);
@@ -112,7 +112,7 @@ void DropDownmenuColor::showColorDialog()
 {
     if (getEnabled())
     {
-        spColorSelectionDialog pDialog = spColorSelectionDialog::create(m_currentColor, m_showUnitPreview);
+        spColorSelectionDialog pDialog = MemoryManagement::create<ColorSelectionDialog>(m_currentColor, m_showUnitPreview);
         oxygine::Stage::getStage()->addChild(pDialog);
         connect(pDialog.get(), &ColorSelectionDialog::editFinished, this, &DropDownmenuColor::changeCurrentItem, Qt::QueuedConnection);
         

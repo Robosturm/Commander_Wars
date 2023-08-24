@@ -2,20 +2,16 @@
 #define INTERPRETER_H
 
 #include <QObject>
-#include <QJSEngine>
+#include <QQmlEngine>
 #include <QVector>
-
-#include "coreengine/gameconsole.h"
-#include "coreengine/mainapp.h"
-
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+#include <QCoreApplication>
 
 class Interpreter;
-using spInterpreter = oxygine::intrusive_ptr<Interpreter>;
+using spInterpreter = std::shared_ptr<Interpreter>;
 /**
  * @brief The Interpreter class java-script interpreter with easy access functions
  */
-class Interpreter final : public QJSEngine, public oxygine::ref_counter
+class Interpreter final : public QQmlEngine
 {
     Q_OBJECT
 
@@ -24,20 +20,8 @@ public:
     {
         return m_pInstance.get();
     }
-    static Interpreter* createInstance()
-    {
-        if (m_pInstance.get() == nullptr)
-        {
-            m_pInstance = spInterpreter::create();
-            m_pInstance->init();
-        }
-        else
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "illegal interpreter creation");
-        }
-        return m_pInstance.get();
-    }
-   virtual ~Interpreter();
+    static Interpreter* createInstance();
+    ~Interpreter();
     static void release();
 
     static void setCppOwnerShip(QObject* object);
@@ -53,6 +37,7 @@ public:
     static bool reloadInterpreter(QString runtime);
 
     bool getInJsCall() const;
+    void trackJsObject(std::shared_ptr<QObject> pObj);
 
     template<typename _TType, template<typename T> class _TVectorList>
     QJSValue arraytoJSValue(const _TVectorList<_TType> & array)
@@ -85,71 +70,43 @@ public slots:
     bool loadScript(const QString & content, const QString & script);
     inline QJSValue doFunction(const QString & func, const QJSValueList& args = QJSValueList())
     {
+        clearJsStack();
         QJSValue ret;
-        QJSValue funcPointer = globalObject().property(func);
-#ifdef GAMEDEBUG
-        OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
-        if (funcPointer.isCallable())
         {
-#endif
+            QJSValue funcPointer = globalObject().property(func);
             ++m_inJsCall;
             ret = funcPointer.call(args);
-            exitJsCall();
-            if (ret.isError())
-            {
-                QString error = ret.toString() + " in File: " +
-                                ret.property("fileName").toString() + " at Line: " +
-                                ret.property("lineNumber").toString();
-                CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
-            }
-#ifdef GAMEDEBUG
         }
-        else
+        collectGarbage();
+        exitJsCall();
+        if (ret.isError())
         {
-            QString error = "Error: attemp to call a non function value. Call:" + func;
-            CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
+            QString error = ret.toString() + " in File: " +
+                            ret.property("fileName").toString() + " at Line: " +
+                            ret.property("lineNumber").toString();
+            printError(error);
         }
-#endif
         return ret;
     }
     inline QJSValue doFunction(const QString & obj, const QString & func, const QJSValueList& args = QJSValueList())
     {
+        clearJsStack();
         QJSValue ret;
-        QJSValue objPointer = globalObject().property(obj);
-#ifdef GAMEDEBUG
-        OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
-        if (objPointer.isObject())
         {
-#endif
+            QJSValue objPointer = globalObject().property(obj);
             QJSValue funcPointer = objPointer.property(func);
-#ifdef GAMEDEBUG
-            if (funcPointer.isCallable())
-            {
-#endif
-                ++m_inJsCall;
-                ret = funcPointer.call(args);
-                exitJsCall();
-                if (ret.isError())
-                {
-                    QString error = ret.toString() + " in File: " +
-                                    ret.property("fileName").toString() + " at Line: " +
-                                    ret.property("lineNumber").toString();
-                    CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
-                }
-#ifdef GAMEDEBUG
-            }
-            else
-            {
-                QString error = "Error: attemp to call a non function value. Call:" + obj + "." + func;
-                CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
-            }
+            ++m_inJsCall;
+            ret = funcPointer.call(args);
         }
-        else
+        collectGarbage();
+        exitJsCall();
+        if (ret.isError())
         {
-            QString error = "Error: attemp to call a non object value in order to call a function. Call:" + obj + "." + func;
-            CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
+            QString error = ret.toString() + " in File: " +
+                            ret.property("fileName").toString() + " at Line: " +
+                            ret.property("lineNumber").toString();
+            printError(error);
         }
-#endif
         return ret;
     }
     void cleanMemory();
@@ -210,12 +167,11 @@ public slots:
         }
         return false;
     }
-    void trackJsObject(oxygine::ref_counter* pObj);
 
 private slots:
     void networkGameFinished(qint32 value, QString id);
 private:
-    friend class oxygine::intrusive_ptr<Interpreter>;
+    friend class MemoryManagement;
     explicit Interpreter();    
     /**
      * @brief init
@@ -225,16 +181,20 @@ private:
     {
         --m_inJsCall;
         Q_ASSERT(m_inJsCall >= 0);
+    }
+    void clearJsStack()
+    {
         if (m_inJsCall == 0)
         {
             m_jsObjects.clear();
         }
     }
+    void printError(const QString & msg);
 private:
     static spInterpreter m_pInstance;
     static QString m_runtimeData;
     qint32 m_inJsCall{0};
-    std::vector<oxygine::intrusive_ptr<oxygine::ref_counter>> m_jsObjects;
+    std::vector<std::shared_ptr<QObject>> m_jsObjects;
 };
 
 #endif // INTERPRETER_H

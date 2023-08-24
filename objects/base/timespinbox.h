@@ -11,14 +11,14 @@
 #include "objects/base/textinput.h"
 
 class TimeSpinBox;
-using spTimeSpinBox = oxygine::intrusive_ptr<TimeSpinBox>;
+using spTimeSpinBox = std::shared_ptr<TimeSpinBox>;
 
 class TimeSpinBox final : public TextInput
 {
     Q_OBJECT
 public:
     explicit TimeSpinBox(qint32 width);
-   virtual ~TimeSpinBox() = default;
+    ~TimeSpinBox() = default;
     virtual void update(const oxygine::UpdateState& us) override;
 
     virtual void setEnabled(bool value) override;

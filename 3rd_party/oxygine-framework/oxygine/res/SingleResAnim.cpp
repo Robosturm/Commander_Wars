@@ -1,23 +1,24 @@
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "texture.h"
 
 #include "spritingsupport/spritecreator.h"
-
-#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "coreengine/interpreter.h"
 
 namespace oxygine
 {
 
 SingleResAnim::SingleResAnim()
 {
+    Interpreter::setCppOwnerShip(this);
     moveToThread(GameWindow::getWindow()->getMainThread());
 }
 
 SingleResAnim::~SingleResAnim()
 {
     m_frames.clear();
-    m_texture.free();
+    m_texture.reset();
 }
 
 void SingleResAnim::init(const QString & file, qint32 columns, qint32 rows, float scaleFactor)
@@ -32,7 +33,7 @@ void SingleResAnim::init(QImage & image, qint32 columns, qint32 rows, float scal
     SpriteCreator::convertToRgba(image);
     m_scaleFactor = scaleFactor;
     m_frames.clear();
-    m_texture.free();
+    m_texture.reset();
     m_texture = VideoDriver::instance->createTexture();
     m_texture->init(image);
     m_texture->setClamp2Edge(clamp2Edge);

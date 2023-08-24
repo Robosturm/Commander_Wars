@@ -9,6 +9,7 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
+#include "coreengine/settings.h"
 
 const char* const Campaign::scriptName = "campaignScript";
 
@@ -84,7 +85,7 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
     return CampaignMapInfo(folder, files);
 }
 
-void Campaign::addDeveloperMaps(QString prefix, QString folder, QStringList & files)
+void Campaign::addDeveloperMaps(const QString & prefix, const QString & folder, QStringList & files)
 {
     if (GameConsole::getDeveloperMode())
     {

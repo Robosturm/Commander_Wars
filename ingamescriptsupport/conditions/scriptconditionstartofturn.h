@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionStartOfTurn;
-using spScriptConditionStartOfTurn = oxygine::intrusive_ptr<ScriptConditionStartOfTurn>;
+using spScriptConditionStartOfTurn = std::shared_ptr<ScriptConditionStartOfTurn>;
 
 class ScriptConditionStartOfTurn final : public ScriptCondition
 {

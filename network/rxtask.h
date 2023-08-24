@@ -4,20 +4,18 @@
 #include <QObject>
 #include <QDataStream>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "network/NetworkInterface.h"
 
 class QIODevice;
 class RxTask;
-using spRxTask = oxygine::intrusive_ptr<RxTask> ;
+using spRxTask = std::shared_ptr<RxTask>;
 
-class RxTask final : public QObject, public oxygine::ref_counter
+class RxTask final : public QObject
 {
     Q_OBJECT
 public:
     RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool useReceivedId);
-   virtual ~RxTask() = default;
+    ~RxTask() = default;
     void swapNetworkInterface(NetworkInterface* pCommIF)
     {
         m_pIF = pCommIF;

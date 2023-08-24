@@ -7,18 +7,16 @@
 
 #include "coreengine/fileserializable.h"
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 class SpecialEvent;
-using spSpecialEvent = oxygine::intrusive_ptr<SpecialEvent>;
+using spSpecialEvent = std::shared_ptr<SpecialEvent>;
 
-class SpecialEvent final : public QObject, public FileSerializable, public oxygine::ref_counter
+class SpecialEvent final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
     explicit SpecialEvent();
     explicit SpecialEvent(qint32 player, qint32 day, GameEnums::GameRecord_SpecialEvents event);
-   virtual ~SpecialEvent() = default;
+    ~SpecialEvent() = default;
     qint32 getOwner() const;
     qint32 getDay() const;
     GameEnums::GameRecord_SpecialEvents getEvent() const;

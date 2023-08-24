@@ -2,7 +2,7 @@
 
 #include "ai/neuralnetwork/neural/neuron.h"
 #include "ai/neuralnetwork/neural/layer.h"
-#include "ai/neuralnetwork/neural/neuralnetwork.h"
+#include "coreengine/memorymanagement.h"
 #include "coreengine/globalutils.h"
 
 Neuron::Neuron(qint32 id_neuron, Layer* layer, ActivationFunction function, bool is_bias)
@@ -109,11 +109,11 @@ void Neuron::addNext(spNeuron & n, bool random)
 {
     if (random)
     {
-        m_next.push_back(spEdge::create(n.get(), this, GlobalUtils::randDouble(-1, 1)));
+        m_next.push_back(MemoryManagement::create<Edge>(n.get(), this, GlobalUtils::randDouble(-1, 1)));
     }
     else
     {
-        m_next.push_back(spEdge::create(n.get(), this, 0));
+        m_next.push_back(MemoryManagement::create<Edge>(n.get(), this, 0));
     }
     n->addPrevious(m_next.back());
 }
@@ -248,7 +248,7 @@ void Neuron::deserializeObject(QDataStream& pStream)
         {
             previous = m_layer->getPreviousLayer()->getNeuron(id);
         }
-        spEdge pEdge = spEdge::create(this, previous, 0);
+        spEdge pEdge = MemoryManagement::create<Edge>(this, previous, 0);
         pEdge->deserializeObject(pStream);
         m_previous.push_back(pEdge);
         if (previous != nullptr)

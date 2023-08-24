@@ -16,7 +16,7 @@ Topbar::Topbar(qint32 x, qint32 width)
 
     // create the box for the bar in which everything will be placed
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    m_pSpriteBox = oxygine::spBox9Sprite::create();
+    m_pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     addChild(m_pSpriteBox);
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editorselection");
     m_pSpriteBox->setResAnim(pAnim);
@@ -45,14 +45,14 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
 
-    spTooltip pTooltip = spTooltip::create();
+    spTooltip pTooltip = MemoryManagement::create<Tooltip>();
     pTooltip->setTooltipText(tooltip);
     pTooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pBox->setResAnim(pAnim);
-    oxygine::spClipRectActor clipRect = oxygine::spClipRectActor::create();
+    oxygine::spClipRectActor clipRect = MemoryManagement::create<oxygine::ClipRectActor>();
     clipRect->setSize(280, 40);
-    oxygine::spTextField textField = oxygine::spTextField::create();
+    oxygine::spTextField textField = MemoryManagement::create<oxygine::TextField>();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
@@ -94,7 +94,7 @@ void Topbar::addGroup(QString text)
     
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
-    oxygine::spTextField textField = oxygine::spTextField::create();
+    oxygine::spTextField textField = MemoryManagement::create<oxygine::TextField>();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
@@ -136,7 +136,7 @@ void Topbar::finishCreation()
             panelHeight = maxHeight;
         }
         QSize size(333, panelHeight);
-        spPanel pPanel = spPanel::create(false, size, QSize(size.width(), m_Items[i].size() * 40));
+        spPanel pPanel = MemoryManagement::create<Panel>(false, size, QSize(size.width(), m_Items[i].size() * 40));
         pPanel->setSubComponent(true);
         pPanel->setVisible(false);
         pPanel->setStopMouseWheel(true);

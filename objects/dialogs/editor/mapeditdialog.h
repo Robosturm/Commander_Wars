@@ -7,7 +7,7 @@
 #include "game/GameEnums.h"
 
 class MapEditDialog;
-using spMapEditDialog = oxygine::intrusive_ptr<MapEditDialog>;
+using spMapEditDialog = std::shared_ptr<MapEditDialog>;
 
 class MapEditDialog final : public CreatedGui
 {
@@ -27,7 +27,7 @@ public:
         GameEnums::MapFilterFlags mapFlags{GameEnums::MapFilterFlags_None};
     };
     explicit MapEditDialog(MapEditInfo info, const QString & confirmMessage);
-   virtual ~MapEditDialog();
+    ~MapEditDialog();
     Q_INVOKABLE void setMapName(QString name);
     Q_INVOKABLE QString getMapName() const;
     Q_INVOKABLE void setMapAuthor(QString name);

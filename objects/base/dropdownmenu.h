@@ -10,7 +10,7 @@
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenu;
-using spDropDownmenu = oxygine::intrusive_ptr<DropDownmenu>;
+using spDropDownmenu = std::shared_ptr<DropDownmenu>;
 
 class DropDownmenu final : public DropDownmenuBase
 {

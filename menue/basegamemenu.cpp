@@ -29,10 +29,10 @@ BaseGamemenu::BaseGamemenu(spGameMap pMap, bool clearPlayerlist)
     {
         pApp->getAudioManager()->clearPlayList();
     }
-    m_MapMover = spMapMover::create(this);
+    m_MapMover = MemoryManagement::create<MapMover>(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
-    m_Cursor = spCursor::create(m_pMap.get());
+    m_Cursor = MemoryManagement::create<Cursor>(m_pMap.get());
     loadBackground();
 }
 
@@ -42,20 +42,20 @@ BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savega
     Mainapp* pApp = Mainapp::getInstance();
     Interpreter::setCppOwnerShip(this);
     pApp->getAudioManager()->clearPlayList();
-    m_MapMover = spMapMover::create(this);
+    m_MapMover = MemoryManagement::create<MapMover>(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
     loadBackground();
     // check for map creation
     if ((width > 0) && (heigth > 0))
     {
-        m_pMap = spGameMap::create(width, heigth, 4);
+        m_pMap = MemoryManagement::create<GameMap>(width, heigth, 4);
     }
     else
     {
-        m_pMap = spGameMap::create(map, false, false, savegame);
+        m_pMap = MemoryManagement::create<GameMap>(map, false, false, savegame);
     }
-    m_Cursor = spCursor::create(m_pMap.get());
+    m_Cursor = MemoryManagement::create<Cursor>(m_pMap.get());
     loadHandling();
 }
 
@@ -68,8 +68,8 @@ BaseGamemenu::~BaseGamemenu()
     cursor.setShape(Qt::CursorShape::ArrowCursor);
 #endif
     m_pMap->detach();
-    m_pMap.free();
-    m_MapMover.free();
+    m_pMap.reset();
+    m_MapMover.reset();
     if (!m_jsName.isEmpty())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
@@ -102,7 +102,7 @@ void BaseGamemenu::loadBackground()
 {
     CONSOLE_PRINT("Entering In Game Menue", GameConsole::eDEBUG);
     // load background
-    m_backgroundSprite = oxygine::spSprite::create();
+    m_backgroundSprite = MemoryManagement::create<oxygine::Sprite>();
     oxygine::Actor::addChild(m_backgroundSprite);
     changeBackground("gamemenu");
 }
@@ -443,8 +443,8 @@ void BaseGamemenu::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 hei
     CONSOLE_PRINT("InGameMenue::initSlidingActor() x " + QString::number(x) + " y " + QString::number(y) + " width " + QString::number(width) + " height "  + QString::number(height), GameConsole::eDEBUG);
     if (m_mapSliding.get() == nullptr)
     {
-        m_mapSliding = oxygine::spSlidingActorNoClipRect::create();
-        m_mapSlidingActor = oxygine::spActor::create();
+        m_mapSliding = MemoryManagement::create<oxygine::SlidingActorNoClipRect>();
+        m_mapSlidingActor = MemoryManagement::create<oxygine::Actor>();
         addChild(m_mapSliding);
         m_mapSliding->setContent(m_mapSlidingActor);
         m_mapSlidingActor->addEventListener(oxygine::Draggable::DragMoveEvent, [this](oxygine::Event*)

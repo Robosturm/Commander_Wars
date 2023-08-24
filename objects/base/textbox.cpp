@@ -17,9 +17,9 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
-    m_Textbox = oxygine::spBox9Sprite::create();
+    m_Textbox = MemoryManagement::create<oxygine::Box9Sprite>();
     m_Textbox->setResAnim(pAnim);
-    m_Textfield = oxygine::spTextField::create();
+    m_Textfield = MemoryManagement::create<oxygine::TextField>();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = (heigth > 0);
@@ -28,7 +28,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     m_Textfield->setHtmlText("");
 
 
-    oxygine::spClipRectActor pClipActor = oxygine::spClipRectActor::create();
+    oxygine::spClipRectActor pClipActor = MemoryManagement::create<oxygine::ClipRectActor>();
 
     if (heigth < 0)
     {

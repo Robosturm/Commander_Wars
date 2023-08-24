@@ -9,7 +9,7 @@
 class CO;
 class GameMap;
 class PlayerInfo;
-using spPlayerInfo = oxygine::intrusive_ptr<PlayerInfo>;
+using spPlayerInfo = std::shared_ptr<PlayerInfo>;
 
 /**
  * @brief Shows infos about the co's, funds and the powermeter
@@ -19,7 +19,7 @@ class PlayerInfo final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit PlayerInfo(GameMap* pMap);
-   virtual ~PlayerInfo() = default;
+    ~PlayerInfo() = default;
 
     Q_INVOKABLE GameMap *getMap() const;
     Q_INVOKABLE void updateData();

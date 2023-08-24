@@ -55,7 +55,7 @@ void PerkSelection::updatePerksView(CO* pCO)
     auto perkGroups = getPerksGrouped();
     for (const auto & group : perkGroups)
     {
-        spLabel textField = spLabel::create(getWidth() - 40);
+        spLabel textField = MemoryManagement::create<Label>(getWidth() - 40);
         textField->setStyle(largeStyle);
         textField->setHtmlText(group.name);
         textField->setPosition(getWidth() / 2 - textField->getTextRect().width() / 2, y);
@@ -72,7 +72,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             qint32 cost = getPerkScore(id);
             QString description = pCOPerkManager->getDescription(index) + "\n" + tr("Cost: %0").arg(cost);
 
-            spCheckbox pCheckbox = spCheckbox::create();
+            spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();
             pCheckbox->setPosition(x, y + 15);
             pCheckbox->setTooltipText(description);
             pCheckbox->setChecked(m_perks.contains(id));
@@ -103,7 +103,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             m_perkIds.append(id);
             addChild(pCheckbox);
 
-            spTooltip pSprite = spTooltip::create();
+            spTooltip pSprite = MemoryManagement::create<Tooltip>();
             pSprite->setResAnim(pAnim);
             if (pAnim != nullptr && pAnim->getWidth() > 0)
             {
@@ -112,7 +112,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             pSprite->setPosition(x + 45, y);
             addChild(pSprite);
 
-            spLabel pLabel = spLabel::create(350);
+            spLabel pLabel = MemoryManagement::create<Label>(350);
             pLabel->setStyle(style);
             pLabel->setText(name + "\n" + tr("Cost: %0").arg(cost));
             pLabel->setHeight(pLabel->getTextRect().height());

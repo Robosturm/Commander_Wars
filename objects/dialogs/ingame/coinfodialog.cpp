@@ -22,7 +22,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -64,7 +64,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
     connect(this, &COInfoDialog::back, this, &COInfoDialog::slotBack, Qt::QueuedConnection);
 
     // no the fun begins create checkboxes and stuff and a panel down here
-    m_pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
+    m_pPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
                          QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
@@ -73,7 +73,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
     {
         pMap = pCO->getMap();
     }
-    m_COInfo = spCOInfoActor::create(pMap, m_pPanel->getScaledWidth());
+    m_COInfo = MemoryManagement::create<COInfoActor>(pMap, m_pPanel->getScaledWidth());
     m_pPanel->addItem(m_COInfo);
     showCO();
     connect(this, &COInfoDialog::quit, this, &COInfoDialog::remove, Qt::QueuedConnection);

@@ -13,20 +13,20 @@
 #include "menue/basemenu.h"
 
 class CampaignMenu;
-using spCampaignMenu = oxygine::intrusive_ptr<CampaignMenu>;
+using spCampaignMenu = std::shared_ptr<CampaignMenu>;
 
 class CampaignMenu final : public Basemenu
 {
     Q_OBJECT
 public:
     explicit CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveCampaign = false);
-   virtual ~CampaignMenu() = default;
+    ~CampaignMenu() = default;
 signals:
     void sigExitMenue();
     void sigButtonNext();
     void sigShowSaveCampaign();
     void sigMapSelected(qint32 index, qint32 x, qint32 y);
-    void sigFlagAppeared(oxygine::Sprite* pPtrSprite, qint32 map);
+    void sigFlagAppeared(oxygine::spSprite pSprite, qint32 map);
     void sigEventPlayed(qint32 event);
     void sigHideMinimap();
     void sigShowMinimap();
@@ -43,7 +43,7 @@ public slots:
 protected slots:
     virtual void onEnter() override;
     void mapSelected(qint32 index, qint32 x, qint32 y);
-    void flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map);
+    void flagAppeared(oxygine::spSprite pSprite, qint32 map);
     void playNextEvent(qint32 event);
     void hideMinimap();
     void showMinimap();

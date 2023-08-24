@@ -14,14 +14,14 @@
 #include "objects/base/colorselector.h"
 
 class ColorSelectionDialog;
-using spColorSelectionDialog = oxygine::intrusive_ptr<ColorSelectionDialog>;
+using spColorSelectionDialog = std::shared_ptr<ColorSelectionDialog>;
 
 class ColorSelectionDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit ColorSelectionDialog(QColor color, bool showUnitPreview = false);
-   virtual ~ColorSelectionDialog() = default;
+    ~ColorSelectionDialog() = default;
 signals:
     void editFinished(QColor color);
     void canceled();

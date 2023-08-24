@@ -9,14 +9,14 @@
 #include "objects/base/tooltip.h"
 
 class SelectKey;
-using spSelectKey = oxygine::intrusive_ptr<SelectKey>;
+using spSelectKey = std::shared_ptr<SelectKey>;
 
 class SelectKey final : public Tooltip
 {
     Q_OBJECT
 public:
     explicit SelectKey(Qt::Key code);
-   virtual ~SelectKey() = default;
+    ~SelectKey() = default;
 
     static QString getKeycodeText(Qt::Key code);
 signals:

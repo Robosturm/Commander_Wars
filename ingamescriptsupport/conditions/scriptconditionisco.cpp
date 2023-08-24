@@ -97,7 +97,7 @@ void ScriptConditionIsCo::readCondition(QTextStream& rStream, QString line)
 
 void ScriptConditionIsCo::showEditCondition(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -105,12 +105,12 @@ void ScriptConditionIsCo::showEditCondition(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = spSpinBox::create(300, 0, 99999);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, 0, 99999);
     spinBox->setTooltipText(tr("Player of which a co should be checked."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_player);
@@ -121,12 +121,12 @@ void ScriptConditionIsCo::showEditCondition(spScriptEditor pScriptEditor)
     });
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("CO Position: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, 1, 2);
+    spinBox = MemoryManagement::create<SpinBox>(300, 1, 2);
     spinBox->setTooltipText(tr("CO of the player which should be checked."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_playerCo + 1);
@@ -137,7 +137,7 @@ void ScriptConditionIsCo::showEditCondition(spScriptEditor pScriptEditor)
     });
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("CO: "));
     pText->setPosition(30, 110);
@@ -155,7 +155,7 @@ void ScriptConditionIsCo::showEditCondition(spScriptEditor pScriptEditor)
         {
             pAnim = pCOSpriteManager->getResAnim(id + "+info");
         }
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setResAnim(pAnim);
         pSprite->setScale(static_cast<float>(pAnim->getWidth()) / 32.0f);
         pSprite->setSize(pAnim->getSize());
@@ -164,7 +164,7 @@ void ScriptConditionIsCo::showEditCondition(spScriptEditor pScriptEditor)
     QStringList coIds;
     pCOSpriteManager->getCoGroups(coIds);
     coIds.push_front("");
-    spDropDownmenuSprite pCoSelector = spDropDownmenuSprite::create(150, coIds, coCreator);
+    spDropDownmenuSprite pCoSelector = MemoryManagement::create<DropDownmenuSprite>(150, coIds, coCreator);
     pCoSelector->setTooltipText(tr("CO which should be selected."));
     pCoSelector->setPosition(width, 110);
     pCoSelector->setCurrentItem(m_coid);

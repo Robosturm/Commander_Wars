@@ -1,4 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "coreengine/memorymanagement.h"
 
 namespace oxygine
 {
@@ -20,7 +21,7 @@ namespace oxygine
 
     VideoDriver::VideoDriver()
     {
-        m_rt = spTexture::create();
+        m_rt = MemoryManagement::create<Texture>();
     }
 
     VideoDriver::~VideoDriver()
@@ -90,7 +91,7 @@ namespace oxygine
 
     spTexture VideoDriver::createTexture()
     {
-        return spTexture::create();
+        return MemoryManagement::create<Texture>();
     }
 
     void VideoDriver::reset()

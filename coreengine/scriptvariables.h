@@ -17,7 +17,7 @@ class ScriptVariables final : public QObject, public FileSerializable
     Q_OBJECT
 public:
     explicit ScriptVariables();
-   virtual ~ScriptVariables() = default;
+    ~ScriptVariables() = default;
 
     /**
      * @brief serialize stores the object
@@ -43,18 +43,18 @@ public:
     {
         return 1;
     }
-public slots:
+    spScriptVariable getSpVariable(const QString & id);
     /**
      * @brief createScriptVariable
      * @param id identifier for the variable
      * @return the created variables or the existing one if one was already created
      */
-    ScriptVariable* createVariable(const QString id);
-    ScriptVariable* getVariable(const QString id);
+    Q_INVOKABLE ScriptVariable* createVariable(const QString & id);
+    Q_INVOKABLE ScriptVariable* getVariable(const QString & id);
     /**
      * @brief clear deletes all variables hold by this object.
      */
-    void clear();
+    Q_INVOKABLE void clear();
 private:
     QVector<spScriptVariable> m_Variables;
 };

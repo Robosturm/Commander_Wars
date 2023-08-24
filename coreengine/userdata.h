@@ -6,16 +6,14 @@
 #include <QVector>
 #include <QMap>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariablefile.h"
 #include "game/GameEnums.h"
 
 class Userdata;
-using spUserdata = oxygine::intrusive_ptr<Userdata>;
+using spUserdata = std::shared_ptr<Userdata>;
 
-class Userdata final : public QObject, public FileSerializable, public oxygine::ref_counter
+class Userdata final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -70,7 +68,7 @@ public:
          */
         GameEnums::ShopItemType itemType;
     };
-   virtual ~Userdata() = default;
+    ~Userdata() = default;
     static Userdata* getInstance();
     void changeUser();
     void storeUser();
@@ -244,7 +242,7 @@ public:
      * @param filename
      * @return
      */
-    Q_INVOKABLE ScriptVariableFile* getScriptVariableFile(const QString filename);
+    Q_INVOKABLE ScriptVariableFile* getScriptVariableFile(const QString & filename);
     /**
      * @brief getUniqueIdentifier
      * @return
@@ -254,12 +252,12 @@ public:
      * @brief setUniqueIdentifier
      * @param newUniqueIdentifier
      */
-    Q_INVOKABLE void setUniqueIdentifier(const QString newUniqueIdentifier);
+    Q_INVOKABLE void setUniqueIdentifier(const QString & newUniqueIdentifier);
 private:
     void showAchieved();
     void reset();
 private:
-    friend class oxygine::intrusive_ptr<Userdata>;
+    friend class MemoryManagement;
     explicit Userdata();
 private:
     static spUserdata m_pInstance;

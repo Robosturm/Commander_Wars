@@ -6,7 +6,7 @@
 #include "ui_reader/createdgui.h"
 
 class Basemenu;
-using spBasemenu = oxygine::intrusive_ptr<Basemenu>;
+using spBasemenu = std::shared_ptr<Basemenu>;
 
 class Basemenu : public CreatedGui
 {

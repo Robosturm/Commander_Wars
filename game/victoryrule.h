@@ -6,14 +6,12 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 class Player;
 class GameMap;
 class VictoryRule;
-using spVictoryRule = oxygine::intrusive_ptr<VictoryRule>;
+using spVictoryRule = std::shared_ptr<VictoryRule>;
 
-class VictoryRule final : public QObject, public FileSerializable, public oxygine::ref_counter
+class VictoryRule final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -22,7 +20,7 @@ public:
 
     explicit VictoryRule(GameMap* pMap);
     explicit VictoryRule(QString ruleID, GameMap* pMap);
-   virtual ~VictoryRule() = default;
+    ~VictoryRule() = default;
 
     /**
      * @brief serialize stores the object

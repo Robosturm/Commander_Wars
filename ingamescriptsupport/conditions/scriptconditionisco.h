@@ -3,7 +3,7 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionIsCo;
-using spScriptConditionIsCo = oxygine::intrusive_ptr<ScriptConditionIsCo>;
+using spScriptConditionIsCo = std::shared_ptr<ScriptConditionIsCo>;
 
 class ScriptConditionIsCo final : public ScriptCondition
 {

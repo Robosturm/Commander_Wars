@@ -10,7 +10,7 @@
 #include "objects/base/textinput.h"
 
 class Textbox;
-using spTextbox = oxygine::intrusive_ptr<Textbox>;
+using spTextbox = std::shared_ptr<Textbox>;
 
 class Textbox : public TextInput
 {

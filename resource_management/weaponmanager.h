@@ -28,7 +28,7 @@ public:
      */
     virtual void loadAll() override;
 protected:
-    friend RessourceManagement<WeaponManager>;
+    friend MemoryManagement;
     WeaponManager()
         : RessourceManagement<WeaponManager>("",
                                              "/scripts/weapons")
@@ -39,7 +39,7 @@ protected:
 #endif
     }
 private:
-   virtual ~WeaponManager() = default;
+    ~WeaponManager() = default;
 };
 
 #endif // WEAPONMANAGER_H

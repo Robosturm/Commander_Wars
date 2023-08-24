@@ -98,7 +98,7 @@ static const char* const attrCustomItem = "customItem";
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
 
-UiFactory* UiFactory::m_pUiFactory{nullptr};
+spUiFactory UiFactory::m_pUiFactory;
 
 UiFactory::UiFactory()
 {
@@ -150,7 +150,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
         CONSOLE_PRINT_MODULE("Loading ui " + uiXml, GameConsole::eDEBUG, GameConsole::eUiFactory);
         if (m_dropDownPlayer.get() == nullptr)
         {
-            m_dropDownPlayer = spPlayer::create(nullptr);
+            m_dropDownPlayer = MemoryManagement::create<Player>(nullptr);
             m_dropDownPlayer->init();
         }
         m_creationCount = 0;
@@ -179,7 +179,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                     if (loaded)
                     {
                         success = true;
-                        oxygine::spActor root = oxygine::spActor::create();                        
+                        oxygine::spActor root = MemoryManagement::create<oxygine::Actor>();                        
                         auto rootElement = document.documentElement();
 
                         bool overwrite = false;
@@ -347,7 +347,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
                               fontColor,
                               getIntValue(getAttribute(childs, attrFontSize), id, loopIdx, pMenu, 24),
                               hAlign);
-        spLabel pLabel = spLabel::create(width);
+        spLabel pLabel = MemoryManagement::create<Label>(width);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         pLabel->setVisible(visible);
@@ -400,7 +400,7 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
                               hAlign);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        oxygine::spTextField pLabel = oxygine::spTextField::create();
+        oxygine::spTextField pLabel = MemoryManagement::create<oxygine::TextField>();
         pLabel->setX(x);
         pLabel->setY(y);
         pLabel->setStyle(style);
@@ -491,7 +491,7 @@ bool UiFactory::createSelectKey(oxygine::spActor parent, QDomElement element, ox
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         QString onEventLine = getAttribute(childs, attrOnEvent);
-        spSelectKey pButton = spSelectKey::create(static_cast<Qt::Key>(startValue));
+        spSelectKey pButton = MemoryManagement::create<SelectKey>(static_cast<Qt::Key>(startValue));
         pButton->setX(x);
         pButton->setY(y);
         pButton->setEnabled(enabled);
@@ -557,7 +557,7 @@ bool UiFactory::createMoveInButton(oxygine::spActor parent, QDomElement element,
         bool useY = getBoolValue(getAttribute(childs, attrUseY), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        auto pMoveButton = spMoveInButton::create(parent.get(), moveInSize, direction,
+        auto pMoveButton = MemoryManagement::create<MoveInButton>(parent.get(), moveInSize, direction,
                                                  startOffset, buttonScale, useY);
         pMoveButton->setObjectName(id);
         pMoveButton->setEnabled(enabled);
@@ -585,7 +585,7 @@ bool UiFactory::createSprite(oxygine::spActor parent, QDomElement element, oxygi
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         QString onEvent = getAttribute(childs, attrOnEvent);
-        spSpriteObject pSprite = spSpriteObject::create();
+        spSpriteObject pSprite = MemoryManagement::create<SpriteObject>();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteId);
         if (pAnim == nullptr)
         {
@@ -638,7 +638,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
         bool value = getBoolValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        spCheckbox pCheckbox = spCheckbox::create();
+        spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();
         pCheckbox->setX(x);
         pCheckbox->setY(y);
         pCheckbox->setChecked(value);
@@ -686,7 +686,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
             mode = getEnumValue(test, id, loopIdx, pMenu, {"Int", "Float", "Real,"}, SpinBox::Mode::Int);
         }
 
-        spSpinBox pSpinBox = spSpinBox::create(width, min, max, mode);
+        spSpinBox pSpinBox = MemoryManagement::create<SpinBox>(width, min, max, mode);
         pSpinBox->setX(x);
         pSpinBox->setY(y);
         pSpinBox->setInfinityValue(infinite);
@@ -733,7 +733,7 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
         {
             unit = getStringValue(test, id, loopIdx, pMenu);
         }
-        spSlider pSlider = spSlider::create(width - 75, min, max, unit);
+        spSlider pSlider = MemoryManagement::create<Slider>(width - 75, min, max, unit);
         pSlider->setX(x);
         pSlider->setY(y);
         pSlider->setTooltipText(tooltip);
@@ -770,7 +770,7 @@ bool UiFactory::createMultiSlider(oxygine::spActor parent, QDomElement element, 
         QVector<qint32> chances = getInt32ListValue(getAttribute(childs, attrStartValues), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        spMultislider pMultislider = spMultislider::create(labels, width, chances, labelWidth);
+        spMultislider pMultislider = MemoryManagement::create<Multislider>(labels, width, chances, labelWidth);
         pMultislider->setX(x);
         pMultislider->setY(y);
         pMultislider->setObjectName(id);
@@ -835,7 +835,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
         QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        spTextbox pTextbox = spTextbox::create(width, height);
+        spTextbox pTextbox = MemoryManagement::create<Textbox>(width, height);
         pTextbox->setPosition(x, y);
         pTextbox->setTooltipText(tooltip);
         pTextbox->setCurrentText(value);
@@ -870,7 +870,7 @@ bool UiFactory::createMultilineTextbox(oxygine::spActor parent, QDomElement elem
         QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        spMultilineTextbox pTextbox = spMultilineTextbox::create(width, height);
+        spMultilineTextbox pTextbox = MemoryManagement::create<MultilineTextbox>(width, height);
         pTextbox->setPosition(x, y);
         pTextbox->setTooltipText(tooltip);
         pTextbox->setCurrentText(value);
@@ -909,7 +909,7 @@ bool UiFactory::createPasswordbox(oxygine::spActor parent, QDomElement element, 
         QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        spPasswordbox pTextbox = spPasswordbox::create(width, height);
+        spPasswordbox pTextbox = MemoryManagement::create<Passwordbox>(width, height);
         pTextbox->setPosition(x, y);
         pTextbox->setTooltipText(tooltip);
         pTextbox->setCurrentText(value);
@@ -943,7 +943,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
         quint64 value = getUInt64Value(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        spTimeSpinBox pSpinBox = spTimeSpinBox::create(width);
+        spTimeSpinBox pSpinBox = MemoryManagement::create<TimeSpinBox>(width);
         pSpinBox->setX(x);
         pSpinBox->setY(y);
         pSpinBox->setTooltipText(tooltip);
@@ -1004,7 +1004,7 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         QSize size = QSize(width, height);
-        spPanel pPanel = spPanel::create(true, size, size);
+        spPanel pPanel = MemoryManagement::create<Panel>(true, size, size);
         pPanel->setX(x);
         pPanel->setY(y);
         pPanel->setVisible(visible);
@@ -1066,7 +1066,7 @@ bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element,
         QStringList items = getStringListValue(getAttribute(childs, attrItems), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        spDropDownmenu pDropDownmenu = spDropDownmenu::create(width, items);
+        spDropDownmenu pDropDownmenu = MemoryManagement::create<DropDownmenu>(width, items);
         pDropDownmenu->setPosition(x, y);
         pDropDownmenu->setTooltipText(tooltip);
         pDropDownmenu->setVisible(visible);
@@ -1127,7 +1127,7 @@ bool UiFactory::createDropDownMenuColor(oxygine::spActor parent, QDomElement ele
         {
             colorItems.append(QColor(item));
         }
-        spDropDownmenuColor pDropDownmenu = spDropDownmenuColor::create(width, colorItems);
+        spDropDownmenuColor pDropDownmenu = MemoryManagement::create<DropDownmenuColor>(width, colorItems);
         pDropDownmenu->setPosition(x, y);
         pDropDownmenu->setTooltipText(tooltip);
         pDropDownmenu->setVisible(visible);
@@ -1185,7 +1185,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
             Player* pPlayer = m_dropDownPlayer.get();
             creator = [this, pPlayer](QString id)
             {
-                spUnit pSprite = spUnit::create(id, pPlayer, false, nullptr);
+                spUnit pSprite = MemoryManagement::create<Unit>(id, pPlayer, false, nullptr);
                 return pSprite;
             };
         }
@@ -1203,7 +1203,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
                 {
                     pAnim = pCOSpriteManager->getResAnim(id + "+info");
                 }
-                oxygine::spSprite pSprite = oxygine::spSprite::create();
+                oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
                 if (pAnim != nullptr)
                 {
                     pSprite->setResAnim(pAnim);
@@ -1219,7 +1219,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
             creator = [pGameManager](QString army)
             {
                 oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_" + army.toLower());
-                oxygine::spSprite ret = oxygine::spSprite::create();
+                oxygine::spSprite ret = MemoryManagement::create<oxygine::Sprite>();
                 ret->setResAnim(pAnim);
                 return ret;
             };
@@ -1242,7 +1242,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
                 oxygine::spSprite pRet = pTerrain;
                 if (isBuilding)
                 {
-                    spBuilding building = spBuilding::create(id, nullptr);
+                    spBuilding building = MemoryManagement::create<Building>(id, nullptr);
                     building->setTooltipText(building->getName());
                     building->updateBuildingSprites(false);
                     building->addChild(pTerrain);
@@ -1251,7 +1251,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
                 return pRet;
             };
         }
-        spDropDownmenuSprite pDropDownmenu = spDropDownmenuSprite::create(width, items, creator, spriteSize);
+        spDropDownmenuSprite pDropDownmenu = MemoryManagement::create<DropDownmenuSprite>(width, items, creator, spriteSize);
         pDropDownmenu->setPosition(x, y);
         pDropDownmenu->setTooltipText(tooltip);
         pDropDownmenu->setVisible(visible);
@@ -1300,7 +1300,7 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         ObjectManager* pObjectManager = ObjectManager::getInstance();
-        oxygine::spBox9Sprite pPanel = oxygine::spBox9Sprite::create();
+        oxygine::spBox9Sprite pPanel = MemoryManagement::create<oxygine::Box9Sprite>();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteId);
         pPanel->setResAnim(pAnim);
         pPanel->setX(x);

@@ -39,7 +39,7 @@ void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite,
         return;
     }
 
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimLeft->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimLeft), oxygine::timeMS(pAnimLeft->getTotalFrames() * GameMap::frameTime), -1);
@@ -53,7 +53,7 @@ void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite,
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimTop->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimTop), oxygine::timeMS(pAnimTop->getTotalFrames() * GameMap::frameTime), -1);
@@ -68,7 +68,7 @@ void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite,
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimBottom->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimBottom), oxygine::timeMS(pAnimBottom->getTotalFrames() * GameMap::frameTime), -1);
@@ -83,7 +83,7 @@ void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite,
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimRight->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimRight), oxygine::timeMS(pAnimRight->getTotalFrames() * GameMap::frameTime), -1);
@@ -97,7 +97,7 @@ void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite,
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimTop->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimTop), oxygine::timeMS(pAnimTop->getTotalFrames() * GameMap::frameTime), -1);
@@ -112,7 +112,7 @@ void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite,
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimBottom->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimBottom), oxygine::timeMS(pAnimBottom->getTotalFrames() * GameMap::frameTime), -1);
@@ -143,7 +143,7 @@ void CreateOutline::createOuterTopBottomOutline(oxygine::spActor pOutlineSprite,
         return;
     }
 
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimTop->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimTop), oxygine::timeMS(pAnimTop->getTotalFrames() * GameMap::frameTime), -1);
@@ -157,7 +157,7 @@ void CreateOutline::createOuterTopBottomOutline(oxygine::spActor pOutlineSprite,
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimLeft->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimLeft), oxygine::timeMS(pAnimLeft->getTotalFrames() * GameMap::frameTime), -1);
@@ -172,7 +172,7 @@ void CreateOutline::createOuterTopBottomOutline(oxygine::spActor pOutlineSprite,
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimRight->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimRight), oxygine::timeMS(pAnimRight->getTotalFrames() * GameMap::frameTime), -1);
@@ -187,7 +187,7 @@ void CreateOutline::createOuterTopBottomOutline(oxygine::spActor pOutlineSprite,
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimBottom->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimBottom), oxygine::timeMS(pAnimBottom->getTotalFrames() * GameMap::frameTime), -1);
@@ -201,7 +201,7 @@ void CreateOutline::createOuterTopBottomOutline(oxygine::spActor pOutlineSprite,
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimLeft->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimLeft), oxygine::timeMS(pAnimLeft->getTotalFrames() * GameMap::frameTime), -1);
@@ -216,7 +216,7 @@ void CreateOutline::createOuterTopBottomOutline(oxygine::spActor pOutlineSprite,
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimRight->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimRight), oxygine::timeMS(pAnimRight->getTotalFrames() * GameMap::frameTime), -1);
@@ -248,7 +248,7 @@ void CreateOutline::createOutline(oxygine::spActor pOutlineSprite, const QString
     }
 
     // left top
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimLeft->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimLeft), oxygine::timeMS(pAnimLeft->getTotalFrames() * GameMap::frameTime), -1);
@@ -263,7 +263,7 @@ void CreateOutline::createOutline(oxygine::spActor pOutlineSprite, const QString
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimTop->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimTop), oxygine::timeMS(pAnimTop->getTotalFrames() * GameMap::frameTime), -1);
@@ -279,7 +279,7 @@ void CreateOutline::createOutline(oxygine::spActor pOutlineSprite, const QString
     pOutlineSprite->addChild(pSprite);
 
     // left bottom
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimLeft->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimLeft), oxygine::timeMS(pAnimLeft->getTotalFrames() * GameMap::frameTime), -1);
@@ -294,7 +294,7 @@ void CreateOutline::createOutline(oxygine::spActor pOutlineSprite, const QString
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimBottom->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimBottom), oxygine::timeMS(pAnimBottom->getTotalFrames() * GameMap::frameTime), -1);
@@ -310,7 +310,7 @@ void CreateOutline::createOutline(oxygine::spActor pOutlineSprite, const QString
     pOutlineSprite->addChild(pSprite);
 
     // right top
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimRight->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimRight), oxygine::timeMS(pAnimRight->getTotalFrames() * GameMap::frameTime), -1);
@@ -325,7 +325,7 @@ void CreateOutline::createOutline(oxygine::spActor pOutlineSprite, const QString
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimTop->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimTop), oxygine::timeMS(pAnimTop->getTotalFrames() * GameMap::frameTime), -1);
@@ -341,7 +341,7 @@ void CreateOutline::createOutline(oxygine::spActor pOutlineSprite, const QString
     pOutlineSprite->addChild(pSprite);
 
     // right bottom
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimRight->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimRight), oxygine::timeMS(pAnimRight->getTotalFrames() * GameMap::frameTime), -1);
@@ -356,7 +356,7 @@ void CreateOutline::createOutline(oxygine::spActor pOutlineSprite, const QString
     pSprite->setColor(color);
     pOutlineSprite->addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnimBottom->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimBottom), oxygine::timeMS(pAnimBottom->getTotalFrames() * GameMap::frameTime), -1);

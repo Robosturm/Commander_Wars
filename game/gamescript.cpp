@@ -6,6 +6,7 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
+#include "coreengine/settings.h"
 
 #include "menue/basegamemenu.h"
 
@@ -213,7 +214,7 @@ QString GameScript::getScriptFile() const
     return m_scriptFile;
 }
 
-void GameScript::setScriptFile(const QString value)
+void GameScript::setScriptFile(const QString & value)
 {
     m_scriptFile = value;
 }

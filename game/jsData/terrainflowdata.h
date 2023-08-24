@@ -12,7 +12,7 @@ class TerrainFlowData final : public QObject
     Q_OBJECT
 public:
     explicit TerrainFlowData(GameMap* pMap);
-   virtual ~TerrainFlowData() = default;
+    ~TerrainFlowData() = default;
     /**
      * @brief getOverlayTiles
      * @param terrains

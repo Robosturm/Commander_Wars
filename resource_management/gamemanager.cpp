@@ -67,14 +67,14 @@ oxygine::spSprite GameManager::getIcon(GameMap* pMap, const QString & icon)
                 pMap->getCurrentPlayer() == nullptr ||
                 pMap->getCurrentPlayer()->getColorTableAnim().get() == nullptr)
             {
-                pPlayer = spPlayer::create(pMap);
+                pPlayer = MemoryManagement::create<Player>(pMap);
                 pPlayer->init();
             }
             else
             {
                 pPlayer = pMap->getSpCurrentPlayer();
             }
-            oxygine::spSprite ret = spUnit::create(icon, pPlayer.get(), false, pMap);
+            oxygine::spSprite ret = MemoryManagement::create<Unit>(icon, pPlayer.get(), false, pMap);
             return ret;
         }
         else if (pBuildingSpriteManager->exists(icon))
@@ -86,7 +86,7 @@ oxygine::spSprite GameManager::getIcon(GameMap* pMap, const QString & icon)
             {
                 pPlayer = pMap->getSpCurrentPlayer();
             }
-            spBuilding pBuilding = spBuilding::create(icon, pMap);
+            spBuilding pBuilding = MemoryManagement::create<Building>(icon, pMap);
             pBuilding->setOwner(pPlayer.get());
             pBuilding->scaleAndShowOnSingleTile();
             return pBuilding;
@@ -97,7 +97,7 @@ oxygine::spSprite GameManager::getIcon(GameMap* pMap, const QString & icon)
 
 oxygine::spSprite GameManager::getIconSprite(const QString & icon)
 {
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim(icon);
     if (pAnim != nullptr)

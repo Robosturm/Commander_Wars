@@ -7,6 +7,8 @@
 
 #include "network/NetworkInterface.h"
 
+#include "multiplayer/networkcommands.h"
+
 #include "objects/base/chat.h"
 #include "objects/base/label.h"
 
@@ -20,10 +22,10 @@
 
 class WikiView;
 class GameMenue;
-using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
+using spGameMenue = std::shared_ptr<GameMenue>;
 
 class MovementPlanner;
-using spMovementPlanner = oxygine::intrusive_ptr<MovementPlanner>;
+using spMovementPlanner = std::shared_ptr<MovementPlanner>;
 
 /**
  * @brief The GameMenue class handles the game
