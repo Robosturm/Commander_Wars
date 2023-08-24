@@ -2091,11 +2091,6 @@ void Settings::setLanguage(const QString language)
             }
         }
     }
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    if (pInterpreter != nullptr)
-    {
-        pInterpreter->installExtensions(QJSEngine::Extension::AllExtensions);
-    }
 }
 
 QStringList Settings::getLanguageNames()

@@ -42,6 +42,7 @@ Interpreter::Interpreter()
 #endif
     setCppOwnerShip(this);
     connect(this, &Interpreter::sigNetworkGameFinished, this, &Interpreter::networkGameFinished, Qt::QueuedConnection);
+    installExtensions(QJSEngine::Extension::AllExtensions);
 }
 
 bool Interpreter::reloadInterpreter(const QString runtime)
@@ -187,6 +188,7 @@ QJSValue Interpreter::doString(const QString & task)
     clearJsStack();
     ++m_inJsCall;
     QJSValue value = evaluate(task, "GameCode");
+    collectGarbage();
     exitJsCall();
     if (value.isError())
     {

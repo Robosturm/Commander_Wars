@@ -72,9 +72,12 @@ public slots:
     {
         clearJsStack();
         QJSValue ret;
-        QJSValue funcPointer = globalObject().property(func);
-        ++m_inJsCall;
-        ret = funcPointer.call(args);
+        {
+            QJSValue funcPointer = globalObject().property(func);
+            ++m_inJsCall;
+            ret = funcPointer.call(args);
+        }
+        collectGarbage();
         exitJsCall();
         if (ret.isError())
         {
@@ -89,10 +92,13 @@ public slots:
     {
         clearJsStack();
         QJSValue ret;
-        QJSValue objPointer = globalObject().property(obj);
-        QJSValue funcPointer = objPointer.property(func);
-        ++m_inJsCall;
-        ret = funcPointer.call(args);
+        {
+            QJSValue objPointer = globalObject().property(obj);
+            QJSValue funcPointer = objPointer.property(func);
+            ++m_inJsCall;
+            ret = funcPointer.call(args);
+        }
+        collectGarbage();
         exitJsCall();
         if (ret.isError())
         {
