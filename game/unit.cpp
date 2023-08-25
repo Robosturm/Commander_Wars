@@ -215,6 +215,10 @@ void Unit::addShineTween()
             m_shineOwner.append(pActor);
         }
     }
+    for (auto & pUnit : m_TransportUnits)
+    {
+        pUnit->addShineTween();
+    }
     Mainapp::getInstance()->continueRendering();
 }
 
