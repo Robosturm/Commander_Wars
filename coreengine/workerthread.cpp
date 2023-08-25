@@ -13,6 +13,8 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/userdata.h"
 
+#include "network/mainserver.h"
+
 #include "menue/mainwindow.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
@@ -46,6 +48,7 @@ WorkerThread::WorkerThread()
     connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigShowMainwindow, this, &WorkerThread::showMainwindow, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigStartSlaveGame, this, &WorkerThread::startSlaveGame, Qt::QueuedConnection);
+    connect(this, &WorkerThread::sigLoadScript, this, &WorkerThread::loadScript, Qt::BlockingQueuedConnection);
     connect(Mainapp::getWorkerthread(), &QThread::finished, this, &WorkerThread::onQuit);
     moveToThread(Mainapp::getWorkerthread());
 }
@@ -161,6 +164,7 @@ void WorkerThread::start()
 void WorkerThread::showMainwindow()
 {
     CONSOLE_PRINT("WorkerThread::showMainwindow", GameConsole::eDEBUG);
+    registerMainserver();
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->threadProcessEvents();
     QThread::msleep(5);
@@ -204,8 +208,20 @@ void WorkerThread::onQuit()
     }
 }
 
-void WorkerThread::startSlaveGame()
+void WorkerThread::registerMainserver()
 {
+    // publish server to js environment for ai training
+    auto* server = MainServer::getInstance();
+    if (server != nullptr)
+    {
+        QString javascriptName = "mainServer";
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->setGlobal(javascriptName, pInterpreter->newQObject(server));
+    }
+}
+
+void WorkerThread::startSlaveGame()
+{    
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     Mainapp::getInstance()->getParser().startSlaveGame();
@@ -225,4 +241,10 @@ void WorkerThread::executeServerScript()
             pInterpreter->doFunction("serverScript");
         }
     }
+}
+
+void WorkerThread::loadScript(const QString & scriptPath)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->openScript(scriptPath, true);
 }

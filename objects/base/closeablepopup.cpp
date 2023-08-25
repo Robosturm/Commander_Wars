@@ -44,14 +44,17 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
     });
     addChild(pBox);
     connect(this, &CloseablePopUp::sigClosed, this, &CloseablePopUp::close, Qt::QueuedConnection);
-
-    m_drag.init(this);
-    m_drag.setDragEnabled(true);
-    m_drag.setDragBounds(QRect(0, 0, oxygine::Stage::getStage()->getWidth() - width, oxygine::Stage::getStage()->getHeight() - heigth));
     QSize size(width - 10, heigth - pSprite->getScaledHeight());
     m_pPanel = MemoryManagement::create<Panel>(true, size, size);
     m_pPanel->setPosition(5, pSprite->getScaledHeight() - 5);
     pBox->addChild(m_pPanel);
+}
+
+void CloseablePopUp::onAdded2Stage()
+{
+    m_drag.init(getSharedPtr<oxygine::Actor>());
+    m_drag.setDragEnabled(true);
+    m_drag.setDragBounds(QRect(0, 0, oxygine::Stage::getStage()->getWidth() - getWidth(), oxygine::Stage::getStage()->getHeight() - getHeight()));
 }
 
 void CloseablePopUp::setLocked(bool locked)

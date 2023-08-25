@@ -472,7 +472,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                 // only launch the server if the rest is ready for it ;)
                 if (Settings::getInstance()->getServer() && !m_slave)
                 {
-                    MainServer::getInstance();
+                    MainServer::createInstance();
 #ifdef GRAPHICSUPPORT
                     if (m_noUi)
                     {

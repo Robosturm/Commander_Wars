@@ -16,8 +16,6 @@ namespace oxygine
 #endif
 
     Actor::Actor()
-        : m_stage(nullptr),
-          m_parent(nullptr)
     {
         m_pressedOvered = 0;
     }
@@ -28,15 +26,17 @@ namespace oxygine
         removeChildren();
     }
 
-    Stage* Actor::__getStage() const
+    spWeakStage Actor::getStage() const
     {
         return m_stage;
     }
 
-    void Actor::added2stage(Stage* stage)
+    void Actor::added2stage(spStage stage)
     {
-        if (m_stage == nullptr)
+        spStage pStage = m_stage.lock();
+        if (pStage.get() == nullptr)
         {
+            onAdded2Stage();
             m_stage = stage;
             for (auto & child : m_children)
             {
@@ -50,10 +50,11 @@ namespace oxygine
 
     void Actor::removedFromStage()
     {
-        if (m_stage != nullptr)
+        spStage pStage = m_stage.lock();
+        if (pStage.get() != nullptr)
         {
-            m_stage->removeEventListeners(this);
-            m_stage = nullptr;
+            pStage->removeEventListeners(this);
+            m_stage.reset();
 
             m_pressedOvered = 0;
             for (auto & child : m_children)
@@ -67,14 +68,14 @@ namespace oxygine
     }
 
 #ifdef GRAPHICSUPPORT
-    QTransform Actor::computeGlobalTransform(Actor* parent) const
+    QTransform Actor::computeGlobalTransform(spActor parent)
     {
         QTransform t;
-        const Actor* actor = this;
+        spActor actor = getSharedPtr<Actor>();
         while (actor && actor != parent)
         {
             t = t * actor->getTransform();
-            actor = actor->getParent();
+            actor = actor->getSpParent();
         }
         return t;
     }
@@ -94,8 +95,8 @@ namespace oxygine
         m_pressedButton[b] = 0;
         if (m_pressedOvered == m_overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
         {
-            Stage* stage = __getStage();
-            if (stage)
+            spStage stage = m_stage.lock();
+            if (stage.get() != nullptr)
             {
                 stage->removeEventListener(m_onGlobalTouchUpEvent);
             }
@@ -114,7 +115,7 @@ namespace oxygine
 
         TouchEvent up = *te;
         up.bubbles = false;
-        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get());
+        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage());
         dispatchEvent(&up);
     }
 
@@ -126,14 +127,14 @@ namespace oxygine
         {
             return;
         }
-        if (isDescendant(safeSpCast<Actor>(ev->target).get()))
+        if (isDescendant(safeSpCast<Actor>(ev->target)))
         {
             return;
         }
         TouchEvent up = *te;
         up.type = TouchEvent::OUTX;
         up.bubbles = false;
-        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get());
+        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage());
         dispatchEvent(&up);
         oxygine::Stage::getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
         m_overred = 0;
@@ -206,7 +207,8 @@ namespace oxygine
     {
         if (!event->stopsImmediatePropagation && event->bubbles && !event->stopsPropagation)
         {
-            if (m_parent)
+            spActor pParent = getSpParent();
+            if (pParent.get())
             {
                 if (TouchEvent::isTouchEvent(event->type))
                 {
@@ -216,7 +218,7 @@ namespace oxygine
 
                 event->phase = Event::phase_bubbling;
                 event->currentTarget.reset();
-                m_parent->dispatchEvent(event);
+                pParent->dispatchEvent(event);
             }
         }
     }
@@ -358,7 +360,8 @@ namespace oxygine
         {
             return;
         }
-        if (m_parent)
+        spActor pParent = getSpParent();
+        if (pParent.get())
         {
             if (requiresThreadChange())
             {
@@ -368,17 +371,17 @@ namespace oxygine
             {
                 m_zOrder = zorder;
                 spActor me = getSharedPtr<Actor>();
-                auto iter = m_parent->m_children.cbegin();
-                while (iter != m_parent->m_children.cend())
+                auto iter = pParent->m_children.cbegin();
+                while (iter != pParent->m_children.cend())
                 {
                     if (iter->get() == me.get())
                     {
-                        m_parent->m_children.erase(iter);
+                        pParent->m_children.erase(iter);
                         break;
                     }
                     ++iter;
                 }
-                m_parent->insertActor(me);
+                pParent->insertActor(me);
             }
         }
         else
@@ -640,37 +643,42 @@ namespace oxygine
         return false;
     }
 
-    bool Actor::isDescendant(const Actor* actor) const
+    bool Actor::isDescendant(spActor actor) const
     {
-        const Actor* act = actor;
-        while (act)
+        while (actor)
         {
-            if (act == this)
-            {
+             if (actor.get() == this)
+             {
                 return true;
-            }
-            act = act->getParent();
+             }
+             actor = actor->getSpParent();
         }
         return false;
     }
 
-    void Actor::setParent(Actor* actor, Actor* parent)
+    void Actor::setParent(spActor actor, spActor parent)
     {
-        if (actor != nullptr)
+        if (actor.get() != nullptr)
         {
-            actor->m_parent = parent;
-            if (parent != nullptr &&
-                parent->__getStage())
-            {
-                actor->added2stage(parent->__getStage());
-            }
-            else
-            {
-                if (actor->__getStage())
+             actor->m_parent = parent;
+             bool remove = true;
+             if (parent.get() != nullptr)
+             {
+                spStage stage = parent->getStage().lock();
+                if (stage.get() != nullptr)
+                {
+                    actor->added2stage(stage);
+                    remove = false;
+                }
+             }
+             if (remove)
+             {
+                spStage stage = actor->getStage().lock();
+                if (stage.get() != nullptr)
                 {
                     actor->removedFromStage();
                 }
-            }
+             }
         }
     }
 
@@ -710,44 +718,55 @@ namespace oxygine
         {
             actor->detach();
             insertActor(actor);
-            setParent(actor.get(), this);
+            if (notInSharedUse())
+            {
+                actor->m_parent = getWeakPtr();
+            }
+            else
+            {
+                setParent(actor, getSharedPtr<Actor>());
+            }
         }
     }
 
     void Actor::removeChild(spActor actor)
     {
-        if (actor->m_parent == nullptr)
+        if (actor.get() != nullptr)
         {
-            return;
-        }
-        else if (requiresThreadChange())
-        {
-            emit MemoryManagement::getInstance().sigRemoveChild(getSharedPtr<Actor>(), actor);
-        }
-        else if (actor)
-        {
-            if (actor->m_parent != this)
+            spActor pParent = actor->getSpParent();
+            if (pParent.get() == nullptr)
             {
-                oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild wrong parent while removing a child");
+                return;
+            }
+            else if (requiresThreadChange())
+            {
+                emit MemoryManagement::getInstance().sigRemoveChild(getSharedPtr<Actor>(), actor);
+            }
+            else if (actor)
+            {
+                if (pParent.get() != this)
+                {
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild wrong parent while removing a child");
+                }
+                else
+                {
+                    setParent(actor, spActor());
+                    auto iter = m_children.cbegin();
+                    while (iter != m_children.cend())
+                    {
+                        if (iter->get() == actor.get())
+                        {
+                            m_children.erase(iter);
+                            break;
+                        }
+                        ++iter;
+                    }
+                }
             }
             else
             {
-                setParent(actor.get(), nullptr);
-                auto iter = m_children.cbegin();
-                while (iter != m_children.cend())
-                {
-                    if (iter->get() == actor.get())
-                    {
-                        m_children.erase(iter);
-                        break;
-                    }
-                    ++iter;
-                }
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove empty actor");
             }
-        }
-        else
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove empty actor");
         }
     }
 
@@ -761,21 +780,20 @@ namespace oxygine
         {
             for (auto & child : m_children)
             {
-                child->setParent(child.get(), nullptr);
+                child->setParent(child, spActor());
             }
             m_children.clear();
         }
     }
 
-    Actor* Actor::detach()
+    void Actor::detach()
     {
-        Actor* parent = getParent();
-        if (parent)
+        spActor parent = getSpParent();
+        if (parent.get() != nullptr)
         {
             spActor pActor = getSharedPtr<Actor>();
             parent->removeChild(pActor);
         }
-        return parent;
     }
 
     void Actor::internalUpdate(const UpdateState& us)
@@ -855,14 +873,16 @@ namespace oxygine
 #endif
     }
 
-    QPoint Actor::local2stage(const QPoint& pos, Actor* stage) const
+    QPoint Actor::local2stage(const QPoint& pos, spActor stage)
     {
-        return convert_local2stage(this, pos, stage);
+        auto me = getSharedPtr<Actor>();
+        return convert_local2stage(me, pos, stage);
     }
 
-    QPoint Actor::stage2local(const QPoint& pos, Actor* stage) const
+    QPoint Actor::stage2local(const QPoint& pos, spActor stage)
     {
-        return convert_stage2local(this, pos, stage);
+        auto me = getSharedPtr<Actor>();
+        return convert_stage2local(me, pos, stage);
     }
 
     bool Actor::prepareRender(RenderState& rs, const RenderState& parentRS)
@@ -993,38 +1013,32 @@ namespace oxygine
 #endif
     }
 
-    QPoint Actor::convert_global2local_(const Actor* child, const Actor* parent, QPoint pos)
+    QPoint Actor::convert_global2local(spActor & child, spActor & parent, QPoint pos)
     {
 #ifdef GRAPHICSUPPORT
-        if (child->getParent() && child->getParent() != parent)
+        if (child.get() != nullptr)
         {
-            pos = convert_global2local_(child->getParent(), parent, pos);
+            spActor pParent = child->getSpParent();
+            if (pParent.get() != nullptr && pParent != parent)
+            {
+                pos = convert_global2local(pParent, parent, pos);
+            }
+            pos = child->parent2local(pos);
         }
-        pos = child->parent2local(pos);
 #endif
         return pos;
     }
 
-    QPoint Actor::convert_global2local(spActor & child, spActor & parent, const QPoint& pos)
-    {
-        return convert_global2local_(child.get(), parent.get(), pos);
-    }
-
-    QPoint Actor::convert_local2global_(const Actor* child, const Actor* parent, QPoint pos)
+    QPoint Actor::convert_local2global(spActor & child, spActor & parent, QPoint pos)
     {
 #ifdef GRAPHICSUPPORT
         while (child && child != parent)
         {
             pos = child->local2parent(pos);
-            child = child->getParent();
+            child = child->getSpParent();
         }
 #endif
         return pos;
-    }
-
-    QPoint Actor::convert_local2global(spActor & child, spActor & parent, const QPoint& pos)
-    {
-        return convert_local2global_(child.get(), parent.get(), pos);
     }
 
     QPoint Actor::convert_local2stage(spActor & actor, const QPoint& pos, spActor root)
@@ -1036,15 +1050,6 @@ namespace oxygine
         return convert_local2global(actor, root, pos);
     }
 
-    QPoint Actor::convert_local2stage(const Actor* actor, const QPoint& pos, const Actor* root)
-    {
-        if (!root)
-        {
-            root = Stage::getStage().get();
-        }
-        return convert_local2global_(actor, root, pos);
-    }
-
     QPoint Actor::convert_stage2local(spActor & actor, const QPoint& pos, spActor root)
     {
         if (!root)
@@ -1052,15 +1057,6 @@ namespace oxygine
             root = Stage::getStage();
         }
         return convert_global2local(actor, root, pos);
-    }
-
-    QPoint Actor::convert_stage2local(const Actor* actor, const QPoint& pos, const Actor* root)
-    {
-        if (!root)
-        {
-            root = Stage::getStage().get();
-        }
-        return convert_global2local_(actor, root, pos);
     }
 
     QRect Actor::getActorTransformedDestRect(Actor* actor, const QTransform& tr)

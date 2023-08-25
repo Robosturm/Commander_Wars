@@ -64,7 +64,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     : BaseGamemenu(pMap, true),
       m_ReplayRecorder(m_pMap.get()),
       m_SaveGame(saveGame),
-      m_actionPerformer(m_pMap.get(), this)
+      m_actionPerformer(m_pMap, getWeakPtr())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
@@ -164,7 +164,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
       m_ReplayRecorder(m_pMap.get()),
       m_gameStarted(false),
       m_SaveGame(saveGame),
-      m_actionPerformer(m_pMap.get(), this)
+      m_actionPerformer(m_pMap, getWeakPtr())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
@@ -196,7 +196,7 @@ void GameMenue::loadingAiPipe()
 GameMenue::GameMenue(spGameMap pMap, bool clearPlayerlist)
     : BaseGamemenu(pMap, clearPlayerlist),
       m_ReplayRecorder(m_pMap.get()),
-      m_actionPerformer(m_pMap.get(), this)
+      m_actionPerformer(m_pMap, getWeakPtr())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");

@@ -146,7 +146,7 @@ void Tooltip::showTooltip()
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->pauseRendering();
-        if (oxygine::Stage::getStage()->isDescendant(this) &&
+        if (oxygine::Stage::getStage()->isDescendant(getSharedPtr<oxygine::Actor>()) &&
             m_enabled &&
             pApp->hasCursor() &&
             !m_tooltipText.isEmpty())

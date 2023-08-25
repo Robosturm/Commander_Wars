@@ -24,6 +24,7 @@ using spGameAction = std::shared_ptr<GameAction>;
 
 class GameMap;
 using spGameMap = std::shared_ptr<GameMap>;
+using spWeakGameMap = std::weak_ptr<GameMap>;
 
 class EditorMenue;
 class BaseGamemenu;

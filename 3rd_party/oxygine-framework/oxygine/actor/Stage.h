@@ -7,6 +7,7 @@ namespace oxygine
 {
     class Stage;
     using spStage = std::shared_ptr<Stage>;
+    using spWeakStage = std::weak_ptr<Stage>;
     class Stage final : public Actor
     {
     public:

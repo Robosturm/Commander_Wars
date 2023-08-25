@@ -2,7 +2,8 @@
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
 
-#include "coreengine/interpreter.h"
+#include "coreengine/mainapp.h"
+#include "coreengine/workerthread.h"
 
 #include <QDirIterator>
 #include <QJsonArray>
@@ -165,10 +166,10 @@ void MatchMakingCoordinator::periodicTasks()
 
 void MatchMakingCoordinator::loadAutomatches(QString & path, bool running)
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList filter;
     filter << "*.js";
     QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+    auto pWorker = Mainapp::getInstance()->getWorker();
     while (dirIter.hasNext())
     {
         dirIter.next();
@@ -181,7 +182,7 @@ void MatchMakingCoordinator::loadAutomatches(QString & path, bool running)
         else
         {
             QString filePath = dirIter.fileInfo().filePath();
-            pInterpreter->openScript(filePath, true);
+            emit pWorker->sigLoadScript(filePath);
             m_autoMatchMakers[id] = MemoryManagement::create<AutoMatchMaker>(id, m_mainServer);
             m_autoMatchMakers[id]->setRunning(running);
             m_autoMatchMakers[id]->setActiveMatch(true);

@@ -79,7 +79,7 @@ namespace oxygine
         m_speed = QPoint(0, 0);
 
         m_content = content;
-        m_drag.init(content.get());
+        m_drag.init(content);
 
         m_clip->addChild(m_content);
 
@@ -327,8 +327,8 @@ namespace oxygine
                                 act->dispatchEvent(&ev);
 
                             }
-                            auto* parent = act->getParent();
-                            if (parent != nullptr)
+                            spActor parent = act->getSpParent();
+                            if (parent.get() != nullptr)
                             {
                                 act = parent->getSharedPtrFromWeak<Actor>();
                             }

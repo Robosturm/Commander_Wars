@@ -13,26 +13,31 @@ namespace oxygine
 
     void Draggable::destroy()
     {
-        if (m_dragClient != nullptr)
+        spActor pActor = m_dragClient.lock();
+        if (pActor.get() != nullptr)
         {
             if (oxygine::Stage::getStage().get() != nullptr)
             {
                 oxygine::Stage::getStage()->removeEventListeners(this);
             }
-            m_dragClient->removeEventListeners(this);
-            m_dragClient->detach();
-            m_dragClient = nullptr;
+            pActor->removeEventListeners(this);
+            pActor->detach();
+            m_dragClient.reset();
         }
 
         m_pressed = false;
     }
 
-    void Draggable::init(Actor* actor)
+    void Draggable::init(spWeakActor actor)
     {
         destroy();
         m_dragClient = actor;
-        actor->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &Draggable::onEvent));
-        actor->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
+        spActor pActor = actor.lock();
+        if (pActor.get() != nullptr)
+        {
+            pActor->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &Draggable::onEvent));
+            pActor->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
+        }
     }
 
     void Draggable::startDrag(const QPoint& localCenter)
@@ -40,18 +45,24 @@ namespace oxygine
         m_startTm = Clock::getTimeMS();
         m_pressed = true;
         m_dragPos = localCenter;
-        m_clientPos = m_dragClient->getPosition();
+        spActor pActor = m_dragClient.lock();
+        if (pActor.get() != nullptr)
+        {
+            m_clientPos = pActor->getPosition();
+        }
         oxygine::Stage::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Draggable::onEvent));
     }
 
     void Draggable::onMove(const QPoint& position)
     {
+        spActor pActor = m_dragClient.lock();
         if (m_pressed && (m_dragEnabled || m_middleButton) &&
-            m_dragClient != nullptr)
+            pActor.get() != nullptr)
         {
-            QPoint localPos = m_dragClient->stage2local(position);
+            spActor pParent = pActor->getSpParent();
+            QPoint localPos = pActor->stage2local(position);
             QPoint dragOffset = localPos - m_dragPos;
-            QPoint converted = convertPosUp(m_dragClient, m_dragClient->getParent(), dragOffset, true);
+            QPoint converted = convertPosUp(pActor, pParent, dragOffset, true);
             QPoint np;
             bool _clientIsParent = true;
             if (!_clientIsParent)
@@ -60,15 +71,16 @@ namespace oxygine
             }
             else
             {
-                np = m_dragClient->getPosition() + converted;
+                np = pActor->getPosition() + converted;
             }
-            auto startPos = m_dragClient->getPosition();
-            m_dragClient->setPosition(np);
+
+            auto startPos = pActor->getPosition();
+            pActor->setPosition(np);
             snapClient2Bounds();
-            if (startPos != m_dragClient->getPosition())
+            if (startPos != pActor->getPosition())
             {
                 oxygine::Event pEvent(DragMoveEvent);
-                m_dragClient->dispatchEvent(&pEvent);
+                pActor->dispatchEvent(&pEvent);
             }
         }
     }
@@ -99,14 +111,15 @@ namespace oxygine
             }
             case TouchEvent::TOUCH_UP:
             {
-                if (m_dragClient != nullptr)
+                spActor pActor = m_dragClient.lock();
+                if (pActor.get() != nullptr)
                 {
                     m_middleButton = false;
                     m_pressed = false;
                     oxygine::Stage::getStage()->removeEventListeners(this);
                     if (Clock::getTimeMS() - m_startTm < timeMS(2))
                     {
-                        m_dragClient->setPosition(m_clientPos);
+                        pActor->setPosition(m_clientPos);
                     }
                 }
                 break;
@@ -125,29 +138,12 @@ namespace oxygine
         m_bounds = r;
     }
 
-    bool isParent(Actor* child, Actor* isItParent)
-    {
-        while (child)
-        {
-            if (child == isItParent)
-            {
-                return true;
-            }
-            child = child->getParent();
-        }
-        return false;
-    }
-
-    Actor* Draggable::getClient()
-    {
-        return m_dragClient;
-    }
-
     void Draggable::snapClient2Bounds()
     {
-        if (m_dragClient != nullptr)
+        spActor pActor = m_dragClient.lock();
+        if (pActor.get() != nullptr)
         {
-            QPoint np = m_dragClient->getPosition();
+            QPoint np = pActor->getPosition();
             if (m_bounds.width() != -1 && m_bounds.height() != -1)
             {
                 np.setX(std::max(np.x(), static_cast<qint32>(m_bounds.x())));
@@ -155,11 +151,11 @@ namespace oxygine
                 np.setX(std::min(np.x(), static_cast<qint32>(m_bounds.right())));
                 np.setY(std::min(np.y(), static_cast<qint32>(m_bounds.bottom())));
             }
-            m_dragClient->setPosition(np);
+            pActor->setPosition(np);
         }
     }
 
-    QPoint Draggable::convertPosUp(Actor* src, Actor* dest, const QPoint& pos, bool direction)
+    QPoint Draggable::convertPosUp(spActor src, spActor dest, const QPoint& pos, bool direction)
     {
         QPoint locPos(pos);
 #ifdef GRAPHICSUPPORT
@@ -167,7 +163,7 @@ namespace oxygine
         while (src != dest && src)
         {
             t = src->getTransform() * t;
-            src = src->getParent();
+            src = src->getSpParent();
         }
         if (direction)
         {
@@ -180,7 +176,7 @@ namespace oxygine
         return locPos;
     }
 
-    QPoint Draggable::convertPosDown(Actor* src, Actor* dest, const QPoint& pos, bool direction)
+    QPoint Draggable::convertPosDown(spActor src, spActor dest, const QPoint& pos, bool direction)
     {
         QPoint locPos(pos);
 #ifdef GRAPHICSUPPORT
@@ -189,7 +185,7 @@ namespace oxygine
         while (src != dest && src)
         {
             t =  t * src->getTransform();
-            src = src->getParent();
+            src = src->getSpParent();
         }
         if (direction)
         {

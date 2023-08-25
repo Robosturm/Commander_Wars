@@ -17,6 +17,7 @@
 #include <QTextStream>
 #include <QThread>
 
+QThread* Interpreter::m_owner{nullptr};
 spInterpreter Interpreter::m_pInstance{nullptr};
 QString Interpreter::m_runtimeData;
 
@@ -24,6 +25,7 @@ Interpreter* Interpreter::createInstance()
 {
     if (m_pInstance.get() == nullptr)
     {
+        m_owner = QThread::currentThread();
         m_pInstance = MemoryManagement::create<Interpreter>();
         m_pInstance->init();
     }
@@ -35,7 +37,8 @@ Interpreter* Interpreter::createInstance()
 }
 
 Interpreter::Interpreter()
-    : QQmlEngine(Mainapp::getInstance()->getWorker())
+    : QJSEngine(Mainapp::getInstance()->getWorker().get())
+
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Interpreter");
@@ -311,7 +314,7 @@ void Interpreter::networkGameFinished(qint32 value, QString id)
     if (exists(obj, func))
     {
         QJSValueList args({value,
-                           id,});
+            id,});
         doFunction(obj, func, args);
     }
 }

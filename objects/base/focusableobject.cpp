@@ -30,7 +30,7 @@ FocusableObject::FocusableObject()
         oxygine::Stage::getStage()->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event* event)
         {
             if (m_focusedObject != nullptr &&
-                !m_focusedObject->isDescendant(oxygine::safeSpCast<Actor>(event->target).get()))
+                !m_focusedObject->isDescendant(oxygine::safeSpCast<Actor>(event->target)))
             {
                 looseFocus();
             }

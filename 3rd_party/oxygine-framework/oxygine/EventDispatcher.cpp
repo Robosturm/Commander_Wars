@@ -10,12 +10,13 @@
 namespace oxygine
 {
 
-    bool EventDispatcher::detached() const
+    bool EventDispatcher::detached()
     {
-        const Actor* pActor = dynamic_cast<const Actor*>(this);
+        const spActor pActor = std::dynamic_pointer_cast<Actor>(getSharedPtr<EventDispatcher>());
         if (pActor != nullptr)
         {
-            return pActor->__getStage() == nullptr;
+            spStage pStage = pActor->getStage().lock();
+            return pStage.get() == nullptr;
         }
         else
         {
@@ -140,7 +141,7 @@ namespace oxygine
         m_enabled = enabled;
     }
 
-    bool EventDispatcher::requiresThreadChange() const
+    bool EventDispatcher::requiresThreadChange()
     {
         return !notInSharedUse() &&
                !GameWindow::getWindow()->isMainThread() &&

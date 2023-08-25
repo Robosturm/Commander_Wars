@@ -78,7 +78,7 @@ namespace oxygine
         m_speed = QPoint(0, 0);
 
         m_content = content;
-        m_drag.init(m_content.get());
+        m_drag.init(m_content);
         addChild(m_content);
         updateDragBounds();
     }
@@ -326,7 +326,7 @@ namespace oxygine
                                     act->dispatchEvent(&ev);
 
                                 }
-                                auto* parent = act->getParent();
+                                spActor parent = act->getSpParent();
                                 if (parent != nullptr)
                                 {
                                     act = parent->getSharedPtrFromWeak<Actor>();
@@ -336,7 +336,6 @@ namespace oxygine
                                     act.reset();
                                 }
                             }
-
                             m_holded.reset();
                         }
                     }
