@@ -281,8 +281,7 @@ void CampaignMenu::flagAppeared(oxygine::spSprite pSprite, qint32 map)
             emit sigShowMinimap();
         }
     });
-    oxygine::spActor pParent = oxygine::safeSpCast<oxygine::Actor>(pSprite->getParent().lock());
-    if (pParent.get() == nullptr)
+    if (pSprite->getParent() == nullptr)
     {
         m_pMapBackground->addChild(pSprite);
     }
@@ -322,8 +321,7 @@ void CampaignMenu::showMinimap()
 
 void CampaignMenu::hideMinimap()
 {
-    oxygine::spActor pActor = oxygine::safeSpCast<oxygine::Actor>(m_pMapSelectionView->getMinimapPanel()->getParent().lock());
-    if (pActor.get() == m_pMapBackground.get())
+    if (m_pMapSelectionView->getMinimapPanel()->getParent() == m_pMapBackground.get())
     {
         Mainapp::getInstance()->getAudioManager()->playSound("minimapOpen.wav");
         m_pMapSelectionView->getMinimapPanel()->detach();

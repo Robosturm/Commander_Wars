@@ -1116,16 +1116,12 @@ void BattleAnimationSprite::setStartWithFraming(bool startWithFraming)
 
 void BattleAnimationSprite::addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
 {
-    oxygine::spActor pActor = getSpParent();
-    if (pActor.get() != nullptr)
+    auto pOwner = dynamic_cast<BattleAnimation*>(getParent());
+    if (pOwner != nullptr)
     {
-        auto pOwner = std::dynamic_pointer_cast<BattleAnimation>(pActor);
-        if (pOwner.get() != nullptr)
-        {
-            pOwner->addScreenshake(startIntensity, decay * Settings::getInstance()->getAnimationSpeed() / Settings::getInstance()->getBattleAnimationSpeed(),
-                                   durationMs  * Settings::getInstance()->getAnimationSpeed() / Settings::getInstance()->getBattleAnimationSpeed(),
-                                   delayMs  * Settings::getInstance()->getAnimationSpeed() / Settings::getInstance()->getBattleAnimationSpeed(), shakePauseMs);
-        }
+        pOwner->addScreenshake(startIntensity, decay * Settings::getInstance()->getAnimationSpeed() / Settings::getInstance()->getBattleAnimationSpeed(),
+                               durationMs  * Settings::getInstance()->getAnimationSpeed() / Settings::getInstance()->getBattleAnimationSpeed(),
+                               delayMs  * Settings::getInstance()->getAnimationSpeed() / Settings::getInstance()->getBattleAnimationSpeed(), shakePauseMs);
     }
 }
 
@@ -1133,33 +1129,21 @@ void BattleAnimationSprite::addSpriteScreenshake(qint32 startIntensity, float de
 {
     oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getInstance()->getBattleAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
                                                                    oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getInstance()->getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getInstance()->getBattleAnimationSpeed())));
-    oxygine::spActor pActor = getSpParent();
-    if (pActor.get() != nullptr)
-    {
-        pActor->addTween(tween);
-    }
+    getParent()->addTween(tween);
 }
 
 void BattleAnimationSprite::addSpriteShakeY(qint32 startIntensity, float startPercent, float endPercent, qint32 durationMs, qint32 delayMs, qint32 loops)
 {
     oxygine::spTween tween = oxygine::createTween(TweenShakeY(startIntensity, startPercent, endPercent),
                                                                    oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getInstance()->getBattleAnimationSpeed())), loops, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getInstance()->getBattleAnimationSpeed())));
-    oxygine::spActor pActor = getSpParent();
-    if (pActor.get() != nullptr)
-    {
-        pActor->addTween(tween);
-    }
+    getParent()->addTween(tween);
 }
 
 void BattleAnimationSprite::addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
 {
-    oxygine::spActor pActor = getSpParent();
-    if (pActor.get() != nullptr)
+    auto pOwner = dynamic_cast<BattleAnimation*>(getParent());
+    if (pOwner != nullptr)
     {
-        auto pOwner = std::dynamic_pointer_cast<BattleAnimation>(pActor);
-        if (pOwner.get() != nullptr)
-        {
-            pOwner->addBattleViewScreenshake(startIntensity, decay, durationMs, delayMs, shakePauseMs);
-        }
+        pOwner->addBattleViewScreenshake(startIntensity, decay, durationMs, delayMs, shakePauseMs);
     }
 }

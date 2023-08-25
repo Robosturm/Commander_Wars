@@ -14,6 +14,7 @@ namespace oxygine
     {
         spClock clock = MemoryManagement::create<Clock>();
         setClock(clock);
+        m_stage = this;
     }
 
     void Stage::onDeactivate(Event*)
@@ -26,7 +27,6 @@ namespace oxygine
     {
         setScale(scaleFactor);
         setSize(gameSize.width(), gameSize.height());
-        m_stage = getSharedPtr<Stage>();
     }
 
     bool Stage::isOn(const QPoint&)

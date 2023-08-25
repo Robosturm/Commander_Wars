@@ -150,9 +150,9 @@ public:
      * @brief getWorker
      * @return
      */
-    static spWorkerThread getWorker()
+    static WorkerThread* getWorker()
     {
-        return getInstance()->m_Worker;
+        return getInstance()->m_Worker.get();
     }
     static QProcess & GetAiSubProcess()
     {

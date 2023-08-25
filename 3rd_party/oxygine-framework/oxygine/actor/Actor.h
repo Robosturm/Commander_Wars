@@ -80,7 +80,6 @@ namespace oxygine
 
     class Actor;
     using spActor = std::shared_ptr<Actor>;
-    using spWeakActor = std::weak_ptr<Actor>;
     class Actor: public EventDispatcher
     {
     public:
@@ -187,15 +186,14 @@ namespace oxygine
             return false;
 #endif
         }
-        spWeakEventDispatcher getParent()
+        Actor* getParent()
         {
             return m_parent;
         }
-        spActor getSpParent()
+        const Actor* getParent() const
         {
-            return oxygine::safeSpCast<oxygine::Actor>(m_parent.lock());
+            return m_parent;
         }
-
         const QSize& getSize() const
         {
 #ifdef GRAPHICSUPPORT
@@ -240,7 +238,7 @@ namespace oxygine
         const QTransform& getTransform() const;
         const QTransform& getTransformInvert() const;
         /**computes global actor transformation*/
-        QTransform computeGlobalTransform(spActor parent = spActor());
+        QTransform computeGlobalTransform(Actor* parent = nullptr) const;
 #endif
 
         void setPosition(const QPoint& pos);
@@ -313,14 +311,14 @@ namespace oxygine
         }
         virtual bool isOn(const QPoint& localPosition);
         /**Returns true if actor is child or located deeper in current subtree*/
-        bool isDescendant(spActor actor) const;
+        bool isDescendant(const Actor* actor) const;
         void addChild(spActor actor);
         /**Remove one child*/
         void removeChild(spActor actor);
         /**Removes all children from Actor*/
         void removeChildren();
         /**detaches actor from parent and returns parent. return NULL If actor doesn't have parent*/
-        void detach();
+        Actor* detach();
         /**Dispatches an event into the event flow. The event target is the EventDispatcher object upon which the dispatchEvent() method is called.*/
         virtual void dispatchEvent(Event* event) override;
 
@@ -328,7 +326,7 @@ namespace oxygine
         template<class TProperty>
         void addTween(const TProperty& property, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), QEasingCurve::Type ease = QEasingCurve::Linear)
         {
-            addTween(createTween(property, duration, loops, twoSides, delay, ease));
+            return addTween(createTween(property, duration, loops, twoSides, delay, ease));
         }
         /**short syntax version of actor->addEventListener(TouchEvent::CLICK, ...);*/
         void addClickListener(const EventCallback& cb)
@@ -361,19 +359,21 @@ namespace oxygine
         //converts local position to parent space
         QPoint local2parent(const QPoint& pos = QPoint()) const;
         //converts local position to Stage
-        QPoint local2stage(const QPoint& pos = QPoint(), spActor stage = spActor());
+        QPoint local2stage(const QPoint& pos = QPoint(), Actor* stage = nullptr) const;
         //converts global position (position in Stage space) to local space
-        QPoint stage2local(const QPoint& pos = QPoint(), spActor stage = spActor());
+        QPoint stage2local(const QPoint& pos = QPoint(), Actor* stage = nullptr) const;
 
         /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
-        spWeakStage getStage() const;
+        Stage* __getStage() const;
 
         void setNotPressed(MouseButton b);
 
         bool internalRender(RenderState& rs, const RenderState& parentRS);
         virtual bool getBounds(QRect&) const;
         static QPoint convert_local2stage(spActor & child, const QPoint& pos, spActor root = spActor());
+        static QPoint convert_local2stage(const Actor* child, const QPoint& pos, const Actor* root = nullptr);
         static QPoint convert_stage2local(spActor & child, const QPoint& pos, spActor root = spActor());
+        static QPoint convert_stage2local(const Actor* child, const QPoint& pos, const Actor* root = nullptr);
         static QRect getActorTransformedDestRect(Actor* actor, const QTransform& tr);
         /*****************************************************************************************/
         // properties for tweens
@@ -393,10 +393,9 @@ namespace oxygine
 
     protected:
         virtual void handleEventImpl(Event* event);
-        void added2stage(spStage);
-        virtual void onAdded2Stage(){}
+        void added2stage(Stage*);
         void removedFromStage();
-        static void setParent(spActor actor, spActor parent);
+        static void setParent(Actor* actor, Actor* parent);
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchMoveEvent(Event*);
         void __setSize(const QSize&);
@@ -409,8 +408,10 @@ namespace oxygine
         virtual void doUpdate(const UpdateState& us);
         void dispatchToParent(Event* event);
         void insertActor(spActor & actor);
-        static QPoint convert_global2local(spActor & child, spActor & parent, QPoint pos);
-        static QPoint convert_local2global(spActor & child, spActor & parent, QPoint pos);
+        static QPoint convert_global2local_(const Actor* child, const Actor* parent, QPoint pos);
+        static QPoint convert_global2local(spActor & child, spActor & parent, const QPoint& pos);
+        static QPoint convert_local2global_(const Actor* child, const Actor* parent, QPoint pos);
+        static QPoint convert_local2global(spActor & child, spActor & parent, const QPoint& pos);
     protected:
 #ifdef GRAPHICSUPPORT
         enum flags
@@ -433,9 +434,9 @@ namespace oxygine
         static QSize m_dummySize;
         static QPointF m_dummyPointF;
 #endif
-        spWeakStage m_stage;
+        Stage* m_stage;
         spClock m_clock;
-        spWeakEventDispatcher m_parent;
+        Actor* m_parent;
         children m_children;
         union
         {

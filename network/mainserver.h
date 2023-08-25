@@ -90,7 +90,6 @@ public:
     static const char* const SQL_MATCHHISTORY;
     static const char* const SQL_SIGNEDUP;
 
-    static void createInstance();
     static MainServer* getInstance();
     static bool exists();
     static void initDatabase();

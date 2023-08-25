@@ -23,7 +23,6 @@
 class WikiView;
 class GameMenue;
 using spGameMenue = std::shared_ptr<GameMenue>;
-using spWeakGameMenue = std::weak_ptr<GameMenue>;
 
 class MovementPlanner;
 using spMovementPlanner = std::shared_ptr<MovementPlanner>;

@@ -25,7 +25,6 @@ namespace oxygine
 
     class EventDispatcher;
     using spEventDispatcher = std::shared_ptr<EventDispatcher>;
-    using spWeakEventDispatcher = std::weak_ptr<EventDispatcher>;
     class EventDispatcher : public IClosureOwner, public RefObject<EventDispatcher>
     {
     public:
@@ -58,8 +57,8 @@ namespace oxygine
         virtual void setEnabled(bool enabled);
 
     protected:
-        bool detached();
-        bool requiresThreadChange();
+        bool detached() const;
+        bool requiresThreadChange() const;
 
     protected:
         struct listener

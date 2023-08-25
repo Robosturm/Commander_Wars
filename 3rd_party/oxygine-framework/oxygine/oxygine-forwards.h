@@ -63,9 +63,6 @@ namespace oxygine
     using spTween = std::shared_ptr<Tween>;
     using spVStyleActor = std::shared_ptr<VStyleActor>;
 
-    using spWeakStage = std::weak_ptr<Stage>;
-    using spWeakActor = std::weak_ptr<Actor>;
-
     using EventCallback = OwnedClosure<void, Event*>;
     using eventType = qint32;
 }

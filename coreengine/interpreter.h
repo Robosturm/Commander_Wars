@@ -2,9 +2,8 @@
 #define INTERPRETER_H
 
 #include <QObject>
-#include <QJSEngine>
+#include <QQmlEngine>
 #include <QVector>
-#include <QThread>
 #include <QCoreApplication>
 
 class Interpreter;
@@ -12,14 +11,13 @@ using spInterpreter = std::shared_ptr<Interpreter>;
 /**
  * @brief The Interpreter class java-script interpreter with easy access functions
  */
-class Interpreter final : public QJSEngine
+class Interpreter final : public QQmlEngine
 {
     Q_OBJECT
 
 public:
     static Interpreter* getInstance()
     {
-        Q_ASSERT(QThread::currentThread() == m_owner);
         return m_pInstance.get();
     }
     static Interpreter* createInstance();
@@ -110,6 +108,16 @@ public slots:
         return ret;
     }
 
+    inline void triggerCollectGarbage()
+    {
+        ++m_jsCallCount;
+        constexpr qint32 REFRESH_COUNT = 400;
+        if (m_jsCallCount >= REFRESH_COUNT)
+        {
+            collectGarbage();
+            m_jsCallCount = 0;
+        }
+    }
     /**
      * @brief doString immediately interprates the string with the javascript-interpreter
      * @param task string parsed to the interpreter
@@ -178,7 +186,8 @@ private:
      */
     void init();
     void exitJsCall()
-    {
+    {        
+        triggerCollectGarbage();
         --m_inJsCall;
         Q_ASSERT(m_inJsCall >= 0);
     }
@@ -196,7 +205,6 @@ private:
     qint32 m_inJsCall{0};
     std::vector<std::shared_ptr<QObject>> m_jsObjects;
     qint32 m_jsCallCount{0};
-    static QThread* m_owner;
 };
 
 #endif // INTERPRETER_H

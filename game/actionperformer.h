@@ -5,8 +5,6 @@
 #include "game/gamemap.h"
 
 class GameMenue;
-using spGameMenue = std::shared_ptr<GameMenue>;
-using spWeakGameMenue = std::weak_ptr<GameMenue>;
 
 class ActionPerformer final : public QObject
 {
@@ -30,7 +28,7 @@ public:
         QVector<ConnectingInfo> m_connectingSocketInfos;
     };
 
-    explicit ActionPerformer(spWeakGameMap pMap, oxygine::spWeakEventDispatcher pMenu);
+    explicit ActionPerformer(GameMap* pMap, GameMenue* pMenu = nullptr);
     /**
      * @brief getSyncData
      * @return
@@ -119,8 +117,8 @@ protected:
     void doTrapping(spGameAction & pGameAction);
     void onTriggeringActionFinished();
 private:
-    oxygine::spWeakEventDispatcher m_pMenu;
-    spWeakGameMap m_pMap;
+    GameMenue* m_pMenu{nullptr};
+    GameMap* m_pMap{nullptr};
     spGameAction m_pStoredAction{nullptr};
     spGameAction m_pCurrentAction{nullptr};
     bool m_actionRunning{false};

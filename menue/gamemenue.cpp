@@ -64,7 +64,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     : BaseGamemenu(pMap, true),
       m_ReplayRecorder(m_pMap.get()),
       m_SaveGame(saveGame),
-      m_actionPerformer(m_pMap, getWeakPtr())
+      m_actionPerformer(m_pMap.get(), this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
@@ -146,7 +146,8 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     else
     {
         CONSOLE_PRINT("GameMenue starting game directly cause it's a single player game.", GameConsole::eDEBUG);
-        startGame();
+        connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
+        emit sigGameStarted();
     }
     CONSOLE_PRINT("Finalizing GameMenue creation", GameConsole::eDEBUG);
     if (Mainapp::getSlave())
@@ -164,7 +165,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
       m_ReplayRecorder(m_pMap.get()),
       m_gameStarted(false),
       m_SaveGame(saveGame),
-      m_actionPerformer(m_pMap, getWeakPtr())
+      m_actionPerformer(m_pMap.get(), this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
@@ -196,7 +197,7 @@ void GameMenue::loadingAiPipe()
 GameMenue::GameMenue(spGameMap pMap, bool clearPlayerlist)
     : BaseGamemenu(pMap, clearPlayerlist),
       m_ReplayRecorder(m_pMap.get()),
-      m_actionPerformer(m_pMap, getWeakPtr())
+      m_actionPerformer(m_pMap.get(), this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
@@ -1762,12 +1763,15 @@ void GameMenue::updateGameInfo()
 void GameMenue::victory(qint32 team)
 {
     bool humanWin = false;
-    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    if (team >= 0)
     {
-        Player* pPlayer = m_pMap->getPlayer(i);
-        if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            humanWin = true;
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+            {
+                humanWin = true;
+            }
         }
     }
     CONSOLE_PRINT("GameMenue::victory for team " + QString::number(team) +

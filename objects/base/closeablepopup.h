@@ -30,8 +30,6 @@ public slots:
     void setLocked(bool locked);
 protected slots:
     void close();
-protected:
-    virtual void onAdded2Stage() override;
 private:
      oxygine::Draggable m_drag;
      spPanel m_pPanel;

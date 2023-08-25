@@ -14,17 +14,12 @@ signals:
     void sigStart();
     void sigShowMainwindow();
     void sigStartSlaveGame();
-    void sigLoadScript(const QString & scriptPath);
 public slots:
-    void executeServerScript();
-private slots:
     void start();
     void showMainwindow();
     void startSlaveGame();
     void onQuit();
-    void loadScript(const QString & scriptPath);
-private:
-    void registerMainserver();
+    void executeServerScript();
 private:
     bool m_started{false};
 };

@@ -49,16 +49,12 @@ const char* const MainServer::SQL_SIGNEDUP          = "signedUp";
 spMainServer MainServer::m_pInstance{nullptr};
 QSqlDatabase* MainServer::m_serverData{nullptr};
 
-void MainServer::createInstance()
+MainServer* MainServer::getInstance()
 {
     if (m_pInstance.get() == nullptr)
     {
         m_pInstance = MemoryManagement::create<MainServer>();
     }
-}
-
-MainServer* MainServer::getInstance()
-{
     return m_pInstance.get();
 }
 
@@ -108,8 +104,12 @@ MainServer::MainServer()
     Interpreter::setCppOwnerShip(this);
     m_periodicExecutionTimer.setSingleShot(false);
     m_periodicExecutionTimer.start(30 * 1000);
+    // publish server to js environment for ai training
+    QString javascriptName = "mainServer";
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->setGlobal(javascriptName, pInterpreter->newQObject(this));
     Mainapp* pApp = Mainapp::getInstance();
-    connect(this, &MainServer::sigExecuteServerScript, pApp->getWorker().get(), &WorkerThread::executeServerScript, NetworkCommands::UNIQUE_DATA_CONNECTION);
+    connect(this, &MainServer::sigExecuteServerScript, pApp->getWorker(), &WorkerThread::executeServerScript, NetworkCommands::UNIQUE_DATA_CONNECTION);
     // connect signals for tcp server events
     connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     connect(m_pGameServer.get(), &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);

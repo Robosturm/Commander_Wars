@@ -15,10 +15,14 @@ namespace oxygine
         explicit Draggable() = default;
         ~Draggable();
 
-        void init(spWeakActor actor);
+        void init(Actor* actor);
 
         void destroy();
 
+        Actor* getDragClient() const
+        {
+            return m_dragClient;
+        }
         const QRect& getDragBounds() const
         {
             return m_bounds;
@@ -46,19 +50,20 @@ namespace oxygine
         void setNoLockForMiddleButton(bool newNoLockForMiddleButton);
 
     protected:
+        Actor* getClient();
         void onEvent(Event* event);
         void startDrag(const QPoint& localPos);
 
         void onDrag(TouchEvent* es);
         void onMove(const QPoint& position);
 
-        QPoint convertPosUp(spActor src, spActor dest, const QPoint& pos, bool direction);
-        QPoint convertPosDown(spActor src, spActor dest, const QPoint& pos, bool direction);
+        QPoint convertPosUp(Actor* src, Actor* dest, const QPoint& pos, bool direction);
+        QPoint convertPosDown(Actor* src, Actor* dest, const QPoint& pos, bool direction);
     protected:
         QRect m_bounds{0, 0, -1, -1};
         QPoint m_dragPos;
         QPoint m_clientPos;
-        spWeakActor m_dragClient;
+        Actor* m_dragClient{nullptr};
         timeMS m_startTm{0};
         bool m_dragEnabled{true};
         bool m_noLockForMiddleButton{false};
