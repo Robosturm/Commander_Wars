@@ -5054,5 +5054,49 @@
         <file>resources/images/co/ge/co_smitan+mini.png</file>
         <file>resources/images/co/yc/co_rattigan+mini.png</file>
         <file>resources/images/co/bm/co_alexander+alt+mini.png</file>
+        <file>customTerrainImages/dor_ruin+a1.png</file>
+        <file>customTerrainImages/dor_ruin+a2.png</file>
+        <file>customTerrainImages/dor_ruin+a3.png</file>
+        <file>customTerrainImages/dor_ruin+a4.png</file>
+        <file>customTerrainImages/dor_ruin+a5.png</file>
+        <file>customTerrainImages/dor_ruin+a6.png</file>
+        <file>customTerrainImages/dor_ruin+a7.png</file>
+        <file>customTerrainImages/dor_ruin+a8.png</file>
+        <file>customTerrainImages/dor_ruin+a9.png</file>
+        <file>customTerrainImages/dor_ruin+a10.png</file>
+        <file>customTerrainImages/dor_ruin+a11.png</file>
+        <file>customTerrainImages/dor_ruin+a12.png</file>
+        <file>customTerrainImages/dor_ruin+a13.png</file>
+        <file>customTerrainImages/dor_ruin+a14.png</file>
+        <file>customTerrainImages/dor_ruin+a15.png</file>
+        <file>customTerrainImages/dor_ruin+a16.png</file>
+        <file>customTerrainImages/dor_ruin+b1.png</file>
+        <file>customTerrainImages/dor_ruin+b2.png</file>
+        <file>customTerrainImages/dor_ruin+b4.png</file>
+        <file>customTerrainImages/dor_ruin+b5.png</file>
+        <file>customTerrainImages/dor_ruin+b6.png</file>
+        <file>customTerrainImages/dor_ruin+b11.png</file>
+        <file>customTerrainImages/dor_ruin+b12.png</file>
+        <file>customTerrainImages/dor_ruin+b13.png</file>
+        <file>customTerrainImages/dor_ruin+b14.png</file>
+        <file>customTerrainImages/dor_ruin+b15.png</file>
+        <file>customTerrainImages/dor_ruin+b16.png</file>
+        <file>customTerrainImages/dor_ruin+c1.png</file>
+        <file>customTerrainImages/dor_ruin+c2.png</file>
+        <file>customTerrainImages/dor_ruin+c7.png</file>
+        <file>customTerrainImages/dor_ruin+c8.png</file>
+        <file>customTerrainImages/dor_ruin+c9.png</file>
+        <file>customTerrainImages/dor_ruin+c11.png</file>
+        <file>customTerrainImages/dor_ruin+c12.png</file>
+        <file>customTerrainImages/dor_ruin+c14.png</file>
+        <file>customTerrainImages/dor_ruin+c15.png</file>
+        <file>customTerrainImages/dor_ruin+c16.png</file>
+        <file>customTerrainImages/dor_ruin+d1.png</file>
+        <file>customTerrainImages/dor_ruin+d2.png</file>
+        <file>customTerrainImages/dor_ruin+d3.png</file>
+        <file>customTerrainImages/dor_ruin+d4.png</file>
+        <file>customTerrainImages/dor_ruin+d7_and_e3.png</file>
+        <file>customTerrainImages/dor_ruin+d8.png</file>
+        <file>customTerrainImages/dor_ruin+d9.png</file>
     </qresource>
 </RCC>
