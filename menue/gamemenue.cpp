@@ -108,7 +108,8 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
                 m_pNetworkInterface->getConnectedSockets().length() == 0)
             {
                 CONSOLE_PRINT("GameMenue starting game directly cause it's a relaunched game with no clients connected.", GameConsole::eDEBUG);
-                startGame();
+               connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
+               emit sigGameStarted();
             }
             else
             {
@@ -134,7 +135,8 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
         else
         {
             CONSOLE_PRINT("GameMenue starting game directly forced by creation flag", GameConsole::eDEBUG);
-            startGame();
+            connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
+            emit sigGameStarted();
         }
         CONSOLE_PRINT("GameMenue creating chat", GameConsole::eDEBUG);
         m_pChat = MemoryManagement::create<Chat>(pNetworkInterface, QSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight() - 100), NetworkInterface::NetworkSerives::GameChat, this);
@@ -2239,6 +2241,10 @@ void GameMenue::exitGame()
 
 void GameMenue::startGame()
 {
+    if (m_gameStarted)
+    {
+        return;
+    }
     CONSOLE_PRINT("GameMenue::startGame", GameConsole::eDEBUG);
     auto mapHash = m_pMap->getMapHash();
     if (m_pMap.get() != nullptr &&
@@ -2290,6 +2296,7 @@ void GameMenue::startGame()
                 if (pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human && !pPlayer->getIsDefeated())
                 {
                     humanAlive = true;
+                    pPlayer->setPlayerNameId(Settings::getInstance()->getUsername());
                     break;
                 }
             }
