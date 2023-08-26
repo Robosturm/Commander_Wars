@@ -15,6 +15,7 @@
 
 #include "gameinput/mapmover.h"
 
+class ActionPerformer;
 class BaseGamemenu;
 using spBaseGamemenu = std::shared_ptr<BaseGamemenu>;
 
@@ -39,7 +40,21 @@ public:
      * @return
      */
     virtual Player* getCurrentViewPlayer() const;
+    virtual ActionPerformer* getActionPerformer()
+    {
+        return nullptr;
+    }
     void registerAtInterpreter(QString name = "game");
+    /**
+     * @brief getGameStarted
+     * @return always true for singleplayer games turns true on multiplayer games once all clients have started the game
+     */
+    bool getGameStarted() const;
+    /**
+     * @brief setGameStarted
+     * @param newGameStarted
+     */
+    void setGameStarted(bool newGameStarted);
     Q_INVOKABLE GameMap* getMap() const;
     Q_INVOKABLE void centerMapOnCursor();
     Q_INVOKABLE void changeBackground(QString background);
@@ -75,6 +90,7 @@ protected:
     bool m_handlingLoaded{false};
     spGameMap m_pMap;
     QString m_jsName;
+    bool m_gameStarted{false};
 };
 
 Q_DECLARE_INTERFACE(BaseGamemenu, "BaseGamemenu");

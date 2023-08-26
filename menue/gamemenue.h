@@ -44,11 +44,6 @@ public:
      */
     void attachInterface(spNetworkInterface pNetworkInterface);
     /**
-     * @brief getGameStarted
-     * @return always true for singleplayer games turns true on multiplayer games once all clients have started the game
-     */
-    bool getGameStarted() const;
-    /**
      * @brief getGameInfoBar
      * @return
      */
@@ -86,7 +81,6 @@ public:
      * @brief doSaveMap
      */
     void doSaveMap();
-    void setGameStarted(bool newGameStarted);
     /**
      * @brief getReplayRecorder
      * @return
@@ -101,7 +95,7 @@ public:
      * @brief getActionPerformer
      * @return
      */
-    ActionPerformer &getActionPerformer();
+    virtual ActionPerformer* getActionPerformer() override;
     /**
      * @brief getIsMultiplayer
      * @param pGameAction
@@ -518,7 +512,6 @@ protected:
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};
     oxygine::spTween m_chatButtonShineTween{nullptr};
-    bool m_gameStarted{false};
     oxygine::spTextField m_CurrentRoundTime;
     bool m_SaveGame{false};
 

@@ -38,7 +38,7 @@ HumanPlayerInput::HumanPlayerInput(GameMap* pMap)
     Interpreter::setCppOwnerShip(this);
 }
 
-void HumanPlayerInput::init(GameMenue* pMenu)
+void HumanPlayerInput::init(BaseGamemenu* pMenu)
 {
     if (!m_initDone)
     {
@@ -50,11 +50,11 @@ void HumanPlayerInput::init(GameMenue* pMenu)
             connect(m_pMenu, &GameMenue::sigRightClickDown, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
             connect(m_pMenu, &GameMenue::sigRightClickUp, this, &HumanPlayerInput::rightClickUp, Qt::QueuedConnection);
             connect(m_pMenu, &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
-            connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
+            connect(pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
             connect(m_pMap, &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
             connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
             connect(m_pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
-            connect(this, &HumanPlayerInput::performAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
+            connect(this, &HumanPlayerInput::performAction, pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
             connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
             m_Fields.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
             m_FieldPoints.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
@@ -77,9 +77,7 @@ HumanPlayerInput::~HumanPlayerInput()
         m_CurrentMenu.reset();
     }
     m_pMarkedFieldData.reset();
-    m_Fields.clear();
-    m_FieldPoints.clear();
-    m_InfoFields.clear();
+    cleanUpInput();
 }
 
 void HumanPlayerInput::rightClickUp(qint32, qint32)
@@ -393,7 +391,8 @@ void HumanPlayerInput::clearMarkedFields()
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
     if (m_pMenu != nullptr &&
-        GameAnimationFactory::getAnimationCount() == 0)
+        GameAnimationFactory::getAnimationCount() == 0 &&
+        m_leftClickEnabled)
     {
         CONSOLE_PRINT("humanplayer input leftClick() with X " + QString::number(x) + " Y " + QString::number(y), GameConsole::eDEBUG);
         Cursor* pCursor = m_pMenu->getCursor();
@@ -706,8 +705,9 @@ void HumanPlayerInput::getNextStepData()
             CONSOLE_PRINT("HumanPlayerInput::getNextStepData show menu", GameConsole::eDEBUG);
             spMenuData pData = m_pGameAction->getMenuStepData();
             if (pData->validData())
-            {                
-                m_CurrentMenu = MemoryManagement::create<HumanPlayerInputMenu>(m_pMenu, m_pMap, pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
+            {
+                auto* pGameMenu = oxygine::safeCast<GameMenue*>(m_pMenu);
+                m_CurrentMenu = MemoryManagement::create<HumanPlayerInputMenu>(pGameMenu, m_pMap, pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
                 attachActionMenu(m_pGameAction->getActionTarget().x(), m_pGameAction->getActionTarget().y());
             }
         }
@@ -799,20 +799,25 @@ void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x,
     {
         data.addData(GameAction::getActionText(m_pMap, action), action, GameAction::getActionIcon(m_pMap, action));
     }
-    m_CurrentMenu = MemoryManagement::create<HumanPlayerInputMenu>(m_pMenu, m_pMap, data.getTexts(), actionIDs, data.getIconList());
+    auto* pGameMenue = oxygine::safeCast<GameMenue*>(m_pMenu);
+    if (pGameMenue != nullptr)
+    {
+        m_CurrentMenu = MemoryManagement::create<HumanPlayerInputMenu>(pGameMenue, m_pMap, data.getTexts(), actionIDs, data.getIconList());
+    }
     attachActionMenu(x, y);
 }
 
 void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
 {
-    if (m_pMenu != nullptr)
+    auto* pGameMenue = oxygine::safeCast<GameMenue*>(m_pMenu);
+    if (pGameMenue != nullptr)
     {        
         oxygine::spSlidingActorNoClipRect pMapSliding = m_pMenu->getMapSliding();
         oxygine::spActor pMapSlidingActor = m_pMenu->getMapSlidingActor();
         float posX = x * GameMap::getImageSize() * m_pMap->getZoom() + m_pMap->getX() + pMapSliding->getX() + pMapSlidingActor->getX();
-        if (posX + m_CurrentMenu->getScaledWidth() > oxygine::Stage::getStage()->getWidth() - 40 - m_pMenu->getGameInfoBar()->getScaledWidth())
+        if (posX + m_CurrentMenu->getScaledWidth() > oxygine::Stage::getStage()->getWidth() - 40 - pGameMenue->getGameInfoBar()->getScaledWidth())
         {
-            posX = oxygine::Stage::getStage()->getWidth() - m_CurrentMenu->getScaledWidth() - 40 - m_pMenu->getGameInfoBar()->getScaledWidth();
+            posX = oxygine::Stage::getStage()->getWidth() - m_CurrentMenu->getScaledWidth() - 40 - pGameMenue->getGameInfoBar()->getScaledWidth();
         }
         if (posX < 10)
         {
@@ -1238,6 +1243,16 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
     m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
     m_pMap->addChild(m_ZInformationLabel);
     zoomChanged(m_pMap->getZoom());
+}
+
+bool HumanPlayerInput::getLeftClickEnabled() const
+{
+    return m_leftClickEnabled;
+}
+
+void HumanPlayerInput::setLeftClickEnabled(bool newLeftClickEnabled)
+{
+    m_leftClickEnabled = newLeftClickEnabled;
 }
 
 void HumanPlayerInput::zoomChanged(float zoom)

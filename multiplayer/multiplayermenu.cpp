@@ -983,7 +983,7 @@ void Multiplayermenu::startRejoinedGame(qint64 syncCounter)
     CONSOLE_PRINT("Leaving Map Selection Menue and rejoining game with sync counter " + QString::number(syncCounter), GameConsole::eDEBUG);
     m_onEnterTimer.stop();
     auto window = MemoryManagement::create<GameMenue>(pMap, true, m_pNetworkInterface, true);
-    window->getActionPerformer().setSyncCounter(syncCounter);
+    window->getActionPerformer()->setSyncCounter(syncCounter);
     oxygine::Stage::getStage()->addChild(window);
 
     QString command = NetworkCommands::RECEIVEDCURRENTGAMESTATE;

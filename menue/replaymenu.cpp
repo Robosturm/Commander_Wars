@@ -31,7 +31,7 @@ ReplayMenu::ReplayMenu(QString filename)
     setIsReplay(true);
     connect(this, &ReplayMenu::sigExitReplay, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowRecordInvalid, this, &ReplayMenu::showRecordInvalid, Qt::QueuedConnection);
-    connect(&getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &ReplayMenu::nextReplayAction, Qt::QueuedConnection);
+    connect(getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &ReplayMenu::nextReplayAction, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigSwapPlay, this, &ReplayMenu::togglePlayUi, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigStartFastForward, this, &ReplayMenu::startFastForward, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigStopFastForward, this, &ReplayMenu::stopFastForward, Qt::QueuedConnection);
@@ -55,7 +55,7 @@ ReplayMenu::ReplayMenu(QString filename)
         m_HumanInput->init(this);
         m_gameStarted = true;
         CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
-        emit getActionPerformer().sigActionPerformed();
+        emit getActionPerformer()->sigActionPerformed();
     }
 }
 
@@ -121,9 +121,9 @@ void ReplayMenu::nextReplayAction()
         {            
             --m_replayCounter;
             CONSOLE_PRINT("Performing next replay action", GameConsole::eDEBUG);
-            pAction->setSyncCounter(getActionPerformer().getSyncCounter() + 1);
-            getActionPerformer().setActionRunning(false);
-            getActionPerformer().performAction(pAction);
+            pAction->setSyncCounter(getActionPerformer()->getSyncCounter() + 1);
+            getActionPerformer()->setActionRunning(false);
+            getActionPerformer()->performAction(pAction);
         }
         else
         {
@@ -276,7 +276,7 @@ void ReplayMenu::oneStep()
     {
         m_paused = false;
         m_pauseRequested = true;
-        emit getActionPerformer().sigActionPerformed();
+        emit getActionPerformer()->sigActionPerformed();
     }
 }
 
@@ -407,7 +407,7 @@ void ReplayMenu::swapPlay()
     {
         CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
         m_paused = false;
-        emit getActionPerformer().sigActionPerformed();
+        emit getActionPerformer()->sigActionPerformed();
     }
     else
     {
@@ -445,7 +445,7 @@ void ReplayMenu::startFastForward()
 {
     QMutexLocker locker(&m_replayMutex);
     m_storedSeekingAnimationSettings.startSeeking();
-    getActionPerformer().skipAnimations(false);
+    getActionPerformer()->skipAnimations(false);
 }
 
 void ReplayMenu::stopFastForward()

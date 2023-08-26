@@ -6,6 +6,8 @@
 
 #include "menue/basegamemenu.h"
 
+#include "gameinput/humanplayerinput.h"
+
 #include "objects/dialogs/editor/mapeditdialog.h"
 #include "objects/editorselection.h"
 #include "objects/base/topbar.h"
@@ -424,6 +426,7 @@ private:
     bool m_gridVisible{false};
     bool m_middleCrossGridVisible{false};
     QTimer m_autosaveTimer;
+    spHumanPlayerInput m_HumanInput;
 };
 
 Q_DECLARE_INTERFACE(EditorMenue, "EditorMenue");

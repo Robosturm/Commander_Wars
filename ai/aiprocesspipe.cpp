@@ -93,9 +93,9 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         m_pipeState = PipeState::PreparingGame;
         m_pMenu = pMenu->getWeakPtr();
         m_pMap = pMenu->getMap();
-        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToSlave, Qt::QueuedConnection);
-        connect(this, &AiProcessPipe::sigPerformAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
-        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
+        connect(pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToSlave, Qt::QueuedConnection);
+        connect(this, &AiProcessPipe::sigPerformAction, pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
+        connect(pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
         QString command = QString(STARTGAME);
         CONSOLE_PRINT("AI-Pipe sending command " + command, GameConsole::eDEBUG);
         auto seed = GlobalUtils::getSeed();
@@ -275,15 +275,15 @@ void AiProcessPipe::onStartGame(QDataStream & stream)
         m_pMenu = pMenu->getWeakPtr();
         m_pipeState = PipeState::Ingame;
         QString command = QString(GAMESTARTED);
-        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToMaster, Qt::QueuedConnection);
+        connect(pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToMaster, Qt::QueuedConnection);
         CONSOLE_PRINT("AI-Pipe sending command " + command +  " current player=" + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), GameConsole::eDEBUG);
         QByteArray data;
         QDataStream outStream(&data, QIODevice::WriteOnly);
         outStream.setVersion(QDataStream::Version::Qt_6_5);
         outStream << command;
         emit m_pActiveConnection->sig_sendData(0, data, NetworkInterface::NetworkSerives::AiPipe, false);
-        connect(this, &AiProcessPipe::sigPerformAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
-        connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
+        connect(this, &AiProcessPipe::sigPerformAction, pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
+        connect(pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
     }
     else
     {

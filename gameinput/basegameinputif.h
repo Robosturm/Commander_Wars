@@ -12,7 +12,7 @@
 class GameMap;
 class Player;
 class GameAction;
-class GameMenue;
+class BaseGamemenu;
 class BaseGameInputIF;
 using spBaseGameInputIF = std::shared_ptr<BaseGameInputIF>;
 
@@ -22,7 +22,7 @@ class BaseGameInputIF : public QObject, public FileSerializable
 public:
     void setPlayer(Player* pPlayer);
 
-    virtual void init(GameMenue* pMenu) = 0;
+    virtual void init(BaseGamemenu* pMenu) = 0;
     virtual void onGameStart();
     static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input, GameEnums::AiTypes aiType);
 
@@ -97,7 +97,7 @@ protected:
      */
     std::vector<std::vector<std::tuple<qint32, bool>>> m_MoveCostMap;
     GameMap* m_pMap{nullptr};
-    GameMenue* m_pMenu{nullptr};
+    BaseGamemenu* m_pMenu{nullptr};
     bool m_initDone{false};
     bool m_processing{false};
 };

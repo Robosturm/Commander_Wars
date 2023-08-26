@@ -44,7 +44,7 @@ public:
     explicit HumanPlayerInput(GameMap* pMap);
     virtual ~HumanPlayerInput();
 
-    virtual void init(GameMenue* pMenu) override;
+    virtual void init(BaseGamemenu* pMenu) override;
     /**
      * @brief deleteArrow deletes the current unit path arrow
      */
@@ -168,6 +168,9 @@ public:
     Q_INVOKABLE void performBasicAction(QString action);
     Q_INVOKABLE void showInfoMenu(qint32 x, qint32 y);
 
+    bool getLeftClickEnabled() const;
+    void setLeftClickEnabled(bool newLeftClickEnabled);
+
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -234,6 +237,7 @@ private:
     QPoint m_lastClickPoint;
     QPoint m_lastCursorPosition;
     bool m_showVisionFields;
+    bool m_leftClickEnabled{true};
 };
 
 #endif // HUMANPLAYERINPUT_H

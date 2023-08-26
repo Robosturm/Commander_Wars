@@ -22,7 +22,7 @@ VictoryRulePopup::VictoryRulePopup(GameMap* pMap, QString rule, qint32 width, qi
         GameMenue* pMenu = dynamic_cast<GameMenue*>(pMap->getMenu());
         if (pMenu != nullptr)
         {
-            connect(&pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &VictoryRulePopup::updateInfo, Qt::QueuedConnection);
+            connect(pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &VictoryRulePopup::updateInfo, Qt::QueuedConnection);
         }
     }
     updateInfo();

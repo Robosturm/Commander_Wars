@@ -30,7 +30,7 @@ void ProxyAi::readIni(QString)
 {
 }
 
-void ProxyAi::init(GameMenue* pMenu)
+void ProxyAi::init(BaseGamemenu* pMenu)
 {
     if (!m_initDone)
     {
@@ -44,8 +44,9 @@ void ProxyAi::init(GameMenue* pMenu)
         }
         m_initDone = true;
         m_pMenu = pMenu;
-        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-        connect(this, &CoreAI::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
+        m_pGameMenue = oxygine::safeCast<GameMenue*>(pMenu);
+        connect(m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+        connect(this, &CoreAI::sigPerformAction, m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
     }
 }
 
@@ -102,8 +103,8 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
             spGameAction pAction = MemoryManagement::create<GameAction>(m_pMap);
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);
-            if (m_pMenu != nullptr &&
-                !m_pMenu->getActionRunning() &&
+            if (m_pGameMenue != nullptr &&
+                !m_pGameMenue->getActionRunning() &&
                 m_pPlayer == m_pMap->getCurrentPlayer())
             {
                 if (verifyActionStack())
@@ -122,7 +123,7 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
 void ProxyAi::doNextAction()
 {
     spGameAction pAction = m_ActionBuffer.front();
-    if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
+    if (pAction->getSyncCounter() == m_pGameMenue->getSyncCounter() + 1)
     {
         CONSOLE_PRINT("Proxy ai emitting action " + pAction->getActionID() + " for player " + QString::number(m_pPlayer->getPlayerID()) +
                           " current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
@@ -136,7 +137,7 @@ void ProxyAi::onInvalidStack()
 {
     CONSOLE_PRINT("Invalid action stack found", GameConsole::eDEBUG);
     m_ActionBuffer.clear();
-    m_pMenu->doResyncGame();
+    m_pGameMenue->doResyncGame();
 }
 
 bool ProxyAi::verifyActionStack()
@@ -146,9 +147,9 @@ bool ProxyAi::verifyActionStack()
     {
         if (m_pPlayer == m_pMap->getCurrentPlayer() &&
             m_ActionBuffer.size() > 0 &&
-            m_pMenu->getActionRunning())
+            m_pGameMenue->getActionRunning())
         {
-            valid = m_ActionBuffer[0]->getSyncCounter() == m_pMenu->getSyncCounter() + 1;
+            valid = m_ActionBuffer[0]->getSyncCounter() == m_pGameMenue->getSyncCounter() + 1;
         }
         for (qint32 i = 0; i < m_ActionBuffer.size() - 1 && valid; ++i)
         {
@@ -161,8 +162,8 @@ bool ProxyAi::verifyActionStack()
 void ProxyAi::nextAction()
 {
     QMutexLocker locker(&m_ActionMutex);
-    if (m_pMenu != nullptr &&
-        !m_pMenu->getActionRunning() &&
+    if (m_pGameMenue != nullptr &&
+        !m_pGameMenue->getActionRunning() &&
         m_pPlayer == m_pMap->getCurrentPlayer())
     {
         if (verifyActionStack())

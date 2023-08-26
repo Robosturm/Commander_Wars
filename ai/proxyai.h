@@ -10,6 +10,7 @@
 
 #include "network/NetworkInterface.h"
 
+class GameMenue;
 class ProxyAi;
 using spProxyAi = std::shared_ptr<ProxyAi>;
 
@@ -50,7 +51,7 @@ public:
     /**
      * @brief init
      */
-    virtual void init(GameMenue* pMenu) override;
+    virtual void init(BaseGamemenu* pMenu) override;
 public slots:
     virtual void nextAction() override;
     void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
@@ -70,6 +71,7 @@ private:
 private:
     QList<spGameAction> m_ActionBuffer;
     QMutex m_ActionMutex;
+    GameMenue* m_pGameMenue{nullptr};
 };
 
 #endif // PROXYAI_H

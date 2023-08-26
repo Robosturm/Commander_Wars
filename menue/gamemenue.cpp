@@ -165,7 +165,6 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
 GameMenue::GameMenue(QString map, bool saveGame)
     : BaseGamemenu(-1, -1, map, saveGame),
       m_ReplayRecorder(m_pMap.get()),
-      m_gameStarted(false),
       m_SaveGame(saveGame),
       m_actionPerformer(m_pMap.get(), this)
 {
@@ -1521,9 +1520,9 @@ void GameMenue::showChat()
     m_ChatButton->setAddColor(0, 0, 0, 0);
 }
 
-ActionPerformer &GameMenue::getActionPerformer()
+ActionPerformer* GameMenue::getActionPerformer()
 {
-    return m_actionPerformer;
+    return &m_actionPerformer;
 }
 
 NetworkInterface* GameMenue::getNetworkInterface()
@@ -1534,11 +1533,6 @@ NetworkInterface* GameMenue::getNetworkInterface()
 ReplayRecorder &GameMenue::getReplayRecorder()
 {
     return m_ReplayRecorder;
-}
-
-void GameMenue::setGameStarted(bool newGameStarted)
-{
-    m_gameStarted = newGameStarted;
 }
 
 bool GameMenue::getSaveAllowed() const
@@ -1577,11 +1571,6 @@ void GameMenue::updateTimer()
         }
         m_CurrentRoundTime->setHtmlText(QTime::fromMSecsSinceStartOfDay(roundTime).toString("hh:mm:ss"));
     }
-}
-
-bool GameMenue::getGameStarted() const
-{
-    return m_gameStarted;
 }
 
 void GameMenue::editFinishedCanceled()

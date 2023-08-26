@@ -96,15 +96,15 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     CONSOLE_PRINT("Creating core ai", GameConsole::eDEBUG);
 }
 
-void CoreAI::init(GameMenue* pMenu)
+void CoreAI::init(BaseGamemenu* pMenu)
 {
     if (!m_initDone)
     {
         CONSOLE_PRINT("CoreAI::init", GameConsole::eDEBUG);
         m_initDone = true;
         m_pMenu = pMenu;
-        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-        connect(this, &CoreAI::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
+        connect(m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+        connect(this, &CoreAI::sigPerformAction, m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
         resetMoveMap();
     }
 }

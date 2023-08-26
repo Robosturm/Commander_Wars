@@ -245,9 +245,10 @@ void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
         {
             if (pAction != nullptr)
             {
-                if (m_pMenu != nullptr)
+                if (m_pMenu != nullptr &&
+                    m_pMenu->getActionPerformer() != nullptr)
                 {
-                    m_pMenu->getActionPerformer().centerMapOnAction(pAction);
+                    m_pMenu->getActionPerformer()->centerMapOnAction(pAction);
                 }
             }
             else

@@ -186,7 +186,7 @@ public:
     /**
      * @brief init
      */
-    virtual void init(GameMenue* pMenu) override;
+    virtual void init(BaseGamemenu* pMenu) override;
     /**
      * @brief onGameStart
      */

@@ -199,6 +199,10 @@ EditorMenue::EditorMenue()
     connect(m_EditorSelection.get(), &EditorSelection::sigSelectionChanged, this, &EditorMenue::selectionChanged, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigResizeMap, this, &EditorMenue::resizeMap, Qt::QueuedConnection);
 
+    m_HumanInput = MemoryManagement::create<HumanPlayerInput>(m_pMap.get());
+    m_HumanInput->init(this);
+    m_HumanInput->setLeftClickEnabled(false);
+
     // clean up temp folder
     QDir dir("temp/");
     dir.removeRecursively();

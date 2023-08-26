@@ -500,3 +500,13 @@ void BaseGamemenu::updateSlidingActorSize()
         m_mapSlidingActor->setPosition(x, y);
     }
 }
+
+void BaseGamemenu::setGameStarted(bool newGameStarted)
+{
+    m_gameStarted = newGameStarted;
+}
+
+bool BaseGamemenu::getGameStarted() const
+{
+    return m_gameStarted;
+}
