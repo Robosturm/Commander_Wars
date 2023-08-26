@@ -125,6 +125,11 @@ public:
      * @return
      */
     Q_INVOKABLE bool getUsesCampaignMap();
+    /**
+     * @brief onCampaignMapSelected
+     */
+    Q_INVOKABLE void onCampaignMapSelected(GameMap* pMap, const QString & filePath);
+
 private:
     QString m_script;
     QString m_scriptFile;

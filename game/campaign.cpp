@@ -221,6 +221,15 @@ void Campaign::getCampaignMapData(CampaignMapData & pCampaignMapData)
     pInterpreter->doFunction(Campaign::scriptName, "getCampaignMapData", args);
 }
 
+void Campaign::onCampaignMapSelected(GameMap* pMap, const QString & filePath)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pMap),
+                       filePath});
+    pInterpreter->doFunction(Campaign::scriptName, "onCampaignMapSelected", args);
+}
+
 void Campaign::serializeObject(QDataStream& pStream) const
 {
     serializeObject(pStream, false);
@@ -254,3 +263,4 @@ void Campaign::deserializeObject(QDataStream& pStream)
     m_Variables.deserializeObject(pStream);
 
 }
+

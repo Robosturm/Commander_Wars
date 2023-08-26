@@ -69,5 +69,8 @@ var BASECAMPAIGN =
     },
     getCampaignMapData : function(campaign, data)
     {
+    },
+    onCampaignMapSelected : function(campaign, map, fileName)
+    {
     }
 };

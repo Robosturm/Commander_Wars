@@ -12,6 +12,7 @@
 
 #include "game/gamemap.h"
 #include "game/gamescript.h"
+#include "game/gameanimation/gameanimationfactory.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
@@ -394,6 +395,13 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
             }
             pMapInfo->setX(xPos);
             m_pMapBackground->addChild(pMapInfo);
+            m_pMapSelectionView->loadCurrentMap();
+            spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+            if (pMap.get() != nullptr)
+            {
+                spCampaign pCampaign = m_pMapSelectionView->getCurrentCampaign();
+                pCampaign->onCampaignMapSelected(pMap.get(), info.fileName());
+            }
         }
         else
         {
@@ -407,6 +415,13 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
         m_pMapSelectionView->getBuildingBackground()->detach();
         m_pMapSelectionView->getMinimapPanel()->detach();
         m_pMapSelectionView->getMapInfo()->detach();
+        m_pMapSelectionView->loadCurrentMap();
+        spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+        if (pMap.get() != nullptr)
+        {
+            spCampaign pCampaign = m_pMapSelectionView->getCurrentCampaign();
+            pCampaign->onCampaignMapSelected(pMap.get(), info.fileName());
+        }
     }
 }
 
@@ -480,9 +495,9 @@ void CampaignMenu::mapSelectionItemChanged(QString item)
 void CampaignMenu::slotButtonNext()
 {
     Mainapp::getInstance()->getAudioManager()->playSound("moveOut.wav");
-    m_pMapSelectionView->loadCurrentMap();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    if (pMap.get() != nullptr)
+    if (pMap.get() != nullptr &&
+        GameAnimationFactory::getAnimationCount() == 0)
     {
         if (pMap->getGameScript()->immediateStart())
         {
