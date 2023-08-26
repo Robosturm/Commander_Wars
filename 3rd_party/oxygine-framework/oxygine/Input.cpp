@@ -52,8 +52,10 @@ namespace oxygine
             ps->m_pressed &= ~(1 << button);
         }
         ps->m_position = p;
-
-        stage->handleEvent(&me);
+        if (stage != nullptr)
+        {
+            stage->handleEvent(&me);
+        }
 
         if (type == TouchEvent::TOUCH_UP)
         {
@@ -72,7 +74,10 @@ namespace oxygine
         me.index = ps->getIndex();
         me.pressure = pressure;
         ps->m_position = QPoint(x, y);
-        stage->handleEvent(&me);
+        if (stage != nullptr)
+        {
+            stage->handleEvent(&me);
+        }
     }
 
     void Input::sendPointerWheelEvent(spStage & stage, const QPoint& dir, PointerState* ps)
@@ -80,7 +85,10 @@ namespace oxygine
         TouchEvent te(TouchEvent::WHEEL_DIR, true, ps->getPosition());
         te.index = ps->getIndex();
         te.wheelDirection = dir;
-        stage->handleEvent(&te);
+        if (stage != nullptr)
+        {
+            stage->handleEvent(&te);
+        }
     }
 
     void Input::cleanup()

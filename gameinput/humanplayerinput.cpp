@@ -77,7 +77,7 @@ HumanPlayerInput::~HumanPlayerInput()
         m_CurrentMenu.reset();
     }
     m_pMarkedFieldData.reset();
-    cleanUpInput();
+    cleanUpInput(true);
 }
 
 void HumanPlayerInput::rightClickUp(qint32, qint32)
@@ -334,7 +334,7 @@ void HumanPlayerInput::syncMarkedFields()
 #endif
 }
 
-void HumanPlayerInput::cleanUpInput()
+void HumanPlayerInput::cleanUpInput(bool inDestructor)
 {
     CONSOLE_PRINT("HumanPlayerInput::cleanUpInput", GameConsole::eDEBUG);
     clearMenu();
@@ -343,12 +343,15 @@ void HumanPlayerInput::cleanUpInput()
     m_showVisionFields = false;
     clearMarkedFields();
     deleteArrow();
-    if (m_pMenu != nullptr)
+    if (!inDestructor && m_pMenu != nullptr)
     {
         Cursor* pCursor = m_pMenu->getCursor();
-        pCursor->changeCursor("cursor+default");
-        pCursor->resetCursorRangeOutline();
-        cursorMoved(pCursor->getMapPointX(), pCursor->getMapPointY());
+        if (pCursor != nullptr)
+        {
+            pCursor->changeCursor("cursor+default");
+            pCursor->resetCursorRangeOutline();
+            cursorMoved(pCursor->getMapPointX(), pCursor->getMapPointY());
+        }
     }
 }
 

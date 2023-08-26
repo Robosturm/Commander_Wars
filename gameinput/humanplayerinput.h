@@ -99,7 +99,7 @@ public:
     /**
      * @brief cleanUpInput resets all internal data
      */
-    void cleanUpInput();
+    void cleanUpInput(bool inDestructor = false);
     /**
      * @brief HumanPlayerInput::showAttackableFields
      * @param x

@@ -230,6 +230,7 @@ void EditorMenue::onEnter()
 EditorMenue::~EditorMenue()
 {
     cleanTemp(-1);
+
 }
 
 void EditorMenue::cleanTemp(qint32 step)
