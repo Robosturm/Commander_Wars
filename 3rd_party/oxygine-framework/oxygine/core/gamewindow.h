@@ -47,10 +47,6 @@ public:
          */
     void pauseRendering()
     {
-        if (!isWorker())
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "pauseRendering not started by worker thread");
-        }
         if (!isMainThread())
         {
             if (m_pausedCounter == 0)
@@ -65,10 +61,6 @@ public:
          */
     void continueRendering()
     {
-        if (!isWorker())
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "continueRendering not started by worker thread");
-        }
         if (!isMainThread())
         {
             --m_pausedCounter;

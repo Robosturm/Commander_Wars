@@ -3,12 +3,6 @@
 #include <chrono>
 #include <QtGlobal>
 
-#ifdef GAMEDEBUG
-#define OXY_ASSERT(check) Q_ASSERT(check)
-#else
-#define OXY_ASSERT(check)
-#endif
-
 namespace oxygine
 {
     using timeMS = std::chrono::milliseconds;

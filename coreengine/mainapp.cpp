@@ -23,8 +23,8 @@
 
 #include "objects/loadingscreen.h"
 
-#include "network/mainserver.h"
 #include "network/tcpclient.h"
+#include "network/mainserver.h"
 
 #include "menue/basegamemenu.h"
 
@@ -72,7 +72,6 @@ Mainapp::Mainapp()
     MemoryManagement::getInstance().moveToThread(QThread::currentThread());
     m_Workerthread = MemoryManagement::create<QThread>();
     m_Networkthread = MemoryManagement::create<QThread>();
-    m_GameServerThread = MemoryManagement::create<QThread>();
     m_aiSubProcess = MemoryManagement::create<QProcess>();
 #ifdef AUDIOSUPPORT
     m_audioThread = MemoryManagement::create<QThread>();
@@ -81,7 +80,6 @@ Mainapp::Mainapp()
 #ifdef GRAPHICSUPPORT
     m_Workerthread->setObjectName("Workerthread");
     m_Networkthread->setObjectName("Networkthread");
-    m_GameServerThread->setObjectName("GameServerThread");
 #endif
     m_Worker = MemoryManagement::create<WorkerThread>();
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
@@ -412,18 +410,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_Workerthread->setObjectName("WorkerThread");
 #endif
             m_Networkthread->start(QThread::Priority::NormalPriority);
-#ifdef GRAPHICSUPPORT
-            if (!m_noUi)
-            {
-                m_Workerthread->start(QThread::Priority::HighestPriority);
-            }
-            else
-            {
-                m_Workerthread->start(QThread::Priority::NormalPriority);
-            }
-#else
-            m_Workerthread->start(QThread::Priority::NormalPriority);
-#endif
+            m_Workerthread->start(QThread::Priority::HighestPriority);
             redrawUi();
             if (!m_noUi)
             {
@@ -468,24 +455,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                     CONSOLE_PRINT("Launching ai subprocess: " + program + " " +  args.join(" "), GameConsole::eDEBUG);
                     m_aiSubProcess->setObjectName("AiSubprocess");
                     m_aiSubProcess->start(program, args);
-                }
-                // only launch the server if the rest is ready for it ;)
-                if (Settings::getInstance()->getServer() && !m_slave)
-                {
-                    MainServer::getInstance();
-#ifdef GRAPHICSUPPORT
-                    if (m_noUi)
-                    {
-                        m_GameServerThread->start(QThread::Priority::HighestPriority);
-                    }
-                    else
-                    {
-                        m_GameServerThread->start(QThread::Priority::NormalPriority);
-                    }
-#else
-                    m_GameServerThread->start(QThread::Priority::HighestPriority);
-#endif
-                }
+                }               
                 if (m_slave && m_initScript.isEmpty())
                 {
                     emit m_Worker->sigStartSlaveGame();
@@ -751,11 +721,6 @@ bool Mainapp::getNoUi() const
     return m_noUi;
 }
 
-QThread* Mainapp::getGameServerThread()
-{
-    return getInstance()->m_GameServerThread.get();
-}
-
 bool Mainapp::getSlave()
 {
     return m_slave;
@@ -900,6 +865,11 @@ void Mainapp::onQuit()
     }
     if (m_Workerthread->isRunning())
     {
+        if (MainServer::exists())
+        {
+            CONSOLE_PRINT("Shutting down game server", GameConsole::eDEBUG);
+            MainServer::getInstance()->release();
+        }
         m_Workerthread->quit();
         while (!m_Workerthread->wait(1))
         {
@@ -928,20 +898,6 @@ void Mainapp::onQuit()
     {
         m_Networkthread->quit();
         while (!m_Networkthread->wait(1))
-        {
-            QCoreApplication::processEvents();
-        }
-    }
-    QCoreApplication::processEvents();
-    CONSOLE_PRINT("Shutting down game server", GameConsole::eDEBUG);
-    if (m_GameServerThread->isRunning())
-    {
-        if (MainServer::exists())
-        {
-            MainServer::getInstance()->release();
-        }
-        m_GameServerThread->quit();
-        while (!m_GameServerThread->wait(1))
         {
             QCoreApplication::processEvents();
         }

@@ -136,11 +136,6 @@ public:
      */
     static void setSlave(bool slave);
     /**
-     * @brief getGameServer
-     * @return
-     */
-    static QThread* getGameServerThread();
-    /**
      * @brief qsTr
      * @param text
      * @return
@@ -330,7 +325,6 @@ private:
     QMutex m_crashMutex;
     std::shared_ptr<QThread> m_Workerthread;
     std::shared_ptr<QThread> m_Networkthread;
-    std::shared_ptr<QThread> m_GameServerThread;
     std::shared_ptr<QThread> m_audioThread;
     std::shared_ptr<QProcess> m_aiSubProcess;
     std::shared_ptr<WorkerThread> m_Worker;

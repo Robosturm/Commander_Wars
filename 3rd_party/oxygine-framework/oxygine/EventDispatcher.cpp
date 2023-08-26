@@ -37,7 +37,7 @@ namespace oxygine
 
     qint32 EventDispatcher::addEventListenerWithId(eventType et, const EventCallback & cb)
     {
-        OXY_ASSERT(!requiresThreadChange());
+        Q_ASSERT(!requiresThreadChange());
         m_lastID++;
         listener ls;
         ls.type = et;
@@ -107,7 +107,7 @@ namespace oxygine
         {
             return;
         }
-        OXY_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
         if (!event->target)
         {
             event->target = getSharedPtr<EventDispatcher>();

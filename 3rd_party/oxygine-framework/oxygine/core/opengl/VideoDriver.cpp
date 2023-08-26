@@ -272,7 +272,7 @@ namespace oxygine
 
     void VideoDriver::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, qint32 primitives)
     {
-        OXY_ASSERT(primitives > 0);
+        Q_ASSERT(primitives > 0);
         GameWindow* window = oxygine::GameWindow::getWindow();
         const unsigned char* vData = reinterpret_cast<const unsigned char*>(verticesData);
         for (const auto & el : decl->m_elements)

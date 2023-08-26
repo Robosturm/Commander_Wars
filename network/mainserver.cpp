@@ -109,7 +109,6 @@ MainServer::MainServer()
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(javascriptName, pInterpreter->newQObject(this));
     Mainapp* pApp = Mainapp::getInstance();
-    connect(this, &MainServer::sigExecuteServerScript, pApp->getWorker(), &WorkerThread::executeServerScript, NetworkCommands::UNIQUE_DATA_CONNECTION);
     // connect signals for tcp server events
     connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     connect(m_pGameServer.get(), &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
@@ -134,7 +133,7 @@ MainServer::MainServer()
         emit m_pGameServer->sig_connect(Settings::getInstance()->getServerListenAdress(), Settings::getInstance()->getServerPort(), Settings::getInstance()->getServerSecondaryListenAdress());
         emit m_pSlaveServer->sig_connect(Settings::getInstance()->getSlaveListenAdress(), Settings::getInstance()->getSlaveServerPort(), "");
     }
-    moveToThread(Mainapp::getGameServerThread());
+    moveToThread(Mainapp::getWorkerthread());
 }
 
 MainServer::~MainServer()
@@ -1078,7 +1077,18 @@ void MainServer::cleanUpSuspendedGames(QVector<SuspendedSlaveInfo> & games)
 
 void MainServer::executeScript()
 {
-    emit sigExecuteServerScript();
+    const char* const SCRIPTFILE = "serverScript.js";
+    if (QFile::exists(SCRIPTFILE))
+    {
+        CONSOLE_PRINT("WorkerThread::executeServerScript loading server script" + QString(SCRIPTFILE), GameConsole::eDEBUG);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        if (pInterpreter->openScript(SCRIPTFILE, false))
+        {
+            QFile::remove(SCRIPTFILE);
+            CONSOLE_PRINT("Executing server script", GameConsole::eDEBUG);
+            pInterpreter->doFunction("serverScript");
+        }
+    }
 }
 
 void MainServer::closeGame(NetworkGame* pGame)

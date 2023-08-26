@@ -227,7 +227,7 @@ namespace oxygine
         {
             return;
         }
-        OXY_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
         handleEventImpl(event);
     }
 

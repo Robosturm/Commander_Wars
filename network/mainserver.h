@@ -170,7 +170,6 @@ public:
 signals:
     void sigRemoveGame(NetworkGame* pGame);
     void sigStartRemoteGame(QString initScript, QString id);
-    void sigExecuteServerScript();
 public slots:
     /**
      * @brief recieveData we received data from

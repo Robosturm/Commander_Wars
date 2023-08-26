@@ -17,6 +17,7 @@
 #include <QTextStream>
 #include <QThread>
 
+QThread* Interpreter::m_pOwner{nullptr};
 spInterpreter Interpreter::m_pInstance{nullptr};
 QString Interpreter::m_runtimeData;
 
@@ -24,6 +25,7 @@ Interpreter* Interpreter::createInstance()
 {
     if (m_pInstance.get() == nullptr)
     {
+        m_pOwner = QThread::currentThread();
         m_pInstance = MemoryManagement::create<Interpreter>();
         m_pInstance->init();
     }

@@ -24,7 +24,7 @@ namespace oxygine
         {
             case ep_show_error:
                 CONSOLE_PRINT(message, GameConsole::eERROR);
-                OXY_ASSERT(false);
+                Q_ASSERT(false);
                 break;
             case ep_show_warning:
                 CONSOLE_PRINT_MODULE(message, GameConsole::eWARNING, module);
@@ -33,7 +33,7 @@ namespace oxygine
                 CONSOLE_PRINT_MODULE(message, GameConsole::eDEBUG, module);
                 break;
             default:
-                OXY_ASSERT(!"not implemented");
+                Q_ASSERT(!"not implemented");
         }
     }
 }

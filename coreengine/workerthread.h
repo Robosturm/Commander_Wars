@@ -19,7 +19,6 @@ public slots:
     void showMainwindow();
     void startSlaveGame();
     void onQuit();
-    void executeServerScript();
 private:
     bool m_started{false};
 };

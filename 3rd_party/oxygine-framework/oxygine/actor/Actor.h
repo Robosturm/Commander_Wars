@@ -90,17 +90,17 @@ namespace oxygine
 
         children & getChildren()
         {
-            OXY_ASSERT(!requiresThreadChange());
+            Q_ASSERT(!requiresThreadChange());
             return m_children;
         }
         oxygine::spActor getFirstChild()
         {
-            OXY_ASSERT(!requiresThreadChange());
+            Q_ASSERT(!requiresThreadChange());
             return m_children.front();
         }
         oxygine::spActor getLastChild()
         {
-            OXY_ASSERT(!requiresThreadChange());
+            Q_ASSERT(!requiresThreadChange());
             return m_children.back();
         }
 

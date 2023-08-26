@@ -33,6 +33,8 @@
 #include "resource_management/uimanager.h"
 #include "wiki/wikidatabase.h"
 
+#include "network/mainserver.h"
+
 #include "objects/loadingscreen.h"
 
 #include "ui_reader/uifactory.h"
@@ -152,6 +154,11 @@ void WorkerThread::start()
             pInterpreter->openScript("init.js", true);
         }
     }
+    // only launch the server if the rest is ready for it ;)
+    if (Settings::getInstance()->getServer() && !pApp->getSlave())
+    {
+        MainServer::getInstance();
+    }
     pLoadingScreen->hide();
     m_started = true;
     CONSOLE_PRINT("WorkerThread::start Finalizing", GameConsole::eDEBUG);
@@ -209,20 +216,4 @@ void WorkerThread::startSlaveGame()
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     Mainapp::getInstance()->getParser().startSlaveGame();
-}
-
-void WorkerThread::executeServerScript()
-{
-    const char* const SCRIPTFILE = "serverScript.js";
-    if (QFile::exists(SCRIPTFILE))
-    {
-        CONSOLE_PRINT("WorkerThread::executeServerScript loading server script" + QString(SCRIPTFILE), GameConsole::eDEBUG);
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        if (pInterpreter->openScript(SCRIPTFILE, false))
-        {
-            QFile::remove(SCRIPTFILE);
-            CONSOLE_PRINT("Executing server script", GameConsole::eDEBUG);
-            pInterpreter->doFunction("serverScript");
-        }
-    }
 }

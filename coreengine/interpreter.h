@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QQmlEngine>
 #include <QVector>
+#include <QThread>
 #include <QCoreApplication>
 
 class Interpreter;
@@ -18,6 +19,7 @@ class Interpreter final : public QQmlEngine
 public:
     static Interpreter* getInstance()
     {
+        Q_ASSERT(m_pOwner == QThread::currentThread());
         return m_pInstance.get();
     }
     static Interpreter* createInstance();
@@ -193,6 +195,7 @@ private:
     qint32 m_inJsCall{0};
     std::vector<std::shared_ptr<QObject>> m_jsObjects;
     qint32 m_jsCallCount{0};
+    static QThread* m_pOwner;
 };
 
 #endif // INTERPRETER_H
