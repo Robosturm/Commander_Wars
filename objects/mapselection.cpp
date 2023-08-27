@@ -27,75 +27,24 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
     connect(&m_itemChangedTimer, &QTimer::timeout, this, &MapSelection::itemChangeTimerExpired, Qt::QueuedConnection);
     connect(this, &MapSelection::sigStartItemChangeTimer, this, &MapSelection::startItemChangeTimer, Qt::QueuedConnection);
 
-    oxygine::spButton pArrowUp = MemoryManagement::create<oxygine::Button>();
-    oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
-
-    pArrowUp->setResAnim(pAnim);
-    pArrowUp->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    pArrowUp->setFlippedY(true);
-    auto* pPtrArrowUp = pArrowUp.get();
-    pArrowUp->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
-    {
-        pPtrArrowUp->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
-    });
-    pArrowUp->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
-    {
-        pPtrArrowUp->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
-    });
-    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event*)
-    {
-        m_spin = -1;
-        m_timer.start();
-        emit changeSelection(m_currentStartIndex - 1);
-    });
-    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event*)
-    {
-        m_spin = 0;
-    });
-    pArrowUp->setScaleX(4.0f);
-    if (pAnim != nullptr)
-    {
-        pArrowUp->setPosition(width / 2 - pAnim->getWidth() * 2, 0);
-    }
-    addChild(pArrowUp);
-
-    qint32 arrowHeigth = 0;
-    if (pAnim != nullptr)
-    {
-        arrowHeigth = static_cast<qint32>(pAnim->getHeight());
-    }
-    qint32 y = arrowHeigth + 5;
+    qint32 y = 5;
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
-    pAnim = pObjectManager->getResAnim("mapSelectionTop");
-    oxygine::spBox9Sprite pBackground = MemoryManagement::create<oxygine::Box9Sprite>();
-    pBackground->setResAnim(pAnim);
-    if (pAnim != nullptr)
-    {
-        pBackground->setSize(width, pAnim->getHeight());
-    }
-    pBackground->setPosition(0, y);
-    if (pAnim != nullptr)
-    {
-        y += pAnim->getHeight();
-    }
-    addChild(pBackground);
 
     m_itemCount = 1;
-    if (pAnim != nullptr && m_itemHeigth > 0)
+    if (m_itemHeigth > 0)
     {
-        m_itemCount = (heigth - 25 - 2 * static_cast<qint32>(pAnim->getHeight()) - arrowHeigth * 2) / m_itemHeigth;
+        m_itemCount = (heigth - 25) / m_itemHeigth;
     }
     createItemContainer(y, width, m_itemHeigth * m_itemCount);
 
-    pAnim = pObjectManager->getResAnim("mapSelectionSelectedMap");
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("mapSelectionSelectedMap");
     m_SelectedItem = MemoryManagement::create<oxygine::Box9Sprite>();
     m_SelectedItem->setResAnim(pAnim);
-    m_SelectedItem->setSize(width - 12, m_itemHeigth);
+    m_SelectedItem->setSize(m_ItemContainer->getContentWidth() - 60, m_itemHeigth);
     m_SelectedItem->setPosition(5, y);
     m_SelectedItem->setPriority(1);
-    m_ItemContainer->addChild(m_SelectedItem);
     m_SelectedItem->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         if (!m_wasMoveScrolling)
@@ -108,160 +57,16 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
             m_wasMoveScrolling = false;
         }
     });
-
-    for (qint32 i = 0; i < m_itemCount; i++)
-    {
-        pAnim = pObjectManager->getResAnim("mapSelectionItem");
-        pBackground = MemoryManagement::create<oxygine::Box9Sprite>();
-        pBackground->setResAnim(pAnim);
-        pBackground->setSize(width, m_itemHeigth);
-        pBackground->setPosition(0, y - m_ItemContainer->getY());
-        oxygine::spClipRectActor pClipActor = MemoryManagement::create<oxygine::ClipRectActor>();
-        pBackground->addChild(pClipActor);
-        oxygine::spTextField pTextfield = MemoryManagement::create<oxygine::TextField>();
-        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-        style.multiline = false;
-        pTextfield->setStyle(style);
-        pTextfield->setHtmlText("");
-        pTextfield->setY(2);
-        pClipActor->addChild(pTextfield);
-        pClipActor->setX(10);
-        pClipActor->setSize(width - 20, m_itemHeigth);
-        m_ItemContainer->addChild(pBackground);
-        m_Items.append(pTextfield);
-        qint32 itemPos = m_Items.size() - 1;
-        auto* pSelectedItem = m_SelectedItem.get();
-        auto* pItem = m_Items[itemPos].get();
-        auto* pItemContainer = m_ItemContainer.get();
-        pBackground->addEventListener(oxygine::TouchEvent::OVER, [this, pSelectedItem, pItem, pItemContainer, i, y](oxygine::Event*)
-        {
-            if (pItem->getText() != "")
-            {
-                if (m_mapMapping.size() > 0 && m_mapMapping[i] >= 0)
-                {
-                    pSelectedItem->setY(y - pItemContainer->getY());
-                    m_currentItem = m_Files[m_mapMapping[i]];
-                    m_currentIdx = i;
-                    emit sigStartItemChangeTimer();
-                }
-            }
-        });
-        pBackground->addEventListener(oxygine::TouchEvent::CLICK, [this, pSelectedItem, pItem, pItemContainer, i, y](oxygine::Event*)
-        {
-            if (pItem->getText() != "")
-            {
-                if (m_mapMapping.size() > 0 && m_mapMapping[i] >= 0)
-                {
-                    pSelectedItem->setY(y - pItemContainer->getY());
-                    m_currentItem = m_Files[m_mapMapping[i]];
-                    m_currentIdx = i;
-                    emit sigStartItemChangeTimer();
-                }
-            }
-        });
-        y += m_itemHeigth;
-    }
-    pAnim = pObjectManager->getResAnim("mapSelectionBottom");
-    pBackground = MemoryManagement::create<oxygine::Box9Sprite>();
-    pBackground->setResAnim(pAnim);
-    if (pAnim != nullptr)
-    {
-        pBackground->setSize(width, pAnim->getHeight());
-    }
-    pBackground->setPosition(0, y);
-    if (pAnim != nullptr)
-    {
-        y += pAnim->getHeight();
-    }
-    addChild(pBackground);
-    oxygine::spButton pArrowDown = MemoryManagement::create<oxygine::Button>();
-    pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
-    pArrowDown->setResAnim(pAnim);
-    pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    auto* pPtrArrowDown = pArrowDown.get();
-    pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [pPtrArrowDown](oxygine::Event*)
-    {
-        pPtrArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
-    });
-    pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [pPtrArrowDown](oxygine::Event*)
-    {
-        pPtrArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
-    });
-    pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event*)
-    {
-        m_spin = +1;
-        m_timer.start();
-        emit changeSelection(m_currentStartIndex + 1);
-    });
-    pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event*)
-    {
-        m_spin = 0;
-    });
-    pArrowDown->setScaleX(4.0f);
-    if (pAnim != nullptr)
-    {
-        pArrowDown->setPosition(width / 2 - pAnim->getWidth() * 2, y + 5);
-    }
-    addChild(pArrowDown);
     changeFolder(folder);
-    connect(this, &MapSelection::changeSelection, this, &MapSelection::updateSelection, Qt::QueuedConnection);
     connect(this, &MapSelection::itemClicked, this, &MapSelection::changeFolder, Qt::QueuedConnection);
-    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [this](oxygine::Event* pEvent)
-    {
-        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
-        if (pTouchEvent != nullptr)
-        {
-            emit changeSelection(static_cast<qint32>(-pTouchEvent->wheelDirection.y() / 100) + m_currentStartIndex);
-            pTouchEvent->stopPropagation();
-        }
-    });
 }
 
 void MapSelection::createItemContainer(qint32 y, qint32 width, qint32 height)
 {
-    m_ItemContainer = MemoryManagement::create<oxygine::Actor>();
+    QSize size(width, height);
+    m_ItemContainer = MemoryManagement::create<Panel>(true, size, size);
     m_ItemContainer->setPosition(0, y);
-    m_ItemContainer->setSize(width, height);
     addChild(m_ItemContainer);
-    m_ItemContainer->addTouchDownListener([this](oxygine::Event* event)
-    {
-        oxygine::TouchEvent* te = oxygine::safeCast<oxygine::TouchEvent*>(event);
-        m_lastScrollPoint = te->localPosition;
-        m_moveScrolling = true;
-    });
-    m_ItemContainer->addTouchUpListener([this](oxygine::Event* event)
-    {
-        if (m_moveScrolling)
-        {
-            m_moveScrolling = false;
-        }
-    });
-    m_ItemContainer->addEventListener(oxygine::TouchEvent::OUTX, [this](oxygine::Event* event)
-    {
-        if (m_moveScrolling)
-        {
-            m_moveScrolling = false;
-            m_wasMoveScrolling = false;
-        }
-    });
-    m_ItemContainer->addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event* event)
-    {
-        if (m_moveScrolling)
-        {
-            event->stopPropagation();
-            oxygine::TouchEvent* te = oxygine::safeCast<oxygine::TouchEvent*>(event);
-            auto newPos = te->localPosition;
-            constexpr qint32 MIN_MOVE = 5;
-            qint32 speed = -(newPos.y() - m_lastScrollPoint.y()) / MIN_MOVE;
-            if (speed != 0)
-            {
-                m_wasMoveScrolling = true;
-                m_lastScrollPoint = newPos;
-                emit changeSelection(m_currentStartIndex + speed);
-            }
-        }
-    });
 }
 
 void MapSelection::setSelection(QString folder, QStringList files)
@@ -270,14 +75,11 @@ void MapSelection::setSelection(QString folder, QStringList files)
     m_itemClicked = false;
     m_currentFolder = folder;
     m_Files = files;
-    updateSelection(0);
-    if (m_Files.size() > 0)
+    updateSelection();
+    if (m_currentIdx < m_Files.size() && m_currentIdx >= 0)
     {
-        if (m_mapMapping.size() > 0 && m_mapMapping[0] >= 0)
-        {
-            m_currentItem = m_Files[m_mapMapping[0]];
-            emit sigStartItemChangeTimer();
-        }
+        m_currentItem = m_Files[0];
+        emit sigStartItemChangeTimer();
     }
 }
 
@@ -361,64 +163,92 @@ void MapSelection::changeFolder(QString folder)
             }
         }
         m_currentFolder = newFolder;
-        updateSelection(0);
-        if (m_mapMapping[m_currentIdx] < m_Files.size())
+        updateSelection();
+        if (m_currentIdx < m_Files.size() && m_currentIdx >= 0)
         {
-            if (m_mapMapping.size() > 0 && m_mapMapping[m_currentIdx] >= 0)
-            {
-                m_currentItem = m_Files[m_mapMapping[m_currentIdx]];
-                emit sigStartItemChangeTimer();
-            }
+            m_currentItem = m_Files[m_currentIdx];
+            emit sigStartItemChangeTimer();
         }
     }
 }
 
-void MapSelection::update(const oxygine::UpdateState& us)
+void MapSelection::addNewSelectionItem(qint32 i, qint32 & y)
 {
-    if (m_spin != 0 && m_timer.elapsed() >= 250)
-    {
-        m_timer.start();
-        emit changeSelection(m_currentStartIndex + m_spin);
-    }
-    oxygine::Actor::update(us);
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    const qint32 width = m_ItemContainer->getContentWidth() - 50;
+    oxygine::ResAnim*  pAnim = pObjectManager->getResAnim("mapSelectionItem");
+    oxygine::spBox9Sprite pBackground = MemoryManagement::create<oxygine::Box9Sprite>();
+    pBackground->setResAnim(pAnim);
+    pBackground->setSize(width, m_itemHeigth);
+    pBackground->setPosition(0, y - m_ItemContainer->getY());
+    spLabel pLabel = MemoryManagement::create<Label>(width - 20);
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    pLabel->setStyle(style);
+    pLabel->setHtmlText("");
+    pLabel->setY(2);
+    pLabel->setX(10);
+    pBackground->addChild(pLabel);
+    m_ItemContainer->addItem(pBackground);
+    m_Items.append(pLabel);
+    qint32 itemPos = m_Items.size() - 1;
+    auto* pSelectedItem = m_SelectedItem.get();
+    auto* pItem = m_Items[itemPos].get();
+    auto* pItemContainer = m_ItemContainer.get();
+    pBackground->addEventListener(oxygine::TouchEvent::OVER, [this, pSelectedItem, pItem, pItemContainer, i, y](oxygine::Event*)
+                                  {
+                                      if (pItem->getText() != "")
+                                      {
+                                          if (i < m_Files.size() && i >= 0)
+                                          {
+                                              pSelectedItem->setY(y - 5);
+                                              m_currentItem = m_Files[i];
+                                              m_currentIdx = i;
+                                              emit sigStartItemChangeTimer();
+                                          }
+                                      }
+                                  });
+    pBackground->addEventListener(oxygine::TouchEvent::CLICK, [this, pSelectedItem, pItem, pItemContainer, i, y](oxygine::Event*)
+                                  {
+                                      if (pItem->getText() != "")
+                                      {
+                                          if (i < m_Files.size() &&  i >= 0)
+                                          {
+                                              pSelectedItem->setY(y - 5);
+                                              m_currentItem = m_Files[i];
+                                              m_currentIdx = i;
+                                              emit sigStartItemChangeTimer();
+                                          }
+                                      }
+                                  });
+    y += m_itemHeigth;
 }
 
-void MapSelection::updateSelection(qint32 startIndex)
+void MapSelection::updateSelection()
 {    
     m_itemClicked = false;
-    m_currentStartIndex = startIndex;
-    if (m_currentStartIndex < 0)
+    m_ItemContainer->clearContent();
+    m_Items.clear();
+    m_ItemContainer->addItem(m_SelectedItem);
+    qint32 y = 5;
+    for (qint32 i = 0; i < m_Files.size() || i < m_itemCount; ++i)
     {
-        m_currentStartIndex = 0;
-    }
-    else if (m_currentStartIndex >= m_Files.size() - m_itemCount)
-    {
-        m_currentStartIndex = m_Files.size() - m_itemCount;
-        if (m_currentStartIndex < 0)
+        addNewSelectionItem(i, y);
+        if (i >= m_Files.size())
         {
-            m_currentStartIndex = 0;
-        }
-    }
-    m_mapMapping.clear();
-    qint32 i = 0;
-    while (m_mapMapping.size() < m_itemCount)
-    {
-        if (m_currentStartIndex + i >= m_Files.size())
-        {
-            m_Items[m_mapMapping.size()]->setHtmlText("");
-            m_mapMapping.append(-1);
+            m_Items[i]->setHtmlText("");
         }
         else
         {
-            QDir dir(m_Files[m_currentStartIndex + i]);
-            if (m_Files[m_currentStartIndex + i] == "..")
+            QDir dir(m_Files[i]);
+            if (m_Files[i] == "..")
             {
-                m_Items[m_mapMapping.size()]->setHtmlText(m_Files[m_currentStartIndex + i]);
-                m_mapMapping.append(m_currentStartIndex + i);
+                m_Items[i]->setHtmlText(m_Files[i]);
             }
             else if (dir.exists())
             {
-                QStringList data = m_Files[m_currentStartIndex + i].split("/");
+                QStringList data = m_Files[i].split("/");
                 QStringList data2 = data[data.size() - 1].split(".");
                 QStringList data3 = data2[0].split("_");
                 QString item;
@@ -430,13 +260,12 @@ void MapSelection::updateSelection(qint32 startIndex)
                     }
                     item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
                 }
-                m_Items[m_mapMapping.size()]->setHtmlText(item);
-                m_mapMapping.append(m_currentStartIndex + i);
+                m_Items[i]->setHtmlText(item);
             }
             else
             {
                 // it's a map
-                QString fullFilename = m_Files[m_currentStartIndex + i];
+                QString fullFilename = m_Files[i];
                 CONSOLE_PRINT("MapSelection::updateSelection Loading: " + fullFilename, GameConsole::eDEBUG);
                 QFile file(fullFilename);
                 file.open(QIODevice::ReadOnly);
@@ -445,7 +274,7 @@ void MapSelection::updateSelection(qint32 startIndex)
                 GameMap::MapHeaderInfo headerInfo;
                 QString mapNameEnding = "";
                 bool matches = true;
-                if (m_Files[m_currentStartIndex + i].endsWith(".map"))
+                if (m_Files[i].endsWith(".map"))
                 {
                     GameMap::readMapHeader(pStream, headerInfo);
                     matches = m_mapFilter.matches(headerInfo);
@@ -455,7 +284,7 @@ void MapSelection::updateSelection(qint32 startIndex)
                 {
                     if (headerInfo.m_mapName.isEmpty())
                     {
-                        QStringList data = m_Files[m_currentStartIndex + i].split("/");
+                        QStringList data = m_Files[i].split("/");
                         QStringList data2 = data[data.size() - 1].split(".");
                         QStringList data3 = data2[0].split("_");
                         QString item;
@@ -470,18 +299,17 @@ void MapSelection::updateSelection(qint32 startIndex)
                                 item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
                             }
                         }
-                        m_Items[m_mapMapping.size()]->setHtmlText(item + mapNameEnding);
+                        m_Items[i]->setHtmlText(item + mapNameEnding);
                     }
                     else
                     {
-                        m_Items[m_mapMapping.size()]->setHtmlText(headerInfo.m_mapName + mapNameEnding);
+                        m_Items[i]->setHtmlText(headerInfo.m_mapName + mapNameEnding);
                     }
-                    m_mapMapping.append(m_currentStartIndex + i);
                 }
             }
         }
-        ++i;
     }
+    m_ItemContainer->setContentHeigth(y + 100);
     if (m_currentIdx + m_currentStartIndex< m_Files.size())
     {
         m_currentItem = m_Files[m_currentIdx + m_currentStartIndex];
@@ -511,5 +339,5 @@ void MapSelection::startItemChangeTimer()
 
 void MapSelection::filterChanged()
 {
-    updateSelection(m_currentStartIndex);
+    updateSelection();
 }
