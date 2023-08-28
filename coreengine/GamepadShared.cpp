@@ -165,6 +165,8 @@ void Gamepad::handleWheelEvent(qint32 x, qint32 y)
         if (currentTimestamp - m_lastWheelEvent >= mouseIntervall * Settings::getInstance()->getGamepadSensitivity())
         {
             m_lastWheelEvent = currentTimestamp;
+            oxygine::Input* input = &oxygine::Input::getInstance();
+            input->sendPointerWheelEvent(oxygine::Stage::getStage(), QPoint(x, y), input->getPointerMouse());
             emit Mainapp::getInstance()->sigWheelEvent(x, y);
         }
     }
@@ -175,23 +177,32 @@ void Gamepad::handleThumbStickPress(bool left, bool right)
 #ifdef GRAPHICSUPPORT
     Mainapp* pApp = Mainapp::getInstance();
     QPoint cursor = pApp->mapPosFromGlobal(pApp->cursor().pos());
+    oxygine::Input* input = &oxygine::Input::getInstance();
     if (left)
     {
+        input->sendPointerButtonEvent(oxygine::Stage::getStage(), oxygine::MouseButton_Left, cursor.x(), cursor.y(), 1.0f,
+                                      oxygine::TouchEvent::TOUCH_DOWN, input->getPointerMouse());
         emit pApp->sigMousePressEvent(oxygine::MouseButton_Left, cursor.x(), cursor.y());
         m_leftMouseSend = true;
     }
     else if (m_leftMouseSend)
-    {
+    {        
+        input->sendPointerButtonEvent(oxygine::Stage::getStage(), oxygine::MouseButton_Left, cursor.x(), cursor.y(), 1.0f,
+                                      oxygine::TouchEvent::TOUCH_UP, input->getPointerMouse());
         emit pApp->sigMouseReleaseEvent(oxygine::MouseButton_Left, cursor.x(), cursor.y());
         m_leftMouseSend = false;
     }
     if (right)
     {
+        input->sendPointerButtonEvent(oxygine::Stage::getStage(), oxygine::MouseButton_Right, cursor.x(), cursor.y(), 1.0f,
+                                      oxygine::TouchEvent::TOUCH_DOWN, input->getPointerMouse());
         emit pApp->sigMousePressEvent(oxygine::MouseButton_Right, cursor.x(), cursor.y());
         m_rightMouseSend = true;
     }
     else if (m_rightMouseSend)
     {
+        input->sendPointerButtonEvent(oxygine::Stage::getStage(), oxygine::MouseButton_Right, cursor.x(), cursor.y(), 1.0f,
+                                      oxygine::TouchEvent::TOUCH_UP, input->getPointerMouse());
         emit pApp->sigMouseReleaseEvent(oxygine::MouseButton_Right, cursor.x(), cursor.y());
         m_rightMouseSend = false;
     }
