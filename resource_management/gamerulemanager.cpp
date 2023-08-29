@@ -44,3 +44,12 @@ qint32 GameRuleManager::getDefaultWeatherChance(QString weatherId)
         return 0;
     }
 }
+
+QString GameRuleManager::getWeatherName(qint32 position)
+{
+    const QString & id = m_loadedWeather[position];
+    QJSValueList args({id});
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue name = pInterpreter->doFunction(id, "getName", args);
+    return name.toString();
+}

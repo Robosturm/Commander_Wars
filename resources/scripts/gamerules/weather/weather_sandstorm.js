@@ -6,6 +6,11 @@ var Constructor = function()
         return qsTr("Sandstorm");
     };
 
+    this.getDescription = function()
+    {
+        return qsTr("Sandy weather which reduces the offence and indirect fire range of units.");
+    };
+
     this.getWeatherTerrainSprite = function()
     {
 

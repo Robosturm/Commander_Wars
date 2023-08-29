@@ -6,6 +6,11 @@ var Constructor = function()
         return qsTr("Snow");
     };
 
+    this.getDescription = function()
+    {
+        return qsTr("Snowy weather which reduces the movement of units.");
+    };
+
     this.getWeatherTerrainSprite = function()
     {
         return "weather_snow";

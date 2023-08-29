@@ -12,6 +12,11 @@ var Constructor = function()
         return "weather_rain";
     };
 
+    this.getDescription = function()
+    {
+        return qsTr("Rainy weather which reduces the vision of units.");
+    };
+
     this.getWeatherSymbol = function()
     {
         return "weather_symbol_rain";

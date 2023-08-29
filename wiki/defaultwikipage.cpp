@@ -11,7 +11,7 @@ DefaultWikipage::DefaultWikipage(QString item)
 #endif
     QJSValueList args({item});
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue icon = pInterpreter->doFunction(item, "getIcon");
+    QJSValue icon = pInterpreter->doFunction(item, "getIcon", args);
     QJSValue name = pInterpreter->doFunction(item, "getName", args);
     QJSValue description = pInterpreter->doFunction(item, "getDescription");
     loadHeadline(name.toString());

@@ -52,6 +52,13 @@ public slots:
         return "";
     }
     /**
+     * @brief getWeatherName
+     * @param position
+     * @return
+     */
+    QString getWeatherName(qint32 position);
+
+    /**
      * @brief getDefaultWeatherChance
      * @param weatherId
      * @return

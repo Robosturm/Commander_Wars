@@ -1,9 +1,24 @@
 var WEATHER =
 {
+    getName : function(id)
+    {
+        return Global[id].getWeatherName();
+    },
+
     getWeatherName : function()
     {
 
         return "";
+    },
+
+    getDescription : function()
+    {
+        return qsTr("Unknown");
+    },
+
+    getIcon : function(id)
+    {
+        return Global[id].getWeatherSymbol();
     },
 
     getWeatherTerrainSprite : function(weather, map)

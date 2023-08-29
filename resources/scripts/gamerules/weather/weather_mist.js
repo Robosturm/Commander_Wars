@@ -11,6 +11,11 @@ var Constructor = function()
         return "weather_symbol_mist";
     };
 
+    this.getDescription = function()
+    {
+        return qsTr("Misty weather which creates mist.");
+    };
+
     this.activate = function(weather, map)
     {
         var animationCount = GameAnimationFactory.getAnimationCount();

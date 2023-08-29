@@ -6,6 +6,11 @@ var Constructor = function()
         return qsTr("Sun");
     };
 
+    this.getDescription = function()
+    {
+        return qsTr("Sunny weather which has no effect.");
+    };
+
     this.getWeatherSymbol = function()
     {
         return "weather_symbol_sun";

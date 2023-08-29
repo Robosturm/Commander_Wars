@@ -16,6 +16,7 @@
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/terrainmanager.h"
 #include "resource_management/shoploader.h"
+#include "resource_management/gamerulemanager.h"
 
 #include "game/co.h"
 #include "game/player.h"
@@ -87,6 +88,12 @@ void WikiDatabase::load()
                                           i));
             }
         }
+    }
+
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
+    for (qint32 i = 0; i < pGameRuleManager->getWeatherCount(); i++)
+    {
+        m_Entries.append(MemoryManagement::create<PageData>(pGameRuleManager->getWeatherName(i), pGameRuleManager->getWeatherID(i), QStringList({tr("Weather")})));
     }
 
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
