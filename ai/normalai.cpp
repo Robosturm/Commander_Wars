@@ -30,6 +30,7 @@ NormalAi::NormalAi(GameMap* pMap, const QString & configurationFile, GameEnums::
 #endif
     CONSOLE_PRINT("Creating normal ai", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &NormalAi::process, Qt::QueuedConnection);
     m_iniData = { // General
@@ -398,7 +399,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
 
     QStringList highPrioBuildings;
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({pInterpreter->newQObject(this)});
+    QJSValueList args({m_jsThis});
     const QString func = "getHighPrioBuildings";
     auto erg = pInterpreter->doFunction(getAiName(), func, args);
     highPrioBuildings = erg.toVariant().toStringList();
@@ -1192,9 +1193,9 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
             for (qint32 i = 0; i < unitIDx.size() - 1; i++)
             {
                 QString function1 = "getUnloadFields";
-                QJSValueList args({pInterpreter->newQObject(pAction.get()),
+                QJSValueList args({JsThis::getJsThis(pAction.get()),
                                    unitIDx[i],
-                                   pInterpreter->newQObject(m_pMap),});
+                                   JsThis::getJsThis(m_pMap),});
                 QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, function1, args);
                 unloadFields.push_back(ret.toVariant().toList());
             }

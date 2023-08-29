@@ -5,6 +5,7 @@
 
 #include "coreengine/scriptvariables.h"
 #include "coreengine/fileserializable.h"
+#include "coreengine/jsthis.h"
 
 #include "game/unit.h"
 #include "game/terrain.h"
@@ -13,7 +14,7 @@ class GameMap;
 class Weather;
 using spWeather = std::shared_ptr<Weather>;
 
-class Weather final : public QObject, public FileSerializable
+class Weather final : public QObject, public FileSerializable, public JsThis
 {
     Q_OBJECT
 public:

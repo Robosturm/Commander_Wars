@@ -8,13 +8,15 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
+#include "coreengine/jsthis.h"
+
 #include "game/unit.h"
 #include "game/gamemap.h"
 
 class BattleAnimationSprite;
 using spBattleAnimationSprite = std::shared_ptr<BattleAnimationSprite>;
 
-class BattleAnimationSprite final : public QObject, public oxygine::Sprite
+class BattleAnimationSprite final : public QObject, public oxygine::Sprite, public JsThis
 {
     Q_OBJECT
 public:

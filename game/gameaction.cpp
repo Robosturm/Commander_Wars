@@ -23,6 +23,7 @@ GameAction::GameAction(GameMap* pMap)
 #endif
     m_actionData.setVersion(QDataStream::Version::Qt_6_5);
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
     m_buffer.open(QIODevice::ReadWrite);
     m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
@@ -37,6 +38,7 @@ GameAction::GameAction(const QString & actionID, GameMap* pMap)
 #endif
     m_actionData.setVersion(QDataStream::Version::Qt_6_5);
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
     m_buffer.open(QIODevice::ReadWrite);
     m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
@@ -108,8 +110,8 @@ void GameAction::perform()
     }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "perform";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction(m_actionID, function1, args);
 }
 
@@ -279,8 +281,8 @@ bool GameAction::canBePerformed(const QString & actionID, bool emptyField, Playe
             }
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "canBePerformed";
-            QJSValueList args({pInterpreter->newQObject(this),
-                               pInterpreter->newQObject(m_pMap)});
+            QJSValueList args({m_jsThis,
+                               JsThis::getJsThis(m_pMap)});
             QJSValue ret = pInterpreter->doFunction(actionID, function1, args);
             if (ret.isBool())
             {
@@ -300,8 +302,8 @@ bool GameAction::isFinalStep(const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "isFinalStep";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(actionID, function1, args);
     if (ret.isBool())
     {
@@ -314,7 +316,7 @@ QString GameAction::getActionText(GameMap* pMap, const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActionText";
-    QJSValueList args({pInterpreter->newQObject(pMap)});
+    QJSValueList args({JsThis::getJsThis(pMap)});
     QJSValue ret = pInterpreter->doFunction(actionID, function1, args);
     if (ret.isString())
     {
@@ -327,7 +329,7 @@ QString GameAction::getActionIcon(GameMap* pMap, const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getIcon";
-    QJSValueList args({pInterpreter->newQObject(pMap)});
+    QJSValueList args({JsThis::getJsThis(pMap)});
     QJSValue ret = pInterpreter->doFunction(actionID, function1, args);
     if (ret.isString())
     {
@@ -340,8 +342,8 @@ QString GameAction::getStepInputType()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepInputType";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args);
     if (ret.isString())
     {
@@ -354,8 +356,8 @@ bool GameAction::getRequiresEmptyField()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRequiresEmptyField";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args);
     if (ret.isBool())
     {
@@ -369,9 +371,9 @@ spCursorData GameAction::getStepCursor()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepCursor";
     spCursorData data = MemoryManagement::create<CursorData>();
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        pInterpreter->newQObject(data.get()),
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args);
     if (ret.isString())
     {
@@ -390,9 +392,9 @@ spMenuData GameAction::getMenuStepData()
     Interpreter* pInterpreter = Interpreter::getInstance();
     spMenuData data = MemoryManagement::create<MenuData>(m_pMap);
     QString function1 = "getStepData";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        pInterpreter->newQObject(data.get()),
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction(m_actionID, function1, args);
     return data;
 }
@@ -402,9 +404,9 @@ spMarkedFieldData GameAction::getMarkedFieldStepData()
     spMarkedFieldData data = MemoryManagement::create<MarkedFieldData>();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepData";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        pInterpreter->newQObject(data.get()),
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction(m_actionID, function1, args);
     return data;
 }
@@ -414,9 +416,9 @@ MenuData* GameAction::getJsMenuStepData()
     Interpreter* pInterpreter = Interpreter::getInstance();
     MenuData* data = MemoryManagement::createAndTrackJsObject<MenuData>(m_pMap);
     QString function1 = "getStepData";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        pInterpreter->newQObject(data),
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction(m_actionID, function1, args);
     return data;
 }
@@ -426,9 +428,9 @@ MarkedFieldData* GameAction::getJMarkedFieldStepData()
     MarkedFieldData* data = MemoryManagement::createAndTrackJsObject<MarkedFieldData>();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepData";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        pInterpreter->newQObject(data),
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction(m_actionID, function1, args);
     return data;
 }

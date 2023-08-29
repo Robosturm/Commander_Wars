@@ -242,7 +242,7 @@ void PerkSelection::updatePerkCount()
 bool PerkSelection::getPerkEnabled(QString perkId)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({pInterpreter->newQObject(m_pCO)});
+    QJSValueList args({JsThis::getJsThis(m_pCO)});
     QJSValue value = pInterpreter->doFunction(perkId, "getPerkEnabled", args);
     if (value.isBool())
     {

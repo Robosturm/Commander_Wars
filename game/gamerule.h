@@ -5,13 +5,14 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/jsthis.h"
 
 class Player;
 
 class GameRule;
 using spGameRule = std::shared_ptr<GameRule>;
 
-class GameRule final : public QObject, public FileSerializable
+class GameRule final : public QObject, public FileSerializable, public JsThis
 {
     Q_OBJECT
 public:

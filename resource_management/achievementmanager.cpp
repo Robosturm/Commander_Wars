@@ -30,7 +30,7 @@ void AchievementManager::onVictory(qint32 team, bool humanWin, GameMap* pMap)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({team,
                        humanWin,
-                       pInterpreter->newQObject(pMap)});
+                       JsThis::getJsThis(pMap)});
     for (const auto & achievement : qAsConst(m_loadedRessources))
     {
         pInterpreter->doFunction(achievement, "onVictory", args);

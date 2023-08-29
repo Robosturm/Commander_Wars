@@ -640,15 +640,15 @@ bool ActionPerformer::isTrap(const QString & function, spGameAction pAction, Uni
     Unit* pUnit = m_pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();
 
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({pInterpreter->newQObject(pAction.get()),
-                       pInterpreter->newQObject(pMoveUnit),
-                       pInterpreter->newQObject(pUnit),
+    QJSValueList args({JsThis::getJsThis(pAction.get()),
+                       JsThis::getJsThis(pMoveUnit),
+                       JsThis::getJsThis(pUnit),
                        currentPoint.x(),
                        currentPoint.y(),
                        previousPoint.x(),
                        previousPoint.y(),
                        moveCost,
-                       pInterpreter->newQObject(m_pMap),
+                       JsThis::getJsThis(m_pMap),
                       });
     const QString obj = "ACTION_TRAP";
     QJSValue erg = pInterpreter->doFunction(obj, function, args);

@@ -12,6 +12,7 @@ SimpleProductionSystem::SimpleProductionSystem(CoreAI * owner)
     setObjectName("SimpleProductionSystem");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
 }
 
 void SimpleProductionSystem::initialize()
@@ -19,9 +20,9 @@ void SimpleProductionSystem::initialize()
     if (!m_init)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(m_owner),
-                           pInterpreter->newQObject(m_owner->getMap())});
+        QJSValueList args({m_jsThis,
+                           JsThis::getJsThis(m_owner),
+                           JsThis::getJsThis(m_owner->getMap())});
         QString function1 = "initializeSimpleProductionSystem";
         QJSValue erg(false);
         if (pInterpreter->exists(GameScript::m_scriptName, function1))
@@ -62,13 +63,13 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "buildUnitSimpleProductionSystem";
-        QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(m_owner),
-                           pInterpreter->newQObject(pBuildings),
-                           pInterpreter->newQObject(pUnits),
-                           pInterpreter->newQObject(pEnemyUnits),
-                           pInterpreter->newQObject(pEnemyBuildings),
-                           pInterpreter->newQObject(m_owner->getMap())});
+        QJSValueList args({m_jsThis,
+                           JsThis::getJsThis(m_owner),
+                           JsThis::getJsThis(pBuildings),
+                           JsThis::getJsThis(pUnits),
+                           JsThis::getJsThis(pEnemyUnits),
+                           JsThis::getJsThis(pEnemyBuildings),
+                           JsThis::getJsThis(m_owner->getMap())});
         QJSValue erg(false);
         if (pInterpreter->exists(GameScript::m_scriptName, function1))
         {
@@ -93,13 +94,13 @@ void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlV
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "onNewBuildQueue";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_owner),
-                       pInterpreter->newQObject(pBuildings),
-                       pInterpreter->newQObject(pUnits),
-                       pInterpreter->newQObject(pEnemyUnits),
-                       pInterpreter->newQObject(pEnemyBuildings),
-                       pInterpreter->newQObject(m_owner->getMap())});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_owner),
+                       JsThis::getJsThis(pBuildings),
+                       JsThis::getJsThis(pUnits),
+                       JsThis::getJsThis(pEnemyUnits),
+                       JsThis::getJsThis(pEnemyBuildings),
+                       JsThis::getJsThis(m_owner->getMap())});
     QJSValue erg(false);
     if (pInterpreter->exists(GameScript::m_scriptName, function1))
     {

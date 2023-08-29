@@ -31,8 +31,8 @@ spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameT
         QJSValueList args({pInterpreter->newQObject(animation.get()),
                            color.name(),
                            powerMode,
-                           pInterpreter->newQObject(pCO),
-                           pInterpreter->newQObject(pMap)});
+                           JsThis::getJsThis(pCO),
+                           JsThis::getJsThis(pMap)});
         pInterpreter->doFunction("GAMEANIMATIONPOWER", "loadAnimation", args);
         m_pGameAnimationPower = animation.get();
     }

@@ -53,11 +53,11 @@ qint32 MovementTableManager::getBaseMovementPoints(const QString & movementID, T
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementpoints";
-    QJSValueList args({pInterpreter->newQObject(pTerrain),
-                       pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pCurrentTerrain),
+    QJSValueList args({JsThis::getJsThis(pTerrain),
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pCurrentTerrain),
                        trapChecking,
-                       pInterpreter->newQObject(pCurrentTerrain->getMap())});
+                       JsThis::getJsThis(pCurrentTerrain->getMap())});
     QJSValue ret = pInterpreter->doFunction(movementID, function1, args);
     if (ret.isNumber())
     {

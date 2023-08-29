@@ -11,12 +11,14 @@ Weather::Weather(QString weatherId, GameMap* pMap)
     setObjectName("Weather");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
 }
 
 Weather::Weather(GameMap* pMap)
     : m_pMap{pMap}
 {
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
 }
 
 void Weather::serializeObject(QDataStream& pStream) const
@@ -58,8 +60,8 @@ QString Weather::getWeatherTerrainSprite()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getWeatherTerrainSprite";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isString())
     {
@@ -75,8 +77,8 @@ QString Weather::getWeatherSymbol()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getWeatherSymbol";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isString())
     {
@@ -92,8 +94,8 @@ qint32 Weather::getOffensiveModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveModifier";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -109,8 +111,8 @@ qint32 Weather::getDefensiveModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDefensiveModifier";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -126,10 +128,10 @@ qint32 Weather::getMovementCostModifier(Unit* pUnit, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementCostModifier";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pTerrain),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pTerrain),
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -145,10 +147,10 @@ qint32 Weather::getMovementpointModifier(Unit* pUnit, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementpointModifier";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pTerrain),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pTerrain),
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -164,10 +166,10 @@ qint32 Weather::getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementFuelCostModifier";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pUnit),
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
                        fuelCost,
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -183,8 +185,8 @@ qint32 Weather::getVisionrangeModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionrangeModifier";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -200,8 +202,8 @@ qint32 Weather::getFirerangeModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFirerangeModifier";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -217,8 +219,8 @@ qint32 Weather::getMinFirerangeModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMinFirerangeModifier";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -234,8 +236,8 @@ void Weather::activate()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "activate";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction(m_WeatherId, function1, args);
 }
 
@@ -243,8 +245,8 @@ void Weather::deactivate()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "deactivate";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction(m_WeatherId, function1, args);
 }
 

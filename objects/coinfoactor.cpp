@@ -331,8 +331,8 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             QString coid = pCOSpriteManager->getID(i);
             spCO testCO = MemoryManagement::create<CO>(coid, pPlayer.get(), pPlayer->getMap());
 
-            QJSValueList args({pInterpreter->newQObject(pCO.get()),
-                               pInterpreter->newQObject(testCO.get())});
+            QJSValueList args({JsThis::getJsThis(pCO.get()),
+                               JsThis::getJsThis(testCO.get())});
             value = pInterpreter->doFunction("TAGPOWER", "getTagstars", args);
             if (value.isNumber())
             {

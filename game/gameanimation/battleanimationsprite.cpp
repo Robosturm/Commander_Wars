@@ -40,6 +40,7 @@ BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, Unit* pUnit, Terrain
     setObjectName("BattleAnimationSprite");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
     if (m_hpRounded < 0.0f)
     {
         m_hpRounded = pUnit->getHpRounded();
@@ -145,11 +146,11 @@ void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Un
     }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = animationType;
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pDefender),
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (m_nextFrames.length() > 0 && !clearSprite)
     {
@@ -211,11 +212,11 @@ QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getPositionOffset";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pUnit),
-                       pInterpreter->newQObject(m_pTerrain),
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pUnit),
+                       JsThis::getJsThis(m_pTerrain),
                        unitIdx,
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args);
     return erg.toVariant().toPoint();
 }
@@ -248,11 +249,11 @@ qint32 BattleAnimationSprite::getImpactDurationMS(Unit* pUnit, Unit* pDefender, 
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getImpactDurationMS";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pDefender),
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
@@ -268,11 +269,11 @@ bool BattleAnimationSprite::hasMoveInAnimation(Unit* pUnit, Unit* pDefender, qin
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "hasMoveInAnimation";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pDefender),
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args);
     if (erg.isBool())
     {
@@ -288,11 +289,11 @@ qint32 BattleAnimationSprite::getDyingDurationMS(Unit* pUnit, Unit* pDefender, q
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDyingDurationMS";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pDefender),
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
@@ -328,11 +329,11 @@ qint32 BattleAnimationSprite::getFireDurationMS(Unit* pUnit, Unit* pDefender, qi
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFireDurationMS";
-    QJSValueList args({pInterpreter->newQObject(this),
-                          pInterpreter->newQObject(pUnit),
-                          pInterpreter->newQObject(pDefender),
+    QJSValueList args({m_jsThis,
+                          JsThis::getJsThis(pUnit),
+                          JsThis::getJsThis(pDefender),
                           attackerWeapon,
-                          pInterpreter->newQObject(m_pMap)});
+                          JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
@@ -348,11 +349,11 @@ qint32 BattleAnimationSprite::getFiredDurationMS(Unit* pUnit, Unit* pDefender, q
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFiredDurationMS";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pDefender),
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
@@ -368,11 +369,11 @@ qint32 BattleAnimationSprite::getMoveInDurationMS(Unit* pUnit, Unit* pDefender, 
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMoveInDurationMS";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pDefender),
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
@@ -388,11 +389,11 @@ qint32 BattleAnimationSprite::getStopDurationMS(Unit* pUnit, Unit* pDefender, qi
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStopDurationMS";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pDefender),
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {

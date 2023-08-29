@@ -71,7 +71,7 @@ void GameAnimation::doPreAnimationCall()
         CONSOLE_PRINT("Calling post Animation function " + m_jsPreActionObject + "." + m_jsPreActionFunction, GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(m_pMap)});
+                           JsThis::getJsThis(m_pMap)});
         pInterpreter->doFunction(m_jsPreActionObject, m_jsPreActionFunction, args);
     }
 }
@@ -417,7 +417,7 @@ bool GameAnimation::onFinished(bool skipping)
             CONSOLE_PRINT("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, GameConsole::eDEBUG);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QJSValueList args({pInterpreter->newQObject(this),
-                               pInterpreter->newQObject(m_pMap)});
+                               JsThis::getJsThis(m_pMap)});
             pInterpreter->doFunction(m_jsPostActionObject, m_jsPostActionFunction, args);
         }
         for (auto & tween : m_stageTweens)

@@ -120,7 +120,7 @@ qint32 RandomMapGenerator::randomMap(spGameMap pMap, qint32 width, qint32 heigth
         {
             QJSValueList args =
             {
-                pInterpreter->newQObject(pMap.get()),
+                JsThis::getJsThis(pMap.get()),
             };
 
             float terrainChance = std::get<1>(terrains[i]);
@@ -458,7 +458,7 @@ bool RandomMapGenerator::randomMapTerrainPlaceable(GameMap* pMap, qint32 x, qint
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({x,
                        y,
-                       pInterpreter->newQObject(pMap)});
+                       JsThis::getJsThis(pMap)});
     QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "Placeable", args);
     if (erg.isBool())
     {
@@ -595,7 +595,7 @@ void RandomMapGenerator::randomMapCreateRoad(GameMap* pMap, QRandomGenerator& ra
             Interpreter* pInterpreter = Interpreter::getInstance();
             if (pTerrain->getBuilding() == nullptr)
             {
-                QJSValueList args({pInterpreter->newQObject(pTerrain)});
+                QJSValueList args({JsThis::getJsThis(pTerrain)});
                 QStringList ret = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getRoadCreation", args).toVariant().toStringList();
                 if (ret.size() >= 2)
                 {
@@ -811,7 +811,7 @@ bool RandomMapGenerator::randomMapIsBuildingPlace(GameMap* pMap, QString buildin
     {
         QJSValueList args({x,
                            y,
-                           pInterpreter->newQObject(pMap),});
+                           JsThis::getJsThis(pMap),});
         QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + buildingId + "Placeable", args);
         if (erg.isBool())
         {
@@ -1358,7 +1358,7 @@ void RandomMapGenerator::connectPositionsWithRoad(GameMap* pMap, QRandomGenerato
             Interpreter* pInterpreter = Interpreter::getInstance();
             if (pTerrain->getBuilding() == nullptr)
             {
-                QJSValueList args({pInterpreter->newQObject(pTerrain)});
+                QJSValueList args({JsThis::getJsThis(pTerrain)});
                 QStringList ret = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getRoadCreation", args).toVariant().toStringList();
                 if (ret.size() >= 2)
                 {

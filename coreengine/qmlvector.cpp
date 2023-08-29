@@ -11,6 +11,7 @@ QmlVectorPoint::QmlVectorPoint()
     setObjectName("QmlVectorPoint");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
 }
 
 QmlVectorUnit::QmlVectorUnit()
@@ -19,6 +20,7 @@ QmlVectorUnit::QmlVectorUnit()
     setObjectName("QmlVectorUnit");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
 }
 
 void QmlVectorUnit::clone(QmlVectorUnit* source)
@@ -133,6 +135,7 @@ QmlVectorBuilding::QmlVectorBuilding()
     setObjectName("QmlVectorBuilding");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
 }
 
 void QmlVectorBuilding::clone(QmlVectorBuilding * source)

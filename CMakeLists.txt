@@ -561,6 +561,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/JsCallback.h
     coreengine/memorymanagement.h coreengine/memorymanagement.cpp
     coreengine/refobject.h
+    coreengine/jsthis.h coreengine/jsthis.cpp
 
     # network engine
     network/smtpmailsender.h network/smtpmailsender.cpp

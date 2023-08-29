@@ -129,7 +129,7 @@ bool GameScript::immediateStart()
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "immediateStart";
-        QJSValueList args({pInterpreter->newQObject(m_pMap)});
+        QJSValueList args({JsThis::getJsThis(m_pMap)});
         QJSValue ret = pInterpreter->doFunction(m_scriptName, function1, args);
         if (ret.isBool())
         {
@@ -146,7 +146,7 @@ bool GameScript::victory(qint32 team)
         CONSOLE_PRINT("Game script on victory", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({team,
-                           pInterpreter->newQObject(m_pMap)});
+                           JsThis::getJsThis(m_pMap)});
         QString function1 = "victory";
         pInterpreter->doFunction(m_scriptName, function1, args);
         m_victoryCalled = true;
@@ -165,7 +165,7 @@ void GameScript::gameStart()
         CONSOLE_PRINT("Game script on game start", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "gameStart";
-        QJSValueList args({pInterpreter->newQObject(m_pMap)});
+        QJSValueList args({JsThis::getJsThis(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
     }
 }
@@ -177,8 +177,8 @@ void GameScript::actionDone(spGameAction & pAction)
         CONSOLE_PRINT("Game script on action done", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "actionDone";
-        QJSValueList args({pInterpreter->newQObject(pAction.get()),
-                           pInterpreter->newQObject(m_pMap)});
+        QJSValueList args({JsThis::getJsThis(pAction.get()),
+                           JsThis::getJsThis(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
     }
 }
@@ -192,7 +192,7 @@ void GameScript::turnStart(qint32 turn, qint32 player)
         QString function1 = "turnStart";
         QJSValueList args({turn,
                            player,
-                           pInterpreter->newQObject(m_pMap)});
+                           JsThis::getJsThis(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
     }
 }
@@ -204,7 +204,7 @@ void GameScript::onGameLoaded(BaseGamemenu* pMenu)
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "onGameLoaded";
         QJSValueList args({pInterpreter->newQObject(pMenu),
-                           pInterpreter->newQObject(m_pMap)});
+                           JsThis::getJsThis(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
     }
 }

@@ -771,8 +771,8 @@ QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target) con
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage";
-    QJSValueList args({pInterpreter->newQObject(m_pMap),
-                       pInterpreter->newQObject(pAction.get()),
+    QJSValueList args({JsThis::getJsThis(m_pMap),
+                       JsThis::getJsThis(pAction.get()),
                        QJSValue(target.x()),
                        QJSValue(target.y()),
                        QJSValue(static_cast<qint32>(GameEnums::LuckDamageMode_Average))});
@@ -787,13 +787,13 @@ QRectF CoreAI::calcVirtuelUnitDamage(GameMap* pMap,
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage3";
-    QJSValueList args({pInterpreter->newQObject(pMap),
-                       pInterpreter->newQObject(nullptr),
-                       pInterpreter->newQObject(pAttacker),
+    QJSValueList args({JsThis::getJsThis(pMap),
+                       JsThis::getJsThis(nullptr),
+                       JsThis::getJsThis(pAttacker),
                        QJSValue(attackerTakenDamage),
                        QJSValue(atkPos.x()),
                        QJSValue(atkPos.y()),
-                       QJSValue(pInterpreter->newQObject(pDefender)),
+                       QJSValue(JsThis::getJsThis(pDefender)),
                        QJSValue(defPos.x()),
                        QJSValue(defPos.y()),
                        QJSValue(defenderTakenDamage),
@@ -1603,8 +1603,8 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUni
 bool CoreAI::isUnloadTerrain(Unit* pUnit, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pTerrain),});
+    QJSValueList args({JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pTerrain),});
     const QString func = "isUnloadTerrain";
     QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, func, args);
     if (ret.isBool())
@@ -1617,8 +1617,8 @@ bool CoreAI::isUnloadTerrain(Unit* pUnit, Terrain* pTerrain)
 bool CoreAI::isLoadingTerrain(Unit* pTransporter, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({pInterpreter->newQObject(pTransporter),
-                       pInterpreter->newQObject(pTerrain),});
+    QJSValueList args({JsThis::getJsThis(pTransporter),
+                       JsThis::getJsThis(pTerrain),});
     const QString func = "isLoadingTerrain";
     QJSValue ret = pInterpreter->doFunction(ACTION_LOAD, func, args);
     if (ret.isBool())
@@ -2430,12 +2430,12 @@ bool CoreAI::getBuildingTargetPointFromScript(spGameAction & pAction, const spMa
     QJSValue erg(false);
     QString function1 = "getBuildingTarget";
     QVector<QPoint> & points = *pData->getPoints();
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pAction.get()),
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pAction.get()),
                        pInterpreter->toScriptValue(points),
                        QJSValue(pData->getAllFields()),
-                       QJSValue(pInterpreter->newQObject(m_pPlayer)),
-                       QJSValue(pInterpreter->newQObject(m_pMap))});
+                       JsThis::getJsThis(m_pPlayer),
+                       JsThis::getJsThis(m_pMap)});
     if (pInterpreter->exists(GameScript::m_scriptName, function1))
     {
         erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
@@ -2481,15 +2481,15 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
     auto costs = pData->getCostList();
     QJSValue erg(false);
     QString function1 = "getBuildingMenuItem";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pAction.get()),
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pAction.get()),
                        QJSValue(pInterpreter->toScriptValue(items)),
                        QJSValue(pInterpreter->toScriptValue(costs)),
                        QJSValue(pInterpreter->toScriptValue(enable)),
-                       pInterpreter->newQObject(pUnits.get()),
-                       pInterpreter->newQObject(pBuildings.get()),
-                       pInterpreter->newQObject(m_pPlayer),
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(pUnits.get()),
+                       JsThis::getJsThis(pBuildings.get()),
+                       JsThis::getJsThis(m_pPlayer),
+                       JsThis::getJsThis(m_pMap)});
     if (pInterpreter->exists(GameScript::m_scriptName, function1))
     {
         erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);

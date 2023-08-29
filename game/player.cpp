@@ -32,6 +32,7 @@ Player::Player(GameMap* pMap)
     setObjectName("Player");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
     m_pBaseGameInput.reset();
     // for older versions we allow all loaded units to be buildable
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
@@ -46,8 +47,8 @@ void Player::init()
     m_team = getPlayerID();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "loadDefaultPlayerColor";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction("PLAYER", function, args);
 }
 
@@ -191,7 +192,7 @@ bool Player::loadTable(qint32 table)
     CONSOLE_PRINT("Player::loadTable", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({QJSValue(table),
-                       pInterpreter->newQObject(m_pMap)});
+                       JsThis::getJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorTable", args);
     QString tablename;
     bool found = false;
@@ -442,7 +443,7 @@ void Player::createTable(QColor baseColor)
     for (qint32 i = 0; i < size; i++)
     {
         QJSValueList args({QJSValue(i),
-                           pInterpreter->newQObject(m_pMap)});
+                           JsThis::getJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorForTable", args);
         qint32 value = 100;
         QColor color;
@@ -589,8 +590,8 @@ QString Player::getArmy()
     {
         // editor menu mode
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(m_pMap)});
+        QJSValueList args({m_jsThis,
+                           JsThis::getJsThis(m_pMap)});
         QJSValue ret = pInterpreter->doFunction("PLAYER", "getDefaultArmy", args);
         if (ret.isString())
         {
@@ -892,9 +893,9 @@ void Player::onUnitDeath(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "onUnitDeath";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction("PLAYER", function1, args);
     for(auto & pCO : m_playerCOs)
     {
@@ -1008,9 +1009,9 @@ void Player::buildedUnit(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "buildedUnit";
-    QJSValueList args({pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({JsThis::getJsThis(pUnit),
+                       m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction(pUnit->getUnitID(), function1, args);
     for(auto & pCO : m_playerCOs)
     {
@@ -1564,8 +1565,8 @@ void Player::startOfTurn()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "startOfTurn";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction("PLAYER", function1, args);
     for(auto & pCO : m_playerCOs)
     {
@@ -1582,8 +1583,8 @@ void Player::endOfTurn()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "endOfTurn";
-    QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
     pInterpreter->doFunction("PLAYER", function1, args);
     for(auto & pCO : m_playerCOs)
     {
@@ -1976,7 +1977,7 @@ qint32 Player::getAverageCost()
         {
             QString unitId = pUnitSpriteManager->getID(i);
             QString function1 = "getBaseCost";
-            QJSValueList args({pInterpreter->newQObject(m_pMap)});
+            QJSValueList args({JsThis::getJsThis(m_pMap)});
             QJSValue erg = pInterpreter->doFunction(unitId, function1, args);
             if (erg.isNumber())
             {

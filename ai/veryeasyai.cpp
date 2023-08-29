@@ -29,6 +29,7 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
     setObjectName("VeryEasyAI");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
 
     m_iniData = { // General
                   {"OwnUnitValue", "General", &m_ownUnitValue, 1.0f, -10.0f, 10.0f},

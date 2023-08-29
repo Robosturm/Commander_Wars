@@ -248,7 +248,7 @@ void MovementPlanner::startAddIn(QString addInId)
             m_activeAddIn = addIn;
             Interpreter* pInterpreter = Interpreter::getInstance();
             QJSValueList args({pInterpreter->newQObject(addIn.get()),
-                               pInterpreter->newQObject(m_pMap.get()),
+                               JsThis::getJsThis(m_pMap.get()),
                                pInterpreter->newQObject(this)});
             pInterpreter->doFunction(addInId, "startAddIn", args);
             changeCursor();
@@ -265,7 +265,7 @@ void MovementPlanner::changeCursor()
     CursorData data;
     QJSValueList args({pInterpreter->newQObject(m_activeAddIn.get()),
                        pInterpreter->newQObject(&data),
-                       pInterpreter->newQObject(m_pMap.get()),
+                       JsThis::getJsThis(m_pMap.get()),
                        pInterpreter->newQObject(this)});
     QJSValue ret = pInterpreter->doFunction(m_activeAddIn->getAddIn(), function1, args);
     if (ret.isString())
@@ -287,7 +287,7 @@ void MovementPlanner::leftClick(qint32 x, qint32 y)
         QJSValueList args({pInterpreter->newQObject(m_activeAddIn.get()),
                            x,
                            y,
-                           pInterpreter->newQObject(m_pMap.get()),
+                           JsThis::getJsThis(m_pMap.get()),
                            pInterpreter->newQObject(this)});
         pInterpreter->doFunction(m_activeAddIn->getAddIn(), "onFieldSelected", args);
         execute();
@@ -303,7 +303,7 @@ void MovementPlanner::execute()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(m_activeAddIn.get()),
-                       pInterpreter->newQObject(m_pMap.get()),
+                       JsThis::getJsThis(m_pMap.get()),
                        pInterpreter->newQObject(this)});
     if (readyToExecute())
     {
@@ -350,7 +350,7 @@ bool MovementPlanner::readyToExecute()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(m_activeAddIn.get()),
-                       pInterpreter->newQObject(m_pMap.get()),
+                       JsThis::getJsThis(m_pMap.get()),
                        pInterpreter->newQObject(this)});
     QJSValue erg = pInterpreter->doFunction(m_activeAddIn->getAddIn(), "readyToExecute", args);
     if (erg.isBool())
@@ -364,7 +364,7 @@ void MovementPlanner::onMenuInputDone()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(m_activeAddIn.get()),
-                       pInterpreter->newQObject(m_pMap.get()),
+                       JsThis::getJsThis(m_pMap.get()),
                        pInterpreter->newQObject(this)});
     pInterpreter->doFunction(m_activeAddIn->getAddIn(), "onMenuInputDone", args);
     execute();
@@ -457,7 +457,7 @@ void MovementPlanner::updateUpdateAddIns()
     for (auto addIn : m_updateAddIns)
     {
         QJSValueList args({pInterpreter->newQObject(addIn),
-                           pInterpreter->newQObject(m_pMap.get()),
+                           JsThis::getJsThis(m_pMap.get()),
                            pInterpreter->newQObject(this)});
         pInterpreter->doFunction(addIn->getAddIn(), "update", args);
     }

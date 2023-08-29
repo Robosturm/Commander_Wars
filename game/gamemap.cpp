@@ -124,6 +124,7 @@ void GameMap::setMapNameFromFilename(QString filename)
 void GameMap::loadMapData()
 {
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
     registerMapAtInterpreter();
     setZoom(1);
 
@@ -1385,7 +1386,7 @@ bool GameMap::canBePlaced(const QString terrainID, qint32 x, qint32 y)
     QString function = "canBePlaced";
     QJSValueList args({x,
                        y,
-                       pInterpreter->newQObject(this)});
+                       m_jsThis});
     QJSValue placeable = pInterpreter->doFunction(terrainID, function, args);
     if (placeable.isBool())
     {

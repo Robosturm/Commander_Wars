@@ -10,11 +10,12 @@
 
 #include "coreengine/globalutils.h"
 #include "coreengine/refobject.h"
+#include "coreengine/jsthis.h"
 
 class QmlVectorPoint;
 using spQmlVectorPoint = std::shared_ptr<QmlVectorPoint>;
 
-class QmlVectorPoint final : public QObject, public RefObject<QmlVectorPoint>
+class QmlVectorPoint final : public QObject, public RefObject<QmlVectorPoint>, public JsThis
 {
     Q_OBJECT
 public:
@@ -51,7 +52,7 @@ Q_DECLARE_INTERFACE(QmlVectorPoint, "QmlVectorPoint");
 
 class QmlVectorUnit;
 using spQmlVectorUnit = std::shared_ptr<QmlVectorUnit>;
-class QmlVectorUnit final : public QObject
+class QmlVectorUnit final : public QObject, public JsThis
 {
     Q_OBJECT
 public:
@@ -114,7 +115,7 @@ Q_DECLARE_INTERFACE(QmlVectorUnit, "QmlVectorUnit");
 
 class QmlVectorBuilding;
 using spQmlVectorBuilding = std::shared_ptr<QmlVectorBuilding>;
-class QmlVectorBuilding final : public QObject
+class QmlVectorBuilding final : public QObject, public JsThis
 {
     Q_OBJECT
 public:

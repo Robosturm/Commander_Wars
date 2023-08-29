@@ -7,6 +7,7 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/JsCallback.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/jsthis.h"
 
 #include "game/unit.h"
 #include "game/building.h"
@@ -21,7 +22,7 @@ using spTerrainFindingSystem = std::shared_ptr<TerrainFindingSystem>;
 class Terrain;
 using spTerrain = std::shared_ptr<Terrain>;
 
-class Terrain final : public Tooltip, public FileSerializable
+class Terrain final : public Tooltip, public FileSerializable, public JsThis
 {
     Q_OBJECT
 
@@ -133,7 +134,6 @@ public:
      * @param newMap
      */
     void setMapForExtending(GameMap * newMap);
-
     /**
      * @brief getPalette
      * @return

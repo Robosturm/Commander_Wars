@@ -65,7 +65,7 @@ DamageCalculator::DamageCalculator(GameMap * pMap)
     for (qint32 i = GameEnums::UnitRank_CO1; i <= maxRang; i++)
     {
         QJSValueList args({i,
-                           pInterpreter->newQObject(&m_map)});
+                           JsThis::getJsThis(&m_map)});
         QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
         rankItems.append(ret.toString());
     }
@@ -525,8 +525,8 @@ QRectF DamageCalculator::calculatePostBattleDamage(spUnit pAttacker, spUnit pDef
     auto defenderPos = pDefender->Unit::getPosition();
 
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({pInterpreter->newQObject(&m_map),
-                       pInterpreter->newQObject(pAttacker.get()),
+    QJSValueList args({JsThis::getJsThis(&m_map),
+                       JsThis::getJsThis(pAttacker.get()),
                        info.x(),
                        info.y(),
                        defenderPos.x(),

@@ -41,6 +41,8 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
     setObjectName("HeavyAi");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
+
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
 
@@ -716,8 +718,8 @@ bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, std::vecto
             case FunctionType::JavaScript:
             {
                 Interpreter* pInterpreter = Interpreter::getInstance();
-                QJSValueList args({pInterpreter->newQObject(this),
-                                   pInterpreter->newQObject(data.m_gameAction.get())});
+                QJSValueList args({m_jsThis,
+                                   JsThis::getJsThis(data.m_gameAction.get())});
                 QJSValue erg = pInterpreter->doFunction(m_aiName, data.m_gameAction->getActionID(), args);
                 if (erg.isNumber())
                 {
@@ -792,8 +794,8 @@ bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, std::vecto
                 else
                 {
                     Interpreter* pInterpreter = Interpreter::getInstance();
-                    QJSValueList args({pInterpreter->newQObject(this),
-                                       pInterpreter->newQObject(data.m_gameAction.get())});
+                    QJSValueList args({m_jsThis,
+                                       JsThis::getJsThis(data.m_gameAction.get())});
                     QString func = data.m_gameAction->getActionID() + "GetBestField";
                     QJSValue erg = pInterpreter->doFunction(m_aiName, func, args);
                     QPoint target = erg.toVariant().toPoint();
@@ -1429,8 +1431,8 @@ void HeavyAi::addCustomTargets(Unit* pUnit)
     const char* const CB_NAME = "addCustomTargets";
     if (pInterpreter->exists(m_aiName, CB_NAME))
     {
-        QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(pUnit)});
+        QJSValueList args({m_jsThis,
+                           JsThis::getJsThis(pUnit)});
         pInterpreter->doFunction(m_aiName, CB_NAME, args);
     }
 }

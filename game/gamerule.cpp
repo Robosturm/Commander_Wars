@@ -11,6 +11,7 @@ GameRule::GameRule()
     setObjectName("GameRule");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
 }
 
 GameRule::GameRule(QString ruleID)
@@ -20,6 +21,7 @@ GameRule::GameRule(QString ruleID)
     setObjectName("GameRule");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
     init();
 }
 
@@ -27,7 +29,7 @@ void GameRule::init()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "init";
-    QJSValueList args({pInterpreter->newQObject(this)});
+    QJSValueList args({m_jsThis});
     pInterpreter->doFunction(m_RuleID, function1, args);
 }
 
@@ -50,9 +52,9 @@ QString GameRule::getRuleName(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleName";
-    QJSValueList args({pInterpreter->newQObject(nullptr),
+    QJSValueList args({JsThis::getJsThis(nullptr),
                        QJSValue(itemNumber),
-                       pInterpreter->newQObject(this),});
+                       m_jsThis,});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isString())
     {
@@ -68,7 +70,7 @@ void GameRule::setRuleValue(qint32 value, qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "setRuleValue";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        QJSValue(value),
                        QJSValue(itemNumber)});
     pInterpreter->doFunction(m_RuleID, function1, args);
@@ -110,7 +112,7 @@ qint32 GameRule::getRuleValue(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleValue";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        QJSValue(itemNumber)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isNumber())
@@ -127,9 +129,9 @@ QString GameRule::getRuleDescription(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleDescription";
-    QJSValueList args({pInterpreter->newQObject(nullptr),
+    QJSValueList args({JsThis::getJsThis(nullptr),
                        QJSValue(itemNumber),
-                       pInterpreter->newQObject(nullptr)});
+                       JsThis::getJsThis(nullptr)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isString())
     {

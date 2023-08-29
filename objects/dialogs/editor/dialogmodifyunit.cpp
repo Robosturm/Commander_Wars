@@ -268,7 +268,7 @@ void DialogModifyUnit::updateData()
     for (qint32 i = GameEnums::UnitRank_CO1; i <= maxRang; i++)
     {
         QJSValueList args({i,
-                           pInterpreter->newQObject(m_pMap)});
+                           JsThis::getJsThis(m_pMap)});
         QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
         rankItems.append(ret.toString());
     }

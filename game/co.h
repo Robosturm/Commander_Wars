@@ -10,6 +10,7 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/jsthis.h"
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
@@ -28,7 +29,7 @@ class CO;
 using spCO = std::shared_ptr<CO>;
 using spUnit = std::shared_ptr<Unit>;
 
-class CO final : public QObject, public oxygine::Actor, public FileSerializable
+class CO final : public QObject, public oxygine::Actor, public FileSerializable, public JsThis
 {
     Q_OBJECT
 public:

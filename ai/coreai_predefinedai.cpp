@@ -371,12 +371,12 @@ bool CoreAI::processPredefinedGenericScripted(Unit* pUnit, spQmlVectorUnit & pEn
     {
         spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
         pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-        QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(pAction.get()),
-                           pInterpreter->newQObject(pUnit),
-                           pInterpreter->newQObject(pEnemyUnits.get()),
-                           pInterpreter->newQObject(pEnemyBuildings.get()),
-                          pInterpreter->newQObject(m_pMap)});
+        QJSValueList args({m_jsThis,
+                           JsThis::getJsThis(pAction.get()),
+                           JsThis::getJsThis(pUnit),
+                           JsThis::getJsThis(pEnemyUnits.get()),
+                           JsThis::getJsThis(pEnemyBuildings.get()),
+                           JsThis::getJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
         if (erg.isBool() && erg.toBool())
         {
@@ -391,12 +391,12 @@ bool CoreAI::processPredefinedGenericScripted(Unit* pUnit, spQmlVectorUnit & pEn
     {
         spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
         pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-        QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(pAction.get()),
-                           pInterpreter->newQObject(pUnit),
-                           pInterpreter->newQObject(pEnemyUnits.get()),
-                           pInterpreter->newQObject(pEnemyBuildings.get()),
-                           pInterpreter->newQObject(m_pMap)});
+        QJSValueList args({m_jsThis,
+                           JsThis::getJsThis(pAction.get()),
+                           JsThis::getJsThis(pUnit),
+                           JsThis::getJsThis(pEnemyUnits.get()),
+                           JsThis::getJsThis(pEnemyBuildings.get()),
+                           JsThis::getJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction(m_aiName, function1, args);
         if (erg.isBool() && erg.toBool())
         {
@@ -420,12 +420,12 @@ bool CoreAI::processPredefinedMapScripted(Unit* pUnit, spQmlVectorUnit & pEnemyU
     {
         spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
         pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-        QJSValueList args({pInterpreter->newQObject(this),
-                           pInterpreter->newQObject(pAction.get()),
-                           pInterpreter->newQObject(pUnit),
-                           pInterpreter->newQObject(pEnemyUnits.get()),
-                           pInterpreter->newQObject(pEnemyBuildings.get()),
-                           pInterpreter->newQObject(m_pMap)});
+        QJSValueList args({m_jsThis,
+                           JsThis::getJsThis(pAction.get()),
+                           JsThis::getJsThis(pUnit),
+                           JsThis::getJsThis(pEnemyUnits.get()),
+                           JsThis::getJsThis(pEnemyBuildings.get()),
+                           JsThis::getJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
         if (erg.isBool() && erg.toBool())
         {

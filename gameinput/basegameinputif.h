@@ -6,6 +6,7 @@
 #include <QMap>
 
 #include "coreengine/fileserializable.h"
+#include "coreengine/jsthis.h"
 
 #include "game/GameEnums.h"
 
@@ -16,7 +17,7 @@ class BaseGamemenu;
 class BaseGameInputIF;
 using spBaseGameInputIF = std::shared_ptr<BaseGameInputIF>;
 
-class BaseGameInputIF : public QObject, public FileSerializable
+class BaseGameInputIF : public QObject, public FileSerializable, public JsThis
 {
     Q_OBJECT
 public:

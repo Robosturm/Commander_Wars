@@ -15,12 +15,13 @@
 #include "game/building.h"
 
 #include "coreengine/fileserializable.h"
+#include "coreengine/jsthis.h"
 
 class GameMap;
 class GameAction;
 using spGameAction = std::shared_ptr<GameAction>;
 
-class GameAction final : public QObject, public FileSerializable
+class GameAction final : public QObject, public FileSerializable, public JsThis
 {
     Q_OBJECT
 

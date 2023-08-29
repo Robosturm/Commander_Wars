@@ -23,6 +23,7 @@ QString Interpreter::m_runtimeData;
 
 Interpreter* Interpreter::createInstance()
 {
+
     if (m_pInstance.get() == nullptr)
     {
         m_pOwner = QThread::currentThread();
@@ -37,7 +38,7 @@ Interpreter* Interpreter::createInstance()
 }
 
 Interpreter::Interpreter()
-    : QQmlEngine(Mainapp::getInstance()->getWorker())
+    : QJSEngine(Mainapp::getInstance()->getWorker())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Interpreter");

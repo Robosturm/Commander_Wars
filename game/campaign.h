@@ -5,13 +5,14 @@
 #include <QVector>
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/jsthis.h"
 
 class GameMap;
 class CampaignMapData;
 class Campaign;
 using spCampaign = std::shared_ptr<Campaign>;
 
-class Campaign final : public QObject, public FileSerializable
+class Campaign final : public QObject, public FileSerializable, public JsThis
 {
     Q_OBJECT
 public:

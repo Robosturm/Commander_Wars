@@ -9,6 +9,8 @@
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/fileserializable.h"
+#include "coreengine/jsthis.h"
+
 
 #include "game/GameEnums.h"
 #include "game/co.h"
@@ -20,7 +22,7 @@ class GameMap;
 class Player;
 using spPlayer = std::shared_ptr<Player>;
 
-class Player : public QObject, public oxygine::Actor, public FileSerializable
+class Player : public QObject, public oxygine::Actor, public FileSerializable, public JsThis
 {
     Q_OBJECT
 public:

@@ -18,6 +18,7 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/qmlvector.h"
+#include "coreengine/jsthis.h"
 
 class GameAction;
 using spGameAction = std::shared_ptr<GameAction>;
@@ -29,7 +30,7 @@ class EditorMenue;
 class BaseGamemenu;
 using spBaseGamemenu = std::shared_ptr<BaseGamemenu>;
 
-class GameMap final : public QObject, public FileSerializable, public oxygine::Actor
+class GameMap final : public QObject, public FileSerializable, public oxygine::Actor, public JsThis
 {
     Q_OBJECT
 public:
@@ -353,6 +354,7 @@ public:
      * @return
      */
     spQmlVectorBuilding getSpBuildingsListCount(Player* pPlayer, const QStringList ids);
+
 signals:
     void signalExitGame();
     void sigSaveGame();

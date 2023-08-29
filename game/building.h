@@ -7,6 +7,7 @@
 #include "game/GameEnums.h"
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/jsthis.h"
 
 #include "objects/base/tooltip.h"
 
@@ -20,7 +21,7 @@ class GameMap;
 class Building;
 using spBuilding = std::shared_ptr<Building>;
 
-class Building final : public Tooltip, public FileSerializable
+class Building final : public Tooltip, public FileSerializable, public JsThis
 {
     Q_OBJECT
     enum class DrawPriority

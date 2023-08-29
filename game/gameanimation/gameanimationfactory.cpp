@@ -310,18 +310,18 @@ GameAnimation* GameAnimationFactory::createOverworldBattleAnimation(GameMap* pMa
 {
     CONSOLE_PRINT("Creating overworld battle animation", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({pInterpreter->newQObject(pAtkTerrain),
-                       pInterpreter->newQObject(pAtkUnit),
+    QJSValueList args({JsThis::getJsThis(pAtkTerrain),
+                       JsThis::getJsThis(pAtkUnit),
                        atkStartHp,
                        atkEndHp,
                        atkWeapon,
-                       pInterpreter->newQObject(pDefTerrain),
-                       pInterpreter->newQObject(pDefUnit),
+                       JsThis::getJsThis(pDefTerrain),
+                       JsThis::getJsThis(pDefUnit),
                        defStartHp,
                        defEndHp,
                        defWeapon,
                        defenderDamage,
-                       pInterpreter->newQObject(pMap)});
+                       JsThis::getJsThis(pMap)});
     QJSValue ret = pInterpreter->doFunction("ACTION_FIRE", "createOverworldBattleAnimation", args);
     return dynamic_cast<GameAnimation*>(ret.toQObject());
 }

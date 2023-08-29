@@ -1,3 +1,6 @@
+#include "3rd_party/oxygine-framework/oxygine/Input.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "coreengine/Gamepad.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"

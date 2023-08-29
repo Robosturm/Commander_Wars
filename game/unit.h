@@ -6,6 +6,7 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/jsthis.h"
 
 #include "game/GameEnums.h"
 
@@ -21,7 +22,7 @@ class UnitPathFindingSystem;
 using spGameAction = std::shared_ptr<GameAction>;
 using spUnit = std::shared_ptr<Unit>;
 
-class Unit final : public Tooltip, public FileSerializable
+class Unit final : public Tooltip, public FileSerializable, public JsThis
 {
     Q_OBJECT
 public:

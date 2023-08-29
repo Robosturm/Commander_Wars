@@ -12,7 +12,7 @@ using spInterpreter = std::shared_ptr<Interpreter>;
 /**
  * @brief The Interpreter class java-script interpreter with easy access functions
  */
-class Interpreter final : public QQmlEngine
+class Interpreter final : public QJSEngine
 {
     Q_OBJECT
 
@@ -73,12 +73,9 @@ public slots:
     inline QJSValue doFunction(const QString & func, const QJSValueList& args = QJSValueList())
     {
         clearJsStack();
-        QJSValue ret;
-        {
-            QJSValue funcPointer = globalObject().property(func);
-            ++m_inJsCall;
-            ret = funcPointer.call(args);
-        }
+        QJSValue funcPointer = globalObject().property(func);
+        ++m_inJsCall;
+        QJSValue ret = funcPointer.call(args);
         exitJsCall();
         if (ret.isError())
         {
@@ -92,13 +89,10 @@ public slots:
     inline QJSValue doFunction(const QString & obj, const QString & func, const QJSValueList& args = QJSValueList())
     {
         clearJsStack();
-        QJSValue ret;
-        {
-            QJSValue objPointer = globalObject().property(obj);
-            QJSValue funcPointer = objPointer.property(func);
-            ++m_inJsCall;
-            ret = funcPointer.call(args);
-        }
+        QJSValue objPointer = globalObject().property(obj);
+        QJSValue funcPointer = objPointer.property(func);
+        ++m_inJsCall;
+        QJSValue ret = funcPointer.call(args);
         exitJsCall();
         if (ret.isError())
         {

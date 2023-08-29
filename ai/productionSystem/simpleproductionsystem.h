@@ -9,12 +9,13 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 #include "coreengine/qmlvector.h"
+#include "coreengine/jsthis.h"
 #include "game/unit.h"
 
 class Building;
 class CoreAI;
 
-class SimpleProductionSystem final : public QObject, public FileSerializable
+class SimpleProductionSystem final : public QObject, public FileSerializable, public JsThis
 {
     Q_OBJECT
 public:
