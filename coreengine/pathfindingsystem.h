@@ -84,7 +84,7 @@ public:
      */
     explicit PathFindingSystem(qint32 startX, qint32 startY,
                                qint32 width, qint32 heigth);
-    virtual ~PathFindingSystem();
+    virtual ~PathFindingSystem() = default;
     /**
      * @brief setStartPoint
      * @param startX
@@ -243,9 +243,9 @@ protected:
     QPoint m_StartPoint;
     qint32 m_width;
     qint32 m_heigth;
-    qint32 * m_costs;
-    Directions * m_DirectionMap;
-    std::array<qint32, Directions::Max> * m_movecosts;
+    std::vector<qint32> m_costs;
+    std::vector<Directions> m_DirectionMap;
+    std::vector<std::array<qint32, Directions::Max>> m_movecosts;
     std::list<Node> m_OpenList;
     qint32 m_FinishNode = -1;
     qint32 m_FinishNodeX = -1;

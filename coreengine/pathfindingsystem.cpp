@@ -18,33 +18,16 @@ bool operator<(const PathFindingSystem::Node& pNodeLhs, const PathFindingSystem:
 PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
                                      qint32 width, qint32 heigth)
     : m_StartPoint(startX, startY),
-      m_width(width),
-      m_heigth(heigth),
-      m_costs(new qint32[static_cast<quint32>(width * heigth)]),
-      m_DirectionMap(new Directions[static_cast<quint32>(width * heigth)]),
-      m_movecosts(new std::array<qint32, Directions::Max>[static_cast<quint32>(width * heigth)])
+    m_width(width),
+    m_heigth(heigth),
+    m_costs(width * heigth, infinite),
+    m_DirectionMap(width * heigth, Directions::Unknown),
+    m_movecosts(width * heigth, std::array<qint32, Directions::Max>({infinite, infinite, infinite, infinite}))
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("PathFindingSystem");
 #endif
     Interpreter::setCppOwnerShip(this);
-    qint32 count = m_width * m_heigth;
-    for (qint32 i = 0; i < count; ++i)
-    {
-        m_costs[i] = infinite;
-        m_DirectionMap[i] = Directions::Unknown;
-        for (quint32 i2 = 0; i2 < Directions::Max; i2++)
-        {
-            m_movecosts[i][i2] = infinite;
-        }
-    }
-}
-
-PathFindingSystem::~PathFindingSystem()
-{
-    delete[] m_costs;
-    delete[] m_DirectionMap;
-    delete[] m_movecosts;
 }
 
 void PathFindingSystem::setStartPoint(qint32 startX, qint32 startY)
