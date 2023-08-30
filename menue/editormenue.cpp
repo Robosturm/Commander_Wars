@@ -323,7 +323,7 @@ void EditorMenue::editorUndo()
             file.close();
             
             Mainapp::getInstance()->pauseRendering();
-            m_pMap->updateSprites();
+            m_pMap->updateSprites(-1, -1, true);
             Mainapp::getInstance()->continueRendering();
             m_EditorSelection->createPlayerSelection();
         }
@@ -348,7 +348,7 @@ void EditorMenue::editorRedo()
         file.close();
         
         Mainapp::getInstance()->pauseRendering();
-        m_pMap->updateSprites();
+        m_pMap->updateSprites(-1, -1, true);
         Mainapp::getInstance()->continueRendering();
         m_EditorSelection->createPlayerSelection();
     }
@@ -420,7 +420,7 @@ void EditorMenue::clickedTopbar(QString itemID)
 void EditorMenue::updateSprites()
 {
     Mainapp::getInstance()->pauseRendering();
-    m_pMap->updateSprites();
+    m_pMap->updateSprites(-1, -1, true);
     Mainapp::getInstance()->continueRendering();
 }
 
@@ -829,7 +829,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
     m_pMap->setMapAuthor(author);
     m_pMap->setMapDescription(description);
     Mainapp::getInstance()->pauseRendering();
-    m_pMap->updateSprites();
+    m_pMap->updateSprites(-1, -1, true);
     Mainapp::getInstance()->continueRendering();
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
@@ -842,7 +842,7 @@ void EditorMenue::playersChanged()
     m_EditorSelection->createPlayerSelection();
     
     Mainapp::getInstance()->pauseRendering();
-    m_pMap->updateSprites();
+    m_pMap->updateSprites(-1, -1, true);
     Mainapp::getInstance()->continueRendering();
     setFocused(true);
 }
@@ -2157,7 +2157,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                         }
                     }
                 }
-                m_pMap->updateSprites();
+                m_pMap->updateSprites(-1, -1, true);
             }
         }
     }
