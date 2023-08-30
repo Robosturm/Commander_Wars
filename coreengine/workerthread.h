@@ -8,7 +8,7 @@ class WorkerThread final : public QObject
     Q_OBJECT
 public:
     explicit WorkerThread();
-    ~WorkerThread() = default;
+    ~WorkerThread();
     bool getStarted() const;
 signals:
     void sigStart();
@@ -18,7 +18,6 @@ public slots:
     void start();
     void showMainwindow();
     void startSlaveGame();
-    void onQuit();
 private:
     bool m_started{false};
 };

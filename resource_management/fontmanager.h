@@ -28,6 +28,13 @@ public:
         return m_pInstance.get();
     }
     /**
+     * @brief release
+     */
+    static void release()
+    {
+        m_pInstance.reset();
+    }
+    /**
      * @brief getMainFont16
      * @return
      */

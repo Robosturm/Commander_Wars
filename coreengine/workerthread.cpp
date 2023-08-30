@@ -31,6 +31,7 @@
 #include "resource_management/shoploader.h"
 #include "resource_management/movementplanneraddinmanager.h"
 #include "resource_management/uimanager.h"
+#include "resource_management/fontmanager.h"
 #include "wiki/wikidatabase.h"
 
 #include "network/mainserver.h"
@@ -48,8 +49,56 @@ WorkerThread::WorkerThread()
     connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigShowMainwindow, this, &WorkerThread::showMainwindow, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigStartSlaveGame, this, &WorkerThread::startSlaveGame, Qt::QueuedConnection);
-    connect(Mainapp::getWorkerthread(), &QThread::finished, this, &WorkerThread::onQuit);
     moveToThread(Mainapp::getWorkerthread());
+}
+
+WorkerThread::~WorkerThread()
+{
+    CONSOLE_PRINT("Shutting down workerthread", GameConsole::eDEBUG);
+    if (MainServer::exists())
+    {
+        CONSOLE_PRINT("Shutting down game server", GameConsole::eDEBUG);
+        MainServer::getInstance()->release();
+    }
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+    pLoadingScreen->hide();
+    UiFactory::shutdown();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    if (oxygine::Stage::getStage())
+    {
+        oxygine::Stage::getStage()->cleanup();
+        for (qint32 i = 0; i < 20; ++i)
+        {
+            pInterpreter->threadProcessEvents();
+        }
+    }
+
+    AchievementManager::getInstance()->release();
+    UiManager::getInstance()->release();
+    MovementPlannerAddInManager::getInstance()->release();
+    ShopLoader::getInstance()->release();
+    WikiDatabase::getInstance()->release();
+    COPerkManager::getInstance()->release();
+    BattleAnimationManager::getInstance()->release();
+    WeaponManager::getInstance()->release();
+    UnitSpriteManager::getInstance()->release();
+    TerrainManager::getInstance()->release();
+    MovementTableManager::getInstance()->release();
+    GameRuleManager::getInstance()->release();
+    GameManager::getInstance()->release();
+    COSpriteManager::getInstance()->release();
+    BuildingSpriteManager::getInstance()->release();
+    FontManager::getInstance()->release();
+
+    Player::releaseStaticData();
+    Mainapp::getAiProcessPipe().quit();
+    GameConsole::getInstance()->release();
+    pInterpreter->threadProcessEvents();
+    Interpreter::release();
+    for (qint32 i = 0; i < 20; ++i)
+    {
+        QCoreApplication::processEvents();
+    }
 }
 
 void WorkerThread::start()
@@ -181,34 +230,6 @@ void WorkerThread::showMainwindow()
 bool WorkerThread::getStarted() const
 {
     return m_started;
-}
-
-void WorkerThread::onQuit()
-{
-    CONSOLE_PRINT("Shutting down workerthread", GameConsole::eDEBUG);
-    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-    pLoadingScreen->hide();
-    UiFactory::shutdown();
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    if (oxygine::Stage::getStage())
-    {
-        oxygine::Stage::getStage()->cleanup();
-        for (qint32 i = 0; i < 20; ++i)
-        {
-            pInterpreter->threadProcessEvents();
-        }
-    }
-    GameAnimationFactory::getInstance()->release();
-    COSpriteManager::getInstance()->release();
-    Player::releaseStaticData();
-    Mainapp::getAiProcessPipe().quit();
-    GameConsole::getInstance()->release();
-    pInterpreter->threadProcessEvents();
-    Interpreter::release();
-    for (qint32 i = 0; i < 20; ++i)
-    {
-        QCoreApplication::processEvents();
-    }
 }
 
 void WorkerThread::startSlaveGame()

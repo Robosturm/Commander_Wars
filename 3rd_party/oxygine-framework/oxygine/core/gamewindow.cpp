@@ -55,7 +55,7 @@ namespace oxygine
         m_timer.stop();
         rsCache().reset();
         rsCache().setDriver(nullptr);
-        MaterialCache::mc().clear();
+        MaterialCache::mc().release();
         STDRenderer::release();
         RenderDelegate::instance.reset();
         VideoDriver::instance.reset();

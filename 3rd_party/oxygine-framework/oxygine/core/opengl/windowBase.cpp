@@ -80,7 +80,7 @@ namespace oxygine
     void WindowBase::paintGL()
     {
         // check for termination
-        if (m_quit)
+        if (m_quit && !m_terminating)
         {
             m_terminating = true;
             CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);

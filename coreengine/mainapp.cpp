@@ -861,15 +861,11 @@ void Mainapp::onQuit()
     QCoreApplication::processEvents();
     if (m_Worker != nullptr)
     {
+
         m_Worker = nullptr;
     }
     if (m_Workerthread->isRunning())
     {
-        if (MainServer::exists())
-        {
-            CONSOLE_PRINT("Shutting down game server", GameConsole::eDEBUG);
-            MainServer::getInstance()->release();
-        }
         m_Workerthread->quit();
         while (!m_Workerthread->wait(1))
         {

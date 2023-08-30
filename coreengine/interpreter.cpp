@@ -23,7 +23,6 @@ QString Interpreter::m_runtimeData;
 
 Interpreter* Interpreter::createInstance()
 {
-
     if (m_pInstance.get() == nullptr)
     {
         m_pOwner = QThread::currentThread();

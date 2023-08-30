@@ -24,7 +24,6 @@ namespace oxygine
         {
             case ep_show_error:
                 CONSOLE_PRINT(message, GameConsole::eERROR);
-                Q_ASSERT(false);
                 break;
             case ep_show_warning:
                 CONSOLE_PRINT_MODULE(message, GameConsole::eWARNING, module);

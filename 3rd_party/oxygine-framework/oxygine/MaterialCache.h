@@ -30,6 +30,10 @@ public:
     void removeUnused();
     qint32 getSize();
     static MaterialCache& mc();
+    static void release()
+    {
+        mcache.reset();
+    }
 protected:
     spMaterial clone_(const Material& other);
     void removeUnusedNoLock();

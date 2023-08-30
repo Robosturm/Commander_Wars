@@ -83,6 +83,13 @@ public:
         return m_loadedRessources;
     }
     bool getLoaded() const;
+    /**
+     * @brief release
+     */
+    void release()
+    {
+        m_pInstance.reset();
+    }
 
 protected:
     explicit RessourceManagement(QString resPath, QString scriptPath, bool raiseErrors = true);

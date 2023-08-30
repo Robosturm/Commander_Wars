@@ -18,11 +18,6 @@ COSpriteManager::COSpriteManager()
     connect(this, &COSpriteManager::sigLoadResAnim, this, &COSpriteManager::loadResAnim, Qt::QueuedConnection);
 }
 
-void COSpriteManager::release()
-{
-    m_Ressources.clear();
-}
-
 QStringList COSpriteManager::getSpriteCOIDs()
 {
     QStringList ret;

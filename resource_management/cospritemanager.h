@@ -32,10 +32,6 @@ public:
      */
     virtual oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_ignore_error) const override;
     /**
-     * @brief release
-     */
-    void release();
-    /**
      * @brief getCoGroups
      * @return
      */
