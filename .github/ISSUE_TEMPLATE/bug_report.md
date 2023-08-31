@@ -27,6 +27,7 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. iOS]
  - Version [e.g. 22]
  - Active Mods (Note: none vanilla mod problems want be investigated)
+ - Game Version [e.g. Beta 33]
 
 **Additional context**
 Add any other context about the problem here.

@@ -143,7 +143,7 @@ var Constructor = function()
         // the engine takes care of checking the path in the correct order and cutting the path.
         if ((targetFieldUnit !== null &&
              targetFieldUnit.isStealthed(moveUnit.getOwner()) &&
-             !targetFieldUnit.getIgnoreUnitCollision()) ||
+             !moveUnit.getIgnoreUnitCollision()) ||
              moveCost < 0)
         {
             return true;
