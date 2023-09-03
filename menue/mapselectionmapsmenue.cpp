@@ -371,6 +371,7 @@ void MapSelectionMapsMenue::ruleSelectionSizeChanged()
 
 void MapSelectionMapsMenue::showPlayerSelection(bool relaunchedLobby)
 {
+    CONSOLE_PRINT("MapSelectionMapsMenue::showPlayerSelection relaunched=" + QString::number(relaunchedLobby), GameConsole::eDEBUG);
     m_pButtonStart->setVisible(true);
     m_pButtonNext->setVisible(false);
     m_pButtonSaveMap->setVisible(true);

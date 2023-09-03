@@ -111,7 +111,9 @@ void Multiplayermenu::initClientAndWaitForConnection()
     if (m_networkMode == NetworkMode::Client)
     {
         m_pReadyAndLeave->setVisible(true);
+        Mainapp::getInstance()->pauseRendering();
         oxygine::safeSpCast<Label>(m_pButtonStart->getFirstChild())->setHtmlText(tr("Ready"));
+        Mainapp::getInstance()->continueRendering();
     }
     else if (m_networkMode == NetworkMode::Observer)
     {
@@ -329,6 +331,8 @@ void Multiplayermenu::loadSaveGame(QString filename)
             m_saveGame = true;
             m_pPlayerSelection->setSaveGame(m_saveGame);
             m_MapSelectionStep = MapSelectionStep::selectRules;
+
+
             buttonNext();
         }
     }    
@@ -1497,18 +1501,19 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     mods = Filesupport::readVectorList<QString, QList>(stream);
     Filesupport::readByteArray(stream); // minimap data
     spGameMap pMap = MemoryManagement::create<GameMap, QDataStream &, bool>(stream, m_saveGame);
-    stream >> m_saveGame;    
-    CONSOLE_PRINT("Is save game" + QString::number(m_saveGame), GameConsole::eDEBUG);
+    stream >> m_saveGame;
+    CONSOLE_PRINT("Is save game " + QString::number(m_saveGame), GameConsole::eDEBUG);
     m_pPlayerSelection->setSaveGame(m_saveGame);
     m_pMapSelectionView->setCurrentMap(pMap);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
     m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
     m_pPlayerSelection->setIsServerGame(true);
-    loadMultiplayerMap();
+    loadMultiplayerMap(m_saveGame);
     createChat();
     // open all players
     if (m_saveGame)
     {
+        CONSOLE_PRINT("Reopening all human players", GameConsole::eDEBUG);
         for (qint32 i = 0; i < pMap->getPlayerCount(); ++i)
         {
             if (pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes::AiTypes_Human)
@@ -1519,6 +1524,8 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     }
     else
     {
+
+        CONSOLE_PRINT("Reopening player 1", GameConsole::eDEBUG);
         m_pPlayerSelection->setPlayerAi(0, GameEnums::AiTypes::AiTypes_Open, "");
     }
     sendSlaveReady();
@@ -1555,11 +1562,14 @@ void Multiplayermenu::slotCancelHostConnection()
 
 void Multiplayermenu::slotHostGameLaunched()
 {
-    m_pDialogConnecting.reset();
-    // we're hosting a game so we get the same rights as a local host
-    m_pNetworkInterface->setIsServer(true);
-    createChat();
-    MapSelectionMapsMenue::buttonNext();
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        m_pDialogConnecting.reset();
+        // we're hosting a game so we get the same rights as a local host
+        m_pNetworkInterface->setIsServer(true);
+        createChat();
+        MapSelectionMapsMenue::buttonNext();
+    }
 }
 
 spGameMap Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream)
@@ -1621,7 +1631,8 @@ QString Multiplayermenu::getNewFileName(QString filename)
 }
 
 void Multiplayermenu::loadMultiplayerMap(bool relaunchedLobby)
-{    
+{
+    CONSOLE_PRINT("Multiplayermenu::loadMultiplayerMap", GameConsole::eDEBUG);
     m_pMapSelectionView->getCurrentMap()->getGameScript()->init();
     m_pMapSelectionView->updateMapData();
     showPlayerSelection(relaunchedLobby);
@@ -2087,6 +2098,7 @@ void Multiplayermenu::markGameReady(bool fixed)
 
 void Multiplayermenu::changeButtonText()
 {
+    Mainapp::getInstance()->pauseRendering();
     if (m_pPlayerSelection->getPlayerReady())
     {
         oxygine::safeSpCast<Label>(m_pButtonStart->getFirstChild())->setHtmlText(tr("Not Ready"));
@@ -2095,6 +2107,7 @@ void Multiplayermenu::changeButtonText()
     {
         oxygine::safeSpCast<Label>(m_pButtonStart->getFirstChild())->setHtmlText(tr("Ready"));
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Multiplayermenu::startCountdown()

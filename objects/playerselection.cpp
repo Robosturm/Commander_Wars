@@ -175,6 +175,7 @@ void PlayerSelection::setPlayerAiName(qint32 player, QString name)
     if (player >= 0 &&
         player < m_pMap->getPlayerCount())
     {
+        CONSOLE_PRINT("PlayerSelection::setPlayerAiName player=" + QString::number(player) + " name=" + name, GameConsole::eDEBUG);
         m_pMap->getPlayer(player)->setPlayerNameId(name);
         DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
         if (pDropDownmenu != nullptr)
@@ -506,16 +507,43 @@ void PlayerSelection::updateInitialState(bool relaunchedLobby)
     // add player selection information
     QStringList aiList = getAiNames();
     QStringList defaultAiList = getDefaultAiNames();
-    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    if (m_saveGame && m_pNetworkInterface.get() != nullptr && !Mainapp::getSlave())
     {
-        Player* pPlayer = m_pMap->getPlayer(i);
-        DropDownmenu* pPlayerAi = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
-        qint32 ai = static_cast<qint32>(pPlayer->getControlType());
-        // update co view
-        selectInitialCos(i);
-        // update ai view
-        selectInitialAi(relaunchedLobby, i, pPlayerAi, ai, aiList, defaultAiList);
-        createInitialAi(pPlayerAi, ai, i);
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            DropDownmenu* pPlayerAi = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
+            qint32 ai = pPlayer->getControlType();
+            if ((ai == GameEnums::AiTypes_Human &&
+                 Settings::getInstance()->getUsername() != pPlayer->getPlayerNameId()) ||
+                ai == GameEnums::AiTypes_Open)
+            {
+                if (pPlayerAi != nullptr)
+                {
+                    pPlayerAi->setCurrentItem(aiList.size() - 1);
+                    createInitialAi(pPlayerAi, GameEnums::AiTypes_Open, i);
+                }
+            }
+            else
+            {
+                createInitialAi(pPlayerAi, ai, i);
+            }
+        }
+    }
+    else
+    {
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            DropDownmenu* pPlayerAi = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
+            auto aiType = pPlayer->getControlType();
+            qint32 ai = static_cast<qint32>(aiType);
+            // update co view
+            selectInitialCos(i);
+            // update ai view
+            selectInitialAi(relaunchedLobby, i, pPlayerAi, ai, aiList, defaultAiList);
+            createInitialAi(pPlayerAi, ai, i);
+        }
     }
 }
 
@@ -552,10 +580,15 @@ void PlayerSelection::selectInitialAi(bool relaunchedLobby, qint32 player, DropD
     }
     else if (m_pNetworkInterface.get() != nullptr)
     {
-        if (m_pNetworkInterface->getIsServer())
+        if (getIsServerNetworkInterface())
         {
             if (m_saveGame)
             {
+                if (ai == GameEnums::AiTypes_Human &&
+                    Settings::getInstance()->getUsername() != pPlayer->getPlayerNameId())
+                {
+                    ai = GameEnums::AiTypes_Open;
+                }
                 if (ai == GameEnums::AiTypes_ProxyAi ||
                     ai == GameEnums::AiTypes_Open)
                 {
@@ -1635,7 +1668,8 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             {
                 auto* pPlayer = m_pMap->getPlayer(i);
                 if (pPlayer->getPlayerNameId() == username &&
-                    pPlayer->getSocketId() == 0)
+                    pPlayer->getSocketId() == 0 &&
+                    pPlayer->getControlType() == GameEnums::AiTypes::AiTypes_Human)
                 {
                     CONSOLE_PRINT("Player " + QString::number(i) + " username " + username + " rejoined lobby game.", GameConsole::eDEBUG);
                     remoteChangePlayerOwner(socketID, username, i, eAiType);
@@ -1644,7 +1678,9 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
                 else if (Mainapp::getSlave() &&
                          pPlayer->getSocketId() == 0 &&
                          pPlayer->getBaseGameInput() != nullptr &&
-                         pPlayer->getControlType() > GameEnums::AiTypes::AiTypes_Human)
+                         pPlayer->getControlType() > GameEnums::AiTypes::AiTypes_Human &&
+                         pPlayer->getControlType() != GameEnums::AiTypes::AiTypes_Open &&
+                         pPlayer->getControlType() != GameEnums::AiTypes::AiTypes_Closed)
                 {
                     CONSOLE_PRINT("Slave player " + QString::number(i) + " ai " + pPlayer->getPlayerNameId() + " control type " + QString::number(pPlayer->getControlType()) + " transferred control to socket " + QString::number(socketID), GameConsole::eDEBUG);
                     remoteChangePlayerOwner(socketID, pPlayer->getPlayerNameId(), i, pPlayer->getControlType(), true, true);
@@ -1894,7 +1930,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                     CONSOLE_PRINT("Disconnecting cause controlling no player and isn't an observer", GameConsole::eDEBUG);
                     emit sigDisconnect();
                 }
-                if (m_isServerGame)
+                if (m_isServerGame && !setup)
                 {
                     if (aiType != GameEnums::AiTypes::AiTypes_Open)
                     {
@@ -1941,10 +1977,18 @@ void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketI
 
 void PlayerSelection::setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QString name)
 {
+    CONSOLE_PRINT("PlayerSelection::setPlayerAi player=" + QString::number(player) + " ai=" + QString::number(eAiType) + " name=" + name, GameConsole::eDEBUG);
     DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
     if (eAiType != GameEnums::AiTypes_Human)
     {
-        if (eAiType == GameEnums::AiTypes_Open)
+        if (eAiType == GameEnums::AiTypes_Closed)
+        {
+            if (pDropDownmenu != nullptr)
+            {
+                pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 2);
+            }
+        }
+        else if (eAiType == GameEnums::AiTypes_Open)
         {
             if (pDropDownmenu != nullptr)
             {

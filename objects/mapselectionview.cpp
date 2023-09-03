@@ -474,6 +474,7 @@ spMapSelection MapSelectionView::getMapSelection() const
 
 void MapSelectionView::updateMapData()
 {
+    CONSOLE_PRINT("MapSelectionView::updateMapData", GameConsole::eDEBUG);
     m_MapName->setHtmlText(m_pCurrentMap->getMapName());
     m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
     m_MapPlayerCount->setHtmlText(QString::number(m_pCurrentMap->getPlayerCount()));

@@ -197,7 +197,7 @@ QString SelectKey::getKeycodeText(Qt::Key code)
 
 void SelectKey::setKeycode(Qt::Key code)
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     QString codeText = getKeycodeText(code);
     if (codeText != tr("Unknown"))
     {
@@ -218,4 +218,5 @@ void SelectKey::setKeycode(Qt::Key code)
         setKeycode(m_currentCode);
     }
     looseFocusInternal();
+    Mainapp::getInstance()->continueRendering();
 }
