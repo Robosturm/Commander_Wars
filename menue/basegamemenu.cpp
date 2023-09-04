@@ -299,6 +299,44 @@ void BaseGamemenu::autoScroll(QPoint cursorPosition)
 #endif
 }
 
+void BaseGamemenu::autoFocus()
+{
+#ifdef GRAPHICSUPPORT
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
+    QRect availableSize(m_autoScrollBorder.x(),
+                        m_autoScrollBorder.y(),
+                        oxygine::Stage::getStage()->getWidth() - m_autoScrollBorder.width() - m_autoScrollBorder.x() - 50,
+                        oxygine::Stage::getStage()->getHeight() - m_autoScrollBorder.height() - m_autoScrollBorder.y());
+    float zoom = GameMap::MaxZoomLimit;
+    const auto imageSize = GameMap::getImageSize();
+    qint32 mapWidth = zoom * imageSize * m_pMap->getMapWidth();
+    qint32 mapHeight = zoom * imageSize * m_pMap->getMapHeight();
+    while (zoom >= GameMap::MinZoomLimit)
+    {
+        if (mapWidth <= availableSize.width() &&
+            mapHeight <= availableSize.height())
+        {
+            break;
+        }
+        else
+        {
+            zoom /= GameMap::ZoomModifier;
+            mapWidth = zoom * imageSize * m_pMap->getMapWidth();
+            mapHeight = zoom * imageSize * m_pMap->getMapHeight();
+        }
+    }
+    m_pMap->setScale(zoom);
+    updateSlidingActorSize();
+    const qint32 x = m_autoScrollBorder.x() + (availableSize.width() - mapWidth) / 2 - m_pMap->getX() - m_mapSliding->getX();
+    const qint32 y = m_autoScrollBorder.y() + (availableSize.height() - mapHeight) / 2 - m_pMap->getY() - m_mapSliding->getY();
+    m_mapSlidingActor->setPosition(x, y);
+    pApp->continueRendering();
+    emit m_pMap->sigZoomChanged(zoom);
+
+#endif
+}
+
 void BaseGamemenu::MoveMap(qint32 x, qint32 y)
 {    
     if (m_pMap.get() != nullptr)

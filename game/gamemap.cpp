@@ -1209,6 +1209,14 @@ void GameMap::moveMap(qint32 x, qint32 y)
     }
 }
 
+void GameMap::autoFocus()
+{
+    if (m_pMenu != nullptr)
+    {
+        m_pMenu->autoFocus();
+    }
+}
+
 void GameMap::limitPosition(BaseGamemenu* pMenu, qint32 & newX, qint32 & newY)
 {
     auto bounds = pMenu->getMapSliding()->getDragBounds();
@@ -1235,22 +1243,22 @@ void GameMap::setZoom(qint32 zoom)
     float curZoom = getScaleX();
     if (zoom > 0)
     {
-        curZoom *= 2.0f;
+        curZoom *= ZoomModifier;
     }
     else
     {
-        curZoom /= 2.0f;
+        curZoom /= ZoomModifier;
     }
     // limit zoom
 
-    float minLimit = 1.0f / 8.0f;
-    if (curZoom > 16.0f)
+
+    if (curZoom > MaxZoomLimit)
     {
-        curZoom = 16.0f;
+        curZoom = MaxZoomLimit;
     }
-    else if (curZoom < minLimit)
+    else if (curZoom < MinZoomLimit)
     {
-        curZoom = minLimit;
+        curZoom = MinZoomLimit;
     }
     else
     {

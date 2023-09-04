@@ -58,6 +58,7 @@ public:
     Q_INVOKABLE GameMap* getMap() const;
     Q_INVOKABLE void centerMapOnCursor();
     Q_INVOKABLE void changeBackground(QString background);
+    Q_INVOKABLE void autoFocus();
 signals:
     void sigMouseWheel(qint32 direction);
     void sigRightClick(qint32 x, qint32 y);
