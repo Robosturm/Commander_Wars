@@ -98,6 +98,9 @@ signals:
     void sigUpdateUnitView();
     void sigChangeScrollValue(qint32 dir);
     void sigPaletteChanged(qint32 newPalette);
+    void sigSelectTerrain(qint32 terrainID);
+    void sigSelectBuilding(qint32 buildingID);
+    void sigSelectUnit(qint32 unitID);
 public slots:
     void updateSelectedPlayer();
     void changeSelectedPlayer(qint32 player);
@@ -106,22 +109,23 @@ public slots:
     void updateUnitView();
     void changeScrollValue(qint32 dir);
     void onPaletteChanged(qint32 newPalette);
-private:
+private slots:
     /**
      * @brief selectBuilding
      * @param building
      */
-    void selectBuilding(qint32 building);
+    void slotSelectBuilding(qint32 building);
     /**
      * @brief selectUnit
      * @param unit
      */
-    void selectUnit(qint32 unit);
+    void slotSelectUnit(qint32 unit);
     /**
      * @brief selectTerrain
      * @param terrain
      */
-    void selectTerrain(qint32 terrain);
+    void slotSelectTerrain(qint32 terrain);
+private:
     /**
      * @brief getPosX
      * @param xCounter
@@ -231,6 +235,7 @@ private:
      * @brief current selected player
      */
     Player* m_currentPlayer{nullptr};
+    qint32 m_currentPlayerIdx{0};
     qint32 m_playerStartIndex{0};
     QVector<spBuilding> m_Players;
     GameMap* m_pMap{nullptr};
