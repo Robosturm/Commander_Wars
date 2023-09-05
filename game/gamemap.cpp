@@ -1243,11 +1243,11 @@ void GameMap::setZoom(qint32 zoom)
     float curZoom = getScaleX();
     if (zoom > 0)
     {
-        curZoom *= ZoomModifier;
+        curZoom *= Settings::getInstance()->getZoomModifier();
     }
     else
     {
-        curZoom /= ZoomModifier;
+        curZoom /= Settings::getInstance()->getZoomModifier();
     }
     // limit zoom
 

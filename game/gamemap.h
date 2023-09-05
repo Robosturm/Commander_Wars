@@ -38,7 +38,6 @@ public:
     static constexpr qint32 defaultImageSize = 32;
     static constexpr float MinZoomLimit = 1.0f / 8.0f;
     static constexpr float MaxZoomLimit = 16.0f;
-    static constexpr float ZoomModifier = 2.0f;
     static const char* const PLAINS;
     /**
      * @brief The MapHeaderInfo struct read from the filesystem

@@ -48,6 +48,16 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
+float Settings::getZoomModifier() const
+{
+    return m_zoomModifier;
+}
+
+void Settings::setZoomModifier(float newZoomModifier)
+{
+    m_zoomModifier = newZoomModifier;
+}
+
 float Settings::getGameScale()
 {
     return m_gameScale;
@@ -1140,6 +1150,7 @@ void Settings::setup()
         MemoryManagement::create<Value<bool>>("Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true),
         MemoryManagement::create<Value<float>>("Resolution", "IngameMenuScaling", &m_ingameMenuScaling, 1.0f, 0.5f, 10.0f),
         MemoryManagement::create<Value<float>>("Resolution", "GameScale", &m_gameScale, 1.0f, 0.125f, 16.0f),
+        MemoryManagement::create<Value<float>>("Resolution", "ZoomModifier", &m_zoomModifier, 2.0f, 1.1f, 2.0f),
 
         // general
         MemoryManagement::create<Value<QString>>("General", "language", &m_language, "en", "", ""),

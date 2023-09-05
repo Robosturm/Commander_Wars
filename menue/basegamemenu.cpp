@@ -321,7 +321,7 @@ void BaseGamemenu::autoFocus()
         }
         else
         {
-            zoom /= GameMap::ZoomModifier;
+            zoom /= Settings::getInstance()->getZoomModifier();
             mapWidth = zoom * imageSize * m_pMap->getMapWidth();
             mapHeight = zoom * imageSize * m_pMap->getMapHeight();
         }

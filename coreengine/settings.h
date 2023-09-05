@@ -746,6 +746,17 @@ public:
      * @return
      */
     Q_INVOKABLE qint32 getCurrentLanguageIndex();
+    /**
+     * @brief getZoomModifier
+     * @return
+     */
+    Q_INVOKABLE float getZoomModifier() const;
+    /**
+     * @brief setZoomModifier
+     * @param newZoomModifier
+     */
+    Q_INVOKABLE void setZoomModifier(float newZoomModifier);
+
 private:
     friend class MemoryManagement;
     explicit Settings();
@@ -769,6 +780,7 @@ private:
     float m_ingameMenuScaling{1.0f};
     bool m_automaticUpdates{true};
     float m_gameScale{1.0f};
+    float m_zoomModifier{2.0f};
 
     bool m_borderless{true};
     bool m_fullscreen{false};
