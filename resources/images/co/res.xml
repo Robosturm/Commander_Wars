@@ -574,21 +574,25 @@
         <!-- gs -->
         <image file="gs/co_meiyo+nrm.png" />
         <image file="gs/co_meiyo+info.png" />
+        <image file="gs/co_meiyo+mini.png" />
         <image file="gs/co_meiyo+face.png" cols = "3" />
         <image file="gs/co_meiyo+alt+nrm.png" />
         <image file="gs/co_meiyo+alt+info.png" />
         <image file="gs/co_meiyo+alt+face.png" cols = "3" />
         <image file="gs/co_minamoto+nrm.png" />
         <image file="gs/co_minamoto+info.png" />
+        <image file="gs/co_minamoto+mini.png" />
         <image file="gs/co_minamoto+face.png" cols = "3" />
         <image file="gs/co_sanjuro+nrm.png" />
         <image file="gs/co_sanjuro+info.png" />
+        <image file="gs/co_sanjuro+mini.png" />
         <image file="gs/co_sanjuro+face.png" cols = "3" />
         <image file="gs/co_sanjuro+alt+nrm.png" />
         <image file="gs/co_sanjuro+alt+info.png" />
         <image file="gs/co_sanjuro+alt+face.png" cols = "3" />
         <image file="gs/co_xavier+nrm.png" />
         <image file="gs/co_xavier+info.png" />
+        <image file="gs/co_xavier+mini.png" />
         <image file="gs/co_xavier+face.png" cols = "3" />
         <image file="gs/co_xavier+alt+nrm.png" />
         <image file="gs/co_xavier+alt+info.png" />
@@ -597,12 +601,14 @@
         <!-- pf -->
         <image file="pf/co_aira+nrm.png" />
         <image file="pf/co_aira+info.png" />
+        <image file="pf/co_aira+mini.png" />
         <image file="pf/co_aira+face.png" cols = "3" />        
         <image file="pf/co_aira+alt+nrm.png" />
         <image file="pf/co_aira+alt+info.png" />
         <image file="pf/co_aira+alt+face.png" cols = "3" />        
         <image file="pf/co_amy+nrm.png" />
         <image file="pf/co_amy+info.png" />
+        <image file="pf/co_amy+mini.png" />
         <image file="pf/co_amy+face.png" cols = "3" />
         <image file="pf/co_amy+alt+nrm.png" />
         <image file="pf/co_amy+alt+info.png" />
@@ -615,12 +621,14 @@
         <image file="pf/co_mina+alt+face.png" cols = "3" />
         <image file="pf/co_nana+nrm.png" />
         <image file="pf/co_nana+info.png" />
+        <image file="pf/co_nana+mini.png" />
         <image file="pf/co_nana+face.png" cols = "3" />        
         <image file="pf/co_nana+alt+nrm.png" />
         <image file="pf/co_nana+alt+info.png" />
         <image file="pf/co_nana+alt+face.png" cols = "3" />        
         <image file="pf/co_alexis+nrm.png" />
         <image file="pf/co_alexis+info.png" />
+        <image file="pf/co_alexis+mini.png" />
         <image file="pf/co_alexis+face.png" cols = "3" />
         <image file="pf/co_alexis+alt+nrm.png" />
         <image file="pf/co_alexis+alt+info.png" />
@@ -632,24 +640,28 @@
         <!-- ti -->
         <image file="ti/co_conrad+nrm.png" />
         <image file="ti/co_conrad+info.png" />
+        <image file="ti/co_conrad+mini.png" />
         <image file="ti/co_conrad+face.png" cols = "3" />
         <image file="ti/co_conrad+alt+nrm.png" />
         <image file="ti/co_conrad+alt+info.png" />
         <image file="ti/co_conrad+alt+face.png" cols = "3" />
         <image file="ti/co_joey+nrm.png" />
         <image file="ti/co_joey+info.png" />
+        <image file="ti/co_joey+mini.png" />
         <image file="ti/co_joey+face.png" cols = "3" />
         <image file="ti/co_joey+alt+nrm.png" />
         <image file="ti/co_joey+alt+info.png" />
         <image file="ti/co_joey+alt+face.png" cols = "3" />
         <image file="ti/co_walter+nrm.png" />
         <image file="ti/co_walter+info.png" />
+        <image file="ti/co_walter+mini.png" />
         <image file="ti/co_walter+face.png" cols = "3" />    
         <image file="ti/co_walter+alt+nrm.png" />
         <image file="ti/co_walter+alt+info.png" />
         <image file="ti/co_walter+alt+face.png" cols = "3" />    
         <image file="ti/co_cassidy+nrm.png" />
         <image file="ti/co_cassidy+info.png" />
+        <image file="ti/co_cassidy+mini.png" />
         <image file="ti/co_cassidy+face.png" cols = "3" />        
         <image file="ti/co_cassidy+alt+nrm.png" />
         <image file="ti/co_cassidy+alt+info.png" />
@@ -659,6 +671,7 @@
         <image file="ti/co_greyfield+face.png" cols = "3" />
         <image file="ti/co_greyfield+nrm.png" scale_factor = "0.75" />
         <image file="ti/co_waylon+info.png" />
+        <image file="ti/co_waylon+mini.png" />
         <image file="ti/co_waylon+face.png" cols = "3" />
         <image file="ti/co_waylon+nrm.png" scale_factor = "0.75" />
         <image file="ti/co_koshi+nrm.png" />
@@ -854,15 +867,19 @@
         <!-- MA -->
         <image file="ma/co_napoleon+nrm.png" />
         <image file="ma/co_napoleon+info.png" />
+        <image file="ma/co_napoleon+mini.png" />
         <image file="ma/co_napoleon+face.png" cols = "3" />
         <image file="ma/co_robosturm+nrm.png" />
         <image file="ma/co_robosturm+info.png" />
+        <image file="ma/co_robosturm+mini.png" />
         <image file="ma/co_robosturm+face.png" cols = "3" />
         <image file="ma/co_roboandy+nrm.png" />
+        <image file="ma/co_roboandy+mini.png" />
         <image file="ma/co_roboandy+info.png" />
         <image file="ma/co_roboandy+face.png" cols = "3" />
         <image file="ma/co_epoch+nrm.png" />
         <image file="ma/co_epoch+info.png" />
+        <image file="ma/co_epoch+mini.png" />
         <image file="ma/co_epoch+face.png" cols = "3" />
         <image file="ma/co_epoch+alt+nrm.png" />
         <image file="ma/co_epoch+alt+info.png" />

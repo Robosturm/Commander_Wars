@@ -5098,5 +5098,23 @@
         <file>customTerrainImages/dor_ruin+d7_and_e3.png</file>
         <file>customTerrainImages/dor_ruin+d8.png</file>
         <file>customTerrainImages/dor_ruin+d9.png</file>
+        <file>resources/images/co/gs/co_meiyo+mini.png</file>
+        <file>resources/images/co/gs/co_minamoto+mini.png</file>
+        <file>resources/images/co/gs/co_sanjuro+mini.png</file>
+        <file>resources/images/co/gs/co_xavier+mini.png</file>
+        <file>resources/images/co/ma/co_epoch+mini.png</file>
+        <file>resources/images/co/ma/co_napoleon+mini.png</file>
+        <file>resources/images/co/ma/co_roboandy+mini.png</file>
+        <file>resources/images/co/ma/co_robosturm+mini.png</file>
+        <file>resources/images/co/pf/co_aira+mini.png</file>
+        <file>resources/images/co/pf/co_alexis+mini.png</file>
+        <file>resources/images/co/pf/co_amy+mini.png</file>
+        <file>resources/images/co/pf/co_mina+mini.png</file>
+        <file>resources/images/co/pf/co_nana+mini.png</file>
+        <file>resources/images/co/ti/co_cassidy+mini.png</file>
+        <file>resources/images/co/ti/co_conrad+mini.png</file>
+        <file>resources/images/co/ti/co_joey+mini.png</file>
+        <file>resources/images/co/ti/co_walter+mini.png</file>
+        <file>resources/images/co/ti/co_waylon+mini.png</file>
     </qresource>
 </RCC>

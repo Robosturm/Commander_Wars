@@ -210,8 +210,8 @@ endif()
 add_definitions(
     -DVERSION_MAJOR=0
     -DVERSION_MINOR=33
-    -DVERSION_REVISION=1
-    -DVERSION_SUFFIX="main"
+    -DVERSION_REVISION=2
+    -DVERSION_SUFFIX="debug"
     -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     )
 
