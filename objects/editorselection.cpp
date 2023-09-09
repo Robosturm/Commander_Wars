@@ -459,6 +459,11 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
     {
         m_currentPlayer = nullptr;
     }
+    else if (player >= m_Players.size())
+    {
+        m_currentPlayerIdx = 0;
+        m_currentPlayer = m_Players.at(0)->getOwner();
+    }
     else
     {
         m_currentPlayer = m_Players.at(player + 1)->getOwner();

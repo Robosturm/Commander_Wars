@@ -59,18 +59,28 @@ void GameMap::extendMap(const QString mapFile, GameEnums::Directions direction)
             {
                 for (qint32 x = 0; x < endWidth; ++x)
                 {
-                    spTerrain pTerrain = pMap->m_fields[y][x];
-                    pMap->m_fields[y][x] = spTerrain();
-
                     qint32 targetX = x + offsetX;
                     qint32 targetY = y + offsetY;
-                    m_fields[targetY][targetX]->detach();
-                    pTerrain->setX(targetX);
-                    pTerrain->setY(targetY);
-                    m_fields[targetY][targetX] = pTerrain;
-                    m_rowSprites[targetY]->addChild(pTerrain);
-                    pTerrain->setPosition(targetX * m_imagesize, targetY * m_imagesize);
-                    pTerrain->setMapForExtending(this);
+                    if (pMap->onMap(x, y))
+                    {
+                        spTerrain pTerrain = pMap->m_fields[y][x];
+                        pMap->m_fields[y][x] = spTerrain();
+                        m_fields[targetY][targetX]->detach();
+                        pTerrain->setX(targetX);
+                        pTerrain->setY(targetY);
+                        m_fields[targetY][targetX] = pTerrain;
+                        m_rowSprites[targetY]->addChild(pTerrain);
+                        pTerrain->setPosition(targetX * m_imagesize, targetY * m_imagesize);
+                        pTerrain->setMapForExtending(this);
+                    }
+                    else
+                    {
+                        spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, targetX, targetY, "", this);
+                        m_rowSprites[y]->addChild(pTerrain);
+                        m_fields[targetY][targetX] = pTerrain;
+                        m_rowSprites[targetY]->addChild(pTerrain);
+                        pTerrain->setPosition(targetX * m_imagesize, targetY * m_imagesize);
+                    }
                 }
             }
         }
