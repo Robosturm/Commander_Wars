@@ -49,9 +49,9 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     setObjectName("GameMap");
 #endif
     Interpreter::setCppOwnerShip(this);
-    m_headerInfo.m_mapAuthor = Settings::getInstance()->getUsername();
     loadMapData();
     newMap(width, heigth, playerCount);
+    m_headerInfo.m_mapAuthor = Settings::getInstance()->getUsername();
     m_loaded = true;
 }
 

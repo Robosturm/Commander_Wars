@@ -671,18 +671,17 @@ void EditorMenue::showNewMap()
 
 void EditorMenue::showEditMap()
 {
-    spGameMap pGameMap = m_pMap;
     MapEditDialog::MapEditInfo info;
-    info.mapName = pGameMap->getMapName();
-    info.author = pGameMap->getMapAuthor();
-    info.description = pGameMap->getMapDescription();
-    info.scriptFile = pGameMap->getGameScript()->getScriptFile();
-    info.mapWidth = pGameMap->getMapWidth();
-    info.mapHeigth = pGameMap->getMapHeight();
-    info.playerCount = pGameMap->getPlayerCount();
-    info.turnLimit = pGameMap->getGameRecorder()->getMapTime();
-    info.deployLimit = pGameMap->getGameRecorder()->getDeployLimit();
-    info.mapFlags = pGameMap->getMapFlags();
+    info.mapName = m_pMap->getMapName();
+    info.author = m_pMap->getMapAuthor();
+    info.description = m_pMap->getMapDescription();
+    info.scriptFile = m_pMap->getGameScript()->getScriptFile();
+    info.mapWidth = m_pMap->getMapWidth();
+    info.mapHeigth = m_pMap->getMapHeight();
+    info.playerCount = m_pMap->getPlayerCount();
+    info.turnLimit = m_pMap->getGameRecorder()->getMapTime();
+    info.deployLimit = m_pMap->getGameRecorder()->getDeployLimit();
+    info.mapFlags = m_pMap->getMapFlags();
     spMapEditDialog mapEditDialog = MemoryManagement::create<MapEditDialog>(info, tr("Do you want to apply the map changes?"));
     connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::changeMap, Qt::QueuedConnection);
     connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -1817,12 +1816,12 @@ void EditorMenue::newMap(MapEditDialog::MapEditInfo info)
 {
     CONSOLE_PRINT("EditorMenue::newMap", GameConsole::eDEBUG);
     cleanTemp(-1);
-    
+
+    m_pMap->newMap(info.mapWidth, info.mapHeigth, info.playerCount);
     m_pMap->setMapName(info.mapName);
     m_pMap->setMapAuthor(info.author);
     m_pMap->setMapDescription(info.description);
     m_pMap->getGameScript()->setScriptFile(info.scriptFile);
-    m_pMap->newMap(info.mapWidth, info.mapHeigth, info.playerCount);
     m_pMap->setMapFlags(info.mapFlags);
     m_pMap->getGameRecorder()->setDeployLimit(info.deployLimit);
     m_pMap->getGameRecorder()->setMapTime(info.turnLimit);
