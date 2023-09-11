@@ -67,7 +67,7 @@ var Constructor = function()
         var variableName = "Active" + playerID.toString();
         var variables = rule.getVariables();
         var variable = variables.getVariable(variableName);
-        var buildings = player.getBuildingListCount("HQ");
+        var buildings = player.getBuildings("HQ");
         var size = buildings.size();
         // replace none starting hq's
         var variableHqXsName = "HqXs" + playerID.toString();

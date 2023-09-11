@@ -1,6 +1,6 @@
 var Constructor = function() { // scriptStart
     this.immediateStart = function(map) { // immediateStart
-        return false;
+        return true;
     }; // immediateStart
     this.getVictoryInfo = function(map) // victoryInfo
     {

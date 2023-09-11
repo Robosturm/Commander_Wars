@@ -474,6 +474,8 @@ void CampaignMenu::mapSelectionItemClicked(QString item)
     }
     if (info.isFile())
     {
+        m_pMapSelectionView->setCurrentFile(info.filePath());
+        m_pMapSelectionView->loadCurrentMap();
         emit sigButtonNext();
     }    
 }
@@ -501,12 +503,15 @@ void CampaignMenu::slotButtonNext()
     {
         if (pMap->getGameScript()->immediateStart())
         {
+            CONSOLE_PRINT("Leaving Campaign Menue", GameConsole::eDEBUG);
+            spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+            pMap->setVisible(false);
             pMap->initPlayersAndSelectCOs();
             pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
-            pMap->updateSprites();
+            pMap->getGameScript()->gameStart();
+            pMap->updateSprites(-1, -1, false, false);
             // start game
-            CONSOLE_PRINT("Leaving Campaign Menue", GameConsole::eDEBUG);
-            auto window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
+            spGameMenue window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
             oxygine::Stage::getStage()->addChild(window);
             oxygine::Actor::detach();
         }

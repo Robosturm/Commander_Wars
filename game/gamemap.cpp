@@ -1694,42 +1694,42 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         m_gameRules->deserializer(pStream, fast);
     }
+    if (showLoadingScreen)
+    {
+        pLoadingScreen->setProgress(tr("Loading Record"), 85);
+    }
+    if (m_headerInfo.m_Version > 3)
+    {
+        m_Recorder->deserializeObject(pStream);
+    }
+    if (showLoadingScreen)
+    {
+        pLoadingScreen->setProgress(tr("Loading scripts"), 90);
+    }
+    if (m_headerInfo.m_Version > 5)
+    {
+        m_GameScript->deserializeObject(pStream);
+    }
+    else
+    {
+        m_GameScript = MemoryManagement::create<GameScript>(this);
+    }
+    if (showLoadingScreen)
+    {
+        pLoadingScreen->setProgress(tr("Loading Campaign"), 95);
+    }
+    if (m_headerInfo.m_Version > 7)
+    {
+        bool exists = false;
+        pStream >> exists;
+        if (exists)
+        {
+            m_Campaign = MemoryManagement::create<Campaign>();
+            m_Campaign->deserializeObject(pStream);
+        }
+    }
     if (!fast)
     {
-        if (showLoadingScreen)
-        {
-            pLoadingScreen->setProgress(tr("Loading Record"), 85);
-        }
-        if (m_headerInfo.m_Version > 3)
-        {
-            m_Recorder->deserializeObject(pStream);
-        }
-        if (showLoadingScreen)
-        {
-            pLoadingScreen->setProgress(tr("Loading scripts"), 90);
-        }
-        if (m_headerInfo.m_Version > 5)
-        {
-            m_GameScript->deserializeObject(pStream);
-        }
-        else
-        {
-            m_GameScript = MemoryManagement::create<GameScript>(this);
-        }
-        if (showLoadingScreen)
-        {
-            pLoadingScreen->setProgress(tr("Loading Campaign"), 95);
-        }
-        if (m_headerInfo.m_Version > 7)
-        {
-            bool exists = false;
-            pStream >> exists;
-            if (exists)
-            {
-                m_Campaign = MemoryManagement::create<Campaign>();
-                m_Campaign->deserializeObject(pStream);
-            }
-        }
         if (m_headerInfo.m_Version > 8)
         {
             pStream >> m_mapPath;

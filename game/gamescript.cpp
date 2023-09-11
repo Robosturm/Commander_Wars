@@ -21,19 +21,6 @@ GameScript::GameScript(GameMap* pMap)
     Interpreter::setCppOwnerShip(this);
 }
 
-GameScript::~GameScript()
-{
-    if (!m_script.isEmpty())
-    {
-        CONSOLE_PRINT("Deleting gameScript", GameConsole::eDEBUG);
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        if (pInterpreter != nullptr)
-        {
-            pInterpreter->deleteObject(m_scriptName);
-        }
-    }
-}
-
 void GameScript::serializeObject(QDataStream& pStream) const
 {
     serializeObject(pStream, false);
@@ -56,13 +43,17 @@ void GameScript::deserializeObject(QDataStream& pStream)
     pStream >> version;
     pStream >> m_script;
     pStream >> m_scriptFile;
+    m_Variables.deserializeObject(pStream);
     if (!m_script.isEmpty())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->loadScript(m_script, m_scriptName);
         m_loaded = true;
     }
-    m_Variables.deserializeObject(pStream);
+    else
+    {
+        init();
+    }
 }
 
 void GameScript::init()
