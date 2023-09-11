@@ -33,6 +33,21 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Focus mute:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: mutes all sounds and music, when the game looses it focused.")</tooltip>
+                <startValue>settings.getMuteOnFcousedLost()</startValue>
+                <onEvent>settings.setMuteOnFcousedLost(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Audio Device:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

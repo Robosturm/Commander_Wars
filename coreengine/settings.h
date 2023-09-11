@@ -756,6 +756,16 @@ public:
      * @param newZoomModifier
      */
     Q_INVOKABLE void setZoomModifier(float newZoomModifier);
+    /**
+     * @brief getMuteOnFcousedLost
+     * @return
+     */
+    Q_INVOKABLE bool getMuteOnFcousedLost() const;
+    /**
+     * @brief setMuteOnFcousedLost
+     * @param newMuteOnFcousedLost
+     */
+    Q_INVOKABLE void setMuteOnFcousedLost(bool newMuteOnFcousedLost);
 
 private:
     friend class MemoryManagement;
@@ -846,6 +856,7 @@ private:
     qint32 m_SoundVolume{100};
     QVariant m_audioOutput;
     bool m_muted{false};
+    bool m_muteOnFcousedLost{true};
     // Network
     quint16 m_GamePort{9001};
     QString m_Username;
@@ -914,7 +925,7 @@ private:
     bool m_simpleDeselect{false};
     bool m_showDetailedBattleForcast{true};
     bool m_autoMoveCursor{false};
-    float m_supplyWarning{0.33f};
+    float m_supplyWarning{0.33f};    
 
     qint32 m_pauseAfterAction{0};
 

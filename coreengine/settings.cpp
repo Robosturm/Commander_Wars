@@ -48,6 +48,16 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
+bool Settings::getMuteOnFcousedLost() const
+{
+    return m_muteOnFcousedLost;
+}
+
+void Settings::setMuteOnFcousedLost(bool newMuteOnFcousedLost)
+{
+    m_muteOnFcousedLost = newMuteOnFcousedLost;
+}
+
 float Settings::getZoomModifier() const
 {
     return m_zoomModifier;
@@ -1217,6 +1227,8 @@ void Settings::setup()
         MemoryManagement::create<Value<qint32>>("Sound", "MusicVolume", &m_MusicVolume, 80, 0, 100),
         MemoryManagement::create<Value<qint32>>("Sound", "SoundVolume", &m_SoundVolume, 100, 0, 100),
         MemoryManagement::create<Value<bool>>("Sound", "Muted", &m_muted, false, false, true),
+        MemoryManagement::create<Value<bool>>("Sound", "MuteOnFocusedLost", &m_muteOnFcousedLost, true, false, true),
+
 #ifdef AUDIOSUPPORT
         MemoryManagement::create<AudioDeviceValue>("Sound", "AudioDevice", &m_audioOutput, DEFAULT_AUDIODEVICE),
 #endif

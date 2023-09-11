@@ -463,17 +463,20 @@ void AudioManager::SlotSetVolume(qint32 value)
 
 void AudioManager::slotSetMuteInternal(bool value)
 {
-    m_internalMuted = value;
-#ifdef AUDIOSUPPORT
-    m_audioOutput.setMuted(m_internalMuted);
-    for (auto & soundEffect : m_soundEffectData)
+    if (Settings::getInstance()->getMuteOnFcousedLost())
     {
-        if (soundEffect.sound.get() != nullptr)
+        m_internalMuted = value;
+#ifdef AUDIOSUPPORT
+        m_audioOutput.setMuted(m_internalMuted);
+        for (auto & soundEffect : m_soundEffectData)
         {
-            soundEffect.sound->setMuted(m_internalMuted);
+            if (soundEffect.sound.get() != nullptr)
+            {
+                soundEffect.sound->setMuted(m_internalMuted);
+            }
         }
-    }
 #endif
+    }
 }
 
 void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
