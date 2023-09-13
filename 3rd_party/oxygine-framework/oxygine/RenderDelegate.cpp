@@ -52,7 +52,6 @@ namespace oxygine
         {
             renderer->flush();
             const QRect ss_rect = Actor::getActorTransformedDestRect(actor, actor->getTransform() * parentRS.transform);
-
             rs.clip = rs.clip.intersected(ss_rect);
             if (!rs.clip.isEmpty())
             {

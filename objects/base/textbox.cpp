@@ -38,9 +38,9 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     m_Textbox->addChild(pClipActor);
     m_Textbox->setSize(width, heigth);
     setSize(width, heigth);
-    m_Textfield->setWidth(m_Textbox->getScaledWidth() - 20);
+    m_Textfield->setWidth(0);
     m_Textfield->setHeight(m_Textbox->getScaledHeight());
-    pClipActor->setSize(m_Textfield->getScaledSize());
+    pClipActor->setSize(m_Textbox->getScaledWidth() - 20, m_Textbox->getScaledHeight());
     pClipActor->setX(10);
     pClipActor->setY(5);
 
@@ -84,7 +84,8 @@ void Textbox::update(const oxygine::UpdateState& us)
 {
 #ifdef GRAPHICSUPPORT
     // no need to calculate more than we need if we're invisible
-    QString drawText = getDrawText(getCurrentText());
+    const QString currentText = getCurrentText();
+    QString drawText = getDrawText(currentText);
     if (m_lastDrawText != drawText)
     {
         m_Textfield->setHtmlText(drawText);
@@ -96,17 +97,19 @@ void Textbox::update(const oxygine::UpdateState& us)
             {
                 // calc text field position based on curmsgpos
                 qint32 xPos = 0;
-                auto textRect = m_Textfield->getTextRect();
-                qint32 fontWidth = textRect.width() / drawText.size();
-                qint32 boxSize = (m_Textbox->getScaledWidth() - 40 - fontWidth);
-                xPos = -fontWidth * curmsgpos + boxSize / 2;
+                constexpr qint32 charSpaceCount = 2;
+                QFontMetrics metrics(m_Textfield->getFont()->font);
+                const auto averageCharSize = metrics.averageCharWidth();
+                qint32 boxSize = (m_Textbox->getScaledWidth() - 40 -  averageCharSize);
+                QRect rect = metrics.boundingRect(currentText.mid(0, curmsgpos));
+                xPos = boxSize -rect.width() - averageCharSize * charSpaceCount;
                 if (xPos > 0)
                 {
                     xPos = 0;
                 }
-                else if ((drawText.size() - curmsgpos + 3) * fontWidth < boxSize)
+                else if (m_Textfield->getTextRect().width() - averageCharSize * charSpaceCount < boxSize)
                 {
-                    xPos = m_Textbox->getScaledWidth() - m_Textfield->getTextRect().width() - fontWidth * 3;
+                    xPos = m_Textbox->getScaledWidth() - m_Textfield->getTextRect().width() - averageCharSize * charSpaceCount;
                     if (xPos > 0)
                     {
                         xPos = 0;

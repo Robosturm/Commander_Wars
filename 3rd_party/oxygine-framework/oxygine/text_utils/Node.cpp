@@ -143,7 +143,7 @@ namespace oxygine
                 rd.nextLine(posX, width);
                 rd.addLineNode(this);
             }
-            m_lines.push_back(QString());
+            m_lines.push_back("");
             m_offsets.push_back(QPoint(rd.getX(), rd.getY()));
             return &(m_lines[m_lines.size() - 1]);
         }

@@ -198,8 +198,11 @@ QString TextInput::getDrawText(const QString & text)
             {
                 endMarked += 1;
             }
-            drawText.insert(endMarked, "</div><r>");
-            drawText.insert(startMarked, "</r><div c='#00ff00'>");
+            if (endMarked > startMarked)
+            {
+                drawText.insert(endMarked, "</div><r>");
+                drawText.insert(startMarked, "</r><div c='#00ff00'>");
+            }
         }
         if (m_toggle.elapsed() > BLINKFREQG * 2)
         {
