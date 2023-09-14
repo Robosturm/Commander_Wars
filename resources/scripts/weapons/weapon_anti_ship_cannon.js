@@ -1,5 +1,9 @@
 var Constructor = function()
 {
+    this.getEnviromentDamage = function(enviromentId)
+    {
+        return 55;
+    };
     this.getName = function()
     {
         return qsTr("Cannon");
