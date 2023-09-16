@@ -37,6 +37,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.canBuildingBePlaced = function(terrain, building, map)
+    {
+        return map.onMap(terrain.getX(), terrain.getY() + 1);
+    };
     this.onDestroyed = function(building, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts

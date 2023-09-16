@@ -1,0 +1,20 @@
+{    
+    "other":"settings",
+    "cmake.buildDirectory":"${workspaceFolder}/../${workspaceRootFolderName}_${buildType}_build",
+    "cmake.configureArgs": [
+        "-DCMAKE_INSTALL_PREFIX='${workspaceFolder}/../install/${buildType}/'",
+        "-DCMAKE_PREFIX_PATH='C:/Qt/6.5.2/mingw_64/'",
+        "-DQt6_DIR='C:/Qt/6.5.2/mingw_64/lib/cmake/Qt6/'",
+        "-DUPDATESUPPORT=OFF",
+        "-DCOW_BUILD_TAG='Dummy'",
+        "-DCOW_UPDATETARGET='Dummy'",
+        "-DCOW_INSTALLDIR='${buildType}'",
+        "-DOPENSSL_LIB_PATH='C:/openSsl/bin'",
+        "-DOPENSSL_INCLUDE_DIR='C:/openSsl/include'",
+        "-DOPENSSL_USE_STATIC_LIBS=ON",
+        "-DPRECOMPILEDOPENSSL=ON",
+        "-DGRAPHICSUPPORT=ON",
+        "-DUSEVULKAN=OFF",
+        "-DDEPLOY_RESOURCES_AS_FOLDER=ON"
+    ],
+}

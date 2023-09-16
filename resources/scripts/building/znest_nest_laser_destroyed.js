@@ -49,6 +49,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.canBuildingBePlaced = function(terrain, building, map)
+    {
+        return map.onMap(terrain.getX(), terrain.getY() + 1);
+    };
 }
 
 Constructor.prototype = BUILDING;

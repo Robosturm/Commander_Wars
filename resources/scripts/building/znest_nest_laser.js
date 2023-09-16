@@ -67,7 +67,7 @@ var Constructor = function()
     };
     this.canBuildingBePlaced = function(terrain, building, map)
     {
-        return BUILDING.canLargeBuildingPlaced(terrain, building, ZNEST_NEST_LASER.getBuildingWidth(), ZNEST_NEST_LASER.getBuildingHeigth(), map);
+        return map.onMap(terrain.getX(), terrain.getY() + 1) && BUILDING.canLargeBuildingPlaced(terrain, building, ZNEST_NEST_LASER.getBuildingWidth(), ZNEST_NEST_LASER.getBuildingHeigth(), map);
     };
     this.startOfTurn = function(building, map)
     {

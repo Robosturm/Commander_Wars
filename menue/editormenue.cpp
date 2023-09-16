@@ -1561,14 +1561,15 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     {
         // point still on the map great :)
         QPoint pos = points.at(i);
-        if (!canBuildingBePlaced(pos.x(), pos.y()) &&
+        bool canBePlaced = canBuildingBePlaced(pos.x(), pos.y());
+        if (canBePlaced &&
             pCurrentBuilding->getBuildingWidth() == 1 &&
             pCurrentBuilding->getBuildingHeigth() == 1)
         {
             QString baseTerrain = pCurrentBuilding->getBaseTerrain()[0];
             m_pMap->replaceTerrain(baseTerrain, pos.x(), pos.y(), false, false);
         }
-        if (canBuildingBePlaced(pos.x(), pos.y()))
+        else if (canBePlaced)
         {
             if (pCurrentBuilding->getBuildingID() != m_pMap->getTerrain(pos.x(), pos.y())->getTerrainID())
             {
