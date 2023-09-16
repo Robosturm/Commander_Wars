@@ -22,9 +22,9 @@
 
 #include "objects/base/label.h"
 
-static const char* const FONT = "infoBar16";
+static const char *const FONT = "infoBar16";
 
-IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
+IngameInfoBar::IngameInfoBar(GameMenue *pMenu, GameMap *pMap)
     : m_pMap(pMap),
       m_pMenu(pMenu)
 {
@@ -34,23 +34,36 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
     CONSOLE_PRINT("Creating IngameInfoBar", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
+    const qint32 minMapHeight = 220;
     qint32 width = 300;
     qint32 cursorInfoHeigth = 330;
-    qint32 gameInfoHeigth = 290;
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+    qint32 gameInfoHeigth = 330;
+    ObjectManager *pObjectManager = ObjectManager::getInstance();
+    oxygine::ResAnim *pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pMiniMapBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pMiniMapBox->setResAnim(pAnim);
 
-    pMiniMapBox->setSize(width, oxygine::Stage::getStage()->getHeight() - cursorInfoHeigth - gameInfoHeigth);
-    pMiniMapBox->setPosition(0, 0);
     if (oxygine::Stage::getStage()->getHeight() - cursorInfoHeigth - gameInfoHeigth < 50)
     {
         pMiniMapBox->setHeight(100);
         setScale(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(100.0f + cursorInfoHeigth + gameInfoHeigth));
     }
+    else
+    {
+        const qint32 itemInfoHeight = 270;
+        qint32 playerCount = m_pMap->getPlayerCount();
+        qint32 freeSize = oxygine::Stage::getStage()->getHeight() - cursorInfoHeigth - gameInfoHeigth - minMapHeight;
+        while (m_shownPlayerCount < playerCount &&
+               itemInfoHeight <= freeSize)
+        {
+            freeSize -= itemInfoHeight;
+            gameInfoHeigth += itemInfoHeight;
+            ++m_shownPlayerCount;
+        }
+    }
+    pMiniMapBox->setSize(width, oxygine::Stage::getStage()->getHeight() - cursorInfoHeigth - gameInfoHeigth);
+    pMiniMapBox->setPosition(0, 0);
     setSize(width, oxygine::Stage::getStage()->getHeight());
-
 
     pMiniMapBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pMinimap = MemoryManagement::create<Minimap>();
@@ -109,268 +122,331 @@ void IngameInfoBar::updatePlayerInfo()
 {
     Mainapp::getInstance()->pauseRendering();
     m_pGameInfoBox->removeChildren();
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    GameManager* pGameManager = GameManager::getInstance();
-    
     if (m_pMap != nullptr &&
         m_pMap->getCurrentPlayer() != nullptr)
     {
         m_pDetailedViewBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
         if (m_pMenu != nullptr)
         {
-            Player* pPlayer = m_pMap->getCurrentPlayer();
+            Player *pPlayer = m_pMap->getCurrentPlayer();
+            qint32 y = 12;
+            qint32 x1 = 10;
+            qint32 x2 = 110;
+            constexpr qint32 yAdvance = 20;
+            constexpr qint32 width = 95;
+
+            spLabel pTextfield = MemoryManagement::create<Label>(width);
+            auto style = pTextfield->getStyle();
+            style = oxygine::TextStyle(FontManager::getFont(FONT));
+            style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+            style.multiline = false;
+            pTextfield->setStyle(style);
+            pTextfield->setHtmlText(tr("Day:"));
+            pTextfield->setPosition(x1, y);
+            m_pGameInfoBox->addChild(pTextfield);
+
+            pTextfield = MemoryManagement::create<Label>(width);
+            pTextfield->setStyle(style);
+            pTextfield->setHtmlText(QString::number(m_pMap->getCurrentDay()));
+            pTextfield->setPosition(x2, y);
+            m_pGameInfoBox->addChild(pTextfield);
+            y += yAdvance;
+
+            const qint32 playerCount = m_pMap->getPlayerCount();
             if (pPlayer != nullptr)
             {
-                qint32 y = 12;
-                qint32 x1 = 10;
-                qint32 x2 = 110;
-                spLabel pName = MemoryManagement::create<Label>(260);
-                auto style = pName->getStyle();
-                style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
-                pName->setStyle(style);
-                pName->setPosition(x1, y - 5);
-                pName->setHtmlText(pPlayer->getPlayerNameId());
-                m_pGameInfoBox->addChild(pName);
-                y += pName->getScaledHeight();
-
-                oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
-                const CO* pCO = pPlayer->getCO(0);
-                oxygine::ResAnim* pAnim = nullptr;
-                if (pCO != nullptr)
+                qint32 count = 0;
+                const qint32 startPlayerId = pPlayer->getPlayerID();
+                for (qint32 i = startPlayerId; count < m_shownPlayerCount && i < playerCount; ++i)
                 {
-                    pAnim = pCO->getResAnim((pCO->getCoID() + "+face"));
+                    updateInfoForPlayer(m_pMap->getPlayer(i), y, x1, x2, yAdvance, width);
+                    ++count;
                 }
-                else
+                for (qint32 i = 0; count < m_shownPlayerCount && i < startPlayerId; ++i)
                 {
-                    pAnim = pCOSpriteManager->getResAnim("no_co+face");
+                    updateInfoForPlayer(m_pMap->getPlayer(i), y, x1, x2, yAdvance, width);
+                    ++count;
                 }
-                if (pAnim != nullptr)
-                {
-                    pSprite->setScale(87.0f / static_cast<float>(pAnim->getHeight()));
-                }
-                pSprite->setResAnim(pAnim);
-                pSprite->setPosition(12, y);
-                m_pGameInfoBox->addChild(pSprite);
-                pSprite = MemoryManagement::create<oxygine::Sprite>();
-                pCO = pPlayer->getCO(1);
-                if (pCO != nullptr)
-                {
-                    pAnim = pCO->getResAnim((pCO->getCoID() + "+face"));
-                }
-                else
-                {
-                    pAnim = pCOSpriteManager->getResAnim("no_co+face");
-                }
-                pSprite->setResAnim(pAnim);
-                pSprite->setPosition(103, y);
-                if (pAnim != nullptr)
-                {
-                    pSprite->setScale(87.0f / static_cast<float>(pAnim->getHeight()));
-                }
-                m_pGameInfoBox->addChild(pSprite);
-
-                pSprite = MemoryManagement::create<oxygine::Sprite>();
-                pAnim = pGameManager->getResAnim((m_pMap->getGameRules()->getCurrentWeather()->getWeatherSymbol()));
-                if (pAnim != nullptr)
-                {
-                    pSprite->setResAnim(pAnim);
-                    pSprite->setPosition(202, y);
-                    pSprite->setScale(85.0f / static_cast<float>(pAnim->getWidth()));
-                }
-                m_pGameInfoBox->addChild(pSprite);
-
-                y -= 4;
-                // boxes for co's and weather
-                ObjectManager* pObjectManager = ObjectManager::getInstance();
-                pAnim = pObjectManager->getResAnim("panel_transparent+mask");
-                oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
-                pBox->setResAnim(pAnim);
-                pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
-                pBox->setSize(91, 95);
-                pBox->setPosition(101, y);
-                m_pGameInfoBox->addChild(pBox);
-                pBox = MemoryManagement::create<oxygine::Box9Sprite>();
-                pBox->setResAnim(pAnim);
-                pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
-                pBox->setSize(91, 95);
-                pBox->setPosition(10, y);
-                m_pGameInfoBox->addChild(pBox);
-                // weather box
-                pBox = MemoryManagement::create<oxygine::Box9Sprite>();
-                pBox->setResAnim(pAnim);
-                pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
-                pBox->setSize(91, 95);
-                pBox->setPosition(198, y);
-                m_pGameInfoBox->addChild(pBox);
-                y += 100;
-
-                if (m_pMap->getGameRules()->getWeatherPrediction())
-                {
-                    pSprite = MemoryManagement::create<oxygine::Sprite>();
-                    Weather* pWeather = m_pMap->getGameRules()->getWeatherAtDay(1, m_pMap->getCurrentPlayer()->getPlayerID());
-                    if (pWeather != nullptr)
-                    {
-                        pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
-                        if (pAnim != nullptr)
-                        {
-                            pSprite->setResAnim(pAnim);
-                            pSprite->setPosition(202, y);
-                            pSprite->setScale(37.0f / static_cast<float>(pAnim->getWidth()));
-                        }
-                    }
-                    m_pGameInfoBox->addChild(pSprite);
-                    pBox = MemoryManagement::create<oxygine::Box9Sprite>();
-                    pAnim = pObjectManager->getResAnim("panel_transparent+mask");
-                    pBox->setResAnim(pAnim);
-                    pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
-                    pBox->setSize(45, 47);
-                    pBox->setPosition(198, y - 4);
-                    m_pGameInfoBox->addChild(pBox);
-
-                    pSprite = MemoryManagement::create<oxygine::Sprite>();
-                    pWeather = m_pMap->getGameRules()->getWeatherAtDay(2, m_pMap->getCurrentPlayer()->getPlayerID());
-                    if (pWeather != nullptr)
-                    {
-                        pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
-                        if (pAnim != nullptr)
-                        {
-                            pSprite->setResAnim(pAnim);
-                            pSprite->setPosition(247, y);
-                            pSprite->setScale(37.0f / static_cast<float>(pAnim->getWidth()));
-                        }
-                    }
-                    m_pGameInfoBox->addChild(pSprite);
-                    pBox = MemoryManagement::create<oxygine::Box9Sprite>();
-                    pAnim = pObjectManager->getResAnim("panel_transparent+mask");
-                    pBox->setResAnim(pAnim);
-                    pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
-                    pBox->setSize(45, 47);
-                    pBox->setPosition(243, y - 4);
-                    m_pGameInfoBox->addChild(pBox);
-                }
-
-                style = oxygine::TextStyle(FontManager::getFont(FONT));
-                style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-                style.multiline = false;
-
-                qint32 count = pPlayer->getBuildingCount();
-                qint32 width = 95;
-                y += 2;
-
-                spLabel pTextfield = MemoryManagement::create<Label>(width);
-                pTextfield->setStyle(style);
-                pTextfield->setHtmlText(tr("Day:"));
-                pTextfield->setPosition(x1, y);
-                m_pGameInfoBox->addChild(pTextfield);
-
-                constexpr qint32 yAdvance = 20;
-
-                pTextfield = MemoryManagement::create<Label>(width);
-                pTextfield->setStyle(style);
-                pTextfield->setHtmlText(QString::number(m_pMap->getCurrentDay()));
-                pTextfield->setPosition(x2, y);
-                m_pGameInfoBox->addChild(pTextfield);
-                y += yAdvance;
-
-                const Player* pViewPlayer = m_pMenu->getCurrentViewPlayer();
-                if (pViewPlayer != nullptr)
-                {
-                    pTextfield = MemoryManagement::create<Label>(width);
-                    pTextfield->setStyle(style);
-                    pTextfield->setHtmlText(tr("Buildings:"));
-                    pTextfield->setPosition(x1, y);
-                    m_pGameInfoBox->addChild(pTextfield);
-                    pTextfield = MemoryManagement::create<Label>(width);
-                    pTextfield->setStyle(style);
-                    if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
-                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
-                    {
-                        pTextfield->setHtmlText(tr("?"));
-                    }
-                    else
-                    {
-                        pTextfield->setHtmlText(QString::number(count));
-                    }
-                    pTextfield->setPosition(x2, y);
-                    m_pGameInfoBox->addChild(pTextfield);
-                    y += yAdvance;
-
-                    count = pPlayer->getUnitCount();
-                    pTextfield = MemoryManagement::create<Label>(width);
-                    pTextfield->setStyle(style);
-                    pTextfield->setHtmlText(tr("Units: "));
-                    pTextfield->setPosition(x1, y);
-                    m_pGameInfoBox->addChild(pTextfield);
-
-                    pTextfield = MemoryManagement::create<Label>(width);
-                    pTextfield->setStyle(style);
-                    if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
-                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
-                    {
-                        pTextfield->setHtmlText(tr("?"));
-                    }
-                    else
-                    {
-                        pTextfield->setHtmlText(QString::number(count));
-                    }
-                    pTextfield->setPosition(x2, y);
-                    m_pGameInfoBox->addChild(pTextfield);
-                    y += yAdvance;
-
-                    count = pPlayer->getFunds();
-                    pTextfield = MemoryManagement::create<Label>(width);
-                    pTextfield->setStyle(style);
-                    pTextfield->setHtmlText(tr("Funds: "));
-                    pTextfield->setPosition(x1, y);
-                    m_pGameInfoBox->addChild(pTextfield);
-                    pTextfield = MemoryManagement::create<Label>(width);
-                    pTextfield->setStyle(style);
-                    if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
-                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
-                    {
-                        pTextfield->setHtmlText(tr("?"));
-                    }
-                    else
-                    {
-                        pTextfield->setHtmlText(QString::number(count));
-                    }
-                    pTextfield->setPosition(x2, y);
-                    m_pGameInfoBox->addChild(pTextfield);
-                    y += yAdvance;
-                }
-
-                count = pPlayer->getPlayerID();
-                pTextfield = MemoryManagement::create<Label>(width);
-                pTextfield->setStyle(style);
-                pTextfield->setHtmlText(tr("Player: "));
-                pTextfield->setPosition(x1, y);
-                m_pGameInfoBox->addChild(pTextfield);
-                pTextfield = MemoryManagement::create<Label>(width);
-                pTextfield->setStyle(style);
-                pTextfield->setHtmlText(QString::number(count + 1));
-                pTextfield->setPosition(x2, y);
-                m_pGameInfoBox->addChild(pTextfield);
-                y += yAdvance;
-
-                count = pPlayer->getTeam();
-                pTextfield = MemoryManagement::create<Label>(width);
-                pTextfield->setStyle(style);
-                pTextfield->setHtmlText(tr("Team: "));
-                pTextfield->setPosition(x1, y);
-                m_pGameInfoBox->addChild(pTextfield);
-                pTextfield = MemoryManagement::create<Label>(width);
-                pTextfield->setStyle(style);
-                pTextfield->setHtmlText(QString::number(count + 1));
-                pTextfield->setPosition(x2, y);
-                m_pGameInfoBox->addChild(pTextfield);
-                y += yAdvance;
             }
         }
     }
     Mainapp::getInstance()->continueRendering();
+}
+
+void IngameInfoBar::updateInfoForPlayer(Player *pPlayer, qint32 &y, qint32 x1, qint32 x2, qint32 yAdvance, qint32 width)
+{
+    COSpriteManager *pCOSpriteManager = COSpriteManager::getInstance();
+    GameManager *pGameManager = GameManager::getInstance();
+    spLabel pTextfield;
+    spLabel pName = MemoryManagement::create<Label>(260);
+    auto style = pName->getStyle();
+    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+    pName->setStyle(style);
+    pName->setPosition(x1, y - 5);
+    pName->setHtmlText(pPlayer->getPlayerNameId());
+    m_pGameInfoBox->addChild(pName);
+    y += pName->getScaledHeight();
+
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+    const CO *pCO = pPlayer->getCO(0);
+    oxygine::ResAnim *pAnim = nullptr;
+    if (pCO != nullptr)
+    {
+        pAnim = pCO->getResAnim((pCO->getCoID() + "+face"));
+    }
+    else
+    {
+        pAnim = pCOSpriteManager->getResAnim("no_co+face");
+    }
+    if (pAnim != nullptr)
+    {
+        pSprite->setScale(87.0f / static_cast<float>(pAnim->getHeight()));
+    }
+    pSprite->setResAnim(pAnim);
+    pSprite->setPosition(12, y);
+    m_pGameInfoBox->addChild(pSprite);
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
+    pCO = pPlayer->getCO(1);
+    if (pCO != nullptr)
+    {
+        pAnim = pCO->getResAnim((pCO->getCoID() + "+face"));
+    }
+    else
+    {
+        pAnim = pCOSpriteManager->getResAnim("no_co+face");
+    }
+    pSprite->setResAnim(pAnim);
+    pSprite->setPosition(103, y);
+    if (pAnim != nullptr)
+    {
+        pSprite->setScale(87.0f / static_cast<float>(pAnim->getHeight()));
+    }
+    m_pGameInfoBox->addChild(pSprite);
+
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
+    pAnim = pGameManager->getResAnim((m_pMap->getGameRules()->getCurrentWeather()->getWeatherSymbol()));
+    if (pAnim != nullptr)
+    {
+        pSprite->setResAnim(pAnim);
+        pSprite->setPosition(202, y);
+        pSprite->setScale(85.0f / static_cast<float>(pAnim->getWidth()));
+    }
+    m_pGameInfoBox->addChild(pSprite);
+
+    y -= 4;
+    // boxes for co's and weather
+    ObjectManager *pObjectManager = ObjectManager::getInstance();
+    pAnim = pObjectManager->getResAnim("panel_transparent+mask");
+    oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
+    pBox->setResAnim(pAnim);
+    pBox->setColorTable(pPlayer->getColorTableAnim(), true);
+    pBox->setSize(91, 95);
+    pBox->setPosition(101, y);
+    m_pGameInfoBox->addChild(pBox);
+    pBox = MemoryManagement::create<oxygine::Box9Sprite>();
+    pBox->setResAnim(pAnim);
+    pBox->setColorTable(pPlayer->getColorTableAnim(), true);
+    pBox->setSize(91, 95);
+    pBox->setPosition(10, y);
+    m_pGameInfoBox->addChild(pBox);
+    // weather box
+    pBox = MemoryManagement::create<oxygine::Box9Sprite>();
+    pBox->setResAnim(pAnim);
+    pBox->setColorTable(pPlayer->getColorTableAnim(), true);
+    pBox->setSize(91, 95);
+    pBox->setPosition(198, y);
+    m_pGameInfoBox->addChild(pBox);
+    y += 100;
+
+    if (m_pMap->getGameRules()->getWeatherPrediction())
+    {
+        pSprite = MemoryManagement::create<oxygine::Sprite>();
+        Weather *pWeather = m_pMap->getGameRules()->getWeatherAtDay(1, pPlayer->getPlayerID());
+        if (pWeather != nullptr)
+        {
+            pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
+            if (pAnim != nullptr)
+            {
+                pSprite->setResAnim(pAnim);
+                pSprite->setPosition(202, y);
+                pSprite->setScale(37.0f / static_cast<float>(pAnim->getWidth()));
+            }
+        }
+        m_pGameInfoBox->addChild(pSprite);
+        pBox = MemoryManagement::create<oxygine::Box9Sprite>();
+        pAnim = pObjectManager->getResAnim("panel_transparent+mask");
+        pBox->setResAnim(pAnim);
+        pBox->setColorTable(pPlayer->getColorTableAnim(), true);
+        pBox->setSize(45, 47);
+        pBox->setPosition(198, y - 4);
+        m_pGameInfoBox->addChild(pBox);
+
+        pSprite = MemoryManagement::create<oxygine::Sprite>();
+        pWeather = m_pMap->getGameRules()->getWeatherAtDay(2, pPlayer->getPlayerID());
+        if (pWeather != nullptr)
+        {
+            pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
+            if (pAnim != nullptr)
+            {
+                pSprite->setResAnim(pAnim);
+                pSprite->setPosition(247, y);
+                pSprite->setScale(37.0f / static_cast<float>(pAnim->getWidth()));
+            }
+        }
+        m_pGameInfoBox->addChild(pSprite);
+        pBox = MemoryManagement::create<oxygine::Box9Sprite>();
+        pAnim = pObjectManager->getResAnim("panel_transparent+mask");
+        pBox->setResAnim(pAnim);
+        pBox->setColorTable(pPlayer->getColorTableAnim(), true);
+        pBox->setSize(45, 47);
+        pBox->setPosition(243, y - 4);
+        m_pGameInfoBox->addChild(pBox);
+    }
+
+    style = oxygine::TextStyle(FontManager::getFont(FONT));
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    qint32 count = pPlayer->getBuildingCount();
+    y += 2;
+
+    const Player *pViewPlayer = m_pMenu->getCurrentViewPlayer();
+    if (pViewPlayer != nullptr)
+    {
+        pTextfield = MemoryManagement::create<Label>(width);
+        pTextfield->setStyle(style);
+        pTextfield->setHtmlText(tr("Buildings:"));
+        pTextfield->setPosition(x1, y);
+        m_pGameInfoBox->addChild(pTextfield);
+        pTextfield = MemoryManagement::create<Label>(width);
+        pTextfield->setStyle(style);
+        if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+            m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+            m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
+        {
+            pTextfield->setHtmlText(tr("?"));
+        }
+        else
+        {
+            pTextfield->setHtmlText(QString::number(count));
+        }
+        pTextfield->setPosition(x2, y);
+        m_pGameInfoBox->addChild(pTextfield);
+        y += yAdvance;
+
+        count = pPlayer->getUnitCount();
+        pTextfield = MemoryManagement::create<Label>(width);
+        pTextfield->setStyle(style);
+        pTextfield->setHtmlText(tr("Units: "));
+        pTextfield->setPosition(x1, y);
+        m_pGameInfoBox->addChild(pTextfield);
+
+        pTextfield = MemoryManagement::create<Label>(width);
+        pTextfield->setStyle(style);
+        if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+            m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+            m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
+        {
+            pTextfield->setHtmlText(tr("?"));
+        }
+        else
+        {
+            pTextfield->setHtmlText(QString::number(count));
+        }
+        pTextfield->setPosition(x2, y);
+        m_pGameInfoBox->addChild(pTextfield);
+        y += yAdvance;
+
+        count = pPlayer->getFunds();
+        pTextfield = MemoryManagement::create<Label>(width);
+        pTextfield->setStyle(style);
+        pTextfield->setHtmlText(tr("Funds: "));
+        pTextfield->setPosition(x1, y);
+        m_pGameInfoBox->addChild(pTextfield);
+        pTextfield = MemoryManagement::create<Label>(width);
+        pTextfield->setStyle(style);
+        if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+            m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+            m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
+        {
+            pTextfield->setHtmlText(tr("?"));
+        }
+        else
+        {
+            pTextfield->setHtmlText(QString::number(count));
+        }
+        pTextfield->setPosition(x2, y);
+        m_pGameInfoBox->addChild(pTextfield);
+        y += yAdvance;
+    }
+
+    pTextfield = MemoryManagement::create<Label>(width);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("ArmyValue: "));
+    pTextfield->setPosition(x1, y);
+    m_pGameInfoBox->addChild(pTextfield);
+    pTextfield = MemoryManagement::create<Label>(width);
+    pTextfield->setStyle(style);
+    if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
+    {
+        pTextfield->setHtmlText(tr("?"));
+    }
+    else
+    {
+        pTextfield->setHtmlText(QString::number(pPlayer->calcArmyValue()));
+    }
+    pTextfield->setPosition(x2, y);
+    m_pGameInfoBox->addChild(pTextfield);
+    y += yAdvance;
+
+    pTextfield = MemoryManagement::create<Label>(width);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Income: "));
+    pTextfield->setPosition(x1, y);
+    m_pGameInfoBox->addChild(pTextfield);
+    pTextfield = MemoryManagement::create<Label>(width);
+    pTextfield->setStyle(style);
+    if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
+    {
+        pTextfield->setHtmlText(tr("?"));
+    }
+    else
+    {
+        pTextfield->setHtmlText(QString::number(pPlayer->calcIncome()));
+    }
+    pTextfield->setPosition(x2, y);
+    m_pGameInfoBox->addChild(pTextfield);
+    y += yAdvance;
+
+    count = pPlayer->getPlayerID();
+    pTextfield = MemoryManagement::create<Label>(width);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Player: "));
+    pTextfield->setPosition(x1, y);
+    m_pGameInfoBox->addChild(pTextfield);
+    pTextfield = MemoryManagement::create<Label>(width);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(QString::number(count + 1));
+    pTextfield->setPosition(x2, y);
+    m_pGameInfoBox->addChild(pTextfield);
+    y += yAdvance;
+
+    count = pPlayer->getTeam();
+    pTextfield = MemoryManagement::create<Label>(width);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Team: "));
+    pTextfield->setPosition(x1, y);
+    m_pGameInfoBox->addChild(pTextfield);
+    pTextfield = MemoryManagement::create<Label>(width);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(QString::number(count + 1));
+    pTextfield->setPosition(x2, y);
+    m_pGameInfoBox->addChild(pTextfield);
+    y += yAdvance;
 }
 
 void IngameInfoBar::updateMinimap()
@@ -393,7 +469,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         m_pCursorInfoBox->removeChildren();
         if (m_pMenu != nullptr)
         {
-            const Player* pPlayer = m_pMenu->getCurrentViewPlayer();
+            const Player *pPlayer = m_pMenu->getCurrentViewPlayer();
             if (pPlayer != nullptr)
             {
                 GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);
@@ -418,18 +494,18 @@ void IngameInfoBar::createMovementInfo(qint32 x, qint32 y)
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     smallStyle.multiline = false;
 
-    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
+    MovementTableManager *pMovementTableManager = MovementTableManager::getInstance();
 
-    Terrain* pTerrain = m_pMap->getTerrain(x, y);
+    Terrain *pTerrain = m_pMap->getTerrain(x, y);
     qint32 posY = 80;
     qint32 posX = 10;
     auto movements = pMovementTableManager->getLoadedRessources();
-    for (const auto & movement : qAsConst(movements))
+    for (const auto &movement : qAsConst(movements))
     {
         qint32 cost = pMovementTableManager->getBaseMovementPoints(movement, pTerrain, pTerrain, nullptr);
         if (cost >= 0)
         {
-            QString name = pMovementTableManager->getName(movement) + " : " ;
+            QString name = pMovementTableManager->getName(movement) + " : ";
             name += QString::number(cost);
             spLabel pTextfield = MemoryManagement::create<Label>(m_pCursorInfoBox->getScaledWidth() / 2 - 30);
             pTextfield->setPosition(posX, posY);
@@ -457,10 +533,10 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     static constexpr qint32 xOffset = 2;
     static constexpr qint32 yOffset = 4;
     bool hpHidden = false;
-    Terrain* pTerrain = m_pMap->getTerrain(x, y);
-    Building* pBuilding = pTerrain->getBuilding();
-    Unit* pUnit = pTerrain->getUnit();
-    Player* pPlayer = m_pMenu->getCurrentViewPlayer();
+    Terrain *pTerrain = m_pMap->getTerrain(x, y);
+    Building *pBuilding = pTerrain->getBuilding();
+    Unit *pUnit = pTerrain->getUnit();
+    Player *pPlayer = m_pMenu->getCurrentViewPlayer();
     if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
     {
         pUnit = nullptr;
@@ -469,13 +545,13 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     {
         hpHidden = pUnit->getHpHidden(m_pMenu->getCurrentViewPlayer());
     }
-    GameManager* pGameManager = GameManager::getInstance();
+    GameManager *pGameManager = GameManager::getInstance();
     m_pDetailedViewBox->removeChildren();
     m_pCursorInfoBox->addChild(m_pDetailedViewBox);
 
-    oxygine::ResAnim* pAnimBase = nullptr;
-    oxygine::ResAnim* pAnimFore = nullptr;
-    oxygine::ResAnim* pAnimBack = nullptr;
+    oxygine::ResAnim *pAnimBase = nullptr;
+    oxygine::ResAnim *pAnimFore = nullptr;
+    oxygine::ResAnim *pAnimBack = nullptr;
     float speed = 0;
     if (pUnit != nullptr)
     {
@@ -517,7 +593,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     pTerrainSprite->setSpeedX(speed);
     m_pDetailedViewBox->addChild(pTerrainSprite);
 
-    oxygine::ResAnim* pAnimWeather = pGameManager->getResAnim(pTerrain->getWeatherOverlayId(), oxygine::ep_ignore_error);
+    oxygine::ResAnim *pAnimWeather = pGameManager->getResAnim(pTerrain->getWeatherOverlayId(), oxygine::ep_ignore_error);
     if (pAnimWeather != nullptr)
     {
         oxygine::spSlidingSprite pWeatherOverlay = MemoryManagement::create<oxygine::SlidingSprite>();
@@ -556,7 +632,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     float defenseY = pTerrainSprite->getY() + 5;
     float startDefenseX = pTerrainSprite->getX() + 5;
     float defenseX = startDefenseX;
-    oxygine::ResAnim* pAnim = pGameManager->getResAnim("defenseStar");
+    oxygine::ResAnim *pAnim = pGameManager->getResAnim("defenseStar");
     for (qint32 i = 1; i <= terrainDefense; i++)
     {
         oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
@@ -586,11 +662,11 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
     oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getFont(FONT));
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     smallStyle.multiline = false;
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
-    Terrain* pTerrain = m_pMap->getTerrain(x, y);
-    Unit* pUnit = pTerrain->getUnit();
-    Player* pPlayer = m_pMenu->getCurrentViewPlayer();
+    ObjectManager *pObjectManager = ObjectManager::getInstance();
+    oxygine::ResAnim *pAnim = pObjectManager->getResAnim("barforeground");
+    Terrain *pTerrain = m_pMap->getTerrain(x, y);
+    Unit *pUnit = pTerrain->getUnit();
+    Player *pPlayer = m_pMenu->getCurrentViewPlayer();
     if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
     {
         pUnit = nullptr;
@@ -798,7 +874,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             for (qint32 i = 0; i < loadingPlace; ++i)
             {
                 oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
-                oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel_transparent+mask");
+                oxygine::ResAnim *pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                 pBox->setResAnim(pAnim);
                 pBox->setSize(GameMap::defaultImageSize + 11, GameMap::defaultImageSize + 12);
                 pBox->setColorTable(pUnit->getOwner()->getColorTableAnim(), true);
@@ -806,7 +882,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
                 m_pCursorInfoBox->addChild(pBox);
                 if (!transportHidden)
                 {
-                    Unit* pTransportUnit = pUnit->getLoadedUnit(i);
+                    Unit *pTransportUnit = pUnit->getLoadedUnit(i);
                     if (pTransportUnit != nullptr)
                     {
                         spUnit pCopypTransportUnit = MemoryManagement::create<Unit>(pTransportUnit->getUnitID(), pTransportUnit->getOwner(), false, m_pMap);
@@ -832,14 +908,14 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
     oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getFont(FONT));
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     smallStyle.multiline = false;
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
+    ObjectManager *pObjectManager = ObjectManager::getInstance();
+    oxygine::ResAnim *pAnim = pObjectManager->getResAnim("barforeground");
     if (pAnim != nullptr)
     {
-        Terrain* pTerrain = m_pMap->getTerrain(x, y);
+        Terrain *pTerrain = m_pMap->getTerrain(x, y);
         spBuilding pBuilding = pTerrain->getSpBuilding();
         spUnit pUnit = pTerrain->getSpUnit();
-        Player* pPlayer = m_pMenu->getCurrentViewPlayer();
+        Player *pPlayer = m_pMenu->getCurrentViewPlayer();
         if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
         {
             pUnit.reset();
@@ -950,8 +1026,8 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
 
 void IngameInfoBar::addColorbar(float divider, qint32 posX, qint32 posY, QColor color)
 {
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
+    ObjectManager *pObjectManager = ObjectManager::getInstance();
+    oxygine::ResAnim *pAnim = pObjectManager->getResAnim("barforeground");
     if (pAnim != nullptr)
     {
         oxygine::spColorRectSprite pColorBar = MemoryManagement::create<oxygine::ColorRectSprite>();
@@ -973,7 +1049,7 @@ void IngameInfoBar::addColorbar(float divider, qint32 posX, qint32 posY, QColor 
 
 void IngameInfoBar::syncMinimapPosition()
 {
-    
+
     if (m_pMap != nullptr)
     {
         QPoint centeredPos = m_pMap->getCenteredPosition();

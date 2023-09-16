@@ -10,6 +10,7 @@
 
 class GameMap;
 class GameMenue;
+class Player;
 class IngameInfoBar;
 using spIngameInfoBar = std::shared_ptr<IngameInfoBar>;
 
@@ -41,6 +42,7 @@ private:
     void createMovementInfo(qint32 x, qint32 y);
     bool createUnitInfo(qint32 x, qint32 y);
     void updateDetailedView(qint32 x, qint32 y);
+    void updateInfoForPlayer(Player* pPlayer, qint32 & y, qint32 x1, qint32 x2, qint32 yAdvance, qint32 width);
 
 private:
     spMinimap m_pMinimap;
@@ -52,6 +54,7 @@ private:
     qint32 m_LastY{-1};
     GameMap* m_pMap{nullptr};
     GameMenue* m_pMenu{nullptr};
+    qint32 m_shownPlayerCount{1};
 };
 
 #endif // INGAMEINFOBAR_H
