@@ -15,6 +15,23 @@
         "-DPRECOMPILEDOPENSSL=ON",
         "-DGRAPHICSUPPORT=ON",
         "-DUSEVULKAN=OFF",
-        "-DDEPLOY_RESOURCES_AS_FOLDER=ON"
+        "-DDEPLOY_RESOURCES_AS_FOLDER=OFF"
     ],
+    "files.associations": {
+        "array": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "*.tcc": "cpp",
+        "optional": "cpp",
+        "ratio": "cpp",
+        "system_error": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "variant": "cpp",
+        "chrono": "cpp",
+        "limits": "cpp",
+        "memory": "cpp"
+    },
 }

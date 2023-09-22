@@ -35,7 +35,7 @@
 
 LobbyMenu::LobbyMenu()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Mainapp *pApp = Mainapp::getInstance();
     CONSOLE_PRINT("Entering Lobby Menue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
@@ -48,11 +48,11 @@ LobbyMenu::LobbyMenu()
         emit m_pTCPClient->sig_connect(Settings::getInstance()->getServerAdress(), Settings::getInstance()->getServerPort(), Settings::getInstance()->getSecondaryServerAdress());
     }
 
-    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
+    BackgroundManager *pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("lobbymenu");
+    oxygine::ResAnim *pBackground = pBackgroundManager->getResAnim("lobbymenu");
     sprite->setResAnim(pBackground);
     sprite->setPosition(-1, -1);
     // background should be last to draw
@@ -67,19 +67,15 @@ LobbyMenu::LobbyMenu()
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
     pButtonExit->setPosition(10, oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
-    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigExitMenue();
-    });
+    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                  { emit sigExitMenue(); });
     connect(this, &LobbyMenu::sigExitMenue, this, &LobbyMenu::exitMenue, Qt::QueuedConnection);
 
     m_pOtherButton = ObjectManager::createButton(tr("Other"));
     addChild(m_pOtherButton);
     m_pOtherButton->setPosition(10, pButtonExit->getY() - m_pOtherButton->getScaledHeight());
-    m_pOtherButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigOther();
-    });
+    m_pOtherButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                     { emit sigOther(); });
     connect(this, &LobbyMenu::sigOther, this, &LobbyMenu::requestOtherData, Qt::QueuedConnection);
     m_pOtherButton->setEnabled(false);
 
@@ -87,20 +83,16 @@ LobbyMenu::LobbyMenu()
     addChild(pButtonHost);
     pButtonHost->setPosition(oxygine::Stage::getStage()->getWidth() - pButtonHost->getScaledWidth() - 10,
                              oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
-    pButtonHost->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigHostLocal();
-    });
+    pButtonHost->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                  { emit sigHostLocal(); });
     connect(this, &LobbyMenu::sigHostLocal, this, &LobbyMenu::hostLocal, Qt::QueuedConnection);
 
     m_pButtonHostOnServer = ObjectManager::createButton(tr("Server Host"), 220);
     addChild(m_pButtonHostOnServer);
     m_pButtonHostOnServer->setPosition(oxygine::Stage::getStage()->getWidth() - pButtonHost->getScaledWidth() - 10,
                                        oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() * 2 - 10);
-    m_pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigHostServer();
-    });
+    m_pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                            { emit sigHostServer(); });
     connect(this, &LobbyMenu::sigHostServer, this, &LobbyMenu::hostServer, Qt::QueuedConnection);
     m_pButtonHostOnServer->setEnabled(false);
 
@@ -108,20 +100,16 @@ LobbyMenu::LobbyMenu()
     addChild(m_pButtonGameJoin);
     m_pButtonGameJoin->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10,
                                    oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
-    m_pButtonGameJoin->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigJoinGame();
-    });
+    m_pButtonGameJoin->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                        { emit sigJoinGame(); });
     connect(this, &LobbyMenu::sigJoinGame, this, &LobbyMenu::joinGame, Qt::QueuedConnection);
     m_pButtonGameJoin->setEnabled(false);
 
     m_pButtonGameObserve = ObjectManager::createButton(tr("Observe Game"), 220);
     addChild(m_pButtonGameObserve);
     m_pButtonGameObserve->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10, m_pButtonGameJoin->getY() - m_pButtonGameJoin->getScaledHeight());
-    m_pButtonGameObserve->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigObserveGame();
-    });
+    m_pButtonGameObserve->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                           { emit sigObserveGame(); });
     connect(this, &LobbyMenu::sigObserveGame, this, &LobbyMenu::observeGame, Qt::QueuedConnection);
     m_pButtonGameObserve->setEnabled(false);
 
@@ -129,59 +117,50 @@ LobbyMenu::LobbyMenu()
     addChild(pButtonJoinAdress);
     pButtonJoinAdress->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - 10 - pButtonJoinAdress->getScaledWidth(),
                                    oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
-    pButtonJoinAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigJoinAdress();
-    });
+    pButtonJoinAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                        { emit sigJoinAdress(); });
     connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
 
     oxygine::spButton pButtonObserveAdress = ObjectManager::createButton(tr("Observe Address"), 220);
     addChild(pButtonObserveAdress);
     pButtonObserveAdress->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - 10 - pButtonJoinAdress->getScaledWidth(),
                                       pButtonJoinAdress->getY() - pButtonJoinAdress->getScaledHeight());
-    pButtonObserveAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigObserveAdress();
-    });
+    pButtonObserveAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                           { emit sigObserveAdress(); });
     connect(this, &LobbyMenu::sigObserveAdress, this, &LobbyMenu::observeAdress, Qt::QueuedConnection);
 
     m_pButtonSwapOwnGamesMode = ObjectManager::createButton(tr("My games"), 200);
     addChild(m_pButtonSwapOwnGamesMode);
     m_pButtonSwapOwnGamesMode->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pButtonSwapOwnGamesMode->getScaledWidth() * 2, 10);
-    m_pButtonSwapOwnGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
+    m_pButtonSwapOwnGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                                {
         m_mode = GameViewMode::OwnGames;
-        emit sigRequestUpdateGames();
-    });
+        emit sigRequestUpdateGames(); });
     m_pButtonSwapOwnGamesMode->setEnabled(false);
 
     m_pButtonSwapOpenGamesMode = ObjectManager::createButton(tr("Open games"), 200);
     addChild(m_pButtonSwapOpenGamesMode);
     m_pButtonSwapOpenGamesMode->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pButtonSwapOpenGamesMode->getScaledWidth(), 10);
-    m_pButtonSwapOpenGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
+    m_pButtonSwapOpenGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                                 {
         m_mode = GameViewMode::OpenGames;
-        emit sigRequestUpdateGames();
-    });
+        emit sigRequestUpdateGames(); });
     m_pButtonSwapOpenGamesMode->setEnabled(false);
 
     m_pButtonSwapObserveGamesMode = ObjectManager::createButton(tr("Observable"), 200);
     addChild(m_pButtonSwapObserveGamesMode);
     m_pButtonSwapObserveGamesMode->setPosition(oxygine::Stage::getStage()->getWidth() / 2, 10);
-    m_pButtonSwapObserveGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
+    m_pButtonSwapObserveGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                                    {
         m_mode = GameViewMode::ObserveGames;
-        emit sigRequestUpdateGames();
-    });
+        emit sigRequestUpdateGames(); });
     m_pButtonSwapObserveGamesMode->setEnabled(false);
 
     m_pButtonUpdateGamesMode = ObjectManager::createButton(tr("Refresh games"), 200);
     addChild(m_pButtonUpdateGamesMode);
     m_pButtonUpdateGamesMode->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + m_pButtonUpdateGamesMode->getScaledWidth(), 10);
-    m_pButtonUpdateGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-    {
-        emit sigRequestUpdateGames();
-    });
+    m_pButtonUpdateGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
+                                               { emit sigRequestUpdateGames(); });
     m_pButtonUpdateGamesMode->setEnabled(false);
     connect(this, &LobbyMenu::sigRequestUpdateGames, this, &LobbyMenu::requestUpdateGames, Qt::QueuedConnection);
 
@@ -216,38 +195,29 @@ LobbyMenu::LobbyMenu()
     m_pNextStepButton = ObjectManager::createIconButton("next_unit", 36);
     m_pNextStepButton->setEnabled(false);
     m_pNextStepButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10 + infoWidth, y);
-    m_pNextStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
-    {
-        emit sigShowNextStep();
-    });
+    m_pNextStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)
+                                        { emit sigShowNextStep(); });
     addChild(m_pNextStepButton);
     m_pEndStepButton = ObjectManager::createIconButton("toEnd", 36);
     m_pEndStepButton->setEnabled(false);
     m_pEndStepButton->setPosition(m_pNextStepButton->getX() + m_pNextStepButton->getScaledWidth() + 10, y);
-    m_pEndStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
-    {
-        emit sigShowEnd();
-    });
+    m_pEndStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)
+                                       { emit sigShowEnd(); });
     addChild(m_pEndStepButton);
 
     m_pPreviousStepButton = ObjectManager::createIconButton("previous_unit", 36);
     m_pPreviousStepButton->setEnabled(false);
     m_pPreviousStepButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - 10 - infoWidth - m_pPreviousStepButton->getScaledWidth(), y);
-    m_pPreviousStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
-    {
-        emit sigShowPreviousStep();
-    });
+    m_pPreviousStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)
+                                            { emit sigShowPreviousStep(); });
     addChild(m_pPreviousStepButton);
 
     m_pStartStepButton = ObjectManager::createIconButton("toStart", 36);
     m_pStartStepButton->setEnabled(false);
     m_pStartStepButton->setPosition(m_pPreviousStepButton->getX() - m_pPreviousStepButton->getScaledWidth() - 10, y);
-    m_pStartStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
-    {
-        emit sigShowStart();
-    });
+    m_pStartStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)
+                                         { emit sigShowStart(); });
     addChild(m_pStartStepButton);
-
 
     connect(this, &LobbyMenu::sigShowNextStep, this, &LobbyMenu::showNextStep, Qt::QueuedConnection);
     connect(this, &LobbyMenu::sigShowPreviousStep, this, &LobbyMenu::showPreviousStep, Qt::QueuedConnection);
@@ -272,21 +242,21 @@ void LobbyMenu::requestUpdateGames()
 {
     switch (m_mode)
     {
-        case GameViewMode::OpenGames:
-        {
-            requestServerGames();
-            break;
-        }
-        case GameViewMode::OwnGames:
-        {
-            requestUserUpdateGames();
-            break;
-        }
-        case GameViewMode::ObserveGames:
-        {
-            requestObserverUpdateGames();
-            break;
-        }
+    case GameViewMode::OpenGames:
+    {
+        requestServerGames();
+        break;
+    }
+    case GameViewMode::OwnGames:
+    {
+        requestUserUpdateGames();
+        break;
+    }
+    case GameViewMode::ObserveGames:
+    {
+        requestObserverUpdateGames();
+        break;
+    }
     }
 }
 
@@ -354,7 +324,7 @@ void LobbyMenu::leaveServer()
 }
 
 void LobbyMenu::exitMenue()
-{    
+{
     CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
     auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
@@ -363,7 +333,7 @@ void LobbyMenu::exitMenue()
 }
 
 void LobbyMenu::hostLocal()
-{    
+{
     CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
     oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>("", "", Settings::getInstance()->getGamePort(), "", Multiplayermenu::NetworkMode::Host));
@@ -377,7 +347,7 @@ void LobbyMenu::hostServer()
     {
         CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
         m_onEnterTimer.stop();
-        oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>(m_pTCPClient, "",  Multiplayermenu::NetworkMode::Host));
+        oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>(m_pTCPClient, "", Multiplayermenu::NetworkMode::Host));
         oxygine::Actor::detach();
     }
 }
@@ -393,7 +363,6 @@ void LobbyMenu::joinGame()
                 spDialogPassword pDialogTextInput = MemoryManagement::create<DialogPassword>(tr("Enter Password"), true, "");
                 addChild(pDialogTextInput);
                 connect(pDialogTextInput.get(), &DialogPassword::sigTextChanged, this, &LobbyMenu::joinGamePassword, Qt::QueuedConnection);
-
             }
             else
             {
@@ -416,7 +385,7 @@ void LobbyMenu::joinGamePassword(QString password)
     bool exists = false;
     if (m_currentGame.getUuid() != 0)
     {
-        for (const auto & game : qAsConst(m_games))
+        for (const auto &game : qAsConst(m_games))
         {
             if (m_currentGame.getUuid() == game.getUuid())
             {
@@ -464,7 +433,7 @@ void LobbyMenu::joinAdress()
 }
 
 void LobbyMenu::join(QString adress, QString password)
-{    
+{
     CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
     oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>(adress.trimmed(), "", Settings::getInstance()->getGamePort(), password, Multiplayermenu::NetworkMode::Client));
@@ -495,7 +464,6 @@ void LobbyMenu::observeGame()
             spDialogPassword pDialogTextInput = MemoryManagement::create<DialogPassword>(tr("Enter Password"), true, "");
             addChild(pDialogTextInput);
             connect(pDialogTextInput.get(), &DialogPassword::sigTextChanged, this, &LobbyMenu::observeGamePassword, Qt::QueuedConnection);
-
         }
         else
         {
@@ -509,7 +477,7 @@ void LobbyMenu::observeGamePassword(QString password)
     bool exists = false;
     if (m_currentGame.getUuid() != 0)
     {
-        for (const auto & game : qAsConst(m_games))
+        for (const auto &game : qAsConst(m_games))
         {
             if (m_currentGame.getUuid() == game.getUuid())
             {
@@ -557,7 +525,7 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else if (messageType == NetworkCommands::SERVERUSERGAMEDATA)
         {
-            if (m_loggedIn  && m_mode == GameViewMode::OwnGames)
+            if (m_loggedIn && m_mode == GameViewMode::OwnGames)
             {
                 updateGameData(objData);
             }
@@ -578,6 +546,14 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             spDialogMessageBox pDialogMessageBox;
             pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Host game is no longer available or is currently relaunched."));
             addChild(pDialogMessageBox);
+        }
+        else if (messageType == NetworkCommands::SERVERUSERNAMES)
+        {
+            onSearchedPlayersReceived(objData);
+        }
+        else if (messageType == NetworkCommands::SERVERPLAYERSTATS)
+        {
+            onReceivedPlayerStats(objData);
         }
         else if (messageType == NetworkCommands::SENDPUBLICKEY)
         {
@@ -622,12 +598,52 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
     }
 }
 
-void LobbyMenu::updateGameData(const QJsonObject & objData)
+void LobbyMenu::requestPlayersFromServer(const QString &searchFilter)
+{
+    QString command = QString(NetworkCommands::SERVERREQUESTUSERNAMES);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_FILTER, searchFilter);
+    QJsonDocument doc(data);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::requestPlayerStats(const QString &player)
+{
+    QString command = QString(NetworkCommands::SERVERREQUESTPLAYERSTATS);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_USERNAME, player);
+    QJsonDocument doc(data);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::onReceivedPlayerStats(const QJsonObject &objData)
+{
+    emit sigReceivedPlayerStats(objData);
+}
+
+void LobbyMenu::onSearchedPlayersReceived(const QJsonObject &objData)
+{
+    QStringList players;
+    QJsonArray usernames = objData.value(JsonKeys::JSONKEY_USERNAMES).toArray();
+    for (const auto &username : usernames)
+    {
+        QString user = username.toString();
+        players.append(user);
+        CONSOLE_PRINT("user: " + user, GameConsole::eDEBUG);
+    }
+    emit sigSearchedPlayersReceived(players);
+}
+
+void LobbyMenu::updateGameData(const QJsonObject &objData)
 {
     m_games.clear();
     QJsonObject games = objData.value(JsonKeys::JSONKEY_GAMES).toObject();
     m_serverCurrentMatchCount = objData.value(JsonKeys::JSONKEY_MATCHCOUNT).toInt();
-    for (const auto & game : games)
+    for (const auto &game : games)
     {
         NetworkGameData gameData;
         gameData.fromJson(game.toObject());
@@ -637,7 +653,7 @@ void LobbyMenu::updateGameData(const QJsonObject & objData)
     emit sigUpdateGamesView();
 }
 
-void LobbyMenu::joinSlaveGame(const QJsonObject & objData)
+void LobbyMenu::joinSlaveGame(const QJsonObject &objData)
 {
     emit sigServerResponded();
     QString slaveAddress = objData.value(JsonKeys::JSONKEY_ADDRESS).toString();
@@ -651,13 +667,13 @@ void LobbyMenu::joinSlaveGame(const QJsonObject & objData)
 
 void LobbyMenu::updateGamesView()
 {
-    const auto & widths = m_gamesview->getWidths();
+    const auto &widths = m_gamesview->getWidths();
     ComplexTableView::Items items;
     qint64 uuid = m_currentGame.getUuid();
     bool hasGame = (uuid != 0);
     qint32 itemCount = 0;
     qint32 currentItem = -1;
-    for (auto & game : m_games)
+    for (auto &game : m_games)
     {
         if (hasGame && game.getUuid() == uuid)
         {
@@ -680,7 +696,7 @@ void LobbyMenu::updateGamesView()
         item.items.append(std::static_pointer_cast<BaseTableItem>(MemoryManagement::create<StringTableItem>(game.getDescription(), widths[2], textColor)));
         QStringList mods = game.getMods();
         QString modString;
-        for (const auto & mod : mods)
+        for (const auto &mod : mods)
         {
             modString.append(Settings::getInstance()->getModName(mod) + "; ");
         }
@@ -724,7 +740,7 @@ void LobbyMenu::connected(quint64 socket)
     emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::checkVersionAndShowInfo(const QJsonObject & objData)
+void LobbyMenu::checkVersionAndShowInfo(const QJsonObject &objData)
 {
     QString version = objData.value(JsonKeys::JSONKEY_VERSION).toString();
     if (version == Mainapp::getGameVersion())
@@ -738,7 +754,7 @@ void LobbyMenu::checkVersionAndShowInfo(const QJsonObject & objData)
             loginToServerAccount(password);
         }
     }
-    else        
+    else
     {
         spDialogMessageBox pDialogMessageBox;
         pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Connection refused. Server has a different version of the game. Server ") + version);
@@ -756,7 +772,7 @@ void LobbyMenu::onLogin()
 
 void LobbyMenu::onEnter()
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
+    Interpreter *pInterpreter = Interpreter::getInstance();
     QString object = "Init";
     QString func = "lobbyMenu";
     if (pInterpreter->exists(object, func))
@@ -767,25 +783,25 @@ void LobbyMenu::onEnter()
     }
 }
 
-void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject & objData)
+void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject &objData)
 {
     auto action = objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt();
     auto accountError = objData.value(JsonKeys::JSONKEY_ACCOUNT_ERROR).toInt();
-    const char * const jsScripts[] =
-    {
-        "",
-        "CreateAccountDialog",
-        "UserLoginDialog",
-        "ForgotPasswordDialog",
-        "ChangePasswordDialog",
-        "",
-        "DeleteAccountDialog",
-    };
+    const char *const jsScripts[] =
+        {
+            "",
+            "CreateAccountDialog",
+            "UserLoginDialog",
+            "ForgotPasswordDialog",
+            "ChangePasswordDialog",
+            "",
+            "DeleteAccountDialog",
+        };
     QString object = jsScripts[action];
     if (!object.isEmpty())
     {
         CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", GameConsole::eDEBUG);
-        Interpreter* pInterpreter = Interpreter::getInstance();
+        Interpreter *pInterpreter = Interpreter::getInstance();
         QJSValueList args;
         args.append(accountError);
         pInterpreter->doFunction(object, "onAccountMessage", args);
@@ -831,8 +847,8 @@ void LobbyMenu::createServerAccount(const QString password, const QString emailA
 {
     m_serverPassword.setPassword(password);
     m_serverEmailAdress = emailAdress;
-    Mainapp* pApp = Mainapp::getInstance();
-    auto & cypher = pApp->getCypher();
+    Mainapp *pApp = Mainapp::getInstance();
+    auto &cypher = pApp->getCypher();
     emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::CreateAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
@@ -840,14 +856,14 @@ void LobbyMenu::deleteServerAccount(const QString password, const QString emailA
 {
     m_serverPassword.setPassword(password);
     m_serverEmailAdress = emailAdress;
-    Mainapp* pApp = Mainapp::getInstance();
-    auto & cypher = pApp->getCypher();
+    Mainapp *pApp = Mainapp::getInstance();
+    auto &cypher = pApp->getCypher();
     emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::DeleteAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+void LobbyMenu::onPublicKeyCreateAccount(quint64 socketID, const QJsonObject &objData, NetworkCommands::PublicKeyActions action)
 {
-    auto & cypher = Mainapp::getInstance()->getCypher();
+    auto &cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
     data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
@@ -857,9 +873,9 @@ void LobbyMenu::onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & o
     emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::onPublicKeyDeleteAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+void LobbyMenu::onPublicKeyDeleteAccount(quint64 socketID, const QJsonObject &objData, NetworkCommands::PublicKeyActions action)
 {
-    auto & cypher = Mainapp::getInstance()->getCypher();
+    auto &cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
     data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
@@ -869,9 +885,9 @@ void LobbyMenu::onPublicKeyDeleteAccount(quint64 socketID, const QJsonObject & o
     emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::onPublicKeyLoginAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+void LobbyMenu::onPublicKeyLoginAccount(quint64 socketID, const QJsonObject &objData, NetworkCommands::PublicKeyActions action)
 {
-    auto & cypher = Mainapp::getInstance()->getCypher();
+    auto &cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
@@ -880,21 +896,20 @@ void LobbyMenu::onPublicKeyLoginAccount(quint64 socketID, const QJsonObject & ob
     emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::onPublicKeyResetAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+void LobbyMenu::onPublicKeyResetAccount(quint64 socketID, const QJsonObject &objData, NetworkCommands::PublicKeyActions action)
 {
-    auto & cypher = Mainapp::getInstance()->getCypher();
+    auto &cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-
 }
 
-void LobbyMenu::onPublicKeyChangePassword(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+void LobbyMenu::onPublicKeyChangePassword(quint64 socketID, const QJsonObject &objData, NetworkCommands::PublicKeyActions action)
 {
-    auto & cypher = Mainapp::getInstance()->getCypher();
+    auto &cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
     data.insert(JsonKeys::JSONKEY_OLDPASSWORD, cypher.toJsonArray(m_oldServerPassword.getHash()));
@@ -907,16 +922,16 @@ void LobbyMenu::onPublicKeyChangePassword(quint64 socketID, const QJsonObject & 
 void LobbyMenu::loginToServerAccount(const QString password)
 {
     m_serverPassword.setPassword(password);
-    Mainapp* pApp = Mainapp::getInstance();
-    auto & cypher = pApp->getCypher();
+    Mainapp *pApp = Mainapp::getInstance();
+    auto &cypher = pApp->getCypher();
     emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::LoginAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::resetPasswordOnServerAccount(const QString emailAdress)
 {
     m_serverEmailAdress = emailAdress;
-    Mainapp* pApp = Mainapp::getInstance();
-    auto & cypher = pApp->getCypher();
+    Mainapp *pApp = Mainapp::getInstance();
+    auto &cypher = pApp->getCypher();
     emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::ResetPassword), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
@@ -924,8 +939,8 @@ void LobbyMenu::changePasswordOnServerAccount(const QString oldEmailAdress, cons
 {
     m_oldServerPassword.setPassword(oldEmailAdress);
     m_serverPassword.setPassword(newEmailAdress);
-    Mainapp* pApp = Mainapp::getInstance();
-    auto & cypher = pApp->getCypher();
+    Mainapp *pApp = Mainapp::getInstance();
+    auto &cypher = pApp->getCypher();
     emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::ChangePassword), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
@@ -975,7 +990,7 @@ void LobbyMenu::requestOtherData()
     }
 }
 
-void LobbyMenu::onShowOther(quint64 socketID, const QJsonObject & objData)
+void LobbyMenu::onShowOther(quint64 socketID, const QJsonObject &objData)
 {
     spDialogOtherLobbyInfo pDialog = MemoryManagement::create<DialogOtherLobbyInfo>(this, objData);
     addChild(pDialog);

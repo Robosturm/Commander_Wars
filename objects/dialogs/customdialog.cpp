@@ -32,7 +32,11 @@ CustomDialog::CustomDialog(const QString & jsName, const QString & uiXml, Baseme
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->setGlobal(jsName, pInterpreter->newQObject(this));
     }
-    loadXmlFile(uiXml);
+    if (!uiXml.isEmpty())
+    {
+        m_uiXml = uiXml;
+        loadXmlFile(m_uiXml);
+    }
     if (!confirmText.isEmpty())
     {
         oxygine::spButton pOkButton = pObjectManager->createButton(confirmText, 150);
@@ -48,7 +52,15 @@ CustomDialog::CustomDialog(const QString & jsName, const QString & uiXml, Baseme
 
 void CustomDialog::loadXmlFile(const QString& uiXml)
 {
-    UiFactory::getInstance().createUi(uiXml, this);
+    if (!uiXml.isEmpty())
+    {
+        UiFactory::getInstance().createUi(uiXml, this);
+    }
+}
+
+void CustomDialog::refreshUi()
+{
+    loadXmlFile(m_uiXml);
 }
 
 CustomDialog::~CustomDialog()

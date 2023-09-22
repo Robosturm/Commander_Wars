@@ -9,21 +9,21 @@
 
 MatchMakingCoordinator::MatchMakingCoordinator(MainServer *parent)
     : QObject{parent},
-    m_mainServer(parent)
+      m_mainServer(parent)
 {
 }
 
-void MatchMakingCoordinator::serializeObject(QDataStream& stream) const
+void MatchMakingCoordinator::serializeObject(QDataStream &stream) const
 {
     stream << getVersion();
     stream << static_cast<qint32>(m_autoMatchMakers.size());
-    for (auto & autoMatchMakers : m_autoMatchMakers)
+    for (auto &autoMatchMakers : m_autoMatchMakers)
     {
         autoMatchMakers->serializeObject(stream);
     }
 }
 
-void MatchMakingCoordinator::deserializeObject(QDataStream& stream)
+void MatchMakingCoordinator::deserializeObject(QDataStream &stream)
 {
     qint32 version = 0;
     stream >> version;
@@ -37,7 +37,7 @@ void MatchMakingCoordinator::deserializeObject(QDataStream& stream)
     }
 }
 
-AutoMatchMaker* MatchMakingCoordinator::getAutoMatchMaker(const QString & matchMaker)
+AutoMatchMaker *MatchMakingCoordinator::getAutoMatchMaker(const QString &matchMaker)
 {
     if (m_autoMatchMakers.contains(matchMaker))
     {
@@ -46,7 +46,7 @@ AutoMatchMaker* MatchMakingCoordinator::getAutoMatchMaker(const QString & matchM
     return nullptr;
 }
 
-void MatchMakingCoordinator::onSlaveInfoGameResult(quint64 socketID, const QJsonObject & objData)
+void MatchMakingCoordinator::onSlaveInfoGameResult(quint64 socketID, const QJsonObject &objData)
 {
     auto matchType = objData.value(JsonKeys::JSONKEY_MATCHTYPE).toString();
     updatePlayerMatchData(objData);
@@ -64,11 +64,11 @@ void MatchMakingCoordinator::onSlaveInfoGameResult(quint64 socketID, const QJson
     m_mainServer->despawnSlave(socketID);
 }
 
-void MatchMakingCoordinator::updatePlayerMatchData(const QJsonObject & objData)
+void MatchMakingCoordinator::updatePlayerMatchData(const QJsonObject &objData)
 {
-    auto & database = m_mainServer->getDatabase();
+    auto &database = m_mainServer->getDatabase();
     QJsonArray resultInfo = objData.value(JsonKeys::JSONKEY_GAMERESULTARRAY).toArray();
-    for (const auto & entry : resultInfo)
+    for (const auto &entry : resultInfo)
     {
         QJsonObject data = entry.toObject();
         QString player = data.value(JsonKeys::JSONKEY_PLAYER).toString();
@@ -79,16 +79,7 @@ void MatchMakingCoordinator::updatePlayerMatchData(const QJsonObject & objData)
             for (auto co : coInfo)
             {
                 QString coId = co.toString();
-                QSqlQuery query = database.exec(QString("SELECT ") +
-                                                MainServer::SQL_GAMESLOST + ", " +
-                                                MainServer::SQL_GAMESWON + ", " +
-                                                MainServer::SQL_GAMESMADE + ", " +
-                                                MainServer::SQL_GAMESDRAW +
-                                                " from " + MainServer::SQL_TABLE_PLAYERDATA + player +
-                                                " WHERE " + MainServer::SQL_COID +
-                                                " = '" + coId + "';");
-                if (!MainServer::sqlQueryFailed(query) &&
-                    query.first())
+                if (coId.isEmpty())
                 {
                     QString entryKey = "";
                     switch (result)
@@ -109,11 +100,51 @@ void MatchMakingCoordinator::updatePlayerMatchData(const QJsonObject & objData)
                         break;
                     }
                     }
-                    if (!entryKey.isEmpty())
+                    QSqlQuery query = database.exec(QString("SELECT ") +
+                                                    MainServer::SQL_GAMESLOST + ", " +
+                                                    MainServer::SQL_GAMESWON + ", " +
+                                                    MainServer::SQL_GAMESMADE + ", " +
+                                                    MainServer::SQL_GAMESDRAW +
+                                                    " from " + MainServer::SQL_TABLE_PLAYERDATA + player +
+                                                    " WHERE " + MainServer::SQL_COID +
+                                                    " = '" + coId + "';");
+                    if (!MainServer::sqlQueryFailed(query) && query.first())
                     {
-                        database.exec(QString("UPDATE ") + MainServer::SQL_TABLE_PLAYERDATA + player + " SET " +
-                                      entryKey + " = " + QString::number(query.value(entryKey).toInt() + 1) + "  WHERE " +
-                                      MainServer::SQL_COID + " = '" + coId + "';");
+
+                        if (!entryKey.isEmpty())
+                        {
+                            database.exec(QString("UPDATE ") + MainServer::SQL_TABLE_PLAYERDATA + player + " SET " +
+                                          entryKey + " = " + QString::number(query.value(entryKey).toInt() + 1) + "  WHERE " +
+                                          MainServer::SQL_COID + " = '" + coId + "';");
+                        }
+                    }
+                    else
+                    {
+                        QString command = QString("INSERT INTO ") + MainServer::SQL_TABLE_PLAYERDATA + player + "(" +
+                                          MainServer::SQL_COID + ", " +
+                                          MainServer::SQL_GAMESMADE + ", " +
+                                          MainServer::SQL_GAMESLOST + ", " +
+                                          MainServer::SQL_GAMESWON + ", " +
+                                          MainServer::SQL_GAMESDRAW + ", " +
+                                          MainServer::SQL_METADATA +
+                                          ") VALUES(" +
+                                          "'" + coId + "'," +
+                                          "0," +
+                                          "0," +
+                                          "0," +
+                                          "0," +
+                                          "''" +
+                                          ")";
+                        query = database.exec(command);
+                        if (!MainServer::sqlQueryFailed(query))
+                        {
+                            if (!entryKey.isEmpty())
+                            {
+                                database.exec(QString("UPDATE ") + MainServer::SQL_TABLE_PLAYERDATA + player + " SET " +
+                                              entryKey + " = " + QString::number(query.value(entryKey).toInt() + 1) + "  WHERE " +
+                                              MainServer::SQL_COID + " = '" + coId + "';");
+                            }
+                        }
                     }
                 }
             }
@@ -121,11 +152,11 @@ void MatchMakingCoordinator::updatePlayerMatchData(const QJsonObject & objData)
     }
 }
 
-void MatchMakingCoordinator::getMatchMakingData(const QString & playerId, QJsonObject & objData)
+void MatchMakingCoordinator::getMatchMakingData(const QString &playerId, QJsonObject &objData)
 {
     QJsonArray preparingAutoMatches;
     QJsonArray runningAutoMatches;
-    for (auto & match : m_autoMatchMakers)
+    for (auto &match : m_autoMatchMakers)
     {
         bool isInMatch = match->getSignedUp(playerId);
         QJsonObject matchInfo;
@@ -152,7 +183,7 @@ void MatchMakingCoordinator::getMatchMakingData(const QString & playerId, QJsonO
 
 void MatchMakingCoordinator::periodicTasks()
 {
-    for (auto & match : m_autoMatchMakers)
+    for (auto &match : m_autoMatchMakers)
     {
         match->setActiveMatch(false);
     }
@@ -163,9 +194,9 @@ void MatchMakingCoordinator::periodicTasks()
     removeMatches();
 }
 
-void MatchMakingCoordinator::loadAutomatches(QString & path, bool running)
+void MatchMakingCoordinator::loadAutomatches(QString &path, bool running)
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
+    Interpreter *pInterpreter = Interpreter::getInstance();
     QStringList filter;
     filter << "*.js";
     QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
@@ -195,7 +226,7 @@ void MatchMakingCoordinator::removeMatches()
     while (removed)
     {
         removed = false;
-        for (auto & match : m_autoMatchMakers)
+        for (auto &match : m_autoMatchMakers)
         {
             if (!match->getActiveMatch())
             {

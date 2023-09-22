@@ -13,6 +13,16 @@
             "stopAtEntry": false,
             "MIMode": "gdb",
             "args": [],
+        },
+        {            
+            "type": "cppdbg",
+            "request": "launch",
+            "name": "Commander_Wars2",
+            "program": "${workspaceFolder}/../install/Debug2/Commander_Wars.exe",
+            "cwd": "${workspaceFolder}/../install/Debug2/",
+            "stopAtEntry": false,
+            "MIMode": "gdb",
+            "args": [],
         }
     ]
 }

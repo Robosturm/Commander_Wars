@@ -512,6 +512,7 @@ private:
      * @brief m_productionData
      */
     std::vector<ProductionData> m_productionData;
+    QVector<QPoint> m_usedFarAwayBuildings;
     InfluenceFrontMap m_InfluenceFrontMap;
 
 

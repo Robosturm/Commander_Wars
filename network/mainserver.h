@@ -356,12 +356,15 @@ private:
      * @param stream
      */
     void onOpenPlayerCount(quint64 socketID, const QJsonObject & objData);
+
+    void onRequestPlayerStats(quint64 socketID, const QJsonObject &objData);
     /**
      * @brief onRequestServerAutoMatchInfo
      * @param socketID
      * @param objData
      */
     void onRequestServerAutoMatchInfo(quint64 socketID, const QJsonObject & objData);
+    void onRequestPlayersFromServer(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief getNextFreeSlaveAddress
      * @param address
@@ -449,6 +452,7 @@ private:
      * @return
      */
     QSqlQuery getAllUsers(QSqlDatabase & database, bool & success);
+    
 private:
     class InternNetworkGame;
     using spInternNetworkGame = std::shared_ptr<InternNetworkGame>;

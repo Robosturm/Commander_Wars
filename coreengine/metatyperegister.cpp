@@ -31,6 +31,8 @@
 
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/networkgamedataview.h"
+#include "multiplayer/dialogotherlobbyinfo.h"
+#include "multiplayer/dialogcostatsinfo.h"
 
 #include "ui_reader/uifactory.h"
 #include "ui_reader/createdgui.h"
@@ -231,6 +233,8 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<Basemenu>("Basemenu", 1);
     qmlRegisterInterface<GeneratorMenu>("GeneratorMenu", 1);
     qmlRegisterInterface<PageData>("PageData", 1);
+    qmlRegisterInterface<DialogOtherLobbyInfo>("DialogOtherLobbyInfo", 1);
+    qmlRegisterInterface<DialogCoStatsInfo>("DialogCoStatsInfo", 1);    
 
     qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
     qmlRegisterInterface<MainServer>("MainServer", 1);

@@ -43,6 +43,8 @@ public:
      * @param height
      */
     virtual void setHeight(qint32 height) override;
+signals:
+    void sigClicked();
 public slots:
     virtual void focusedLost() override {}
     /**

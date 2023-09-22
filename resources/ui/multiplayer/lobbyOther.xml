@@ -6,6 +6,64 @@
         <width>settings.getStageWidth() - 20</width>
         <height>settings.getStageHeight() - 80</height>
         <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Player Filter:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>"PlayerFilter"</Id>
+                <width>settings.getStageWidth() - 90 - lastWidth - lastX - 170</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The search filter for players on the server.")</tooltip>
+                <startValue>""</startValue>
+                <onEvent>currentMenu.requestPlayersFromServer(input)</onEvent>
+            </Textbox>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>160</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Search")</text>
+                <onEvent>currentMenu.requestPlayersFromServer(currentMenu.getObject("PlayerFilter").getCurrentText())</onEvent>
+            </Button>
+            <Panel>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>settings.getStageWidth() - 100</width>
+                <height>settings.getStageHeight() - 240 - lastY</height>
+                <childs>
+                     <loop count="currentMenu.getFoundPlayerSize()">
+                        <Label>
+                            <x>10</x>
+                            <y>10 + loopIdx * 42</y>
+                            <width>parentWidth - 100</width>
+                            <text>currentMenu.getUserName(loopIdx)</text>
+                            <font>"main"</font>
+                            <fontSize>24</fontSize>
+                            <showBorder>true</showBorder>
+                            <onEvent>currentMenu.showPlayerStats(currentMenu.getUserName(loopIdx))</onEvent>
+                        </Label>
+                     </loop>
+                </childs>
+            </Panel>
+            <Button>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Show own Stats")</text>
+                <onEvent>currentMenu.showPlayerStats(settings.getUsername())</onEvent>
+            </Button>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>250</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Register for games")</text>
+                <onEvent>todo</onEvent>
+            </Button>
         </childs>
     </Panel>
 </ui>

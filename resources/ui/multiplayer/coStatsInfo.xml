@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
+        <childs>
+            <loop count="currentMenu.getCoCount()">
+                <Sprite>
+                    <x>CoStatsInfo.getNextX()</x>
+                    <y>CoStatsInfo.getNextY()</y>
+                    <scale>2</scale>
+                    <sprite>currentMenu.getCoId(loopIdx).toLowerCase() + "+face"</sprite>
+                </Sprite>
+                <Label>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY - 5</y>
+                    <width>200</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Wins:") + " " + currentMenu.getGamesWon(currentMenu.getCoId(loopIdx)).toString() + " (" + (currentMenu.getGamesWon(currentMenu.getCoId(loopIdx)) * 100 / currentMenu.getGamesMade(currentMenu.getCoId(loopIdx)) ).toString() + "%)"</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>lastX</x>
+                    <y>lastY + lastHeight + 5</y>
+                    <width>200</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Draw:") + " " + currentMenu.getGamesDraw(currentMenu.getCoId(loopIdx)).toString() + " (" + (currentMenu.getGamesDraw(currentMenu.getCoId(loopIdx)) * 100 / currentMenu.getGamesMade(currentMenu.getCoId(loopIdx)) ).toString() + "%)"</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>lastX</x>
+                    <y>lastY + lastHeight + 5</y>
+                    <width>200</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Lost:") + " " + currentMenu.getGamesLost(currentMenu.getCoId(loopIdx)).toString() + " (" + (currentMenu.getGamesLost(currentMenu.getCoId(loopIdx)) * 100 / currentMenu.getGamesMade(currentMenu.getCoId(loopIdx)) ).toString() + "%)"</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+            </loop>            
+        </childs>
+    </Panel>
+</ui>

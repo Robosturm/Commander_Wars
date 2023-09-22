@@ -94,6 +94,7 @@ static const char* const attrVisible = "visible";
 static const char* const attrSpinSpeed = "spinSpeed";
 static const char* const attrShowUnitPreview = "showUnitPreview";
 static const char* const attrCustomItem = "customItem";
+static const char* const attrShowBorder = "showBorder";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -247,7 +248,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
 bool UiFactory::loop(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
     qint32 loopCount = getIntValue(element.attribute("count"), "", loopIdx, pMenu);
-    bool success = loopCount > 0;
+    bool success = loopCount >= 0;
     Panel* pPanel = dynamic_cast<Panel*>(parent.get());
     for (qint32 i = 0; i < loopCount; ++i)
     {
@@ -347,7 +348,8 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
                               fontColor,
                               getIntValue(getAttribute(childs, attrFontSize), id, loopIdx, pMenu, 24),
                               hAlign);
-        spLabel pLabel = MemoryManagement::create<Label>(width);
+        bool showBorder = getBoolValue(getAttribute(childs, attrShowBorder), id, loopIdx, pMenu, false);                              
+        spLabel pLabel = MemoryManagement::create<Label>(width, showBorder);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         pLabel->setVisible(visible);
@@ -370,6 +372,14 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
             {
                 pPtr->setHtmlText(onUpdate<QString>(onUpdateLine, id, loopIdx, pMenu));
             }, Qt::QueuedConnection);
+        }        
+        QString onEvent = getAttribute(childs, attrOnEvent);
+        if (!onEvent.isEmpty())
+        {
+            pLabel->addClickListener([this, onEvent, id, loopIdx, pMenu](oxygine::Event*)
+            {
+                emit sigDoEvent(onEvent, id, loopIdx, pMenu);
+            });
         }
         parent->addChild(pLabel);
         item = pLabel;
@@ -597,7 +607,7 @@ bool UiFactory::createSprite(oxygine::spActor parent, QDomElement element, oxygi
         pSprite->setPosition(x, y);
         pSprite->setVisible(visible);
         pSprite->setEnabled(enabled);
-        if (width == 0 && height > 0)
+        if (width > 0 && height > 0)
         {
             pSprite->setSize(width, height);
         }
@@ -1041,8 +1051,24 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
             }
             node = node.nextSibling();
         }
-        pPanel->setContentHeigth(maxHeight + 40);
-        pPanel->setContentWidth(maxWidth + 40);
+        // restore last coordinates after iterating over child elements
+        m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
+        if (maxHeight >= pPanel->getScaledHeight() - 80)
+        {
+            pPanel->setContentHeigth(maxHeight + 40);
+        }
+        else
+        {
+            pPanel->setContentHeigth(pPanel->getScaledHeight() - 80);
+        }
+        if (maxWidth >= pPanel->getScaledWidth() - 80)
+        {
+            pPanel->setContentWidth(maxWidth + 40);
+        }
+        else
+        {
+            pPanel->setContentWidth(pPanel->getScaledWidth() - 80);
+        }
         parent->addChild(pPanel);
         m_parentSize = QSize(0, 0);
         item = pPanel;

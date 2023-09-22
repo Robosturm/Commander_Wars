@@ -50,7 +50,7 @@ private:
      * Nodename: Label
      * supported attributes are:
      * mandatory: x, y, width, heigth, text, font, fontSize
-     * optional: tooltip, onUpdate, id, enabled, fontColor, visible
+     * optional: tooltip, onUpdate, id, enabled, fontColor, visible, onEvent, showBorder
      */
     bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**

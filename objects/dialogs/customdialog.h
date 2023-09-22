@@ -45,11 +45,16 @@ public slots:
      * @param pBaseMenu
      */
     void createDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu);
+    /**
+     * clears all ui elements and loads the default xml
+    */
+    Q_INVOKABLE void refreshUi();
 private slots:
     void remove();
 
-private:
+protected:
     QString m_jsName;
+    QString m_uiXml;
     Basemenu* m_pBaseMenu{nullptr};
     ScriptVariables m_Variables;
 };

@@ -46,6 +46,8 @@ public:
     Q_INVOKABLE void enableServerButtons(bool enable);
     Q_INVOKABLE void requestObserverUpdateGames();
     Q_INVOKABLE void showContactingServer();
+    Q_INVOKABLE void requestPlayersFromServer(const QString & searchFilter);
+    Q_INVOKABLE void requestPlayerStats(const QString & player);
 signals:
     void sigExitMenue();
     void sigHostServer();
@@ -62,6 +64,8 @@ signals:
     void sigShowPreviousStep();
     void sigShowStart();
     void sigShowEnd();
+    void sigSearchedPlayersReceived(const QStringList & foundPlayers);
+    void sigReceivedPlayerStats(const QJsonObject & objData);
 
 public slots:
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
@@ -111,6 +115,14 @@ private:
      * @param data
      */
     void showNetworkGameData(NetworkGameData & data);
+    /**
+     * 
+     */
+    void onSearchedPlayersReceived(const QJsonObject &objData);
+    /**
+     * 
+    */
+    void onReceivedPlayerStats(const QJsonObject &objData);
 private:
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<NetworkGameData> m_games;
@@ -141,5 +153,7 @@ private:
     qint32 m_gameIndex{0};
     qint32 m_serverCurrentMatchCount{0};
 };
+
+Q_DECLARE_INTERFACE(LobbyMenu, "LobbyMenu");
 
 #endif // LOBBYMENU_H

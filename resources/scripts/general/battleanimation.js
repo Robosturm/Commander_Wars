@@ -206,7 +206,7 @@ var BATTLEANIMATION =
         return 100;
     },
 
-    spotterArmyData = [["ac", "ac"],
+    spotterArmyData : [["ac", "ac"],
                        ["bm", "bm"],
                        ["dm", "dm"],
                        ["ge", "ge"],
@@ -220,35 +220,41 @@ var BATTLEANIMATION =
                        ["ma", ""],],
     loadSpotterOrCoMini : function(sprite, unit, spotterNeeded)
     {
-        var coMiniLoaded = false;
-        if (settings.getUseCoMinis())
+        var baseId = unit.getTerrain().getBaseTerrainID();
+        var isSea = baseId === "SEA" ||
+                    baseId === "LAKE";
+        if (!isSea)
         {
-            var owner = unit.getOwner();
-            var co = owner.getCO(0);
-            var coid = "";
-            if (co !== null && co.getCOUnit() === unit)
+            var coMiniLoaded = false;
+            if (settings.getUseCoMinis())
             {
-                coid = co.getCoID();
-            }
-            else
-            {
-                co = owner.getCO(1);
+                var owner = unit.getOwner();
+                var co = owner.getCO(0);
+                var coid = "";
                 if (co !== null && co.getCOUnit() === unit)
                 {
                     coid = co.getCoID();
                 }
+                else
+                {
+                    co = owner.getCO(1);
+                    if (co !== null && co.getCOUnit() === unit)
+                    {
+                        coid = co.getCoID();
+                    }
+                }
+                if (coid !== "" &&
+                    sprite.existResAnim(coid + "+mini"))
+                {
+                    sprite.loadCoMini(coid + "+mini", GameEnums.Recoloring_None, Qt.point(90, 5),
+                                    Qt.point(0, 0), 1, false, 1, 1, 20);
+                    coMiniLoaded = true;
+                }
             }
-            if (coid !== "" &&
-                sprite.existResAnim(coid + "+mini"))
+            if (!coMiniLoaded && spotterNeeded)
             {
-                sprite.loadCoMini(coid + "+mini", GameEnums.Recoloring_None, Qt.point(90, 5),
-                                  Qt.point(0, 0), 1, false, 1, 1, 20);
-                coMiniLoaded = true;
+                BATTLEANIMATION.loadSpotter(sprite, unit);
             }
-        }
-        if (!coMiniLoaded && spotterNeeded)
-        {
-            BATTLEANIMATION.loadSpotter(sprite, unit);
         }
     },
     loadSpotter : function(sprite, unit)

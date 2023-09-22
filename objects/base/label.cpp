@@ -18,8 +18,8 @@ Label::Label(qint32 width, bool showBox)
     qint32 yOffset = 0;
     if (showBox)
     {
-        ObjectManager* pObjectManager = ObjectManager::getInstance();
-        oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");
+        ObjectManager *pObjectManager = ObjectManager::getInstance();
+        oxygine::ResAnim *pAnim = pObjectManager->getResAnim("dropdownmenu");
         oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
         pBox->setResAnim(pAnim);
         pBox->setSize(width, 40);
@@ -43,10 +43,10 @@ Label::Label(qint32 width, bool showBox)
 }
 
 void Label::setWidth(qint32 width)
-{    
+{
     m_clipRect->setWidth(width);
     m_textField->setWidth(width);
-    oxygine::Sprite::setWidth(width);    
+    oxygine::Sprite::setWidth(width);
 }
 
 void Label::setHeight(qint32 height)
@@ -57,7 +57,7 @@ void Label::setHeight(qint32 height)
 }
 
 void Label::setText(QString str)
-{    
+{
     m_textField->setText(str);
 }
 
@@ -77,8 +77,8 @@ void Label::setHtmlText(QString str)
 #endif
 }
 
-void Label::setStyle(const oxygine::TextStyle& st)
-{    
+void Label::setStyle(const oxygine::TextStyle &st)
+{
 #ifdef GRAPHICSUPPORT
     m_textField->setStyle(st);
     m_clipRect->setPosition(m_clipRect->getPosition() + QPoint(0, -m_clipOffset));

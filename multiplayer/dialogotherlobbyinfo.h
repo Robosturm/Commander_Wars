@@ -11,14 +11,27 @@ using spDialogOtherLobbyInfo = std::shared_ptr<DialogOtherLobbyInfo>;
 
 class DialogOtherLobbyInfo final : public CustomDialog
 {
+    Q_OBJECT
 public:
     explicit DialogOtherLobbyInfo(LobbyMenu* pBaseMenu, const QJsonObject & objData);
     ~DialogOtherLobbyInfo() = default;
 
     Q_INVOKABLE qint32 getPreparingAutomatedMatchCount() const;
     Q_INVOKABLE qint32 getRunningAutomatedMatchCount() const;
+    Q_INVOKABLE void requestPlayersFromServer(const QString & searchFilter);    
+    Q_INVOKABLE QStringList getFoundPlayers();
+    Q_INVOKABLE qint32 getFoundPlayerSize();
+    Q_INVOKABLE QString getUserName(qint32 idx);
+    Q_INVOKABLE void showPlayerStats(const QString & player);
+private slots:
+    void onSearchedPlayersReceived(const QStringList & foundPlayers);
+    void receivedPlayerStats(const QJsonObject & objData);
 private:
     const QJsonObject m_otherData;
+    LobbyMenu* m_pLobbyMenu{nullptr};
+    QStringList m_foundPlayers;
 };
+
+Q_DECLARE_INTERFACE(DialogOtherLobbyInfo, "DialogOtherLobbyInfo");
 
 #endif // DIALOGOTHERLOBBYINFO_H

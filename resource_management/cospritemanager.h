@@ -49,6 +49,10 @@ public:
     {
         return m_loadedRessources;
     }
+    Q_INVOKABLE qint32 getCoCount()
+    {
+        return m_loadedRessources.size();
+    }
     /**
      * @brief loadResAnim this function is not callable from js
      * @param coid
