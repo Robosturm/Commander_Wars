@@ -695,6 +695,7 @@ set(${PROJECT_NAME}_SRCS
     multiplayer/networkgamedataview.h multiplayer/networkgamedataview.cpp
     multiplayer/dialogotherlobbyinfo.h multiplayer/dialogotherlobbyinfo.cpp
     multiplayer/dialogcostatsinfo.cpp multiplayer/dialogcostatsinfo.h
+    multiplayer/dialogAutoMatches.cpp multiplayer/dialogAutoMatches.h
     multiplayer/networkcommands.h
 
     #campaign support

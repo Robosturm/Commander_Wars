@@ -76,7 +76,7 @@ LobbyMenu::LobbyMenu()
     m_pOtherButton->setPosition(10, pButtonExit->getY() - m_pOtherButton->getScaledHeight());
     m_pOtherButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
                                      { emit sigOther(); });
-    connect(this, &LobbyMenu::sigOther, this, &LobbyMenu::requestOtherData, Qt::QueuedConnection);
+    connect(this, &LobbyMenu::sigOther, this, &LobbyMenu::onShowOtherDialog, Qt::QueuedConnection);
     m_pOtherButton->setEnabled(false);
 
     oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Direct Host"), 220);
@@ -589,7 +589,7 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else if (messageType == NetworkCommands::SERVERSENDAUTOMATCHINFO)
         {
-            onShowOther(socketID, objData);
+            receivedShowAutoMatches(objData);
         }
         else
         {
@@ -979,7 +979,7 @@ void LobbyMenu::showEnd()
     requestUserUpdateGames();
 }
 
-void LobbyMenu::requestOtherData()
+void LobbyMenu::requestShowAutoMatches()
 {
     if (m_pTCPClient.get() != nullptr)
     {
@@ -990,8 +990,13 @@ void LobbyMenu::requestOtherData()
     }
 }
 
-void LobbyMenu::onShowOther(quint64 socketID, const QJsonObject &objData)
+void LobbyMenu::onShowOtherDialog()
 {
-    spDialogOtherLobbyInfo pDialog = MemoryManagement::create<DialogOtherLobbyInfo>(this, objData);
+    spDialogOtherLobbyInfo pDialog = MemoryManagement::create<DialogOtherLobbyInfo>(this);
     addChild(pDialog);
+}
+
+void LobbyMenu::receivedShowAutoMatches(const QJsonObject & objData)
+{
+    emit sigRequestShowAutoMatches(objData);
 }

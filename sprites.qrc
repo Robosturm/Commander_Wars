@@ -4837,6 +4837,7 @@
         <file>resources/ui/multiplayer/networkGameDataView.js</file>
         <file>resources/ui/multiplayer/coStatsInfo.xml</file>
         <file>resources/ui/multiplayer/coStatsInfo.js</file>
+        <file>resources/ui/multiplayer/dialogAutoMatches.xml</file>        
         <file>resources/objects/toEnd.png</file>
         <file>resources/objects/toStart.png</file>
         <file>resources/images/building/depot+mask.png</file>

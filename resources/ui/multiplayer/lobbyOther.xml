@@ -62,7 +62,7 @@
                 <y>lastY</y>
                 <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Register for games")</text>
-                <onEvent>todo</onEvent>
+                <onEvent>currentMenu.showAutoMatches()</onEvent>
             </Button>
         </childs>
     </Panel>

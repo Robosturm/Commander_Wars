@@ -8,25 +8,16 @@
 
 #include "network/JsonKeys.h"
 
-DialogOtherLobbyInfo::DialogOtherLobbyInfo(LobbyMenu *pBaseMenu, const QJsonObject &objData)
+DialogOtherLobbyInfo::DialogOtherLobbyInfo(LobbyMenu *pBaseMenu)
     : CustomDialog("", "", pBaseMenu, tr("Close")),
-      m_otherData(objData),
       m_pLobbyMenu(pBaseMenu)
 {
     connect(pBaseMenu, &LobbyMenu::sigSearchedPlayersReceived, this, &DialogOtherLobbyInfo::onSearchedPlayersReceived);
     connect(pBaseMenu, &LobbyMenu::sigReceivedPlayerStats, this, &DialogOtherLobbyInfo::receivedPlayerStats);
+    connect(pBaseMenu, &LobbyMenu::sigRequestShowAutoMatches, this, &DialogOtherLobbyInfo::receivedShowAutoMatches);
+    
     m_uiXml = "ui/multiplayer/lobbyOther.xml";
     loadXmlFile(m_uiXml);
-}
-
-qint32 DialogOtherLobbyInfo::getPreparingAutomatedMatchCount() const
-{
-    return m_otherData[JsonKeys::JSONKEY_PREPARINGAUTOMATCHES].toArray().size();
-}
-
-qint32 DialogOtherLobbyInfo::getRunningAutomatedMatchCount() const
-{
-    return m_otherData[JsonKeys::JSONKEY_RUNNINGAUTOMATCHES].toArray().size();
 }
 
 QStringList DialogOtherLobbyInfo::getFoundPlayers()
@@ -69,4 +60,14 @@ void DialogOtherLobbyInfo::receivedPlayerStats(const QJsonObject &objData)
     auto stats = objData.value(JsonKeys::JSONKEY_COSTATS).toObject();
     spDialogCoStatsInfo pDialog = MemoryManagement::create<DialogCoStatsInfo>(m_pLobbyMenu, stats);
     addChild(pDialog);
+}
+
+void DialogOtherLobbyInfo::showAutoMatches()
+{
+    m_pLobbyMenu->requestShowAutoMatches();
+}
+
+void DialogOtherLobbyInfo::receivedShowAutoMatches(const QJsonObject & objData)
+{
+
 }

@@ -66,6 +66,7 @@ signals:
     void sigShowEnd();
     void sigSearchedPlayersReceived(const QStringList & foundPlayers);
     void sigReceivedPlayerStats(const QJsonObject & objData);
+    void sigRequestShowAutoMatches(const QJsonObject & objData);
 
 public slots:
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
@@ -89,11 +90,12 @@ public slots:
     void showPreviousStep();
     void showStart();
     void showEnd();
-    void requestOtherData();
+    void requestShowAutoMatches();
 protected slots:
     virtual void onEnter() override;
 private:
-    void onShowOther(quint64 socketID, const QJsonObject & objData);
+    void onShowOtherDialog();
+    void receivedShowAutoMatches(const QJsonObject & objData);
     void updateGameData(const QJsonObject & objData);
     void joinSlaveGame(const QJsonObject & objData);
     void checkVersionAndShowInfo(const QJsonObject & objData);
@@ -104,7 +106,8 @@ private:
     void onPublicKeyChangePassword(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void handleAccountMessage(quint64 socketID, const QJsonObject & objData);
     void requestServerGames();
-    void requestUserUpdateGames();    /**
+    void requestUserUpdateGames();    
+    /**
      * @brief getMinimapImage
      * @param img
      * @param data
