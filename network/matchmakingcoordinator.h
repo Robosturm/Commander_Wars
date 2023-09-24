@@ -67,7 +67,10 @@ private:
      * @brief removeMatches
      */
     void removeMatches();
-
+    /**
+     * 
+    */
+    void fixPlayerTable(const QString &player);
 private:
     /**
      * @brief m_autoMatchMakers

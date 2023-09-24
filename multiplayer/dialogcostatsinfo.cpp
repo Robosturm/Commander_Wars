@@ -18,7 +18,7 @@ DialogCoStatsInfo::DialogCoStatsInfo(LobbyMenu *pBaseMenu, const QJsonObject &ob
         {
             CoData data;
             data.coid = co;
-            data.playedGames = getGamesMade(co);
+            data.playedGames = getGamesMade(co, true);
             m_sortedCoids.push_back(data);
         }
     }
@@ -56,12 +56,16 @@ qint32 DialogCoStatsInfo::getGamesLost(const QString &coid)
     }
 }
 
-qint32 DialogCoStatsInfo::getGamesMade(const QString &coid)
+qint32 DialogCoStatsInfo::getGamesMade(const QString &coid, bool zeroBased)
 {
 
     auto stats = getCoStats(coid);
     if (stats.isEmpty())
     {
+        if (zeroBased)
+        {
+            return 0;
+        }
         return 1;
     }
     else

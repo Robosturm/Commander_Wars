@@ -1413,7 +1413,7 @@ void MainServer::createUserTable(const QString &username)
                                          SQL_GAMESLOST + " INTEGER, " +
                                          SQL_GAMESWON + " INTEGER, " +
                                          SQL_GAMESDRAW + " INTEGER," +
-                                         SQL_METADATA + "TEXT)");
+                                         SQL_METADATA + " TEXT)");
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create user table for user " + username + ". Error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);

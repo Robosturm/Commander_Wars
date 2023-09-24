@@ -135,7 +135,12 @@ public:
      * @param socketID
      * @param objData
      */
-    void onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData);
+    void onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData);    
+    /**
+     * @brief createUserTable
+     * @param username
+     */
+    void createUserTable(const QString & username);
     /**
      * @brief startRemoteGame used for ai training and to move data from one thread context to this one
      * @param map
@@ -401,11 +406,6 @@ private:
      * @param doc
      */
     void loginToAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
-    /**
-     * @brief createUserTable
-     * @param username
-     */
-    void createUserTable(const QString & username);
     /**
      * @brief createMatchData
      * @param match

@@ -23,7 +23,7 @@ public:
 
     Q_INVOKABLE qint32 getGamesWon(const QString &coid);
     Q_INVOKABLE qint32 getGamesLost(const QString &coid);
-    Q_INVOKABLE qint32 getGamesMade(const QString &coid);
+    Q_INVOKABLE qint32 getGamesMade(const QString &coid, bool zeroBased = false);
     Q_INVOKABLE qint32 getGamesDraw(const QString &coid);
     Q_INVOKABLE qint32 getCoCount();
     Q_INVOKABLE QString getCoId(qint32 index);

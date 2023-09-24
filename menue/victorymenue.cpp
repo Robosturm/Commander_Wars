@@ -521,15 +521,15 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     connect(this, &VictoryMenue::sigFinishCurrentGraph, this, &VictoryMenue::finishGraph, Qt::QueuedConnection);
     pApp->continueRendering();
     Mainapp::getAiProcessPipe().onQuitGame();
-    if (Settings::getInstance()->getAiSlave())
-    {
-        connect(this, &VictoryMenue::sigQuitOnAiPipe, this, &VictoryMenue::quitOnAiPipe, Qt::QueuedConnection);
-        emit sigQuitOnAiPipe();
-    }
-    else if (Mainapp::getSlave())
+    if (Mainapp::getSlave())
     {
         multiplayerGameFinished();
     }
+    else if (Settings::getInstance()->getAiSlave())
+    {
+        connect(this, &VictoryMenue::sigQuitOnAiPipe, this, &VictoryMenue::quitOnAiPipe, Qt::QueuedConnection);
+        emit sigQuitOnAiPipe();
+    }    
     else
     {
         AddScoreToUserdata();
