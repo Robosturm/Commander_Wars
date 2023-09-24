@@ -99,7 +99,7 @@ jobs:
             abi : "armeabi-v7a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            installerCommands1: ''
+            installerCommands1: 'choco install ninja'
             installerCommands2: ''
             source_asset: 'android-build/build/outputs/apk/release/android-build-release-signed.apk'
             asset_name: 'Commander_Wars_armeabi-v7a.apk'
@@ -114,7 +114,7 @@ jobs:
             abi : "arm64-v8a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            installerCommands1: ''
+            installerCommands1: 'choco install ninja'
             installerCommands2: ''
             source_asset: 'android-build/build/outputs/apk/release/android-build-release-signed.apk'
             asset_name: 'Commander_Wars_arm64-v8a.apk'
@@ -190,6 +190,7 @@ jobs:
         cmake \
         -S "${{github.workspace}}/source" \
         -B "${{github.workspace}}/build" \
+        -DCMAKE_GENERATOR="Ninja" \
         -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" \
         -DQT_QMAKE_EXECUTABLE="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \

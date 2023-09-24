@@ -56,7 +56,7 @@ jobs:
             abi : "armeabi-v7a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            installerCommands1: ''
+            installerCommands1: 'choco install ninja'
             installerCommands2: ''
             cmakeOptions: ''
             openSslabiPath: 'android_openssl/ssl_3/armeabi-v7a'
@@ -69,7 +69,7 @@ jobs:
             abi : "arm64-v8a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            installerCommands1: ''
+            installerCommands1: 'choco install ninja'
             installerCommands2: ''
             cmakeOptions: ''
             openSslabiPath: 'android_openssl/ssl_3/arm64-v8a'
@@ -143,6 +143,7 @@ jobs:
         cmake \
         -S "${{github.workspace}}/source" \
         -B "${{github.workspace}}/build" \
+        -DCMAKE_GENERATOR="Ninja" \
         -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" \
         -DQT_QMAKE_EXECUTABLE="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
