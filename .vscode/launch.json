@@ -12,7 +12,7 @@
             "cwd": "${workspaceFolder}/../install/Debug/",
             "stopAtEntry": false,
             "MIMode": "gdb",
-            "args": [],
+            "args": ["--createSlaveLogs"],
         },
         {            
             "type": "cppdbg",

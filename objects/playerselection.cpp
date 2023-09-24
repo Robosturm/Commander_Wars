@@ -33,14 +33,13 @@
 #include "network/tcpserver.h"
 #include "network/JsonKeys.h"
 
-constexpr const char* const CO_ARMY = "CO_ARMY";
-constexpr const char* const OBJECT_AI_PREFIX = "AI_";
-constexpr const char* const OBJECT_COLOR_PREFIX = "PlayerColor_";
-constexpr const char* const OBJECT_TEAM_PREFIX = "Team_";
-constexpr const char* const OBJECT_READY_PREFIX = "Ready_";
-constexpr const char* const OBJECT_CO1_PREFIX = "CO1_";
-constexpr const char* const OBJECT_CO2_PREFIX = "CO2_";
-
+constexpr const char *const CO_ARMY = "CO_ARMY";
+constexpr const char *const OBJECT_AI_PREFIX = "AI_";
+constexpr const char *const OBJECT_COLOR_PREFIX = "PlayerColor_";
+constexpr const char *const OBJECT_TEAM_PREFIX = "Team_";
+constexpr const char *const OBJECT_READY_PREFIX = "Ready_";
+constexpr const char *const OBJECT_CO1_PREFIX = "CO1_";
+constexpr const char *const OBJECT_CO2_PREFIX = "CO2_";
 
 PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
 {
@@ -73,7 +72,7 @@ bool PlayerSelection::isOpenPlayer(qint32 player)
         player >= 0 &&
         player < m_pMap->getPlayerCount())
     {
-        DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+        DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
         if (pDropDownmenu != nullptr)
         {
             if (pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 1)
@@ -96,7 +95,7 @@ bool PlayerSelection::isClosedPlayer(qint32 player)
     bool ret = false;
     if (!getIsCampaign())
     {
-        DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+        DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
         if (pDropDownmenu != nullptr)
         {
             if (m_pNetworkInterface.get() != nullptr)
@@ -177,7 +176,7 @@ void PlayerSelection::setPlayerAiName(qint32 player, QString name)
     {
         CONSOLE_PRINT("PlayerSelection::setPlayerAiName player=" + QString::number(player) + " name=" + name, GameConsole::eDEBUG);
         m_pMap->getPlayer(player)->setPlayerNameId(name);
-        DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+        DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
         if (pDropDownmenu != nullptr)
         {
             pDropDownmenu->setCurrentItemText(name);
@@ -199,9 +198,9 @@ GameEnums::AiTypes PlayerSelection::getPlayerAiType(qint32 player)
 }
 
 void PlayerSelection::showSelectCO(qint32 player, quint8 co)
-{    
+{
     QString coid = "";
-    
+
     if (m_pMap->getPlayer(player)->getCO(co) != nullptr)
     {
         coid = m_pMap->getPlayer(player)->getCO(co)->getCoID();
@@ -216,11 +215,11 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
         cos = m_pMap->getGameRules()->getCOBannlist();
         if (cos.size() == 0)
         {
-            cos= COSpriteManager::getInstance()->getLoadedRessources();
+            cos = COSpriteManager::getInstance()->getLoadedRessources();
         }
-        Userdata* pUserdata = Userdata::getInstance();
+        Userdata *pUserdata = Userdata::getInstance();
         auto items = pUserdata->getShopItemsList(GameEnums::ShopItemType_CO, false);
-        for (const auto & item : items)
+        for (const auto &item : items)
         {
             cos.removeAll(item);
         }
@@ -236,11 +235,11 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
         oxygine::Stage::getStage()->addChild(dialog);
         if (co == 0)
         {
-            connect(dialog.get(), &COSelectionDialog::editFinished, this , &PlayerSelection::playerCO1Changed, Qt::QueuedConnection);
+            connect(dialog.get(), &COSelectionDialog::editFinished, this, &PlayerSelection::playerCO1Changed, Qt::QueuedConnection);
         }
         else
         {
-            connect(dialog.get(), &COSelectionDialog::editFinished, this , &PlayerSelection::playerCO2Changed, Qt::QueuedConnection);
+            connect(dialog.get(), &COSelectionDialog::editFinished, this, &PlayerSelection::playerCO2Changed, Qt::QueuedConnection);
         }
     }
 }
@@ -251,7 +250,7 @@ bool PlayerSelection::getIsCampaign() const
 }
 
 bool PlayerSelection::getIsArmyCustomizationAllowed()
-{    
+{
     return (m_pCampaign.get() == nullptr ||
             m_pCampaign->getAllowArmyCustomization(m_pMap) ||
             GameConsole::getDeveloperMode());
@@ -259,7 +258,7 @@ bool PlayerSelection::getIsArmyCustomizationAllowed()
 
 bool PlayerSelection::hasLockedPlayersInCaseOfDisconnect() const
 {
-    for (auto & locked : m_lockedInCaseOfDisconnect)
+    for (auto &locked : m_lockedInCaseOfDisconnect)
     {
         if (locked)
         {
@@ -301,7 +300,7 @@ bool PlayerSelection::getIsObserverNetworkInterface() const
     return m_pNetworkInterface.get() != nullptr && m_pNetworkInterface->getIsObserver();
 }
 
-bool PlayerSelection::isNotServerChangeable(Player* pPlayer) const
+bool PlayerSelection::isNotServerChangeable(Player *pPlayer) const
 {
     bool notServerChangeAblePlayer = false;
     if (pPlayer->getBaseGameInput() != nullptr)
@@ -313,7 +312,7 @@ bool PlayerSelection::isNotServerChangeable(Player* pPlayer) const
 
 qint32 PlayerSelection::getDefaultColorCount() const
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
+    Interpreter *pInterpreter = Interpreter::getInstance();
     QString function = "getDefaultPlayerColors";
     QJSValueList args;
     QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
@@ -327,7 +326,7 @@ qint32 PlayerSelection::getDefaultColorCount() const
 
 QColor PlayerSelection::getDefaultColor(qint32 index)
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
+    Interpreter *pInterpreter = Interpreter::getInstance();
     QString function = "getDefaultColor";
     QJSValueList args({QJSValue(index)});
     QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
@@ -335,10 +334,10 @@ QColor PlayerSelection::getDefaultColor(qint32 index)
     return color;
 }
 
-QColor PlayerSelection::getDisplayColor(qint32 index, bool & exists) const
+QColor PlayerSelection::getDisplayColor(qint32 index, bool &exists) const
 {
     exists = false;
-    Interpreter* pInterpreter = Interpreter::getInstance();
+    Interpreter *pInterpreter = Interpreter::getInstance();
     QString function = "getDisplayColor";
     QJSValueList args({QJSValue(index)});
     QColor displayColor;
@@ -431,7 +430,7 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
                         m_pMap->getPlayer(i)->setBuildList(unitList.items);
                     }
                 }
-                Player* pPlayer = m_pMap->getPlayer(i);
+                Player *pPlayer = m_pMap->getPlayer(i);
                 if (pPlayer->getTeam() != 0)
                 {
                     allPlayer1 = false;
@@ -492,7 +491,7 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
 
 void PlayerSelection::showPlayerSelection(bool relaunchedLobby)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Mainapp *pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     resetUi();
     initializeMap(relaunchedLobby);
@@ -511,8 +510,8 @@ void PlayerSelection::updateInitialState(bool relaunchedLobby)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            Player* pPlayer = m_pMap->getPlayer(i);
-            DropDownmenu* pPlayerAi = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
+            Player *pPlayer = m_pMap->getPlayer(i);
+            DropDownmenu *pPlayerAi = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
             qint32 ai = pPlayer->getControlType();
             if ((ai == GameEnums::AiTypes_Human &&
                  Settings::getInstance()->getUsername() != pPlayer->getPlayerNameId()) ||
@@ -534,8 +533,8 @@ void PlayerSelection::updateInitialState(bool relaunchedLobby)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            Player* pPlayer = m_pMap->getPlayer(i);
-            DropDownmenu* pPlayerAi = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
+            Player *pPlayer = m_pMap->getPlayer(i);
+            DropDownmenu *pPlayerAi = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
             auto aiType = pPlayer->getControlType();
             qint32 ai = static_cast<qint32>(aiType);
             // update co view
@@ -547,10 +546,10 @@ void PlayerSelection::updateInitialState(bool relaunchedLobby)
     }
 }
 
-void PlayerSelection::selectInitialAi(bool relaunchedLobby, qint32 player, DropDownmenu* pPlayerAi, qint32 & ai, const QStringList & aiList, const QStringList & defaultAiList)
+void PlayerSelection::selectInitialAi(bool relaunchedLobby, qint32 player, DropDownmenu *pPlayerAi, qint32 &ai, const QStringList &aiList, const QStringList &defaultAiList)
 {
     CONSOLE_PRINT("PlayerSelection::selectInitialAi player=" + QString::number(player) + " ai=" + QString::number(ai) + " relaunchedLobby=" + QString::number(relaunchedLobby), GameConsole::eDEBUG);
-    Player* pPlayer = m_pMap->getPlayer(player);
+    Player *pPlayer = m_pMap->getPlayer(player);
     const bool isCampaign = getIsCampaign();
     if (relaunchedLobby)
     {
@@ -611,6 +610,7 @@ void PlayerSelection::selectInitialAi(bool relaunchedLobby, qint32 player, DropD
                 ai = GameEnums::AiTypes_Open;
                 if (pPlayerAi != nullptr)
                 {
+                    CONSOLE_PRINT("PlayerSelection::selectInitialAi player=" + QString::number(player) + " new ai=" + QString::number(ai) + " relaunchedLobby=" + QString::number(relaunchedLobby), GameConsole::eDEBUG);
                     pPlayerAi->setCurrentItem(aiList.size() - 1);
                 }
             }
@@ -619,6 +619,7 @@ void PlayerSelection::selectInitialAi(bool relaunchedLobby, qint32 player, DropD
                 ai = GameEnums::AiTypes_Human;
                 if (pPlayerAi != nullptr)
                 {
+                    CONSOLE_PRINT("PlayerSelection::selectInitialAi player=" + QString::number(player) + " new ai=" + QString::number(ai) + " relaunchedLobby=" + QString::number(relaunchedLobby), GameConsole::eDEBUG);
                     pPlayerAi->setCurrentItem(0);
                 }
             }
@@ -635,7 +636,7 @@ void PlayerSelection::selectInitialAi(bool relaunchedLobby, qint32 player, DropD
     }
     else
     {
-        auto* input = pPlayer->getBaseGameInput();
+        auto *input = pPlayer->getBaseGameInput();
         if (input == nullptr)
         {
             ai = GameEnums::AiTypes_Closed;
@@ -655,10 +656,10 @@ void PlayerSelection::selectInitialAi(bool relaunchedLobby, qint32 player, DropD
     }
 }
 
-void PlayerSelection::createInitialAi(DropDownmenu* pPlayerAi, qint32 ai, qint32 player)
+void PlayerSelection::createInitialAi(DropDownmenu *pPlayerAi, qint32 ai, qint32 player)
 {
     CONSOLE_PRINT("PlayerSelection::createInitialAi for player " + QString::number(player) + " with control type " + QString::number(ai), GameConsole::eDEBUG);
-    Player* pPlayer = m_pMap->getPlayer(player);
+    Player *pPlayer = m_pMap->getPlayer(player);
     // create initial selected ai's
     QString displayName = pPlayer->getPlayerNameId();
     if (pPlayerAi != nullptr)
@@ -684,7 +685,7 @@ void PlayerSelection::createInitialAi(DropDownmenu* pPlayerAi, qint32 ai, qint32
 
 void PlayerSelection::selectInitialCos(qint32 player)
 {
-    Player* pPlayer = m_pMap->getPlayer(player);
+    Player *pPlayer = m_pMap->getPlayer(player);
     if (m_pNetworkInterface.get() == nullptr ||
         m_pNetworkInterface->getIsServer())
     {
@@ -717,7 +718,7 @@ void PlayerSelection::selectInitialCos(qint32 player)
 
 QStringList PlayerSelection::getSelectableArmies() const
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
+    Interpreter *pInterpreter = Interpreter::getInstance();
     QJSValue erg = pInterpreter->doFunction("PLAYER", "getArmies");
     QStringList ret = erg.toVariant().toStringList();
     ret.push_front(CO_ARMY);
@@ -726,7 +727,7 @@ QStringList PlayerSelection::getSelectableArmies() const
 
 void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
 {
-    Player* pPlayer = m_pMap->getPlayer(player);
+    Player *pPlayer = m_pMap->getPlayer(player);
     if (army == CO_ARMY)
     {
         pPlayer->setPlayerArmySelected(false);
@@ -751,7 +752,7 @@ void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
 }
 
 void PlayerSelection::allPlayerIncomeChanged(float value)
-{        
+{
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_pMap->getPlayer(i)->setFundsModifier(value);
@@ -779,14 +780,14 @@ void PlayerSelection::slotShowAllBuildList()
     // use player 0 as default for showing all
     spBuildListDialog dialog = MemoryManagement::create<BuildListDialog>(m_pMap, 0, m_pMap->getPlayer(0)->getBuildList());
     oxygine::Stage::getStage()->addChild(dialog);
-    connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangeAllBuildList, Qt::QueuedConnection);
+    connect(dialog.get(), &BuildListDialog::editFinished, this, &PlayerSelection::slotChangeAllBuildList, Qt::QueuedConnection);
 }
 
 void PlayerSelection::slotShowPlayerBuildList(qint32 player)
 {
     spBuildListDialog dialog = MemoryManagement::create<BuildListDialog>(m_pMap, player, m_pMap->getPlayer(player)->getBuildList());
     oxygine::Stage::getStage()->addChild(dialog);
-    connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangePlayerBuildList, Qt::QueuedConnection);
+    connect(dialog.get(), &BuildListDialog::editFinished, this, &PlayerSelection::slotChangePlayerBuildList, Qt::QueuedConnection);
 }
 
 void PlayerSelection::slotChangeAllBuildList(qint32, QStringList buildList)
@@ -799,7 +800,7 @@ void PlayerSelection::slotChangeAllBuildList(qint32, QStringList buildList)
 }
 
 void PlayerSelection::slotChangePlayerBuildList(qint32 player, QStringList buildList)
-{    
+{
     if (player >= 0 && player < m_pMap->getPlayerCount())
     {
         m_pMap->getPlayer(player)->setBuildList(buildList);
@@ -826,14 +827,14 @@ void PlayerSelection::playerDataChanged()
     {
         QString command = QString(NetworkCommands::PLAYERDATA);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
-        
+
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << command;
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            Player* pPlayer = m_pMap->getPlayer(i);
+            Player *pPlayer = m_pMap->getPlayer(i);
             sendStream << pPlayer->getFunds();
             sendStream << pPlayer->getFundsModifier();
             sendStream << pPlayer->getTeam();
@@ -867,17 +868,17 @@ void PlayerSelection::playerColorChanged(QColor displayColor, qint32 playerIdx, 
 }
 
 void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
-{    
+{
     if (!m_saveGame)
     {
-        CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
+        CO *pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
         if (coid == "" ||
             coid == CO::CO_RANDOM ||
             pCO == nullptr ||
             pCO->getCoID() != coid)
         {
             QStringList perks;
-            CO* pCurrentCO = m_pMap->getPlayer(playerIdx)->getCO(0);
+            CO *pCurrentCO = m_pMap->getPlayer(playerIdx)->getCO(0);
             if (pCurrentCO != nullptr)
             {
                 perks = pCurrentCO->getPerkList();
@@ -904,16 +905,16 @@ void PlayerSelection::autoSelectPlayerColors()
     QVector<qint32> usedColors;
     QVector<qint32> openPlayers;
     qint32 playerCount = m_pMap->getPlayerCount();
-    DropDownmenuColor* pPlayer0Color= getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(0));
+    DropDownmenuColor *pPlayer0Color = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(0));
     if (pPlayer0Color != nullptr)
     {
         for (qint32 i = 0; i < playerCount; ++i)
         {
-            Player* pPlayer = m_pMap->getPlayer(i);
-            CO* pCO = pPlayer->getCO(0);
+            Player *pPlayer = m_pMap->getPlayer(i);
+            CO *pCO = pPlayer->getCO(0);
             if (pCO != nullptr)
             {
-                Interpreter* pInterpreter = Interpreter::getInstance();
+                Interpreter *pInterpreter = Interpreter::getInstance();
                 QJSValueList args({pCO->getCOArmy().toLower()});
                 QJSValue erg = pInterpreter->doFunction("PLAYER", "getDisplayColorFromArmy", args);
                 if (erg.isNumber())
@@ -922,7 +923,7 @@ void PlayerSelection::autoSelectPlayerColors()
                     if (index >= 0 && !usedColors.contains(index))
                     {
                         usedColors.append(index);
-                        DropDownmenuColor* pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(i));
+                        DropDownmenuColor *pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(i));
                         if (pDropDownmenuColor != nullptr)
                         {
                             pDropDownmenuColor->setCurrentItem(index);
@@ -937,14 +938,14 @@ void PlayerSelection::autoSelectPlayerColors()
             }
         }
         qint32 colors = pPlayer0Color->getItemCount();
-        for (const auto & openPlayer : qAsConst(openPlayers))
+        for (const auto &openPlayer : qAsConst(openPlayers))
         {
             for (qint32 i = 0; i < colors; ++i)
             {
                 if (!usedColors.contains(i))
                 {
                     usedColors.append(i);
-                    DropDownmenuColor* pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(i));
+                    DropDownmenuColor *pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(i));
                     if (pDropDownmenuColor != nullptr)
                     {
                         pDropDownmenuColor->setCurrentItem(i);
@@ -968,11 +969,11 @@ void PlayerSelection::setMap(GameMap *newPMap)
 }
 
 void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
-{    
+{
     if (m_pMap)
     {
-        CO* pCurrentCO = m_pMap->getPlayer(playerIdx)->getCO(0);
-        oxygine::ResAnim* pAnim = nullptr;
+        CO *pCurrentCO = m_pMap->getPlayer(playerIdx)->getCO(0);
+        oxygine::ResAnim *pAnim = nullptr;
         if (coid.isEmpty() || pCurrentCO == nullptr)
         {
             pAnim = COSpriteManager::getInstance()->getResAnim("no_co+info");
@@ -982,7 +983,7 @@ void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
             pAnim = pCurrentCO->getResAnim((coid + "+info"));
         }
 
-        SpriteObject* pSprite = getCastedObject<SpriteObject>(OBJECT_CO1_PREFIX + QString::number(playerIdx));
+        SpriteObject *pSprite = getCastedObject<SpriteObject>(OBJECT_CO1_PREFIX + QString::number(playerIdx));
         if (pSprite != nullptr)
         {
             pSprite->setResAnim(pAnim);
@@ -999,17 +1000,17 @@ void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
 }
 
 void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
-{    
+{
     if (!m_saveGame)
     {
-        CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
+        CO *pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
         if (coid == "" ||
             coid == CO::CO_RANDOM ||
             pCO == nullptr ||
             pCO->getCoID() != coid)
         {
             QStringList perks;
-            CO* pCurrentCO = m_pMap->getPlayer(playerIdx)->getCO(1);
+            CO *pCurrentCO = m_pMap->getPlayer(playerIdx)->getCO(1);
             if (pCurrentCO != nullptr)
             {
                 perks = pCurrentCO->getPerkList();
@@ -1031,8 +1032,8 @@ void PlayerSelection::updateCO2Sprite(QString coid, qint32 playerIdx)
 {
     if (m_pMap)
     {
-        CO* pCurrentCO = m_pMap->getPlayer(playerIdx)->getCO(1);
-        oxygine::ResAnim* pAnim = nullptr;
+        CO *pCurrentCO = m_pMap->getPlayer(playerIdx)->getCO(1);
+        oxygine::ResAnim *pAnim = nullptr;
         if (coid.isEmpty() || pCurrentCO == nullptr)
         {
             pAnim = COSpriteManager::getInstance()->getResAnim("no_co+info");
@@ -1041,7 +1042,7 @@ void PlayerSelection::updateCO2Sprite(QString coid, qint32 playerIdx)
         {
             pAnim = pCurrentCO->getResAnim((coid + "+info"));
         }
-        SpriteObject* pSprite = getCastedObject<SpriteObject>(OBJECT_CO2_PREFIX + QString::number(playerIdx));
+        SpriteObject *pSprite = getCastedObject<SpriteObject>(OBJECT_CO2_PREFIX + QString::number(playerIdx));
         if (pSprite != nullptr)
         {
             pSprite->setResAnim(pAnim);
@@ -1063,14 +1064,14 @@ void PlayerSelection::updateCOData(qint32 playerIdx)
     {
         QString command = QString(NetworkCommands::CODATA);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
-        
-        Player* pPlayer = m_pMap->getPlayer(playerIdx);
+
+        Player *pPlayer = m_pMap->getPlayer(playerIdx);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << command;
         sendStream << playerIdx;
-        CO* pCO = pPlayer->getCO(0);
+        CO *pCO = pPlayer->getCO(0);
         QString coid = "";
         QStringList perks;
         if (pCO != nullptr)
@@ -1134,17 +1135,15 @@ void PlayerSelection::slotCOsDelete(qint32 mode)
 
 void PlayerSelection::showSelectCOPerks(qint32 player)
 {
-    Player* pPlayer = m_pMap->getPlayer(player);
+    Player *pPlayer = m_pMap->getPlayer(player);
     if (pPlayer->getCO(0) != nullptr || pPlayer->getCO(1) != nullptr)
     {
-        Userdata* pUserdata = Userdata::getInstance();
+        Userdata *pUserdata = Userdata::getInstance();
         auto hiddenList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Perk, false);
         spPerkSelectionDialog pPerkSelectionDialog = MemoryManagement::create<PerkSelectionDialog>(m_pMap, pPlayer, false, hiddenList);
         oxygine::Stage::getStage()->addChild(pPerkSelectionDialog);
         connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, this, [this, player]()
-        {
-            updateCOData(player);
-        });
+                { updateCOData(player); });
     }
 }
 
@@ -1154,10 +1153,21 @@ void PlayerSelection::selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType)
     {
         CONSOLE_PRINT("PlayerSelection::selectPlayerAi for player " + QString::number(player) + " with control type " + QString::number(eAiType), GameConsole::eDEBUG);
         m_pMap->getPlayer(player)->setControlType(eAiType);
-        DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+        DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
         if (pDropDownmenu != nullptr)
         {
-            pDropDownmenu->setCurrentItem(static_cast<qint32>(eAiType));
+            if (eAiType == GameEnums::AiTypes_Open)
+            {
+                pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
+            }
+            else if (eAiType == GameEnums::AiTypes_Closed)
+            {
+                pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 2);
+            }
+            else
+            {
+                pDropDownmenu->setCurrentItem(static_cast<qint32>(eAiType));
+            }
         }
         selectAI(player);
     }
@@ -1170,12 +1180,11 @@ void PlayerSelection::forcePlayerAi(qint32 player, GameEnums::AiTypes eAiType)
     createAi(player, eAiType, "ForcedAi");
 }
 
-
 void PlayerSelection::selectAI(qint32 player)
 {
     CONSOLE_PRINT("PlayerSelection::selectAI for player " + QString::number(player), GameConsole::eDEBUG);
     GameEnums::AiTypes type = m_pMap->getPlayer(player)->getControlType();
-    DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+    DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
     if (pDropDownmenu != nullptr)
     {
         type = static_cast<GameEnums::AiTypes>(pDropDownmenu->getCurrentItem());
@@ -1266,11 +1275,11 @@ void PlayerSelection::selectAI(qint32 player)
 }
 
 void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type, QString displayName)
-{    
-    if(m_pMap != nullptr)
+{
+    if (m_pMap != nullptr)
     {
         CONSOLE_PRINT("PlayerSelection::createAi for player " + QString::number(player) + " with control type " + QString::number(type) + " with display name " + displayName, GameConsole::eDEBUG);
-        Player* pPlayer = m_pMap->getPlayer(player);
+        Player *pPlayer = m_pMap->getPlayer(player);
         pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, type));
         pPlayer->setPlayerNameId(displayName);
         pPlayer->setControlType(type);
@@ -1285,8 +1294,8 @@ QStringList PlayerSelection::getDefaultAiNames() const
 {
     QStringList defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def.")}; // heavy ai disabled cause it's not finished
 #if HEAVY_AI
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    GameManager* pGameManager = GameManager::getInstance();
+    Interpreter *pInterpreter = Interpreter::getInstance();
+    GameManager *pGameManager = GameManager::getInstance();
     // heavy ai enable code
     for (qint32 i = 0; i < pGameManager->getHeavyAiCount(); ++i)
     {
@@ -1420,8 +1429,8 @@ void PlayerSelection::joinObserver(quint64 socketID)
 {
     if (m_pNetworkInterface->getIsServer())
     {
-        auto* gameRules = m_pMap->getGameRules();
-        auto & observer = gameRules->getObserverList();
+        auto *gameRules = m_pMap->getGameRules();
+        auto &observer = gameRules->getObserverList();
         if (observer.size() < gameRules->getMultiplayerObserver())
         {
             observer.append(socketID);
@@ -1506,7 +1515,7 @@ QJsonArray PlayerSelection::getOnlineInfo()
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
         {
-            auto* pPlayer = m_pMap->getPlayer(i);
+            auto *pPlayer = m_pMap->getPlayer(i);
             bool isOnline = pPlayer->getSocketId() != 0;
             pPlayer->setIsOnline(isOnline);
             onlineInfo.append(isOnline);
@@ -1523,7 +1532,7 @@ QJsonArray PlayerSelection::getUserNames()
         qint32 count = m_pMap->getPlayerCount();
         for (qint32 i = 0; i < count; ++i)
         {
-            Player* pPlayer = m_pMap->getPlayer(i);
+            Player *pPlayer = m_pMap->getPlayer(i);
             if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
             {
                 CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
@@ -1549,7 +1558,7 @@ void PlayerSelection::setIsServerGame(bool isServerGame)
     m_isServerGame = isServerGame;
 }
 
-void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
+void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream &stream)
 {
     if (m_pNetworkInterface->getIsServer())
     {
@@ -1558,14 +1567,14 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
         stream >> fixed;
         stream >> value;
         CONSOLE_PRINT("PlayerSelection::recievePlayerReady for socket " + QString::number(socketID) + " is " + (value ? "ready" : "not ready"), GameConsole::eDEBUG);
-        for  (qint32 i = 0; i < m_playerSockets.size(); i++)
+        for (qint32 i = 0; i < m_playerSockets.size(); i++)
         {
             if (m_playerSockets[i] == socketID)
             {
                 CONSOLE_PRINT("Changing player " + QString::number(i), GameConsole::eDEBUG);
                 m_playerReadyFlags[i] = value;
                 m_lockedInCaseOfDisconnect[i] = value;
-                Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
+                Checkbox *pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
                 if (pCheckbox != nullptr)
                 {
                     pCheckbox->setChecked(value);
@@ -1598,25 +1607,25 @@ void PlayerSelection::sendPlayerReady(quint64 socketID)
         auto playerCount = m_pMap->getPlayerCount();
         sendStream << command;
         sendStream << static_cast<qint32>(m_pMap->getPlayerCount());
-        for  (qint32 i = 0; i < playerCount; i++)
+        for (qint32 i = 0; i < playerCount; i++)
         {
-            CONSOLE_PRINT("Player " + QString::number(i) + " is " + (m_playerReadyFlags[i] ? "ready" :  "not ready"), GameConsole::eDEBUG);
+            CONSOLE_PRINT("Player " + QString::number(i) + " is " + (m_playerReadyFlags[i] ? "ready" : "not ready"), GameConsole::eDEBUG);
             sendStream << m_playerReadyFlags[i];
         }
         emit m_pNetworkInterface.get()->sigForwardData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer);
     }
 }
 
-void PlayerSelection::recievePlayerServerReady(quint64, QDataStream& stream)
+void PlayerSelection::recievePlayerServerReady(quint64, QDataStream &stream)
 {
     qint32 size = 0;
     stream >> size;
-    for  (qint32 i = 0; i < size; i++)
+    for (qint32 i = 0; i < size; i++)
     {
         bool value = false;
         stream >> value;
         m_playerReadyFlags[i] = value;
-        Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
+        Checkbox *pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
         if (pCheckbox != nullptr)
         {
             pCheckbox->setChecked(value);
@@ -1649,7 +1658,7 @@ void PlayerSelection::sendPlayerRequest(quint64 socketID, qint32 player, GameEnu
     emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
-void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
+void PlayerSelection::requestPlayer(quint64 socketID, QDataStream &stream)
 {
     if (m_pNetworkInterface->getIsServer() ||
         m_isServerGame)
@@ -1661,12 +1670,13 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
         qint32 aiType;
         stream >> aiType;
         GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
+        CONSOLE_PRINT("Requesting player " + QString::number(player) + " for username " + username + " as ai " + QString::number(eAiType) + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
         bool rejoin = false;
         if (player < 0)
         {
             for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                auto* pPlayer = m_pMap->getPlayer(i);
+                auto *pPlayer = m_pMap->getPlayer(i);
                 if (pPlayer->getPlayerNameId() == username &&
                     pPlayer->getSocketId() == 0 &&
                     pPlayer->getControlType() == GameEnums::AiTypes::AiTypes_Human)
@@ -1689,29 +1699,56 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
         }
         if (!rejoin)
         {
-            // the client wants any player?
-            if (player < 0)
+            bool alreadyInGame = false;
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
             {
-                for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+                if (isOpenPlayer(i) && player < 0)
                 {
-                    if (isOpenPlayer(i))
+                    // the client wants any player?
+                    CONSOLE_PRINT("Player is " + QString::number(i) + " is currently open and will be selected as requested player.", GameConsole::eDEBUG);
+                    player = i;
+                }
+                else
+                {
+                    auto *pPlayer = m_pMap->getPlayer(i);
+                    if (pPlayer != nullptr)
                     {
-                        player = i;
-                        break;
+                        CONSOLE_PRINT("Player is " + QString::number(i) + " is currently owned by username " + pPlayer->getPlayerNameId() + " and socket " + QString::number(pPlayer->getSocketId()), GameConsole::eDEBUG);
+                        if (pPlayer->getSocketId() == socketID ||
+                            pPlayer->getPlayerNameId() == username)
+                        {
+                            alreadyInGame = true;
+                            break;
+                        }
                     }
                 }
             }
-            bool allowed = joinAllowed(socketID, username, eAiType);
-            bool isOpen = isOpenPlayer(player);
-            // opening a player is always valid changing to an human with an open player is also valid
-            if (allowed &&
-                (isOpen || eAiType == GameEnums::AiTypes_Open))
+            bool denied = true;
+            if (!alreadyInGame && player >= 0 && player < m_pMap->getPlayerCount())
             {
-                remoteChangePlayerOwner(socketID, username, player, eAiType);
+                auto *pPlayer = m_pMap->getPlayer(player);
+                bool allowed = joinAllowed(socketID, username, eAiType);
+                bool isOpen = isOpenPlayer(player);
+                // opening a player is always valid changing to an human with an open player is also valid
+                if (allowed &&
+                    (isOpen || eAiType == GameEnums::AiTypes_Open ||
+                    (pPlayer->getSocketId() == 0 && pPlayer->getPlayerNameId().isEmpty())))
+                {
+                    CONSOLE_PRINT("requestPlayer accepting player " + username + " for player " + QString::number(player) + " as ai " + QString::number(eAiType), GameConsole::eDEBUG);
+                    remoteChangePlayerOwner(socketID, username, player, eAiType);
+                }
+                else
+                {
+                    denied = true;
+                }
             }
             else
             {
-                CONSOLE_PRINT("Player change for username " + username + " rejected. Cause player " + QString::number(player) + " for ai " + QString::number(aiType) + " allowed=" + QString::number(allowed) + " open=" + QString::number(isOpen), GameConsole::eDEBUG);
+                denied = true;
+            }
+            if (denied && !alreadyInGame)
+            {                
+                CONSOLE_PRINT("Player change for username " + username + " rejected. Cause player " + QString::number(player) + " for ai " + QString::number(aiType), GameConsole::eDEBUG);
                 QString command = NetworkCommands::PLAYERACCESSDENIED;
                 QByteArray accessDenied;
                 QDataStream sendStream(&accessDenied, QIODevice::WriteOnly);
@@ -1728,14 +1765,14 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
     }
 }
 
-void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType, bool forceAiType, bool inSetup)
+void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString &username, qint32 player, GameEnums::AiTypes eAiType, bool forceAiType, bool inSetup)
 {
     // valid request
     // change data locally and send remote update
-    Player* pPlayer = m_pMap->getPlayer(player);
+    Player *pPlayer = m_pMap->getPlayer(player);
     m_lockedInCaseOfDisconnect[player] = false;
     // we need to handle opening a player slightly different here...
-    DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+    DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
     if (eAiType == GameEnums::AiTypes_Open)
     {
         pPlayer->setControlType(eAiType);
@@ -1810,7 +1847,7 @@ bool PlayerSelection::joinAllowed(quint64 socketId, QString username, GameEnums:
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
         {
-            Player* pPlayer = m_pMap->getPlayer(i);
+            Player *pPlayer = m_pMap->getPlayer(i);
             if (pPlayer->getPlayerNameId() == username &&
                 socketId != pPlayer->getSocketId())
             {
@@ -1844,9 +1881,9 @@ QString PlayerSelection::getNameFromAiType(GameEnums::AiTypes aiType) const
     return name;
 }
 
-void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
+void PlayerSelection::changePlayer(quint64 socketId, QDataStream &stream)
 {
-    if (!m_pNetworkInterface->getIsServer() ||
+    if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
         m_isServerGame)
     {
         quint64 socket;
@@ -1859,7 +1896,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
         stream >> socket;
         stream >> name;
         stream >> player;
-        stream >> aiType;        
+        stream >> aiType;
         stream >> setup;
         CONSOLE_PRINT("Remote change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " in setup " + QString::number(setup), GameConsole::eDEBUG);
         if (socket != m_pNetworkInterface->getSocketID() ||
@@ -1959,7 +1996,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
     }
 }
 
-void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest, bool inSetup)
+void PlayerSelection::createPlayerChangedData(QByteArray &data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest, bool inSetup)
 {
     QString command = QString(NetworkCommands::PLAYERCHANGED);
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
@@ -1978,7 +2015,7 @@ void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketI
 void PlayerSelection::setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QString name)
 {
     CONSOLE_PRINT("PlayerSelection::setPlayerAi player=" + QString::number(player) + " ai=" + QString::number(eAiType) + " name=" + name, GameConsole::eDEBUG);
-    DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+    DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
     if (eAiType != GameEnums::AiTypes_Human)
     {
         if (eAiType == GameEnums::AiTypes_Closed)
@@ -2009,14 +2046,14 @@ void PlayerSelection::setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QSt
     }
 }
 
-void PlayerSelection::recievedPlayerData(quint64, QDataStream& stream)
+void PlayerSelection::recievedPlayerData(quint64, QDataStream &stream)
 {
     if (!m_pNetworkInterface->getIsServer() ||
         m_isServerGame)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            Player* pPlayer = m_pMap->getPlayer(i);
+            Player *pPlayer = m_pMap->getPlayer(i);
             qint32 funds = 0;
             float fundsModifier = 0.0f;
             qint32 team = 0;
@@ -2041,8 +2078,8 @@ void PlayerSelection::recievedPlayerData(quint64, QDataStream& stream)
     }
 }
 
-void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
-{    
+void PlayerSelection::recievedCOData(quint64, QDataStream &stream)
+{
     qint32 playerIdx;
     QString coid;
     stream >> playerIdx;
@@ -2051,7 +2088,7 @@ void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
     if (!m_saveGame)
     {
         m_pMap->getPlayer(playerIdx)->setCO(coid, 0);
-        CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
+        CO *pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
         if (pCO != nullptr)
         {
             pCO->setPerkList(perks);
@@ -2064,7 +2101,7 @@ void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
     if (!m_saveGame)
     {
         m_pMap->getPlayer(playerIdx)->setCO(coid, 1);
-        CO* pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
+        CO *pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
         if (pCO != nullptr)
         {
             pCO->setPerkList(perks);
@@ -2074,29 +2111,29 @@ void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
     updateCO2Sprite(coid, playerIdx);
 }
 
-void PlayerSelection::recievedColorData(quint64, QDataStream& stream)
-{    
+void PlayerSelection::recievedColorData(quint64, QDataStream &stream)
+{
     qint32 playerIdx = 0;
     QColor displayColor;
     stream >> playerIdx;
     stream >> displayColor;
-    Player* pPlayer = m_pMap->getPlayer(playerIdx);
+    Player *pPlayer = m_pMap->getPlayer(playerIdx);
     QColor tableColor = displayColorToTableColor(displayColor);
     pPlayer->setColor(tableColor);
-    DropDownmenuColor* pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(playerIdx));
+    DropDownmenuColor *pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(playerIdx));
     if (pDropDownmenuColor != nullptr)
     {
         pDropDownmenuColor->setCurrentItem(displayColor);
     }
 }
 
-void PlayerSelection::recievePlayerArmy(quint64, QDataStream& stream)
-{    
+void PlayerSelection::recievePlayerArmy(quint64, QDataStream &stream)
+{
     qint32 playerIdx = 0;
     QString army;
     stream >> playerIdx;
     stream >> army;
-    Player* pPlayer = m_pMap->getPlayer(playerIdx);
+    Player *pPlayer = m_pMap->getPlayer(playerIdx);
     if (army == CO_ARMY)
     {
         pPlayer->setPlayerArmySelected(false);
@@ -2132,7 +2169,7 @@ void PlayerSelection::disconnected(quint64 socketID)
                         // reopen all players
                         m_pMap->getPlayer(i)->setControlType(GameEnums::AiTypes_Open);
                         m_pMap->getPlayer(i)->setPlayerNameId("");
-                        DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
+                        DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
                         if (pDropDownmenu != nullptr)
                         {
                             pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
@@ -2143,8 +2180,8 @@ void PlayerSelection::disconnected(quint64 socketID)
             }
             CONSOLE_PRINT("Removing socket " + QString::number(socketID) + " from observer list", GameConsole::eLogLevels::eDEBUG);
 
-            auto* gameRules = m_pMap->getGameRules();
-            auto & observer = gameRules->getObserverList();
+            auto *gameRules = m_pMap->getGameRules();
+            auto &observer = gameRules->getObserverList();
             observer.removeAll(socketID);
         }
         sendOpenPlayerCount();
@@ -2152,7 +2189,7 @@ void PlayerSelection::disconnected(quint64 socketID)
 }
 
 void PlayerSelection::updatePlayerData(qint32 player)
-{    
+{
     if (player < 0)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -2162,8 +2199,8 @@ void PlayerSelection::updatePlayerData(qint32 player)
     }
     else
     {
-        Player* pPlayer = m_pMap->getPlayer(player);
-        CO* pCO = pPlayer->getCO(0);
+        Player *pPlayer = m_pMap->getPlayer(player);
+        CO *pCO = pPlayer->getCO(0);
         QString coid = "no_co";
         if (pCO != nullptr)
         {
@@ -2178,12 +2215,12 @@ void PlayerSelection::updatePlayerData(qint32 player)
         }
         updateCO2Sprite(coid, player);
 
-        DropDownmenuColor* pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(player));
-        DropDownmenu* pDropDownmenuTeam = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
-        DropDownmenu* pDropDownmenuAI = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
-        SpriteObject* pCo1 = getCastedObject<SpriteObject>(OBJECT_CO1_PREFIX + QString::number(player));
-        SpriteObject* pCo2 = getCastedObject<SpriteObject>(OBJECT_CO2_PREFIX + QString::number(player));
-        Checkbox* pReadyBox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(player));
+        DropDownmenuColor *pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(player));
+        DropDownmenu *pDropDownmenuTeam = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
+        DropDownmenu *pDropDownmenuAI = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+        SpriteObject *pCo1 = getCastedObject<SpriteObject>(OBJECT_CO1_PREFIX + QString::number(player));
+        SpriteObject *pCo2 = getCastedObject<SpriteObject>(OBJECT_CO2_PREFIX + QString::number(player));
+        Checkbox *pReadyBox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(player));
         bool singleCo = m_pMap->getGameRules()->getSingleCo();
         if (pDropDownmenuColor != nullptr)
         {
@@ -2346,7 +2383,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
         }
         if (getIsCampaign())
         {
-            auto* input = pPlayer->getBaseGameInput();
+            auto *input = pPlayer->getBaseGameInput();
             if (input != nullptr &&
                 input->getAiType() != GameEnums::AiTypes_Human)
             {
@@ -2393,7 +2430,7 @@ void PlayerSelection::setPlayerReady(bool value)
             m_pMap->getPlayer(i)->getControlType() != GameEnums::AiTypes_Open)
         {
             m_playerReadyFlags[i] = value;
-            Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
+            Checkbox *pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
             if (pCheckbox != nullptr)
             {
                 pCheckbox->setChecked(value);
@@ -2419,7 +2456,7 @@ void PlayerSelection::changeAllTeams(qint32 value)
         {
             for (qint32 i = 0; i < playersPerTeam - upCountPlayers; ++i)
             {
-                DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
+                DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
                 if (pDropDownmenu != nullptr)
                 {
                     pDropDownmenu->setCurrentItem(team);
@@ -2432,7 +2469,7 @@ void PlayerSelection::changeAllTeams(qint32 value)
         {
             for (qint32 i = 0; i < upCountPlayers; ++i)
             {
-                DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
+                DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
                 if (pDropDownmenu != nullptr)
                 {
                     pDropDownmenu->setCurrentItem(team);
@@ -2443,7 +2480,7 @@ void PlayerSelection::changeAllTeams(qint32 value)
             if (freePlayer > 0)
             {
                 --freePlayer;
-                DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
+                DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
                 if (pDropDownmenu != nullptr)
                 {
                     pDropDownmenu->setCurrentItem(team);
@@ -2455,20 +2492,20 @@ void PlayerSelection::changeAllTeams(qint32 value)
     }
 }
 
-void PlayerSelection::serializeObject(QDataStream& stream) const
+void PlayerSelection::serializeObject(QDataStream &stream) const
 {
     CONSOLE_PRINT("PlayerSelection::serializeObject", GameConsole::eDEBUG);
     stream << getVersion();
     stream << static_cast<qint32>(m_playerReadyFlags.size());
-    for (auto & item : m_playerReadyFlags)
+    for (auto &item : m_playerReadyFlags)
     {
         stream << item;
     }
-    for (auto & item : m_lockedInCaseOfDisconnect)
+    for (auto &item : m_lockedInCaseOfDisconnect)
     {
         stream << item;
     }
-    for (auto & item : m_lockedAiControl)
+    for (auto &item : m_lockedAiControl)
     {
         stream << item;
     }
@@ -2486,7 +2523,7 @@ void PlayerSelection::serializeObject(QDataStream& stream) const
     stream << m_isServerGame;
 }
 
-void PlayerSelection::deserializeObject(QDataStream& stream)
+void PlayerSelection::deserializeObject(QDataStream &stream)
 {
     CONSOLE_PRINT("PlayerSelection::deserializeObject", GameConsole::eDEBUG);
     qint32 version = 0;
@@ -2525,4 +2562,3 @@ void PlayerSelection::deserializeObject(QDataStream& stream)
     stream >> m_playerReady;
     stream >> m_isServerGame;
 }
-

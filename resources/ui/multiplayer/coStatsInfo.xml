@@ -16,7 +16,7 @@
                 <Label>
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY - 5</y>
-                    <width>200</width>
+                    <width>250</width>
                     <text>QT_TRANSLATE_NOOP("GAME","Wins:") + " " + currentMenu.getGamesWon(currentMenu.getCoId(loopIdx)).toString() + " (" + (currentMenu.getGamesWon(currentMenu.getCoId(loopIdx)) * 100 / currentMenu.getGamesMade(currentMenu.getCoId(loopIdx)) ).toString() + "%)"</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
@@ -24,7 +24,7 @@
                 <Label>
                     <x>lastX</x>
                     <y>lastY + lastHeight + 5</y>
-                    <width>200</width>
+                    <width>250</width>
                     <text>QT_TRANSLATE_NOOP("GAME","Draw:") + " " + currentMenu.getGamesDraw(currentMenu.getCoId(loopIdx)).toString() + " (" + (currentMenu.getGamesDraw(currentMenu.getCoId(loopIdx)) * 100 / currentMenu.getGamesMade(currentMenu.getCoId(loopIdx)) ).toString() + "%)"</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
@@ -32,7 +32,7 @@
                 <Label>
                     <x>lastX</x>
                     <y>lastY + lastHeight + 5</y>
-                    <width>200</width>
+                    <width>250</width>
                     <text>QT_TRANSLATE_NOOP("GAME","Lost:") + " " + currentMenu.getGamesLost(currentMenu.getCoId(loopIdx)).toString() + " (" + (currentMenu.getGamesLost(currentMenu.getCoId(loopIdx)) * 100 / currentMenu.getGamesMade(currentMenu.getCoId(loopIdx)) ).toString() + "%)"</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
