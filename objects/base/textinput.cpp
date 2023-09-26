@@ -33,7 +33,6 @@ TextInput::~TextInput()
 {
     if (m_lineEdit != nullptr)
     {
-        m_lineEdit->deleteLater();
         m_lineEdit = nullptr;
     }
 }

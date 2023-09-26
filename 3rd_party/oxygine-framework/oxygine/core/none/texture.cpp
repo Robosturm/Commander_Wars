@@ -1,7 +1,20 @@
 #include "3rd_party/oxygine-framework/oxygine/core/none/texture.h"
 
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+
+#include "coreengine/interpreter.h"
+
 namespace oxygine
 {
+    Texture::Texture()
+    {
+    Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
+    setObjectName("Texture");
+#endif
+    moveToThread(GameWindow::getWindow()->getMainThread());
+    }
+
     Texture::~Texture()
     {
         Texture::release();

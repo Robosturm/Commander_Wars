@@ -140,7 +140,6 @@ QVector<UiFactory::FactoryItem> & UiFactory::getFactoryItems()
 
 void UiFactory::shutdown()
 {
-    m_pUiFactory->deleteLater();
     m_pUiFactory = nullptr;
 }
 

@@ -12,6 +12,9 @@ GLuint Texture::m_highestTextureCount = 0;
 Texture::Texture()
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
+    setObjectName("Texture");
+#endif
     moveToThread(GameWindow::getWindow()->getMainThread());
 }
 

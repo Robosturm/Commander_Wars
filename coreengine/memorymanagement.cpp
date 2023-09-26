@@ -33,7 +33,27 @@ MemoryManagement::MemoryManagement()
 
 void MemoryManagement::printDeletionInfo(QObject* obj)
 {
+    Q_ASSERT(QJSEngine::objectOwnership(obj) == QJSEngine::ObjectOwnership::CppOwnership);
+    if (obj->objectName().isEmpty())
+    {
+        CONSOLE_PRINT("Deleting object with no name", GameConsole::eDEBUG);    
+    }
+    else
+    {
         CONSOLE_PRINT("Deleting object " + obj->objectName(), GameConsole::eDEBUG);    
+    }
+}
+
+void MemoryManagement::printDeletionInfo(const QString & name)
+{
+    if (name.isEmpty())
+    {
+        CONSOLE_PRINT("Deleting object with no name", GameConsole::eDEBUG);    
+    }
+    else
+    {
+        CONSOLE_PRINT("Deleting object " + name, GameConsole::eDEBUG);    
+    }
 }
 
 quint32 MemoryManagement::getObjectCounter()

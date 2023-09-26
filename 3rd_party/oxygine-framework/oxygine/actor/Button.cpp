@@ -13,7 +13,11 @@ namespace oxygine
           m_btnPressed(0),
           m_btnOvered(0)
     {
+        
         Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
+        setObjectName("Button");
+#endif
         EventCallback ncb = EventCallback(this, &Button::_mouseEvent);
         addEventListener(TouchEvent::TOUCH_DOWN, ncb);
         addEventListener(TouchEvent::OVER, ncb);

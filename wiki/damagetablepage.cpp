@@ -1,3 +1,5 @@
+#include "coreengine/interpreter.h"
+
 #include "wiki/damagetablepage.h"
 
 #include "game/gamemap.h"
@@ -10,6 +12,10 @@
 DamageTablePage::DamageTablePage(const QString & pageId)
     : Wikipage(pageId)
 {
+        Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
+    setObjectName("DamageTablePage");
+#endif
     const qint32 bonusWidth = 30;
     const qint32 entryWidth = GameMap::defaultImageSize + bonusWidth;
     const qint32 entryHeight = GameMap::defaultImageSize;

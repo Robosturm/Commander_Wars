@@ -64,6 +64,7 @@ public:
         }
         else
         {
+            printDeletionInfo("basic object");
             delete pObj;
         }
     }
@@ -71,6 +72,7 @@ public:
     static quint32 getObjectCounter();
 
     static void printDeletionInfo(QObject* obj);
+    static void printDeletionInfo(const QString & name);
 signals:
     void sigSetAddColor(oxygine::spVStyleActor actor, QColor color);
     void sigRebuildText(oxygine::spTextField actor);

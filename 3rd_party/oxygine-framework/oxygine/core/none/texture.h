@@ -43,6 +43,6 @@ public:
     static quint32 getHighestTextureCount();
 protected:
     friend MemoryManagement;
-    explicit Texture() = default;
+    explicit Texture();
 };
 }
