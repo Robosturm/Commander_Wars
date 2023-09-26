@@ -41,7 +41,7 @@ class ReplayRecorder final : public QObject
     static const qint32 VERSION = 1;
 public:
     explicit ReplayRecorder(GameMap* pMap);
-    ~ReplayRecorder();
+    virtual ~ReplayRecorder();
     /**
      * @brief startRecording
      */

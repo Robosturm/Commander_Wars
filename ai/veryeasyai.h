@@ -18,7 +18,7 @@ class VeryEasyAI final : public CoreAI
 public:
 
     explicit VeryEasyAI(GameMap* pMap);
-    ~VeryEasyAI() = default;
+    virtual ~VeryEasyAI() = default;
 public slots:
     /**
      * @brief process

@@ -60,7 +60,7 @@ public:
      */
     explicit Unit(GameMap* pMap);
     explicit Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap);
-    ~Unit();
+    virtual ~Unit();
     /**
      * @brief setTerrain
      * @param pTerrain smart pointer to the terrain this building is placed on

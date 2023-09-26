@@ -17,7 +17,7 @@ class Minimap final : public QObject, public oxygine::Actor
 public:
     static const qint32 IMAGE_SIZE{4};
     explicit Minimap();
-    ~Minimap() = default;
+    virtual ~Minimap() = default;
 
     void clear();    
     void setMenu(GameMenue* pMenu);

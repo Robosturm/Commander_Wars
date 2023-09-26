@@ -10,7 +10,7 @@ class CampaignMapData final : public QObject
     Q_OBJECT
 public:
     explicit CampaignMapData();
-    ~CampaignMapData() = default;
+    virtual ~CampaignMapData() = default;
     Q_INVOKABLE const QString getMapBackground() const;
     Q_INVOKABLE void setMapBackground(const QString newMapBackground);
     Q_INVOKABLE const QString getFolder() const;

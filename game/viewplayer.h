@@ -20,7 +20,7 @@ public:
     };
 
     explicit Viewplayer(GameMenue* pMenu, GameMap* pMap);
-    ~Viewplayer() = default;
+    virtual ~Viewplayer() = default;
     /**
      * @brief getColorTableAnim
      * @return

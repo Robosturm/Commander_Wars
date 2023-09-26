@@ -286,7 +286,6 @@ namespace oxygine
             const spTexture& texture = m_frame.getTexture();
             if (texture != m_mat->m_base)
             {
-
                 spMaterial mat = m_mat->clone();
                 mat->m_base  = texture;
                 auto newMat = MaterialCache::mc().cache(*mat.get());

@@ -141,7 +141,7 @@ public slots:
 protected:
     friend MemoryManagement;
     explicit FontManager();
-    ~FontManager() = default;
+    virtual ~FontManager() = default;
 
 private:
     static spFontManager m_pInstance;

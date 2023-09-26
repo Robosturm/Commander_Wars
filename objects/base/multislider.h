@@ -21,7 +21,7 @@ public:
     static const qint32 SLIDER_OFFSET_X = 10;
     static const qint32 SLIDER_LOCK_BUTTON_WIDTH = SLIDER_OFFSET_X + 110 + 50;
     explicit Multislider(QStringList texts, qint32 width, QVector<qint32> values = {}, qint32 startX = -1);
-    ~Multislider() = default;
+    virtual ~Multislider() = default;
     virtual void setEnabled(bool value) override;
 signals:
     void signalSliderChanged();

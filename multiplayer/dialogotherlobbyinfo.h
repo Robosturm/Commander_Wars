@@ -14,7 +14,7 @@ class DialogOtherLobbyInfo final : public CustomDialog
     Q_OBJECT
 public:
     explicit DialogOtherLobbyInfo(LobbyMenu* pBaseMenu);
-    ~DialogOtherLobbyInfo() = default;
+    virtual ~DialogOtherLobbyInfo() = default;
 
     Q_INVOKABLE void requestPlayersFromServer(const QString & searchFilter);    
     Q_INVOKABLE QStringList getFoundPlayers();

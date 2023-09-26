@@ -28,7 +28,7 @@ public:
      * @return the singleton of the factory
      */
     static GameAnimationFactory* getInstance();
-    ~GameAnimationFactory() = default;
+    virtual ~GameAnimationFactory() = default;
     void release();
     /**
      * @brief queueAnimation queues the given animation by removing it from the execution

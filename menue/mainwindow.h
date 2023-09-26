@@ -13,7 +13,7 @@ class Mainwindow final : public Basemenu
     Q_OBJECT
 public:
     explicit Mainwindow(const QString & initialView);
-    ~Mainwindow() = default;
+    virtual ~Mainwindow() = default;
 signals:
     void sigImport();
     void sigVersionClicked();

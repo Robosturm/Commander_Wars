@@ -8,6 +8,9 @@ namespace oxygine
 {
     const qint32 MAX_TOUCHES = 17;
 
+    class Input;
+    using spInput = std::shared_ptr<Input>;
+
     class Input final
     {
     public:
@@ -35,7 +38,7 @@ namespace oxygine
         explicit Input();
     private:
         friend MemoryManagement;
-        static std::shared_ptr<Input> m_instance;
+        static spInput m_instance;
         PointerState m_pointers[MAX_TOUCHES];
         PointerState m_pointerMouse;
         qint64 m_ids[MAX_TOUCHES + 1];

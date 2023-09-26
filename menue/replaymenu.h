@@ -21,7 +21,7 @@ class ReplayMenu final : public GameMenue
     static constexpr qint32 actionPixelSize = 5;
 public:
     ReplayMenu(QString filename);
-    ~ReplayMenu();
+    virtual ~ReplayMenu();
     /**
      * @brief getCurrentViewPlayer
      * @return

@@ -3,12 +3,15 @@
 
 #include <QObject>
 
+class WorkerThread;
+using spWorkerThread = std::shared_ptr<WorkerThread>;
+
 class WorkerThread final : public QObject
 {
     Q_OBJECT
 public:
     explicit WorkerThread();
-    ~WorkerThread();
+    virtual ~WorkerThread();
     bool getStarted() const;
 signals:
     void sigStart();

@@ -573,7 +573,7 @@ void AudioManager::SlotLoadFolder(QString folder)
 #endif
 }
 
-void AudioManager::loadMusicFolder(QString folder, QStringList& loadedSounds)
+void AudioManager::loadMusicFolder(const QString & folder, QStringList& loadedSounds)
 {
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
@@ -600,7 +600,7 @@ void AudioManager::loadMusicFolder(QString folder, QStringList& loadedSounds)
 #endif
 }
 
-void AudioManager::addMusicToPlaylist(QString file, qint64 startPointMs, qint64 endPointMs)
+void AudioManager::addMusicToPlaylist(const QString & file, qint64 startPointMs, qint64 endPointMs)
 {
     CONSOLE_PRINT_MODULE("Adding " + file + " to play list", GameConsole::eDEBUG, GameConsole::eAudio);
 #ifdef AUDIOSUPPORT

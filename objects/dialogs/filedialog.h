@@ -30,7 +30,7 @@ public:
      * @param wildcards wildcard items will be split at ;
      */
     explicit FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
-    ~FileDialog() = default;
+    virtual ~FileDialog() = default;
 
     bool getPreview() const;
     void setPreview(bool preview);

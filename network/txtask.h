@@ -17,7 +17,7 @@ class TxTask final : public QObject
     Q_OBJECT
 public:
     TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool sendAll);
-    ~TxTask() = default;
+    virtual ~TxTask() = default;
     quint64 getSocketID() const;
     void setSocketID(const quint64 &SocketID);
     void close();

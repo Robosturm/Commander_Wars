@@ -16,7 +16,7 @@ class TableView final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit TableView(const QVector<qint32> & widths, const QVector<QStringList> & data, const QVector<QStringList> & tooltips, const QStringList & header, bool selectable = false);
-    ~TableView() = default;
+    virtual ~TableView() = default;
     const QStringList & getItem(qint32 i) const;
     Q_INVOKABLE void setCurrentItem(qint32 i);
     Q_INVOKABLE qint32 getCurrentItem() const;

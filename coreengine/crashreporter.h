@@ -4,6 +4,9 @@
 #include <QString>
 
 class QProcess;
+class CrashReporter;
+using spCrashReporter = std::shared_ptr<CrashReporter>;
+using spQProcess = std::shared_ptr<QProcess>;
 
 class CrashReporter final
 {
@@ -25,11 +28,11 @@ private:
     static void setOsSignalHandler();
     CrashReporter() = default;
 private:
-    static std::shared_ptr<CrashReporter> m_instance;
+    static spCrashReporter m_instance;
     QString sCrashReportDirPath;             // log file path
     QString sProgramName;                    // the full path to the executable (which we need to resolve symbols)
     logWrittenCallback sLogWrittenCallback{nullptr};  // function to call after we've written the log file
-    std::shared_ptr<QProcess> sProcess;               // process used to capture output of address mapping tool
+    spQProcess sProcess;               // process used to capture output of address mapping tool
 };
 
 #endif // CRASHREPORTER_H

@@ -19,7 +19,7 @@ class PlayerInfo final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit PlayerInfo(GameMap* pMap);
-    ~PlayerInfo() = default;
+    virtual ~PlayerInfo() = default;
 
     Q_INVOKABLE GameMap *getMap() const;
     Q_INVOKABLE void updateData();

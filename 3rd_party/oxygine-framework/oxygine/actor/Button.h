@@ -14,7 +14,7 @@ namespace oxygine
     public:
 
         explicit Button();
-        ~Button() = default;
+        virtual ~Button() = default;
 
         qint32 getRow() const
         {

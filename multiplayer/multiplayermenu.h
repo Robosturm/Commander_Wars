@@ -34,7 +34,7 @@ public:
     explicit Multiplayermenu(const QString & address, const QString & secondaryAddress, quint16 port, const QString & password, NetworkMode networkMode);
     explicit Multiplayermenu(const QString & address, quint16 port, const Password * password, NetworkMode networkMode);
     explicit Multiplayermenu(spNetworkInterface pNetworkInterface, const QString & password, NetworkMode networkMode);
-    ~Multiplayermenu() = default;
+    virtual ~Multiplayermenu() = default;
 
     /**
      * @brief existsMap

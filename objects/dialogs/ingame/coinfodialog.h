@@ -22,7 +22,7 @@ public:
     explicit COInfoDialog(spCO pCO, spPlayer pPlayer,
                           std::function<void (spCO& m_CurrrentCO, spPlayer& pPlayer, qint32 direction)> stepFunction,
                           bool ingame);
-    ~COInfoDialog() = default;
+    virtual ~COInfoDialog() = default;
     /**
      * @brief showCO
      */

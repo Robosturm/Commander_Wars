@@ -16,7 +16,7 @@ class MenuData final : public QObject
     Q_OBJECT
 public:
     explicit MenuData(GameMap* pMap);
-    ~MenuData();
+    virtual ~MenuData();
     QStringList getTexts()
     {
         return m_texts;

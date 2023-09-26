@@ -19,6 +19,7 @@
 
 class MainServer;
 using spMainServer = std::shared_ptr<MainServer>;
+using spQProcess = std::shared_ptr<QProcess>;
 
 /**
  * @brief The MainServer class handling the server and it's data.
@@ -95,7 +96,7 @@ public:
     static void initDatabase();
     static GameEnums::LoginError verifyLoginData(const QString & username, const QByteArray & password);
     void release();
-    ~MainServer();
+    virtual ~MainServer();
 
     inline spTCPServer getGameServer()
     {
@@ -462,7 +463,7 @@ private:
     class InternNetworkGame final
     {
     public:
-        std::shared_ptr<QProcess> process;
+        spQProcess process;
         spNetworkGame game;
         QString slaveName;
     };

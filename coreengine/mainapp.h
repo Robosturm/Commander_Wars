@@ -33,6 +33,8 @@ using spTCPClient = std::shared_ptr<TCPClient>;
 class AiProcessPipe;
 using spAiProcessPipe = std::shared_ptr<AiProcessPipe>;
 class Minimap;
+using spQThread = std::shared_ptr<QThread>;
+using spQProcess = std::shared_ptr<QProcess>;
 
 class Mainapp final : public oxygine::GameWindow
 {
@@ -98,7 +100,7 @@ public:
     };
 
     explicit Mainapp();
-    ~Mainapp();
+    virtual ~Mainapp();
     virtual void shutdown() override;
     static inline Mainapp* getInstance()
     {
@@ -165,7 +167,7 @@ public:
      * @brief getLastCreateLineEdit
      * @return
      */
-    std::shared_ptr<EventTextEdit> getLastCreateLineEdit() const
+    spEventTextEdit getLastCreateLineEdit() const
     {
         return m_pLineEdit;
     }
@@ -317,17 +319,17 @@ protected:
     virtual void onQuit() override;
 
 private:
-    std::shared_ptr<EventTextEdit> m_pLineEdit;
+    spEventTextEdit m_pLineEdit;
 
     static Mainapp* m_pMainapp;
     static bool m_slave;
     static bool m_trainingSession;
     QMutex m_crashMutex;
-    std::shared_ptr<QThread> m_Workerthread;
-    std::shared_ptr<QThread> m_Networkthread;
-    std::shared_ptr<QThread> m_audioThread;
-    std::shared_ptr<QProcess> m_aiSubProcess;
-    std::shared_ptr<WorkerThread> m_Worker;
+    spQThread m_Workerthread;
+    spQThread m_Networkthread;
+    spQThread m_audioThread;
+    spQProcess m_aiSubProcess;
+    spWorkerThread m_Worker;
     spAudioManager m_AudioManager;
     spAiProcessPipe m_aiProcessPipe;
     spTCPClient m_slaveClient;

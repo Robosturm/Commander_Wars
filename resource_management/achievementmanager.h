@@ -20,9 +20,7 @@ public:
 protected:
     friend MemoryManagement;
     AchievementManager();
-
-private:
-    ~AchievementManager() = default;
+    virtual ~AchievementManager() = default;
 };
 
 #endif // ACHIEVEMENTMANAGER_H

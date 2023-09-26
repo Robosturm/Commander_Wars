@@ -10,6 +10,7 @@
 
 class LocalServer;
 using spLocalServer = std::shared_ptr<LocalServer>;
+using spQLocalServer = std::shared_ptr<QLocalServer>;
 
 /**
  * @brief The LocalServer class for connecting a local pipe to the hosted game
@@ -18,8 +19,8 @@ class LocalServer final : public NetworkInterface
 {
     Q_OBJECT
 public:
-    LocalServer(QObject* pParent);
-    ~LocalServer();
+    explicit LocalServer(QObject* pParent);
+    virtual ~LocalServer();
 public slots:
     virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress) override;
     virtual void disconnectTCP() override;
@@ -46,7 +47,7 @@ private:
     QVector<QLocalSocket*> m_pTCPSockets;
     QVector<quint64> m_SocketIDs;
     quint64 m_idCounter = 0;
-    std::shared_ptr<QLocalServer> m_pTCPServer{nullptr};
+    spQLocalServer m_pTCPServer{nullptr};
     bool m_gameServer{false};
 };
 

@@ -19,7 +19,7 @@ class DialogCoStatsInfo final : public CustomDialog
     };
 public:
     explicit DialogCoStatsInfo(LobbyMenu *pBaseMenu, const QJsonObject &objData);
-    ~DialogCoStatsInfo() = default;
+    virtual ~DialogCoStatsInfo() = default;
 
     Q_INVOKABLE qint32 getGamesWon(const QString &coid);
     Q_INVOKABLE qint32 getGamesLost(const QString &coid);

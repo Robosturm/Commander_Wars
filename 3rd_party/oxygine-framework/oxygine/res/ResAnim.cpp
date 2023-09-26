@@ -135,7 +135,7 @@ namespace oxygine
         {
             return m_frames[index];
         }
-        static std::shared_ptr<AnimationFrame> emptyFrame;
+        static spAnimationFrame emptyFrame;
         if (emptyFrame.get() == nullptr)
         {
             emptyFrame = MemoryManagement::create<AnimationFrame>();

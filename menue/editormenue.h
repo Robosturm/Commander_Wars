@@ -43,7 +43,7 @@ public:
     };
 
     explicit EditorMenue();
-    ~EditorMenue();
+    virtual ~EditorMenue();
     /**
      * @brief cleanTemp clean ups undo and redo steps
      * @param step

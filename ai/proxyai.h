@@ -19,7 +19,7 @@ class ProxyAi final : public CoreAI
     Q_OBJECT
 public:
     explicit ProxyAi(GameMap* pMap);
-    ~ProxyAi() = default;
+    virtual ~ProxyAi() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

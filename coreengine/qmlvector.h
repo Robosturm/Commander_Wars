@@ -20,7 +20,7 @@ class QmlVectorPoint final : public QObject, public RefObject<QmlVectorPoint>, p
     Q_OBJECT
 public:
     explicit QmlVectorPoint();
-    ~QmlVectorPoint() = default;
+    virtual ~QmlVectorPoint() = default;
     const std::vector<QPoint> & getVector() const
     {
         return m_Vector;
@@ -57,7 +57,7 @@ class QmlVectorUnit final : public QObject, public JsThis
     Q_OBJECT
 public:
     explicit QmlVectorUnit();
-    ~QmlVectorUnit() = default;
+    virtual ~QmlVectorUnit() = default;
     void clone(QmlVectorUnit* source);
     const std::vector<spUnit> & getVector() const
     {
@@ -120,7 +120,7 @@ class QmlVectorBuilding final : public QObject, public JsThis
     Q_OBJECT
 public:
     explicit QmlVectorBuilding();
-    ~QmlVectorBuilding() = default;
+    virtual ~QmlVectorBuilding() = default;
     void clone(QmlVectorBuilding * source);
     const std::vector<spBuilding> & getVector() const
     {

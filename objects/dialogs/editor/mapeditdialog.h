@@ -27,7 +27,7 @@ public:
         GameEnums::MapFilterFlags mapFlags{GameEnums::MapFilterFlags_None};
     };
     explicit MapEditDialog(MapEditInfo info, const QString & confirmMessage);
-    ~MapEditDialog();
+    virtual ~MapEditDialog();
     Q_INVOKABLE void setMapName(QString name);
     Q_INVOKABLE QString getMapName() const;
     Q_INVOKABLE void setMapAuthor(QString name);

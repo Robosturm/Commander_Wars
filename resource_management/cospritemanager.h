@@ -79,7 +79,7 @@ signals:
 protected:
     friend MemoryManagement;
     COSpriteManager();
-    ~COSpriteManager() = default;
+    virtual ~COSpriteManager() = default;
 private:
     struct CoSprite
     {

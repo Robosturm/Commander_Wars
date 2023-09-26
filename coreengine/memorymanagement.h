@@ -59,6 +59,7 @@ public:
         --m_objectCounter;
         if constexpr (std::is_base_of_v<QObject, T>)
         {
+            printDeletionInfo(pObj);
             pObj->deleteLater();
         }
         else
@@ -69,6 +70,7 @@ public:
 
     static quint32 getObjectCounter();
 
+    static void printDeletionInfo(QObject* obj);
 signals:
     void sigSetAddColor(oxygine::spVStyleActor actor, QColor color);
     void sigRebuildText(oxygine::spTextField actor);

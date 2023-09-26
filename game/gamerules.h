@@ -37,7 +37,7 @@ public:
     };
 
     explicit GameRules(GameMap* pMap);
-    ~GameRules() = default;
+    virtual ~GameRules() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

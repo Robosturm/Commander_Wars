@@ -13,7 +13,7 @@ class Leaf final : public DecisionNode
 public:
         explicit Leaf();
         Leaf(std::vector<std::vector<float>>& trainingData);
-        ~Leaf() = default;
+        virtual ~Leaf() = default;
         virtual void serializeObject(QDataStream& pStream) const override;
         virtual void deserializeObject(QDataStream& pStream)  override;
         virtual qint32 getVersion() const override

@@ -3,12 +3,15 @@
 #include <QTextEdit>
 #include <QKeyEvent>
 
+class EventTextEdit;
+using spEventTextEdit = std::shared_ptr<EventTextEdit>;
+
 class EventTextEdit final : public QTextEdit
 {
     Q_OBJECT
 public:
-    EventTextEdit() = default;
-    ~EventTextEdit() = default;
+    explicit EventTextEdit();
+    virtual ~EventTextEdit() = default;
     virtual bool event(QEvent *event) override;
     bool getSingleLine() const;
     void setSingleLine(bool newSingleLine);

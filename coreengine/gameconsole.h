@@ -54,7 +54,7 @@ public:
         BLINKFREQG = 250,
         MAXLASTMSG = 20
     };
-    ~GameConsole() = default;
+    virtual ~GameConsole() = default;
     static GameConsole* getInstance();
     static spConsole getSpInstance();
     static bool hasInstance();

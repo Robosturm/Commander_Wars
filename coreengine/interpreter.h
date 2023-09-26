@@ -7,6 +7,8 @@
 #include <QThread>
 #include <QCoreApplication>
 
+using spQObject = std::shared_ptr<QObject>;
+
 class Interpreter;
 using spInterpreter = std::shared_ptr<Interpreter>;
 /**
@@ -23,7 +25,7 @@ public:
         return m_pInstance.get();
     }
     static Interpreter* createInstance();
-    ~Interpreter();
+    virtual ~Interpreter();
     static void release();
 
     static void setCppOwnerShip(QObject* object);
@@ -39,7 +41,7 @@ public:
     static bool reloadInterpreter(QString runtime);
 
     bool getInJsCall() const;
-    void trackJsObject(std::shared_ptr<QObject> pObj);
+    void trackJsObject(spQObject pObj);
 
     template<typename _TType, template<typename T> class _TVectorList>
     QJSValue arraytoJSValue(const _TVectorList<_TType> & array)
@@ -187,7 +189,7 @@ private:
     static spInterpreter m_pInstance;
     static QString m_runtimeData;
     qint32 m_inJsCall{0};
-    std::vector<std::shared_ptr<QObject>> m_jsObjects;
+    std::vector<spQObject> m_jsObjects;
     qint32 m_jsCallCount{0};
     static QThread* m_pOwner;
 };

@@ -13,7 +13,7 @@ namespace oxygine
         };
 
         explicit Draggable() = default;
-        ~Draggable();
+        virtual ~Draggable();
 
         void init(Actor* actor);
 

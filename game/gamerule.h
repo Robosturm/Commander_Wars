@@ -21,7 +21,7 @@ public:
 
     explicit GameRule();
     explicit GameRule(QString ruleID);
-    ~GameRule() = default;
+    virtual ~GameRule() = default;
 
     /**
      * @brief serialize stores the object

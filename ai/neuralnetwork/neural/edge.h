@@ -18,7 +18,7 @@ class Edge final : public FileSerializable
 {
 public:
     Edge(Neuron* nextNeuron, Neuron* previousNeuron, double weight);
-    ~Edge() = default;
+    virtual ~Edge() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

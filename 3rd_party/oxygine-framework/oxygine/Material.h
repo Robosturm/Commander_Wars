@@ -34,7 +34,7 @@ public:
         m_fracShader(other->m_fracShader)
     {
     }
-    ~Material() = default;
+    virtual ~Material() = default;
     void init();
     spMaterial clone() const
     {

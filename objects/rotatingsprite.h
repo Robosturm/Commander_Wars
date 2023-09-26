@@ -13,7 +13,7 @@ class RotatingSprite final : public oxygine::Actor
 {
 public:
     explicit RotatingSprite();
-    ~RotatingSprite() = default;
+    virtual ~RotatingSprite() = default;
     void setSprite(oxygine::spActor firstSprite, oxygine::spActor secondSprite);
     qint32 getSpeed() const;
     void setSpeed(const qint32 &value);

@@ -17,7 +17,7 @@ class GameAnimationDialog final : public GameAnimation
 public:
     static const qint32 dialogHeigth = 96;
     explicit GameAnimationDialog(quint32 frameTime, GameMap* pMap);
-    ~GameAnimationDialog() = default;
+    virtual ~GameAnimationDialog() = default;
     virtual void restart() override;
     void finishDialog();
     void updateShownText();

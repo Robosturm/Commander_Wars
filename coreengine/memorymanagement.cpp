@@ -5,6 +5,8 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
+#include "coreengine/mainapp.h"
+
 MemoryManagement MemoryManagement::m_memoryManagement;
 std::atomic<quint32> MemoryManagement::m_objectCounter{0};
 
@@ -27,6 +29,11 @@ MemoryManagement::MemoryManagement()
     connect(this, &MemoryManagement::sigAddEventListener, this, &MemoryManagement::addEventListener, Qt::BlockingQueuedConnection);
     connect(this, &MemoryManagement::sigRemoveEventListener, this, &MemoryManagement::removeEventListener, Qt::BlockingQueuedConnection);
     connect(this, &MemoryManagement::sigRemoveEventListeners, this, &MemoryManagement::removeEventListeners, Qt::BlockingQueuedConnection);
+}
+
+void MemoryManagement::printDeletionInfo(QObject* obj)
+{
+        CONSOLE_PRINT("Deleting object " + obj->objectName(), GameConsole::eDEBUG);    
 }
 
 quint32 MemoryManagement::getObjectCounter()

@@ -16,7 +16,7 @@ public:
     explicit QZipReader(const QString &fileName, QIODevice::OpenMode mode = QIODevice::ReadOnly );
 
     explicit QZipReader(QIODevice *device);
-    ~QZipReader();
+    virtual ~QZipReader();
 
     QIODevice* device() const;
 

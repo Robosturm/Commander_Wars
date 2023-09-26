@@ -13,7 +13,7 @@ class DialogAutoMatches final : public CustomDialog
 {
 public:
     explicit DialogAutoMatches(LobbyMenu *pBaseMenu, const QJsonObject &objData);
-    ~DialogAutoMatches() = default;
+    virtual ~DialogAutoMatches() = default;
 
 private:
 

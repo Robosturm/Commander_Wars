@@ -32,6 +32,8 @@
         "variant": "cpp",
         "chrono": "cpp",
         "limits": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp"
     },
 }

@@ -104,7 +104,7 @@ public:
     };
 
     explicit GameRecorder(GameMap* pMap);
-    ~GameRecorder() = default;
+    virtual ~GameRecorder() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

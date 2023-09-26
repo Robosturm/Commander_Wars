@@ -14,7 +14,7 @@ TCPClient::TCPClient(QObject* pParent)
     m_isServer = false;
 }
 
-TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, std::shared_ptr<QTcpSocket> pSocket, quint64 socketId)
+TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, spQTcpSocket pSocket, quint64 socketId)
     : NetworkInterface(pParent),
       m_pRXTask(pRXTask),
       m_pTXTask(pTXTask),
@@ -44,7 +44,7 @@ void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdres
     m_port = port;
     m_testedSecondaryAddress = false;
     m_socketID = 1;
-    m_pSocket = std::make_shared<QTcpSocket>(this);
+    m_pSocket = MemoryManagement::create<QTcpSocket>(this);
     connect(m_pSocket.get(), &QTcpSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);

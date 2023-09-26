@@ -20,7 +20,7 @@ class COInfoActor final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit COInfoActor(GameMap* pMap, qint32 width);
-    ~COInfoActor() = default;
+    virtual ~COInfoActor() = default;
     /**
      * @brief showCO
      * @param pCO

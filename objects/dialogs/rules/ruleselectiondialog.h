@@ -19,7 +19,7 @@ class RuleSelectionDialog final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode, bool enabled = true);
-    ~RuleSelectionDialog() = default;
+    virtual ~RuleSelectionDialog() = default;
 signals:
     void sigRulesChanged();
     void sigShowLoadRules();

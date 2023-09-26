@@ -46,7 +46,7 @@ public:
     };
 
     explicit VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay = false);
-    ~VictoryMenue() = default;
+    virtual ~VictoryMenue() = default;
 
     /**
      * @brief createLine creates a nice sweet polygon line for drawing our graphs

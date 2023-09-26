@@ -12,7 +12,7 @@ class DialogExtendMap final : public CreatedGui
     Q_OBJECT
 public:
     explicit DialogExtendMap();
-    ~DialogExtendMap() = default;
+    virtual ~DialogExtendMap() = default;
     Q_INVOKABLE QString getMapFile() const;
     Q_INVOKABLE void setMapFile(const QString newMapFile);
     Q_INVOKABLE GameEnums::Directions getDirection() const;

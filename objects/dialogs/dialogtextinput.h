@@ -15,7 +15,7 @@ class DialogTextInput final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit DialogTextInput(QString text, bool showCancel, QString startInput);
-    ~DialogTextInput() = default;
+    virtual ~DialogTextInput() = default;
 
 signals:
     void sigTextChanged(QString text);

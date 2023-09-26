@@ -24,7 +24,7 @@ class PerkSelection final : public QObject, public oxygine::Actor
 
 public:
     explicit PerkSelection(CO* pCO, qint32 width, qint32 maxPerkCosts, qint32 maxPerkCount, bool banning, QStringList hiddenList, GameMap* pMap);
-    ~PerkSelection() = default;
+    virtual ~PerkSelection() = default;
     void updatePerksView(CO* pCO);
     qint32 getPerkScore(const QStringList & perks) const;
     qint32 getPerkScore(const QString & perk) const;

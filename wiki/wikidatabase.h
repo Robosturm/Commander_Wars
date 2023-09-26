@@ -45,7 +45,7 @@ class WikiDatabase final : public QObject, public RessourceManagement<WikiDataba
     Q_OBJECT
 public:
 
-   ~WikiDatabase() = default;
+   virtual ~WikiDatabase() = default;
     /**
      * @brief load
      */

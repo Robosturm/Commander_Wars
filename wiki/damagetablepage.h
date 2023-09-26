@@ -9,7 +9,7 @@ class DamageTablePage final : public Wikipage
 {
 public:
     explicit DamageTablePage(const QString & pageId);
-    ~DamageTablePage() = default;
+    virtual ~DamageTablePage() = default;
 private:
     oxygine::spColorRectSprite m_verticalMarker;
     oxygine::spColorRectSprite m_horizontalMarker;

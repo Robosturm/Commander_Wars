@@ -30,7 +30,7 @@ public:
     static const char* const stopAnimation;
 
     explicit BattleAnimationSprite(GameMap* pMap, Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1, bool playSound = true);
-    ~BattleAnimationSprite();
+    virtual ~BattleAnimationSprite();
     /**
      * @brief loadAnimation
      * @param animationType

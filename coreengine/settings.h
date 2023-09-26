@@ -19,6 +19,7 @@
 class GLGraphicsView;
 class Settings;
 using spSettings = std::shared_ptr<Settings>;
+using spQTranslator = std::shared_ptr<QTranslator>;
 
 class Settings final : public QObject
 {
@@ -49,6 +50,8 @@ private:
         const char* const m_group;
         const char* const m_name;
     };
+
+    using spValueBase = std::shared_ptr<ValueBase>;
 
     template<typename TType>
     struct Value : public ValueBase
@@ -289,7 +292,7 @@ public:
         FullScreen,
     };
 
-    ~Settings() = default;
+    virtual ~Settings() = default;
     static Settings* getInstance();
 
     void setup();
@@ -773,7 +776,7 @@ private:
 
 private:
     // setting variables
-    QVector<std::shared_ptr<ValueBase>> m_SettingValues;
+    QVector<spValueBase> m_SettingValues;
     qint32 m_x{0};
     qint32 m_y{0};
     qint32 m_width{1024};
@@ -939,7 +942,7 @@ private:
     QStringList m_activeMods;
     QStringList m_activeModVersions;
     QString m_userPath;
-    QVector<std::shared_ptr<QTranslator>> m_translators;
+    QVector<spQTranslator> m_translators;
     QString m_updateStep;
     QString m_pipeUuid;
     bool m_spawnAiProcess{DEFAULTAIPIPE};

@@ -28,7 +28,7 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
     }
     else if (m_pTCPServer[0].get() == nullptr)
     {        
-        m_pTCPServer[0] = std::make_shared<QTcpServer>(this);
+        m_pTCPServer[0] = MemoryManagement::create<QTcpServer>(this);
         if (primaryAdress.isEmpty())
         {
             m_pTCPServer[0]->listen(QHostAddress::Any, port);
@@ -40,7 +40,7 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
         connect(m_pTCPServer[0].get(), &QTcpServer::newConnection, this, &TCPServer::onConnect, Qt::QueuedConnection);
         if (!secondaryAdress.isEmpty())
         {
-            m_pTCPServer[1] = std::make_shared<QTcpServer>(this);
+            m_pTCPServer[1] = MemoryManagement::create<QTcpServer>(this);
             m_pTCPServer[1]->listen(QHostAddress(secondaryAdress), port);
             connect(m_pTCPServer[1].get(), &QTcpServer::newConnection, this, &TCPServer::onConnect, Qt::QueuedConnection);
         }
@@ -103,7 +103,7 @@ void TCPServer::onConnect()
     {
         if (pTcpServer != nullptr)
         {
-            std::shared_ptr<QTcpSocket> nextSocket = MemoryManagement::createFromPointer(pTcpServer->nextPendingConnection());
+            auto nextSocket = MemoryManagement::createFromPointer(pTcpServer->nextPendingConnection());
             if (nextSocket.get() != nullptr)
             {
                 connect(nextSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPServer::displayTCPError, Qt::QueuedConnection);

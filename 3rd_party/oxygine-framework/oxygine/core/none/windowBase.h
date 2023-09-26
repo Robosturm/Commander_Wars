@@ -10,7 +10,7 @@ namespace oxygine
         Q_OBJECT
     public:
         WindowBase() = default;
-        ~WindowBase() = default;
+        virtual ~WindowBase() = default;
 
         QSize size() const;
         qint32 x() const;

@@ -16,7 +16,7 @@ class DialogPasswordAndAdress final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit DialogPasswordAndAdress(QString text);
-    ~DialogPasswordAndAdress() = default;
+    virtual ~DialogPasswordAndAdress() = default;
 
 signals:
     void sigTextChanged(QString text, QString password);

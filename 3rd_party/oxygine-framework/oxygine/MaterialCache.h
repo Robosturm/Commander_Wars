@@ -18,6 +18,9 @@ inline void hash_combine(std::size_t& seed, const T& v, Rest... rest)
 class Material;
 using spMaterial = std::shared_ptr<Material>;
 
+class MaterialCache;
+using spMaterialCache = std::shared_ptr<MaterialCache>;
+
 class MaterialCache final
 {
 public:
@@ -47,6 +50,6 @@ protected:
 private:
     friend MemoryManagement;
     explicit MaterialCache() = default;
-    static std::shared_ptr<MaterialCache> mcache;
+    static spMaterialCache mcache;
 };
 }

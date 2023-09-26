@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
@@ -9,9 +11,6 @@
 #include <QFile>
 #include <QTextStream>
 
-class STDRenderer;
-using spSTDRenderer = std::shared_ptr<STDRenderer>;
-
 namespace oxygine
 {
     bool STDRenderer::m_restored = false;
@@ -20,11 +19,11 @@ namespace oxygine
     spTexture STDRenderer::white{nullptr};
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
-    std::shared_ptr<UberShaderProgram> STDRenderer::m_uberShader;
+    spUberShaderProgram STDRenderer::m_uberShader;
 
     RenderStateCache& rsCache()
     {
-        static std::shared_ptr<RenderStateCache> r;
+        static spRenderStateCache r;
         if (r.get() == nullptr)
         {
             r = MemoryManagement::create<RenderStateCache>();

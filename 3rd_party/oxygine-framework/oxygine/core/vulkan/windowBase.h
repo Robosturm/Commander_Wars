@@ -11,7 +11,7 @@ namespace oxygine
         Q_OBJECT
     public:
         WindowBase();
-        ~WindowBase() = default;
+        virtual ~WindowBase() = default;
         /**
          * @brief createRenderer
          * @return

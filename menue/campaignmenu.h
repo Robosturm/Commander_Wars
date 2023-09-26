@@ -20,7 +20,7 @@ class CampaignMenu final : public Basemenu
     Q_OBJECT
 public:
     explicit CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveCampaign = false);
-    ~CampaignMenu() = default;
+    virtual ~CampaignMenu() = default;
 signals:
     void sigExitMenue();
     void sigButtonNext();

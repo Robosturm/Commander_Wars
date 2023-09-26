@@ -1,13 +1,11 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include <QVulkanFunctions>
 
 namespace oxygine
 {
     class ShaderProgram;
-    using spShaderProgram = oxygine::intrusive_ptr<ShaderProgram>;
+    using spShaderProgram = std::shared_ptr<ShaderProgram>;
     class ShaderProgram: public ref_counter
     {
     public:

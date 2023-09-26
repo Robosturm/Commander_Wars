@@ -15,7 +15,7 @@ public:
     static const char* const MODE_INSTALL;
 
     explicit GameUpdater();
-    ~GameUpdater() = default;
+    virtual ~GameUpdater() = default;
     static void launchPatcher();
     static void launchApplication();
     static void cleanUpOldArtifacts();

@@ -13,7 +13,7 @@ using spSingleResAnim = std::shared_ptr<SingleResAnim>;
         Q_OBJECT
     public:
         explicit SingleResAnim();
-        ~SingleResAnim();
+        virtual ~SingleResAnim();
         virtual void init(const QString & file, qint32 columns, qint32 rows, float scaleFactor) override;
         virtual void init(QImage & image, qint32 columns, qint32 rows, float scaleFactor,
                           bool clamp2Edge = true, quint32 linearFilter = 0) override;

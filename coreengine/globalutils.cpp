@@ -13,7 +13,7 @@
 
 static constexpr double DOUBLE_EPSILON = 0.5;
 static constexpr float FLOAT_EPSILON = 0.5f;
-std::shared_ptr<GlobalUtils> GlobalUtils::m_pInstace;
+spGlobalUtils GlobalUtils::m_pInstace;
 
 GlobalUtils::GlobalUtils()
 {

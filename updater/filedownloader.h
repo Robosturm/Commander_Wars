@@ -22,7 +22,7 @@ public:
                    const QString & resolveEnd,
                    const QString & currentTag,
                    const QString & downloadFile);
-    ~FileDownloader() = default;
+    virtual ~FileDownloader() = default;
 
 signals:
     void sigNewProgress(qint64 bytesReceived, qint64 bytesTotal);

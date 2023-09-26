@@ -11,6 +11,6 @@ protected:
     MovementPlannerAddInManager();
 
 private:
-    ~MovementPlannerAddInManager() = default;
+    virtual ~MovementPlannerAddInManager() = default;
 };
 

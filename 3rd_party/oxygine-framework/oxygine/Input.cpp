@@ -3,7 +3,7 @@
 
 namespace oxygine
 {
-    std::shared_ptr<Input> Input::m_instance;
+    spInput Input::m_instance;
 
     Input::Input()
     {

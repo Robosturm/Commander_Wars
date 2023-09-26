@@ -7,6 +7,9 @@ namespace oxygine
 class VideoDriver;
 class Texture;
 using spTexture = std::shared_ptr<Texture>;
+class UberShaderProgram;
+using spUberShaderProgram = std::shared_ptr<UberShaderProgram>;
+
 class UberShaderProgram final
 {
 public:

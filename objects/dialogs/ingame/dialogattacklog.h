@@ -20,7 +20,7 @@ class DialogAttackLog final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit DialogAttackLog(GameMap* pMap, Player* pPlayer);
-    ~DialogAttackLog() = default;
+    virtual ~DialogAttackLog() = default;
 signals:
     void sigFinished();
     void sigShowAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAtk, qint32 posDefX, qint32 posDefY, qint32 playerDef);

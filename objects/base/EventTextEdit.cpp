@@ -1,4 +1,13 @@
 #include "objects/base/EventTextEdit.h"
+#include "coreengine/interpreter.h"
+
+EventTextEdit::EventTextEdit()
+{
+#ifdef GRAPHICSUPPORT
+    setObjectName("EventTextEdit");
+#endif
+    Interpreter::setCppOwnerShip(this);
+}
 
 bool EventTextEdit::event(QEvent *event)
 {

@@ -6,6 +6,7 @@
 #include "network/txtask.h"
 
 class QLocalSocket;
+using spQLocalSocket = std::shared_ptr<QLocalSocket>;
 
 class LocalClient;
 using spLocalClient = std::shared_ptr<LocalClient>;
@@ -14,8 +15,8 @@ class LocalClient final : public NetworkInterface
 {
     Q_OBJECT
 public:
-    LocalClient(QObject* pParent);
-    ~LocalClient();
+    explicit LocalClient(QObject* pParent);
+    virtual ~LocalClient();
 public slots:
     virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress) override;
     virtual void disconnectTCP() override;
@@ -26,7 +27,7 @@ protected slots:
 private:
     spRxTask m_pRXTask;
     spTxTask m_pTXTask;
-    std::shared_ptr<QLocalSocket> m_pSocket;
+    spQLocalSocket m_pSocket;
 };
 
 #endif // LOCALCLIENT_H

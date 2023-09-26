@@ -31,7 +31,7 @@ public:
     };
 
     explicit LobbyMenu();
-    ~LobbyMenu() = default;
+    virtual ~LobbyMenu() = default;
     Q_INVOKABLE bool getServerRequestNewPassword() const;
     Q_INVOKABLE void setServerRequestNewPassword(bool newServerRequestNewPassword);
     Q_INVOKABLE void onLogin();

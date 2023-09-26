@@ -5,7 +5,7 @@
 
 namespace oxygine
 {
-    std::shared_ptr<MaterialCache> MaterialCache::mcache;
+    spMaterialCache MaterialCache::mcache;
 
     spMaterial MaterialCache::clone_(const Material& other)
     {

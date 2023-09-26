@@ -18,7 +18,7 @@ class UnitStatisticView final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit UnitStatisticView(const GameRecorder::PlayerData & data, qint32 width, qint32 heigth, Player* pPlayer, GameMap* pMap);
-    ~UnitStatisticView() = default;
+    virtual ~UnitStatisticView() = default;
 signals:
     void sigShowLink(QString pageID);
 public slots:

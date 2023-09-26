@@ -55,8 +55,7 @@ public:
 protected:
     friend MemoryManagement;
     GameManager();
-private:
-    ~GameManager() = default;
+    virtual ~GameManager() = default;
 private:
     oxygine::spSprite getIconSprite(const QString & icon);
     QStringList m_loadedHeavyAis;

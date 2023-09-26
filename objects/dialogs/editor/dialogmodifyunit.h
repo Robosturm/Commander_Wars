@@ -19,7 +19,7 @@ class DialogModifyUnit final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit DialogModifyUnit(GameMap* pMap, Unit* pUnit);
-    ~DialogModifyUnit() = default;
+    virtual ~DialogModifyUnit() = default;
 signals:
     void sigFinished();
     void sigUpdateData();

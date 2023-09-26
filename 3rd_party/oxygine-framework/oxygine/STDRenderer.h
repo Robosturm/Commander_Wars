@@ -51,7 +51,7 @@ namespace oxygine
         static size_t maxVertices;
 
         explicit STDRenderer(VideoDriver* driver = nullptr);
-        ~STDRenderer();
+        virtual ~STDRenderer();
 
         const QMatrix4x4& getViewProjection() const;
         VideoDriver* getDriver();
@@ -148,8 +148,11 @@ namespace oxygine
         spTexture m_prevRT;
     private:
         static bool m_restored;
-        static std::shared_ptr<UberShaderProgram> m_uberShader;
+        static spUberShaderProgram m_uberShader;
     };
+
+    class RenderStateCache;
+    using spRenderStateCache = std::shared_ptr<RenderStateCache>;
 
     class RenderStateCache
     {

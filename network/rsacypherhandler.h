@@ -12,7 +12,7 @@ class RsaCypherHandler final
 {
 public:
     explicit RsaCypherHandler();
-    ~RsaCypherHandler();
+    virtual ~RsaCypherHandler();
     RsaCypherHandler(const RsaCypherHandler &) = delete;
     RsaCypherHandler & operator=(const RsaCypherHandler &) = delete;
 

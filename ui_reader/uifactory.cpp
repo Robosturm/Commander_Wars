@@ -358,7 +358,10 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         pLabel->setStyle(style);
         pLabel->setHtmlText(text);
         pLabel->setTooltipText(tooltip);
-        pLabel->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pLabel->setObjectName(id);
+        }
         pLabel->setEnabled(enabled);
         if (height > 0)
         {
@@ -472,7 +475,10 @@ bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygi
         pButton->setY(y);
         pButton->setEnabled(enabled);
         pButton->setVisible(visible);
-        pButton->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pButton->setObjectName(id);
+        }
         QString onEvent = getAttribute(childs, attrOnEvent);
         pButton->addClickListener([this, onEvent, id, loopIdx, pMenu](oxygine::Event*)
         {
@@ -506,7 +512,10 @@ bool UiFactory::createSelectKey(oxygine::spActor parent, QDomElement element, ox
         pButton->setY(y);
         pButton->setEnabled(enabled);
         pButton->setVisible(visible);
-        pButton->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pButton->setObjectName(id);
+        }
         pButton->setTooltipText(tooltip);
         connect(pButton.get(), &SelectKey::sigKeyChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](Qt::Key key)
         {
@@ -538,7 +547,10 @@ bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, o
         pButton->setY(y);
         pButton->setEnabled(enabled);
         pButton->setVisible(visible);
-        pButton->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pButton->setObjectName(id);
+        }
         QString onEvent = getAttribute(childs, attrOnEvent);
         pButton->addClickListener([this, onEvent, id, loopIdx, pMenu](oxygine::Event*)
         {
@@ -567,9 +579,11 @@ bool UiFactory::createMoveInButton(oxygine::spActor parent, QDomElement element,
         bool useY = getBoolValue(getAttribute(childs, attrUseY), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        auto pMoveButton = MemoryManagement::create<MoveInButton>(parent.get(), moveInSize, direction,
-                                                 startOffset, buttonScale, useY);
-        pMoveButton->setObjectName(id);
+        auto pMoveButton = MemoryManagement::create<MoveInButton>(parent.get(), moveInSize, direction, startOffset, buttonScale, useY);
+        if (!id.isEmpty())
+        {
+            pMoveButton->setObjectName(id);
+        }
         pMoveButton->setEnabled(enabled);
         pMoveButton->setVisible(visible);
         parent->addChild(pMoveButton);
@@ -601,7 +615,10 @@ bool UiFactory::createSprite(oxygine::spActor parent, QDomElement element, oxygi
         {
             pAnim = COSpriteManager::getInstance()->getResAnim(spriteId);
         }
-        pSprite->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pSprite->setObjectName(id);
+        }
         pSprite->setResAnim(pAnim);
         pSprite->setScale(scale);
         pSprite->setPosition(x, y);
@@ -653,7 +670,10 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
         pCheckbox->setY(y);
         pCheckbox->setChecked(value);
         pCheckbox->setTooltipText(tooltip);
-        pCheckbox->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pCheckbox->setObjectName(id);
+        }
         pCheckbox->setEnabled(enabled);
         pCheckbox->setVisible(visible);
         parent->addChild(pCheckbox);
@@ -703,7 +723,10 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         pSpinBox->setTooltipText(tooltip);
         pSpinBox->setUnit(unit);
         pSpinBox->setCurrentValue(value);
-        pSpinBox->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pSpinBox->setObjectName(id);
+        }
         pSpinBox->setEnabled(enabled);
         pSpinBox->setSpinSpeed(spinSpeed);
         pSpinBox->setVisible(visible);
@@ -748,7 +771,10 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
         pSlider->setY(y);
         pSlider->setTooltipText(tooltip);
         pSlider->setCurrentValue(value);
-        pSlider->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pSlider->setObjectName(id);
+        }
         pSlider->setEnabled(enabled);
         pSlider->setVisible(visible);
         connect(pSlider.get(), &Slider::sliderValueChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](qint32 value)
@@ -783,7 +809,10 @@ bool UiFactory::createMultiSlider(oxygine::spActor parent, QDomElement element, 
         spMultislider pMultislider = MemoryManagement::create<Multislider>(labels, width, chances, labelWidth);
         pMultislider->setX(x);
         pMultislider->setY(y);
-        pMultislider->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pMultislider->setObjectName(id);
+        }
         pMultislider->setEnabled(enabled);
         pMultislider->setVisible(visible);
         pMultislider->setTooltipText(tooltip);
@@ -849,7 +878,10 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
         pTextbox->setPosition(x, y);
         pTextbox->setTooltipText(tooltip);
         pTextbox->setCurrentText(value);
-        pTextbox->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pTextbox->setObjectName(id);
+        }
         pTextbox->setEnabled(enabled);
         pTextbox->setVisible(visible);
         connect(pTextbox.get(), &Textbox::sigTextChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](QString value)
@@ -884,7 +916,10 @@ bool UiFactory::createMultilineTextbox(oxygine::spActor parent, QDomElement elem
         pTextbox->setPosition(x, y);
         pTextbox->setTooltipText(tooltip);
         pTextbox->setCurrentText(value);
-        pTextbox->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pTextbox->setObjectName(id);
+        }
         pTextbox->setEnabled(enabled);
         pTextbox->setVisible(visible);
         connect(pTextbox.get(), &MultilineTextbox::sigTextChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](QString value)
@@ -923,7 +958,10 @@ bool UiFactory::createPasswordbox(oxygine::spActor parent, QDomElement element, 
         pTextbox->setPosition(x, y);
         pTextbox->setTooltipText(tooltip);
         pTextbox->setCurrentText(value);
-        pTextbox->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pTextbox->setObjectName(id);
+        }
         pTextbox->setEnabled(enabled);
         pTextbox->setVisible(visible);
         connect(pTextbox.get(), &Textbox::sigTextChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](QString value)
@@ -958,7 +996,10 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
         pSpinBox->setY(y);
         pSpinBox->setTooltipText(tooltip);
         pSpinBox->setCurrentValue(value);
-        pSpinBox->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pSpinBox->setObjectName(id);
+        }
         pSpinBox->setEnabled(enabled);
         pSpinBox->setVisible(visible);
         connect(pSpinBox.get(), &TimeSpinBox::sigValueChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu](qint32 value)
@@ -1018,7 +1059,10 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
         pPanel->setX(x);
         pPanel->setY(y);
         pPanel->setVisible(visible);
-        pPanel->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pPanel->setObjectName(id);
+        }
         pPanel->setEnabled(enabled);
         m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
         updateMenuSize(pMenu);
@@ -1097,7 +1141,10 @@ bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element,
         pDropDownmenu->setTooltipText(tooltip);
         pDropDownmenu->setVisible(visible);
         pDropDownmenu->setEnabled(enabled);
-        pDropDownmenu->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pDropDownmenu->setObjectName(id);
+        }
         if (hasChild(childs, attrStartValue))
         {
             bool success = false;
@@ -1158,7 +1205,10 @@ bool UiFactory::createDropDownMenuColor(oxygine::spActor parent, QDomElement ele
         pDropDownmenu->setTooltipText(tooltip);
         pDropDownmenu->setVisible(visible);
         pDropDownmenu->setShowUnitPreview(showUnitPreview);
-        pDropDownmenu->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pDropDownmenu->setObjectName(id);
+        }
         pDropDownmenu->setEnabled(enabled);
         if (hasChild(childs, attrStartValue))
         {
@@ -1282,7 +1332,10 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
         pDropDownmenu->setTooltipText(tooltip);
         pDropDownmenu->setVisible(visible);
         pDropDownmenu->setEnabled(enabled);
-        pDropDownmenu->setObjectName(id);
+        if (!id.isEmpty())
+        {
+            pDropDownmenu->setObjectName(id);
+        }
         if (hasChild(childs, attrStartValue))
         {
             bool success = false;

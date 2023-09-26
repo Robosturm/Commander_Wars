@@ -323,7 +323,7 @@ bool Interpreter::getInJsCall() const
     return m_inJsCall > 0;
 }
 
-void Interpreter::trackJsObject(std::shared_ptr<QObject> pObj)
+void Interpreter::trackJsObject(spQObject pObj)
 {
     if (m_inJsCall > 0)
     {

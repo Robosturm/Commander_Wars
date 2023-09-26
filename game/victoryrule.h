@@ -20,7 +20,7 @@ public:
 
     explicit VictoryRule(GameMap* pMap);
     explicit VictoryRule(QString ruleID, GameMap* pMap);
-    ~VictoryRule() = default;
+    virtual ~VictoryRule() = default;
 
     /**
      * @brief serialize stores the object

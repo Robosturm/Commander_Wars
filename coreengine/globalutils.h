@@ -1,6 +1,8 @@
 #ifndef GLOBALUTILS_H
 #define GLOBALUTILS_H
 
+#include <memory>
+
 #include <QObject>
 #include <QDir>
 #include <QRandomGenerator>
@@ -8,11 +10,14 @@
 class QmlVectorPoint;
 using spQmlVectorPoint = std::shared_ptr<QmlVectorPoint>;
 
+class GlobalUtils;
+using spGlobalUtils = std::shared_ptr<GlobalUtils>;
+
 class GlobalUtils final : public QObject
 {
     Q_OBJECT
 public:
-    ~GlobalUtils() = default;
+    virtual ~GlobalUtils() = default;
     static GlobalUtils* getInstance()
     {
         return m_pInstace.get();
@@ -159,7 +164,7 @@ private:
     explicit GlobalUtils();
 private:
     friend class MemoryManagement;
-    static std::shared_ptr<GlobalUtils> m_pInstace;
+    static spGlobalUtils m_pInstace;
     QRandomGenerator m_randGenerator;
     bool m_useSeed;
     quint32 m_seed;

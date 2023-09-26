@@ -14,7 +14,7 @@ protected:
     friend MemoryManagement;
     ObjectManager();
 private:
-    ~ObjectManager() = default;
+    virtual ~ObjectManager() = default;
 };
 
 

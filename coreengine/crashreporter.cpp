@@ -9,7 +9,7 @@
 #include <QTextStream>
 #include <QStandardPaths>
 
-std::shared_ptr<CrashReporter> CrashReporter::m_instance;
+spCrashReporter CrashReporter::m_instance;
 
 void CrashReporter::_writeLog( const QString &inSignal)
 {
