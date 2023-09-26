@@ -12,6 +12,9 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
       m_useY(useY)
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
+    setObjectName("MoveInButton");
+#endif
 
     m_pButton = MemoryManagement::create<oxygine::Button>();
     if (m_useY)

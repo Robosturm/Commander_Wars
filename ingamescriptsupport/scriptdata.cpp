@@ -19,6 +19,9 @@ ScriptData::ScriptData(GameMap* pMap)
     : m_pMap(pMap)
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
+    setObjectName("ScriptData");
+#endif
 }
 
 void ScriptData::clearData()

@@ -12,6 +12,9 @@ namespace oxygine
 SingleResAnim::SingleResAnim()
 {
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
+    setObjectName("SingleResAnim");
+#endif
     moveToThread(GameWindow::getWindow()->getMainThread());
 }
 

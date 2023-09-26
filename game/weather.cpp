@@ -17,6 +17,9 @@ Weather::Weather(QString weatherId, GameMap* pMap)
 Weather::Weather(GameMap* pMap)
     : m_pMap{pMap}
 {
+#ifdef GRAPHICSUPPORT
+    setObjectName("Weather");
+#endif
     Interpreter::setCppOwnerShip(this);
     setupJsThis(this);
 }
