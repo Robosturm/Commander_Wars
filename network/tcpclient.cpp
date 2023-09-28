@@ -44,7 +44,7 @@ void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdres
     m_port = port;
     m_testedSecondaryAddress = false;
     m_socketID = 1;
-    m_pSocket = MemoryManagement::create<QTcpSocket>(this);
+    m_pSocket = MemoryManagement::createNamedQObject<QTcpSocket>("QTcpSocket", this);
     connect(m_pSocket.get(), &QTcpSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);

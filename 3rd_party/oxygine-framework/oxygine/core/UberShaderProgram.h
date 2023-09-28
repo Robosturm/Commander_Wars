@@ -13,6 +13,10 @@ using spUberShaderProgram = std::shared_ptr<UberShaderProgram>;
 class UberShaderProgram final
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "UberShaderProgram";
+    }
     enum ColorMode
     {
         COLOR_DEFAULT,

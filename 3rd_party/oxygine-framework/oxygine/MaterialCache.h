@@ -24,6 +24,10 @@ using spMaterialCache = std::shared_ptr<MaterialCache>;
 class MaterialCache final
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "ClipRectActor";
+    }
     ~MaterialCache() = default;
     spMaterial cache(const Material& other)
     {

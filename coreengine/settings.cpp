@@ -2101,7 +2101,7 @@ void Settings::setLanguage(const QString language)
     {
         if (QFile::exists(file))
         {
-            auto translator = MemoryManagement::create<QTranslator>();
+            auto translator = MemoryManagement::createNamedQObject<QTranslator>("QTranslator");
             m_translators.append(translator);
             if (translator->load(QLocale(m_language), file))
             {

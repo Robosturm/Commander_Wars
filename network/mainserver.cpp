@@ -98,9 +98,14 @@ MainServer::MainServer()
       m_periodicExecutionTimer(this),
       m_pGameServer(MemoryManagement::create<TCPServer>(this)),
       m_pSlaveServer(MemoryManagement::create<TCPServer>(this)),
-      m_matchMakingCoordinator(this)
+      m_matchMakingCoordinator(this),
+      m_mailSenderThread(this)
 {
     CONSOLE_PRINT("Game server launched", GameConsole::eDEBUG);
+#ifdef GRAPHICSUPPORT
+    setObjectName("MainServer");
+#endif
+    m_mailSenderThread.setObjectName("Mailserverthread");
     Interpreter::setCppOwnerShip(this);
     m_periodicExecutionTimer.setSingleShot(false);
     m_periodicExecutionTimer.start(30 * 1000);

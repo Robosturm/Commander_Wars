@@ -8,6 +8,10 @@ namespace oxygine
     class RenderDelegate final
     {
     public:
+        static constexpr const char* const getTypeName()
+        {
+            return "RenderDelegate";
+        }
         static spRenderDelegate instance;
         explicit RenderDelegate() = default;
         ~RenderDelegate() = default;

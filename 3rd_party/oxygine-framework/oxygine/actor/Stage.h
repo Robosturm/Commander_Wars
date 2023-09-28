@@ -9,7 +9,11 @@ namespace oxygine
     using spStage = std::shared_ptr<Stage>;
     class Stage final : public Actor
     {
-    public:
+    public:    
+        static constexpr const char* const getTypeName()
+        {
+            return "Stage";
+        }
         enum
         {
             ACTIVATE = sysEventID('S', 'A', 'c'),

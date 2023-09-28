@@ -11,6 +11,10 @@ using spQProcess = std::shared_ptr<QProcess>;
 class CrashReporter final
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "CrashReporter";
+    }
     ~CrashReporter() = default;
     /// Function signature for a callback after the log is written.
     /// @param log

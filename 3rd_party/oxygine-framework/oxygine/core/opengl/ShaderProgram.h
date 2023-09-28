@@ -9,7 +9,11 @@ namespace oxygine
     using spShaderProgram = std::shared_ptr<ShaderProgram>;
     class ShaderProgram final
     {
-    public:
+    public:           
+        static constexpr const char* const getTypeName()
+        {
+            return "ShaderProgram";
+        }
         explicit ShaderProgram(const QString & vsShader, const QString & fsShader, const VertexDeclaration* decl);
         ~ShaderProgram() = default;
         void bind();

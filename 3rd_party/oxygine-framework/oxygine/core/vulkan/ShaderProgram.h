@@ -8,7 +8,11 @@ namespace oxygine
     using spShaderProgram = std::shared_ptr<ShaderProgram>;
     class ShaderProgram: public ref_counter
     {
-    public:
+    public:            
+        static constexpr const char* const getTypeName()
+        {
+            return "ShaderProgram";
+        }
         explicit ShaderProgram(const QString & vsShader, const QString & fsShader);
         virtual ~ShaderProgram() = default;
     private:

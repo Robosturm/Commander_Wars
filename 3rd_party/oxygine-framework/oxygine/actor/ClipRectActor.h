@@ -12,9 +12,12 @@ namespace oxygine
     class ClipRectActor : public Actor
     {
     public:
+        static constexpr const char* const getTypeName()
+        {
+            return "ClipRectActor";
+        }
         explicit ClipRectActor() = default;
         virtual ~ClipRectActor() = default;
-
         bool getClipping() const
         {
             return m_clipping;

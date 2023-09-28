@@ -83,6 +83,10 @@ namespace oxygine
     class Actor: public EventDispatcher
     {
     public:
+        static constexpr const char* const getTypeName()
+        {
+            return "Actor";
+        }
         explicit Actor();
         virtual ~Actor();
         using children = std::vector<spActor>;

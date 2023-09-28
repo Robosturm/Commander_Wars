@@ -12,7 +12,11 @@ namespace oxygine
     using spAnimationFrame = std::shared_ptr<AnimationFrame>;
     class AnimationFrame final
     {
-    public:
+    public:    
+        static constexpr const char* const getTypeName()
+        {
+            return "AnimationFrame";
+        }
         explicit AnimationFrame() = default;
         ~AnimationFrame() = default;
         void init(ResAnim *rs, short column, short row, const spTexture &texture,

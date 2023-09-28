@@ -28,6 +28,9 @@ namespace
 
 AiProcessPipe::AiProcessPipe()
 {
+#ifdef GRAPHICSUPPORT
+    setObjectName("AiProcessPipe");
+#endif
     Interpreter::setCppOwnerShip(this);
     connect(this, &AiProcessPipe::sigStartPipe, this, &AiProcessPipe::startPipe, Qt::QueuedConnection);
     connect(this, &AiProcessPipe::sigPipeReady, this, &AiProcessPipe::pipeReady, Qt::QueuedConnection);

@@ -15,6 +15,10 @@ using spNeuron = std::shared_ptr<Neuron>;
 class Neuron final : public FileSerializable
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "Neuron";
+    }
 
     enum class ActivationFunction
     {

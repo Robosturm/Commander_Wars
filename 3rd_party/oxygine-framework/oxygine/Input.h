@@ -14,6 +14,10 @@ namespace oxygine
     class Input final
     {
     public:
+        static constexpr const char* const getTypeName()
+        {
+            return "Input";
+        }
         static Input & getInstance()
         {
             if (m_instance.get() == nullptr)

@@ -29,6 +29,10 @@ namespace oxygine
     class STDRenderer final : public ShaderProgramChangedHook
     {
     public:
+        static constexpr const char* const getTypeName()
+        {
+            return "STDRenderer";
+        }
         static spSTDRenderer current;
         static spSTDRenderer instance;
         /**Initializes internal classes. Called automatically from oxygine::init();*/
@@ -156,7 +160,11 @@ namespace oxygine
 
     class RenderStateCache
     {
-    public:
+    public:    
+        static constexpr const char* const getTypeName()
+        {
+            return "RenderStateCache";
+        }
         RenderStateCache();
 
         void setDriver(VideoDriver* d);

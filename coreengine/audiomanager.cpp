@@ -16,6 +16,9 @@
 
 SoundData::SoundData()
 {
+#ifdef GRAPHICSUPPORT
+    setObjectName("SoundData");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

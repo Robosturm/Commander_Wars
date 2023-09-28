@@ -22,6 +22,10 @@ using spAttackReport = std::shared_ptr<AttackReport>;
 class AttackReport final
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "AttackReport";
+    }
     qint32 day{0};
     /**
      * @brief defenderKilled

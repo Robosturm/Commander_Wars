@@ -68,7 +68,7 @@ void CrashReporter::setSignalHandler(logWrittenCallback inLogWrittenCallback )
     m_instance->sLogWrittenCallback = inLogWrittenCallback;
     if (m_instance->sProcess == nullptr)
     {
-        m_instance->sProcess = MemoryManagement::create<QProcess>();
+        m_instance->sProcess = MemoryManagement::createNamedQObject<QProcess>("QProcess");
 #ifdef GRAPHICSUPPORT
         m_instance->sProcess->setObjectName("CrashreporterProcess");
 #endif

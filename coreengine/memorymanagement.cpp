@@ -36,24 +36,35 @@ void MemoryManagement::printDeletionInfo(QObject* obj)
     Q_ASSERT(QJSEngine::objectOwnership(obj) == QJSEngine::ObjectOwnership::CppOwnership);
     if (obj->objectName().isEmpty())
     {
-        CONSOLE_PRINT("Deleting object with no name", GameConsole::eDEBUG);    
+        CONSOLE_PRINT("Deleting object with no name from thread " + QThread::currentThread()->objectName() + " rendering paused " + QString::number(Mainapp::getInstance() != nullptr ? Mainapp::getInstance()->renderingPaused() : false), GameConsole::eDEBUG);    
     }
     else
     {
-        CONSOLE_PRINT("Deleting object " + obj->objectName(), GameConsole::eDEBUG);    
+        CONSOLE_PRINT("Deleting object " + obj->objectName() + " from thread " + QThread::currentThread()->objectName() + " rendering paused " + QString::number(Mainapp::getInstance() != nullptr ? Mainapp::getInstance()->renderingPaused() : false), GameConsole::eDEBUG);    
     }
 }
 
 void MemoryManagement::printDeletionInfo(const QString & name)
 {
-    if (name.isEmpty())
+    CONSOLE_PRINT("Deleting object " + name + " from thread " + QThread::currentThread()->objectName() + " rendering paused " + QString::number(Mainapp::getInstance() != nullptr ? Mainapp::getInstance()->renderingPaused() : false), GameConsole::eDEBUG);    
+}
+
+void MemoryManagement::printCreationInfo(QObject* obj)
+{
+    Q_ASSERT(QJSEngine::objectOwnership(obj) == QJSEngine::ObjectOwnership::CppOwnership);
+    if (obj->objectName().isEmpty())
     {
-        CONSOLE_PRINT("Deleting object with no name", GameConsole::eDEBUG);    
+        CONSOLE_PRINT("Creating object with no name from thread " + QThread::currentThread()->objectName() + " rendering paused " + QString::number(Mainapp::getInstance() != nullptr ? Mainapp::getInstance()->renderingPaused() : false), GameConsole::eDEBUG);    
     }
     else
     {
-        CONSOLE_PRINT("Deleting object " + name, GameConsole::eDEBUG);    
+        CONSOLE_PRINT("Creating object " + obj->objectName() + " from thread " + QThread::currentThread()->objectName() + " rendering paused " + QString::number(Mainapp::getInstance() != nullptr ? Mainapp::getInstance()->renderingPaused() : false), GameConsole::eDEBUG);    
     }
+}
+
+void MemoryManagement::printCreationInfo(const QString & name)
+{
+    CONSOLE_PRINT("Creating object " + name + " from thread " + QThread::currentThread()->objectName() + " rendering paused " + QString::number(Mainapp::getInstance() != nullptr ? Mainapp::getInstance()->renderingPaused() : false), GameConsole::eDEBUG);    
 }
 
 quint32 MemoryManagement::getObjectCounter()

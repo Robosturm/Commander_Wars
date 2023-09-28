@@ -17,6 +17,10 @@ using spEdge = std::shared_ptr<Edge>;
 class Edge final : public FileSerializable
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "Edge";
+    }
     Edge(Neuron* nextNeuron, Neuron* previousNeuron, double weight);
     virtual ~Edge() = default;
     /**

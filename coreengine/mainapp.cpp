@@ -69,12 +69,13 @@ Mainapp::Mainapp()
 #endif
     Interpreter::setCppOwnerShip(this);
     m_pMainapp = this;
+    QThread::currentThread()->setObjectName("Renderthread");
     MemoryManagement::getInstance().moveToThread(QThread::currentThread());
-    m_Workerthread = MemoryManagement::create<QThread>();
-    m_Networkthread = MemoryManagement::create<QThread>();
-    m_aiSubProcess = MemoryManagement::create<QProcess>();
+    m_Workerthread = MemoryManagement::createNamedQObject<QThread>("QThread");
+    m_Networkthread = MemoryManagement::createNamedQObject<QThread>("QThread");
+    m_aiSubProcess = MemoryManagement::createNamedQObject<QProcess>("QProcess");
 #ifdef AUDIOSUPPORT
-    m_audioThread = MemoryManagement::create<QThread>();
+    m_audioThread = MemoryManagement::createNamedQObject<QThread>("QThread");
     m_audioThread->setObjectName("Audiothread");
 #endif
 #ifdef GRAPHICSUPPORT

@@ -15,7 +15,10 @@ namespace oxygine
     class VideoDriver final
     {
     public:
-
+        static constexpr const char* const getTypeName()
+        {
+            return "VideoDriver";
+        }
         enum PRIMITIVE_TYPE
         {
             PT_POINTS,

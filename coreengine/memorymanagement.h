@@ -19,13 +19,35 @@ public:
     }
 
     template <class T, typename ...TArgs>
+    static std::shared_ptr<T> createNamedQObject(const QString & name, TArgs... args)
+    {
+        ++m_objectCounter;
+        std::shared_ptr<T> pRet(new T(args...), &MemoryManagement::deleter<T>);
+        pRet->setObjectName(name);
+        Q_ASSERT(QJSEngine::objectOwnership(pRet.get()) == QJSEngine::ObjectOwnership::CppOwnership);
+#ifdef MEMORYTRACING
+            printCreationInfo(pRet.get());
+#endif
+        return pRet;
+    }
+
+    template <class T, typename ...TArgs>
     static std::shared_ptr<T> create(TArgs... args)
     {
         ++m_objectCounter;
         std::shared_ptr<T> pRet(new T(args...), &MemoryManagement::deleter<T>);
         if constexpr (std::is_base_of_v<QObject, T>)
         {
-            Interpreter::setCppOwnerShip(pRet.get());
+            Q_ASSERT(QJSEngine::objectOwnership(pRet.get()) == QJSEngine::ObjectOwnership::CppOwnership);
+#ifdef MEMORYTRACING
+            printCreationInfo(pRet.get());
+#endif
+        }
+        else
+        {
+#ifdef MEMORYTRACING
+            printCreationInfo(T::getTypeName());
+#endif
         }
         return pRet;
     }
@@ -43,10 +65,10 @@ public:
     {
         ++m_objectCounter;
         std::shared_ptr<T> pRet(new T(args...), &MemoryManagement::deleter<T>);
-        if constexpr (std::is_base_of_v<QObject, T>)
-        {
-            Interpreter::setCppOwnerShip(pRet.get());
-        }
+        Q_ASSERT(QJSEngine::objectOwnership(pRet.get()) == QJSEngine::ObjectOwnership::CppOwnership);
+#ifdef MEMORYTRACING
+        printCreationInfo(pRet.get());
+#endif
         Interpreter* pInterpreter = Interpreter::getInstance();
         Q_ASSERT(pInterpreter->getInJsCall());
         pInterpreter->trackJsObject(pRet);
@@ -59,12 +81,16 @@ public:
         --m_objectCounter;
         if constexpr (std::is_base_of_v<QObject, T>)
         {
+#ifdef MEMORYTRACING
             printDeletionInfo(pObj);
+#endif
             pObj->deleteLater();
         }
         else
         {
-            printDeletionInfo("basic object");
+#ifdef MEMORYTRACING
+            printDeletionInfo(T::getTypeName());
+#endif
             delete pObj;
         }
     }
@@ -73,6 +99,8 @@ public:
 
     static void printDeletionInfo(QObject* obj);
     static void printDeletionInfo(const QString & name);
+    static void printCreationInfo(QObject* obj);
+    static void printCreationInfo(const QString & name);
 signals:
     void sigSetAddColor(oxygine::spVStyleActor actor, QColor color);
     void sigRebuildText(oxygine::spTextField actor);

@@ -14,6 +14,10 @@ using spLayer = std::shared_ptr<Layer>;
 class Layer final : public FileSerializable
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "Layer";
+    }
     static const char* const LAYER_PARAMETER_SIZE;
     static const char* const LAYER_PARAMETER_TYPE;
     static const char* const LAYER_PARAMETER_ACTIVATION;

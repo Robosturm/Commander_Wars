@@ -12,7 +12,11 @@ namespace oxygine
     using spResAnim = std::shared_ptr<ResAnim>;
     class ResAnim: public Resource
     {
-    public:
+    public:    
+        static constexpr const char* const getTypeName()
+        {
+            return "ResAnim";
+        }
         explicit ResAnim(Resource* atlas = nullptr);
         virtual ~ResAnim() = default;
 

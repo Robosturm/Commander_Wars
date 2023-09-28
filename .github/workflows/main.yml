@@ -134,6 +134,7 @@ jobs:
         -DUPDATESUPPORT=ON \
         -DCOW_BUILD_TAG="Dummy" \
         -DCOW_UPDATETARGET="Dummy" \
+        -D-DQT_NO_DEBUG \
         -DCOW_INSTALLDIR="Commander_Wars_Release" \
         ${{matrix.cmakeOptions}}
         
@@ -164,6 +165,7 @@ jobs:
         -DPRECOMPILEDOPENSSL=ON \
         -DUPDATESUPPORT=OFF \
         -DDEFAULTAIPIPE=OFF \
+        -D-DQT_NO_DEBUG \
         -DCOW_BUILD_TAG="Dummy" \
         -DCOW_UPDATETARGET="Dummy" \
         -DCOW_INSTALL_DIR="Commander_Wars_Release" \

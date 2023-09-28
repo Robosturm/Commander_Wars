@@ -56,6 +56,10 @@ private:
     template<typename TType>
     struct Value : public ValueBase
     {
+        static constexpr const char* const getTypeName()
+        {
+            return "Value";
+        }
         Value(const char* const group, const char* const name, TType* value, TType defaultValue, TType minValue, TType maxValue, bool excludeFromReset = false)
             : ValueBase(group, name),
             m_defaultValue{defaultValue},
@@ -222,6 +226,10 @@ private:
 #ifdef AUDIOSUPPORT
     struct AudioDeviceValue : public ValueBase
     {
+        static constexpr const char* const getTypeName()
+        {
+            return "AudioDeviceValue";
+        }
         AudioDeviceValue(const char* const group, const char* const name, QVariant* value, QString defaultValue)
             : ValueBase(group, name),
             m_value{value},

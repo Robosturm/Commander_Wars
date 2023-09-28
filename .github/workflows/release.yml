@@ -180,6 +180,7 @@ jobs:
         -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/ \
         -DUPDATESUPPORT=ON \
         -DCOW_BUILD_TAG="${{github.ref}}" \
+        -DQT_NO_DEBUG \
         -DCOW_UPDATETARGET="${{matrix.asset_name}}" \
         -DCOW_INSTALL_DIR="Commander_Wars_Release" \
         ${{matrix.cmakeOptions}}
@@ -213,6 +214,7 @@ jobs:
         -DDEFAULTAIPIPE=OFF \
         -DCOW_BUILD_TAG="Dummy" \
         -DCOW_UPDATETARGET="Dummy" \
+        -DQT_NO_DEBUG \
         -DCOW_INSTALL_DIR="Commander_Wars_Release" \
         -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install"
 

@@ -9,6 +9,7 @@
 #include <QMediaDevices>
 #include <QAudioDevice>
 #include <QAudioOutput>
+using spQSoundEffect = std::shared_ptr<QSoundEffect>;
 #endif
 #include <QIODevice>
 #include <QTimer>
@@ -18,7 +19,6 @@
 
 class AudioManager;
 using spAudioManager = std::shared_ptr<AudioManager>;
-using spQSoundEffect = std::shared_ptr<QSoundEffect>;
 
 
 struct SoundData : public QObject
@@ -42,6 +42,10 @@ private:
 #ifdef AUDIOSUPPORT
     struct Player
     {
+        static constexpr const char* const getTypeName()
+        {
+            return "Player";
+        }
         Player(QObject *parent)
             : m_player(parent)
         {
@@ -293,7 +297,7 @@ private:
         SoundEffect(QObject *owner)
             : timer(owner)
         {
-            sound = MemoryManagement::create<QSoundEffect>(owner);
+            sound = MemoryManagement::createNamedQObject<QSoundEffect>("QSoundEffect", owner);
         }
         spQSoundEffect sound;
         QTimer timer;

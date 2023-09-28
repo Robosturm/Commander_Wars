@@ -12,6 +12,10 @@ using spResAtlasGeneric = std::shared_ptr<ResAtlasGeneric>;
 class ResAtlasGeneric : public ResAtlas
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "ResAtlasGeneric";
+    }
     explicit ResAtlasGeneric() = default;
     virtual ~ResAtlasGeneric() = default;
     void loadAtlas(CreateResourceContext& context);

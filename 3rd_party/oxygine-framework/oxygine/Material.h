@@ -18,6 +18,10 @@ using spMaterial = std::shared_ptr<Material>;
 class Material final : public RefObject<Material>
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "Material";
+    }
     static spMaterial current;
     static spMaterial null;
 

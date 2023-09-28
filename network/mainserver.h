@@ -463,6 +463,10 @@ private:
     class InternNetworkGame final
     {
     public:
+        static constexpr const char* const getTypeName()
+        {
+            return "InternNetworkGame";
+        }
         spQProcess process;
         spNetworkGame game;
         QString slaveName;

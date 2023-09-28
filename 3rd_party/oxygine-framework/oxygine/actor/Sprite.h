@@ -13,6 +13,10 @@ using spSprite = std::shared_ptr<Sprite>;
 class Sprite : public VStyleActor
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "Sprite";
+    }
     using TweenAnim = oxygine::TweenAnim;
     explicit Sprite() = default;
     virtual ~Sprite();

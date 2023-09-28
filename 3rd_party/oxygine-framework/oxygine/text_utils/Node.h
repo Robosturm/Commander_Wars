@@ -33,7 +33,11 @@ namespace oxygine
 
         class Node
         {
-        public:
+        public:        
+            static constexpr const char* const getTypeName()
+            {
+                return "Node";
+            }
             explicit Node() = default;
             virtual ~Node() = default;
 
@@ -69,6 +73,10 @@ namespace oxygine
         class TextNode : public Node
         {
         public:
+            static constexpr const char* const getTypeName()
+            {
+                return "TextNode";
+            }
             explicit TextNode(const QString & v);
             virtual ~TextNode() = default;
             virtual void xresize(Aligner& rd) override;
@@ -96,7 +104,11 @@ namespace oxygine
 
         class WigglyNode final : public TextNode
         {
-        public:
+        public:        
+            static constexpr const char* const getTypeName()
+            {
+                return "WigglyNode";
+            }
             explicit WigglyNode(QDomElement& reader, const QString & v);
             virtual ~WigglyNode() = default;
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
@@ -110,7 +122,11 @@ namespace oxygine
 
         class DivNode final : public Node
         {
-        public:
+        public:        
+            static constexpr const char* const getTypeName()
+            {
+                return "DivNode";
+            }
             explicit DivNode(QDomElement& reader);
             virtual ~DivNode() = default;
             virtual void resize(Aligner& rd) override;
@@ -121,7 +137,11 @@ namespace oxygine
 
         class BrNode final: public Node
         {
-        public:
+        public:        
+            static constexpr const char* const getTypeName()
+            {
+                return "BrNode";
+            }
             explicit BrNode() = default;
             virtual ~BrNode() = default;
             void xresize(Aligner& rd) override

@@ -26,6 +26,9 @@ public:
         m_mainId(mainId),
         m_item(item)
     {
+#ifdef GRAPHICSUPPORT
+    setObjectName("PageData");
+#endif
         Interpreter::setCppOwnerShip(this);
     }
     QString m_name;

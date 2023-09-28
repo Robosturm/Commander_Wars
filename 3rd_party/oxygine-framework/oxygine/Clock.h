@@ -9,6 +9,10 @@ using spClock = std::shared_ptr<Clock>;
 class Clock final
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "Clock";
+    }
     explicit Clock() = default;
     ~Clock() = default;
     timeMS getTime() const;

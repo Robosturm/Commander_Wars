@@ -17,6 +17,9 @@ spGlobalUtils GlobalUtils::m_pInstace;
 
 GlobalUtils::GlobalUtils()
 {
+#ifdef GRAPHICSUPPORT
+    setObjectName("GlobalUtils");
+#endif
     Interpreter::setCppOwnerShip(this);
 }
 

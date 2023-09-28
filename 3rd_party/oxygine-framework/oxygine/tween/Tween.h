@@ -38,6 +38,10 @@ public:
 class Tween : public EventDispatcher
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "Tween";
+    }
     static constexpr qint32 TWEEN_COMPLETE_DT = std::numeric_limits<int>::max() / 2;
 
     explicit Tween() = default;
@@ -191,6 +195,10 @@ template<class TProperty>
 class TweenT final : public Tween
 {
 public:
+    static constexpr const char* const getTypeName()
+    {
+        return "TweenT";
+    }
     using TActor = typename TProperty::TActor;
     explicit TweenT(const TProperty& property)
         : m_property(property)
