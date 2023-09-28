@@ -1,6 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 
+#include <QObject>
 #include <QImage>
 
 class MemoryManagement;
@@ -9,7 +10,7 @@ namespace oxygine
 {
 class Texture;
 using spTexture = std::shared_ptr<Texture>;
-class Texture final
+class Texture final : public QObject
 {
 public:
     ~Texture();
