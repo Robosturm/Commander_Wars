@@ -2249,6 +2249,7 @@ void GameMenue::startGame()
     {
         Player* pPlayer = m_pMap->getPlayer(i);
         pPlayer->setMenu(this);
+        pPlayer->loadVisionFields();
         auto* pInput = pPlayer->getBaseGameInput();
         if (pInput != nullptr)
         {
