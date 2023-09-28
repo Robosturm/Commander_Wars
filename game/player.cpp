@@ -123,6 +123,11 @@ void Player::loadVisionFields()
                 m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(GameEnums::VisionType_Mist, 0, false)));
                 break;
             }
+            default:
+            {
+                m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(GameEnums::VisionType_Clear, 0, false)));
+                break;
+            }
         }
     }
 }
@@ -1166,44 +1171,82 @@ void Player::updatePlayerVision(bool reduceTimer)
     {
         qint32 width = m_pMap->getMapWidth();
         qint32 heigth = m_pMap->getMapHeight();
-        if (m_FogVisionFields.size() == width &&
-            m_FogVisionFields[width - 1].size() == heigth)
+        if (m_FogVisionFields.size() != width ||
+            m_FogVisionFields[width - 1].size() != heigth)
         {
-            for (qint32 x = 0; x < width; x++)
+            CONSOLE_PRINT("Loading player for player " + m_playerNameId + " vision cause it's not loaded yet", GameConsole::eWARNING);
+            loadVisionFields();
+        }
+        for (qint32 x = 0; x < width; x++)
+        {
+            for (qint32 y = 0; y < heigth; y++)
             {
-                for (qint32 y = 0; y < heigth; y++)
+                if (reduceTimer)
                 {
-                    if (reduceTimer)
+                    m_FogVisionFields[x][y].m_duration -= 1;
+                }
+                qint32 duration = m_FogVisionFields[x][y].m_duration;
+                if (duration <= 0)
+                {
+                    if (m_FogVisionFields[x][y].m_visionType == GameEnums::VisionType_Clear)
                     {
-                        m_FogVisionFields[x][y].m_duration -= 1;
+                        m_FogVisionFields[x][y].m_visionType = GameEnums::VisionType_Fogged;
                     }
-                    qint32 duration = m_FogVisionFields[x][y].m_duration;
-                    if (duration <= 0)
-                    {
-                        if (m_FogVisionFields[x][y].m_visionType == GameEnums::VisionType_Clear)
-                        {
-                            m_FogVisionFields[x][y].m_visionType = GameEnums::VisionType_Fogged;
-                        }
-                        m_FogVisionFields[x][y].m_duration = 0;
-                        m_FogVisionFields[x][y].m_directView = false;
-                    }
+                    m_FogVisionFields[x][y].m_duration = 0;
+                    m_FogVisionFields[x][y].m_directView = false;
                 }
             }
-            bool visionBlock = m_pMap->getGameRules()->getVisionBlock();
-            // create vision for all units and terrain
-            for (qint32 x = 0; x < width; x++)
+        }
+        bool visionBlock = m_pMap->getGameRules()->getVisionBlock();
+        // create vision for all units and terrain
+        for (qint32 x = 0; x < width; x++)
+        {
+            for (qint32 y = 0; y < heigth; y++)
             {
-                for (qint32 y = 0; y < heigth; y++)
+                // check terrain vision
+                Terrain* pTerrain = m_pMap->getTerrain(x, y);
+                qint32 visionRange = pTerrain->getVision(this);
+                if (visionRange >= 0)
                 {
-                    // check terrain vision
-                    Terrain* pTerrain = m_pMap->getTerrain(x, y);
-                    qint32 visionRange = pTerrain->getVision(this);
+                    spQmlVectorPoint pPoints;
+                    if (visionBlock)
+                    {
+                        pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange, pTerrain->getTotalVisionHigh());
+                    }
+                    else
+                    {
+                        pPoints = GlobalUtils::getSpCircle(0, visionRange);
+                    }
+                    for (auto & point : pPoints->getVector())
+                    {
+                        if (m_pMap->onMap(point.x() + x, point.y() + y))
+                        {
+                            Terrain* visionField = m_pMap->getTerrain(point.x() + x,point.y() + y);
+                            Unit* pUnit = visionField->getUnit();
+                            bool visionHide = visionField->getVisionHide(this);
+                            if ((!visionHide) ||
+                                ((pUnit != nullptr) && visionHide &&
+                                 !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
+                            {
+                                m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
+                            }
+                        }
+                    }
+                }
+                // check building vision
+                Building* pBuilding = pTerrain->getBuilding();
+                if ((pBuilding != nullptr) &&
+                    ((isAlly( pBuilding->getOwner())) ||
+                     (checkAlliance(pBuilding->getOwner()) == GameEnums::Alliance_Friend)))
+                {
+                    m_FogVisionFields[x][y].m_visionType = GameEnums::VisionType_Clear;
+                    qint32 visionRange = pBuilding->getVision();
                     if (visionRange >= 0)
                     {
                         spQmlVectorPoint pPoints;
                         if (visionBlock)
                         {
-                            pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange, pTerrain->getTotalVisionHigh());
+                            pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange, pBuilding->getTotalVisionHigh());
                         }
                         else
                         {
@@ -1225,86 +1268,50 @@ void Player::updatePlayerVision(bool reduceTimer)
                             }
                         }
                     }
-                    // check building vision
-                    Building* pBuilding = pTerrain->getBuilding();
-                    if ((pBuilding != nullptr) &&
-                        ((isAlly( pBuilding->getOwner())) ||
-                         (checkAlliance(pBuilding->getOwner()) == GameEnums::Alliance_Friend)))
+                }
+                // create unit vision
+                Unit* pUnit = pTerrain->getUnit();
+                if ((pUnit != nullptr) &&
+                    (isAlly(pUnit->getOwner())))
+                {
+                    qint32 visionRange = pUnit->getVision(QPoint(x, y));
+                    spQmlVectorPoint pPoints;
+                    if (visionBlock)
                     {
-                        m_FogVisionFields[x][y].m_visionType = GameEnums::VisionType_Clear;
-                        qint32 visionRange = pBuilding->getVision();
-                        if (visionRange >= 0)
+                        if (pBuilding != nullptr)
                         {
-                            spQmlVectorPoint pPoints;
-                            if (visionBlock)
-                            {
-                                pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange, pBuilding->getTotalVisionHigh());
-                            }
-                            else
-                            {
-                                pPoints = GlobalUtils::getSpCircle(0, visionRange);
-                            }
-                            for (auto & point : pPoints->getVector())
-                            {
-                                if (m_pMap->onMap(point.x() + x, point.y() + y))
-                                {
-                                    Terrain* visionField = m_pMap->getTerrain(point.x() + x,point.y() + y);
-                                    Unit* pUnit = visionField->getUnit();
-                                    bool visionHide = visionField->getVisionHide(this);
-                                    if ((!visionHide) ||
-                                        ((pUnit != nullptr) && visionHide &&
-                                         !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
-                                    {
-                                        m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    // create unit vision
-                    Unit* pUnit = pTerrain->getUnit();
-                    if ((pUnit != nullptr) &&
-                        (isAlly(pUnit->getOwner())))
-                    {
-                        qint32 visionRange = pUnit->getVision(QPoint(x, y));
-                        spQmlVectorPoint pPoints;
-                        if (visionBlock)
-                        {
-                            if (pBuilding != nullptr)
-                            {
-                                pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange,  pUnit->getTotalVisionHigh());
-                            }
-                            else
-                            {
-                                pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange,  pUnit->getVisionHigh() + pTerrain->getVisionHigh());
-                            }
+                            pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange,  pUnit->getTotalVisionHigh());
                         }
                         else
                         {
-                            pPoints = GlobalUtils::getSpCircle(0, visionRange);
+                            pPoints = m_pMap->getSpVisionCircle(x, y, 0, visionRange,  pUnit->getVisionHigh() + pTerrain->getVisionHigh());
                         }
-                        for (auto & point : pPoints->getVector())
+                    }
+                    else
+                    {
+                        pPoints = GlobalUtils::getSpCircle(0, visionRange);
+                    }
+                    for (auto & point : pPoints->getVector())
+                    {
+                        if (m_pMap->onMap(point.x() + x, point.y() + y))
                         {
-                            if (m_pMap->onMap(point.x() + x, point.y() + y))
+                            Terrain* visionField = m_pMap->getTerrain(point.x() + x,point.y() + y);
+                            Unit* pUnit = visionField->getUnit();
+                            bool visionHide = visionField->getVisionHide(this);
+                            if ((!visionHide) ||
+                                ((pUnit != nullptr) && visionHide &&
+                                 !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
                             {
-                                Terrain* visionField = m_pMap->getTerrain(point.x() + x,point.y() + y);
-                                Unit* pUnit = visionField->getUnit();
-                                bool visionHide = visionField->getVisionHide(this);
-                                if ((!visionHide) ||
-                                    ((pUnit != nullptr) && visionHide &&
-                                     !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
-                                {
-                                    m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
-                                }
-                                // terrain hides are visible if we're near it.
-                                else if (((qAbs(point.x()) + qAbs(point.y())) <= 1))
-                                {
-                                    m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
-                                }
-                                else
-                                {
-                                    // do nothing
-                                }
+                                m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
+                            }
+                            // terrain hides are visible if we're near it.
+                            else if (((qAbs(point.x()) + qAbs(point.y())) <= 1))
+                            {
+                                m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
+                            }
+                            else
+                            {
+                                // do nothing
                             }
                         }
                     }

@@ -272,20 +272,34 @@ var Init =
             menu.startGame();
             ++Init.step;
         }
-        else if (Init.coTestStep < 3 && Init.playTest === 4)
+        else if (Init.playTest === 4)
         {
-            var ids = coSpriteManager.getCoIds();
-            var co = ids[Init.currentCoTest]
-            GameConsole.print("Testing co " + co + " testing co step " + Init.coTestStep.toString(), 0);
-            menu.selectMap("maps/test/", "co_test.map");
-            menu.buttonNext();
-            menu.buttonNext();
-            var selection = menu.getPlayerSelection();
-            selection.selectPlayerAi(0, 0);
-            selection.selectPlayerAi(1, 2);
-            selection.playerCO1Changed(co, 0);
-            Init.currentCoTest += 1;
-            menu.startGame();
+            if (Init.coTestStep < 3)
+            {
+                var ids = coSpriteManager.getCoIds();
+                var co = ids[Init.currentCoTest]
+                GameConsole.print("Testing co " + co + " testing co step " + Init.coTestStep.toString(), 0);
+                menu.selectMap("maps/test/", "co_test.map");
+                menu.buttonNext();
+                menu.buttonNext();
+                var selection = menu.getPlayerSelection();
+                selection.selectPlayerAi(0, 0);
+                selection.selectPlayerAi(1, 1);
+                selection.playerCO1Changed(co, 0);
+                Init.currentCoTest += 1;
+                menu.startGame();
+            }
+            else
+            {
+                menu.selectMap("maps/test/", "co_test.map");
+                menu.buttonNext();
+                menu.buttonNext();
+                var selection = menu.getPlayerSelection();
+                selection.selectPlayerAi(0, 0);
+                selection.selectPlayerAi(1, 1);
+                ++Init.step;
+                menu.startGame();
+            }
         }
         else
         {
@@ -309,7 +323,11 @@ var Init =
     },
     gameMenu = function(menu)
     {
-        if (Init.playTest === 0)
+        if (Init.step >= Init.steps.length)
+        {
+            menu.exitGameDelayed();
+        }
+        else if (Init.playTest === 0)
         {
             GameConsole.print("Showing all ingame menus", 0);
             menu.victoryInfo();
@@ -355,7 +373,10 @@ var Init =
     onVictory = function(menu)
     {
         GameConsole.print("On Victory", 0);
-        ++Init.playTest;
+        if (Init.playTest < 4)
+        {
+            ++Init.playTest;
+        }
         menu.exitMenue();
     },
 }

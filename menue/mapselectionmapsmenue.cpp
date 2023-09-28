@@ -391,6 +391,7 @@ void MapSelectionMapsMenue::hidePlayerSelection()
 void MapSelectionMapsMenue::startGame()
 {    
     CONSOLE_PRINT("Start game", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     defeatClosedPlayers();
 
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
@@ -402,7 +403,7 @@ void MapSelectionMapsMenue::startGame()
     pMap->updateSprites(-1, -1, false, false, applyRulesPalette);
     // start game
     CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
-    m_onEnterTimer.stop();
+    
     spGameMenue window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();

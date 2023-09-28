@@ -811,7 +811,11 @@ GameEnums::Fog GameRules::getFogMode() const
 
 void GameRules::setFogMode(const GameEnums::Fog FogMode)
 {
-    m_FogMode = FogMode;
+    if (FogMode >= GameEnums::Fog::Fog_Off &&
+        FogMode <= GameEnums::Fog::Fog_OfMist)
+    {
+        m_FogMode = FogMode;
+    }
 }
 
 void GameRules::createFogVision()

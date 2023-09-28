@@ -220,9 +220,14 @@ var BATTLEANIMATION =
                        ["ma", ""],],
     loadSpotterOrCoMini : function(sprite, unit, spotterNeeded)
     {
-        var baseId = unit.getTerrain().getBaseTerrainID();
-        var isSea = baseId === "SEA" ||
-                    baseId === "LAKE";
+        var terrain = unit.getTerrain();
+        var isSea = false;
+        if (terrain !== null)
+        {
+            var baseId = terrain.getBaseTerrainID();
+            isSea = baseId === "SEA" ||
+                        baseId === "LAKE";
+        }
         if (!isSea)
         {
             var coMiniLoaded = false;
