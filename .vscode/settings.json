@@ -15,6 +15,7 @@
         "-DPRECOMPILEDOPENSSL=ON",
         "-DGRAPHICSUPPORT=ON",
         "-DUSEVULKAN=OFF",
+        "-DAUDIOSUPPORT=ON",
         "-DDEPLOY_RESOURCES_AS_FOLDER=OFF"
     ],
     "files.associations": {
