@@ -66,7 +66,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 29;
+        return 30;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -109,6 +109,11 @@ public:
 signals:
     void sigVictory(qint32 team);
 public:
+    Q_INVOKABLE bool getDrawVotingRunning() const;
+    Q_INVOKABLE void startDrawVoting();
+    Q_INVOKABLE void setDrawVoting(qint32 player, GameEnums::DrawVoting vote);
+    Q_INVOKABLE GameEnums::DrawVoting getDrawVoting(qint32 player) const;
+    Q_INVOKABLE GameEnums::DrawVoting getDrawVotingResult();
     /**
      * @brief getParallelCos
      * @return
@@ -742,6 +747,12 @@ private:
     qint32 m_multiplayerObserver{0};
     QVector<quint64> m_observerList;
     QString m_matchType;
+
+    struct
+    {
+        bool votingInProgress{false};
+        QVector<GameEnums::DrawVoting> votingResults;
+    } m_drawVoting;
 };
 
 Q_DECLARE_INTERFACE(GameRules, "GameRules");

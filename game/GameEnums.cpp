@@ -251,7 +251,11 @@ void GameEnums::registerEnums()
 
     value.setProperty("DamageFormula_AdvanceWars4", DamageFormula_AdvanceWars4);
     value.setProperty("DamageFormula_AdvanceWars1_3", DamageFormula_AdvanceWars1_3);
-
+    
+    value.setProperty("DrawVoting_MissingVote", DrawVoting_MissingVote);
+    value.setProperty("DrawVoting_Yes", DrawVoting_Yes);
+    value.setProperty("DrawVoting_No", DrawVoting_No);
+        
     pInterpreter->setGlobal("GameEnums", value);
 }
 

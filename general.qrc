@@ -1453,6 +1453,7 @@
         <file>resources/scripts/actions/ACTION_UNLOAD.js</file>
         <file>resources/scripts/actions/ACTION_UNSTEALTH.js</file>
         <file>resources/scripts/actions/ACTION_WAIT.js</file>
+        <file>resources/scripts/actions/ACTION_DRAWVOTE.js</file>
         <file>resources/scripts/battleanimations/BATTLEANIMATION_AIRCRAFTCARRIER.js</file>
         <file>resources/scripts/battleanimations/BATTLEANIMATION_ANTITANKCANNON.js</file>
         <file>resources/scripts/battleanimations/BATTLEANIMATION_APC.js</file>

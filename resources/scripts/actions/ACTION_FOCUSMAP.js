@@ -18,6 +18,7 @@ var Constructor = function()
     };
     this.isFinalStep = function(action, map)
     {
+        action.setIsLocal(true);
         return true;
     };
     this.getStepInputType = function(action, map)

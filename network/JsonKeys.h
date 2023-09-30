@@ -56,6 +56,7 @@ namespace JsonKeys
     const char* const JSONKEY_MINIMAPDATA = "minimapData";
     const char* const JSONKEY_MATCHSTARTINDEX = "matchStartIndex";
     const char* const JSONKEY_MATCHCOUNT = "matchCount";
+    const char* const JSONKEY_VOTERESULT = "voteResult";
     const char* const JSONKEY_MATCHOBSERVERCOUNT = "observerCount";
     const char* const JSONKEY_MATCHMAXOBSERVERCOUNT = "maxObserverCount";
     const char* const JSONKEY_RUNNINGAUTOMATCHES = "runningAutomatches";

@@ -1217,6 +1217,26 @@ void GameMap::autoFocus()
     }
 }
 
+void GameMap::startDrawVoting()
+{
+    GameMenue* pMenu = dynamic_cast<GameMenue*>(m_pMenu);
+    if (pMenu != nullptr)
+    {
+        m_gameRules->startDrawVoting();
+        pMenu->startDrawVoting();
+    }
+}
+
+bool GameMap::getIsMultiplayerMatch() const
+{
+    GameMenue* pMenu = dynamic_cast<GameMenue*>(m_pMenu);
+    if (pMenu != nullptr)
+    {
+        return pMenu->getNetworkInterface() != nullptr;
+    }
+    return false;
+}
+
 void GameMap::limitPosition(BaseGamemenu* pMenu, qint32 & newX, qint32 & newY)
 {
     auto bounds = pMenu->getMapSliding()->getDragBounds();

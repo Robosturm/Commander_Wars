@@ -378,6 +378,11 @@ signals:
     void sigShowLoadSaveGame();
 public:
     /**
+     * 
+     */
+    Q_INVOKABLE void startDrawVoting();
+    Q_INVOKABLE bool getIsMultiplayerMatch() const;
+    /**
      * @brief autoFocus
      */
     Q_INVOKABLE void autoFocus();

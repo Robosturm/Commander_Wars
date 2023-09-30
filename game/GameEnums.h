@@ -360,6 +360,15 @@ public:
     };
     Q_ENUM(DamageFormula)
 
+    
+    enum DrawVoting
+    {
+        DrawVoting_MissingVote,
+        DrawVoting_Yes,
+        DrawVoting_No
+    };
+    Q_ENUM(DrawVoting)
+
     static void registerEnums();
 private:
     GameEnums();

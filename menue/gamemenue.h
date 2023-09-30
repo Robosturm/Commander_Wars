@@ -112,6 +112,8 @@ public:
      * @return
      */
     bool doDespawnSlave();
+
+    void startDrawVoting();
 signals:
     void sigGameStarted();
     void sigSyncFinished();
@@ -429,6 +431,12 @@ protected slots:
      * @param objData
      */
     void receivedUsername(quint64 socketID, const QJsonObject & objData);
+    void receivedStartDrawVoting(quint64 socketID, const QJsonObject & objData);
+    void receivedRequestDrawVoting(quint64 socketID, const QJsonObject & objData);
+    void receivedDrawVoting(quint64 socketID, const QJsonObject & objData);
+    void receivedDrawVotingResult(quint64 socketID, const QJsonObject & objData);
+    void deniedDrawVoting();
+    void acceptDrawVoting();
     /**
      * @brief playerRequestControl
      * @param stream
@@ -501,6 +509,7 @@ protected:
      * @brief loadingAiPipe
      */
     void loadingAiPipe();
+    void sendDrawVoteResult(bool result);
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;

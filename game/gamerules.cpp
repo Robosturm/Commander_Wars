@@ -38,6 +38,60 @@ void GameRules::resetArrays()
     m_FogSprites.clear();
 }
 
+bool GameRules::getDrawVotingRunning() const
+{
+    return m_drawVoting.votingInProgress;
+}
+
+void GameRules::startDrawVoting()
+{
+    m_drawVoting.votingInProgress = true;
+    m_drawVoting.votingResults.clear();
+    for (qint32 i = 0; m_pMap->getPlayerCount(); ++i)
+    {
+        m_drawVoting.votingResults.append(GameEnums::DrawVoting_MissingVote);
+    }
+}
+
+void GameRules::setDrawVoting(qint32 player, GameEnums::DrawVoting vote)
+{
+    if (player >= 0 && player < m_drawVoting.votingResults.size())
+    {
+        m_drawVoting.votingResults[player] = vote;
+    }
+}
+
+GameEnums::DrawVoting GameRules::getDrawVoting(qint32 player) const
+{
+    if (player >= 0 && player < m_drawVoting.votingResults.size())
+    {
+        return m_drawVoting.votingResults[player];
+    }
+    return GameEnums::DrawVoting_MissingVote;
+}
+
+GameEnums::DrawVoting GameRules::getDrawVotingResult()
+{
+    GameEnums::DrawVoting result = GameEnums::DrawVoting_Yes;
+    for (const auto vote : m_drawVoting.votingResults)
+    {
+        if (vote == GameEnums::DrawVoting_No)
+        {
+            result = GameEnums::DrawVoting_No;
+            break;
+        }
+        else if (vote == GameEnums::DrawVoting_MissingVote)
+        {
+            result = GameEnums::DrawVoting_MissingVote;
+        }
+    }
+    if (result != GameEnums::DrawVoting_MissingVote)
+    {
+        m_drawVoting.votingInProgress = false;
+    }
+    return result;
+}
+
 bool GameRules::getParallelCos() const
 {
     return m_parallelCos;
@@ -1573,6 +1627,12 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
     }
     pStream << static_cast<qint32>(m_damageFormula);
     pStream << m_parallelCos;
+    pStream << m_drawVoting.votingInProgress;
+    pStream << static_cast<qint32>(m_drawVoting.votingResults.size());
+    for (qint32 i = 0; i < m_drawVoting.votingResults.size(); i++)
+    {
+        pStream << static_cast<qint32>(m_drawVoting.votingResults[i]);
+    }
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1915,6 +1975,17 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 28)
     {
         pStream >> m_parallelCos;
+    }
+     if (version > 28)
+    {
+        pStream >> m_drawVoting.votingInProgress;
+        pStream << size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            qint32 value;
+            pStream >> value;
+            m_drawVoting.votingResults.push_back(static_cast<GameEnums::DrawVoting>(value));
+        }
     }
     CONSOLE_PRINT("Weather prediction for days after restoring " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
 }

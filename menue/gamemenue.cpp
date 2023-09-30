@@ -5,6 +5,7 @@
 #endif
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QJsonObject>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -368,6 +369,22 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             receivedOnlineInfo(socketID, objData);
         }
+        else if (messageType == NetworkCommands::STARTDRAWVOTING)
+        {
+            receivedStartDrawVoting(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::REQUESTDRAWVOTE)
+        {
+            receivedRequestDrawVoting(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::SENDDRAWVOTE)
+        {
+            receivedDrawVoting(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::SENDDRAWVOTERESULTS)
+        {
+            receivedDrawVotingResult(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in GameMenue::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -485,6 +502,128 @@ void GameMenue::receivedOnlineInfo(quint64 socketID, const QJsonObject & objData
         m_pMap->getPlayer(i)->setIsOnline(onlineInfo[i].toBool());
     }
     updatePlayerinfo();
+}
+
+void GameMenue::receivedStartDrawVoting(quint64 socketID, const QJsonObject & objData)
+{
+    auto* pRules = m_pMap->getGameRules();
+    pRules->startDrawVoting();
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    {
+        if (m_pMap->getPlayer(i)->getSocketId() == socketID)
+        {
+            pRules->setDrawVoting(i, GameEnums::DrawVoting_Yes);
+        }
+    }
+    QString command = QString(NetworkCommands::REQUESTDRAWVOTE);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QJsonDocument doc(data);
+    emit m_pNetworkInterface->sigForwardData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson);
+}
+
+void GameMenue::receivedRequestDrawVoting(quint64 socketID, const QJsonObject & objData)
+{
+    setFocused(false);
+    spDialogMessageBox pMesage =  MemoryManagement::create<DialogMessageBox>(tr("Do you want to accept a draw for this match?"), true);
+    connect(pMesage.get(), &DialogMessageBox::sigCancel, this, &GameMenue::deniedDrawVoting, Qt::QueuedConnection);
+    connect(pMesage.get(), &DialogMessageBox::sigOk, this, &GameMenue::acceptDrawVoting, Qt::QueuedConnection);
+    addChild(pMesage);    
+}
+
+void GameMenue::deniedDrawVoting()
+{
+    sendDrawVoteResult(false);
+    setFocused(true);
+}
+
+void GameMenue::acceptDrawVoting()
+{
+    sendDrawVoteResult(true);
+    setFocused(true);
+}
+
+void GameMenue::sendDrawVoteResult(bool result)
+{
+    QString command = QString(NetworkCommands::SENDDRAWVOTE);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_VOTERESULT, result);
+    QJsonDocument doc(data);
+    emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void GameMenue::receivedDrawVoting(quint64 socketID, const QJsonObject & objData)
+{
+    auto* pRules = m_pMap->getGameRules();
+    bool result = objData.value(JsonKeys::JSONKEY_VOTERESULT).toBool();
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    {
+        if (m_pMap->getPlayer(i)->getSocketId() == socketID)
+        {
+            if (result)
+            {
+                pRules->setDrawVoting(i, GameEnums::DrawVoting_Yes);
+            }
+            else
+            {
+                pRules->setDrawVoting(i, GameEnums::DrawVoting_No);
+            }
+        }
+    }
+    auto voteResult = pRules->getDrawVotingResult();
+    if (voteResult != GameEnums::DrawVoting_MissingVote)
+    {
+        QString command = QString(NetworkCommands::SENDDRAWVOTERESULTS);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_VOTERESULT, static_cast<qint32>(voteResult));
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        if (voteResult == GameEnums::DrawVoting_Yes)
+        {
+            if (Mainapp::getSlave())
+            {
+                victory(-1);
+            }
+            else
+            {
+                spDialogMessageBox pMesage =  MemoryManagement::create<DialogMessageBox>(tr("The draw vote resulted in a yes and the game ends here."));
+                connect(pMesage.get(), &DialogMessageBox::sigOk, this, [this]()
+                {
+                    emit sigVictory(-1);
+                }, Qt::QueuedConnection);        
+                addChild(pMesage);
+            }
+        }
+    }
+}
+
+void GameMenue::receivedDrawVotingResult(quint64 socketID, const QJsonObject & objData)
+{
+    GameEnums::DrawVoting result = static_cast<GameEnums::DrawVoting>(objData.value(JsonKeys::JSONKEY_VOTERESULT).toInt());     
+    setFocused(false);
+    if (result == GameEnums::DrawVoting_Yes)
+    {
+        spDialogMessageBox pMesage =  MemoryManagement::create<DialogMessageBox>(tr("The draw vote resulted in a yes and the game ends here."));
+        connect(pMesage.get(), &DialogMessageBox::sigOk, this, [this]()
+        {
+            setFocused(true);
+        }, Qt::QueuedConnection);        
+        addChild(pMesage);
+    }
+    else
+    {
+        spDialogMessageBox pMesage =  MemoryManagement::create<DialogMessageBox>(tr("The draw vote resulted ina no and the game will continue."));
+        connect(pMesage.get(), &DialogMessageBox::sigOk, this, [this]()
+        {
+            setFocused(true);
+        }, Qt::QueuedConnection);        
+        addChild(pMesage);
+    }
 }
 
 void GameMenue::requestLoginData(quint64 socketID, const QJsonObject & objData)
@@ -955,10 +1094,17 @@ void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint
     sendStream.setVersion(QDataStream::Version::Qt_6_5);
     sendStream << command;
     sendStream << static_cast<qint32>(playerAis.size());
+    auto* pRules = m_pMap->getGameRules();
+    bool requestVoteResult = false;
     for (qint32 i = 0; i < playerAis.size(); ++i)
     {
         sendStream << playerAis[i];
         sendStream << static_cast<qint32>(aiTypes[i]);
+        if (pRules->getDrawVotingRunning() &&
+             pRules->getDrawVoting(i) == GameEnums::DrawVoting_MissingVote) 
+        {
+            requestVoteResult = true;
+        }
     }
     sendStream << m_actionPerformer.getSyncCounter();
     if (playerAis.size() > 0 && m_slaveDespawnTimer.isActive())
@@ -966,7 +1112,16 @@ void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint
         CONSOLE_PRINT("Stopping slave despawn timer", GameConsole::eDEBUG);
         m_slaveDespawnTimer.stop();
     }
-    emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+    emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);    
+    if (requestVoteResult)
+    {
+        QString command = QString(NetworkCommands::REQUESTDRAWVOTE);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(socketId, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
     sendOpenPlayerCount();
     sendOnlineInfo();
 }
@@ -1292,6 +1447,25 @@ bool GameMenue::doDespawnSlave()
         m_indespawningMode = true;
     }
     return m_despawning;
+}
+
+void GameMenue::startDrawVoting()
+{
+    // send data
+    if (m_pNetworkInterface->getIsServer())
+    {
+        QJsonObject dummy;
+        receivedStartDrawVoting(0, dummy);
+    }
+    else
+    {
+        QString command = QString(NetworkCommands::STARTDRAWVOTING);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
 }
 
 void GameMenue::closeSlave()
