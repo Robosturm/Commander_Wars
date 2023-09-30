@@ -178,7 +178,7 @@ public:
     Q_INVOKABLE void slotShowPlayerBuildList(qint32 player);
     Q_INVOKABLE void slotChangeAllBuildList(qint32, QStringList buildList);
     Q_INVOKABLE void slotChangePlayerBuildList(qint32 player, QStringList buildList);
-    Q_INVOKABLE void selectAI(qint32 player);
+    Q_INVOKABLE void selectAI(qint32 player, bool forced = false);
     Q_INVOKABLE GameMap *getMap() const;
     /**
      * @brief changeTeams

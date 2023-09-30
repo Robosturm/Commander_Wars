@@ -1170,7 +1170,7 @@ void PlayerSelection::selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType)
                 pDropDownmenu->setCurrentItem(static_cast<qint32>(eAiType));
             }
         }
-        selectAI(player);
+        selectAI(player, true);
     }
 }
 
@@ -1181,39 +1181,42 @@ void PlayerSelection::forcePlayerAi(qint32 player, GameEnums::AiTypes eAiType)
     createAi(player, eAiType, "ForcedAi");
 }
 
-void PlayerSelection::selectAI(qint32 player)
+void PlayerSelection::selectAI(qint32 player, bool forced)
 {
     CONSOLE_PRINT("PlayerSelection::selectAI for player " + QString::number(player), GameConsole::eDEBUG);
     GameEnums::AiTypes type = m_pMap->getPlayer(player)->getControlType();
-    DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
-    if (pDropDownmenu != nullptr)
-    {
-        type = static_cast<GameEnums::AiTypes>(pDropDownmenu->getCurrentItem());
-    }
-    if (isOpenPlayer(player))
-    {
-        CONSOLE_PRINT("PlayerSelection::selectAI player " + QString::number(player) + " is open.", GameConsole::eDEBUG);
-        type = GameEnums::AiTypes_Open;
-    }
-    else if (isClosedPlayer(player))
-    {
-        CONSOLE_PRINT("PlayerSelection::selectAI player " + QString::number(player) + " is closed.", GameConsole::eDEBUG);
-        type = GameEnums::AiTypes_Closed;
-    }
     QString name = m_pMap->getPlayer(player)->getPlayerNameId();
-    if (type == GameEnums::AiTypes_Human)
+    if (!forced)
     {
-        if (!Mainapp::getSlave())
+        DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+        if (pDropDownmenu != nullptr)
         {
-            name = Settings::getInstance()->getUsername();
+            type = static_cast<GameEnums::AiTypes>(pDropDownmenu->getCurrentItem());
         }
-    }
-    else
-    {
-        QStringList aiTypes = getDefaultAiNames();
-        if (type >= 0 && type < aiTypes.size())
+        if (isOpenPlayer(player))
         {
-            name = aiTypes[type];
+            CONSOLE_PRINT("PlayerSelection::selectAI player " + QString::number(player) + " is open.", GameConsole::eDEBUG);
+            type = GameEnums::AiTypes_Open;
+        }
+        else if (isClosedPlayer(player))
+        {
+            CONSOLE_PRINT("PlayerSelection::selectAI player " + QString::number(player) + " is closed.", GameConsole::eDEBUG);
+            type = GameEnums::AiTypes_Closed;
+        }
+        if (type == GameEnums::AiTypes_Human)
+        {
+            if (!Mainapp::getSlave())
+            {
+                name = Settings::getInstance()->getUsername();
+            }
+        }
+        else
+        {
+            QStringList aiTypes = getDefaultAiNames();
+            if (type >= 0 && type < aiTypes.size())
+            {
+                name = aiTypes[type];
+            }
         }
     }
     CONSOLE_PRINT("Selecting ai type " + QString::number(type) + " with name " + name + " for payer " + QString::number(player), GameConsole::eDEBUG);
@@ -1656,6 +1659,7 @@ void PlayerSelection::sendPlayerRequest(quint64 socketID, qint32 player, GameEnu
     sendStream << static_cast<qint32>(player);
     sendStream << Settings::getInstance()->getUsername();
     sendStream << static_cast<qint32>(aiType);
+    sendStream << getIsServerNetworkInterface();
     emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
@@ -1670,6 +1674,8 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream &stream)
         stream >> username;
         qint32 aiType;
         stream >> aiType;
+        bool serverRequest = false;
+        stream >> serverRequest;
         GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
         CONSOLE_PRINT("Requesting player " + QString::number(player) + " for username " + username + " as ai " + QString::number(eAiType) + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
         bool rejoin = false;
@@ -1701,25 +1707,28 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream &stream)
         if (!rejoin)
         {
             bool alreadyInGame = false;
-            for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+            if (!serverRequest)
             {
-                if (isOpenPlayer(i) && player < 0)
+                for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
                 {
-                    // the client wants any player?
-                    CONSOLE_PRINT("Player is " + QString::number(i) + " is currently open and will be selected as requested player.", GameConsole::eDEBUG);
-                    player = i;
-                }
-                else
-                {
-                    auto *pPlayer = m_pMap->getPlayer(i);
-                    if (pPlayer != nullptr)
+                    if (isOpenPlayer(i) && player < 0)
                     {
-                        CONSOLE_PRINT("Player is " + QString::number(i) + " is currently owned by username " + pPlayer->getPlayerNameId() + " and socket " + QString::number(pPlayer->getSocketId()), GameConsole::eDEBUG);
-                        if (pPlayer->getSocketId() == socketID ||
-                            pPlayer->getPlayerNameId() == username)
+                        // the client wants any player?
+                        CONSOLE_PRINT("Player is " + QString::number(i) + " is currently open and will be selected as requested player.", GameConsole::eDEBUG);
+                        player = i;
+                    }
+                    else
+                    {
+                        auto *pPlayer = m_pMap->getPlayer(i);
+                        if (pPlayer != nullptr)
                         {
-                            alreadyInGame = true;
-                            break;
+                            CONSOLE_PRINT("Player is " + QString::number(i) + " is currently owned by username " + pPlayer->getPlayerNameId() + " and socket " + QString::number(pPlayer->getSocketId()), GameConsole::eDEBUG);
+                            if (pPlayer->getSocketId() == socketID ||
+                                pPlayer->getPlayerNameId() == username)
+                            {
+                                alreadyInGame = true;
+                                break;
+                            }
                         }
                     }
                 }
@@ -1728,7 +1737,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream &stream)
             if (!alreadyInGame && player >= 0 && player < m_pMap->getPlayerCount())
             {
                 auto *pPlayer = m_pMap->getPlayer(player);
-                bool allowed = joinAllowed(socketID, username, eAiType);
+                bool allowed = serverRequest || joinAllowed(socketID, username, eAiType);
                 bool isOpen = isOpenPlayer(player);
                 // opening a player is always valid changing to an human with an open player is also valid
                 if (allowed &&
