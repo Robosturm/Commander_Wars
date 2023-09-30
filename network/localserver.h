@@ -6,7 +6,7 @@
 
 #include "network/rxtask.h"
 #include "network/txtask.h"
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 class LocalServer;
 using spLocalServer = std::shared_ptr<LocalServer>;

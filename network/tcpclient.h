@@ -4,7 +4,7 @@
 #include <QSslError>
 #include <QList>
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 #include "network/rxtask.h"
 #include "network/txtask.h"
 

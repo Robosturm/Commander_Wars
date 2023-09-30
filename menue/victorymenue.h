@@ -13,7 +13,7 @@
 #include "objects/base/dropdownmenu.h"
 #include "objects/unitstatisticview.h"
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 #include "game/gamemap.h"
 

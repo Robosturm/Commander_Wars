@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 class QIODevice;
 class TxTask;

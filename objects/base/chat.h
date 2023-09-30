@@ -8,7 +8,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/textbox.h"

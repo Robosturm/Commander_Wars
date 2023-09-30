@@ -1,7 +1,7 @@
 #ifndef LOCALCLIENT_H
 #define LOCALCLIENT_H
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 #include "network/rxtask.h"
 #include "network/txtask.h"
 

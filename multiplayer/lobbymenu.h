@@ -8,7 +8,7 @@
 #include "objects/tableView/complextableview.h"
 
 #include "network/networkgamedata.h"
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 #include "multiplayer/networkcommands.h"
 #include "multiplayer/password.h"

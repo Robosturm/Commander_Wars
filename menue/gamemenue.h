@@ -5,7 +5,7 @@
 
 #include "menue/basegamemenu.h"
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 #include "multiplayer/networkcommands.h"
 

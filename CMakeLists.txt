@@ -571,7 +571,7 @@ set(${PROJECT_NAME}_SRCS
     network/localclient.cpp network/localclient.h
     network/txtask.cpp network/txtask.h
     network/rxtask.cpp network/rxtask.h
-    network/NetworkInterface.h network/networkInterface.cpp
+    network/networkInterface.h network/networkInterface.cpp
     network/networkgamedata.cpp network/networkgamedata.h
     network/mainserver.cpp network/mainserver.h
     network/automatchmaker.h network/automatchmaker.cpp

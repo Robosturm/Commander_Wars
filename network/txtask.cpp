@@ -4,7 +4,7 @@
 #include "coreengine/gameconsole.h"
 
 #include "network/txtask.h"
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 TxTask::TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool sendAll)
  : m_pSocket(pSocket),

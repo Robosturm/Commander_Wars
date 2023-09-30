@@ -5,7 +5,7 @@
 
 #include "ui_reader/createdgui.h"
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 #include "game/gamemap.h"
 #include "game/campaign.h"

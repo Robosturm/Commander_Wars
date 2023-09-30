@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QDataStream>
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 class QIODevice;
 class RxTask;

@@ -3,7 +3,7 @@
 
 #include <QVector>
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 #include "network/tcpclient.h"
 
 class QSslServer ;

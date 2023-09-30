@@ -8,7 +8,7 @@
 #include "game/gameaction.h"
 #include "ai/coreai.h"
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 class GameMenue;
 class ProxyAi;

@@ -1,5 +1,4 @@
-#ifndef NETWORKINTERFACE_H
-#define NETWORKINTERFACE_H
+#pragma once
 
 #include <QObject>
 #include <QThread>
@@ -329,5 +328,3 @@ protected:
     quint16 m_connectedPort{0};
 
 };
-
-#endif // NETWORKINTERFACE_H

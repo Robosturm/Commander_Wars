@@ -9,7 +9,7 @@
 
 #include "menue/mapselectionmapsmenue.h"
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 #include "multiplayer/password.h"
 #include "multiplayer/networkcommands.h"

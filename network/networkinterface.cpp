@@ -6,7 +6,7 @@
 
 #include <QSslKey>
 
-#include "network/NetworkInterface.h"
+#include "network/networkInterface.h"
 
 #include "coreengine/gameconsole.h"
 
