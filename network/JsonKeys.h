@@ -25,7 +25,6 @@ namespace JsonKeys
     const char* const JSONKEY_ChatMessage = "message";
     const char* const JSONKEY_ChatTarget = "target";
     const char* const JSONKEY_PUBLICKEY = "publicKey";
-    const char* const JSONKEY_RECEIVEACTION = "receiveAction";
     const char* const JSONKEY_DECRYPTEDMESSAGE = "decryptedMessage";
     const char* const JSONKEY_IV = "iv";
     const char* const JSONKEY_ENCRYPTEDKEY = "encryptedKey";

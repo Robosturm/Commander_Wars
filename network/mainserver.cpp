@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QDateTime>
@@ -267,16 +268,25 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         {
             joinSlaveGame(socketID, objData);
         }
-        else if (messageType == NetworkCommands::REQUESTPUBLICKEY)
+        else if (messageType == NetworkCommands::LOGINACCOUNT)
         {
-            QJsonObject objData = doc.object();
-            auto &cypher = Mainapp::getInstance()->getCypher();
-            auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
-            emit m_pGameServer->sig_sendData(socketID, cypher.getPublicKeyMessage(action), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            loginToAccount(socketID, objData);
         }
-        else if (messageType == NetworkCommands::CRYPTEDMESSAGE)
+        else if (messageType == NetworkCommands::CREATEACCOUNT)
         {
-            handleCryptedMessage(socketID, doc);
+            createAccount(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::RESETPASSWORD)
+        {
+            resetAccountPassword(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::CHANGEPASSWORD)
+        {
+            changeAccountPassword(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::DELETEACCOUNT)
+        {
+            deleteAccount(socketID, objData);
         }
         else if (messageType == NetworkCommands::SERVERREQUESTUSERGAMES)
         {
@@ -1245,55 +1255,11 @@ bool MainServer::getNextFreeSlaveAddress(QString &address, quint16 &port, QStrin
     return success;
 }
 
-void MainServer::handleCryptedMessage(qint64 socketId, const QJsonDocument &doc)
+void MainServer::createAccount(qint64 socketId, const QJsonObject &objData)
 {
-    auto &cypher = Mainapp::getInstance()->getCypher();
-    QJsonObject objData = doc.object();
-    QJsonDocument decryptedDoc = QJsonDocument::fromJson(cypher.getDecryptedMessage(doc));
-    auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
-    CONSOLE_PRINT("Handling crypted message action " + QString::number(static_cast<qint32>(action)) + " received", GameConsole::eDEBUG);
-    switch (action)
-    {
-    case NetworkCommands::PublicKeyActions::LoginAccount:
-    {
-        loginToAccount(socketId, decryptedDoc, action);
-        break;
-    }
-    case NetworkCommands::PublicKeyActions::CreateAccount:
-    {
-        createAccount(socketId, decryptedDoc, action);
-        break;
-    }
-    case NetworkCommands::PublicKeyActions::ResetPassword:
-    {
-        resetAccountPassword(socketId, decryptedDoc, action);
-        break;
-    }
-    case NetworkCommands::PublicKeyActions::ChangePassword:
-    {
-        changeAccountPassword(socketId, decryptedDoc, action);
-        break;
-    }
-    case NetworkCommands::PublicKeyActions::DeleteAccount:
-    {
-        deleteAccount(socketId, decryptedDoc, action);
-        break;
-    }
-    default:
-    {
-        CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", GameConsole::eDEBUG);
-        break;
-    }
-    }
-}
-
-void MainServer::createAccount(qint64 socketId, const QJsonDocument &doc, NetworkCommands::PublicKeyActions action)
-{
-    auto &cypher = Mainapp::getInstance()->getCypher();
-    QJsonObject data = doc.object();
-    QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
-    QString mailAdress = data.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
-    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
+    QByteArray password = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    QString mailAdress = objData.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
+    QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Creating account with username " + username + " and email adress " + mailAdress, GameConsole::eDEBUG);
     bool success = false;
     QSqlQuery query = getAccountInfo(*m_serverData, username, success);
@@ -1329,23 +1295,20 @@ void MainServer::createAccount(qint64 socketId, const QJsonDocument &doc, Networ
         CONSOLE_PRINT("Username is already existing.", GameConsole::eDEBUG);
         result = GameEnums::LoginError_AccountExists;
     }
-    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    QString command = QString(NetworkCommands::SERVERRESPONSCREATEACCOUNT);
     CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), GameConsole::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
-    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void MainServer::deleteAccount(qint64 socketId, const QJsonDocument &doc, NetworkCommands::PublicKeyActions action)
+void MainServer::deleteAccount(qint64 socketId, const QJsonObject &objData)
 {
-    auto &cypher = Mainapp::getInstance()->getCypher();
-    QJsonObject data = doc.object();
-    QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
-    QString mailAdress = data.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
-    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
+    QByteArray password = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    QString mailAdress = objData.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
+    QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Deleting account with username " + username + " and email adress " + mailAdress, GameConsole::eDEBUG);
     bool success = false;
     GameEnums::LoginError result = GameEnums::LoginError_None;
@@ -1377,22 +1340,19 @@ void MainServer::deleteAccount(qint64 socketId, const QJsonDocument &doc, Networ
         result = GameEnums::LoginError_AccountDoesntExist;
     }
 
-    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    QString command = QString(NetworkCommands::SERVERRESPONSDELETEACCOUNT);
     CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), GameConsole::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
-    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void MainServer::loginToAccount(qint64 socketId, const QJsonDocument &doc, NetworkCommands::PublicKeyActions action)
+void MainServer::loginToAccount(qint64 socketId, const QJsonObject &objData)
 {
-    auto &cypher = Mainapp::getInstance()->getCypher();
-    QJsonObject data = doc.object();
-    QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
-    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
+    QByteArray password = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Login to account with username " + username, GameConsole::eDEBUG);
     auto result = checkPassword(*m_serverData, username, password);
     if (result == GameEnums::LoginError_None)
@@ -1400,12 +1360,11 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument &doc, Netwo
         // mark client as logged in
         emit m_pGameServer->sigSetIsActive(socketId, true);
     }
-    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    QString command = QString(NetworkCommands::SERVERRESPONSLOGINACCOUNT);
     CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), GameConsole::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
-    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
@@ -1480,11 +1439,10 @@ GameEnums::LoginError MainServer::verifyLoginData(const QString &username, const
     return valid;
 }
 
-void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument &doc, NetworkCommands::PublicKeyActions action)
+void MainServer::resetAccountPassword(qint64 socketId, const QJsonObject &objData)
 {
-    QJsonObject data = doc.object();
-    QString mailAdress = data.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
-    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
+    QString mailAdress = objData.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
+    QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Resetting account with username " + username + " and email adress " + mailAdress, GameConsole::eDEBUG);
     bool success = false;
     QSqlQuery query = getAccountInfo(*m_serverData, username, success);
@@ -1510,7 +1468,7 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument &doc,
             if (!sqlQueryFailed(changeQuery))
             {
                 CONSOLE_PRINT("Try sending reset password mail", GameConsole::eDEBUG);
-                emit m_mailSender.sigSendMail(socketId, "Commander Wars password reset", message, mailAdress, username, action);
+                emit m_mailSender.sigSendMail(socketId, "Commander Wars password reset", message, mailAdress, username);
             }
             else
             {
@@ -1528,20 +1486,19 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument &doc,
     }
     if (result != GameEnums::LoginError_None)
     {
-        QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+        QString command = QString(NetworkCommands::SERVERRESPONSRESETPASSWORD);
         CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), GameConsole::eDEBUG);
         QJsonObject outData;
         outData.insert(JsonKeys::JSONKEY_COMMAND, command);
         outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
-        outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
         QJsonDocument outDoc(outData);
         emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
-void MainServer::onMailSendResult(quint64 socketId, const QString receiverAddress, const QString username, bool result, NetworkCommands::PublicKeyActions action)
+void MainServer::onMailSendResult(quint64 socketId, const QString receiverAddress, const QString username, bool result)
 {
-    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    QString command = QString(NetworkCommands::SERVERRESPONSRESETPASSWORD);
     GameEnums::LoginError mailSendResult = GameEnums::LoginError_None;
     if (!result)
     {
@@ -1551,7 +1508,6 @@ void MainServer::onMailSendResult(quint64 socketId, const QString receiverAddres
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, mailSendResult);
-    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
@@ -1605,14 +1561,12 @@ QSqlDatabase &MainServer::getDatabase()
     return *m_serverData;
 }
 
-void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument &doc, NetworkCommands::PublicKeyActions action)
+void MainServer::changeAccountPassword(qint64 socketId, const QJsonObject &objData)
 {
-    auto &cypher = Mainapp::getInstance()->getCypher();
-    QJsonObject data = doc.object();
-    QByteArray oldPassword = cypher.toByteArray(data.value(JsonKeys::JSONKEY_OLDPASSWORD).toArray());
-    QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    QByteArray oldPassword = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_OLDPASSWORD).toArray());
+    QByteArray password = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
     bool success = false;
-    QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
+    QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Login to account with username " + username, GameConsole::eDEBUG);
     QSqlQuery query = getAccountInfo(*m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
@@ -1648,12 +1602,11 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument &doc
     {
         result = GameEnums::LoginError_AccountDoesntExist;
     }
-    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    QString command = QString(NetworkCommands::SERVERRESPONSCHANGEPASSWORD);
     CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), GameConsole::eDEBUG);
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
-    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }

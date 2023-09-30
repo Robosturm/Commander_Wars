@@ -44,7 +44,7 @@ bool SmtpMailSender::connectToServer(SmtpClient & client)
     return success;
 }
 
-void SmtpMailSender::sendMail(quint64 socketId, const QString subject, const QString content, const QString receiverAddress, const QString username, NetworkCommands::PublicKeyActions action)
+void SmtpMailSender::sendMail(quint64 socketId, const QString subject, const QString content, const QString receiverAddress, const QString username)
 {
     SmtpClient client(Settings::getInstance()->getMailServerAddress(), Settings::getInstance()->getMailServerPort(), static_cast<SmtpClient::ConnectionType>(Settings::getInstance()->getMailServerConnectionType()));
     bool result = false;
@@ -68,5 +68,5 @@ void SmtpMailSender::sendMail(quint64 socketId, const QString subject, const QSt
         CONSOLE_PRINT("Sending mail to " + receiverAddress + " failed.", GameConsole::eDEBUG);
     }
     CONSOLE_PRINT("Emitting mail send result", GameConsole::eDEBUG);
-    emit sigMailResult(socketId, receiverAddress, username, result, action);
+    emit sigMailResult(socketId, receiverAddress, username, result);
 }

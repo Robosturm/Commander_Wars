@@ -4,6 +4,7 @@
 #include <memory>
 
 #include <QObject>
+#include <QJsonArray>
 #include <QDir>
 #include <QRandomGenerator>
 
@@ -38,6 +39,18 @@ public:
         return std::find(vec.cbegin(), vec.cend(), data) != vec.cend();
     }
     static spQmlVectorPoint getSpCircle(qint32 min, qint32 max);
+    /**
+     * @brief toByteArray
+     * @param jsonArray
+     * @return
+     */
+    static QByteArray toByteArray(const QJsonArray & jsonArray);
+    /**
+     * @brief toJsonArray
+     * @param byteArray
+     * @return
+     */
+    static QJsonArray toJsonArray(const QByteArray & byteArray);
 public slots:
     static QString makePathRelative(QString file, bool full = true);
     /**

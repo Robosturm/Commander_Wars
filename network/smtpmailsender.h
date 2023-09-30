@@ -13,11 +13,11 @@ public:
     virtual ~SmtpMailSender() = default;
 
 signals:
-    void sigSendMail(quint64 socketId, const QString subject, const QString content, const QString receiverAddress, const QString username, NetworkCommands::PublicKeyActions action);
-    void sigMailResult(quint64 socketId, const QString receiverAddress, const QString username, bool result, NetworkCommands::PublicKeyActions action);
+    void sigSendMail(quint64 socketId, const QString subject, const QString content, const QString receiverAddress, const QString username);
+    void sigMailResult(quint64 socketId, const QString receiverAddress, const QString username, bool result);
     void sigMoveToThread(QThread* pThread);
 private slots:
-    void sendMail(quint64 socketId, const QString subject, const QString content, const QString receiverAddress, const QString username, NetworkCommands::PublicKeyActions action);
+    void sendMail(quint64 socketId, const QString subject, const QString content, const QString receiverAddress, const QString username);
     void slotMoveToThread(QThread* pThread);
 private:
     bool connectToServer(SmtpClient & client);

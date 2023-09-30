@@ -1,4 +1,5 @@
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QCryptographicHash>
 
@@ -367,7 +368,6 @@ void Multiplayermenu::playerJoined(quint64 socketID)
 void Multiplayermenu::acceptNewConnection(quint64 socketID)
 {
     CONSOLE_PRINT("Accepting connection for socket " + QString::number(socketID), GameConsole::eDEBUG);
-    auto & cypher = Mainapp::getInstance()->getCypher();
     if (Mainapp::getSlave() &&
         m_hostSocket == 0)
     {
@@ -375,13 +375,21 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
     }
     if (Mainapp::getSlave())
     {
-        CONSOLE_PRINT("Slave requesting login data", GameConsole::eDEBUG);
-        emit m_pNetworkInterface->sig_sendData(socketID, cypher.getPublicKeyMessage(NetworkCommands::PublicKeyActions::RequestLoginData), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        QString command = QString(NetworkCommands::REQUESTLOGINDDATA);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
     else
     {
-        CONSOLE_PRINT("Requesting public key for initial map update", GameConsole::eDEBUG);
-        emit m_pNetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        QString command = QString(NetworkCommands::SENDINITIALMAPUPDATE);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
     CONSOLE_PRINT("Stopping despawn timer", GameConsole::eDEBUG);
     m_slaveDespawnTimer.stop();
@@ -545,45 +553,13 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
         }
-        else if (messageType == NetworkCommands::REQUESTPUBLICKEY)
+        else if (messageType == NetworkCommands::SENDINITIALMAPUPDATE)
         {
-            auto & cypher = Mainapp::getInstance()->getCypher();
-            auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
-            emit m_pNetworkInterface->sig_sendData(socketID, cypher.getPublicKeyMessage(action), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            sendMapInfoUpdate(socketID);
         }
-        else if (messageType == NetworkCommands::SENDPUBLICKEY)
+        else if (messageType == NetworkCommands::REQUESTLOGINDDATA)
         {
-            auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
-            if (action == NetworkCommands::PublicKeyActions::SendInitialMapUpdate)
-            {
-                sendMapInfoUpdate(socketID, objData, action);
-            }
-            else if (action == NetworkCommands::PublicKeyActions::RequestLoginData)
-            {
-                sendLoginData(socketID, objData, action);
-            }
-            else
-            {
-                CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", GameConsole::eDEBUG);
-            }
-        }
-        else if (messageType == NetworkCommands::CRYPTEDMESSAGE)
-        {
-            auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
-            if (action == NetworkCommands::PublicKeyActions::SendInitialMapUpdate)
-            {
-                auto & cypher = Mainapp::getInstance()->getCypher();
-                recieveData(socketID, cypher.getDecryptedMessage(doc), NetworkInterface::NetworkSerives::Multiplayer);
-            }
-            else if (action == NetworkCommands::PublicKeyActions::RequestLoginData)
-            {
-                auto & cypher = Mainapp::getInstance()->getCypher();
-                recieveData(socketID, cypher.getDecryptedMessage(doc), NetworkInterface::NetworkSerives::ServerHostingJson);
-            }
-            else
-            {
-                CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", GameConsole::eDEBUG);
-            }
+            sendLoginData(socketID, objData);
         }
         else if (messageType == NetworkCommands::DISCONNECTINGFROMSERVER)
         {
@@ -641,33 +617,30 @@ void Multiplayermenu::sendUsername(quint64 socketID, const QJsonObject & objData
     emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void Multiplayermenu::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+void Multiplayermenu::sendLoginData(quint64 socketID, const QJsonObject & objData)
 {
-    auto & cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::VERIFYLOGINDATA);
     Password serverPassword;
     QString password = Settings::getInstance()->getServerPassword();
     serverPassword.setPassword(password);
-    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(serverPassword.getHash()));
+    data.insert(JsonKeys::JSONKEY_PASSWORD, GlobalUtils::toJsonArray(serverPassword.getHash()));
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     // send map data to client and make sure password message is crypted
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     QJsonDocument doc(data);
     CONSOLE_PRINT("Sending login data to slave", GameConsole::eDEBUG);
-    emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socketID)
 {
-    auto & cypher = Mainapp::getInstance()->getCypher();
     QString username =  objData.value(JsonKeys::JSONKEY_USERNAME).toString();
-    QByteArray password = cypher.toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
+    QByteArray password = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
     GameEnums::LoginError valid = MainServer::verifyLoginData(username, password);
     if (valid == GameEnums::LoginError_None)
     {
-        CONSOLE_PRINT("Client login data are valid. Requesting public key for initial map update", GameConsole::eDEBUG);
-        emit m_pNetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        sendMapInfoUpdate(socketID);
     }
     else
     {
@@ -711,7 +684,7 @@ void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socke
     }
 }
 
-void Multiplayermenu::sendMapInfoUpdate(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+void Multiplayermenu::sendMapInfoUpdate(quint64 socketID)
 {
     QCryptographicHash myHash(QCryptographicHash::Sha512);
     QString file = m_pMapSelectionView->getCurrentFile().filePath();
@@ -776,9 +749,7 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID, const QJsonObject & ob
         }
     }
     // send map data to client and make sure password message is crypted
-    auto & cypher = Mainapp::getInstance()->getCypher();
-    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, data).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
 void Multiplayermenu::connectToSlave(const QJsonObject & objData, quint64 socketID)

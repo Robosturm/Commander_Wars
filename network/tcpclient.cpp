@@ -14,7 +14,7 @@ TCPClient::TCPClient(QObject* pParent)
     m_isServer = false;
 }
 
-TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, spQTcpSocket pSocket, quint64 socketId)
+TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, spQSslSocket pSocket, quint64 socketId)
     : NetworkInterface(pParent),
       m_pRXTask(pRXTask),
       m_pTXTask(pTXTask),
@@ -24,7 +24,9 @@ TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, spQTc
 #ifdef GRAPHICSUPPORT
     setObjectName("TCPClient");
 #endif
-    TCPClient::setSocketID(socketId);
+    NetworkInterface::setSocketID(socketId);
+    m_pRXTask->setSocketID(socketId);
+    m_pTXTask->setSocketID(socketId);
     connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 }
 
@@ -43,16 +45,17 @@ void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdres
     m_secondaryAdress = secondaryAdress;
     m_port = port;
     m_testedSecondaryAddress = false;
-    m_socketID = 1;
-    m_pSocket = MemoryManagement::createNamedQObject<QTcpSocket>("QTcpSocket", this);
-    connect(m_pSocket.get(), &QTcpSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
+    m_pSocket = MemoryManagement::createNamedQObject<QSslSocket>("QSslSocket", this);
+    connect(m_pSocket.get(), &QSslSocket::encrypted, this, &TCPClient::connected, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QAbstractSocket::stateChanged, this, &TCPClient::displayStateChange, Qt::QueuedConnection);
     connect(this, &TCPClient::sigDisconnectClient, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
     connect(this, &TCPClient::sigDisconnectTCP, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
-    connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
-    m_pSocket->connectToHost(address, port);
+    connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);    
+    m_pSocket->setSslConfiguration(getSslConfiguration());
+    m_pSocket->connectToHostEncrypted(address, port);
+    
     // Start RX-Task
     m_pRXTask = MemoryManagement::create<RxTask>(m_pSocket.get(), 0, this, false);
     connect(m_pSocket.get(), &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
@@ -71,7 +74,7 @@ void TCPClient::disconnectTCP()
     {
         CONSOLE_PRINT("Unable to connect to primary address testing secondary", GameConsole::eDEBUG);
         m_pSocket->close();
-        m_pSocket->connectToHost(m_secondaryAdress, m_port);
+        m_pSocket->connectToHostEncrypted(m_secondaryAdress, m_port);
         m_testedSecondaryAddress = true;
         CONSOLE_PRINT("Client is running and connecting to \"" + m_secondaryAdress + "\" and port " + QString::number(m_port), GameConsole::eLogLevels::eDEBUG);
         m_connectedAdress = m_secondaryAdress;
@@ -123,10 +126,15 @@ void TCPClient::changeThread(quint64, QThread* pThread)
 
 void TCPClient::connected()
 {
-    CONSOLE_PRINT("Client is connected", GameConsole::eLogLevels::eDEBUG);
-    m_isConnected = true;
-    m_testedSecondaryAddress = true; // no need to test the secondary address
-    emit sigConnected(0);
+    if (m_pSocket->isEncrypted() && 
+        m_socketID > 0 && 
+        !m_isConnected)
+    {
+        CONSOLE_PRINT("Client is connected and encrypted ready using socket id " + QString::number(m_socketID), GameConsole::eLogLevels::eDEBUG);
+        m_isConnected = true;
+        m_testedSecondaryAddress = true; // no need to test the secondary address
+        emit sigConnected(m_socketID);
+    }
 }
 
 spTxTask TCPClient::getTXTask() const
@@ -144,6 +152,7 @@ void TCPClient::setSocketID(const quint64 &socketID)
     NetworkInterface::setSocketID(socketID);
     m_pRXTask->setSocketID(socketID);
     m_pTXTask->setSocketID(socketID);
+    connected();
 }
 
 void TCPClient::sslErrors(const QList<QSslError> &errors)

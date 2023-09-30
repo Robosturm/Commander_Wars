@@ -271,7 +271,7 @@ protected:
      * @param objData
      * @param action
      */
-    void sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
+    void sendLoginData(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief verifyLoginData
      * @param objData
@@ -284,7 +284,7 @@ protected:
      * @param objData
      * @param action
      */
-    void sendMapInfoUpdate(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
+    void sendMapInfoUpdate(quint64 socketID);
 private:
     /**
      * @brief init

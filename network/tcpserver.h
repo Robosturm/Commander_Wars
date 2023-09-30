@@ -6,8 +6,8 @@
 #include "network/NetworkInterface.h"
 #include "network/tcpclient.h"
 
-class QTcpServer;
-using spQTcpServer = std::shared_ptr<QTcpServer>;
+class QSslServer ;
+using spQSslServer = std::shared_ptr<QSslServer>;
 class TCPServer;
 using spTCPServer = std::shared_ptr<TCPServer>;
 
@@ -37,7 +37,7 @@ public slots:
 private:
     QMap<quint64, spTCPClient> m_pClients;
     quint64 m_idCounter = 0;
-    spQTcpServer m_pTCPServer[2];
+    spQSslServer m_pTCPServer[2];
     bool m_gameServer{false};
 };
 

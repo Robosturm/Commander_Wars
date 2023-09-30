@@ -1,4 +1,5 @@
-#include <QTcpServer>
+#include <QSslServer>
+#include <QSslSocket>
 
 #include "network/tcpserver.h"
 
@@ -27,8 +28,10 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
         CONSOLE_PRINT("TCP Server launched ignored on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port) + " cause the primary adress is equal to the secondary.", GameConsole::eLogLevels::eERROR);
     }
     else if (m_pTCPServer[0].get() == nullptr)
-    {        
-        m_pTCPServer[0] = MemoryManagement::createNamedQObject<QTcpServer>("QTcpServer", this);
+    {    
+
+        m_pTCPServer[0] = MemoryManagement::createNamedQObject<QSslServer>("QSslServer", this);
+            m_pTCPServer[0]->setSslConfiguration(getSslConfiguration());
         if (primaryAdress.isEmpty())
         {
             m_pTCPServer[0]->listen(QHostAddress::Any, port);
@@ -37,12 +40,13 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
         {
             m_pTCPServer[0]->listen(QHostAddress(primaryAdress), port);
         }
-        connect(m_pTCPServer[0].get(), &QTcpServer::newConnection, this, &TCPServer::onConnect, Qt::QueuedConnection);
+        connect(m_pTCPServer[0].get(), &QTcpServer::pendingConnectionAvailable, this, &TCPServer::onConnect, Qt::QueuedConnection);
         if (!secondaryAdress.isEmpty())
         {
-            m_pTCPServer[1] = MemoryManagement::createNamedQObject<QTcpServer>("QTcpServer", this);
+            m_pTCPServer[1] = MemoryManagement::createNamedQObject<QSslServer>("QSslServer", this);
+            m_pTCPServer[1]->setSslConfiguration(getSslConfiguration());
             m_pTCPServer[1]->listen(QHostAddress(secondaryAdress), port);
-            connect(m_pTCPServer[1].get(), &QTcpServer::newConnection, this, &TCPServer::onConnect, Qt::QueuedConnection);
+            connect(m_pTCPServer[1].get(), &QTcpServer::pendingConnectionAvailable, this, &TCPServer::onConnect, Qt::QueuedConnection);
         }
         connect(this, &TCPServer::sigDisconnectClient, this, &TCPServer::disconnectClient, Qt::QueuedConnection);
         connect(this, &TCPServer::sigDisconnectTCP, this, &TCPServer::disconnectTCP, Qt::QueuedConnection);
@@ -103,7 +107,7 @@ void TCPServer::onConnect()
     {
         if (pTcpServer != nullptr)
         {
-            auto nextSocket = MemoryManagement::createFromPointer(pTcpServer->nextPendingConnection());
+            spQSslSocket nextSocket = MemoryManagement::createNamedFromPointer("QSslSocket", dynamic_cast<QSslSocket*>(pTcpServer->nextPendingConnection()));
             if (nextSocket.get() != nullptr)
             {
                 connect(nextSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPServer::displayTCPError, Qt::QueuedConnection);
@@ -134,6 +138,10 @@ void TCPServer::onConnect()
                 QByteArray data;
                 pTXTask->send(m_idCounter, data, NetworkSerives::ServerSocketInfo, false);
                 emit sigConnected(m_idCounter);
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to receive valid QSslSocket from QSslServer", GameConsole::eLogLevels::eERROR);
             }
         }
     }

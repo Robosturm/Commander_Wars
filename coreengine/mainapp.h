@@ -16,8 +16,6 @@
 #include "coreengine/Gamepad.h"
 #include "coreengine/commandlineparser.h"
 
-#include "network/rsacypherhandler.h"
-
 #ifdef UPDATESUPPORT
 #include "updater/gameupdater.h"
 #endif
@@ -220,14 +218,6 @@ public:
 
     QPoint mapPosFromGlobal(QPoint pos) const;
     QPoint mapPosToGlobal(QPoint pos) const;
-    /**
-     * @brief getCypher
-     * @return
-     */
-    RsaCypherHandler & getCypher()
-    {
-        return m_rsaCypher;
-    }
     StartupPhase getStartUpStep() const;
     /**
      * @brief getAiProcessPipe
@@ -339,7 +329,6 @@ private:
     bool m_noAudio{false};
     CommandLineParser m_parser;
     StartupPhase m_startUpStep{StartupPhase::Start};
-    RsaCypherHandler m_rsaCypher;
 #ifdef UPDATESUPPORT
     spGameUpdater m_gameUpdater;
 #endif

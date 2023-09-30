@@ -12,6 +12,7 @@
 #include "coreengine/interpreter.h"
 
 #include "network/JsonKeys.h"
+#include "multiplayer/networkcommands.h"
 
 const char* const chatPlayerTarget = "@Player";
 const char* const chatTeamTarget = "@Team";

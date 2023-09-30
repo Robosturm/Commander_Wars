@@ -3,8 +3,8 @@
     "cmake.buildDirectory":"${workspaceFolder}/../${workspaceRootFolderName}_${buildType}_build",
     "cmake.configureArgs": [
         "-DCMAKE_INSTALL_PREFIX='${workspaceFolder}/../install/${buildType}/'",
-        "-DCMAKE_PREFIX_PATH='C:/Qt/6.5.2/mingw_64/'",
-        "-DQt6_DIR='C:/Qt/6.5.2/mingw_64/lib/cmake/Qt6/'",
+        "-DCMAKE_PREFIX_PATH='C:/Qt/6.5.3/mingw_64/'",
+        "-DQt6_DIR='C:/Qt/6.5.3/mingw_64/lib/cmake/Qt6/'",
         "-DUPDATESUPPORT=OFF",
         "-DCOW_BUILD_TAG='Dummy'",
         "-DCOW_UPDATETARGET='Dummy'",
@@ -81,6 +81,9 @@
         "streambuf": "cpp",
         "thread": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "qnetworkinterface": "cpp",
+        "qsslsocket": "cpp",
+        "qvector": "cpp"
     },
 }

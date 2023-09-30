@@ -52,6 +52,7 @@ bool AudioManager::tryPlaySoundAtCachePosition(spSoundData &soundCache, qint32 i
         soundItem->setAudioDevice(m_audioDevice);
         soundItem->setSource(soundCache->cacheUrl);
         soundItem->setVolume(sound);
+        soundItem->setMuted(false);
         if (loops < 0)
         {
             soundItem->setLoopCount(QSoundEffect::Infinite);
@@ -100,7 +101,9 @@ void AudioManager::stopSoundInternal(qint32 soundIndex)
 {
     CONSOLE_PRINT_MODULE("Stopping sound at index " + QString::number(soundIndex), GameConsole::eDEBUG, GameConsole::eAudio);
     m_soundEffectData[soundIndex].timer.stop();
-    m_soundEffectData[soundIndex].sound = MemoryManagement::createNamedQObject<QSoundEffect>("QSoundEffect", this);
+    // m_soundEffectData[soundIndex].sound->stop();
+    m_soundEffectData[soundIndex].sound->setVolume(0);
+    m_soundEffectData[soundIndex].sound->setMuted(true);
     m_soundEffectData[soundIndex].sound->setObjectName("SoundEffect" + QString::number(soundIndex));
     connect(
         m_soundEffectData[soundIndex].sound.get(), &QSoundEffect::statusChanged, this, [this, soundIndex]()

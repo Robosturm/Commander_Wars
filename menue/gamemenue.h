@@ -272,7 +272,7 @@ public slots:
      * @param objData
      * @param action
      */
-    void sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
+    void requestLoginData(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief verifyLoginData
      * @param objData

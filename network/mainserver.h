@@ -216,7 +216,7 @@ private slots:
      * @param username
      * @param result
      */
-    void onMailSendResult(quint64 socketId, const QString receiverAddress, const QString username, bool result, NetworkCommands::PublicKeyActions action);
+    void onMailSendResult(quint64 socketId, const QString receiverAddress, const QString username, bool result);
     /**
      * @brief executeScript
      */
@@ -382,31 +382,24 @@ private:
      */
     void parseSlaveAddressOptions();
     /**
-     * @brief handleCryptedMessage
-     * @param socketId
-     * @param data
-     * @param action
-     */
-    void handleCryptedMessage(qint64 socketId, const QJsonDocument & doc);
-    /**
      * @brief createAccount
      * @param socketId
      * @param doc
      */
-    void createAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    void createAccount(qint64 socketId, const QJsonObject & objData);
     /**
      * @brief deleteAccount
      * @param socketId
      * @param doc
      * @param action
      */
-    void deleteAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    void deleteAccount(qint64 socketId, const QJsonObject & objData);
     /**
      * @brief loginToAccount
      * @param socketId
      * @param doc
      */
-    void loginToAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    void loginToAccount(qint64 socketId, const QJsonObject & objData);
     /**
      * @brief createMatchData
      * @param match
@@ -425,14 +418,14 @@ private:
      * @param socketId
      * @param doc
      */
-    void resetAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    void resetAccountPassword(qint64 socketId, const QJsonObject & objData);
     /**
      * @brief changeAccountPassword
      * @param socketId
      * @param doc
      * @param action
      */
-    void changeAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    void changeAccountPassword(qint64 socketId, const QJsonObject & objData);
     /**
      * @brief getAccountInfo
      * @param username

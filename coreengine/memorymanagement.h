@@ -51,12 +51,16 @@ public:
         }
         return pRet;
     }
-
+    
     template <class T>
-    static std::shared_ptr<T> createFromPointer(T* pPtr)
+    static std::shared_ptr<T> createNamedFromPointer(const QString & name, T* pPtr)
     {
         ++m_objectCounter;
         std::shared_ptr<T> pRet(pPtr, &MemoryManagement::deleter<T>);
+        if (pPtr != nullptr)
+        {
+            pRet->setObjectName(name);
+        }
         return pRet;
     }
 

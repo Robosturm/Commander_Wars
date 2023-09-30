@@ -5,10 +5,11 @@
 #include <QThread>
 #include <QVector>
 #include <QAbstractSocket>
-#include <QTcpSocket>
+#include <QSslSocket>
 #include <QLocalSocket>
 #include <QSemaphore>
 #include <QNetworkInterface>
+#include <QSslConfiguration>
 
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
@@ -88,6 +89,17 @@ public:
             }
         }
         return ipAddresses;
+    }
+
+    static void attachKeys(QSslConfiguration & sslConfiguration);
+
+    static QSslConfiguration getSslConfiguration()
+    {
+        QSslConfiguration sslConfiguration;
+        sslConfiguration.setPeerVerifyMode(QSslSocket::VerifyNone);
+        sslConfiguration.setProtocol(QSsl::SslProtocol::TlsV1_3);
+        attachKeys(sslConfiguration);
+        return sslConfiguration;
     }
 
     bool getIsServer()

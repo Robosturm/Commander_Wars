@@ -8,20 +8,18 @@
 #include "network/rxtask.h"
 #include "network/txtask.h"
 
-class QTcpSocket;
-using spQTcpSocket = std::shared_ptr<QTcpSocket>;
+class QSslSocket;
+using spQSslSocket = std::shared_ptr<QSslSocket>;
 
 class TCPClient;
 using spTCPClient = std::shared_ptr<TCPClient>;
-
-
 
 class TCPClient final : public NetworkInterface
 {
     Q_OBJECT
 public:
     TCPClient(QObject* pParent);
-    TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, spQTcpSocket pSocket, quint64 socketId);
+    TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, spQSslSocket pSocket, quint64 socketId);
     virtual ~TCPClient();
     /**
      * @brief moveClientToThread
@@ -45,7 +43,7 @@ private slots:
 private:
     spRxTask m_pRXTask;
     spTxTask m_pTXTask;
-    spQTcpSocket m_pSocket;
+    spQSslSocket m_pSocket;
     bool m_onServer{false};
     QString m_secondaryAdress;
     quint16 m_port{0};

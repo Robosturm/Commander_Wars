@@ -564,3 +564,23 @@ qint32 GlobalUtils::roundFloorToInt(qreal value, qreal precision)
 {
     return qFloor(value * precision);
 }
+
+QByteArray GlobalUtils::toByteArray(const QJsonArray & jsonArray)
+{
+    QByteArray array;
+    for (auto & item : jsonArray)
+    {
+        array.append(static_cast<char>(item.toInt()));
+    }
+    return array;
+}
+
+QJsonArray GlobalUtils::toJsonArray(const QByteArray & byteArray)
+{
+    QJsonArray array;
+    for (qint32 i = 0; i < byteArray.size(); ++i)
+    {
+        array.append(byteArray[i]);
+    }
+    return array;
+}

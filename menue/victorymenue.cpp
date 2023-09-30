@@ -1,6 +1,7 @@
 #include <QtMath>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QJsonDocument>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -31,6 +32,8 @@
 
 #include "network/JsonKeys.h"
 #include "network/tcpclient.h"
+
+#include "multiplayer/networkcommands.h"
 
 VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay)
     : m_ProgressTimer(this),

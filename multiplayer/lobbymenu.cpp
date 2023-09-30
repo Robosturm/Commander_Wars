@@ -1,4 +1,5 @@
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QRegularExpression>
 
@@ -555,37 +556,25 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             onReceivedPlayerStats(objData);
         }
-        else if (messageType == NetworkCommands::SENDPUBLICKEY)
+        else if (messageType == NetworkCommands::SERVERRESPONSCREATEACCOUNT)
         {
-            auto action = static_cast<NetworkCommands::PublicKeyActions>(objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt());
-            if (action == NetworkCommands::PublicKeyActions::CreateAccount)
-            {
-                onPublicKeyCreateAccount(socketID, objData, action);
-            }
-            else if (action == NetworkCommands::PublicKeyActions::LoginAccount)
-            {
-                onPublicKeyLoginAccount(socketID, objData, action);
-            }
-            else if (action == NetworkCommands::PublicKeyActions::ResetPassword)
-            {
-                onPublicKeyResetAccount(socketID, objData, action);
-            }
-            else if (action == NetworkCommands::PublicKeyActions::ChangePassword)
-            {
-                onPublicKeyChangePassword(socketID, objData, action);
-            }
-            else if (action == NetworkCommands::PublicKeyActions::DeleteAccount)
-            {
-                onPublicKeyDeleteAccount(socketID, objData, action);
-            }
-            else
-            {
-                CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", GameConsole::eDEBUG);
-            }
+            handleAccountMessage(socketID, "CreateAccountDialog", objData);
         }
-        else if (messageType == NetworkCommands::SERVERACCOUNTMESSAGE)
+        else if (messageType == NetworkCommands::SERVERRESPONSLOGINACCOUNT)
         {
-            handleAccountMessage(socketID, objData);
+            handleAccountMessage(socketID, "UserLoginDialog", objData);
+        }
+        else if (messageType == NetworkCommands::SERVERRESPONSRESETPASSWORD)
+        {
+            handleAccountMessage(socketID, "ForgotPasswordDialog", objData);
+        }
+        else if (messageType == NetworkCommands::SERVERRESPONSCHANGEPASSWORD)
+        {
+            handleAccountMessage(socketID, "ChangePasswordDialog", objData);
+        }
+        else if (messageType == NetworkCommands::SERVERRESPONSDELETEACCOUNT)
+        {
+            handleAccountMessage(socketID, "DeleteAccountDialog", objData);
         }
         else if (messageType == NetworkCommands::SERVERSENDAUTOMATCHINFO)
         {
@@ -783,21 +772,9 @@ void LobbyMenu::onEnter()
     }
 }
 
-void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject &objData)
+void LobbyMenu::handleAccountMessage(quint64 socketID, const QString object, const QJsonObject &objData)
 {
-    auto action = objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt();
     auto accountError = objData.value(JsonKeys::JSONKEY_ACCOUNT_ERROR).toInt();
-    const char *const jsScripts[] =
-        {
-            "",
-            "CreateAccountDialog",
-            "UserLoginDialog",
-            "ForgotPasswordDialog",
-            "ChangePasswordDialog",
-            "",
-            "DeleteAccountDialog",
-        };
-    QString object = jsScripts[action];
     if (!object.isEmpty())
     {
         CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", GameConsole::eDEBUG);
@@ -808,7 +785,7 @@ void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject &objDat
     }
     else
     {
-        CONSOLE_PRINT("Unknown account message " + QString::number(action) + " received", GameConsole::eDEBUG);
+        CONSOLE_PRINT("Account message is empty.", GameConsole::eDEBUG);
     }
 }
 
@@ -843,105 +820,76 @@ bool LobbyMenu::isValidPassword(const QString password)
     return match.hasMatch();
 }
 
-void LobbyMenu::createServerAccount(const QString password, const QString emailAdress)
+void LobbyMenu::createServerAccount(const QString passwordString, const QString emailAdress)
 {
-    m_serverPassword.setPassword(password);
-    m_serverEmailAdress = emailAdress;
-    Mainapp *pApp = Mainapp::getInstance();
-    auto &cypher = pApp->getCypher();
-    emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::CreateAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-}
-
-void LobbyMenu::deleteServerAccount(const QString password, const QString emailAdress)
-{
-    m_serverPassword.setPassword(password);
-    m_serverEmailAdress = emailAdress;
-    Mainapp *pApp = Mainapp::getInstance();
-    auto &cypher = pApp->getCypher();
-    emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::DeleteAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-}
-
-void LobbyMenu::onPublicKeyCreateAccount(quint64 socketID, const QJsonObject &objData, NetworkCommands::PublicKeyActions action)
-{
-    auto &cypher = Mainapp::getInstance()->getCypher();
+    QString command = NetworkCommands::CREATEACCOUNT;
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data;
-    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
-    data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    Password password;
+    password.setPassword(passwordString);
+    data.insert(JsonKeys::JSONKEY_PASSWORD, GlobalUtils::toJsonArray(password.getHash()));
+    data.insert(JsonKeys::JSONKEY_EMAILADRESS, emailAdress);
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
-    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::onPublicKeyDeleteAccount(quint64 socketID, const QJsonObject &objData, NetworkCommands::PublicKeyActions action)
+void LobbyMenu::deleteServerAccount(const QString passwordString, const QString emailAdress)
 {
-    auto &cypher = Mainapp::getInstance()->getCypher();
+    QString command = NetworkCommands::DELETEACCOUNT;
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data;
-    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
-    data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    Password password;
+    password.setPassword(passwordString);
+    data.insert(JsonKeys::JSONKEY_PASSWORD, GlobalUtils::toJsonArray(password.getHash()));
+    data.insert(JsonKeys::JSONKEY_EMAILADRESS, emailAdress);
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
-    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::onPublicKeyLoginAccount(quint64 socketID, const QJsonObject &objData, NetworkCommands::PublicKeyActions action)
+void LobbyMenu::loginToServerAccount(const QString passwordString)
 {
-    auto &cypher = Mainapp::getInstance()->getCypher();
+    QString command = NetworkCommands::LOGINACCOUNT;
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data;
-    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    Password password;
+    password.setPassword(passwordString);
+    data.insert(JsonKeys::JSONKEY_PASSWORD, GlobalUtils::toJsonArray(password.getHash()));
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
-    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-}
-
-void LobbyMenu::onPublicKeyResetAccount(quint64 socketID, const QJsonObject &objData, NetworkCommands::PublicKeyActions action)
-{
-    auto &cypher = Mainapp::getInstance()->getCypher();
-    QJsonObject data;
-    data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
-    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
-    QJsonDocument doc(data);
-    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-}
-
-void LobbyMenu::onPublicKeyChangePassword(quint64 socketID, const QJsonObject &objData, NetworkCommands::PublicKeyActions action)
-{
-    auto &cypher = Mainapp::getInstance()->getCypher();
-    QJsonObject data;
-    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
-    data.insert(JsonKeys::JSONKEY_OLDPASSWORD, cypher.toJsonArray(m_oldServerPassword.getHash()));
-    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
-    QJsonDocument doc(data);
-    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-}
-
-void LobbyMenu::loginToServerAccount(const QString password)
-{
-    m_serverPassword.setPassword(password);
-    Mainapp *pApp = Mainapp::getInstance();
-    auto &cypher = pApp->getCypher();
-    emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::LoginAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::resetPasswordOnServerAccount(const QString emailAdress)
 {
-    m_serverEmailAdress = emailAdress;
-    Mainapp *pApp = Mainapp::getInstance();
-    auto &cypher = pApp->getCypher();
-    emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::ResetPassword), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    QString command = NetworkCommands::RESETPASSWORD;
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_EMAILADRESS, emailAdress);
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
+    QJsonDocument doc(data);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::changePasswordOnServerAccount(const QString oldEmailAdress, const QString newEmailAdress)
+void LobbyMenu::changePasswordOnServerAccount(const QString oldServerPassword, const QString newServerPassword)
 {
-    m_oldServerPassword.setPassword(oldEmailAdress);
-    m_serverPassword.setPassword(newEmailAdress);
-    Mainapp *pApp = Mainapp::getInstance();
-    auto &cypher = pApp->getCypher();
-    emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::ChangePassword), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    QString command = NetworkCommands::CHANGEPASSWORD;
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    Password password;
+    password.setPassword(newServerPassword);
+    data.insert(JsonKeys::JSONKEY_PASSWORD, GlobalUtils::toJsonArray(password.getHash()));
+    password.setPassword(oldServerPassword);
+    data.insert(JsonKeys::JSONKEY_OLDPASSWORD, GlobalUtils::toJsonArray(password.getHash()));
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
+    QJsonDocument doc(data);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::showNextStep()

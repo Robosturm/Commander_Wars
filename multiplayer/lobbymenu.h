@@ -42,7 +42,7 @@ public:
     Q_INVOKABLE void deleteServerAccount(const QString password, const QString emailAdress);
     Q_INVOKABLE void loginToServerAccount(const QString password);
     Q_INVOKABLE void resetPasswordOnServerAccount(const QString emailAdress);
-    Q_INVOKABLE void changePasswordOnServerAccount(const QString oldEmailAdress, const QString newEmailAdress);
+    Q_INVOKABLE void changePasswordOnServerAccount(const QString oldServerPassword, const QString newServerPassword);
     Q_INVOKABLE void enableServerButtons(bool enable);
     Q_INVOKABLE void requestObserverUpdateGames();
     Q_INVOKABLE void showContactingServer();
@@ -99,12 +99,7 @@ private:
     void updateGameData(const QJsonObject & objData);
     void joinSlaveGame(const QJsonObject & objData);
     void checkVersionAndShowInfo(const QJsonObject & objData);
-    void onPublicKeyDeleteAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
-    void onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
-    void onPublicKeyLoginAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
-    void onPublicKeyResetAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
-    void onPublicKeyChangePassword(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
-    void handleAccountMessage(quint64 socketID, const QJsonObject & objData);
+    void handleAccountMessage(quint64 socketID, const QString object, const QJsonObject & objData);
     void requestServerGames();
     void requestUserUpdateGames();    
     /**
@@ -147,9 +142,6 @@ private:
     QString m_password;
     bool m_loggedIn{false};
 
-    Password m_serverPassword;
-    Password m_oldServerPassword;
-    QString m_serverEmailAdress;
     bool m_serverRequestNewPassword;
     GameViewMode m_mode{GameViewMode::OpenGames};
     qint32 m_lastSelectedItem{-1};

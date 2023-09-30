@@ -6,17 +6,6 @@ namespace NetworkCommands
 {
     static const Qt::ConnectionType UNIQUE_DATA_CONNECTION = static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::UniqueConnection);
 
-    enum class PublicKeyActions
-    {
-        SendInitialMapUpdate,
-        CreateAccount,
-        LoginAccount,
-        ResetPassword,
-        ChangePassword,
-        RequestLoginData,
-        DeleteAccount,
-    };
-
     enum DisconnectReason
     {
         InvalidPassword,
@@ -158,18 +147,6 @@ namespace NetworkCommands
      */
     const char* const RECEIVEPLAYERCONTROLLEDINFO = "RECEIVEPLAYERCONTROLLEDINFO";
     /**
-     * @brief REQUESTPUBLICKEY
-     */
-    const char* const REQUESTPUBLICKEY = "REQUESTPUBLICKEY";
-    /**
-     * @brief SENDPUBLICKEY
-     */
-    const char* const SENDPUBLICKEY = "SENDPUBLICKEY";
-    /**
-     * @brief CRYPTEDMESSAGE
-     */
-    const char* const CRYPTEDMESSAGE = "CRYPTEDMESSAGE";
-    /**
      * @brief CRYPTEDMESSAGE
      */
     const char* const VERIFYLOGINDATA = "VERIFYLOGINDATA";
@@ -246,10 +223,6 @@ namespace NetworkCommands
      */
     const char* const SERVERNOGAMESLOTSAVAILABLE = "SERVERNOGAMESLOTSAVAILABLE";
     /**
-     * @brief SERVERACCOUNTMESSAGE
-     */
-    const char* const SERVERACCOUNTMESSAGE = "SERVERACCOUNTMESSAGE";
-    /**
      * @brief SERVERREQUESTUSERGAMES
      */
     const char* const SERVERREQUESTUSERGAMES = "SERVERREQUESTUSERGAMES";
@@ -320,5 +293,18 @@ namespace NetworkCommands
     /**
      * @brief SERVERSENDAUTOMATCHINFO
      */
-    const char* const SERVERSENDAUTOMATCHINFO = "SERVERSENDAUTOMATCHINFO";
+    const char* const SERVERSENDAUTOMATCHINFO = "SERVERSENDAUTOMATCHINFO";    
+    const char* const SENDINITIALMAPUPDATE = "SENDINITIALMAPUPDATE";
+    const char* const CREATEACCOUNT = "CREATEACCOUNT";
+    const char* const LOGINACCOUNT = "LOGINACCOUNT";
+    const char* const RESETPASSWORD = "RESETPASSWORD";
+    const char* const CHANGEPASSWORD = "CHANGEPASSWORD";
+    const char* const REQUESTLOGINDDATA = "REQUESTLOGINDDATA";
+    const char* const DELETEACCOUNT = "DELETEACCOUNT";
+    const char* const SERVERRESPONSCREATEACCOUNT = "SERVERRESPONSCREATEACCOUNT";
+    const char* const SERVERRESPONSLOGINACCOUNT = "SERVERRESPONSLOGINACCOUNT";
+    const char* const SERVERRESPONSRESETPASSWORD = "SERVERRESPONSRESETPASSWORD";
+    const char* const SERVERRESPONSCHANGEPASSWORD = "SERVERRESPONSCHANGEPASSWORD";
+    const char* const SERVERRESPONSREQUESTLOGINDDATA = "SERVERRESPONSREQUESTLOGINDDATA";
+    const char* const SERVERRESPONSDELETEACCOUNT = "SERVERRESPONSDELETEACCOUNT";
 }
