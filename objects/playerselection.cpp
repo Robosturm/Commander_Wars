@@ -1936,12 +1936,15 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream &stream)
                 }
                 else if (m_isServerGame)
                 {
-                    if (aiType != GameEnums::AiTypes::AiTypes_Open &&
-                        aiType != GameEnums::AiTypes::AiTypes_Human)
+                    if (!getIsServerNetworkInterface())
                     {
-                        aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                        if (aiType != GameEnums::AiTypes::AiTypes_Open &&
+                            aiType != GameEnums::AiTypes::AiTypes_Human)
+                        {
+                            aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                        }
+                        CONSOLE_PRINT("Server remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation. Orignal ai " + QString::number(originalAiType), GameConsole::eDEBUG);
                     }
-                    CONSOLE_PRINT("Server remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation. Orignal ai " + QString::number(originalAiType), GameConsole::eDEBUG);
                 }
                 else if (!clientRequest)
                 {
