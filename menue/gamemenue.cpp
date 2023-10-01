@@ -1450,8 +1450,7 @@ bool GameMenue::doDespawnSlave()
 }
 
 void GameMenue::startDrawVoting()
-{
-    // send data
+{    
     if (m_pNetworkInterface->getIsServer())
     {
         QJsonObject dummy;

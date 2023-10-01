@@ -10,7 +10,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "wait";
+        return "surrender";
     };
     this.isFinalStep = function(action, map)
     {

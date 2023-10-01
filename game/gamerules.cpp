@@ -47,7 +47,7 @@ void GameRules::startDrawVoting()
 {
     m_drawVoting.votingInProgress = true;
     m_drawVoting.votingResults.clear();
-    for (qint32 i = 0; m_pMap->getPlayerCount(); ++i)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
     {
         m_drawVoting.votingResults.append(GameEnums::DrawVoting_MissingVote);
     }
@@ -1976,10 +1976,10 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     {
         pStream >> m_parallelCos;
     }
-     if (version > 28)
+     if (version > 29)
     {
         pStream >> m_drawVoting.votingInProgress;
-        pStream << size;
+        pStream >> size;
         for (qint32 i = 0; i < size; i++)
         {
             qint32 value;

@@ -1222,7 +1222,6 @@ void GameMap::startDrawVoting()
     GameMenue* pMenu = dynamic_cast<GameMenue*>(m_pMenu);
     if (pMenu != nullptr)
     {
-        m_gameRules->startDrawVoting();
         pMenu->startDrawVoting();
     }
 }
