@@ -174,7 +174,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 13;
+        return 14;
     }
     /**
      * @brief clearMap
@@ -917,6 +917,14 @@ public:
      * @brief showDamageCalculator
      */
     Q_INVOKABLE void showDamageCalculator();
+    /**
+     * @brief getVariables
+     * @return
+     */
+    Q_INVOKABLE inline ScriptVariables* getVariables()
+    {
+        return &m_Variables;
+    }
 private slots:
     void zoomChanged();
 private:
@@ -954,6 +962,7 @@ private:
     spCampaign m_Campaign;
     spGameRecorder m_Recorder{MemoryManagement::create<GameRecorder>(this)};
     spGameScript m_GameScript{MemoryManagement::create<GameScript>(this)};
+    ScriptVariables m_Variables;
     static const char* const m_GameAnimationFactory;
     bool m_loaded{false};
     QString m_mapMusic;
