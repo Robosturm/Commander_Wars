@@ -89,9 +89,10 @@ jobs:
           path: 'android_openssl'
 
     - name: Checkout source code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
           path: 'source'
+          submodules: 'true'
 
     - name: Install host os qt
       if: matrix.target == 'android'
