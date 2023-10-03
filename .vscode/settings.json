@@ -84,6 +84,8 @@
         "typeinfo": "cpp",
         "qnetworkinterface": "cpp",
         "qsslsocket": "cpp",
-        "qvector": "cpp"
+        "qvector": "cpp",
+        "qjsonobject": "cpp",
+        "qjsonvalueref": "cpp"
     },
 }

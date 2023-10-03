@@ -426,7 +426,7 @@ void GameConsole::logActions(bool log)
 
 void GameConsole::extractResources()
 {
-    QString targetDir = "extractedResources/";
+    QString targetDir = QString("extractedResources_Version_") + Mainapp::getGameVersion().replace(".", "_") + "/";
     QDir target(targetDir);
     if (target.exists())
     {

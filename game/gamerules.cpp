@@ -1622,7 +1622,16 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
     {
         pStream << m_multiplayerObserver;
         pStream << m_maxPerkCount;
-        pStream << m_matchType;
+        if (Mainapp::getSlave())
+        {
+            pStream << m_matchType;
+        }
+        else
+        {
+            // don't save match type on clients
+            QString dummy;
+            pStream << dummy; 
+        }
         pStream << m_mapPalette;
     }
     pStream << static_cast<qint32>(m_damageFormula);

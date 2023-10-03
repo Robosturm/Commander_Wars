@@ -1,4 +1,5 @@
 #include <QJsonObject>
+#include <QJsonValueRef>
 #include <QJsonArray>
 #include <QJsonDocument>
 
@@ -80,19 +81,26 @@ void AutoMatchMaker::onNewMatchResultData(const QJsonObject & objData)
     pInterpreter->doFunction(m_matchId, "onNewMatchResultData", args);
 }
 
-void AutoMatchMaker::createNewGame(const QString players)
+void AutoMatchMaker::createNewGame(const QStringList players, const QStringList modList)
 {
     spNetworkInterface dummy;
     Multiplayermenu multiplayermenu(dummy, "", Multiplayermenu::NetworkMode::Host);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(&multiplayermenu),
-                       players,
+                       pInterpreter->arraytoJSValue(players),
                        pInterpreter->newQObject(&m_mainServer)});
     pInterpreter->doFunction(m_matchId, "onCreateNewGame", args);
     QString saveFile = "savegames/" + m_matchId + QString::number(m_matchCounter) + ".lsav";
     auto doc = multiplayermenu.doSaveLobbyState(saveFile, "");
     QJsonObject objData = doc.object();
+    objData.remove(JsonKeys::JSONKEY_USEDMODS);
+    QJsonObject mods;
+    for (qint32 i = 0; i < modList.size(); ++i)
+    {
+        mods.insert(JsonKeys::JSONKEY_MOD + QString::number(i), modList[i]);
+    }
+    objData.insert(JsonKeys::JSONKEY_USEDMODS, mods);
     m_mainServer.onSlaveInfoDespawning(0, objData);
     ++m_matchCounter;
 }
@@ -429,6 +437,21 @@ QJsonObject AutoMatchMaker::getBracketGraphInfo()
         graphInfo = QJsonDocument::fromJson(erg.toString().toLocal8Bit()).object();
     }
     return graphInfo;
+}
+
+QString AutoMatchMaker::readDataFromJson(const QString & filePath)
+{
+    if (QFile::exists(filePath))
+    {
+        QFile file(filePath);
+        file.open(QIODevice::ReadOnly);
+        QTextStream stream(&file);
+        return stream.readAll();
+    }
+    else
+    {
+        return "";
+    }
 }
 
 bool AutoMatchMaker::getRunning() const

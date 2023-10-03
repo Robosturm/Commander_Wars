@@ -2065,7 +2065,8 @@
         <file>ai/training/heavyai_training.js</file>
         <file>ai/training/normalai_training.js</file>
         <file>ai/training/situation_training.js</file>
-        <file>templates/serverscript/matchMaking/tournee.js</file>
+        <file>templates/serverscript/matchMaking/automatchmaker.js</file>
+        <file>templates/serverscript/matchMaking/automatchmaker.json</file>
         <file>resources/scripts/building/field_base.js</file>
         <file>resources/scripts/actions/ACTION_FOCUSMAP.js</file>
     </qresource>

@@ -80,7 +80,7 @@ public:
      */
     QJsonObject getBracketGraphInfo();
     Q_INVOKABLE bool getSignedUp(const QString  playerId);
-    Q_INVOKABLE void createNewGame(const QString players);
+    Q_INVOKABLE void createNewGame(const QStringList players, const QStringList modList);
     Q_INVOKABLE QString getMatchId() const;
     Q_INVOKABLE void updateMmr(const QString player1, const QString player2, qint32 maxEloChange, GameEnums::GameResult gameResultForPlayer1);
     Q_INVOKABLE bool setMmr(const QString player, qint32 mmr);
@@ -130,6 +130,7 @@ public:
     Q_INVOKABLE static QString getBracketGraphPreviousMatchId();
     Q_INVOKABLE static QString getBracketGraphPreviousWinnersId();
     Q_INVOKABLE static QString getBracketGraphPreviousPlayersId();
+    Q_INVOKABLE QString readDataFromJson(const QString & filePath);
 private:
     QString m_matchId;
     MainServer & m_mainServer;

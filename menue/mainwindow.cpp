@@ -93,7 +93,7 @@ Mainwindow::Mainwindow(const QString & initialView)
     style.color = Qt::black;
     spLabel pTextfield = MemoryManagement::create<Label>(300);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(Mainapp::getGameVersion());
+    pTextfield->setHtmlText("Version: " + Mainapp::getGameVersion());
     pTextfield->setPosition(oxygine::Stage::getStage()->getWidth() - 10 - pTextfield->getTextRect().width(), oxygine::Stage::getStage()->getHeight() - 10 - pTextfield->getTextRect().height());
     pTextfield->addClickListener([this](oxygine::Event*)
     {

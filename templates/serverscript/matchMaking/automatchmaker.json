@@ -1,0 +1,11 @@
+{
+    "name" : "My auto mach",
+    "description" : "My auto match description",
+    "isSignUpChangeAllowed" : true,
+    "maxMmrChange" : 30,
+    "searchRangeSteps" : 100,
+    "matchHistory" : 10,
+    "maps" : [],
+    "rule" : "",
+    "mods" : []
+}
