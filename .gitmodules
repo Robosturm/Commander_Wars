@@ -1,0 +1,3 @@
+[submodule "3rd_party/opennn"]
+	path = 3rd_party/opennn
+	url = https://github.com/Robosturm/opennn.git

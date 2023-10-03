@@ -86,6 +86,8 @@
         "qsslsocket": "cpp",
         "qvector": "cpp",
         "qjsonobject": "cpp",
-        "qjsonvalueref": "cpp"
+        "qjsonvalueref": "cpp",
+        "fstream": "cpp",
+        "tensor": "cpp"
     },
 }
