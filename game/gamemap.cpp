@@ -1769,10 +1769,10 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             pStream >> m_recordFile;
             pStream >> m_replayActionCount;
         }
-        if (m_headerInfo.m_Version > 13)
-        {
-            m_Variables.deserializeObject(pStream);
-        }
+    }
+    if (m_headerInfo.m_Version > 13)
+    {
+        m_Variables.deserializeObject(pStream);
     }
     if (showLoadingScreen)
     {

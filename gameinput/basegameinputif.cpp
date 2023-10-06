@@ -6,7 +6,7 @@
 #include "ai/veryeasyai.h"
 #include "ai/proxyai.h"
 #include "ai/normalai.h"
-#include "ai/heavyai.h"
+#include "ai/heavyai/heavyai.h"
 #include "ai/dummyai.h"
 
 #include "game/gamemap.h"

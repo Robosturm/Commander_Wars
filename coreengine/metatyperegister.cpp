@@ -11,7 +11,7 @@
 #include "coreengine/audiomanager.h"
 
 #include "ai/productionSystem/simpleproductionsystem.h"
-#include "ai/heavyai.h"
+#include "ai/heavyai/heavyai.h"
 #include "ai/normalai.h"
 #include "ai/influencefrontmap.h"
 
@@ -197,7 +197,6 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<InfluenceInfo>("InfluenceInfo", 1);
 
     qmlRegisterInterface<NormalAi>("NormalAi", 1);
-    qmlRegisterInterface<NeuralNetwork>("NeuralNetwork", 1);
     qmlRegisterInterface<NetworkGame>("NetworkGame", 1);
     qmlRegisterInterface<PlayerSelection>("PlayerSelection", 1);
     qmlRegisterInterface<COSpriteManager>("COSpriteManager", 1);

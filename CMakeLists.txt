@@ -726,20 +726,13 @@ set(${PROJECT_NAME}_SRCS
     ai/coreai_predefinedai.cpp
     ai/proxyai.cpp ai/proxyai.h
     ai/normalai.cpp ai/normalai.h
-    ai/heavyai.cpp ai/heavyai.h
-    ai/heavyai/heavyaiproduction.cpp
-    ai/heavyai/heavyaitraining.cpp
+    ai/heavyai/heavyai.cpp ai/heavyai/heavyai.h
     ai/influencefrontmap.cpp ai/influencefrontmap.h
     ai/dummyai.h ai/dummyai.cpp
     ai/aiprocesspipe.h ai/aiprocesspipe.cpp
     # production system
     ai/productionSystem/simpleproductionsystem.h ai/productionSystem/simpleproductionsystem.cpp
 
-    # neuralnetwork
-    ai/neuralnetwork/neural/edge.cpp ai/neuralnetwork/neural/edge.h
-    ai/neuralnetwork/neural/layer.cpp ai/neuralnetwork/neural/layer.h
-    ai/neuralnetwork/neural/neuralnetwork.cpp ai/neuralnetwork/neural/neuralnetwork.h
-    ai/neuralnetwork/neural/neuron.cpp ai/neuralnetwork/neural/neuron.h
     # decision tree
     ai/decisiontree/leaf.cpp ai/decisiontree/leaf.h
     ai/decisiontree/decisionnode.cpp ai/decisiontree/decisionnode.h
