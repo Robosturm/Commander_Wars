@@ -1405,6 +1405,10 @@ bool NormalAi::moveUnit(spGameAction &pAction, MoveUnitData *pUnitData, spQmlVec
                         bool shortenPathForTarget,
                         spQmlVectorBuilding &pBuildings, spQmlVectorBuilding &pEnemyBuildings)
 {
+    if (targets.size() == 0)
+    {
+        return false;
+    }
     AI_CONSOLE_PRINT("NormalAi::moveUnit()", GameConsole::eDEBUG);
     Unit *pUnit = pUnitData->pUnit.get();
     TargetedUnitPathFindingSystem pfs(m_pMap, pUnit, targets, &m_MoveCostMap);

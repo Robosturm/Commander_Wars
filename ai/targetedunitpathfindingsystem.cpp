@@ -23,9 +23,9 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit
     auto y = pUnit->Unit::getY();
     std::sort(m_Targets.begin(), m_Targets.end(), [x, y](const QVector3D& lhs, const QVector3D& rhs)
     {
-        auto dist1 = GlobalUtils::getDistance(x, y, lhs.x(), lhs.y());
-        auto dist2 = GlobalUtils::getDistance(x, y, rhs.x(), rhs.y());
-        return dist1 < dist2 || (dist1 == dist2 && lhs.z() < rhs.z());
+        auto dist1 = GlobalUtils::getDistance(x, y, lhs.x(), lhs.y()) * lhs.z();
+        auto dist2 = GlobalUtils::getDistance(x, y, rhs.x(), rhs.y()) * rhs.z();
+        return dist1 < dist2;
     });
     if (m_Targets.size()  > maxTargets)
     {
