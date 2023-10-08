@@ -202,8 +202,8 @@ void GameAnimationCapture::addSoldierSprite(const QString spriteID, Player*  pPl
         const float startPercentDone = (static_cast<float>(m_startPoints) / static_cast<float>(m_maxPoints));
         constexpr qint32 unitOffset = 6;
         float buildingHigh = m_BuildingEndPos - m_BuildingStartPos;
-        float startPosition = unitOffsetY + qCeil(unitOffset * (1.0f - startPercentDone)) + qCeil(startPercentDone * buildingHigh);
-        float endPosition = unitOffsetY + qCeil(unitOffset * ( 1.0f - percentDone)) + qCeil(percentDone * buildingHigh);
+        float startPosition = unitOffsetY + std::ceil(unitOffset * (1.0f - startPercentDone)) + std::ceil(startPercentDone * buildingHigh);
+        float endPosition = unitOffsetY + std::ceil(unitOffset * ( 1.0f - percentDone)) + std::ceil(percentDone * buildingHigh);
 
         oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim->getTotalFrames() > 1)

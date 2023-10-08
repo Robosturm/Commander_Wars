@@ -3,6 +3,8 @@
 #include <QDirIterator>
 #include <QDateTime>
 
+#include <cmath>
+
 #include "coreengine/qmlvector.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/gameconsole.h"
@@ -537,32 +539,32 @@ QVector<qint32> GlobalUtils::calcWidths(const QVector<qint32> & maxWidths, const
 
 float GlobalUtils::roundFloor(float value, float precision)
 {
-    return qFloor(value * precision) / precision;
+    return std::floor(value * precision) / precision;
 }
 
 double GlobalUtils::roundFloor(double value, double precision)
 {
-    return qFloor(value * precision) / precision;
+    return std::floor(value * precision) / precision;
 }
 
 float GlobalUtils::roundCeil(float value, float precision)
 {
-    return qCeil(value * precision) / precision;
+    return std::ceil(value * precision) / precision;
 }
 
 double GlobalUtils::roundCeil(double value, double precision)
 {
-    return qCeil(value * precision) / precision;
+    return std::ceil(value * precision) / precision;
 }
 
 qint32 GlobalUtils::roundFloorToInt(float value, float precision)
 {
-    return qFloor(value * precision);
+    return std::floor(value * precision);
 }
 
 qint32 GlobalUtils::roundFloorToInt(qreal value, qreal precision)
 {
-    return qFloor(value * precision);
+    return std::floor(value * precision);
 }
 
 QByteArray GlobalUtils::toByteArray(const QJsonArray & jsonArray)

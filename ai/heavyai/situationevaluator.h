@@ -4,6 +4,7 @@
 
 #include "3rd_party/opennn/opennn/opennn.h"
 
+class Player;
 class Unit;
 class GameMap;
 class QmlVectorPoint;
@@ -29,15 +30,16 @@ public:
     };
 
 
-    explicit SituationEvaluator();
+    explicit SituationEvaluator(Player* pOwner);
 
     void updateInputVector(GameMap* pMap, const QPoint & searchPoint);
 
 private:
-    void getUnitsInRange(std::vector<Unit*> & units, GameMap* pMap, const QPoint & searchPoint);
+    void getUnitsInRange(std::array<Unit*, UNIT_COUNT> & units, GameMap* pMap, const QPoint & searchPoint);
 
 private:
     opennn::Tensor<opennn::type, 2> m_inputVector;
     spQmlVectorPoint m_searchRange;
+    Player* m_pOwner{nullptr};
 };
 
