@@ -226,6 +226,8 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}")
         set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}")
+        add_definitions(-DWIN32_LEAN_AND_MEAN
+        )
     endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     if ("${ANDROID_ABI}" STREQUAL armeabi-v7a)
@@ -727,6 +729,7 @@ set(${PROJECT_NAME}_SRCS
     ai/proxyai.cpp ai/proxyai.h
     ai/normalai.cpp ai/normalai.h
     ai/heavyai/heavyai.cpp ai/heavyai/heavyai.h
+    ai/heavyai/situationevaluator.h ai/heavyai/situationevaluator.cpp
     ai/influencefrontmap.cpp ai/influencefrontmap.h
     ai/dummyai.h ai/dummyai.cpp
     ai/aiprocesspipe.h ai/aiprocesspipe.cpp

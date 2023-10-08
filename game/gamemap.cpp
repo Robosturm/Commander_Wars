@@ -443,6 +443,18 @@ Terrain* GameMap::getTerrain(qint32 x, qint32 y) const
     }
 }
 
+Terrain* GameMap::getTerrain(QPoint pos) const
+{
+    if (onMap(pos.x(), pos.y()))
+    {
+        return m_fields[pos.y()][pos.x()].get();
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
 QString GameMap::getMapTagsText()
 {
     QString ret = tr("Tags\n\n");
@@ -1143,6 +1155,24 @@ bool GameMap::onMap(qint32 x, qint32 y) const
         (y >= 0) &&
         (x < width) &&
         (y < heigth))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool GameMap::onMap(const QPoint & point) const
+{
+
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    if ((point.x() >= 0) &&
+        (point.y() >= 0) &&
+        (point.x() < width) &&
+        (point.y() < heigth))
     {
         return true;
     }

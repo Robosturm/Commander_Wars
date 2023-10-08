@@ -654,6 +654,12 @@ public:
      */
     Q_INVOKABLE bool onMap(qint32 x, qint32 y) const;
     /**
+     * @brief onMap returns if the given coordinates are on the map
+     * @param point
+     * @return true if it's still on the map
+     */
+    Q_INVOKABLE bool onMap(const QPoint & point) const;
+    /**
      * @brief centerMap centers the view point to the given location
      * @param x
      * @param y
@@ -681,6 +687,12 @@ public:
      * @return the real pointer to the given terrain
      */
     Q_INVOKABLE Terrain* getTerrain(qint32 x, qint32 y) const;
+    /**
+     * @brief getTerrain only use this for js scripts
+     * @param pos
+     * @return the real pointer to the given terrain
+     */
+    Q_INVOKABLE Terrain* getTerrain(QPoint pos) const;
     /**
      * @brief canBePlaced
      * @param terrainID the terrain id you want to place

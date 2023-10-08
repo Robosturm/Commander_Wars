@@ -51,6 +51,7 @@ Unit::Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap)
     setupJsThis(this);
     if (!m_UnitID.isEmpty())
     {
+        m_unitIdx = UnitSpriteManager::getInstance()->getIndex(m_UnitID);
         initUnit();
         setFuel(m_maxFuel);
         setAmmo1(m_maxAmmo1);
@@ -4096,6 +4097,7 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             pStream >> dummy2;
         }
     }
+    m_unitIdx = UnitSpriteManager::getInstance()->getIndex(m_UnitID);
 }
 
 void Unit::showRanges()

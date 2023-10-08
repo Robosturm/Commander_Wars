@@ -1086,6 +1086,15 @@ public:
      * @return
      */
     Q_INVOKABLE static QString getUnitRangName(qint32 rang);
+    /**
+     * @brief getUnitIdx
+     * @return
+     */
+    Q_INVOKABLE qint32 getUnitIdx() const
+    {
+        return m_unitIdx;
+    }
+
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons
@@ -1121,6 +1130,7 @@ protected:
      */
     qint32 getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString &));
 private:
+    qint32 m_unitIdx{-1};
     QVector<oxygine::spSprite> m_pUnitWaitSprites;
     QVector<oxygine::spSprite> m_pUnitSprites;
     /**

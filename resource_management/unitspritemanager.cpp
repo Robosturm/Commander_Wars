@@ -1,5 +1,8 @@
 #include "resource_management/unitspritemanager.h"
 
+#include "game/unit.h"
+#include "game/player.h"
+
 UnitSpriteManager::UnitSpriteManager()
     : RessourceManagement<UnitSpriteManager>("/images/units/res.xml",
                                              "/scripts/units")
@@ -114,6 +117,28 @@ void UnitSpriteManager::removeRessource(QString id)
         {
             m_loadedRessources.removeAt(i);
             break;
+        }
+    }
+}
+
+void UnitSpriteManager::createBaseDamageTable()
+{
+    auto pPlayer = MemoryManagement::create<Player>(nullptr);
+    pPlayer->init();
+    auto size = m_loadedRessources.size();
+    QVector<spUnit> matchups;
+    matchups.reserve(size);
+    for (const auto & unitId : m_loadedRessources)
+    {
+        spUnit pUnit = MemoryManagement::create<Unit>(unitId, pPlayer.get(), false, nullptr);
+        matchups.append(pUnit);
+    }
+    for (qint32 attacker = 0; attacker < size; ++attacker)
+    {
+        for (qint32 defender = 0; defender < size; ++defender)
+        {
+            float damage = matchups[attacker]->getBaseDamage(matchups[defender].get());
+            m_baseDamgeTable.insert_or_assign(static_cast<qint32>(size * attacker + defender), damage);
         }
     }
 }

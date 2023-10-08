@@ -2,6 +2,7 @@
 #define UNITSPRITEMANAGER_H
 
 #include "game/GameEnums.h"
+#include "game/unit.h"
 
 #include "resource_management/ressourcemanagement.h"
 
@@ -9,6 +10,15 @@ class UnitSpriteManager final : public QObject, public RessourceManagement<UnitS
 {
     Q_OBJECT
 public:
+    /**
+     * @brief createBaseDamageTable
+     */
+    void createBaseDamageTable();
+
+    qint32 getBaseDamage(Unit* pAttacker, Unit* pDefender)
+    {
+        return m_baseDamgeTable[pAttacker->getUnitIdx() * m_loadedRessources.size() + pDefender->getUnitIdx()];
+    }
     /**
      * @brief getUnitType
      * @param i
@@ -53,6 +63,8 @@ protected:
     UnitSpriteManager();
 private:
     virtual ~UnitSpriteManager() = default;
+
+    std::map<qint32, float> m_baseDamgeTable;
 };
 
 Q_DECLARE_INTERFACE(UnitSpriteManager, "UnitSpriteManager");

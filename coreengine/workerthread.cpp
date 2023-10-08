@@ -175,13 +175,14 @@ void WorkerThread::start()
     MovementPlannerAddInManager::getInstance()->loadAll();
     pLoadingScreen->setProgress(tr("Loading Ui scripts..."), Mainapp::SCRIPT_PROCESS + 26);
     UiManager::getInstance()->loadAll();
-
     Userdata::getInstance()->changeUser();
     pLoadingScreen->setProgress(tr("Loading Achievements..."), Mainapp::SCRIPT_PROCESS + 28);
     // achievements should be loaded last
     AchievementManager* pAchievementManager = AchievementManager::getInstance();
     pAchievementManager->loadAll();
     Player::getNeutralTableAnim();
+    pUnitspritemanager->createBaseDamageTable();
+
     const QString obj = "Global";
     const QString func = "finalizeLoading";
     pInterpreter->doFunction(obj, func);
