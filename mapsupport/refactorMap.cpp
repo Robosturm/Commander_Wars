@@ -72,6 +72,11 @@ void GameMap::extendMap(const QString mapFile, GameEnums::Directions direction)
                         m_rowSprites[targetY]->addChild(pTerrain);
                         pTerrain->setPosition(targetX * m_imagesize, targetY * m_imagesize);
                         pTerrain->setMapForExtending(this);
+                        Unit* pUnit = pTerrain->getUnit();
+                        if (pUnit != nullptr)
+                        {
+                            pUnit->setAiMode(pUnit->getAiMode());
+                        }
                     }
                     else
                     {
@@ -440,6 +445,7 @@ void GameMap::flipX()
             {
                 spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
                 pTerrain->setUnit(pUnit);
+                pUnit->setAiMode(pCurrentUnit->getAiMode());
             }
         }
     }
@@ -478,6 +484,7 @@ void GameMap::rotateX()
             {
                 spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
                 pTerrain->setUnit(pUnit);
+                pUnit->setAiMode(pCurrentUnit->getAiMode());
             }
         }
     }
@@ -516,6 +523,7 @@ void GameMap::flipY()
             {
                 spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
                 pTerrain->setUnit(pUnit);
+                pUnit->setAiMode(pCurrentUnit->getAiMode());
             }
         }
     }
@@ -554,6 +562,7 @@ void GameMap::rotateY()
             {
                 spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
                 pTerrain->setUnit(pUnit);
+                pUnit->setAiMode(pCurrentUnit->getAiMode());
             }
         }
     }
