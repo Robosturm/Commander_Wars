@@ -699,30 +699,35 @@ void EditorMenue::showExtendMap()
 
 void EditorMenue::extendMap(const QString & mapFile, GameEnums::Directions direction)
 {
+    createTempFile();
     m_pMap->extendMap(mapFile, direction);
     setFocused(true);
 }
 
 void EditorMenue::flipX()
 {
+    createTempFile();
     spGameMap pGameMap = m_pMap;
     pGameMap->flipX();
 }
 
 void EditorMenue::flipY()
 {
+    createTempFile();
     spGameMap  pGameMap = m_pMap;
     pGameMap->flipY();
 }
 
 void EditorMenue::rotateX()
 {
+    createTempFile();
     spGameMap  pGameMap = m_pMap;
     pGameMap->rotateX();
 }
 
 void EditorMenue::rotateY()
 {
+    createTempFile();
     spGameMap  pGameMap = m_pMap;
     pGameMap->rotateY();
 }
@@ -798,7 +803,8 @@ void EditorMenue::copy()
 }
 
 void EditorMenue::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
-{    
+{
+    createTempFile();
     CONSOLE_PRINT("EditorMenue::resizeMap", GameConsole::eDEBUG);
     m_pMap->resizeMap(left, top, right, bottom);    
     updateGrids();

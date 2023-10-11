@@ -14,6 +14,12 @@ class SituationEvaluator : public QObject
 {
     Q_OBJECT
 public:
+    struct UnitInfo
+    {
+        Unit* pUnit{nullptr};
+        qint32 multiplier{0};
+    };
+
     static constexpr qint32 UNIT_COUNT = 40;
     static constexpr qint32 SEARCH_RANGE = 30;
     enum class Features
@@ -35,10 +41,11 @@ public:
     void updateInputVector(GameMap* pMap, const QPoint & searchPoint);
 
 private:
-    void getUnitsInRange(std::array<Unit*, UNIT_COUNT> & units, GameMap* pMap, const QPoint & searchPoint);
+    void getUnitsInRange(GameMap* pMap, const QPoint & searchPoint);
 
 private:
     opennn::Tensor<opennn::type, 2> m_inputVector;
+    std::array<UnitInfo, UNIT_COUNT> m_unitsInfo;
     spQmlVectorPoint m_searchRange;
     Player* m_pOwner{nullptr};
 };

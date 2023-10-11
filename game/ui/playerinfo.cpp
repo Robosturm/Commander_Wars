@@ -103,7 +103,10 @@ void PlayerInfo::updateData()
                 }
                 pSprite = MemoryManagement::create<oxygine::Sprite>();
                 pSprite->setResAnim(pAnim);
-                pSprite->setWidth(pAnim->getWidth());
+                if (pAnim != nullptr)
+                {
+                    pSprite->setWidth(pAnim->getWidth());
+                }
                 pSprite->setY(yPos);
                 if (pAnim != nullptr)
                 {

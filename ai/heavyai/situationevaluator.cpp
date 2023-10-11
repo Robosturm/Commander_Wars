@@ -3,6 +3,8 @@
 #include "coreengine/globalutils.h"
 #include "game/gamemap.h"
 
+
+
 SituationEvaluator::SituationEvaluator(Player* pOwner)
     : m_inputVector(1, UNIT_COUNT * UNIT_COUNT * static_cast<qint32>(Features::Max)),
     m_searchRange(GlobalUtils::getSpCircle(0, SEARCH_RANGE)),
@@ -12,23 +14,48 @@ SituationEvaluator::SituationEvaluator(Player* pOwner)
 
 void SituationEvaluator::updateInputVector(GameMap* pMap, const QPoint & searchPoint)
 {
-    std::array<Unit*, UNIT_COUNT> units({nullptr});
-    getUnitsInRange(units, pMap, searchPoint);
+    getUnitsInRange(pMap, searchPoint);
     for (qint32 i = 0; i < UNIT_COUNT; ++i)
     {
-        Unit* pUnit = units[i];
+        Unit* pUnit = m_unitsInfo[i].pUnit;
         if (pUnit == nullptr)
         {
-
+            for (qint32 feature = 0; feature < static_cast<qint32>(Features::Max); ++feature)
+            {
+                qint32 basePosition = UNIT_COUNT * UNIT_COUNT * feature + i * UNIT_COUNT;
+                for (qint32 enemyUnit = 0; enemyUnit < UNIT_COUNT; ++enemyUnit)
+                {
+                    m_inputVector(0, basePosition + enemyUnit) = 0;
+                }
+            }
         }
         else
         {
+            for (qint32 feature = 0; feature < static_cast<qint32>(Features::Max); ++feature)
+            {
+                qint32 basePosition = UNIT_COUNT * UNIT_COUNT * feature + i * UNIT_COUNT;
 
+            }
         }
     }
 }
 
-void SituationEvaluator::getUnitsInRange(std::array<Unit*, UNIT_COUNT> & units, GameMap* pMap, const QPoint & searchPoint)
+//void SituationEvaluator::updateHp(qint32 basePosition, const UnitInfo & unitInfo)
+//{
+//    for (qint32 enemyUnit = 0; enemyUnit < UNIT_COUNT; ++enemyUnit)
+//    {
+//        if (unitInfo.multiplier != m_unitsInfo[enemyUnit].multiplier)
+//        {
+//            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit].pUnit->getHpRounded();
+//        }
+//        else
+//        {
+//            m_inputVector(0, basePosition + enemyUnit) = 0;
+//        }
+//    }
+//}
+
+void SituationEvaluator::getUnitsInRange(GameMap* pMap, const QPoint & searchPoint)
 {
     qint32 alliedPosition = 0;
     qint32 enemyPosition = UNIT_COUNT - 1;
@@ -43,12 +70,14 @@ void SituationEvaluator::getUnitsInRange(std::array<Unit*, UNIT_COUNT> & units, 
             {
                 if (m_pOwner->isEnemyUnit(pUnit))
                 {
-                    units[enemyPosition] = pUnit;
+                    m_unitsInfo[enemyPosition].pUnit = pUnit;
+                    m_unitsInfo[enemyPosition].multiplier = -1;
                     --enemyPosition;
                 }
                 else
                 {
-                    units[alliedPosition] = pUnit;
+                    m_unitsInfo[alliedPosition].pUnit = pUnit;
+                    m_unitsInfo[alliedPosition].multiplier = 1;
                     ++alliedPosition;
                 }
                 if (alliedPosition > enemyPosition)
@@ -57,5 +86,10 @@ void SituationEvaluator::getUnitsInRange(std::array<Unit*, UNIT_COUNT> & units, 
                 }
             }
         }
+    }
+    for (qint32 i = alliedPosition; i <= enemyPosition; ++i)
+    {
+        m_unitsInfo[enemyPosition].pUnit = nullptr;
+        m_unitsInfo[enemyPosition].multiplier = 1;
     }
 }
