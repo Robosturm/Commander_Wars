@@ -853,5 +853,11 @@ private:
         qint32 unfogRange{0};
     };
     FlareInfo m_flareInfo;
+    struct ExplodeInfo
+    {
+        qint32 range{0};
+        qint32 damage{0};
+    };
+    ExplodeInfo m_explodeInfo;
     QStringList m_iniFiles;
 };

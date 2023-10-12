@@ -69,12 +69,23 @@ var Constructor = function()
         ACTION_EXPLODE.postAnimationTargetX = action.readDataInt32();
         ACTION_EXPLODE.postAnimationTargetY = action.readDataInt32();
     };
+
+
+    this.getDamage = function()
+    {
+        return 4;
+    };
+    this.getRange = function()
+    {
+        return 2;
+    };
+
     this.performPostAnimation = function(postAnimation, map)
     {
         var owner = ACTION_EXPLODE.postAnimationUnit.getOwner();
         var x = ACTION_EXPLODE.postAnimationTargetX;
         var y = ACTION_EXPLODE.postAnimationTargetY;
-        var fields = globals.getCircle(1, 2);
+        var fields = globals.getCircle(1, ACTION_EXPLODE.getRange());
         var size = fields.size();
         for (var i = 0; i < size; i++)
         {
@@ -85,7 +96,7 @@ var Constructor = function()
                 var unit = terrain.getUnit();
                 if (unit !== null)
                 {
-                    unit.setHp(unit.getHpRounded() - 4);
+                    unit.setHp(unit.getHpRounded() - ACTION_EXPLODE.getDamage());
                     if (unit.getHp() <= 0)
                     {
                         // we destroyed a unit
@@ -95,7 +106,7 @@ var Constructor = function()
                 }                
             }
         }
-        var animation = GameAnimationFactory.createAnimation(map, x - 2, y - 3);
+        var animation = GameAnimationFactory.createAnimation(map, x - 2, y - 2);
         animation.addSprite("explosion+black_bomb", map.getImageSize() / 2, map.getImageSize() / 2, 0, 1.875);
         animation.setSound("explosion+land.wav");
         // we destroyed a unit

@@ -183,7 +183,11 @@ public:
      * @return
      */
     bool isStatusStealthedAndInvisible(Player* pPlayer, bool & terrainHide);
-
+    /**
+     * @brief getAiCache
+     * @return
+     */
+    QVector<qint32> & getAiCache();
     // js invokable functions
     /**
      * @brief getX
@@ -1223,6 +1227,10 @@ private:
      * @brief m_sortValues values sto
      */
     QVector<qint32> m_sortValues;
+    /**
+     * @brief m_aiCache
+     */
+    QVector<qint32> m_aiCache;
 };
 
 Q_DECLARE_INTERFACE(Unit, "Unit");

@@ -729,6 +729,7 @@ set(${PROJECT_NAME}_SRCS
     ai/proxyai.cpp ai/proxyai.h
     ai/normalai.cpp ai/normalai.h
     ai/heavyai/heavyai.cpp ai/heavyai/heavyai.h
+    ai/heavyai/heavyAiEnums.h
     ai/heavyai/situationevaluator.h ai/heavyai/situationevaluator.cpp
     ai/influencefrontmap.cpp ai/influencefrontmap.h
     ai/dummyai.h ai/dummyai.cpp

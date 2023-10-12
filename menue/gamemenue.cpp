@@ -1269,7 +1269,6 @@ void GameMenue::disconnected(quint64 socketID)
     {
         CONSOLE_PRINT("Handling player GameMenue::disconnect()", GameConsole::eDEBUG);
         bool showDisconnect = !m_pNetworkInterface->getIsServer();
-        removeSyncSocket(socketID);
         auto & observer = m_pMap->getGameRules()->getObserverList();
         bool observerDisconnect = observer.contains(socketID);
         if (observerDisconnect)

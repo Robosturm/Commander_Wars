@@ -93,6 +93,21 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     {
         m_flareInfo.unfogRange = erg.toNumber();
     }
+
+
+    const QString funcGetDamage = "getDamage";
+    erg = pInterpreter->doFunction(ACTION_EXPLODE, funcGetDamage);
+    if (erg.isNumber())
+    {
+        m_explodeInfo.damage = erg.toNumber();
+    }
+    const QString funcGetRange = "getRange";
+    erg = pInterpreter->doFunction(ACTION_EXPLODE, funcGetRange);
+    if (erg.isNumber())
+    {
+        m_explodeInfo.range = erg.toNumber();
+    }
+
     CONSOLE_PRINT("Creating core ai", GameConsole::eDEBUG);
 }
 

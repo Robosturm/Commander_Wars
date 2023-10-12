@@ -190,8 +190,7 @@ void NormalAi::process()
     }
     spQmlVectorBuilding pBuildings = m_pPlayer->getSpBuildings();
     pBuildings->randomize();
-    spQmlVectorUnit pUnits;
-    pUnits = m_pPlayer->getSpUnits();
+    spQmlVectorUnit pUnits = m_pPlayer->getSpUnits();
     spQmlVectorUnit pEnemyUnits;
     spQmlVectorBuilding pEnemyBuildings;
     qint32 cost = 0;

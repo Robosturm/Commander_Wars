@@ -30,7 +30,7 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit
     if (m_Targets.size()  > maxTargets)
     {
         m_Targets.resize(maxTargets);
-    }
+    }    
     setMovepoints(m_pUnit->getFuel() * 2);
 }
 

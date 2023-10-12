@@ -127,7 +127,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
                 {
                     UnitPathFindingSystem turnPfs(m_pMap, pUnit);
                     turnPfs.explore();
-                    spQmlVectorPoint pPoints = GlobalUtils::getSpCircle(1, 3);
+                    spQmlVectorPoint pPoints = GlobalUtils::getSpCircle(1, m_explodeInfo.range);
                     auto targets = turnPfs.getAllNodePointsFast();
                     qint32 maxDamage = 0;
                     std::vector<QPoint> bestTargets;
@@ -135,7 +135,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     for (auto & target : targets)
                     {
-                        qint32 damageDone = m_pPlayer->getRocketTargetDamage(target.x(), target.y(), pPoints.get(), 5, 1.2f, GameEnums::RocketTarget_Money, true);
+                        qint32 damageDone = m_pPlayer->getRocketTargetDamage(target.x(), target.y(), pPoints.get(), m_explodeInfo.damage, 1.2f, GameEnums::RocketTarget_Money, true);
                         if (damageDone > maxDamage)
                         {
                             bestTargets.clear();

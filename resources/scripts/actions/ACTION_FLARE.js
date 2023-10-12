@@ -43,16 +43,15 @@ var Constructor = function()
     this.getMinRange = function()
     {
         return 1;
-    }
-
+    };
     this.getMaxRange = function()
     {
         return 5;
-    }
+    };
     this.getUnfogRange = function()
     {
         return 2;
-    }
+    };
 
     this.getStepData = function(action, data, map)
     {

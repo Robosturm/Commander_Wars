@@ -4,6 +4,7 @@
 #include "coreengine/globalutils.h"
 
 #include "ai/heavyai/heavyai.h"
+#include "ai/heavyai/heavyAiEnums.h"
 
 #include "game/player.h"
 #include "game/gameaction.h"
@@ -28,7 +29,107 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
     CONSOLE_PRINT("Creating heavy ai", GameConsole::eDEBUG);
 }
 
+void HeavyAi::toggleAiPause()
+{
+    m_pause = !m_pause;
+}
+
+void HeavyAi::showIslandMap(QString unitId)
+{
+    Unit unit(unitId, m_pPlayer, false, m_pMap);
+    qint32 unitIslandIdx = getIslandIndex(&unit);
+    if (unitIslandIdx >= 0 && unitIslandIdx < m_IslandMaps.size())
+    {
+        m_IslandMaps[unitIslandIdx]->show();
+    }
+}
+
+void HeavyAi::hideIslandMap(QString unitId)
+{
+    Unit unit(unitId, m_pPlayer, false, m_pMap);
+    qint32 unitIslandIdx = getIslandIndex(&unit);
+    if (unitIslandIdx >= 0 && unitIslandIdx < m_IslandMaps.size())
+    {
+        m_IslandMaps[unitIslandIdx]->hide();
+    }
+}
+
 void HeavyAi::process()
 {
+    AI_CONSOLE_PRINT("NormalAi::process()", GameConsole::eDEBUG);
+    if (m_pause)
+    {
+        m_timer.start(1000);
+        return;
+    }
+    else
+    {
+        m_timer.stop();
+    }
 
+    spQmlVectorBuilding pBuildings = m_pPlayer->getSpBuildings();
+    pBuildings->randomize();
+    spQmlVectorUnit pUnits = m_pPlayer->getSpUnits();
+    spQmlVectorUnit pEnemyUnits = m_pPlayer->getSpEnemyUnits();
+    pEnemyUnits->pruneEnemies(pUnits.get(), m_enemyPruneRange);
+    qint32 cost = 0;
+    m_pPlayer->getSiloRockettarget(2, 3, cost);
+    m_missileTarget = (cost >= m_minSiloDamage);
+    updateUnitCache(pUnits);
+    updateUnitCache(pEnemyUnits);
+    if (useBuilding(pBuildings, pUnits))
+    {
+        clearUnitCache(pUnits);
+        clearUnitCache(pEnemyUnits);
+    }
+    else
+    {
+        m_IslandMaps.clear();
+        m_turnMode = GameEnums::AiTurnMode_EndOfDay;
+        if (useCOPower(pUnits, pEnemyUnits))
+        {
+            m_usedTransportSystem = false;
+            m_usedPredefinedAi = false;
+            m_turnMode = GameEnums::AiTurnMode_DuringDay;
+        }
+        else
+        {
+            m_turnMode = GameEnums::AiTurnMode_StartOfDay;
+            finishTurn();
+        }
+    }
+}
+
+void HeavyAi::updateUnitCache(spQmlVectorUnit & pUnits)
+{
+    for(auto & pUnit : pUnits->getVector())
+    {
+        auto & cache = pUnit->getAiCache();
+        if (cache.size() != static_cast<qint32>(AiCache::Max))
+        {
+            QPoint pos = pUnit->getPosition();
+            cache.resize(static_cast<qint32>(AiCache::Max));
+            cache[static_cast<qint32>(AiCache::MovementPoints)] = pUnit->getMovementpoints(pos);
+            cache[static_cast<qint32>(AiCache::MinFirerange)] = pUnit->getMinRange(pos);
+            cache[static_cast<qint32>(AiCache::MaxFirerange)] = pUnit->getMaxRange(pos);
+        }
+    }
+    rebuildIsland(pUnits);
+}
+
+void HeavyAi::clearUnitCache(spQmlVectorUnit & pUnits)
+{
+    for(auto & pUnit : pUnits->getVector())
+    {
+        pUnit->getAiCache().clear();
+    }
+}
+
+void HeavyAi::finishTurn()
+{
+    auto pUnits = m_pPlayer->getSpUnits();
+    clearUnitCache(pUnits);
+    pUnits = m_pPlayer->getSpEnemyUnits();
+    clearUnitCache(pUnits);
+    CoreAI::finishTurn();
 }

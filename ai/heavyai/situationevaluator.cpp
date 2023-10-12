@@ -66,7 +66,7 @@ void SituationEvaluator::getUnitsInRange(GameMap* pMap, const QPoint & searchPoi
         if (pTerrain != nullptr)
         {
             Unit* pUnit = pTerrain->getUnit();
-            if (pUnit != nullptr)
+            if (pUnit != nullptr && pUnit->getHpRounded() > 0)
             {
                 if (m_pOwner->isEnemyUnit(pUnit))
                 {
