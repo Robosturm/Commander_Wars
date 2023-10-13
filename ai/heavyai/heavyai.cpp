@@ -4,7 +4,7 @@
 #include "coreengine/globalutils.h"
 
 #include "ai/heavyai/heavyai.h"
-#include "ai/heavyai/heavyAiEnums.h"
+#include "ai/heavyai/heavyAiSharedData.h"
 
 #include "game/player.h"
 #include "game/gameaction.h"
@@ -75,8 +75,6 @@ void HeavyAi::process()
     qint32 cost = 0;
     m_pPlayer->getSiloRockettarget(2, 3, cost);
     m_missileTarget = (cost >= m_minSiloDamage);
-    updateUnitCache(pUnits);
-    updateUnitCache(pEnemyUnits);
     if (useBuilding(pBuildings, pUnits))
     {
         clearUnitCache(pUnits);
@@ -91,9 +89,16 @@ void HeavyAi::process()
             m_usedTransportSystem = false;
             m_usedPredefinedAi = false;
             m_turnMode = GameEnums::AiTurnMode_DuringDay;
+            clearUnitCache(pUnits);
+            clearUnitCache(pEnemyUnits);
+
         }
         else
         {
+            updateUnitCache(pUnits);
+            updateUnitCache(pEnemyUnits);
+
+
             m_turnMode = GameEnums::AiTurnMode_StartOfDay;
             finishTurn();
         }
@@ -108,10 +113,11 @@ void HeavyAi::updateUnitCache(spQmlVectorUnit & pUnits)
         if (cache.size() != static_cast<qint32>(AiCache::Max))
         {
             QPoint pos = pUnit->getPosition();
-            cache.resize(static_cast<qint32>(AiCache::Max));
-            cache[static_cast<qint32>(AiCache::MovementPoints)] = pUnit->getMovementpoints(pos);
-            cache[static_cast<qint32>(AiCache::MinFirerange)] = pUnit->getMinRange(pos);
-            cache[static_cast<qint32>(AiCache::MaxFirerange)] = pUnit->getMaxRange(pos);
+            cache.resize(HeavyAiSharedData::AiCache::Max);
+            cache[HeavyAiSharedData::AiCache::MovementPoints] = pUnit->getMovementpoints(pos);
+            cache[HeavyAiSharedData::AiCache::MinFirerange] = pUnit->getMinRange(pos);
+            cache[HeavyAiSharedData::AiCache::MaxFirerange] = pUnit->getMaxRange(pos);
+            cache[HeavyAiSharedData::AiCache::CanMoveAndFire] = pUnit->canMoveAndFire(pos);
         }
     }
     rebuildIsland(pUnits);

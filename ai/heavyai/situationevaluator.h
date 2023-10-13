@@ -4,6 +4,8 @@
 
 #include "3rd_party/opennn/opennn/opennn.h"
 
+#include "ai/heavyai/heavyAiSharedData.h"
+
 class Player;
 class Unit;
 class GameMap;
@@ -14,27 +16,9 @@ class SituationEvaluator : public QObject
 {
     Q_OBJECT
 public:
-    struct UnitInfo
-    {
-        Unit* pUnit{nullptr};
-        qint32 multiplier{0};
-    };
 
     static constexpr qint32 UNIT_COUNT = 40;
     static constexpr qint32 SEARCH_RANGE = 30;
-    enum class Features
-    {
-        HP,
-        HpDamage,
-        FundsDamage,
-        MovementPoints,
-        Distance,
-        HasMoved,
-        Defense,
-        RepairsOnPosition,
-        Max,
-    };
-
 
     explicit SituationEvaluator(Player* pOwner);
 
@@ -45,7 +29,7 @@ private:
 
 private:
     opennn::Tensor<opennn::type, 2> m_inputVector;
-    std::array<UnitInfo, UNIT_COUNT> m_unitsInfo;
+    std::array<HeavyAiSharedData::UnitInfo, UNIT_COUNT> m_unitsInfo;
     spQmlVectorPoint m_searchRange;
     Player* m_pOwner{nullptr};
 };

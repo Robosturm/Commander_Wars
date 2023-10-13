@@ -6,6 +6,18 @@ class GameMap;
 class HeavyAi;
 using spHeavyAi = std::shared_ptr<HeavyAi>;
 
+
+/**
+ * @brief The HeavyAi class
+ * How the ai and what it does:
+ * 1. Uses the same capturing system as the normal ai with the difference to run the situationevalutor before-hand
+ * 2. Loading and transporting is done with the same code as for all other ai's
+ * 3. Waiting uses the situationevalutor instead of the normal ai's waiting code
+ * 4. Situationevalutor takes the closest 40 units and tests if the new simulated game state is a win or a loose and makes the move with the highest score.
+ * 5. MovementFilterer will make a fast decision which fields should be evaluated by the Situationevalutor to save same processing time
+ * 6. The unitselector makes a decision which unit should be moved next based on the current situation
+ * 7. The buildsystem will make the decision which unit should be build next
+ */
 class HeavyAi final : public CoreAI
 {
     Q_OBJECT

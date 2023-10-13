@@ -187,7 +187,10 @@ public:
      * @brief getAiCache
      * @return
      */
-    QVector<qint32> & getAiCache();
+    std::vector<qint32> & getAiCache()
+    {
+        return m_aiCache;
+    }
     // js invokable functions
     /**
      * @brief getX
@@ -1230,7 +1233,7 @@ private:
     /**
      * @brief m_aiCache
      */
-    QVector<qint32> m_aiCache;
+    std::vector<qint32> m_aiCache;
 };
 
 Q_DECLARE_INTERFACE(Unit, "Unit");

@@ -626,11 +626,6 @@ qint32 Unit::getCoBonus(QPoint position, const QString & function, qint32(Player
     return bonus;
 }
 
-QVector<qint32> & Unit::getAiCache()
-{
-    return m_aiCache;
-}
-
 GameMap *Unit::getMap() const
 {
     return m_pMap;

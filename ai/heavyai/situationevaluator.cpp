@@ -20,7 +20,7 @@ void SituationEvaluator::updateInputVector(GameMap* pMap, const QPoint & searchP
         Unit* pUnit = m_unitsInfo[i].pUnit;
         if (pUnit == nullptr)
         {
-            for (qint32 feature = 0; feature < static_cast<qint32>(Features::Max); ++feature)
+            for (qint32 feature = 0; feature < HeavyAiSharedData::Features::Max; ++feature)
             {
                 qint32 basePosition = UNIT_COUNT * UNIT_COUNT * feature + i * UNIT_COUNT;
                 for (qint32 enemyUnit = 0; enemyUnit < UNIT_COUNT; ++enemyUnit)
@@ -31,7 +31,7 @@ void SituationEvaluator::updateInputVector(GameMap* pMap, const QPoint & searchP
         }
         else
         {
-            for (qint32 feature = 0; feature < static_cast<qint32>(Features::Max); ++feature)
+            for (qint32 feature = 0; feature < HeavyAiSharedData::Features::Max; ++feature)
             {
                 qint32 basePosition = UNIT_COUNT * UNIT_COUNT * feature + i * UNIT_COUNT;
 
