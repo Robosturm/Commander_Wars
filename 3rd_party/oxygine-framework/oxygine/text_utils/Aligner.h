@@ -1,6 +1,8 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
 
+#include <vector>
+
 #include <QFontMetrics>
 
 namespace oxygine
