@@ -1,9 +1,10 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-
 #include <QOpenGLShader>
 
 #include <QImage>
+
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
+
 
 class MemoryManagement;
 

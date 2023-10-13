@@ -1,14 +1,14 @@
 #pragma once
+#include <QTimer>
+#include <QThread>
+#include <QKeyEvent>
+#include <QElapsedTimer>
+
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 
 #include "windowBase.h"
-
-#include <QTimer>
-#include <QThread>
-#include <QKeyEvent>
-#include <QElapsedTimer>
 
 namespace oxygine
 {
