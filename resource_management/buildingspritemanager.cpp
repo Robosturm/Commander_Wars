@@ -70,7 +70,7 @@ QStringList BuildingSpriteManager::getBuildingsSorted()
     QString function1 = "getBuildingGroupSort";
     QJSValue ret = pInterpreter->doFunction("BUILDING", function1);
     auto list = ret.toVariant().toList();
-    for (const auto & buildingType : qAsConst(list))
+    for (const auto & buildingType : std::as_const(list))
     {
         qint32 value = buildingType.toInt();
         if (!buildingGroups.contains(value))

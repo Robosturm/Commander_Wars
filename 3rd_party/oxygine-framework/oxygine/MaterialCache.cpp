@@ -35,7 +35,7 @@ namespace oxygine
     {
         m_addCounter = 0;
         materials fresh;
-        for (const auto & material : qAsConst(m_materials))
+        for (const auto & material : std::as_const(m_materials))
         {
             if (material.use_count() > 1)
             {

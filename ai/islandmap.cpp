@@ -71,9 +71,9 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, cons
 qint32 IslandMap::getIslandSize(qint32 island) const
 {
     qint32 count = 0;
-    for (const auto & data : qAsConst(m_Islands))
+    for (const auto & data : std::as_const(m_Islands))
     {
-        for (const auto & field : qAsConst(data))
+        for (const auto & field : std::as_const(data))
         {
             if (field == island)
             {

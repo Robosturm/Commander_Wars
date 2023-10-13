@@ -125,7 +125,7 @@ void MapSelection::changeFolder(QString folder)
         QFileInfo upFolder(newFolder + "..");
         QStringList list;
         list.reserve(m_filter.size());
-        for (const auto & ending : qAsConst(m_filter))
+        for (const auto & ending : std::as_const(m_filter))
         {
             list.append("*" + ending);
         }

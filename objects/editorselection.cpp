@@ -135,7 +135,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     // reserve vector size for fun and speed :D
     m_Terrains.reserve(pTerrainManager->getCount());
     QStringList sortedTerrainIDs = pTerrainManager->getTerrainsSorted();
-    for (const auto& terrainId : qAsConst(sortedTerrainIDs))
+    for (const auto& terrainId : std::as_const(sortedTerrainIDs))
     {
         if (Terrain::getShowInEditor(terrainId))
         {
@@ -162,7 +162,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     // load other sprites not shown in the starting screen
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     QStringList sortedBuildingIDs = pBuildingSpriteManager->getBuildingsSorted();
-    for (const auto & buildingId : qAsConst(sortedBuildingIDs))
+    for (const auto & buildingId : std::as_const(sortedBuildingIDs))
     {
         if (Building::getShowInEditor(buildingId))
         {

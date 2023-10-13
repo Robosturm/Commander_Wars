@@ -840,13 +840,13 @@ void Mainapp::createBaseDirs()
         "resources/aidata/normal",
         "resources/aidata/heavy",
     };
-    for (const auto & path : qAsConst(dirs))
+    for (const auto & path : std::as_const(dirs))
     {
         QDir newDir(userPath + path);
         newDir.mkpath(".");
     }
     auto virtList = QDir(QString(oxygine::Resource::RCC_PREFIX_PATH) + "maps").entryInfoList(QDir::Dirs);
-    for (const auto & item : qAsConst(virtList))
+    for (const auto & item : std::as_const(virtList))
     {
         QString path = GlobalUtils::makePathRelative(item.canonicalFilePath());
         if (!path.endsWith(".camp"))

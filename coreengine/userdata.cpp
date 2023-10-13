@@ -201,7 +201,7 @@ void Userdata::deleteAchievement(QString id)
 
 bool Userdata::achieved(QString id)
 {
-    for (const auto & achievement : qAsConst(m_achievements))
+    for (const auto & achievement : std::as_const(m_achievements))
     {
         if (achievement.id == id)
         {
@@ -213,7 +213,7 @@ bool Userdata::achieved(QString id)
 
 QString Userdata::getActiveCoStyle(QString coid)
 {
-    for (const auto & style : qAsConst(m_customCOStyles))
+    for (const auto & style : std::as_const(m_customCOStyles))
     {
         if (coid == std::get<0>(style))
         {
@@ -323,7 +323,7 @@ const Userdata::MapVictoryInfo * Userdata::getVictoryForMap(QString mapPath)
 QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, bool buyable, bool bought)
 {
     QVector<Userdata::ShopItem> ret;
-    for (const auto & item : qAsConst(m_shopItems))
+    for (const auto & item : std::as_const(m_shopItems))
     {
         if ((item.itemType == type || type == GameEnums::ShopItemType::ShopItemType_All) &&
             item.buyable == buyable &&
@@ -338,7 +338,7 @@ QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, boo
 QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, bool bought)
 {
     QVector<Userdata::ShopItem> ret;
-    for (const auto & item : qAsConst(m_shopItems))
+    for (const auto & item : std::as_const(m_shopItems))
     {
         if ((item.itemType == type || type == GameEnums::ShopItemType::ShopItemType_All) &&
             item.bought == bought)
@@ -352,7 +352,7 @@ QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, boo
 QStringList Userdata::getShopItemsList(GameEnums::ShopItemType type, bool bought)
 {
     QStringList ret;
-    for (const auto & item : qAsConst(m_shopItems))
+    for (const auto & item : std::as_const(m_shopItems))
     {
         if ((item.itemType == type || type == GameEnums::ShopItemType::ShopItemType_All) &&
             item.bought == bought)
@@ -490,7 +490,7 @@ void Userdata::serializeObject(QDataStream& pStream) const
     }
     pStream << static_cast<qint32>(m_mapVictoryInfo.size());
     auto keys = m_mapVictoryInfo.keys();
-    for (const auto & key : qAsConst(keys))
+    for (const auto & key : std::as_const(keys))
     {
         const auto & item = m_mapVictoryInfo[key];
         pStream << key;
@@ -499,7 +499,7 @@ void Userdata::serializeObject(QDataStream& pStream) const
         Filesupport::writeVectorList(pStream, item.score);
     }
     pStream << static_cast<qint32>(m_shopItems.size());
-    for (const auto & item : qAsConst(m_shopItems))
+    for (const auto & item : std::as_const(m_shopItems))
     {
         pStream << item.key;
         pStream << item.name;

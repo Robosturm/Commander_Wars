@@ -149,7 +149,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     auto additionalFaces = ret.toVariant().toStringList();
     QStringList coIds = ret.toVariant().toStringList();
     coIds.append(additionalFaces);
-    for (const auto & face : qAsConst(coIds))
+    for (const auto & face : std::as_const(coIds))
     {
         oxygine::ResAnim* pAnim = nullptr;
         pAnim = COSpriteManager::getInstance()->getResAnim(face + "+info");

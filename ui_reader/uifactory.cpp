@@ -163,7 +163,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
         uiFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/" + uiXml);
         uiFiles.append("resources/" + uiXml);
         m_lastCoordinates.setRect(0, 0, 0, 0);
-        for (const auto & uiFile : qAsConst(uiFiles))
+        for (const auto & uiFile : std::as_const(uiFiles))
         {
             if (QFile::exists(uiFile))
             {
@@ -1446,7 +1446,7 @@ bool UiFactory::checkElements(const QDomNodeList & childs, const QStringList & a
 {
     bool ret = true;
     qint32 childCount = childs.count();
-    for (const auto & attr : qAsConst(attributes))
+    for (const auto & attr : std::as_const(attributes))
     {
         for (qint32 i = 0; i < childCount; ++i)
         {
@@ -1878,7 +1878,7 @@ QVector<qint32> UiFactory::getInt32ListValue(QString line, QString objectId, qin
         else
         {
             auto values = erg.toVariant().toList();
-            for (const auto & value : qAsConst(values))
+            for (const auto & value : std::as_const(values))
             {
                 result.append(value.toInt());
             }

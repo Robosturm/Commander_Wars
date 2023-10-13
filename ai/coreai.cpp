@@ -695,7 +695,7 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, std::vecto
     {
         spMarkedFieldData pMarkedFieldData = pAction->getMarkedFieldStepData();
         const auto & points = *pMarkedFieldData->getPoints();
-        for (auto & target : qAsConst(points))
+        for (auto & target : std::as_const(points))
         {
             QRectF damage = calcUnitDamage(pAction, target);
             Terrain* pTerrain = m_pMap->getTerrain(target.x(), target.y());
@@ -2069,7 +2069,7 @@ void CoreAI::sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQm
     for (auto & pUnitData : pUnits)
     {
         qint32 distance = std::numeric_limits<qint32>::max();
-        for (const auto & pEnemy : qAsConst(pEnemyUnitsVec))
+        for (const auto & pEnemy : std::as_const(pEnemyUnitsVec))
         {
             qint32 newDistance = GlobalUtils::getDistance(pEnemy->getPosition(), pUnitData.pUnit->getPosition());
             if (newDistance < distance)
@@ -2872,7 +2872,7 @@ void CoreAI::getAttackTargetsFast(Unit* pUnit, QmlVectorPoint & firePoints, Unit
 
 void CoreAI::getAttacksFromFieldFast(Unit* pUnit, QPoint position, QmlVectorPoint & firePoints, std::vector<DamageData>& ret) const
 {
-    for (auto & target : qAsConst(firePoints.getVector()))
+    for (auto & target : std::as_const(firePoints.getVector()))
     {
         QPoint finalPos = target + position;
         if (m_pMap->onMap(finalPos.x(), finalPos.y()))
@@ -2989,7 +2989,7 @@ void CoreAI::serializeObject(QDataStream& stream) const
         stream << iniFile;
     }
     stream << static_cast<qint32>(m_iniData.size());
-    for (const auto & item : qAsConst(m_iniData))
+    for (const auto & item : std::as_const(m_iniData))
     {
         stream << item.m_name;
         stream << *item.m_value;

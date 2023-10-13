@@ -108,7 +108,7 @@ void CO::setCOUnit(Unit* pUnit)
         QString function1 = "onCOUnitLost";
         QJSValueList args({m_jsThis,
                            JsThis::getJsThis(m_pMap)});
-        for (const auto & perk : qAsConst(m_perkList))
+        for (const auto & perk : std::as_const(m_perkList))
         {
             if (isJsFunctionEnabled(perk))
             {
@@ -159,7 +159,7 @@ void CO::endOfTurn()
     QString function1 = "endOfTurn";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -174,7 +174,7 @@ void CO::startOfTurn()
     QString function1 = "startOfTurn";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -190,7 +190,7 @@ void CO::onUnitDeath(Unit* pUnit)
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -299,7 +299,7 @@ qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -326,7 +326,7 @@ bool CO::getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDe
                        JsThis::getJsThis(m_pMap),
                        attackerPosition.x(),
                        attackerPosition.y()});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -350,7 +350,7 @@ qint32 CO::getEnemyTerrainDefenseModifier(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -374,7 +374,7 @@ qint32 CO::getVisionrangeModifier(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -411,7 +411,7 @@ QStringList CO::getCOUnits(Building* pBuilding)
                        JsThis::getJsThis(pBuilding),
                        JsThis::getJsThis(m_pMap)});
     QStringList ret;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         QJSValue erg = pInterpreter->doFunction(perk, function1, args);
         ret.append(erg.toVariant().toStringList());
@@ -427,7 +427,7 @@ QStringList CO::getTransportUnits(Unit* pUnit)
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(m_pMap)});
     QStringList ret;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         QJSValue erg = pInterpreter->doFunction(perk, function1, args);
         ret.append(erg.toVariant().toStringList());
@@ -445,7 +445,7 @@ qint32 CO::getMovementpointModifier(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -469,7 +469,7 @@ qint32 CO::getFirerangeModifier(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -493,7 +493,7 @@ qint32 CO::getMinFirerangeModifier(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -516,7 +516,7 @@ bool CO::getHpHidden(Unit* pUnit, QPoint position)
                        position.x(),
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -539,7 +539,7 @@ bool CO::getRankInfoHidden(Unit* pUnit, QPoint position)
                        position.x(),
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -562,7 +562,7 @@ bool CO::getPerfectHpView(Unit* pUnit, QPoint position)
                        position.x(),
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -586,7 +586,7 @@ qint32 CO::getAttackHpBonus(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -610,7 +610,7 @@ qint32 CO::getBonusLuck(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -634,7 +634,7 @@ qint32 CO::getEnemyBonusLuck(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -658,7 +658,7 @@ qint32 CO::getBonusMisfortune(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -682,7 +682,7 @@ qint32 CO::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -704,7 +704,7 @@ qreal CO::getEnemyRepairCostModifier(Unit* pUnit)
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(m_pMap)});
     qreal ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -726,7 +726,7 @@ qreal CO::getRepairCostModifier(Unit* pUnit)
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(m_pMap)});
     qreal ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -748,7 +748,7 @@ QStringList CO::getAdditionalBuildingActions(Building* pBuilding)
                        JsThis::getJsThis(pBuilding),
                        JsThis::getJsThis(m_pMap)});
     QStringList ret;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -781,7 +781,7 @@ qint32 CO::getFuelCostModifier(Unit* pUnit, QPoint position, qint32 costs)
                        costs,
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -805,7 +805,7 @@ qint32 CO::getMovementcostModifier(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -828,7 +828,7 @@ qint32 CO::getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost)
                        fuelCost,
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -849,7 +849,7 @@ void CO::buildedUnit(Unit* pUnit)
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -869,7 +869,7 @@ qint32 CO::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -894,7 +894,7 @@ qint32 CO::getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint posi
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -933,7 +933,7 @@ bool CO::getCanMoveAndFire(Unit* pUnit, QPoint position)
                        position.x(),
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -957,7 +957,7 @@ qint32 CO::getRepairBonus(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -980,7 +980,7 @@ bool CO::canBeRepaired(Unit* pUnit, QPoint position)
                        position.x(),
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1004,7 +1004,7 @@ qint32 CO::getCaptureBonus(Unit* pUnit, QPoint position)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1028,7 +1028,7 @@ void CO::activatePower()
     QString function1 = "activatePower";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         pInterpreter->doFunction(perk, function1, args);
     }
@@ -1050,7 +1050,7 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
     QJSValueList args({m_jsThis,
                        powerMode,
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         pInterpreter->doFunction(perk, function1, args);
     }
@@ -1099,7 +1099,7 @@ qint32 CO::getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPos
                        luckMode,
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1129,7 +1129,7 @@ qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint at
                        luckMode,
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1152,7 +1152,7 @@ qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
                        position.y(),
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1182,7 +1182,7 @@ qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPo
                        luckMode,
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1212,7 +1212,7 @@ qint32 CO::getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint a
                        luckMode,
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1245,7 +1245,7 @@ qreal CO::getDamageReduction(GameAction* pAction, qreal damage, Unit* pAttacker,
                        JsThis::getJsThis(pAction),
                        JsThis::getJsThis(m_pMap)});
     qreal ergValue = 0.0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1278,7 +1278,7 @@ qreal CO::getTrueDamage(GameAction* pAction, qreal damage, Unit* pAttacker, QPoi
                           luckMode,
                           JsThis::getJsThis(m_pMap)});
     qreal ergValue = 0.0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1307,7 +1307,7 @@ GameEnums::CounterAttackMode CO::canCounterAttack(GameAction* pAction, Unit* pAt
                        luckMode,
                        JsThis::getJsThis(m_pMap)});
     auto ergValue = GameEnums::CounterAttackMode_Undefined;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1356,7 +1356,7 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
                            JsThis::getJsThis(m_pMap)});
         // call co bonus
         QString function1 = "gainPowerstar";
-        for (const auto & perk : qAsConst(m_perkList))
+        for (const auto & perk : std::as_const(m_perkList))
         {
             pInterpreter->doFunction(perk, function1, args);
         }
@@ -1393,7 +1393,7 @@ QStringList CO::getActionModifierList(Unit* pUnit)
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(m_pMap)});
     QStringList ret;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1413,7 +1413,7 @@ qint32 CO::getCORange()
         QString function1 = "getCOUnitRange";
         QJSValueList args({m_jsThis,
                            JsThis::getJsThis(m_pMap)});
-        for (const auto & perk : qAsConst(m_perkList))
+        for (const auto & perk : std::as_const(m_perkList))
         {
             if (isJsFunctionEnabled(perk))
             {
@@ -1472,7 +1472,7 @@ qint32 CO::getIncomeReduction(Building* pBuilding, qint32 income)
                        income,
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1493,7 +1493,7 @@ qint32 CO::getPowerChargeBonus()
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1516,7 +1516,7 @@ qint32 CO::getBonusIncome(Building* pBuilding, qint32 income)
                       income,
                       JsThis::getJsThis(m_pMap)});
     qint32 ergValue = 0;
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1536,7 +1536,7 @@ bool CO::getPerfectVision()
     QString function1 = "getPerfectVision";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1556,7 +1556,7 @@ bool CO::getWeatherImmune()
     QString function1 = "getWeatherImmune";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1577,7 +1577,7 @@ void CO::postAction(GameAction* pAction)
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pAction),
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -1934,7 +1934,7 @@ void CO::postBattleActions(Unit* pAttacker, qreal atkDamage, Unit* pDefender, bo
                        weapon,
                        JsThis::getJsThis(pAction),
                        JsThis::getJsThis(m_pMap)});
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
         {
@@ -2046,7 +2046,7 @@ void CO::serializeObject(QDataStream& pStream, bool forHash) const
     m_Variables.serializeObject(pStream, forHash);
     pStream << m_powerUsed;
     pStream << static_cast<qint32>(m_perkList.size());
-    for (const auto & perk : qAsConst(m_perkList))
+    for (const auto & perk : std::as_const(m_perkList))
     {
         pStream << perk;
     }

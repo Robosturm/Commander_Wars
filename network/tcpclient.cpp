@@ -157,7 +157,7 @@ void TCPClient::setSocketID(const quint64 &socketID)
 
 void TCPClient::sslErrors(const QList<QSslError> &errors)
 {
-    for (const auto & error : qAsConst(errors))
+    for (const auto & error : std::as_const(errors))
     {
         CONSOLE_PRINT(error.errorString(), GameConsole::eLogLevels::eDEBUG);
     }

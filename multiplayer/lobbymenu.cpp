@@ -386,7 +386,7 @@ void LobbyMenu::joinGamePassword(QString password)
     bool exists = false;
     if (m_currentGame.getUuid() != 0)
     {
-        for (const auto &game : qAsConst(m_games))
+        for (const auto &game : std::as_const(m_games))
         {
             if (m_currentGame.getUuid() == game.getUuid())
             {
@@ -478,7 +478,7 @@ void LobbyMenu::observeGamePassword(QString password)
     bool exists = false;
     if (m_currentGame.getUuid() != 0)
     {
-        for (const auto &game : qAsConst(m_games))
+        for (const auto &game : std::as_const(m_games))
         {
             if (m_currentGame.getUuid() == game.getUuid())
             {

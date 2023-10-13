@@ -173,7 +173,7 @@ QVector<PerkSelection::PerkGroup> PerkSelection::getPerksGrouped()
 qint32 PerkSelection::getPerkScore(const QStringList & perks) const
 {
     qint32 perkScore = 0;
-    for (const auto & perk : qAsConst(perks))
+    for (const auto & perk : std::as_const(perks))
     {
         perkScore += getPerkScore(perk);
     }
@@ -319,7 +319,7 @@ void PerkSelection::selectRandomPerks(bool fill)
     {
         selectedPerks = m_pCO->getPerkList();
     }
-    for (const auto & perk : qAsConst(selectedPerks))
+    for (const auto & perk : std::as_const(selectedPerks))
     {
         perks.removeAll(perk);
     }

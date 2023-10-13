@@ -500,7 +500,7 @@ void IngameInfoBar::createMovementInfo(qint32 x, qint32 y)
     qint32 posY = 80;
     qint32 posX = 10;
     auto movements = pMovementTableManager->getLoadedRessources();
-    for (const auto &movement : qAsConst(movements))
+    for (const auto &movement : std::as_const(movements))
     {
         qint32 cost = pMovementTableManager->getBaseMovementPoints(movement, pTerrain, pTerrain, nullptr);
         if (cost >= 0)

@@ -60,7 +60,7 @@ QStringList UnitSpriteManager::getUnitsSorted()
     QString function1 = "getUnitTypeSort";
     QJSValue ret = pInterpreter->doFunction("UNIT", function1);
     auto list = ret.toVariant().toList();
-    for (const auto & unitType : qAsConst(list))
+    for (const auto & unitType : std::as_const(list))
     {
         qint32 value = unitType.toInt();
         if (!unitTypes.contains(value))

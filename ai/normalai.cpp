@@ -3213,7 +3213,7 @@ float NormalAi::calcSameFundsMatchUpScore(Unit &dummy, const QStringList &buildL
     float resultScore = 0;
     auto movepoints = dummy.getMovementpoints(dummy.getPosition());
     float count = 0;
-    for (const auto &unitId : qAsConst(buildList))
+    for (const auto &unitId : std::as_const(buildList))
     {
         Unit dummyMatchUp(unitId, m_pPlayer, false, m_pMap);
         auto matchUpMovepoints = dummyMatchUp.getMovementpoints(dummy.getPosition());

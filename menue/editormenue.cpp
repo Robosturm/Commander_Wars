@@ -406,7 +406,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         MenuItem("EDITBIOMES",          &EditorMenue::showEditBiomes),
         MenuItem("UPDATESPRITES",       &EditorMenue::updateSprites),
     };
-    for (auto & item : qAsConst(items))
+    for (auto & item : std::as_const(items))
     {
         if (item.m_Id == itemID &&
             item.m_func != nullptr)

@@ -240,7 +240,7 @@ void GameMap::applyToArea(const QRect& area, std::function<void (qint32 x, qint3
 bool GameMap::anyPlayerAlive()
 {
     qint32 count = 0;
-    for (const auto & player : qAsConst(m_players))
+    for (const auto & player : std::as_const(m_players))
     {
         if (!player->getIsDefeated())
         {
@@ -718,7 +718,7 @@ void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints, bool applyRulesPalet
                 pPfs->explore();
                 pTerrain->updateFlowSprites(pPfs.get(), applyRulesPalette);
                 auto points = pPfs->getAllNodePointsFast();
-                for (const auto & point : qAsConst(points))
+                for (const auto & point : std::as_const(points))
                 {
                     flowPoints.removeAll(point);
                 }

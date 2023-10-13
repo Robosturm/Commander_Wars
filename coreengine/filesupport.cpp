@@ -13,7 +13,7 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
     QStringList fullList;
 
     QString userPath = Settings::getInstance()->getUserPath();
-    for (const auto & folder : qAsConst(folders))
+    for (const auto & folder : std::as_const(folders))
     {
         fullList.append(oxygine::Resource::RCC_PREFIX_PATH + folder);
         fullList.append(userPath + folder);
@@ -22,7 +22,7 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
             fullList.append(folder);
         }
     }
-    for (const auto & folder : qAsConst(fullList))
+    for (const auto & folder : std::as_const(fullList))
     {
         CONSOLE_PRINT_MODULE("Adding files for folder: " + folder, GameConsole::eDEBUG, GameConsole::eFileSupport);
         addHash(myHash, folder, filter);

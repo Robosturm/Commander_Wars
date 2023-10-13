@@ -184,7 +184,7 @@ void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
         m_showVisionFields = true;
         Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
         auto points = pUnit->getVisionFields(pUnit->Unit::getPosition());
-        for (auto & point : qAsConst(points))
+        for (auto & point : std::as_const(points))
         {
             if (!GlobalUtils::contains(m_FieldPoints, QPoint(point.x(), point.y())))
             {

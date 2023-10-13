@@ -34,7 +34,7 @@ void CrashReporter::_writeLog( const QString &inSignal)
     {
         QTextStream stream( &file );
         QStringList dataList = cReportHeader;
-        for (const QString & data : qAsConst(dataList))
+        for (const QString & data : std::as_const(dataList))
         {
             stream << data << Qt::endl;
             ret += data + "\n";

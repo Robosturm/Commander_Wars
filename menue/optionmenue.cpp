@@ -265,7 +265,7 @@ void OptionMenue::showMods()
     qint32 mods = 0;
     style.multiline = false;
     QStringList availableMods = Settings::getInstance()->getAvailableMods();
-    for (const auto & mod : qAsConst(availableMods))
+    for (const auto & mod : std::as_const(availableMods))
     {
         QString name;
         QString description;
@@ -279,7 +279,7 @@ void OptionMenue::showMods()
         Settings::getInstance()->getModInfos(mod, name, description, version,
                               compatibleMods, incompatibleMods, requiredMods, isComsetic,
                               modTags, thumbnail);
-        for (const auto & tag : qAsConst(modTags))
+        for (const auto & tag : std::as_const(modTags))
         {
             if (!tags.contains(tag))
             {
@@ -363,7 +363,7 @@ void OptionMenue::updateModSelection()
     QStringList currentMods = Settings::getInstance()->getMods();
     qint32 index = 0;
     bool set = false;
-    for (const auto & gameMode : qAsConst(m_gamemodeMods))
+    for (const auto & gameMode : std::as_const(m_gamemodeMods))
     {
         bool valid = (currentMods.size() == gameMode.m_enableMods.size());
         for (const auto & activeMod : gameMode.m_enableMods)
@@ -502,7 +502,7 @@ void OptionMenue::updateModCheckboxes()
         Settings::getInstance()->getModInfos(mod, name, description, version,
                               compatibleMods, incompatibleMods, requiredMods, isComsetic, tags, thumbnail);
         qint32 i2 = 0;
-        for (const auto & checkBoxMod : qAsConst(availableMods))
+        for (const auto & checkBoxMod : std::as_const(availableMods))
         {
             if (incompatibleMods.contains(checkBoxMod))
             {
@@ -512,7 +512,7 @@ void OptionMenue::updateModCheckboxes()
         }
     }
     qint32 i = 0;
-    for (const auto & mod : qAsConst(availableMods))
+    for (const auto & mod : std::as_const(availableMods))
     {
         QString name;
         QString description;
@@ -525,7 +525,7 @@ void OptionMenue::updateModCheckboxes()
         bool isComsetic = false;
         Settings::getInstance()->getModInfos(mod, name, description, version,
                               compatibleMods, incompatibleMods, requiredMods, isComsetic, tags, thumbnail);
-        for (const auto & incompatibleMod : qAsConst(incompatibleMods))
+        for (const auto & incompatibleMod : std::as_const(incompatibleMods))
         {
             if (mods.contains(incompatibleMod))
             {
@@ -535,7 +535,7 @@ void OptionMenue::updateModCheckboxes()
         }
         if (m_ModCheckboxes[i]->getEnabled())
         {
-            for (const auto & requiredMod : qAsConst(requiredMods))
+            for (const auto & requiredMod : std::as_const(requiredMods))
             {
                 if (!mods.contains(requiredMod))
                 {

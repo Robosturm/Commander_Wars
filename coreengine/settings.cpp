@@ -953,7 +953,7 @@ void Settings::setActiveMods(const QStringList activeMods)
         }
     }
     m_activeMods.sort();
-    for (const auto & mod : qAsConst(m_activeMods))
+    for (const auto & mod : std::as_const(m_activeMods))
     {
         CONSOLE_PRINT("Loaded mod: " + mod, GameConsole::eDEBUG);
         bool found = false;
@@ -1136,7 +1136,7 @@ void Settings::setup()
     m_settingFile = defaultPath + m_settingFile;
     auto devices = QInputDevice::devices();
     bool hasTouch = false;
-    for (const auto & device: qAsConst(devices))
+    for (const auto & device: std::as_const(devices))
     {
         if (device->type() == QInputDevice::DeviceType::TouchScreen)
         {
@@ -2128,7 +2128,7 @@ QStringList Settings::getLanguageNames()
      }
      QStringList filter;
      filter << "*.qm";
-     for (const QString & path : qAsConst(paths))
+     for (const QString & path : std::as_const(paths))
      {
          QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
          while (dirIter.hasNext())
@@ -2151,7 +2151,7 @@ QStringList Settings::getLanguageIds()
      QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
      QStringList filter;
      filter << "*.qm";
-     for (const QString & path : qAsConst(paths))
+     for (const QString & path : std::as_const(paths))
      {
          QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
          while (dirIter.hasNext())
@@ -2174,7 +2174,7 @@ qint32 Settings::getCurrentLanguageIndex()
      QStringList filter;
      filter << "*.qm";
      qint32 i = 0;
-     for (const QString & path : qAsConst(paths))
+     for (const QString & path : std::as_const(paths))
      {
          QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
          while (dirIter.hasNext())

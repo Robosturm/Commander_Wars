@@ -303,7 +303,7 @@ void DecisionTree::getTrainingData(QString file, std::vector<std::vector<float>>
 
     QStringList mods = Settings::getInstance()->getMods();
     QStringList fullMods;
-    for(const QString & mod : qAsConst(mods))
+    for(const QString & mod : std::as_const(mods))
     {
         fullMods.append(oxygine::Resource::RCC_PREFIX_PATH + mod);
         fullMods.append(Settings::getInstance()->getUserPath() + mod);

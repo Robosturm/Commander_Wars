@@ -60,7 +60,7 @@ void ProxyAi::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();
     stream << static_cast<qint32>(m_ActionBuffer.size());
-    for (const auto & action : qAsConst(m_ActionBuffer))
+    for (const auto & action : std::as_const(m_ActionBuffer))
     {
         action->serializeObject(stream);
     }

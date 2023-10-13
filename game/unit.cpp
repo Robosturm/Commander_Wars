@@ -2861,7 +2861,7 @@ void Unit::createMoveVision(QVector<QPoint> movePath)
         if (moveCost > 0)
         {
             auto fields = getVisionFields(movePath[i]);
-            for (auto & field : qAsConst(fields))
+            for (auto & field : std::as_const(fields))
             {
                 m_pOwner->addVisionField(field.x(), field.y(), 1, field.z());
             }

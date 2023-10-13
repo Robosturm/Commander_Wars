@@ -939,7 +939,7 @@ void PlayerSelection::autoSelectPlayerColors()
             }
         }
         qint32 colors = pPlayer0Color->getItemCount();
-        for (const auto &openPlayer : qAsConst(openPlayers))
+        for (const auto &openPlayer : std::as_const(openPlayers))
         {
             for (qint32 i = 0; i < colors; ++i)
             {

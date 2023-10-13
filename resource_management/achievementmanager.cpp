@@ -18,7 +18,7 @@ void AchievementManager::loadAll()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     RessourceManagement<AchievementManager>::loadAll();
-    for (const auto & achievement : qAsConst(m_loadedRessources))
+    for (const auto & achievement : std::as_const(m_loadedRessources))
     {
         pInterpreter->doFunction(achievement, "registerAchievements");
     }
@@ -31,7 +31,7 @@ void AchievementManager::onVictory(qint32 team, bool humanWin, GameMap* pMap)
     QJSValueList args({team,
                        humanWin,
                        JsThis::getJsThis(pMap)});
-    for (const auto & achievement : qAsConst(m_loadedRessources))
+    for (const auto & achievement : std::as_const(m_loadedRessources))
     {
         pInterpreter->doFunction(achievement, "onVictory", args);
     }

@@ -136,7 +136,7 @@ QString GameManager::getDescription(qint32 position)
 QStringList GameManager::getDefaultActionbBannlist()
 {
     QStringList ret;
-    for (const auto & action : qAsConst(m_loadedRessources))
+    for (const auto & action : std::as_const(m_loadedRessources))
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue value = pInterpreter->doFunction(action, "getBannedByDefault");

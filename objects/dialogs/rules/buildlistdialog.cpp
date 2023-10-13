@@ -188,7 +188,7 @@ QVector<BuildListDialog::UnitGroup> BuildListDialog::getUnitGroups()
     m_UnitList = pUnitSpriteManager->getUnitsSorted();
     UnitGroup currentGroup;
     qint32 currentIdentifier = std::numeric_limits<qint32>::min();
-    for (const auto & unit : qAsConst(m_UnitList))
+    for (const auto & unit : std::as_const(m_UnitList))
     {
         qint32 newIdentifier = pUnitSpriteManager->getUnitType(unit);
         if (newIdentifier != currentIdentifier)

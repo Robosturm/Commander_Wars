@@ -311,7 +311,7 @@ QStringList GlobalUtils::getFiles(const QString folder, const QStringList filter
     QStringList ret;
 
     QStringList paths = {oxygine::Resource::RCC_PREFIX_PATH, Settings::getInstance()->getUserPath()};
-    for (const auto & path : qAsConst(paths))
+    for (const auto & path : std::as_const(paths))
     {
         QDirIterator dirIter(path + folder, filter, QDir::Files, QDirIterator::Subdirectories);
         while (dirIter.hasNext())
@@ -463,10 +463,10 @@ QFileInfoList GlobalUtils::getInfoList(const QString & folder, const QStringList
     QFileInfoList infoList;
     infoList.append(QDir(Settings::getInstance()->getUserPath() + folder).entryInfoList(QDir::Dirs));
     auto virtList = QDir(oxygine::Resource::RCC_PREFIX_PATH + folder).entryInfoList(QDir::Dirs);
-    for (const auto & item : qAsConst(virtList))
+    for (const auto & item : std::as_const(virtList))
     {
         bool found = false;
-        for (const auto & item2 : qAsConst(infoList))
+        for (const auto & item2 : std::as_const(infoList))
         {
             if (item2.baseName() == item.baseName())
             {

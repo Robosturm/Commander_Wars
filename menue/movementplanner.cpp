@@ -211,7 +211,7 @@ void MovementPlanner::clickedTopbar(QString itemID)
         MenuItem("HIDE",                &MovementPlanner::hide),
     };
     bool called = false;
-    for (auto & item : qAsConst(items))
+    for (auto & item : std::as_const(items))
     {
         if (item.m_Id == itemID &&
             item.m_func != nullptr)

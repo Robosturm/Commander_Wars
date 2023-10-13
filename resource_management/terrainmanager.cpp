@@ -38,7 +38,7 @@ QString TerrainManager::getFittingResAnim(const QString spriteIdStart, const QSt
     const auto & keys = m_resourcesMap.keys();
     const auto spriteIdStartLower = spriteIdStart.toLower();
     const auto spriteIdEndLower = spriteIdEnd.toLower();
-    for (const auto & key : qAsConst(keys))
+    for (const auto & key : std::as_const(keys))
     {
         if (key.startsWith(spriteIdStartLower) &&
             key.endsWith(spriteIdEndLower))
@@ -83,7 +83,7 @@ QStringList TerrainManager::getTerrainsSorted()
     QString function1 = "getTerrainGroupSort";
     QJSValue ret = pInterpreter->doFunction("TERRAIN", function1);
     auto list = ret.toVariant().toList();
-    for (const auto & terrainType : qAsConst(list))
+    for (const auto & terrainType : std::as_const(list))
     {
         qint32 value = terrainType.toInt();
         if (!terrainGroups.contains(value))

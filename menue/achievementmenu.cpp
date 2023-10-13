@@ -98,7 +98,7 @@ Achievementmenu::Achievementmenu()
     QStringList groups{tr("All")};
     Userdata* pUserdata = Userdata::getInstance();
     const auto* achievements = pUserdata->getAchievements();
-    for (const auto & achievement : qAsConst(*achievements))
+    for (const auto & achievement : std::as_const(*achievements))
     {
         if (achievement.loaded && !groups.contains(achievement.group))
         {
@@ -137,7 +137,7 @@ Achievementmenu::Achievementmenu()
 
     qint32 singleWidth = oxygine::Stage::getStage()->getWidth() - 80;
     qint32 achieveCount = 0;
-    for (const auto & achievement : qAsConst(*achievements))
+    for (const auto & achievement : std::as_const(*achievements))
     {
         if (achievement.loaded)
         {
@@ -251,7 +251,7 @@ void Achievementmenu::searchChanged(QString searchText, QString group, SortDirec
     qint32 x = 10;
     qint32 y = 10;
     qint32 singleWidth = oxygine::Stage::getStage()->getWidth() - 80;
-    for (const auto & achievement : qAsConst(achievements))
+    for (const auto & achievement : std::as_const(achievements))
     {
         if (achievement.loaded)
         {
