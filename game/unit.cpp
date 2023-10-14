@@ -340,11 +340,6 @@ void Unit::syncAnimation(oxygine::timeMS syncTime)
 #endif
 }
 
-Player* Unit::getOwner()
-{
-    return m_pOwner;
-}
-
 QString Unit::getName()
 {
     if (m_customName.isEmpty())
@@ -2585,30 +2580,6 @@ qreal Unit::getUnitDamage(const QString & weaponID)
         return ret.toNumber();
     }
     return -1.0;
-}
-
-qint32 Unit::getX() const
-{
-    if (m_pTerrain != nullptr)
-    {
-        return m_pTerrain->Terrain::getX();
-    }
-    else
-    {
-        return m_virtuellX;
-    }
-}
-
-qint32 Unit::getY() const
-{
-    if (m_pTerrain != nullptr)
-    {
-        return m_pTerrain->Terrain::getY();
-    }
-    else
-    {
-        return m_virtuellY;
-    }
 }
 
 void Unit::refill(bool noMaterial, qreal fuelAmount, qreal ammo1Amount, qreal ammo2Amount)

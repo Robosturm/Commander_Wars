@@ -1,7 +1,10 @@
 #pragma once
 
-#include <game/unitpathfindingsystem.h>
+#include "game/unitpathfindingsystem.h"
 #include "ai/heavyai/heavyAiSharedData.h"
+
+class UnitTargetedPathFindingSystem;
+using spUnitTargetedPathFindingSystem = std::shared_ptr<UnitTargetedPathFindingSystem>;
 
 class UnitTargetedPathFindingSystem : public UnitPathFindingSystem
 {
@@ -12,7 +15,7 @@ public:
         Unit* pUnit{nullptr};
     };
 
-    UnitTargetedPathFindingSystem(GameMap* pMap, Unit* pUnit, std::vector<HeavyAiSharedData::UnitInfo> & pTargets);
+    UnitTargetedPathFindingSystem(GameMap* pMap, qint32 unitIdx, std::array<HeavyAiSharedData::spUnitInfo, HeavyAiSharedData::UNIT_COUNT> & pTargets);
     /**
      * @brief getRemainingCost
      * @param x
@@ -29,7 +32,9 @@ public:
      */
     virtual bool finished(qint32 x, qint32 y, qint32)  override;
 private:
-    std::vector<HeavyAiSharedData::UnitInfo> m_pTargets;
-    std::vector<HeavyAiSharedData::UnitInfo> m_reachableTargets;
+    std::array<HeavyAiSharedData::spUnitInfo, HeavyAiSharedData::UNIT_COUNT> & m_pTargets;
+    qint32 m_searchIndex{0};
+    bool m_allReached{false};
+    qint32 m_unitIdx{-1};
 };
 

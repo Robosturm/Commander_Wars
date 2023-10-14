@@ -9,6 +9,7 @@
 #include "coreengine/jsthis.h"
 
 #include "game/GameEnums.h"
+#include "game/terrain.h"
 
 #include "objects/base/tooltip.h"
 
@@ -196,12 +197,32 @@ public:
      * @brief getX
      * @return  x coordinates of this unit
      */
-    Q_INVOKABLE qint32 getX() const;
+    Q_INVOKABLE qint32 getX() const
+    {
+        if (m_pTerrain != nullptr)
+        {
+            return m_pTerrain->Terrain::getX();
+        }
+        else
+        {
+            return m_virtuellX;
+        }
+    }
     /**
      * @brief getY
      * @return  y coordinates of this unit
      */
-    Q_INVOKABLE qint32 getY() const;
+    Q_INVOKABLE qint32 getY() const
+    {
+        if (m_pTerrain != nullptr)
+        {
+            return m_pTerrain->Terrain::getY();
+        }
+        else
+        {
+            return m_virtuellY;
+        }
+    }
     /**
      * @brief createUnitPathFindingSystem Note: the path finding system needs to be deleted by the caller using remove()
      * @return a path finding system that is explored for this unit using the given player information
@@ -570,7 +591,10 @@ public:
      * @brief getOwner
      * @return the pointer to the owner of this unit
      */
-    Q_INVOKABLE Player* getOwner();
+    Q_INVOKABLE Player* getOwner()
+    {
+        return m_pOwner;
+    }
     /**
      * @brief getMovementType the movement type id
      * @return

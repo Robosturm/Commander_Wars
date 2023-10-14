@@ -7,7 +7,6 @@
 #include <QVector>
 #include <QVector3D>
 
-#include "coreengine/qmlvector.h"
 #include "coreengine/fileserializable.h"
 #include "coreengine/jsthis.h"
 
@@ -17,6 +16,12 @@
 
 #include "gameinput/basegameinputif.h"
 
+class QmlVectorPoint;
+using spQmlVectorPoint = std::shared_ptr<QmlVectorPoint>;
+class QmlVectorUnit;
+using spQmlVectorUnit = std::shared_ptr<QmlVectorUnit>;
+class QmlVectorBuilding;
+using spQmlVectorBuilding = std::shared_ptr<QmlVectorBuilding>;
 class SimpleProductionSystem;
 class GameMap;
 class Player;
@@ -270,7 +275,14 @@ public:
      * @brief getPlayerID player id of this player from 0 to n
      * @return
      */
-    Q_INVOKABLE qint32 getPlayerID() const;
+    Q_INVOKABLE qint32 getPlayerID()
+    {
+        if (m_pMap != nullptr && m_playerId < 0)
+        {
+            updatePlayerID();
+        }
+        return m_playerId;
+    }
     /**
      * @brief getArmy the army string id of this player.
      * @return
@@ -746,6 +758,10 @@ private:
      * @param pUnit
      */
     qint32 calculatePlayerStrength(Unit* pUnit) const;
+    /**
+     * @brief Player::updatePlayerID
+     */
+    void updatePlayerID();
 protected:
     GameMap* m_pMap{nullptr};
 
@@ -794,6 +810,7 @@ private:
     quint64 m_socketId{0};
     bool m_playerArmySelected{false};
     qint32 m_averageCosts{-1};
+    qint32 m_playerId{-1};
     /**
      * @brief m_uniqueIdentifier
      */

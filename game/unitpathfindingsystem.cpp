@@ -68,7 +68,8 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
             if (!m_useBasecosts)
             {
                 // check for an enemy on the field
-                if (pUnit != nullptr)
+                if (pUnit != nullptr &&
+                    pUnit->getHp() > 0.0)
                 {
                     // ignore unit if it's not an enemy unit or if it's stealthed
                     if (m_pUnit->getOwner()->isEnemyUnit(pUnit) &&

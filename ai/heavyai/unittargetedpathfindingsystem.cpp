@@ -1,34 +1,37 @@
 #include "ai/heavyai/unittargetedpathfindingsystem.h"
 #include "coreengine/globalutils.h"
 
-UnitTargetedPathFindingSystem::UnitTargetedPathFindingSystem(GameMap* pMap, Unit* pUnit, std::vector<HeavyAiSharedData::UnitInfo> & pTargets)
-    : UnitPathFindingSystem(pMap, pUnit),
-    m_pTargets(pTargets)
+UnitTargetedPathFindingSystem::UnitTargetedPathFindingSystem(GameMap* pMap, qint32 unitIdx, std::array<HeavyAiSharedData::spUnitInfo, HeavyAiSharedData::UNIT_COUNT> & pTargets)
+    : UnitPathFindingSystem(pMap, pTargets[unitIdx]->pUnit),
+    m_pTargets(pTargets),
+    m_unitIdx{unitIdx}
 
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("UnitTargetedPathFindingSystem");
 #endif
     Interpreter::setCppOwnerShip(this);
-    m_reachableTargets.reserve(m_pTargets.size());
 }
 
 qint32 UnitTargetedPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)
 {
+    m_allReached = true;
     qint32 minCost = std::numeric_limits<qint32>::max();
-    for (qint32 i = 0; i < m_pTargets.size(); ++i)
+    for (qint32 i = m_searchIndex; i < m_pTargets.size(); ++i)
     {
         auto & target = m_pTargets[i];
-        auto & cache = target.pUnit->getAiCache();
-        qint32 distance = GlobalUtils::getDistance(x, y, target.pUnit->getX(), target.pUnit->getY());
+        auto & cache = target->pUnit->getAiCache();
+        qint32 distance = GlobalUtils::getDistance(x, y, target->pUnit->getX(), target->pUnit->getY());
         qint32 maxFireRange = cache[HeavyAiSharedData::AiCache::MaxFirerange];
         // in fire range?
         if (distance >= cache[HeavyAiSharedData::AiCache::MinFirerange] &&
             distance <= maxFireRange)
         {
-            m_pTargets[i].reachable = true;
-            m_reachableTargets.push_back(m_pTargets[i]);
-            m_pTargets.erase(m_pTargets.cbegin() + i);
+            m_pTargets[m_unitIdx]->reachable[i] = true;
+            if (i == m_searchIndex)
+            {
+                m_searchIndex += 1;
+            }
         }
         else
         {
@@ -37,6 +40,7 @@ qint32 UnitTargetedPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
             {
                 minCost = newCost;
             }
+            m_allReached = false;
         }
     }
     return minCost;
@@ -44,5 +48,5 @@ qint32 UnitTargetedPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
 
 bool UnitTargetedPathFindingSystem::finished(qint32 x, qint32 y, qint32 movementCosts)
 {
-    return m_pTargets.size() == 0;
+    return m_allReached;
 }

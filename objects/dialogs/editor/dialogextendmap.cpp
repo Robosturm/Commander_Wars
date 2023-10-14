@@ -6,6 +6,7 @@
 #include "objects/base/textbox.h"
 
 #include "coreengine/interpreter.h"
+#include "coreengine/globalutils.h"
 
 #include "resource_management/objectmanager.h"
 

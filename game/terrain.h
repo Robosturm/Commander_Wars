@@ -8,13 +8,15 @@
 #include "coreengine/JsCallback.h"
 #include "coreengine/scriptvariables.h"
 #include "coreengine/jsthis.h"
-
-#include "game/unit.h"
-#include "game/building.h"
-
 #include "objects/base/tooltip.h"
+#include "game/GameEnums.h"
 
+class GameAction;
+class Building;
+using spBuilding = std::shared_ptr<Building>;
 class Player;
+class Unit;
+using spUnit = std::shared_ptr<Unit>;
 class TerrainFindingSystem;
 class GameMap;
 using spTerrainFindingSystem = std::shared_ptr<TerrainFindingSystem>;
@@ -369,11 +371,17 @@ public:
     Q_INVOKABLE const QString getTerrainID() const;
     Q_INVOKABLE QString getTerrainName() const;
     Q_INVOKABLE void setTerrainName(const QString & value, bool customName = false);
-    Q_INVOKABLE qint32 getX() const;
+    Q_INVOKABLE qint32 getX() const
+    {
+        return m_x;
+    }
     Q_INVOKABLE void setX(const qint32 value);
     Q_INVOKABLE qint32 getHp() const;
     Q_INVOKABLE void setHp(const qint32 value);
-    Q_INVOKABLE qint32 getY() const;
+    Q_INVOKABLE qint32 getY() const
+    {
+        return m_y;
+    }
     Q_INVOKABLE void setY(const qint32 value);
     /**
      * @brief Terrain::getVision

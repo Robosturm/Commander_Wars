@@ -1407,11 +1407,6 @@ const QString Terrain::getTerrainID() const
     return m_terrainID;
 }
 
-qint32 Terrain::getX() const
-{
-    return m_x;
-}
-
 void Terrain::setX(const qint32 value)
 {
     m_x = value;
@@ -1419,11 +1414,6 @@ void Terrain::setX(const qint32 value)
     {
         m_pBaseTerrain->setX(value);
     }
-}
-
-qint32 Terrain::getY() const
-{
-    return m_y;
 }
 
 void Terrain::setY(const qint32 value)

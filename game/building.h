@@ -5,6 +5,8 @@
 #include <QVector>
 
 #include "game/GameEnums.h"
+#include "game/player.h"
+#include "game/terrain.h"
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 #include "coreengine/jsthis.h"
@@ -12,7 +14,6 @@
 #include "objects/base/tooltip.h"
 
 class QmlVectorPoint;
-class Player;
 class Unit;
 class Terrain;
 class GameAction;
@@ -257,12 +258,22 @@ public:
      * @brief getOwnerID
      * @return the player owner index of this building
      */
-    Q_INVOKABLE qint32 getOwnerID();
+    Q_INVOKABLE qint32 getOwnerID()
+    {
+        if (m_pOwner != nullptr)
+        {
+            return m_pOwner->getPlayerID();
+        }
+        return -1;
+    }
     /**
      * @brief getOwner
      * @return the pointer to the owner of this building
      */
-    Q_INVOKABLE Player* getOwner();
+    Q_INVOKABLE Player* getOwner()
+    {
+        return m_pOwner;
+    }
     /**
      * @brief getBuildingID
      * @return the string if of this building
@@ -275,12 +286,32 @@ public:
      * @brief getX
      * @return  x coordinates of this unit
      */
-    Q_INVOKABLE qint32 getX() const;
+    Q_INVOKABLE qint32 getX() const
+    {
+        if (m_pTerrain != nullptr)
+        {
+            return m_pTerrain->Terrain::getX();
+        }
+        else
+        {
+            return -1;
+        }
+    }
     /**
      * @brief getY
      * @return  y coordinates of this unit
      */
-    Q_INVOKABLE qint32 getY() const;
+    Q_INVOKABLE qint32 getY() const
+    {
+        if (m_pTerrain != nullptr)
+        {
+            return m_pTerrain->Terrain::getY();
+        }
+        else
+        {
+            return -1;
+        }
+    }
     /**
      * @brief getPosition
      * @return

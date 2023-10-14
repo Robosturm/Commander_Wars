@@ -222,20 +222,6 @@ void Building::setOwner(Player* pOwner)
     }
 }
 
-Player* Building::getOwner()
-{
-    return m_pOwner;
-}
-
-qint32 Building::getOwnerID()
-{
-    if (m_pOwner != nullptr)
-    {
-        return m_pOwner->getPlayerID();
-    }
-    return -1;
-}
-
 void Building::loadSprite(const QString & spriteID, bool addPlayerColor, qint32 frameTime, QPoint pos)
 {
     if (addPlayerColor)
@@ -644,30 +630,6 @@ QString Building::getMinimapIcon()
     else
     {
         return "";
-    }
-}
-
-qint32 Building::getX() const
-{
-    if (m_pTerrain != nullptr)
-    {
-        return m_pTerrain->Terrain::getX();
-    }
-    else
-    {
-        return -1;
-    }
-}
-
-qint32 Building::getY() const
-{
-    if (m_pTerrain != nullptr)
-    {
-        return m_pTerrain->Terrain::getY();
-    }
-    else
-    {
-        return -1;
     }
 }
 

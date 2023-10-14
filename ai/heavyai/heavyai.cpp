@@ -117,6 +117,7 @@ void HeavyAi::updateUnitCache(spQmlVectorUnit & pUnits)
             cache[HeavyAiSharedData::AiCache::UnitMovementPoints] = pUnit->getMovementpoints(pos);
             cache[HeavyAiSharedData::AiCache::MinFirerange] = pUnit->getMinRange(pos);
             cache[HeavyAiSharedData::AiCache::MaxFirerange] = pUnit->getMaxRange(pos);
+            cache[HeavyAiSharedData::TerrainDefense] = pUnit->getTerrainDefense();
             cache[HeavyAiSharedData::AiCache::CanMoveAndFire] = static_cast<qint32>(pUnit->canMoveAndFire(pos));
         }
     }
