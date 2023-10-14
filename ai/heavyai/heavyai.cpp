@@ -110,14 +110,14 @@ void HeavyAi::updateUnitCache(spQmlVectorUnit & pUnits)
     for(auto & pUnit : pUnits->getVector())
     {
         auto & cache = pUnit->getAiCache();
-        if (cache.size() != static_cast<qint32>(AiCache::Max))
+        if (cache.size() != static_cast<qint32>(HeavyAiSharedData::AiCache::MaxAiCache))
         {
             QPoint pos = pUnit->getPosition();
-            cache.resize(HeavyAiSharedData::AiCache::Max);
-            cache[HeavyAiSharedData::AiCache::MovementPoints] = pUnit->getMovementpoints(pos);
+            cache.resize(HeavyAiSharedData::AiCache::MaxAiCache);
+            cache[HeavyAiSharedData::AiCache::UnitMovementPoints] = pUnit->getMovementpoints(pos);
             cache[HeavyAiSharedData::AiCache::MinFirerange] = pUnit->getMinRange(pos);
             cache[HeavyAiSharedData::AiCache::MaxFirerange] = pUnit->getMaxRange(pos);
-            cache[HeavyAiSharedData::AiCache::CanMoveAndFire] = pUnit->canMoveAndFire(pos);
+            cache[HeavyAiSharedData::AiCache::CanMoveAndFire] = static_cast<qint32>(pUnit->canMoveAndFire(pos));
         }
     }
     rebuildIsland(pUnits);

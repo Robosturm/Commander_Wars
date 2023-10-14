@@ -19,10 +19,11 @@ qint32 UnitTargetedPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
     for (qint32 i = 0; i < m_pTargets.size(); ++i)
     {
         auto & target = m_pTargets[i];
+        auto & cache = target.pUnit->getAiCache();
         qint32 distance = GlobalUtils::getDistance(x, y, target.pUnit->getX(), target.pUnit->getY());
-        qint32 maxFireRange = target.pUnit->getAiCache()[HeavyAiSharedData::AiCache::MaxFirerange];
+        qint32 maxFireRange = cache[HeavyAiSharedData::AiCache::MaxFirerange];
         // in fire range?
-        if (distance >= target.pUnit->getAiCache()[HeavyAiSharedData::AiCache::MinFirerange] &&
+        if (distance >= cache[HeavyAiSharedData::AiCache::MinFirerange] &&
             distance <= maxFireRange)
         {
             m_pTargets[i].reachable = true;

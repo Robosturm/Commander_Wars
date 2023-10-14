@@ -6,7 +6,7 @@
 
 
 SituationEvaluator::SituationEvaluator(Player* pOwner)
-    : m_inputVector(1, UNIT_COUNT * UNIT_COUNT * static_cast<qint32>(Features::Max)),
+    : m_inputVector(1, UNIT_COUNT * UNIT_COUNT * HeavyAiSharedData::SituationFeatures::MaxFeatures),
     m_searchRange(GlobalUtils::getSpCircle(0, SEARCH_RANGE)),
     m_pOwner(pOwner)
 {
@@ -20,7 +20,7 @@ void SituationEvaluator::updateInputVector(GameMap* pMap, const QPoint & searchP
         Unit* pUnit = m_unitsInfo[i].pUnit;
         if (pUnit == nullptr)
         {
-            for (qint32 feature = 0; feature < HeavyAiSharedData::Features::Max; ++feature)
+            for (qint32 feature = 0; feature < HeavyAiSharedData::SituationFeatures::MaxFeatures; ++feature)
             {
                 qint32 basePosition = UNIT_COUNT * UNIT_COUNT * feature + i * UNIT_COUNT;
                 for (qint32 enemyUnit = 0; enemyUnit < UNIT_COUNT; ++enemyUnit)
@@ -31,7 +31,7 @@ void SituationEvaluator::updateInputVector(GameMap* pMap, const QPoint & searchP
         }
         else
         {
-            for (qint32 feature = 0; feature < HeavyAiSharedData::Features::Max; ++feature)
+            for (qint32 feature = 0; feature < HeavyAiSharedData::SituationFeatures::MaxFeatures; ++feature)
             {
                 qint32 basePosition = UNIT_COUNT * UNIT_COUNT * feature + i * UNIT_COUNT;
 

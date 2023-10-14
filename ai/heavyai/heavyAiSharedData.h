@@ -19,16 +19,16 @@ enum SituationFeatures
     RepairsOnPosition,
     CapturePoints,
     BuildingImportance,
-    Max,
+    MaxFeatures,
 };
 
-enum class AiCache
+enum AiCache
 {
-    MovementPoints,
+    UnitMovementPoints,
     MinFirerange,
     MaxFirerange,
     CanMoveAndFire,
-    Max,
+    MaxAiCache,
 };
 
 
