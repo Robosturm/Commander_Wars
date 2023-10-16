@@ -53,6 +53,7 @@ var Constructor = function()
         player.addFunds(-action.getCosts());
         map.getGameRecorder().buildUnit(player.getPlayerID(), unitID, player.getPlayerID());
         unit.setHasMoved(true);
+        unit.setUnitVisible(false, player);
         player.buildedUnit(unit);
         // achievements
         if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)

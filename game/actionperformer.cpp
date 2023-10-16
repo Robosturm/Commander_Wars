@@ -170,7 +170,6 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
                 baseGameInput->centerCameraOnAction(pGameAction.get());
             }
             pGameAction->perform();
-            m_pMap->getGameRules()->createFogVision();
             // clean up the action
             m_pCurrentAction = pGameAction;
             pGameAction.reset();
