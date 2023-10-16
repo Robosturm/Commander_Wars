@@ -56,6 +56,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
     {
         m_pMenu->setSaveAllowed(false);
     }
+    Mainapp::getInstance()->pauseRendering();
     if (m_multiplayerSyncData.m_waitingForSyncFinished && m_pMenu != nullptr)
     {
         m_multiplayerSyncData.m_postSyncAction = pGameAction;
@@ -72,7 +73,6 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
         CONSOLE_PRINT("GameMenue::performAction " + pGameAction->getActionID() + " at X: " + QString::number(pGameAction->getTarget().x())
                       + " at Y: " + QString::number(pGameAction->getTarget().y()) +
                       " is proxy ai " + QString::number(proxyAi), GameConsole::eDEBUG);
-        Mainapp::getInstance()->pauseRendering();
         bool multiplayer = false;
         if (m_pMenu != nullptr)
         {
@@ -170,6 +170,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
                 baseGameInput->centerCameraOnAction(pGameAction.get());
             }
             pGameAction->perform();
+            m_pMap->getGameRules()->createFogVision();
             // clean up the action
             m_pCurrentAction = pGameAction;
             pGameAction.reset();
@@ -186,8 +187,8 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
                 m_pMenu->autoSaveMap();
             }
         }
-        Mainapp::getInstance()->continueRendering();
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 bool ActionPerformer::requiresForwarding(const spGameAction & pGameAction) const
