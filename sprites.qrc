@@ -3429,7 +3429,7 @@
         <file>resources/images/co_perks/pathfinder.png</file>
         <file>resources/images/co_perks/scout.png</file>
         <file>resources/images/co_perks/slamShield.png</file>
-        <file>resources/images/co_perks/sniper.png</file>
+        <file>resources/images/co_perks/perksniper.png</file>
         <file>resources/images/co_perks/snipeShield.png</file>
         <file>resources/images/co_perks/stealthy.png</file>
         <file>resources/images/co_perks/urbanFighter.png</file>
@@ -4837,7 +4837,7 @@
         <file>resources/ui/multiplayer/networkGameDataView.js</file>
         <file>resources/ui/multiplayer/coStatsInfo.xml</file>
         <file>resources/ui/multiplayer/coStatsInfo.js</file>
-        <file>resources/ui/multiplayer/dialogAutoMatches.xml</file>        
+        <file>resources/ui/multiplayer/dialogAutoMatches.xml</file>
         <file>resources/objects/toEnd.png</file>
         <file>resources/objects/toStart.png</file>
         <file>resources/images/building/depot+mask.png</file>

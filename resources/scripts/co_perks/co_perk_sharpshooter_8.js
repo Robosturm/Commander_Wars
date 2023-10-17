@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "sniper";
+        return "perksniper";
     };
     this.getName = function()
     {
