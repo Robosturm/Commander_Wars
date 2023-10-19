@@ -5,6 +5,7 @@
 
 #include "ai/heavyai/heavyai.h"
 #include "ai/heavyai/heavyAiSharedData.h"
+#include "ai/heavyai/situationevaluator.h"
 
 #include "game/player.h"
 #include "game/gameaction.h"
@@ -27,6 +28,16 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
         loadIni("heavy/" + m_aiName.toLower() + ".ini");
     }
     CONSOLE_PRINT("Creating heavy ai", GameConsole::eDEBUG);
+}
+
+void HeavyAi::init(BaseGamemenu* pMenu)
+{
+    if (!m_initDone)
+    {
+        m_evaluator = MemoryManagement::create<SituationEvaluator>(m_pPlayer);
+        CoreAI::init(pMenu);
+    }
+
 }
 
 void HeavyAi::toggleAiPause()
@@ -97,7 +108,10 @@ void HeavyAi::process()
         {
             updateUnitCache(pUnits);
             updateUnitCache(pEnemyUnits);
-
+            if (pUnits->size() > 0)
+            {
+                m_evaluator->updateInputVector(m_pMap, pUnits->at(0)->getPosition(), true);
+            }
 
             m_turnMode = GameEnums::AiTurnMode_StartOfDay;
             finishTurn();
@@ -112,13 +126,24 @@ void HeavyAi::updateUnitCache(spQmlVectorUnit & pUnits)
         auto & cache = pUnit->getAiCache();
         if (cache.size() != static_cast<qint32>(HeavyAiSharedData::AiCache::MaxAiCache))
         {
+            auto* pBuilding = pUnit->getTerrain()->getBuilding();
             QPoint pos = pUnit->getPosition();
             cache.resize(HeavyAiSharedData::AiCache::MaxAiCache);
             cache[HeavyAiSharedData::AiCache::UnitMovementPoints] = pUnit->getMovementpoints(pos);
             cache[HeavyAiSharedData::AiCache::MinFirerange] = pUnit->getMinRange(pos);
-            cache[HeavyAiSharedData::AiCache::MaxFirerange] = pUnit->getMaxRange(pos);
-            cache[HeavyAiSharedData::TerrainDefense] = pUnit->getTerrainDefense();
+            cache[HeavyAiSharedData::AiCache::MaxFirerange] = pUnit->getMaxRange(pos);            
+            cache[HeavyAiSharedData::AiCache::BaseCost] = pUnit->getBaseCosts();
             cache[HeavyAiSharedData::AiCache::CanMoveAndFire] = static_cast<qint32>(pUnit->canMoveAndFire(pos));
+            if (pBuilding != nullptr &&
+                pBuilding->getOwner() == pUnit->getOwner() &&
+                pBuilding->canRepair(pUnit.get()))
+            {
+                cache[HeavyAiSharedData::CurrentRepair] = 2 + pUnit->getRepairBonus(pos);
+            }
+            else
+            {
+                cache[HeavyAiSharedData::CurrentRepair] = 0;
+            }
         }
     }
     rebuildIsland(pUnits);

@@ -17,30 +17,37 @@ qint32 UnitTargetedPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
 {
     m_allReached = true;
     qint32 minCost = std::numeric_limits<qint32>::max();
-    for (qint32 i = m_searchIndex; i < m_pTargets.size(); ++i)
+    for (qint32 i = m_pTargets.size() - 1; i >= 0; --i)
     {
         auto & target = m_pTargets[i];
-        auto & cache = target->pUnit->getAiCache();
-        qint32 distance = GlobalUtils::getDistance(x, y, target->pUnit->getX(), target->pUnit->getY());
-        qint32 maxFireRange = cache[HeavyAiSharedData::AiCache::MaxFirerange];
-        // in fire range?
-        if (distance >= cache[HeavyAiSharedData::AiCache::MinFirerange] &&
-            distance <= maxFireRange)
+        if (target->pUnit != nullptr)
         {
-            m_pTargets[m_unitIdx]->reachable[i] = true;
-            if (i == m_searchIndex)
+            auto & cache = target->pUnit->getAiCache();
+            qint32 distance = GlobalUtils::getDistance(x, y, target->pUnit->getX(), target->pUnit->getY());
+            qint32 maxFireRange = cache[HeavyAiSharedData::AiCache::MaxFirerange];
+            // in fire range?
+            if (distance >= cache[HeavyAiSharedData::AiCache::MinFirerange] &&
+                distance <= maxFireRange)
             {
-                m_searchIndex += 1;
+                m_pTargets[m_unitIdx]->reachable[i] = true;
+                if (i == m_searchIndex)
+                {
+                    --m_searchIndex;
+                }
+            }
+            else
+            {
+                qint32 newCost = distance - maxFireRange;
+                if (newCost < minCost)
+                {
+                    minCost = newCost;
+                }
+                m_allReached = false;
             }
         }
-        else
+        else if (i == m_searchIndex)
         {
-            qint32 newCost = distance - maxFireRange;
-            if (newCost < minCost)
-            {
-                minCost = newCost;
-            }
-            m_allReached = false;
+            --m_searchIndex;
         }
     }
     return minCost;

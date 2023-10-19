@@ -414,6 +414,20 @@ void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::R
     }
 }
 
+bool Building::isHq()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "isHq";
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
+    if (erg.isBool())
+    {
+        return erg.toBool();
+    }
+    return false;
+}
+
 GameMap *Building::getMap() const
 {
     return m_pMap;

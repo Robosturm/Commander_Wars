@@ -1,10 +1,14 @@
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
+
 #include "ai/heavyai/situationevaluator.h"
 #include "ai/heavyai/unittargetedpathfindingsystem.h"
+#include "ai/coreai.h"
 
+#include "coreengine/settings.h"
 #include "coreengine/globalutils.h"
 #include "game/gamemap.h"
-
-
+#include "game/GameEnums.h"
+#include "game/unit.h"
 
 SituationEvaluator::SituationEvaluator(Player* pOwner)
     : m_inputVector(1, HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::SituationFeatures::MaxFeatures),
@@ -15,6 +19,25 @@ SituationEvaluator::SituationEvaluator(Player* pOwner)
     {
         m_unitsInfo[i] = MemoryManagement::create<HeavyAiSharedData::UnitInfo>();
         m_unitsInfo[i]->stealthed.resize(pOwner->getMap()->getPlayerCount());
+    }
+}
+
+void SituationEvaluator::loadNetwork(const QString & filePath)
+{
+    QString finalPath = Settings::getInstance()->getUserPath() + "/" + filePath;
+    if (QFile::exists(finalPath))
+    {
+        finalPath = QString(oxygine::Resource::RCC_PREFIX_PATH) + "/" + filePath;
+    }
+    if (QFile::exists(finalPath))
+    {
+        QFile file(finalPath);
+        file.open(QIODevice::ReadOnly);
+        QTextStream stream(&file);
+        QString content = stream.readAll();
+        tinyxml2::XMLDocument xml;
+        xml.Parse(content.toStdString().c_str());
+        m_neuralNetwork.from_XML(xml);
     }
 }
 
@@ -40,6 +63,13 @@ void SituationEvaluator::updateInputVector(GameMap* pMap, const QPoint & searchP
     }
 }
 
+float SituationEvaluator::getOutput()
+{
+    auto inputDimension = opennn::get_dimensions(m_inputVector);
+    Tensor<opennn::type, 2> outputs = m_neuralNetwork.calculate_outputs(m_inputVector.data(), inputDimension);
+    return outputs(0);
+}
+
 void SituationEvaluator::clearUnitInput(qint32 index)
 {
     for (qint32 feature = 0; feature < HeavyAiSharedData::SituationFeatures::MaxFeatures; ++feature)
@@ -59,11 +89,11 @@ void SituationEvaluator::fillUnitInput(qint32 index)
         qint32 basePosition = HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::UNIT_COUNT * feature + index * HeavyAiSharedData::UNIT_COUNT;
         using updateFeature = void (SituationEvaluator::*)(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);
         constexpr std::array<updateFeature, HeavyAiSharedData::SituationFeatures::MaxFeatures> featureCb{
+            &SituationEvaluator::updateDistance,
             &SituationEvaluator::updateHp,
             &SituationEvaluator::updateHpDamage,
             &SituationEvaluator::updateFundsDamage,
             &SituationEvaluator::updateMovementPoints,
-            &SituationEvaluator::updateDistance,
             &SituationEvaluator::updateHasMoved,
             &SituationEvaluator::updateDefense,
             &SituationEvaluator::updateRepairsOnPosition,
@@ -92,12 +122,53 @@ void SituationEvaluator::updateHp(qint32 basePosition, const HeavyAiSharedData::
 
 void SituationEvaluator::updateHpDamage(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
 {
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    bool hasWeapons = unitInfo->pUnit->hasWeapons();
+    for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
+    {
+        if (hasWeapons && shouldFillInfo(unitInfo, enemyUnit))
+        {
+            const QString func = "calcAttackerWeaponDamage";
+            QRectF erg;
+            QJSValueList args({JsThis::getJsThis(nullptr),
+                               JsThis::getJsThis(unitInfo->pUnit),
+                               0,
+                               pInterpreter->toScriptValue(unitInfo->pUnit->getPosition()),
+                               JsThis::getJsThis(m_unitsInfo[enemyUnit]->pUnit),
+                               QJSValue(m_unitsInfo[enemyUnit]->pUnit->getX()),
+                               QJSValue(m_unitsInfo[enemyUnit]->pUnit->getY()),
+                               0,
+                               QJSValue(static_cast<qint32>(GameEnums::LuckDamageMode_Average)),
+                               pInterpreter->toScriptValue(erg),
+                               QJSValue(static_cast<qint32>(GameEnums::AttackRangeCheck_None))});
+            QJSValue jsErg = pInterpreter->doFunction(CoreAI::ACTION_FIRE, func, args);
+            erg = jsErg.toVariant().toRectF();
+            m_inputVector(0, basePosition + enemyUnit) = erg.x() * Unit::MAX_UNIT_HP / Unit::DAMAGE_100;
+        }
+        else
+        {
+            m_inputVector(0, basePosition + enemyUnit) = 0;
+        }
+    }
 }
 
 void SituationEvaluator::updateFundsDamage(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
 {
 
+    qint32 hpOffset = HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::UNIT_COUNT * (HeavyAiSharedData::SituationFeatures::HpDamage - HeavyAiSharedData::SituationFeatures::HP);
+    for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
+    {
+        if (shouldFillInfo(unitInfo, enemyUnit))
+        {
+
+            auto hpDamage = m_inputVector(0, basePosition + enemyUnit - hpOffset);
+            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::BaseCost] * hpDamage / Unit::MAX_UNIT_HP;
+        }
+        else
+        {
+            m_inputVector(0, basePosition + enemyUnit) = 0;
+        }
+    }
 }
 
 void SituationEvaluator::updateMovementPoints(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
@@ -152,7 +223,7 @@ void SituationEvaluator::updateDefense(qint32 basePosition, const HeavyAiSharedD
     {
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::TerrainDefense];
+            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->terrainDefense;
         }
         else
         {
@@ -163,7 +234,17 @@ void SituationEvaluator::updateDefense(qint32 basePosition, const HeavyAiSharedD
 
 void SituationEvaluator::updateRepairsOnPosition(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
 {
-
+    for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
+    {
+        if (shouldFillInfo(unitInfo, enemyUnit))
+        {
+            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::CurrentRepair];
+        }
+        else
+        {
+            m_inputVector(0, basePosition + enemyUnit) = 0;
+        }
+    }
 }
 
 void SituationEvaluator::updateCapturePoints(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
@@ -183,6 +264,17 @@ void SituationEvaluator::updateCapturePoints(qint32 basePosition, const HeavyAiS
 
 void SituationEvaluator::updateBuildingImportance(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
 {
+    for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
+    {
+        if (shouldFillInfo(unitInfo, enemyUnit))
+        {
+            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->buildingImportance;
+        }
+        else
+        {
+            m_inputVector(0, basePosition + enemyUnit) = 0;
+        }
+    }
 
 }
 
@@ -226,6 +318,7 @@ void SituationEvaluator::getUnitsInRange(GameMap* pMap, const QPoint & searchPoi
                     m_unitsInfo[enemyPosition]->pUnit = pUnit;
                     m_unitsInfo[enemyPosition]->multiplier = -1;
                     updateStealthInfo(pMap, enemyPosition);
+                    m_unitsInfo[enemyPosition]->terrainDefense = pUnit->getTerrainDefense();
                     --enemyPosition;
                 }
                 else
@@ -233,6 +326,7 @@ void SituationEvaluator::getUnitsInRange(GameMap* pMap, const QPoint & searchPoi
                     m_unitsInfo[alliedPosition]->pUnit = pUnit;
                     m_unitsInfo[alliedPosition]->multiplier = 1;
                     updateStealthInfo(pMap, alliedPosition);
+                     m_unitsInfo[alliedPosition]->terrainDefense = pUnit->getTerrainDefense();
                     ++alliedPosition;
                 }
                 if (alliedPosition > enemyPosition)
@@ -247,6 +341,33 @@ void SituationEvaluator::getUnitsInRange(GameMap* pMap, const QPoint & searchPoi
         m_unitsInfo[enemyPosition]->pUnit = nullptr;
         m_unitsInfo[enemyPosition]->pUnitTargetedPathFindingSystem.reset();
         m_unitsInfo[enemyPosition]->multiplier = 1;
+        m_unitsInfo[enemyPosition]->terrainDefense = 0;
+        m_unitsInfo[enemyPosition]->buildingImportance = 0;
+    }
+}
+
+void SituationEvaluator::updateBuildingImportance(qint32 unitPosition)
+{
+    auto* pUnit = m_unitsInfo[unitPosition]->pUnit;
+    auto* pTerrain = pUnit->getTerrain();
+    if (pTerrain != nullptr)
+    {
+        Building* pBuilding = pTerrain->getBuilding();
+        if (pBuilding != nullptr)
+        {
+            if (pBuilding->isHq())
+            {
+                m_unitsInfo[unitPosition]->buildingImportance = HeavyAiSharedData::HQ_IMPORTANCE;
+            }
+            else
+            {
+                m_unitsInfo[unitPosition]->buildingImportance = pBuilding->getConstructionList().size();
+            }
+        }
+    }
+    else
+    {
+        m_unitsInfo[unitPosition]->buildingImportance = 0;
     }
 }
 
@@ -265,6 +386,7 @@ void SituationEvaluator::createPathFindingSystems(GameMap* pMap)
         if (m_unitsInfo[i]->pUnit != nullptr)
         {
             m_unitsInfo[i]->pUnitTargetedPathFindingSystem = MemoryManagement::create<UnitTargetedPathFindingSystem>(pMap, i, m_unitsInfo);
+            m_unitsInfo[i]->pUnitTargetedPathFindingSystem->explore();
         }
     }
 }

@@ -632,7 +632,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit &pUnits, spQmlVectorBuilding &pB
                                 {
                                     Building *pBuilding = m_pMap->getTerrain(captures[i2].m_x, captures[i2].m_y)->getBuilding();
                                     qint32 testPrio = std::numeric_limits<qint32>::min();
-                                    if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
+                                    if (pBuilding->isHq())
                                     {
                                         testPrio = std::numeric_limits<qint32>::max();
                                     }

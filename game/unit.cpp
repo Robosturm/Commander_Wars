@@ -762,6 +762,22 @@ qint32 Unit::getCosts() const
     }
 }
 
+qint32 Unit::getBaseCosts() const
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getBaseCost";
+    QJSValueList args({JsThis::getJsThis(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return -1;
+    }
+}
+
 QString Unit::getTerrainAnimationBase(Unit* pDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

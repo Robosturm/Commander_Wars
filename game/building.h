@@ -522,6 +522,11 @@ public:
      * @param mode
      */
     Q_INVOKABLE void loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime = 100);
+    /**
+     * @brief isHq
+     * @return
+     */
+    Q_INVOKABLE bool isHq();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     QVector<oxygine::spSprite> m_pWeatherOverlaySprites;

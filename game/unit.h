@@ -505,6 +505,7 @@ public:
     Q_INVOKABLE void setCapturePoints(const qint32 value);
     Q_INVOKABLE bool canCapture();
     Q_INVOKABLE qint32 getCosts() const;
+    Q_INVOKABLE qint32 getBaseCosts() const;
     Q_INVOKABLE qint32 getMinRange(QPoint position);
     Q_INVOKABLE qint32 getBonusMinRange(QPoint position);
     Q_INVOKABLE qint32 getBaseMinRange() const;

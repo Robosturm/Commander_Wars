@@ -5,7 +5,8 @@
 class GameMap;
 class HeavyAi;
 using spHeavyAi = std::shared_ptr<HeavyAi>;
-
+class SituationEvaluator;
+using spSituationEvaluator = std::shared_ptr<SituationEvaluator>;
 
 /**
  * @brief The HeavyAi class
@@ -25,6 +26,7 @@ public:
 
     explicit HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType);
     virtual ~HeavyAi() = default;
+    virtual void init(BaseGamemenu* pMenu) override;
     /*******************************************************************/
     // debugging section
     /*******************************************************************/
@@ -66,6 +68,7 @@ private:
     double m_minSiloDamage{7000};
     QTimer m_timer;
     bool m_pause{false};
+    spSituationEvaluator m_evaluator;
 };
 
 Q_DECLARE_INTERFACE(HeavyAi, "HeavyAi");
