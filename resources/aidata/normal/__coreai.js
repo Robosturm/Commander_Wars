@@ -89,6 +89,9 @@ var COREAI =
     subCounterUnitBalance : 2.5,
     ownCounterUnitMinHp : 7,
     enemyCounterUnitMinHp : 5,
+    // the following units are only build if nothing else is possible
+    specialUnits = ["PIPERUNNER", "HOELLIUM"],
+    specialProductionCount = 4,
 
     getGroundModifier : function(system)
     {
@@ -574,7 +577,16 @@ var COREAI =
                 break;
             }
         }
-        return system.buildNextUnit(buildings, units, minMode, maxMode, COREAI.minAverageIslandSize, minBaseCost, maxBaseCost);
+        var build = system.buildNextUnit(buildings, units, minMode, maxMode, COREAI.minAverageIslandSize, minBaseCost, maxBaseCost);
+        if (!build && system.getCurrentTurnProducedUnitsCounter() === 0)
+        {
+            for (var i = 0; i < COREAI.specialProductionCount; ++i)
+            {
+                system.addForcedProduction(COREAI.specialUnits);
+            }
+            build = system.buildNextUnit(buildings, units, minMode, maxMode, COREAI.minAverageIslandSize, minBaseCost, maxBaseCost);
+        }
+        return build;
     },
 
     getFactoryMenuItem : function(ai, action, ids, costs, enabled, units, buildings, owner, map)

@@ -153,6 +153,16 @@ void SimpleProductionSystem::updateActiveProductionSystem(QmlVectorBuilding* pBu
     }
 }
 
+qint32 SimpleProductionSystem::getCurrentTurnProducedUnitsCounter() const
+{
+    return m_currentTurnProducedUnitsCounter;
+}
+
+void SimpleProductionSystem::setCurrentTurnProducedUnitsCounter(qint32 newCurrentTurnProducedUnitsCounter)
+{
+    m_currentTurnProducedUnitsCounter = newCurrentTurnProducedUnitsCounter;
+}
+
 void SimpleProductionSystem::updateIslandSizeForBuildings(QmlVectorBuilding* pBuildings)
 {
     m_averageMoverange.clear();
@@ -634,6 +644,7 @@ bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
                         if (pAction->canBePerformed())
                         {
                             CONSOLE_PRINT("Building unit " + unitId + " at x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
+                            ++m_currentTurnProducedUnitsCounter;
                             emit m_owner->sigPerformAction(pAction);
                             return true;
                         }
@@ -686,6 +697,7 @@ void SimpleProductionSystem::serializeObject(QDataStream& pStream) const
         pStream << item.count;
     }
     m_Variables.serializeObject(pStream);
+    pStream << m_currentTurnProducedUnitsCounter;
 }
 
 void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
@@ -734,6 +746,10 @@ void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
         m_initialProduction.push_back(item);
     }
     m_Variables.deserializeObject(pStream);
+    if (version > 0)
+    {
+        pStream >> m_currentTurnProducedUnitsCounter;
+    }
 }
 
 Unit* SimpleProductionSystem::getDummyUnit(const QString & unitId)

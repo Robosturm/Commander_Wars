@@ -2263,6 +2263,7 @@ void CoreAI::finishTurn()
     AI_CONSOLE_PRINT("CoreAI::finishTurn(()", GameConsole::eDEBUG);
     m_usedTransportSystem = false;
     m_usedPredefinedAi = false;
+    m_productionSystem.setCurrentTurnProducedUnitsCounter(0);
     spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_NEXT_PLAYER, m_pMap);
     CO* pCO0 = m_pPlayer->getCO(0);
     CO* pCO1 = m_pPlayer->getCO(1);

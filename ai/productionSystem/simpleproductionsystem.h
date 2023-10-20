@@ -72,7 +72,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 0;
+        return 1;
     }
     void initialize();
     bool buildUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings, bool & executed);
@@ -105,6 +105,9 @@ public:
     Q_INVOKABLE Unit* getDummyUnit(const QString & unitId);
     Q_INVOKABLE qint32 getProductionFromList(const QStringList & unitIds, QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, qint32 minBuildMode, qint32 maxBuildMode, const QVector<bool> & enableList = QVector<bool>());
     Q_INVOKABLE void updateIslandSizeForBuildings(QmlVectorBuilding* pBuildings);
+    Q_INVOKABLE qint32 getCurrentTurnProducedUnitsCounter() const;
+    void setCurrentTurnProducedUnitsCounter(qint32 newCurrentTurnProducedUnitsCounter);
+
 private:
     bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize);
     bool buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits);
@@ -123,6 +126,7 @@ private:
     std::map<Building*, AverageBuildData> m_averageMoverange;
     ScriptVariables m_Variables;
     spUnit m_dummy;
+    qint32 m_currentTurnProducedUnitsCounter{0};
 };
 
 Q_DECLARE_INTERFACE(SimpleProductionSystem, "SimpleProductionSystem");
