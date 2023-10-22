@@ -23,7 +23,8 @@
 NormalAi::NormalAi(GameMap *pMap, const QString &configurationFile, GameEnums::AiTypes aiType, const QString &jsName)
     : CoreAI(pMap, aiType, jsName),
     m_InfluenceFrontMap(pMap, m_IslandMaps),
-    m_captureBuildingSelector(*this)
+    m_captureBuildingSelector(*this),
+    m_transporterSelector(*this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("NormalAi");
@@ -975,111 +976,7 @@ bool NormalAi::moveToUnloadArea(spGameAction &pAction, MoveUnitData *pUnitData, 
 
 bool NormalAi::unloadUnits(spGameAction &pAction, Unit *pUnit, spQmlVectorUnit &pEnemyUnits)
 {
-
-    Interpreter *pInterpreter = Interpreter::getInstance();
-    bool unloaded = false;
-    std::vector<qint32> unloadedUnits;
-    do
-    {
-        unloaded = false;
-        spMenuData pDataMenu = pAction->getMenuStepData();
-        if (pDataMenu->validData())
-        {
-            QStringList actions = pDataMenu->getActionIDs();
-            QVector<qint32> unitIDx = pDataMenu->getCostList();
-            std::vector<QList<QVariant>> unloadFields;
-            for (qint32 i = 0; i < unitIDx.size() - 1; i++)
-            {
-                QString function1 = "getUnloadFields";
-                QJSValueList args({
-                    JsThis::getJsThis(pAction.get()),
-                    unitIDx[i],
-                    JsThis::getJsThis(m_pMap),
-                });
-                QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, function1, args);
-                unloadFields.push_back(ret.toVariant().toList());
-            }
-            if (actions.size() > 1)
-            {
-                for (qint32 i = 0; i < unloadFields.size(); i++)
-                {
-                    Unit *pLoadedUnit = pUnit->getLoadedUnit(i);
-                    if (!needsRefuel(pLoadedUnit))
-                    {
-                        if (!GlobalUtils::contains(unloadedUnits, unitIDx[i]))
-                        {
-                            if (unloadFields[i].size() == 1)
-                            {
-                                addMenuItemData(pAction, actions[i], unitIDx[i]);
-                                spMarkedFieldData pFields = pAction->getMarkedFieldStepData();
-                                addSelectedFieldData(pAction, pFields->getPoints()->at(0));
-                                unloaded = true;
-                                unloadedUnits.push_back(unitIDx[i]);
-                                break;
-                            }
-                            else if (unloadFields[i].size() > 0 &&
-                                     pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
-                            {
-                                auto &fields = unloadFields[i];
-                                for (auto &field : fields)
-                                {
-                                    QPoint unloadField = field.toPoint();
-                                    Building *pBuilding = m_pMap->getTerrain(unloadField.x(),
-                                                                             unloadField.y())
-                                                              ->getBuilding();
-                                    if (pBuilding != nullptr && m_pPlayer->isEnemy(pBuilding->getOwner()))
-                                    {
-                                        addMenuItemData(pAction, actions[i], unitIDx[i]);
-                                        addSelectedFieldData(pAction, unloadField);
-                                        unloaded = true;
-                                        unloadedUnits.push_back(unitIDx[i]);
-                                        break;
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (unloaded == false &&
-                    !needsRefuel(pUnit->getLoadedUnit(0)))
-                {
-                    qint32 costs = pDataMenu->getCostList()[0];
-                    addMenuItemData(pAction, actions[0], costs);
-                    unloaded = true;
-                    spMarkedFieldData pFields = pAction->getMarkedFieldStepData();
-                    qint32 field = 0;
-                    qint32 bestDistance = std::numeric_limits<qint32>::max();
-                    for (qint32 i = 0; i < pFields->getPoints()->size(); ++i)
-                    {
-                        QPoint unloadPos = pFields->getPoints()->at(i);
-                        qint32 currentBestDistance = std::numeric_limits<qint32>::max();
-                        for (auto &pEnemy : pEnemyUnits->getVector())
-                        {
-                            qint32 distance = GlobalUtils::getDistance(unloadPos, pEnemy->Unit::getPosition());
-                            if (distance < currentBestDistance)
-                            {
-                                currentBestDistance = distance;
-                            }
-                        }
-                        if (currentBestDistance < bestDistance ||
-                            (currentBestDistance == bestDistance && GlobalUtils::randInt(0, 1) == 1))
-                        {
-                            bestDistance = currentBestDistance;
-                            field = i;
-                        }
-                    }
-                    addSelectedFieldData(pAction, pFields->getPoints()->at(field));
-                }
-            }
-        }
-        else
-        {
-            AI_CONSOLE_PRINT("Error invalid menu data received while unloading units", GameConsole::eERROR);
-            return false;
-        }
-    } while (unloaded);
-    addMenuItemData(pAction, ACTION_WAIT, 0);
+    m_transporterSelector.prepareUnloadInformation(pAction, pUnit, pEnemyUnits);
     m_updatePoints.push_back(pUnit->getPosition());
     m_updatePoints.push_back(pAction->getActionTarget());
     if (pAction->canBePerformed())

@@ -159,8 +159,8 @@ var Constructor = function()
     this.superPowerOffBonus = 30;
     this.superPowerMovementBonus = 1;
 
-    this.powerDefBonus = 10;
-    this.powerOffBonus = 10;
+    this.powerDefBonus = 20;
+    this.powerOffBonus = 20;
     this.powerHeal = 2;
 
     this.d2dCoZoneOffBonus = 20;

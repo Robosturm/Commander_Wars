@@ -727,7 +727,8 @@ set(${PROJECT_NAME}_SRCS
     ai/islandmap.cpp ai/islandmap.h
     ai/coreai_predefinedai.cpp
     ai/proxyai.cpp ai/proxyai.h
-    ai/normalai.cpp ai/normalai.h
+    ai/normalai.cpp ai/normalai.h    
+    ai/transporterselector.h ai/transporterselector.cpp
     ai/heavyai/heavyai.cpp ai/heavyai/heavyai.h
     ai/heavyai/heavyAiSharedData.h
     ai/heavyai/situationevaluator.h ai/heavyai/situationevaluator.cpp    

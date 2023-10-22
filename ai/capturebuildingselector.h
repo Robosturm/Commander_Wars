@@ -3,7 +3,6 @@
 #include <QtTypes>
 #include "ai/coreai.h"
 
-class CoreAI;
 class GameAction;
 using spGameAction = std::shared_ptr<GameAction>;
 class QmlVectorUnit;

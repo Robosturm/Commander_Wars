@@ -5,6 +5,7 @@
 
 #include "ai/coreai.h"
 #include "ai/capturebuildingselector.h"
+#include "ai/transporterselector.h"
 
 #include "ai/influencefrontmap.h"
 
@@ -515,6 +516,7 @@ private:
     std::vector<ProductionData> m_productionData;
     InfluenceFrontMap m_InfluenceFrontMap;
     CaptureBuildingSelector m_captureBuildingSelector;
+    TransporterSelector m_transporterSelector;
 
     double m_notAttackableDamage{25.0f};
     double m_midDamage{55.0f};

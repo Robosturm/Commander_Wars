@@ -239,14 +239,14 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nBrenner's units gain +%0% defence.") +
-                   qsTr("\n\nCO Zone Effect: \nBrenner's units gain +%2% firepower and +%1% defence.");
-        text = replaceTextArgs(text, [CO_BRENNER.d2dDefBonus, CO_BRENNER.d2dCoZoneDefBonus, CO_BRENNER.d2dCoZoneOffBonus]);
+                   qsTr("\n\nCO Zone Effect: \nBrenner's units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_BRENNER.d2dDefBonus, CO_BRENNER.d2dCoZoneOffBonus, CO_BRENNER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Restores +%0 HP to all of Brenner's units. His units gain +%2% firepower and +%1% defence.");
-        text = replaceTextArgs(text, [CO_BRENNER.powerHeal, CO_BRENNER.powerDefBonus, CO_BRENNER.powerOffBonus]);
+        var text = qsTr("Restores +%0 HP to all of Brenner's units. His units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_BRENNER.powerHeal, CO_BRENNER.powerOffBonus, CO_BRENNER.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -255,8 +255,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Restores +%0 HP to all of Brenner's units. His units gain +%2% firepower and +%1% defence.");
-        text = replaceTextArgs(text, [CO_BRENNER.superPowerHeal, CO_BRENNER.superPowerDefBonus, CO_BRENNER.powerOffBonus]);
+        var text = qsTr("Restores +%0 HP to all of Brenner's units. His units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_BRENNER.superPowerHeal, CO_BRENNER.powerOffBonus, CO_BRENNER.superPowerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
