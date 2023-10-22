@@ -22,7 +22,8 @@
 
 NormalAi::NormalAi(GameMap *pMap, const QString &configurationFile, GameEnums::AiTypes aiType, const QString &jsName)
     : CoreAI(pMap, aiType, jsName),
-      m_InfluenceFrontMap(pMap, m_IslandMaps)
+    m_InfluenceFrontMap(pMap, m_IslandMaps),
+    m_captureBuildingSelector(*this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("NormalAi");
@@ -294,7 +295,7 @@ void NormalAi::resetToTurnStart()
 {
     clearUnitData();
     m_productionData.clear();
-    m_usedFarAwayBuildings.clear();
+    m_captureBuildingSelector.resetUsedFarAwayBuildings();
     m_secondMoveRound = false;
     CoreAI::resetToTurnStart();
 }
@@ -428,290 +429,29 @@ bool NormalAi::isUsingUnit(Unit *pUnit)
 bool NormalAi::captureBuildings(spQmlVectorUnit &pUnits, spQmlVectorBuilding &pBuildings, spQmlVectorBuilding &pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("NormalAi::captureBuildings()", GameConsole::eDEBUG);
-    struct CaptureInfo
+    MoveUnitData* targetUnitData = nullptr;
+    spGameAction pAction = m_captureBuildingSelector.getNextCaptureBuilding(m_OwnUnits, &targetUnitData);
+    if (pAction.get() != nullptr)
     {
-        CaptureInfo(qint32 x, qint32 y, qint32 unitIdx, bool farAway)
-            : m_x(x),
-              m_y(y),
-              m_unitIdx(unitIdx),
-              m_farAway(farAway)
+        ++targetUnitData->nextAiStep;
+        m_updatePoints.push_back(pAction->getTargetUnit()->getPosition());
+        m_updatePoints.push_back(pAction->getActionTarget());
+        if (pAction->getActionID() == ACTION_WAIT)
         {
-        }
-        qint32 m_x;
-        qint32 m_y;
-        qint32 m_unitIdx;
-        bool m_farAway{false};
-    };
-
-    QStringList highPrioBuildings;
-    Interpreter *pInterpreter = Interpreter::getInstance();
-    QJSValueList args({m_jsThis});
-    const QString func = "getHighPrioBuildings";
-    auto erg = pInterpreter->doFunction(getAiName(), func, args);
-    highPrioBuildings = erg.toVariant().toStringList();
-
-    std::vector<CaptureInfo> captureBuildings;
-    qint32 cost = 0;
-    QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
-    bool fireSilos = hasMissileTarget();
-
-    for (qint32 i = 0; i < m_OwnUnits.size(); ++i)
-    {
-        pInterpreter->threadProcessEvents();
-        auto &unitData = m_OwnUnits[i];
-        if (unitData.nextAiStep <= m_aiFunctionStep)
-        {
-            Unit *pUnit = unitData.pUnit.get();
-            if (!pUnit->getHasMoved() &&
-                unitData.actions.contains(ACTION_CAPTURE) &&
-                pUnit->getAiMode() == GameEnums::GameAi_Normal)
+            std::vector<QVector3D> targets;
+            auto actionTarget = pAction->getActionTarget();
+            targets.push_back(QVector3D(actionTarget.x(), actionTarget.y(), 1));
+            std::vector<QVector3D> transporterTargets;
+            if (moveUnit(pAction, targetUnitData, pUnits, targetUnitData->actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
             {
-                if (pUnit->getCapturePoints() > 0)
-                {
-                    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_CAPTURE, m_pMap);
-                    pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                    if (pAction->canBePerformed())
-                    {
-                        ++unitData.nextAiStep;
-                        emit sigPerformAction(pAction);
-                        return true;
-                    }
-                }
-                else
-                {
-                    GameAction action(ACTION_CAPTURE, m_pMap);
-                    action.setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                    auto targets = unitData.pUnitPfs->getAllNodePointsFast();
-                    for (auto &target : targets)
-                    {
-                        action.setActionID(ACTION_CAPTURE);
-                        action.setMovepath(QVector<QPoint>(1, target), 0);
-                        if (unitData.pUnitPfs->getTargetCosts(target.x(), target.y()) < unitData.movementPoints + 1)
-                        {
-                            if (action.canBePerformed())
-                            {
-                                captureBuildings.push_back(CaptureInfo(target.x(), target.y(), i, false));
-                            }
-                            else
-                            {
-                                action.setActionID(ACTION_MISSILE);
-                                if (action.canBePerformed() && fireSilos)
-                                {
-                                    captureBuildings.push_back(CaptureInfo(target.x(), target.y(), i, false));
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Terrain *pTerrain = m_pMap->getTerrain(target.x(), target.y());
-                            auto *pBuilding = pTerrain->getBuilding();
-                            if (pBuilding != nullptr &&
-                                pBuilding->getOwner() == nullptr &&
-                                !m_usedFarAwayBuildings.contains(target) &&
-                                highPrioBuildings.contains(pBuilding->getBuildingID()) &&
-                                pTerrain->getUnit() == nullptr)
-                            {
-                                if (action.canBePerformed())
-                                {
-                                    captureBuildings.push_back(CaptureInfo(target.x(), target.y(), i, true));
-                                }
-                            }
-                        }
-                    }
-                }
+                m_captureBuildingSelector.addUsedFarAwayBuildings(actionTarget);
+                return true;
             }
         }
-    }
-    if (captureBuildings.size() > 0)
-    {
-        constexpr qint32 nearbyPrioBonus = 2048;
-        Interpreter *pInterpreter = Interpreter::getInstance();
-        for (qint32 i = 0; i < m_OwnUnits.size(); ++i)
+        else
         {
-            auto &unitData = m_OwnUnits[i];
-            if (unitData.nextAiStep <= m_aiFunctionStep)
-            {
-                pInterpreter->threadProcessEvents();
-                Unit *pUnit = unitData.pUnit.get();
-                if (!pUnit->getHasMoved() &&
-                    unitData.actions.contains(ACTION_CAPTURE) &&
-                    pUnit->getAiMode() == GameEnums::GameAi_Normal)
-                {
-                    std::vector<CaptureInfo> captures;
-                    for (auto &building : captureBuildings)
-                    {
-                        if (building.m_unitIdx == i)
-                        {
-                            captures.push_back(building);
-                        }
-                    }
-                    bool perform = false;
-                    qint32 targetIndex = 0;
-                    if (captures.size() > 0)
-                    {
-                        if (captures.size() == 1)
-                        {
-                            // we have only one target go for it
-                            targetIndex = 0;
-                            perform = true;
-                        }
-                        else
-                        {
-                            qint32 prio = -1;
-                            // check if we have a building only we can capture and capture it
-                            qint32 i2 = 0;
-                            while (i2 < captures.size())
-                            {
-                                qint32 captureCount = 0;
-                                for (auto &buildingPos2 : captureBuildings)
-                                {
-                                    if (buildingPos2.m_x == captures[i2].m_x &&
-                                        buildingPos2.m_y == captures[i2].m_y)
-                                    {
-                                        if (buildingPos2.m_farAway == captures[i2].m_farAway ||
-                                            (buildingPos2.m_farAway == true && captures[i2].m_farAway == false))
-                                        {
-                                            ++captureCount;
-                                        }
-                                        else
-                                        {
-                                            --captureCount;
-                                        }
-                                    }
-                                }
-                                if (captureCount <= 0)
-                                {
-                                    captures.erase(captures.cbegin() + i2);
-                                }
-                                else
-                                {
-                                    bool isProductionBuilding = m_pMap->getTerrain(captures[i2].m_x, captures[i2].m_y)->getBuilding()->isProductionBuilding();
-                                    if ((captureCount == 1 && perform == false) ||
-                                        (captureCount == 1 && perform == true && isProductionBuilding))
-                                    {
-                                        Building *pBuilding = m_pMap->getTerrain(captures[i2].m_x, captures[i2].m_y)->getBuilding();
-                                        qint32 testPrio = std::numeric_limits<qint32>::min();
-                                        if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
-                                        {
-                                            testPrio = std::numeric_limits<qint32>::max();
-                                        }
-                                        else if (pBuilding->isProductionBuilding())
-                                        {
-                                            testPrio = pBuilding->getConstructionList().size();
-                                        }
-                                        if (!captures[i2].m_farAway && testPrio > 0)
-                                        {
-                                            testPrio += nearbyPrioBonus;
-                                        }
-                                        if (!perform)
-                                        {
-                                            prio = testPrio;
-                                            targetIndex = i2;
-                                        }
-                                        else
-                                        {
-                                            if (testPrio > prio)
-                                            {
-                                                targetIndex = i2;
-                                                prio = testPrio;
-                                            }
-                                        }
-                                        perform = true;
-                                    }
-                                    ++i2;
-                                }
-                            }
-                            // if not we can select a target from the list
-                            if (!perform &&
-                                captures.size() > 0)
-                            {
-                                prio = -1;
-                                targetIndex = 0;
-                                // priorities production buildings over over captures
-                                for (qint32 i2 = 0; i2 < captures.size(); i2++)
-                                {
-                                    Building *pBuilding = m_pMap->getTerrain(captures[i2].m_x, captures[i2].m_y)->getBuilding();
-                                    qint32 testPrio = std::numeric_limits<qint32>::min();
-                                    if (pBuilding->isHq())
-                                    {
-                                        testPrio = std::numeric_limits<qint32>::max();
-                                    }
-                                    else if (pBuilding->isProductionBuilding())
-                                    {
-                                        testPrio = pBuilding->getConstructionList().size();
-                                    }
-                                    if (!captures[i2].m_farAway && testPrio > 0)
-                                    {
-                                        testPrio += nearbyPrioBonus;
-                                    }
-                                    if (testPrio > prio)
-                                    {
-                                        targetIndex = i2;
-                                        prio = testPrio;
-                                    }
-                                }
-                                perform = true;
-                            }
-                        }
-                    }
-                    // perform capturing
-                    if (perform)
-                    {
-                        ++unitData.nextAiStep;
-                        if (captures[targetIndex].m_farAway)
-                        {
-                            spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
-                            pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                            std::vector<QVector3D> targets;
-                            targets.push_back(QVector3D(captures[targetIndex].m_x, captures[targetIndex].m_y, 1));
-                            std::vector<QVector3D> transporterTargets;
-
-                            if (moveUnit(pAction, &unitData, pUnits, unitData.actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
-                            {
-                                m_usedFarAwayBuildings.append(QPoint(captures[targetIndex].m_x, captures[targetIndex].m_y));
-                                return true;
-                            }
-                        }
-                        else
-                        {
-                            spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_CAPTURE, m_pMap);
-                            pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                            auto path = unitData.pUnitPfs->getPathFast(captures[targetIndex].m_x, captures[targetIndex].m_y);
-                            pAction->setMovepath(path, unitData.pUnitPfs->getCosts(path));
-                            m_updatePoints.push_back(pUnit->getPosition());
-                            m_updatePoints.push_back(pAction->getActionTarget());
-                            if (pAction->canBePerformed())
-                            {
-                                emit sigPerformAction(pAction);
-                                return true;
-                            }
-                            else
-                            {
-                                CoreAI::addSelectedFieldData(pAction, rocketTarget);
-                                pAction->setActionID(ACTION_MISSILE);
-                                if (pAction->canBePerformed())
-                                {
-                                    emit sigPerformAction(pAction);
-                                    return true;
-                                }
-                            }
-                        }
-                        qint32 i2 = 0;
-                        while (i2 < captureBuildings.size())
-                        {
-                            if (captureBuildings[i2].m_x == captures[targetIndex].m_x &&
-                                captureBuildings[i2].m_y == captures[targetIndex].m_y)
-                            {
-                                captureBuildings.erase(captureBuildings.cbegin() + i2);
-                            }
-                            else
-                            {
-                                ++i2;
-                            }
-                        }
-                    }
-                }
-            }
+            emit sigPerformAction(pAction);
+            return true;
         }
     }
     ++m_aiFunctionStep;

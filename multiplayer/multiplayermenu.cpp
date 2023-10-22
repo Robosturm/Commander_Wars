@@ -384,12 +384,7 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
     }
     else
     {
-        QString command = QString(NetworkCommands::SENDINITIALMAPUPDATE);
-        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
-        QJsonObject data;
-        data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        sendMapInfoUpdate(socketID);
     }
     CONSOLE_PRINT("Stopping despawn timer", GameConsole::eDEBUG);
     m_slaveDespawnTimer.stop();
@@ -553,10 +548,6 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
         }
-        else if (messageType == NetworkCommands::SENDINITIALMAPUPDATE)
-        {
-            sendMapInfoUpdate(socketID);
-        }
         else if (messageType == NetworkCommands::REQUESTLOGINDDATA)
         {
             sendLoginData(socketID, objData);
@@ -689,7 +680,14 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID)
     QCryptographicHash myHash(QCryptographicHash::Sha512);
     QString file = m_pMapSelectionView->getCurrentFile().filePath();
     QString fileName = m_pMapSelectionView->getCurrentFile().fileName();
-    QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    auto* pGameScript = pMap->getGameScript();
+    auto* pGameRules = pMap->getGameRules();
+    QString scriptFile;
+    if (pGameScript != nullptr)
+    {
+        scriptFile = pGameScript->getScriptFile();
+    }
     QFile mapFile(file);
     if (mapFile.exists())
     {
@@ -707,7 +705,11 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID)
     stream << Mainapp::getGameVersion();
     QStringList mods = Settings::getInstance()->getMods();
     QStringList versions = Settings::getInstance()->getActiveModVersions();
-    bool filter = m_pMapSelectionView->getCurrentMap()->getGameRules()->getCosmeticModsAllowed();
+    bool filter = false;
+    if (pGameRules != nullptr)
+    {
+        filter = pGameRules->getCosmeticModsAllowed();
+    }
     Settings::getInstance()->filterCosmeticMods(mods, versions, filter);
     stream << filter;
     stream << static_cast<qint32>(mods.size());

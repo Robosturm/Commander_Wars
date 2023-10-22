@@ -30,7 +30,7 @@ class EditorMenue;
 class BaseGamemenu;
 using spBaseGamemenu = std::shared_ptr<BaseGamemenu>;
 
-class GameMap final : public QObject, public FileSerializable, public oxygine::Actor, public JsThis
+class GameMap : public QObject, public FileSerializable, public oxygine::Actor, public JsThis
 {
     Q_OBJECT
 public:
@@ -54,7 +54,10 @@ public:
         qint32 m_uniqueIdCounter{0};
         mutable GameEnums::MapFilterFlags m_mapFlags{GameEnums::MapFilterFlags_None};
     };
-
+    /**
+     * @brief GameMap
+     */
+    explicit GameMap() = default;
     /**
      * @brief GameMap creates an empty ma (filled with plains) with two players and the given size
      * @param width

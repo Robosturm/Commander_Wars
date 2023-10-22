@@ -293,8 +293,7 @@ namespace NetworkCommands
     /**
      * @brief SERVERSENDAUTOMATCHINFO
      */
-    const char* const SERVERSENDAUTOMATCHINFO = "SERVERSENDAUTOMATCHINFO";    
-    const char* const SENDINITIALMAPUPDATE = "SENDINITIALMAPUPDATE";
+    const char* const SERVERSENDAUTOMATCHINFO = "SERVERSENDAUTOMATCHINFO";
     const char* const CREATEACCOUNT = "CREATEACCOUNT";
     const char* const LOGINACCOUNT = "LOGINACCOUNT";
     const char* const RESETPASSWORD = "RESETPASSWORD";

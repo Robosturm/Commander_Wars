@@ -108,6 +108,8 @@ void HeavyAi::process()
         {
             updateUnitCache(pUnits);
             updateUnitCache(pEnemyUnits);
+
+
             if (pUnits->size() > 0)
             {
                 m_evaluator->updateInputVector(m_pMap, pUnits->at(0)->getPosition(), true);

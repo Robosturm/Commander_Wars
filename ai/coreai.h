@@ -599,6 +599,20 @@ public:
      * @brief resetMoveMap
      */
     Q_INVOKABLE void resetMoveMap();
+    qint32 getAiFunctionStep() const
+    {
+        return m_aiFunctionStep;
+    }
+
+    /**
+     * @brief hasMissileTarget
+     * @return
+     */
+    bool hasMissileTarget() const
+    {
+        return m_missileTarget;
+    }
+    void addSelectedFieldData(spGameAction & pGameAction, const QPoint & point);
 protected:
     /**
      * @brief prepareEnemieData
@@ -609,7 +623,6 @@ protected:
     void prepareEnemieData(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
     void sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
 
-    void addSelectedFieldData(spGameAction & pGameAction, const QPoint & point);
     /**
      * @brief isAttackOnTerrainAllowed
      * @param pTerrain
@@ -722,14 +735,6 @@ protected:
      * @param pUnits
      */
     void rebuildIsland(spQmlVectorUnit & pUnits);
-    /**
-     * @brief hasMissileTarget
-     * @return
-     */
-    bool hasMissileTarget()
-    {
-        return m_missileTarget;
-    }
     /**
      * @brief GetUnitCounts
      * @param pUnits

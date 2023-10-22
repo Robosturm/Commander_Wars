@@ -2034,20 +2034,23 @@ qint32 Unit::getCapturePoints() const
     return m_capturePoints;
 }
 
-void Unit::setCapturePoints(const qint32 value)
+void Unit::setCapturePoints(const qint32 value, bool updateVisuals)
 {
     m_capturePoints = value;
     if (m_capturePoints < 0)
     {
         m_capturePoints = 0;
     }
-    if (m_capturePoints > 0)
+    if (updateVisuals)
     {
-        loadIcon("capture", GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
-    }
-    else
-    {
-        unloadIcon("capture");
+        if (m_capturePoints > 0)
+        {
+            loadIcon("capture", GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
+        }
+        else
+        {
+            unloadIcon("capture");
+        }
     }
 }
 
@@ -2343,14 +2346,14 @@ qint32 Unit::getHpRounded() const
     return GlobalUtils::roundUp(m_hp);
 }
 
-void Unit::setHp(const qreal value)
+void Unit::setHp(const qreal value, bool updateVisuals)
 {
     m_hp = GlobalUtils::roundFloor(value, FLOAT_PRECISION);
     if (m_hp > MAX_UNIT_HP)
     {
         m_hp = MAX_UNIT_HP;
     }
-    if (m_pMap != nullptr)
+    if (updateVisuals && m_pMap != nullptr)
     {
         updateIcons(m_pMap->getCurrentViewPlayer());
     }
@@ -3370,16 +3373,6 @@ bool Unit::hasWeapons()
     return false;
 }
 
-qint32 Unit::getUniqueID() const
-{
-    return m_UniqueID;
-}
-
-GameEnums::GameAi Unit::getAiMode() const
-{
-    return m_AiMode;
-}
-
 void Unit::modifyUnit(qint32 hpChange, qint32 ammo1Change, qint32 ammo2Change, qint32 fuelChange)
 {
     setHp(getHp() + hpChange);
@@ -3724,6 +3717,12 @@ void Unit::serializeObject(QDataStream& pStream, bool forHash) const
             pStream << m_customRangeInfo[i].color.rgba();
         }
         pStream << m_cursorInfoRange;
+        size = m_aiCache.size();
+        pStream << size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            pStream << m_aiCache[i];
+        }
     }
 }
 
@@ -4083,6 +4082,19 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             qint32 dummy2;
             pStream >> dummy2;
         }
+    }
+    if (version > 23)
+    {
+        m_aiCache.clear();
+        qint32 size = 0;
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            qint32 info;
+            pStream >> info;
+            m_aiCache.push_back(info);
+        }
+
     }
     m_unitIdx = UnitSpriteManager::getInstance()->getIndex(m_UnitID);
 }

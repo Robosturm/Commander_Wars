@@ -443,6 +443,10 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
                     {
                         allHuman = false;
                     }
+                    else if (ai == GameEnums::AiTypes_Human)
+                    {
+                        pPlayer->setPlayerNameId(Settings::getInstance()->getUsername());
+                    }
                     pPlayer->setControlType(ai);
                 }
                 else if (pPlayer->getControlType() != GameEnums::AiTypes_Open &&
@@ -451,6 +455,7 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
                     CONSOLE_PRINT("PlayerSelection::initializeMap changing player " + QString::number(i) + " to human", GameConsole::eDEBUG);
                     pPlayer->setBaseGameInput(MemoryManagement::create<HumanPlayerInput>(m_pMap));
                     pPlayer->setControlType(GameEnums::AiTypes_Human);
+                    pPlayer->setPlayerNameId(Settings::getInstance()->getUsername());
                 }
                 else
                 {

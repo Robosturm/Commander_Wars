@@ -90,7 +90,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 23;
+        return 24;
     }
 
 
@@ -369,7 +369,10 @@ public:
      * @brief getUniqueID
      * @return returns the map wide unique id of this unit.
      */
-    Q_INVOKABLE qint32 getUniqueID() const;
+    Q_INVOKABLE qint32 getUniqueID() const
+    {
+        return m_UniqueID;
+    }
     /**
      * @brief spawnUnit
      * @param unitID
@@ -380,7 +383,10 @@ public:
      * @brief getAiMode
      * @return
      */
-    Q_INVOKABLE GameEnums::GameAi getAiMode() const;
+    Q_INVOKABLE GameEnums::GameAi getAiMode() const
+    {
+        return m_AiMode;
+    }
     /**
      * @brief setAiMode
      * @param AiMode
@@ -476,7 +482,7 @@ public:
      */
     Q_INVOKABLE qint32 getMovementCosts(qint32 x, qint32 y, qint32 curX = -1, qint32 curY = -1, bool trapChecking = false);
     Q_INVOKABLE qreal getHp() const;
-    Q_INVOKABLE void setHp(const qreal value);
+    Q_INVOKABLE void setHp(const qreal value, bool updateVisuals = true);
     Q_INVOKABLE qint32 getHpRounded() const;
     Q_INVOKABLE bool hasDirectWeapon();
     Q_INVOKABLE qint32 getAmmo1() const;
@@ -502,7 +508,7 @@ public:
     Q_INVOKABLE qint32 getMaxFuel() const;
     Q_INVOKABLE void setMaxFuel(const qint32 value);
     Q_INVOKABLE qint32 getCapturePoints() const;
-    Q_INVOKABLE void setCapturePoints(const qint32 value);
+    Q_INVOKABLE void setCapturePoints(const qint32 value, bool updateVisuals = true);
     Q_INVOKABLE bool canCapture();
     Q_INVOKABLE qint32 getCosts() const;
     Q_INVOKABLE qint32 getBaseCosts() const;

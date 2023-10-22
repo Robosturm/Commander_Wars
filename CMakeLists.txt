@@ -730,10 +730,12 @@ set(${PROJECT_NAME}_SRCS
     ai/normalai.cpp ai/normalai.h
     ai/heavyai/heavyai.cpp ai/heavyai/heavyai.h
     ai/heavyai/heavyAiSharedData.h
-    ai/heavyai/situationevaluator.h ai/heavyai/situationevaluator.cpp
+    ai/heavyai/situationevaluator.h ai/heavyai/situationevaluator.cpp    
+    ai/heavyai/simulationmap.h ai/heavyai/simulationmap.cpp
     ai/influencefrontmap.cpp ai/influencefrontmap.h
     ai/heavyai/unittargetedpathfindingsystem.h ai/heavyai/unittargetedpathfindingsystem.cpp
     ai/dummyai.h ai/dummyai.cpp
+    ai/capturebuildingselector.h ai/capturebuildingselector.cpp
     ai/aiprocesspipe.h ai/aiprocesspipe.cpp
     # production system
     ai/productionSystem/simpleproductionsystem.h ai/productionSystem/simpleproductionsystem.cpp

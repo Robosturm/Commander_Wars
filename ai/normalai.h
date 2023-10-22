@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "ai/coreai.h"
+#include "ai/capturebuildingselector.h"
 
 #include "ai/influencefrontmap.h"
 
@@ -512,9 +513,8 @@ private:
      * @brief m_productionData
      */
     std::vector<ProductionData> m_productionData;
-    QVector<QPoint> m_usedFarAwayBuildings;
     InfluenceFrontMap m_InfluenceFrontMap;
-
+    CaptureBuildingSelector m_captureBuildingSelector;
 
     double m_notAttackableDamage{25.0f};
     double m_midDamage{55.0f};
