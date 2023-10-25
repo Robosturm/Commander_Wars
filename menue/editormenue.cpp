@@ -2106,6 +2106,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                 pTerrain->setTerrainSpriteName(id);
                                 pTerrain->setFixedOverlaySprites(pCopyTerrain->getFixedOverlaySprites());
                                 pTerrain->setCustomOverlays(pCopyTerrain->getCustomOverlays());
+                                pTerrain->setHp(pCopyTerrain->getHp());
                                 if (selection != EditorSelection::EditorMode::All)
                                 {
                                     break;
@@ -2126,6 +2127,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                     }
                                     spBuilding pCopyBuilding = MemoryManagement::create<Building>(pBuilding->getBuildingID(), m_pMap.get());
                                     pCopyBuilding->setOwner(pBuilding->getOwner());
+                                    pCopyBuilding->setHp(pBuilding->getHp());
                                     m_pMap->getTerrain(x + xPos, y + yPos)->setBuilding(pCopyBuilding);
                                 }
                                 if (selection != EditorSelection::EditorMode::All)
