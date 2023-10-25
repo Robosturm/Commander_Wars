@@ -9,7 +9,7 @@ env:
   BUILD_TYPE: Release
   QT_Version: '6.5.2'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
-  JAVA_PATH: ${{JAVA_HOME_11_X64}}
+  JAVA_PATH: $JAVA_HOME_11_X64
   ANDROID_OPEN_SSL_TAG: '7f5f34d16040883f7353b3f99bc3fc83ecdc2a4b'
   
 jobs:
