@@ -106,6 +106,11 @@ elseif(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(OPENSSL_LIBS
         ${OPENSSL_LIB_PATH}/libcrypto-3-x64.dll
         ${OPENSSL_LIB_PATH}/libssl-3-x64.dll
+        ${OPENSSL_LIB_PATH}/capi.dll
+        ${OPENSSL_LIB_PATH}/dasync.dll
+        ${OPENSSL_LIB_PATH}/legacy.dll
+        ${OPENSSL_LIB_PATH}/loader_attic.dll
+        ${OPENSSL_LIB_PATH}/padlock.dll
     CACHE INTERNAL "")
     include_directories(${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
