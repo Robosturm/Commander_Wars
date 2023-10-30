@@ -67,6 +67,17 @@ ScriptVariable* ScriptVariables::createVariable(const QString & id)
     return pVar.get();
 }
 
+void ScriptVariables::deleteVariable(const QString & id)
+{
+    for (qint32 i = 0; i < m_Variables.size(); i++)
+    {
+        if (m_Variables[i]->getId() == id)
+        {
+            m_Variables.removeAt(i);
+        }
+    }
+}
+
 spScriptVariable ScriptVariables::getSpVariable(const QString & id)
 {
     for (qint32 i = 0; i < m_Variables.size(); i++)

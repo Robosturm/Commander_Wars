@@ -50,13 +50,13 @@ var WEATHER =
         return 0;
     },
 
-    getFirerangeModifier : function(weather, map)
+    getFirerangeModifier : function(weather, map, unit, terrain)
     {
         // only called when the weather is active
         return 0;
     },
 
-    getMinFirerangeModifier : function(weather, map)
+    getMinFirerangeModifier : function(weather, map, unit, terrain)
     {
         // only called when the weather is active
         return 0;
@@ -67,7 +67,7 @@ var WEATHER =
         return 0;
     },
 
-    getVisionrangeModifier : function(weather, map)
+    getVisionrangeModifier : function(weather, map, unit, terrain)
     {
         // only called when the weather is active
         return 0;

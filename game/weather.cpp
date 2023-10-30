@@ -184,12 +184,14 @@ qint32 Weather::getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost)
     }
 }
 
-qint32 Weather::getVisionrangeModifier()
+qint32 Weather::getVisionrangeModifier(Unit* pUnit, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionrangeModifier";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       JsThis::getJsThis(m_pMap),
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pTerrain),});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -201,12 +203,14 @@ qint32 Weather::getVisionrangeModifier()
     }
 }
 
-qint32 Weather::getFirerangeModifier()
+qint32 Weather::getFirerangeModifier(Unit* pUnit, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFirerangeModifier";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       JsThis::getJsThis(m_pMap),
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pTerrain),});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -218,12 +222,14 @@ qint32 Weather::getFirerangeModifier()
     }
 }
 
-qint32 Weather::getMinFirerangeModifier()
+qint32 Weather::getMinFirerangeModifier(Unit* pUnit, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMinFirerangeModifier";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       JsThis::getJsThis(m_pMap),
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(pTerrain),});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {

@@ -53,9 +53,9 @@ public:
     Q_INVOKABLE qint32 getDefensiveModifier();
     Q_INVOKABLE qint32 getMovementCostModifier(Unit* pUnit, Terrain* pTerrain);
     Q_INVOKABLE qint32 getMovementpointModifier(Unit* pUnit, Terrain* pTerrain);
-    Q_INVOKABLE qint32 getFirerangeModifier();
-    Q_INVOKABLE qint32 getMinFirerangeModifier();
-    Q_INVOKABLE qint32 getVisionrangeModifier();
+    Q_INVOKABLE qint32 getFirerangeModifier(Unit* pUnit, Terrain* pTerrain);
+    Q_INVOKABLE qint32 getMinFirerangeModifier(Unit* pUnit, Terrain* pTerrain);
+    Q_INVOKABLE qint32 getVisionrangeModifier(Unit* pUnit, Terrain* pTerrain);
     Q_INVOKABLE qint32 getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost);
     Q_INVOKABLE void activate();
     Q_INVOKABLE void deactivate();

@@ -571,7 +571,7 @@ qint32 Unit::getVision(QPoint position)
     rangeModifier += getCoBonus(position, "getEnemyVisionBonus", &Player::getCoBonus);
     if (!getWeatherImmune())
     {
-        rangeModifier += m_pMap->getGameRules()->getCurrentWeather()->getVisionrangeModifier();
+        rangeModifier += m_pMap->getGameRules()->getCurrentWeather()->getVisionrangeModifier(this, m_pTerrain);
     }
     qint32 mapHeigth = m_pMap->getMapHeight();
     qint32 mapWidth = m_pMap->getMapWidth();
@@ -658,7 +658,7 @@ qint32 Unit::getBonusMaxRange(QPoint position)
 
     if (!getWeatherImmune())
     {
-        rangeModifier += m_pMap->getGameRules()->getCurrentWeather()->getFirerangeModifier();
+        rangeModifier += m_pMap->getGameRules()->getCurrentWeather()->getFirerangeModifier(this, m_pTerrain);
     }
     // add terrain modifiers
     if (m_pMap->onMap(position.x(), position.y()))
@@ -729,7 +729,7 @@ qint32 Unit::getBonusMinRange(QPoint position)
 
     if (!getWeatherImmune())
     {
-        rangeModifier += m_pMap->getGameRules()->getCurrentWeather()->getMinFirerangeModifier();
+        rangeModifier += m_pMap->getGameRules()->getCurrentWeather()->getMinFirerangeModifier(this, m_pTerrain);
     }
     // add terrain modifiers
     if (m_pMap->onMap(position.x(), position.y()))

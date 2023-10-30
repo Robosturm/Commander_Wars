@@ -51,6 +51,7 @@ public:
      */
     Q_INVOKABLE ScriptVariable* createVariable(const QString & id);
     Q_INVOKABLE ScriptVariable* getVariable(const QString & id);
+    Q_INVOKABLE void deleteVariable(const QString & id);
     /**
      * @brief clear deletes all variables hold by this object.
      */
