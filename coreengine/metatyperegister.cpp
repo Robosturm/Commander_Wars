@@ -14,6 +14,9 @@
 #include "ai/heavyai/heavyai.h"
 #include "ai/normalai.h"
 #include "ai/influencefrontmap.h"
+#include "ai/trainingdatagenerator.h"
+#include "ai/heavyai/situationevaluator.h"
+#include "ai/heavyai/simulationmap.h"
 
 #include "menue/basegamemenu.h"
 #include "menue/victorymenue.h"
@@ -240,6 +243,9 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<AutoMatchMaker>("AutoMatchMaker", 1);
     qmlRegisterInterface<Multiplayermenu>("Multiplayermenu", 1);
     qmlRegisterInterface<NetworkGameDataView>("NetworkGameDataView", 1);
+    qmlRegisterInterface<TrainingDataGenerator>("TrainingDataGenerator", 1);
+    qmlRegisterInterface<SituationEvaluator>("SituationEvaluator", 1);
+    qmlRegisterInterface<SimulationMap>("SimulationMap", 1);
 #ifdef AUDIOSUPPORT
     qmlRegisterInterface<SoundData>("SoundData", 1);
 #endif

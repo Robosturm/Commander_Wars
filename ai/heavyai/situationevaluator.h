@@ -37,6 +37,11 @@ public:
      * @return
      */
     float getOutput();
+    /**
+     * @brief getInputVector
+     * @return
+     */
+    QString getInputVector() const;
 private:
     void getUnitsInRange(GameMap* pMap, const QPoint & searchPoint);
     void createPathFindingSystems(GameMap* pMap);
@@ -56,6 +61,8 @@ private:
     void updateStealthed(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);
     void updateBuildingImportance(qint32 unitPosition);
     void updateStealthInfo(GameMap* pMap, qint32 unitPosition);
+    void updateMinFirerange(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);
+    void updateMaxFirerange(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);
 private:
     opennn::Tensor<opennn::type, 2> m_inputVector;
     opennn::NeuralNetwork m_neuralNetwork;
@@ -64,3 +71,4 @@ private:
     Player* m_pOwner{nullptr};
 };
 
+Q_DECLARE_INTERFACE(SituationEvaluator, "SituationEvaluator");

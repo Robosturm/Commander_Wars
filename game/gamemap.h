@@ -20,6 +20,8 @@
 #include "coreengine/qmlvector.h"
 #include "coreengine/jsthis.h"
 
+#include "ai/trainingdatagenerator.h"
+
 class GameAction;
 using spGameAction = std::shared_ptr<GameAction>;
 
@@ -177,7 +179,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 14;
+        return 15;
     }
     /**
      * @brief clearMap
@@ -940,6 +942,11 @@ public:
     {
         return &m_Variables;
     }
+    TrainingDataGenerator* getTrainingDataGenerator()
+    {
+        return &m_trainingDataGenerator;
+    }
+
 private slots:
     void zoomChanged();
 private:
@@ -977,6 +984,7 @@ private:
     spCampaign m_Campaign;
     spGameRecorder m_Recorder{MemoryManagement::create<GameRecorder>(this)};
     spGameScript m_GameScript{MemoryManagement::create<GameScript>(this)};
+    TrainingDataGenerator m_trainingDataGenerator{this};
     ScriptVariables m_Variables;
     static const char* const m_GameAnimationFactory;
     bool m_loaded{false};
@@ -991,5 +999,7 @@ private:
     qint32 m_replayActionCount{0};
     static qint32 m_imagesize;
 };
+
+Q_DECLARE_INTERFACE(GameMap, "GameMap");
 
 #endif // GAMEMAP_H

@@ -2,6 +2,7 @@
 #include "game/gameanimation/gameanimationfactory.h"
 #include "ai/coreai.h"
 #include "ai/dummyai.h"
+#include "ai/trainingdatagenerator.h"
 
 #include "coreengine/mainapp.h"
 
@@ -360,7 +361,6 @@ void ActionPerformer::finishActionPerformed()
         }
         m_pMap->getCurrentPlayer()->postAction(m_pCurrentAction.get());
         m_pMap->getGameScript()->actionDone(m_pCurrentAction);
-        m_pCurrentAction.reset();
     }
     skipAnimations(true);
     if (m_pMenu != nullptr)
@@ -395,6 +395,8 @@ void ActionPerformer::actionPerformed()
                 m_pMap->killDeadUnits();
                 m_pMap->getGameRules()->checkVictory();
                 m_pMap->getGameRules()->createFogVision();
+                m_pMap->getTrainingDataGenerator()->onActionDone(m_pCurrentAction.get());
+                m_pCurrentAction.reset();
                 m_actionRunning = false;
                 m_finishedPerformed = false;
                 CONSOLE_PRINT("Storing current map hash", GameConsole::eDEBUG);

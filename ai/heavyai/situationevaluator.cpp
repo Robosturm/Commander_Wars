@@ -11,8 +11,8 @@
 #include "game/unit.h"
 
 SituationEvaluator::SituationEvaluator(Player* pOwner)
-    : m_inputVector(1, HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::SituationFeatures::MaxFeatures),
-    m_searchRange(GlobalUtils::getSpCircle(0, HeavyAiSharedData::SEARCH_RANGE)),
+    : m_inputVector(1, HeavyAiSharedData::INPUT_VECTOR_SIZE),
+    m_searchRange(GlobalUtils::getSpCircle(0, HeavyAiSharedData::UNIT_SEARCH_RANGE)),
     m_pOwner(pOwner)
 {
     for (qint32 i = 0; i < HeavyAiSharedData::UNIT_COUNT; ++i)
@@ -63,6 +63,16 @@ void SituationEvaluator::updateInputVector(GameMap* pMap, const QPoint & searchP
     }
 }
 
+QString SituationEvaluator::getInputVector() const
+{
+    QString input;
+    for (qint32 i = 0; i < HeavyAiSharedData::INPUT_VECTOR_SIZE; ++i)
+    {
+        input += QString::number(m_inputVector(0, i)) + ";";
+    }
+    return input;
+}
+
 float SituationEvaluator::getOutput()
 {
     auto inputDimension = opennn::get_dimensions(m_inputVector);
@@ -72,7 +82,7 @@ float SituationEvaluator::getOutput()
 
 void SituationEvaluator::clearUnitInput(qint32 index)
 {
-    for (qint32 feature = 0; feature < HeavyAiSharedData::SituationFeatures::MaxFeatures; ++feature)
+    for (qint32 feature = 0; feature < HeavyAiSharedData::SituationFeatures::SituationFeatures_MaxFeatures; ++feature)
     {
         qint32 basePosition = HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::UNIT_COUNT * feature + index * HeavyAiSharedData::UNIT_COUNT;
         for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
@@ -84,11 +94,11 @@ void SituationEvaluator::clearUnitInput(qint32 index)
 
 void SituationEvaluator::fillUnitInput(qint32 index)
 {
-    for (qint32 feature = 0; feature < HeavyAiSharedData::SituationFeatures::MaxFeatures; ++feature)
+    for (qint32 feature = 0; feature < HeavyAiSharedData::SituationFeatures::SituationFeatures_MaxFeatures; ++feature)
     {
         qint32 basePosition = HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::UNIT_COUNT * feature + index * HeavyAiSharedData::UNIT_COUNT;
         using updateFeature = void (SituationEvaluator::*)(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);
-        constexpr std::array<updateFeature, HeavyAiSharedData::SituationFeatures::MaxFeatures> featureCb{
+        constexpr std::array<updateFeature, HeavyAiSharedData::SituationFeatures::SituationFeatures_MaxFeatures> featureCb{
             &SituationEvaluator::updateDistance,
             &SituationEvaluator::updateHp,
             &SituationEvaluator::updateHpDamage,
@@ -100,6 +110,8 @@ void SituationEvaluator::fillUnitInput(qint32 index)
             &SituationEvaluator::updateCapturePoints,
             &SituationEvaluator::updateBuildingImportance,
             &SituationEvaluator::updateStealthed,
+            &SituationEvaluator::updateMinFirerange,
+            &SituationEvaluator::updateMaxFirerange,
         };
         (this->*featureCb[feature])(basePosition, m_unitsInfo[index]);
     }
@@ -155,7 +167,7 @@ void SituationEvaluator::updateHpDamage(qint32 basePosition, const HeavyAiShared
 void SituationEvaluator::updateFundsDamage(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
 {
 
-    qint32 hpOffset = HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::UNIT_COUNT * (HeavyAiSharedData::SituationFeatures::HpDamage - HeavyAiSharedData::SituationFeatures::HP);
+    qint32 hpOffset = HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::UNIT_COUNT * (HeavyAiSharedData::SituationFeatures::SituationFeatures_HpDamage - HeavyAiSharedData::SituationFeatures::SituationFeatures_HP);
     for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
     {
         if (shouldFillInfo(unitInfo, enemyUnit))
@@ -239,6 +251,36 @@ void SituationEvaluator::updateRepairsOnPosition(qint32 basePosition, const Heav
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
             m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::CurrentRepair];
+        }
+        else
+        {
+            m_inputVector(0, basePosition + enemyUnit) = 0;
+        }
+    }
+}
+
+void SituationEvaluator::updateMinFirerange(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
+{
+    for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
+    {
+        if (shouldFillInfo(unitInfo, enemyUnit))
+        {
+            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::MinFirerange];
+        }
+        else
+        {
+            m_inputVector(0, basePosition + enemyUnit) = 0;
+        }
+    }
+}
+
+void SituationEvaluator::updateMaxFirerange(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
+{
+    for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
+    {
+        if (shouldFillInfo(unitInfo, enemyUnit))
+        {
+            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::MaxFirerange];
         }
         else
         {

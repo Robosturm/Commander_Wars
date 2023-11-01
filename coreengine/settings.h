@@ -777,6 +777,16 @@ public:
      * @param newMuteOnFcousedLost
      */
     Q_INVOKABLE void setMuteOnFcousedLost(bool newMuteOnFcousedLost);
+    /**
+     * @brief getCreateAiTrainingData
+     * @return
+     */
+    Q_INVOKABLE bool getCreateAiTrainingData() const;
+    /**
+     * @brief setCreateAiTrainingData
+     * @param newCreateAiTrainingData
+     */
+    Q_INVOKABLE void setCreateAiTrainingData(bool newCreateAiTrainingData);
 
 private:
     friend class MemoryManagement;
@@ -939,6 +949,7 @@ private:
     float m_supplyWarning{0.33f};    
 
     qint32 m_pauseAfterAction{0};
+    bool m_createAiTrainingData{false};
 
     // internal members
     static spSettings m_pInstance;

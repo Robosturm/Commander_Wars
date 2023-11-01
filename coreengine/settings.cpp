@@ -48,6 +48,16 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
+bool Settings::getCreateAiTrainingData() const
+{
+    return m_createAiTrainingData;
+}
+
+void Settings::setCreateAiTrainingData(bool newCreateAiTrainingData)
+{
+    m_createAiTrainingData = newCreateAiTrainingData;
+}
+
 bool Settings::getMuteOnFcousedLost() const
 {
     return m_muteOnFcousedLost;
@@ -1302,6 +1312,7 @@ void Settings::setup()
         MemoryManagement::create<Value<bool>>("Logging", "LogActions", &m_LogActions, false, false, true),
         MemoryManagement::create<Value<GameConsole::eLogLevels>>("Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL),
         MemoryManagement::create<Value<quint64>>("Logging", "LogModules", &m_defaultLogModuls, GameConsole::eGeneral | GameConsole::eJavaScript, 0, std::numeric_limits<quint64>::max()),
+        MemoryManagement::create<Value<bool>>("Logging", "CreateAiTrainingData", &m_createAiTrainingData, false, false, true),
     };
     QSettings settings(m_settingFile, QSettings::IniFormat);
     for (auto setting : m_SettingValues)

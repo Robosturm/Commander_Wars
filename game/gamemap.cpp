@@ -1529,6 +1529,7 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
         pStream << m_replayActionCount;
     }
     m_Variables.serializeObject(pStream, forHash);
+    m_trainingDataGenerator.serializeObject(pStream, forHash);
 }
 
 void GameMap::updateMapFlags() const
@@ -1803,6 +1804,10 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     if (m_headerInfo.m_Version > 13)
     {
         m_Variables.deserializeObject(pStream);
+    }
+    if (m_headerInfo.m_Version > 14)
+    {
+        m_trainingDataGenerator.deserializeObject(pStream);
     }
     if (showLoadingScreen)
     {

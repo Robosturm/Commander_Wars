@@ -24,9 +24,9 @@ public:
     void loadStartState(GameMap* pMap);
     void restoreInitialState();
 
-    void moveUnit(QPoint currentPos, QPoint newPos);
-    void dealDamage(QPoint position, float damage);
-    void increaseCapturePoints(QPoint position, qint32 points);
+    Q_INVOKABLE void moveUnit(QPoint currentPos, QPoint newPos);
+    Q_INVOKABLE void dealDamage(QPoint position, float damage);
+    Q_INVOKABLE void increaseCapturePoints(QPoint position, qint32 points);
 private:
     void resetMoveUnit(SimulationStep & step);
     void resetDealDamage(SimulationStep & step);
@@ -35,3 +35,4 @@ private:
     std::vector<SimulationStep> m_steps;
 };
 
+Q_DECLARE_INTERFACE(SimulationMap, "SimulationMap");
