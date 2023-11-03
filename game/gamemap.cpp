@@ -1469,6 +1469,7 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << getVersion();
     if (!forHash)
     {
+        pStream << GlobalUtils::MAP_MAGIC;
         pStream << m_headerInfo.m_mapName;
         pStream << m_headerInfo.m_mapAuthor;
         pStream << m_headerInfo.m_mapDescription;
@@ -1629,9 +1630,27 @@ oxygine::spActor GameMap::getMarkedFieldsLayer() const
     return m_markedFieldsLayer;
 }
 
+bool GameMap::validMap(const MapHeaderInfo & headerInfo)
+{
+    return headerInfo.m_mapMagic == GlobalUtils::MAP_MAGIC;
+}
+
+bool GameMap::validMap() const
+{
+    return validMap(m_headerInfo);
+}
+
 void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
 {
     pStream >> headerInfo.m_Version;
+    if (headerInfo.m_Version > 15)
+    {
+        pStream >> headerInfo.m_mapMagic;
+        if (!validMap(headerInfo))
+        {
+            return;
+        }
+    }
     if (headerInfo.m_Version > 1)
     {
         pStream >> headerInfo.m_mapName;
@@ -1667,7 +1686,10 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     // restore map header
     readMapHeader(pStream, m_headerInfo);
-
+    if (validMap(m_headerInfo))
+    {
+        return;
+    }
     CONSOLE_PRINT("Loading map " + m_headerInfo.m_mapName + " Fast =" + (fast ? "true" : "false"), GameConsole::eDEBUG);
     qint32 mapSize = m_headerInfo.m_width * m_headerInfo.m_heigth;
     setSize(m_headerInfo.m_width * GameMap::getImageSize(), m_headerInfo.m_heigth * GameMap::getImageSize());

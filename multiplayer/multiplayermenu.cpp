@@ -1936,7 +1936,7 @@ void Multiplayermenu::startGameOnServer()
     Settings::getInstance()->filterCosmeticMods(myMods, myVersions, pMap->getGameRules()->getCosmeticModsAllowed());
     Filesupport::writeVectorList(sendStream, myMods);
     QImage img;
-    pApp->saveMapAsImage(m_pMapSelectionView->getMinimap(), img);
+    pApp->saveMapAsImage(m_pMapSelectionView->getMinimap(), &img);
     QByteArray ba;
     QBuffer buffer(&ba);
     buffer.open(QIODevice::WriteOnly);

@@ -20,10 +20,13 @@
 
 #include "menue/mainwindow.h"
 
+#include "game/gamemap.h"
+
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
+#include "objects/minimap.h"
 #include "objects/base/chat.h"
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/dialogs/customdialog.h"
@@ -947,4 +950,45 @@ void LobbyMenu::onShowOtherDialog()
 void LobbyMenu::receivedShowAutoMatches(const QJsonObject & objData)
 {
     emit sigRequestShowAutoMatches(objData);
+}
+
+void LobbyMenu::uploadMap(const QString & filePath)
+{
+    if (m_loggedIn && QFile::exists(filePath))
+    {
+        GameMap map(filePath, true, false, false);
+        if (map.validMap())
+        {
+            Minimap minimap;
+            minimap.updateMinimap(&map);
+            QImage image;
+            Mainapp::getInstance()->saveMapAsImage(&minimap, &image);
+            QByteArray imageArray;
+            QBuffer buffer(&imageArray);
+            buffer.open(QIODevice::WriteOnly);
+            image.save(&buffer, "PNG");
+            buffer.close();
+            QByteArray mapArray;
+            buffer.setBuffer(&mapArray);
+            buffer.open(QIODevice::WriteOnly);
+            QDataStream stream(&buffer);
+            map.serializeObject(stream);
+            QString command = NetworkCommands::MAPUPLOAD;
+            CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+            QJsonObject data;
+            data.insert(JsonKeys::JSONKEY_COMMAND, command);
+            data.insert(JsonKeys::JSONKEY_MAPPATH, filePath);
+            data.insert(JsonKeys::JSONKEY_MINIMAPDATA, GlobalUtils::toJsonArray(imageArray));
+            data.insert(JsonKeys::JSONKEY_MAPDATA, GlobalUtils::toJsonArray(mapArray));
+            data.insert(JsonKeys::JSONKEY_MAPNAME, map.getMapName());
+            data.insert(JsonKeys::JSONKEY_MAPAUTHOR, map.getMapAuthor());
+            data.insert(JsonKeys::JSONKEY_MAPPLAYERS, map.getPlayerCount());
+            data.insert(JsonKeys::JSONKEY_MAPWIDTH, map.getMapWidth());
+            data.insert(JsonKeys::JSONKEY_MAPHEIGHT, map.getMapHeight());
+            data.insert(JsonKeys::JSONKEY_MAPFLAGS, static_cast<qint64>(map.getMapFlags()));
+            data.insert(JsonKeys::JSONKEY_MAPUPLOADER, Settings::getInstance()->getUsername());
+            QJsonDocument doc(data);
+            emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        }
+    }
 }

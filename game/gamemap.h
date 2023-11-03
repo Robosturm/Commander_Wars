@@ -54,6 +54,7 @@ public:
         qint32 m_heigth{0};
         qint32 m_playerCount{0};
         qint32 m_uniqueIdCounter{0};
+        QByteArray m_mapMagic;
         mutable GameEnums::MapFilterFlags m_mapFlags{GameEnums::MapFilterFlags_None};
     };
     /**
@@ -168,6 +169,17 @@ public:
      */
     static void readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo);
     /**
+     * @brief validMap
+     * @param headerInfo
+     * @return
+     */
+    static bool validMap(const MapHeaderInfo & headerInfo);
+    /**
+     * @brief validMap
+     * @return
+     */
+    bool validMap() const;
+    /**
      * @brief readMapName
      * @param pStream
      * @return
@@ -179,7 +191,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 15;
+        return 16;
     }
     /**
      * @brief clearMap

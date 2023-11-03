@@ -64,6 +64,20 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Register for games")</text>
                 <onEvent>currentMenu.showAutoMatches()</onEvent>
             </Button>
+            <Button>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Upload Map")</text>
+                <onEvent></onEvent>
+            </Button>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>250</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Download map")</text>
+                <onEvent>s</onEvent>
+            </Button>
         </childs>
     </Panel>
 </ui>

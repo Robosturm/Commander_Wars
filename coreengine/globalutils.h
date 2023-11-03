@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QJsonArray>
+#include <QByteArray>
 #include <QDir>
 #include <QRandomGenerator>
 
@@ -18,6 +19,8 @@ class GlobalUtils final : public QObject
 {
     Q_OBJECT
 public:
+    static const QByteArray MAP_MAGIC;
+
     virtual ~GlobalUtils() = default;
     static GlobalUtils* getInstance()
     {
@@ -32,6 +35,7 @@ public:
     static QFileInfoList getInfoList(const QString & folder, const QStringList & list = QStringList());
     static QUrl getUrlForFile(const QString & file);
     static QString getByteArrayString(const QByteArray & bytes);
+    static QByteArray getStringByteArray(const QString & bytes);
     static QVector<qint32> calcWidths(const QVector<qint32> & maxWidths, const QVector<float> & distribution, qint32 totalWidth);
     template<typename TData>
     static bool contains(const std::vector<TData> & vec, const TData & data)

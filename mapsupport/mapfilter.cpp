@@ -1,4 +1,5 @@
 #include "mapsupport/mapfilter.h"
+#include "network/JsonKeys.h"
 
 bool MapFilter::matches(GameMap::MapHeaderInfo & info) const
 {
@@ -14,8 +15,55 @@ bool MapFilter::matches(GameMap::MapHeaderInfo & info) const
     matches = matches && m_players.matches(info.m_playerCount);
     matches = matches && m_width.matches(info.m_width);
     matches = matches && m_height.matches(info.m_heigth);
-    matches = matches && matchesMapFlags(info.m_mapFlags);
+    matches = matches && matchesMapFlags(m_filter, info.m_mapFlags);
     return matches;
+}
+
+QJsonObject MapFilter::toJson() const
+{
+    QJsonObject obj;
+    obj.insert(JsonKeys::JSONKEY_MAPNAME, m_mapName);
+    obj.insert(JsonKeys::JSONKEY_MAPAUTHOR, m_mapAuthor);
+    obj.insert(JsonKeys::JSONKEY_MINPLAYERS, m_players.minValue);
+    obj.insert(JsonKeys::JSONKEY_MAXPLAYERS, m_players.maxValue);
+    obj.insert(JsonKeys::JSONKEY_MINWIDTH, m_width.minValue);
+    obj.insert(JsonKeys::JSONKEY_MAXWIDTH, m_width.maxValue);
+    obj.insert(JsonKeys::JSONKEY_MINHEIGHT, m_height.minValue);
+    obj.insert(JsonKeys::JSONKEY_MAXHEIGHT, m_height.maxValue);
+    QJsonArray filters;
+    for (const auto & filter : m_filter)
+    {
+        QJsonObject filterObj;
+        filterObj.insert(JsonKeys::JSONKEY_FLAGFILTERFLAGS, filter.flag);
+        filterObj.insert(JsonKeys::JSONKEY_FLAGFILTERISACTIVE, filter.isActive);
+        filterObj.insert(JsonKeys::JSONKEY_FLAGFILTERISOPTIONAL, filter.isOptional);
+        filters.append(filterObj);
+    }
+    obj.insert(JsonKeys::JSONKEY_FLAGFILTER, filters);
+    return obj;
+}
+
+void MapFilter::fromJson(const QJsonObject & object)
+{
+    m_mapName = object.value(JsonKeys::JSONKEY_MAPNAME).toString();
+    m_mapAuthor = object.value(JsonKeys::JSONKEY_MAPAUTHOR).toString();
+    m_players.minValue = object.value(JsonKeys::JSONKEY_MINPLAYERS).toInt();
+    m_players.maxValue = object.value(JsonKeys::JSONKEY_MAXPLAYERS).toInt();
+    m_width.minValue = object.value(JsonKeys::JSONKEY_MINWIDTH).toInt();
+    m_width.maxValue = object.value(JsonKeys::JSONKEY_MAXWIDTH).toInt();
+    m_height.minValue = object.value(JsonKeys::JSONKEY_MINHEIGHT).toInt();
+    m_height.maxValue = object.value(JsonKeys::JSONKEY_MAXHEIGHT).toInt();
+    QJsonArray filters = object.value(JsonKeys::JSONKEY_FLAGFILTER).toArray();
+    m_filter.clear();
+    for (const auto & filterObj : filters)
+    {
+        auto filterInfo = filterObj.toObject();
+        FlagFilter filter;
+        filter.flag = static_cast<GameEnums::MapFilterFlags>(filterInfo.value(JsonKeys::JSONKEY_FLAGFILTERFLAGS).toInteger());
+        filter.isActive = filterInfo.value(JsonKeys::JSONKEY_FLAGFILTERISACTIVE).toBool();
+        filter.isOptional = filterInfo.value(JsonKeys::JSONKEY_FLAGFILTERISOPTIONAL).toBool();
+        m_filter.append(filter);
+    }
 }
 
 void MapFilter::addToFilter(GameEnums::MapFilterFlags flag, bool active, bool isOptional)
@@ -120,12 +168,12 @@ bool MapFilter::FlagFilter::matches(GameEnums::MapFilterFlags flags) const
     return (flags & flag) > 0;
 }
 
-bool MapFilter::matchesMapFlags(GameEnums::MapFilterFlags flags) const
+bool MapFilter::matchesMapFlags(const QVector<FlagFilter> & filters, GameEnums::MapFilterFlags flags)
 {
     bool matches = true;
     bool hasOptional = false;
     qint32 count = 0;
-    for (auto & filter : m_filter)
+    for (auto & filter : filters)
     {
         if (filter.isActive)
         {

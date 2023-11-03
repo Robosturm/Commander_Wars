@@ -278,7 +278,7 @@ public slots:
      * @param pMinimap
      * @param img
      */
-    void saveMapAsImage(Minimap* pMinimap, QImage img);
+    void saveMapAsImage(Minimap* pMinimap, QImage * img);
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -300,7 +300,7 @@ signals:
     void sigNextStartUpStep(Mainapp::StartupPhase step);
     void sigCreateLineEdit();
     void sigDoMapshot(BaseGamemenu* pMenu);
-    void sigSaveMapAsImage(Minimap* pMinimap, QImage img);
+    void sigSaveMapAsImage(Minimap* pMinimap, QImage * img);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;

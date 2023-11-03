@@ -19,6 +19,30 @@ namespace NetworkCommands
         Max,
     };
     /**
+     * @brief FILEDOWNLOADREQUEST
+     */
+    const char* const FILEDOWNLOADREQUEST = "FILEDOWNLOADREQUEST";
+    /**
+     * @brief REQUESTAVAILABLEMAPS
+     */
+    const char* const REQUESTAVAILABLEMAPS = "REQUESTAVAILABLEMAPS";
+    /**
+     * @brief RECEIVEAVAILABLEMAPS
+     */
+    const char* const RECEIVEAVAILABLEMAPS = "RECEIVEAVAILABLEMAPS";
+    /**
+     * @brief FILEDOWNLOAD
+     */
+    const char* const FILEDOWNLOAD = "FILEDOWNLOAD";
+    /**
+     * @brief MAPUPLOAD
+     */
+    const char* const MAPUPLOAD = "MAPUPLOAD";    
+    /**
+     * @brief MAPUPLOADRESPONSE
+     */
+    const char* const MAPUPLOADRESPONSE = "MAPUPLOADRESPONSE";
+    /**
      * @brief RESYNCINFO
      */
     const char* const RESYNCINFO = "RESYNCINFO";

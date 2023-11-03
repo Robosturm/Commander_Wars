@@ -788,6 +788,9 @@ public:
      */
     Q_INVOKABLE void setCreateAiTrainingData(bool newCreateAiTrainingData);
 
+    bool getAllowMapUpload() const;
+    void setAllowMapUpload(bool newAllowMapUpload);
+
 private:
     friend class MemoryManagement;
     explicit Settings();
@@ -883,6 +886,7 @@ private:
     QString m_Username;
     QString m_slaveServerName;
     QString m_serverPassword;
+    bool m_allowMapUpload{true};
 
     bool m_Server{false};
     quint16 m_ServerPort{9002};

@@ -972,13 +972,13 @@ void Mainapp::doMapshot(BaseGamemenu* pMenu)
     }
 }
 
-void Mainapp::saveMapAsImage(Minimap* pMinimap, QImage img)
+void Mainapp::saveMapAsImage(Minimap* pMinimap, QImage * img)
 {
     if (!m_shuttingDown && !m_noUi)
     {
         if (isMainThread())
         {
-            GamemapImageSaver::saveMapAsImage(pMinimap, img);
+            GamemapImageSaver::saveMapAsImage(pMinimap, *img);
         }
         else
         {

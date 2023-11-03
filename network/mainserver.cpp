@@ -47,6 +47,20 @@ const char *const MainServer::SQL_RUNNINGGAMES = "runningGames";
 const char *const MainServer::SQL_MATCHHISTORY = "matchHistory";
 const char *const MainServer::SQL_SIGNEDUP = "signedUp";
 
+const char *const MainServer::SQL_TABLE_DOWNLOADMAPINFO = "downloadMapInfo";
+const char *const MainServer::SQL_MAPAUTHOR = "mapAuthor";
+const char *const MainServer::SQL_MAPNAME = "mapName";
+const char *const MainServer::SQL_MAPPATH = "mapPath";
+const char *const MainServer::SQL_MAPIMAGEPATH = "mapImagePath";
+const char *const MainServer::SQL_MAPPLAYERS = "mapPlayers";
+const char *const MainServer::SQL_MAPWIDTH = "mapWidth";
+const char *const MainServer::SQL_MAPHEIGHT = "mapHeight";
+const char *const MainServer::SQL_MAPFLAGS = "mapFlags";
+const char *const MainServer::SQL_MAPUPLOADER = "mapUploader";
+const char *const MainServer::SQL_MAPDOWNLOADCOUNT = "mapDownloadCount";
+const char *const MainServer::SQL_MAPUPLOADDATE = "mapUploadDate";
+const char *const MainServer::SQL_MAPLASTDOWNLOADDATE = "mapLastDownloadDate";
+
 spMainServer MainServer::m_pInstance{nullptr};
 QSqlDatabase *MainServer::m_serverData{nullptr};
 
@@ -96,11 +110,12 @@ void MainServer::release()
 
 MainServer::MainServer()
     : QObject(),
-      m_periodicExecutionTimer(this),
-      m_pGameServer(MemoryManagement::create<TCPServer>(this)),
-      m_pSlaveServer(MemoryManagement::create<TCPServer>(this)),
-      m_matchMakingCoordinator(this),
-      m_mailSenderThread(this)
+    m_periodicExecutionTimer(this),
+    m_pGameServer(MemoryManagement::create<TCPServer>(this)),
+    m_pSlaveServer(MemoryManagement::create<TCPServer>(this)),
+    m_matchMakingCoordinator(this),
+    m_mapFileServer(this),
+    m_mailSenderThread(this)
 {
     CONSOLE_PRINT("Game server launched", GameConsole::eDEBUG);
 #ifdef GRAPHICSUPPORT
@@ -164,6 +179,7 @@ MainServer::~MainServer()
 
 void MainServer::startDatabase()
 {
+    // create primary table for user data
     QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
                                          SQL_USERNAME + " TEXT PRIMARY KEY, " +
                                          SQL_PASSWORD + " TEXT, " +
@@ -174,6 +190,25 @@ void MainServer::startDatabase()
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create player table error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+    }
+    // create table for map file server
+    query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_DOWNLOADMAPINFO + " (" +
+                               SQL_MAPNAME + " TEXT PRIMARY KEY, " +
+                               SQL_MAPAUTHOR + " TEXT, " +
+                               SQL_MAPPATH + " TEXT, " +
+                               SQL_MAPIMAGEPATH + " TEXT, " +
+                               SQL_MAPPLAYERS + " INTEGER, " +
+                               SQL_MAPWIDTH + " INTEGER, " +
+                               SQL_MAPHEIGHT + " INTEGER, " +
+                               SQL_MAPFLAGS + " BIGINT," +
+                               SQL_MAPUPLOADER + " TEXT, " +
+                               SQL_MAPDOWNLOADCOUNT + " INTEGER, " +
+                               SQL_MAPUPLOADDATE + " TEXT, " +
+                               SQL_METADATA + " TEXT, " +
+                               SQL_MAPLASTDOWNLOADDATE + " TEXT)");
+    if (sqlQueryFailed(query))
+    {
+        CONSOLE_PRINT("Unable to create map table: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
     }
     bool success = false;
     query = getAllUsers(*m_serverData, success);
@@ -315,6 +350,14 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         else if (messageType == NetworkCommands::SERVERREQUESTPLAYERSTATS)
         {
             onRequestPlayerStats(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::MAPUPLOAD)
+        {
+            m_mapFileServer.onMapUpload(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::FILEDOWNLOADREQUEST)
+        {
+            m_mapFileServer.onRequestDownloadMap(socketID, objData);
         }
         else
         {

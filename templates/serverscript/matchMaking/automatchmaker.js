@@ -7,6 +7,12 @@ var AUTOMATCHMAKER =
         return obj.name;
     },
 
+    getStartMmr = function(autoMatchMaker, server)
+    {
+        var obj = JSON.parse(autoMatchMaker.readDataFromJson(AUTOMATCHMAKER.jsonFileName));
+        return obj.startMmr;
+    },
+
     getDescription = function(autoMatchMaker, server)
     {
         var obj = JSON.parse(autoMatchMaker.readDataFromJson(AUTOMATCHMAKER.jsonFileName));
@@ -34,7 +40,7 @@ var AUTOMATCHMAKER =
         // todo
     },
 
-    createNewMatchForPlayer = function(autoMatchMaker, usernames, server)
+    createNewMatchForPlayer = function(autoMatchMaker, username, server)
     {
 
     },

@@ -10,6 +10,7 @@
 #include "network/networkgame.h"
 #include "network/smtpmailsender.h"
 #include "network/matchmakingcoordinator.h"
+#include "network/mapfileserver.h"
 
 #include "coreengine/fileserializable.h"
 
@@ -90,6 +91,19 @@ public:
     static const char* const SQL_RUNNINGGAMES;
     static const char* const SQL_MATCHHISTORY;
     static const char* const SQL_SIGNEDUP;
+    static const char *const SQL_TABLE_DOWNLOADMAPINFO;
+    static const char *const SQL_MAPAUTHOR;
+    static const char *const SQL_MAPNAME;
+    static const char *const SQL_MAPPLAYERS;
+    static const char *const SQL_MAPWIDTH;
+    static const char *const SQL_MAPHEIGHT;
+    static const char *const SQL_MAPFLAGS;
+    static const char *const SQL_MAPUPLOADER;
+    static const char *const SQL_MAPDOWNLOADCOUNT;
+    static const char *const SQL_MAPUPLOADDATE;
+    static const char *const SQL_MAPLASTDOWNLOADDATE;
+    static const char *const SQL_MAPPATH;
+    static const char *const SQL_MAPIMAGEPATH;
 
     static MainServer* getInstance();
     static bool exists();
@@ -362,7 +376,6 @@ private:
      * @param stream
      */
     void onOpenPlayerCount(quint64 socketID, const QJsonObject & objData);
-
     void onRequestPlayerStats(quint64 socketID, const QJsonObject &objData);
     /**
      * @brief onRequestServerAutoMatchInfo
@@ -520,6 +533,7 @@ private:
     QVector<SlaveAddress> m_freeAddresses;
 
     MatchMakingCoordinator m_matchMakingCoordinator;
+    MapFileServer m_mapFileServer;
     /**
      * @brief m_serverData
      */

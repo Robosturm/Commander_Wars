@@ -1,0 +1,259 @@
+#include <QFile>
+#include <QJsonDocument>
+
+#include "network/mapfileserver.h"
+#include "network/mainserver.h"
+#include "network/JsonKeys.h"
+#include "coreengine/settings.h"
+#include "coreengine/globalutils.h"
+
+#include "mapsupport/mapfilter.h"
+
+MapFileServer::MapFileServer(MainServer *parent)
+    : QObject{parent},
+    m_mainServer(parent)
+{
+}
+
+void MapFileServer::onMapUpload(quint64 socketID, const QJsonObject & objData)
+{
+    bool success = false;
+    spTCPServer pServer = m_mainServer->getGameServer();
+    if (pServer->getClient(socketID)->getIsActive() &&
+        Settings::getInstance()->getAllowMapUpload())
+    {
+        QString filePath = objData.value(JsonKeys::JSONKEY_MAPPATH).toString();
+        bool uploadAllowed = !QFile::exists(filePath) || sameUploader(objData);
+        if (filePath.startsWith("maps") &&
+            filePath.endsWith(".map") &&
+            uploadAllowed)
+        {
+            QByteArray mapArray = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_MAPDATA).toArray());
+            QBuffer buffer(&mapArray);
+            buffer.open(QIODevice::ReadOnly);
+            QDataStream stream(&buffer);
+            qint32 version = 0;
+            stream >> version;
+            QByteArray mapMagic;
+            stream >> mapMagic;
+            if (mapMagic == GlobalUtils::MAP_MAGIC)
+            {
+                QFile::remove(filePath);
+                QFile file(filePath);
+                file.open(QIODevice::ReadOnly);
+                QDataStream stream(&file);
+                stream.writeRawData(mapArray.constData(), mapArray.size());
+                file.close();
+                QByteArray imageArray = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_MINIMAPDATA).toArray());
+                QImage image;
+                image.loadFromData(imageArray, "PNG");
+                QString imagePath = filePath.replace(".map", ".png");
+                QFile::remove(imagePath);
+                image.save(imagePath);
+                QString command =  QString("INSERT INTO ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + "(" +
+                                  MainServer::SQL_MAPNAME + ", " +
+                                  MainServer::SQL_MAPAUTHOR + ", " +
+                                  MainServer::SQL_MAPPATH + ", " +
+                                  MainServer::SQL_MAPIMAGEPATH + ", " +
+                                  MainServer::SQL_MAPPLAYERS + ", " +
+                                  MainServer::SQL_MAPWIDTH + ", " +
+                                  MainServer::SQL_MAPHEIGHT + ", " +
+                                  MainServer::SQL_MAPFLAGS + "," +
+                                  MainServer::SQL_MAPUPLOADER + ", " +
+                                  MainServer::SQL_MAPDOWNLOADCOUNT + ", " +
+                                  MainServer::SQL_MAPUPLOADDATE + ", " +
+                                  MainServer::SQL_MAPLASTDOWNLOADDATE +
+                                  ") VALUES(" +
+                                  "'" + objData.value(JsonKeys::JSONKEY_MAPNAME).toString() + "', " +
+                                  "'" + objData.value(JsonKeys::JSONKEY_MAPAUTHOR).toString() + "', " +
+                                  "'" + filePath + "', " +
+                                  "'" + imagePath + "', " +
+                                  QString::number(objData.value(JsonKeys::JSONKEY_MAPPLAYERS).toInt()) + ", " +
+                                  QString::number(objData.value(JsonKeys::JSONKEY_MAPWIDTH).toInt()) + ", " +
+                                  QString::number(objData.value(JsonKeys::JSONKEY_MAPHEIGHT).toInt()) + ", " +
+                                  QString::number(objData.value(JsonKeys::JSONKEY_MAPFLAGS).toInteger()) + "," +
+                                  "'" + objData.value(JsonKeys::JSONKEY_MAPUPLOADER).toString() + "', " +
+                                  "0, " +
+                                  "'" + QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + "', " +
+                                  "'" + QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + "')";
+                QSqlQuery query = m_mainServer->getDatabase().exec(command);
+                if (MainServer::sqlQueryFailed(query))
+                {
+                    QFile::remove(filePath);
+                    QFile::remove(imagePath);
+                }
+                else
+                {
+                    success = true;
+                }
+            }
+        }
+    }
+    QString command = QString(NetworkCommands::MAPUPLOADRESPONSE);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_RESULT, success);
+    QJsonDocument doc(data);
+    CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(socketID), GameConsole::eDEBUG);
+    emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+
+}
+
+bool MapFileServer::sameUploader(const QJsonObject & objData)
+{
+    bool success = false;
+    QString filePath = objData.value(JsonKeys::JSONKEY_MAPPATH).toString();
+    QSqlQuery query = m_mainServer->getDatabase().exec(QString("SELECT ") + MainServer::SQL_MAPUPLOADER +
+                                                       " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
+                                                       " WHERE " + MainServer::SQL_MAPPATH +
+                                                       " = '" + filePath + "';");
+    if (!MainServer::sqlQueryFailed(query) && query.first())
+    {
+        success = query.value(MainServer::SQL_MAPUPLOADER) == objData.value(JsonKeys::JSONKEY_MAPUPLOADER).toString();
+        if (success)
+        {
+            QString command = QString("DELETE FROM ") + MainServer::SQL_MAPUPLOADER + " WHERE " +
+                              MainServer::SQL_MAPPATH + " = '" + filePath + "';";
+            query = m_mainServer->getDatabase().exec(command);
+            MainServer::sqlQueryFailed(query);
+        }
+    }
+    return success;
+}
+
+void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & objData)
+{
+    spTCPServer pServer = m_mainServer->getGameServer();
+    QString command = QString(NetworkCommands::RECEIVEAVAILABLEMAPS);
+    QJsonObject response;
+    response.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QString filterCommand = QString("SELECT ") + MainServer::SQL_MAPPATH + ", " +
+                            MainServer::SQL_MAPNAME + ", " +
+                            MainServer::SQL_MAPAUTHOR + ", " +
+                            MainServer::SQL_MAPPLAYERS + ", " +
+                            MainServer::SQL_MAPWIDTH + ", " +
+                            MainServer::SQL_MAPHEIGHT + ", " +
+                            MainServer::SQL_MAPFLAGS + ", " +
+                            MainServer::SQL_MAPPATH + ", " +
+                            MainServer::SQL_MAPIMAGEPATH +
+                            " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
+                            " WHERE ";
+    qint32 filterCount = 0;
+    MapFilter mapFilter;
+    mapFilter.fromJson(objData);
+    addFilterOption(filterCommand, mapFilter.getMinHeight(), filterCount, MainServer::SQL_MAPHEIGHT, ">=");
+    addFilterOption(filterCommand, mapFilter.getMaxHeight(), filterCount, MainServer::SQL_MAPHEIGHT, "<=");
+    addFilterOption(filterCommand, mapFilter.getMinWidth(), filterCount, MainServer::SQL_MAPWIDTH, ">=");
+    addFilterOption(filterCommand, mapFilter.getMaxWidth(), filterCount, MainServer::SQL_MAPWIDTH, "<=");
+    addFilterOption(filterCommand, mapFilter.getMinPlayer(), filterCount, MainServer::SQL_MAPPLAYERS, ">=");
+    addFilterOption(filterCommand, mapFilter.getMaxPlayer(), filterCount, MainServer::SQL_MAPPLAYERS, "<=");
+    addFilterOption(filterCommand, mapFilter.getMapName(), filterCount, MainServer::SQL_MAPNAME);
+    addFilterOption(filterCommand, mapFilter.getMapName(), filterCount, MainServer::SQL_MAPAUTHOR);
+    if (filterCount == 0)
+    {
+        filterCommand += QString(MainServer::SQL_MAPPATH) + " LIKE '%';";
+    }
+    else
+    {
+        filterCommand +=  ";";
+    }
+    QSqlQuery query = m_mainServer->getDatabase().exec(filterCommand);
+    qint32 startItem = objData.value(JsonKeys::JSONKEY_STARTINDEX).toInt();
+    qint32 itemsPerPage = objData.value(JsonKeys::JSONKEY_ITEMSPERPAGE).toInt();
+    qint32 itemCount = query.size();
+    if (!MainServer::sqlQueryFailed(query) && itemCount >= startItem)
+    {
+        QJsonArray foundMaps;
+        query.seek(startItem);
+        do
+        {
+            QJsonObject mapData;
+            mapData.insert(JsonKeys::JSONKEY_MAPPATH, query.value(MainServer::SQL_MAPPATH).toString());
+            mapData.insert(JsonKeys::JSONKEY_MAPNAME, query.value(MainServer::SQL_MAPNAME).toString());
+            mapData.insert(JsonKeys::JSONKEY_MAPAUTHOR, query.value(MainServer::SQL_MAPAUTHOR).toString());
+            mapData.insert(JsonKeys::JSONKEY_MAPPLAYERS, query.value(MainServer::SQL_MAPPLAYERS).toInt());
+            mapData.insert(JsonKeys::JSONKEY_MAPWIDTH, query.value(MainServer::SQL_MAPWIDTH).toInt());
+            mapData.insert(JsonKeys::JSONKEY_MAPHEIGHT, query.value(MainServer::SQL_MAPHEIGHT).toInt());
+            mapData.insert(JsonKeys::JSONKEY_MAPFLAGS, query.value(MainServer::SQL_MAPFLAGS).toLongLong());
+            QImage image;
+            image.load(query.value(MainServer::SQL_MAPIMAGEPATH).toString());
+            QByteArray imageArray;
+            QBuffer buffer(&imageArray);
+            buffer.open(QIODevice::WriteOnly);
+            image.save(&buffer, "PNG");
+            buffer.close();
+            mapData.insert(JsonKeys::JSONKEY_MINIMAPDATA, GlobalUtils::toJsonArray(imageArray));
+            foundMaps.append(mapData);
+        } while (foundMaps.size() < itemsPerPage && query.next());
+        response.insert(JsonKeys::JSONKEY_MAPLIST, foundMaps);
+    }
+    response.insert(JsonKeys::JSONKEY_FOUNDITEMS, itemCount);
+    QJsonDocument doc(response);
+    CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(socketID), GameConsole::eDEBUG);
+    emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void MapFileServer::addFilterOption(QString & filterCommand, qint32 value, qint32 & filterCount, const char* const item, const char* const opCommand)
+{
+    if (value > 0)
+    {
+        if (filterCount > 0)
+        {
+            filterCommand += " AND ";
+        }
+        filterCommand += QString(item) + " " + opCommand + " "  + QString::number(value);
+        ++filterCount;
+    }
+}
+
+void MapFileServer::addFilterOption(QString & filterCommand, QString value, qint32 & filterCount, const char* const item)
+{
+    if (!value.isEmpty())
+    {
+        if (filterCount > 0)
+        {
+            filterCommand += " AND ";
+        }
+        filterCommand += QString(item) + " LIKE '"  + value + "%'";
+        ++filterCount;
+    }
+}
+
+void MapFileServer::onRequestDownloadMap(quint64 socketID, const QJsonObject & objData)
+{
+    spTCPServer pServer = m_mainServer->getGameServer();
+    bool success = false;
+    QString command = QString(NetworkCommands::FILEDOWNLOAD);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QString mapPath = objData.value(JsonKeys::JSONKEY_MAPPATH).toString();
+    if (QFile::exists(mapPath))
+    {
+        QSqlQuery query = m_mainServer->getDatabase().exec(QString("SELECT ") +
+                                                           MainServer::SQL_MAPPATH + ", " +
+                                                           MainServer::SQL_MAPDOWNLOADCOUNT + ", " +
+                                                           MainServer::SQL_MAPLASTDOWNLOADDATE +
+                                                           " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
+                                                           " WHERE " + MainServer::SQL_MAPPATH +
+                                                           " = '" + mapPath + "';");
+        if (!MainServer::sqlQueryFailed(query) && query.first())
+        {
+            // load map data and send it to client
+            QFile file(mapPath);
+            data.insert(JsonKeys::JSONKEY_MAPDATA, GlobalUtils::toJsonArray(file.readAll()));
+            // update internal data
+            qint32 downloadCount = query.value(MainServer::SQL_MAPDOWNLOADCOUNT).toInt();
+            auto changeQuery = m_mainServer->getDatabase().exec(QString("UPDATE ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " SET " +
+                                                                MainServer::SQL_MAPDOWNLOADCOUNT + " = '" + QString::number(downloadCount + 1) + ", " +
+                                                                MainServer::SQL_MAPLASTDOWNLOADDATE + " = '" + QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + "' WHERE " +
+                                                                MainServer::SQL_MAPPATH + " = '" + objData.value(JsonKeys::JSONKEY_MAPPATH).toString() + "';");
+            MainServer::sqlQueryFailed(changeQuery);
+            success = true;
+        }
+    }
+    data.insert(JsonKeys::JSONKEY_DOWNLOADRESULT, success);
+    data.insert(JsonKeys::JSONKEY_MAPPATH, mapPath);
+    QJsonDocument doc(data);
+    CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(socketID), GameConsole::eDEBUG);
+    emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}

@@ -48,6 +48,16 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
+bool Settings::getAllowMapUpload() const
+{
+    return m_allowMapUpload;
+}
+
+void Settings::setAllowMapUpload(bool newAllowMapUpload)
+{
+    m_allowMapUpload = newAllowMapUpload;
+}
+
 bool Settings::getCreateAiTrainingData() const
 {
     return m_createAiTrainingData;
@@ -1289,6 +1299,7 @@ void Settings::setup()
         MemoryManagement::create<Value<quint16>>("Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()),
         MemoryManagement::create<Value<quint16>>("Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()),
         MemoryManagement::create<Value<bool>>("Network", "Server", &m_Server, false, false, true),
+        MemoryManagement::create<Value<bool>>("Network", "AllowMapUpload", &m_allowMapUpload, true, false, true),
         MemoryManagement::create<Value<QString>>("Network", "ServerListenAdress", &m_serverListenAdress, "", "", ""),
         MemoryManagement::create<Value<QString>>("Network", "ServerSecondaryListenAdress", &m_serverSecondaryListenAdress, "", "", ""),
         MemoryManagement::create<Value<QString>>("Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""),

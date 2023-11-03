@@ -12,6 +12,9 @@
 
 #include "multiplayer/multiplayermenu.h"
 
+// cases to consider
+// handle slaves despawning due to timeout
+
 AutoMatchMaker::AutoMatchMaker(const QString & matchId, MainServer * mainServer)
     : m_matchId(matchId),
       m_mainServer(*mainServer)
@@ -105,7 +108,7 @@ void AutoMatchMaker::createNewGame(const QStringList players, const QStringList 
     ++m_matchCounter;
 }
 
-QStringList AutoMatchMaker::getOpponentsForPlayer(const QString player, qint32 playerCount, qint32 mmrSearchRange)
+QStringList AutoMatchMaker::getOpponentsForPlayer(const QString player, qint32 mmrSearchRange)
 {
     qint32 mmr = getMmr(player);
     QStringList players;
@@ -338,11 +341,21 @@ void AutoMatchMaker::onNewPlayerData(const QJsonObject & objData)
     qint32 maxGames = objData.value(JsonKeys::JSONKEY_MAXMATCHGAMES).toInt();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(&m_mainServer)});
+    QJSValue erg = pInterpreter->doFunction(m_matchId, "getStartMmr", args);
+    doNewPlayerData(player, minGames, maxGames, "", erg.toNumber());
+    QJSValueList args1({pInterpreter->newQObject(this),
                        player,
                        minGames,
                        maxGames,
                        pInterpreter->newQObject(&m_mainServer)});
-    pInterpreter->doFunction(m_matchId, "onNewPlayerData", args);
+
+    qint32 currentMatches = getRunningGames(player);
+
+    for (qint32 i = currentMatches; i < minGames; ++i)
+    {
+        pInterpreter->doFunction(m_matchId, "onNewPlayerData", args1);
+    }
 }
 
 bool AutoMatchMaker::getSignedUp(const QString playerId)
@@ -367,19 +380,22 @@ bool AutoMatchMaker::doNewPlayerData(const QString & player, qint32 minGames, qi
     if (getMmr(player) < 0)
     {
         QString command = QString("INSERT INTO ") + MainServer::SQL_TABLE_MATCH_DATA + m_matchId + " (" +
-                          MainServer::SQL_USERNAME + " TEXT PRIMARY KEY, " +
-                          MainServer::SQL_MMR + ", " +
+                          MainServer::SQL_USERNAME + ", " +
+                          MainServer::SQL_MMR + " , " +
                           MainServer::SQL_MINGAMES + ", " +
                           MainServer::SQL_MAXGAMES + ", " +
                           MainServer::SQL_RUNNINGGAMES + "," +
                           MainServer::SQL_METADATA + "," +
+                          MainServer::SQL_SIGNEDUP + "," +
                           MainServer::SQL_MATCHHISTORY +
                           ") VALUES(" +
                           "'" + player + "'," +
                           QString::number(startMmr) + "," +
                           QString::number(minGames) + "," +
                           QString::number(maxGames) + "," +
+                          "0," +
                           "'" + metaData + "'," +
+                          "false,"
                           "''" +
                           ")";
         auto query = database.exec(command);

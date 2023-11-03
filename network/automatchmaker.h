@@ -89,7 +89,7 @@ public:
     Q_INVOKABLE QString getMatchHistoryData(const QString player);
     Q_INVOKABLE bool setMatchMetaData(const QString player, QString metaData);
     Q_INVOKABLE QString getMatchMetaData(const QString player);
-    Q_INVOKABLE QStringList getOpponentsForPlayer(const QString player, qint32 playerCount, qint32 mmrSearchStepRange);
+    Q_INVOKABLE QStringList getOpponentsForPlayer(const QString player, qint32 mmrSearchStepRange);
     Q_INVOKABLE qint32 getRunningGames(const QString player);
     Q_INVOKABLE bool setRunningGames(const QString player, qint32 count);
     Q_INVOKABLE qint32 getMinGames(const QString player);

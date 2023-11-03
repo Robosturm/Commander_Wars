@@ -15,6 +15,13 @@
 
 static constexpr double DOUBLE_EPSILON = 0.5;
 static constexpr float FLOAT_EPSILON = 0.5f;
+static constexpr qint32 HEXBASE = 16;
+static constexpr qint32 MAGIC_HEADER_SIZE = 18;
+static const quint8 MAP_MAGIC_DATA[MAGIC_HEADER_SIZE] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+                                                         0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF,
+                                                         0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+const QByteArray GlobalUtils::MAP_MAGIC(reinterpret_cast<const char*>(MAP_MAGIC_DATA), MAGIC_HEADER_SIZE);
+
 spGlobalUtils GlobalUtils::m_pInstace;
 
 GlobalUtils::GlobalUtils()
@@ -41,7 +48,23 @@ QString GlobalUtils::getByteArrayString(const QByteArray & bytes)
     QString data;
     for (qint32 i = 0; i < bytes.size(); i++)
     {
-        data += "0x" + QString::number(bytes[i], 16)+ " ";
+        if (i > 0)
+        {
+            data += ",";
+        }
+        data += QString::number(bytes[i], HEXBASE);
+    }
+    return data;
+}
+
+QByteArray GlobalUtils::getStringByteArray(const QString & bytes)
+{
+    QByteArray data;
+    QStringList items = bytes.split(",");
+    for (auto & item : items)
+    {
+        bool ok;
+        data += item.toInt(&ok, HEXBASE);
     }
     return data;
 }

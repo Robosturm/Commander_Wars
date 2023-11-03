@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QJsonObject>
+
 #include "game/GameEnums.h"
 #include "game/gamemap.h"
 
@@ -22,6 +24,8 @@ class MapFilter final
 public:
     explicit MapFilter() = default;
     virtual ~MapFilter() = default;
+    QJsonObject toJson() const;
+    void fromJson(const QJsonObject & object);
 
     void setFlagActive(GameEnums::MapFilterFlags flag, bool isOptional);
     bool getFlagActive(GameEnums::MapFilterFlags flag);
@@ -53,8 +57,7 @@ public:
     QString getMapName() const;
     void setMapName(const QString &newMapName);
 
-private:
-    bool matchesMapFlags(GameEnums::MapFilterFlags flags) const;
+    static bool matchesMapFlags(const QVector<FlagFilter> & filters, GameEnums::MapFilterFlags flags);
 private:
 
     QVector<FlagFilter> m_filter;

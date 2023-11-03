@@ -48,6 +48,7 @@ public:
     Q_INVOKABLE void showContactingServer();
     Q_INVOKABLE void requestPlayersFromServer(const QString & searchFilter);
     Q_INVOKABLE void requestPlayerStats(const QString & player);
+    Q_INVOKABLE void uploadMap(const QString & filePath);
 signals:
     void sigExitMenue();
     void sigHostServer();

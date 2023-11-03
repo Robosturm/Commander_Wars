@@ -3,8 +3,9 @@
     "description" : "My auto match description",
     "isSignUpChangeAllowed" : true,
     "maxMmrChange" : 30,
-    "searchRangeSteps" : 100,
+    "searchRangeSteps" : 150,
     "matchHistory" : 10,
+    "startMmr" : 750,
     "maps" : [],
     "rule" : "",
     "mods" : []

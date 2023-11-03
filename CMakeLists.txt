@@ -647,6 +647,7 @@ set(${PROJECT_NAME}_SRCS
     network/automatchmaker.h network/automatchmaker.cpp
     network/networkgame.cpp network/networkgame.h
     network/matchmakingcoordinator.h network/matchmakingcoordinator.cpp
+    network/mapfileserver.h network/mapfileserver.cpp
     network/JsonKeys.h
 
     # game

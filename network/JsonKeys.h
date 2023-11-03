@@ -54,6 +54,8 @@ namespace JsonKeys
     const char* const JSONKEY_MINMATCHGAMES = "minMatchGames";
     const char* const JSONKEY_MAXMATCHGAMES = "maxMatchGames";
     const char* const JSONKEY_MINIMAPDATA = "minimapData";
+    const char* const JSONKEY_MAPDATA = "mapData";
+    const char* const JSONKEY_MAPPATH = "mapPath";
     const char* const JSONKEY_MATCHSTARTINDEX = "matchStartIndex";
     const char* const JSONKEY_MATCHCOUNT = "matchCount";
     const char* const JSONKEY_VOTERESULT = "voteResult";
@@ -66,6 +68,30 @@ namespace JsonKeys
     const char* const JSONKEY_PLAYERID = "playerId";
     const char* const JSONKEY_SIGNUPCHANGEALLOWED = "signUpChangeAllowed";
     const char* const JSONKEY_MMR = "mmr";
+    const char* const JSONKEY_RESULT = "result";
+    // map filter
+    const char* const JSONKEY_MAPNAME = "mapName";
+    const char* const JSONKEY_MAPAUTHOR = "mapAuthor";
+    const char* const JSONKEY_MINPLAYERS = "minPlayers";
+    const char* const JSONKEY_MINWIDTH = "minWidth";
+    const char* const JSONKEY_MAXWIDTH = "maxWidth";
+    const char* const JSONKEY_MINHEIGHT = "minHeight";
+    const char* const JSONKEY_MAXHEIGHT = "maxHeight";
+    const char* const JSONKEY_FLAGFILTER = "flagFilter";
+    const char* const JSONKEY_FLAGFILTERFLAGS = "flagFilterFlags";
+    const char* const JSONKEY_FLAGFILTERISACTIVE = "flagFilterIsActive";
+    const char* const JSONKEY_FLAGFILTERISOPTIONAL = "flagFilterIsOptional";    
+    const char* const JSONKEY_MAPLIST = "mapList";
+    const char* const JSONKEY_STARTINDEX = "startIndex";
+    const char* const JSONKEY_ITEMSPERPAGE = "itemsPerPage";
+    const char* const JSONKEY_FOUNDITEMS = "foundItems";
+    const char* const JSONKEY_MAPWIDTH = "mapWidth";
+    const char* const JSONKEY_MAPHEIGHT = "mapHeight";
+    const char* const JSONKEY_MAPPLAYERS = "mapPlayers";
+    const char* const JSONKEY_MAPFLAGS = "mapFlags";
+    const char* const JSONKEY_MAPUPLOADER = "mapUploader";
+    const char* const JSONKEY_DOWNLOADRESULT = "downloadResult";
+
     // bracket graph data
     const char* const JSONKEY_BRACKETGRAPHINFO = "bracketGraphInfo";
     const char* const JSONKEY_BRACKETGRAPHPREVIOUSMATCH = "bracketGraphPreviousMatch";
