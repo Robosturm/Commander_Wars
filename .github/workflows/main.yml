@@ -121,7 +121,7 @@ jobs:
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
-          tools: '${{qtTools}}'
+          tools: '${{matrix.qtTools}}'
           add-tools-to-path: "true"
         
     - name: Install OS Dependencies 1
