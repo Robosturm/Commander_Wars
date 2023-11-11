@@ -4,6 +4,7 @@ env:
   BUILD_TYPE: Release
   QT_Version: '6.5.2'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
+  GCC_PATH: 'D:/a/Commander_Wars/Commander_Wars/qt/Qt/Tools/mingw1120_64/bin/'
   JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/11.0.21-9/x64/'
   ANDROID_OPEN_SSL_TAG: '7f5f34d16040883f7353b3f99bc3fc83ecdc2a4b'
   
@@ -23,7 +24,7 @@ jobs:
             qtTools: 'tools_mingw90'
             installerCommands1: choco install openssl --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
-            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" -DCXX_COMPILER_PATH="${{github.workspace}}/qt/Qt/Tools/mingw1120_64/bin/" -DC_COMPILER_PATH="${{github.workspace}}/qt/Qt/Tools/mingw1120_64/bin/"'
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON"'
           - buildTarget: windows-server # test build to check if the server configuration compiles as well
             os: windows-latest
             COMPILER_VERSION: 'win64_mingw'
@@ -32,7 +33,7 @@ jobs:
             qtTools: 'tools_mingw90'
             installerCommands1: choco install openssl --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
-            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF -DCXX_COMPILER_PATH="${{github.workspace}}/qt/Qt/Tools/mingw1120_64/bin/" -DC_COMPILER_PATH="${{github.workspace}}/qt/Qt/Tools/mingw1120_64/bin/"'
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF'
           - buildTarget: ubuntu-desktop
             os: ubuntu-latest
             COMPILER_VERSION: ''
