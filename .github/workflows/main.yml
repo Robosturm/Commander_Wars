@@ -114,7 +114,6 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:      
-          aqtversion: '==2.0.2'
           target: ${{matrix.target}}
           version: ${{env.QT_Version}}
           arch: ${{matrix.COMPILER_VERSION}}
