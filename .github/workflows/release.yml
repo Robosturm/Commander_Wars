@@ -170,6 +170,7 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
           tools: '${{matrix.qtTools}}'
+          add-tools-to-path: "true"
                 
     - name: Install OS Dependencies 1
       run: ${{matrix.installerCommands1}}
