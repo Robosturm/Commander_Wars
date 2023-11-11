@@ -20,7 +20,7 @@ jobs:
             COMPILER_VERSION: 'win64_mingw'
             target: 'desktop'
             qtPath: 'mingw_64'
-            qtTools: 'qt.tools.win64_mingw1120'
+            qtTools: 'tools_mingw90'
             installerCommands1: choco install openssl --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON"'
@@ -29,7 +29,7 @@ jobs:
             COMPILER_VERSION: 'win64_mingw'
             target: 'desktop'
             qtPath: 'mingw_64'
-            qtTools: 'qt.tools.win64_mingw1120'
+            qtTools: 'tools_mingw90'
             installerCommands1: choco install openssl --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF'
@@ -113,7 +113,8 @@ jobs:
 
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
-      with:      
+      with:     
+          aqtversion: '==3.1.*'
           target: ${{matrix.target}}
           version: ${{env.QT_Version}}
           arch: ${{matrix.COMPILER_VERSION}}
@@ -121,7 +122,6 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
           tools: '${{matrix.qtTools}}'
-          add-tools-to-path: "true"
         
     - name: Install OS Dependencies 1
       run: ${{matrix.installerCommands1}}
