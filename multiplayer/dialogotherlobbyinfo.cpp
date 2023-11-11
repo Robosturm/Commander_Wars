@@ -20,6 +20,11 @@ DialogOtherLobbyInfo::DialogOtherLobbyInfo(LobbyMenu *pBaseMenu)
     loadXmlFile(m_uiXml);
 }
 
+LobbyMenu* DialogOtherLobbyInfo::getLobbyMenu()
+{
+    return m_pLobbyMenu;
+}
+
 QStringList DialogOtherLobbyInfo::getFoundPlayers()
 {
     return m_foundPlayers;

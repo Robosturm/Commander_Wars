@@ -22,6 +22,7 @@ public:
     Q_INVOKABLE QString getUserName(qint32 idx);
     Q_INVOKABLE void showPlayerStats(const QString & player);
     Q_INVOKABLE void showAutoMatches();
+    Q_INVOKABLE LobbyMenu* getLobbyMenu();
 private slots:
     void onSearchedPlayersReceived(const QStringList & foundPlayers);
     void receivedPlayerStats(const QJsonObject & objData);

@@ -32,6 +32,7 @@
 #include "menue/movementplanner.h"
 #include "menue/generatormenu.h"
 
+#include "multiplayer/lobbymenu.h"
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/networkgamedataview.h"
 #include "multiplayer/dialogotherlobbyinfo.h"
@@ -233,6 +234,7 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<BaseGamemenu>("BaseGamemenu", 1);
     qmlRegisterInterface<Basemenu>("Basemenu", 1);
+    qmlRegisterInterface<LobbyMenu>("LobbyMenu", 1);
     qmlRegisterInterface<GeneratorMenu>("GeneratorMenu", 1);
     qmlRegisterInterface<PageData>("PageData", 1);
     qmlRegisterInterface<DialogOtherLobbyInfo>("DialogOtherLobbyInfo", 1);

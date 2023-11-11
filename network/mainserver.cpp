@@ -193,9 +193,9 @@ void MainServer::startDatabase()
     }
     // create table for map file server
     query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_DOWNLOADMAPINFO + " (" +
-                               SQL_MAPNAME + " TEXT PRIMARY KEY, " +
+                               SQL_MAPPATH + " TEXT PRIMARY KEY, " +
                                SQL_MAPAUTHOR + " TEXT, " +
-                               SQL_MAPPATH + " TEXT, " +
+                               SQL_MAPNAME + " TEXT, " +
                                SQL_MAPIMAGEPATH + " TEXT, " +
                                SQL_MAPPLAYERS + " INTEGER, " +
                                SQL_MAPWIDTH + " INTEGER, " +

@@ -106,11 +106,6 @@ elseif(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(OPENSSL_LIBS
         ${OPENSSL_LIB_PATH}/libcrypto-3-x64.dll
         ${OPENSSL_LIB_PATH}/libssl-3-x64.dll
-        ${OPENSSL_LIB_PATH}/capi.dll
-        ${OPENSSL_LIB_PATH}/dasync.dll
-        ${OPENSSL_LIB_PATH}/legacy.dll
-        ${OPENSSL_LIB_PATH}/loader_attic.dll
-        ${OPENSSL_LIB_PATH}/padlock.dll
     CACHE INTERNAL "")
     include_directories(${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
@@ -126,6 +121,10 @@ else()
         OpenSSL::Crypto
     )
 endif()
+
+# todo kernel32.dll
+# todo shell32.dll
+# todo msvcrt.dll
 
 ###################################################################################
 # Set build dependend defines
@@ -766,6 +765,7 @@ set(${PROJECT_NAME}_SRCS
     multiplayer/dialogotherlobbyinfo.h multiplayer/dialogotherlobbyinfo.cpp
     multiplayer/dialogcostatsinfo.cpp multiplayer/dialogcostatsinfo.h
     multiplayer/dialogAutoMatches.cpp multiplayer/dialogAutoMatches.h
+    multiplayer/dialogselectdownloadmap.cpp multiplayer/dialogselectdownloadmap.h
     multiplayer/networkcommands.h
 
     #campaign support
@@ -1244,6 +1244,7 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
                 "$<TARGET_FILE:${PROJECT_NAME}>"
                 --libdir \"${FullInstallPath}\"
                 --plugindir \"${FullInstallPath}\"
+                --compiler-runtime
                 --no-quick-import
                 --no-translations
         COMMENT "Running windeployqt..."

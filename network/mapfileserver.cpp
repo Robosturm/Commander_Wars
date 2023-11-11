@@ -7,8 +7,6 @@
 #include "coreengine/settings.h"
 #include "coreengine/globalutils.h"
 
-#include "mapsupport/mapfilter.h"
-
 MapFileServer::MapFileServer(MainServer *parent)
     : QObject{parent},
     m_mainServer(parent)
@@ -23,8 +21,10 @@ void MapFileServer::onMapUpload(quint64 socketID, const QJsonObject & objData)
         Settings::getInstance()->getAllowMapUpload())
     {
         QString filePath = objData.value(JsonKeys::JSONKEY_MAPPATH).toString();
+        QString imagePath = filePath;
+        imagePath.replace(".map", ".png");
         bool uploadAllowed = !QFile::exists(filePath) || sameUploader(objData);
-        if (filePath.startsWith("maps") &&
+        if ((filePath.startsWith("maps/") || filePath.startsWith("/maps")) &&
             filePath.endsWith(".map") &&
             uploadAllowed)
         {
@@ -39,16 +39,18 @@ void MapFileServer::onMapUpload(quint64 socketID, const QJsonObject & objData)
             if (mapMagic == GlobalUtils::MAP_MAGIC)
             {
                 QFile::remove(filePath);
+                QFile::remove(imagePath);
                 QFile file(filePath);
-                file.open(QIODevice::ReadOnly);
+                file.open(QIODevice::WriteOnly);
                 QDataStream stream(&file);
-                stream.writeRawData(mapArray.constData(), mapArray.size());
+                qint32 contentSize = mapArray.size();
+                stream.writeRawData(mapArray.constData(), contentSize);
                 file.close();
                 QByteArray imageArray = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_MINIMAPDATA).toArray());
                 QImage image;
-                image.loadFromData(imageArray, "PNG");
-                QString imagePath = filePath.replace(".map", ".png");
-                QFile::remove(imagePath);
+                QBuffer buffer(&imageArray);
+                buffer.open(QIODevice::ReadOnly);
+                image.load(&buffer, "PNG");
                 image.save(imagePath);
                 QString command =  QString("INSERT INTO ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + "(" +
                                   MainServer::SQL_MAPNAME + ", " +
@@ -109,10 +111,12 @@ bool MapFileServer::sameUploader(const QJsonObject & objData)
                                                        " = '" + filePath + "';");
     if (!MainServer::sqlQueryFailed(query) && query.first())
     {
-        success = query.value(MainServer::SQL_MAPUPLOADER) == objData.value(JsonKeys::JSONKEY_MAPUPLOADER).toString();
+        QString currentUploader = objData.value(JsonKeys::JSONKEY_MAPUPLOADER).toString();
+        QString oldUploader = query.value(MainServer::SQL_MAPUPLOADER).toString();
+        success = oldUploader == currentUploader;
         if (success)
         {
-            QString command = QString("DELETE FROM ") + MainServer::SQL_MAPUPLOADER + " WHERE " +
+            QString command = QString("DELETE FROM ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " WHERE " +
                               MainServer::SQL_MAPPATH + " = '" + filePath + "';";
             query = m_mainServer->getDatabase().exec(command);
             MainServer::sqlQueryFailed(query);
@@ -149,6 +153,8 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
     addFilterOption(filterCommand, mapFilter.getMaxPlayer(), filterCount, MainServer::SQL_MAPPLAYERS, "<=");
     addFilterOption(filterCommand, mapFilter.getMapName(), filterCount, MainServer::SQL_MAPNAME);
     addFilterOption(filterCommand, mapFilter.getMapName(), filterCount, MainServer::SQL_MAPAUTHOR);
+    addFlagFilterOption(filterCommand, filterCount, mapFilter.getFlagFilter());
+
     if (filterCount == 0)
     {
         filterCommand += QString(MainServer::SQL_MAPPATH) + " LIKE '%';";
@@ -167,6 +173,7 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
         query.seek(startItem);
         do
         {
+
             QJsonObject mapData;
             mapData.insert(JsonKeys::JSONKEY_MAPPATH, query.value(MainServer::SQL_MAPPATH).toString());
             mapData.insert(JsonKeys::JSONKEY_MAPNAME, query.value(MainServer::SQL_MAPNAME).toString());
@@ -191,6 +198,54 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
     QJsonDocument doc(response);
     CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(socketID), GameConsole::eDEBUG);
     emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void MapFileServer::addFlagFilterOption(QString & filterCommand, qint32 & filterCount, const QVector<MapFilter::FlagFilter> & filters)
+{
+    bool requiresOptional = true;
+    for (const auto & filter : filters)
+    {
+        if (filter.isActive && !filter.isOptional)
+        {
+            requiresOptional = false;
+            if (filterCount > 0)
+            {
+                filterCommand += " AND ";
+            }
+            filterCommand += QString(MainServer::SQL_MAPFLAGS) + " & " + QString::number(filter.flag) + " > 0";
+            ++filterCount;
+        }
+    }
+    bool initialAnd = false;
+    if (requiresOptional)
+    {
+        for (const auto & filter : filters)
+        {
+            if (filter.isActive && filter.isOptional)
+            {
+                if (filterCount > 0 && !initialAnd)
+                {
+                    filterCommand += " AND ( ";
+                    initialAnd = true;
+                }
+                else if (!initialAnd)
+                {
+                    filterCommand += " ( ";
+                    initialAnd = true;
+                }
+                else
+                {
+                    filterCommand += " OR ";
+                }
+                filterCommand += QString(MainServer::SQL_MAPFLAGS) + " & " + QString::number(filter.flag) + " > 0";
+                ++filterCount;
+            }
+        }
+    }
+    if (initialAnd)
+    {
+        filterCommand += ")";
+    }
 }
 
 void MapFileServer::addFilterOption(QString & filterCommand, qint32 value, qint32 & filterCount, const char* const item, const char* const opCommand)

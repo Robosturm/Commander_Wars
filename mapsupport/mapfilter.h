@@ -7,13 +7,6 @@
 
 class MapFilter final
 {
-    struct FlagFilter
-    {
-        GameEnums::MapFilterFlags flag;
-        bool isActive{false};
-        bool isOptional{false};
-        bool matches(GameEnums::MapFilterFlags flags) const;
-    };
     struct MinMaxFilter
     {
         qint32 minValue{0};
@@ -22,6 +15,14 @@ class MapFilter final
     };
 
 public:
+    struct FlagFilter
+    {
+        GameEnums::MapFilterFlags flag;
+        bool isActive{false};
+        bool isOptional{false};
+        bool matches(GameEnums::MapFilterFlags flags) const;
+    };
+
     explicit MapFilter() = default;
     virtual ~MapFilter() = default;
     QJsonObject toJson() const;
@@ -57,7 +58,10 @@ public:
     QString getMapName() const;
     void setMapName(const QString &newMapName);
 
+    const QVector<FlagFilter> & getFlagFilter() const;
+
     static bool matchesMapFlags(const QVector<FlagFilter> & filters, GameEnums::MapFilterFlags flags);
+
 private:
 
     QVector<FlagFilter> m_filter;

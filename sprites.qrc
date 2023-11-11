@@ -5119,5 +5119,7 @@
         <file>resources/images/co/ti/co_joey+mini.png</file>
         <file>resources/images/co/ti/co_walter+mini.png</file>
         <file>resources/images/co/ti/co_waylon+mini.png</file>
+        <file>resources/ui/multiplayer/lobbyOther.js</file>
+        <file>resources/ui/multiplayer/selectDownloadMap.xml</file>
     </qresource>
 </RCC>

@@ -48,7 +48,8 @@ public:
     Q_INVOKABLE void showContactingServer();
     Q_INVOKABLE void requestPlayersFromServer(const QString & searchFilter);
     Q_INVOKABLE void requestPlayerStats(const QString & player);
-    Q_INVOKABLE void uploadMap(const QString & filePath);
+    Q_INVOKABLE void uploadMap(const  QString & selectedFilePath);
+    void requestAvailableMaps(const QJsonObject & objData);
 signals:
     void sigExitMenue();
     void sigHostServer();
@@ -68,6 +69,7 @@ signals:
     void sigSearchedPlayersReceived(const QStringList & foundPlayers);
     void sigReceivedPlayerStats(const QJsonObject & objData);
     void sigRequestShowAutoMatches(const QJsonObject & objData);
+    void sigReceivedAvailableMaps(const QJsonObject & objData);
 
 public slots:
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
@@ -122,6 +124,11 @@ private:
      * 
     */
     void onReceivedPlayerStats(const QJsonObject &objData);
+    /**
+     * @brief onMapUploadResponse
+     * @param objData
+     */
+    void onMapUploadResponse(const QJsonObject & objData);
 private:
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<NetworkGameData> m_games;

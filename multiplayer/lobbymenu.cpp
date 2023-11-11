@@ -583,6 +583,14 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             receivedShowAutoMatches(objData);
         }
+        else if (messageType == NetworkCommands::MAPUPLOADRESPONSE)
+        {
+            onMapUploadResponse(objData);
+        }
+        else if (messageType == NetworkCommands::RECEIVEAVAILABLEMAPS)
+        {
+            emit sigReceivedAvailableMaps(objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in LobbyMenu::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -952,8 +960,14 @@ void LobbyMenu::receivedShowAutoMatches(const QJsonObject & objData)
     emit sigRequestShowAutoMatches(objData);
 }
 
-void LobbyMenu::uploadMap(const QString & filePath)
+void LobbyMenu::uploadMap(const  QString & selectedFilePath)
 {
+    QString filePath = selectedFilePath;
+    QString userPath = Settings::getInstance()->getUserPath();
+    if (!userPath.isEmpty())
+    {
+        filePath = filePath.replace(userPath, "");
+    }
     if (m_loggedIn && QFile::exists(filePath))
     {
         GameMap map(filePath, true, false, false);
@@ -968,13 +982,13 @@ void LobbyMenu::uploadMap(const QString & filePath)
             buffer.open(QIODevice::WriteOnly);
             image.save(&buffer, "PNG");
             buffer.close();
-            QByteArray mapArray;
+            QByteArray mapArray;            
             buffer.setBuffer(&mapArray);
             buffer.open(QIODevice::WriteOnly);
             QDataStream stream(&buffer);
             map.serializeObject(stream);
             QString command = NetworkCommands::MAPUPLOAD;
-            CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+            CONSOLE_PRINT("Sending command " + command + " map data=" + QString::number(mapArray.size()) + " image data=" + QString::number(imageArray.size()), GameConsole::eDEBUG);
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
             data.insert(JsonKeys::JSONKEY_MAPPATH, filePath);
@@ -991,4 +1005,26 @@ void LobbyMenu::uploadMap(const QString & filePath)
             emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
     }
+}
+
+void LobbyMenu::onMapUploadResponse(const QJsonObject & objData)
+{
+    if (objData.value(JsonKeys::JSONKEY_RESULT).toBool())
+    {
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Map upload was successful."));
+        addChild(pDialogMessageBox);
+    }
+    else
+    {
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Map upload failed. Please rename the map file to a unique name."));
+        addChild(pDialogMessageBox);
+    }
+}
+
+void LobbyMenu::requestAvailableMaps(const QJsonObject & objData)
+{
+    QJsonDocument doc(objData);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
+        <childs>
+            <Button>
+                <x>10</x>
+                <y>10</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Select map filter")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select the filter for which maps you see for downloading.")</tooltip>
+                <onEvent>currentMenu.close();</onEvent>
+            </Button>
+
+
+            <loop count="currentMenu.getMapCounts()">
+
+            </loop>
+
+        </childs>
+    </Panel>
+</ui>

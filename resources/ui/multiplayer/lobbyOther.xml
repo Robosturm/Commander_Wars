@@ -69,14 +69,14 @@
                 <y>lastY + lastHeight + 10</y>
                 <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Upload Map")</text>
-                <onEvent></onEvent>
+                <onEvent>currentMenu.showFileDialog(["*.map"], settings.getUserPath() + "maps", false, "LobbyOther", "uploadMap")</onEvent>
             </Button>
             <Button>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Download map")</text>
-                <onEvent>s</onEvent>
+                <onEvent></onEvent>
             </Button>
         </childs>
     </Panel>

@@ -281,6 +281,10 @@ public:
         {
             updatePlayerID();
         }
+        else if (m_pMap == nullptr && m_playerId < 0)
+        {
+            m_playerId = 0;
+        }
         return m_playerId;
     }
     /**

@@ -196,6 +196,11 @@ bool MapFilter::matchesMapFlags(const QVector<FlagFilter> & filters, GameEnums::
     return matches && (!hasOptional || count > 0);
 }
 
+const QVector<MapFilter::FlagFilter> & MapFilter::getFlagFilter() const
+{
+    return m_filter;
+}
+
 QString MapFilter::getMapName() const
 {
     return m_mapName;

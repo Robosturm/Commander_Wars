@@ -1651,6 +1651,10 @@ void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
             return;
         }
     }
+    else
+    {
+        headerInfo.m_mapMagic = GlobalUtils::MAP_MAGIC;
+    }
     if (headerInfo.m_Version > 1)
     {
         pStream >> headerInfo.m_mapName;
@@ -1686,7 +1690,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     // restore map header
     readMapHeader(pStream, m_headerInfo);
-    if (validMap(m_headerInfo))
+    if (!validMap(m_headerInfo))
     {
         return;
     }
