@@ -24,7 +24,7 @@ jobs:
             qtTools: 'tools_mingw90'
             installerCommands1: choco install openssl --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
-            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON"'
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" "-DCMAKE_C_COMPILER:FILEPATH=${{env.GCC_PATH}}/gcc.exe" "-DCMAKE_CXX_COMPILER:FILEPATH=${{env.GCC_PATH}}/g++.exe"'
           - buildTarget: windows-server # test build to check if the server configuration compiles as well
             os: windows-latest
             COMPILER_VERSION: 'win64_mingw'
@@ -33,7 +33,7 @@ jobs:
             qtTools: 'tools_mingw90'
             installerCommands1: choco install openssl --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
-            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF'
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF "-DCMAKE_C_COMPILER:FILEPATH=${{env.GCC_PATH}}/gcc.exe" "-DCMAKE_CXX_COMPILER:FILEPATH=${{env.GCC_PATH}}/g++.exe"'
           - buildTarget: ubuntu-desktop
             os: ubuntu-latest
             COMPILER_VERSION: ''
