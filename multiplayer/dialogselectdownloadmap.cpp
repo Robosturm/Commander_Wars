@@ -18,6 +18,7 @@ DialogSelectDownloadMap::DialogSelectDownloadMap(LobbyMenu* pBaseMenu)
 {
     m_uiXml = "ui/multiplayer/selectDownloadMap.xml";
     loadXmlFile(m_uiXml);
+    connect(m_pBaseMenu, &LobbyMenu::sigOnDownloadedResponse, this, &DialogSelectDownloadMap::onMapDownloaded, Qt::QueuedConnection);
 }
 
 void DialogSelectDownloadMap::showMapFilter()
@@ -98,7 +99,23 @@ oxygine::spActor DialogSelectDownloadMap::loadCustomId(const QString & item, qin
 
 void DialogSelectDownloadMap::downloadMap(qint32 mapIndex)
 {
+    QString command = QString(NetworkCommands::FILEDOWNLOAD);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_MAPPATH, getMapPath(mapIndex));
+    m_pBaseMenu->requestDownloadMap(data);
+}
 
+void DialogSelectDownloadMap::onMapDownloaded(bool success)
+{
+    if (success)
+    {
+        exit();
+    }
+    else
+    {
+
+    }
 }
 
 QString DialogSelectDownloadMap::getMapPath(qint32 mapIndex)

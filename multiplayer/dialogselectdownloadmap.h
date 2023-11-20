@@ -33,6 +33,7 @@ public:
 private slots:
     void filterChanged();
     void receivedMapData(const QJsonObject &objData);
+    void onMapDownloaded(bool success);
 private:
     LobbyMenu* m_pBaseMenu{nullptr};
     qint32 m_currentPage{0};

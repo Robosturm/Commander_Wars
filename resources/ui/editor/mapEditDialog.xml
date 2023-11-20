@@ -437,6 +437,21 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>250</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Fog map:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as a fog of war map.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_FogOfWar)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_FogOfWar, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Scripted map:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

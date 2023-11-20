@@ -591,6 +591,10 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             emit sigReceivedAvailableMaps(objData);
         }
+        else if (messageType == NetworkCommands::FILEDOWNLOAD)
+        {
+            onDownloadResponse(objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in LobbyMenu::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -1021,6 +1025,30 @@ void LobbyMenu::onMapUploadResponse(const QJsonObject & objData)
         pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Map upload failed. Please rename the map file to a unique name."));
         addChild(pDialogMessageBox);
     }
+}
+
+void LobbyMenu::onDownloadResponse(const QJsonObject & objData)
+{
+    bool success = objData.value(JsonKeys::JSONKEY_DOWNLOADRESULT).toBool();
+    if (success)
+    {
+        QByteArray mapArray = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_MAPDATA).toArray());
+        QString filePath = objData.value(JsonKeys::JSONKEY_MAPPATH).toString();
+        QFile::remove(filePath);
+        QFile file(filePath);
+        file.open(QIODevice::WriteOnly);
+        QDataStream stream(&file);
+        qint32 contentSize = mapArray.size();
+        stream.writeRawData(mapArray.constData(), contentSize);
+        file.close();
+    }
+    emit sigOnDownloadedResponse(success);
+}
+
+void LobbyMenu::requestDownloadMap(const QJsonObject & objData)
+{
+    QJsonDocument doc(objData);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::requestAvailableMaps(const QJsonObject & objData)

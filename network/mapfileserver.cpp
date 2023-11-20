@@ -293,9 +293,6 @@ void MapFileServer::onRequestDownloadMap(quint64 socketID, const QJsonObject & o
                                                            " = '" + mapPath + "';");
         if (!MainServer::sqlQueryFailed(query) && query.first())
         {
-            // load map data and send it to client
-            QFile file(mapPath);
-            data.insert(JsonKeys::JSONKEY_MAPDATA, GlobalUtils::toJsonArray(file.readAll()));
             // update internal data
             qint32 downloadCount = query.value(MainServer::SQL_MAPDOWNLOADCOUNT).toInt();
             auto changeQuery = m_mainServer->getDatabase().exec(QString("UPDATE ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " SET " +
@@ -303,11 +300,15 @@ void MapFileServer::onRequestDownloadMap(quint64 socketID, const QJsonObject & o
                                                                 MainServer::SQL_MAPLASTDOWNLOADDATE + " = '" + QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + "' WHERE " +
                                                                 MainServer::SQL_MAPPATH + " = '" + objData.value(JsonKeys::JSONKEY_MAPPATH).toString() + "';");
             MainServer::sqlQueryFailed(changeQuery);
+            // load map data and send it to client
+            QFile file(mapPath);
+            file.open(QIODevice::ReadOnly);
+            data.insert(JsonKeys::JSONKEY_MAPDATA, GlobalUtils::toJsonArray(file.readAll()));
             success = true;
         }
     }
     data.insert(JsonKeys::JSONKEY_DOWNLOADRESULT, success);
-    data.insert(JsonKeys::JSONKEY_MAPPATH, mapPath);
+    data.insert(JsonKeys::JSONKEY_MAPPATH, mapPath);        
     QJsonDocument doc(data);
     CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(socketID), GameConsole::eDEBUG);
     emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);

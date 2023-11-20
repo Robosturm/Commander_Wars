@@ -762,6 +762,36 @@
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
                 <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Air)</startValue>
                 <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Air, input);</onEvent>
+            </Checkbox>            
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Fog of war map:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as fog of war map.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_FogOfWar)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_FogOfWar, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_FogOfWar)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_FogOfWar, input);</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>

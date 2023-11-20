@@ -1,4 +1,4 @@
-CO_ISABELLAthis.superPowerOffBonus = 30;
+CO_ISABELLA.superPowerOffBonus = 30;
 CO_ISABELLA.superPowerDefBonus = 30;
 CO_ISABELLA.superPowerFirerangeBonus = 2;
 CO_ISABELLA.superPowerMovementBonus = 2;
