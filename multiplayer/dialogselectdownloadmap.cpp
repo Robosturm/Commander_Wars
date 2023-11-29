@@ -8,9 +8,12 @@
 #include "network/JsonKeys.h"
 
 #include "objects/dialogs/mapSelection/mapselectionfilterdialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/spriteobject.h"
 
 #include "ui_reader/uifactory.h"
+
+static constexpr qint32 ITEMS_PER_PAGE = 20;
 
 DialogSelectDownloadMap::DialogSelectDownloadMap(LobbyMenu* pBaseMenu)
     : CustomDialog("", "", pBaseMenu, tr("Close")),
@@ -30,12 +33,52 @@ void DialogSelectDownloadMap::showMapFilter()
 
 qint32 DialogSelectDownloadMap::getCurrentPage() const
 {
-    return m_currentPage;
+    return m_currentStartIndex % ITEMS_PER_PAGE;
 }
 
-void DialogSelectDownloadMap::setCurrentPage(qint32 newCurrentPage)
+void DialogSelectDownloadMap::changeCurrentPageToEnd(bool start)
 {
-    m_currentPage = newCurrentPage;
+    if (start)
+    {
+        changeCurrentPage(0);
+    }
+    else
+    {
+        changeCurrentPage((getPageCount() - 1) * ITEMS_PER_PAGE);
+    }
+}
+
+void DialogSelectDownloadMap::changeCurrentPage(qint32 direction)
+{
+    if (direction > 0)
+    {
+        m_currentStartIndex += ITEMS_PER_PAGE;
+    }
+    else
+    {
+        m_currentStartIndex -= ITEMS_PER_PAGE;
+    }
+    if (m_currentStartIndex < 0)
+    {
+        m_currentStartIndex = 0;
+    }
+    qint32 pageCount = getPageCount();
+    if (m_currentStartIndex >= pageCount)
+    {
+        m_currentStartIndex = pageCount - 1;
+    }
+    filterChanged();
+}
+
+qint32 DialogSelectDownloadMap::getPageCount()
+{
+    qint32 items = m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toInt();
+    qint32 page = items / ITEMS_PER_PAGE;
+    if (page % ITEMS_PER_PAGE > 0)
+    {
+        ++page;
+    }
+    return page;
 }
 
 void DialogSelectDownloadMap::filterChanged()
@@ -43,11 +86,14 @@ void DialogSelectDownloadMap::filterChanged()
     QString command = QString(NetworkCommands::REQUESTAVAILABLEMAPS);
     QJsonObject data = m_mapFilter.toJson();
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_ITEMSPERPAGE, ITEMS_PER_PAGE);
+    data.insert(JsonKeys::JSONKEY_STARTINDEX, m_currentStartIndex);
     m_pBaseMenu->requestAvailableMaps(data);
 }
 
 void DialogSelectDownloadMap::receivedMapData(const QJsonObject &objData)
 {
+    m_currentStartIndex = objData.value(JsonKeys::JSONKEY_STARTINDEX).toInt();
     m_mapData = objData;
     m_minimapImages.clear();
     QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toArray();
@@ -97,6 +143,11 @@ oxygine::spActor DialogSelectDownloadMap::loadCustomId(const QString & item, qin
     }
 }
 
+qint32 DialogSelectDownloadMap::getMapImageHeight(qint32 mapIndex)
+{
+    return m_minimapSprites[mapIndex]->getHeight();
+}
+
 void DialogSelectDownloadMap::downloadMap(qint32 mapIndex)
 {
     QString command = QString(NetworkCommands::FILEDOWNLOAD);
@@ -114,7 +165,9 @@ void DialogSelectDownloadMap::onMapDownloaded(bool success)
     }
     else
     {
-
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Failed to download map from the server."));
+        addChild(pDialogMessageBox);
     }
 }
 

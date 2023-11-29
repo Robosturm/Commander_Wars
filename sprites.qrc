@@ -5121,5 +5121,6 @@
         <file>resources/images/co/ti/co_waylon+mini.png</file>
         <file>resources/ui/multiplayer/lobbyOther.js</file>
         <file>resources/ui/multiplayer/selectDownloadMap.xml</file>
+        <file>resources/ui/multiplayer/selectDownloadMap.js</file>
     </qresource>
 </RCC>

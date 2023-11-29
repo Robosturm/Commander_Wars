@@ -8,6 +8,8 @@
 #include "mapsupport/mapfilter.h"
 
 class LobbyMenu;
+class DialogSelectDownloadMap;
+using spDialogSelectDownloadMap = std::shared_ptr<DialogSelectDownloadMap>;
 
 class DialogSelectDownloadMap : public CustomDialog
 {
@@ -20,7 +22,7 @@ public:
                                           UiFactory* pFactoty, CreatedGui* pMenu, qint32 loopIdx, qint32 & scaledWidth, qint32 & scaledHeight) override;
     Q_INVOKABLE void showMapFilter();
     Q_INVOKABLE qint32 getCurrentPage() const;
-    Q_INVOKABLE void setCurrentPage(qint32 newCurrentPage);
+    Q_INVOKABLE qint32 getPageCount();
     Q_INVOKABLE void downloadMap(qint32 mapIndex);
     Q_INVOKABLE QString getMapPath(qint32 mapIndex);
     Q_INVOKABLE QString getMapName(qint32 mapIndex);
@@ -29,14 +31,17 @@ public:
     Q_INVOKABLE qint32 getMapWidth(qint32 mapIndex);
     Q_INVOKABLE qint32 getMapHeight(qint32 mapIndex);
     Q_INVOKABLE qint64 getMapFlags(qint32 mapIndex);
+    Q_INVOKABLE qint32 getMapImageHeight(qint32 mapIndex);
     Q_INVOKABLE qint32 getMapCounts();
+    Q_INVOKABLE void changeCurrentPage(qint32 direction);
+    Q_INVOKABLE void changeCurrentPageToEnd(bool start);
 private slots:
     void filterChanged();
     void receivedMapData(const QJsonObject &objData);
     void onMapDownloaded(bool success);
 private:
     LobbyMenu* m_pBaseMenu{nullptr};
-    qint32 m_currentPage{0};
+    qint32 m_currentStartIndex{0};
     MapFilter m_mapFilter;
     QJsonObject m_mapData;
     std::vector<QImage> m_minimapImages;

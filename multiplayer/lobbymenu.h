@@ -50,6 +50,7 @@ public:
     Q_INVOKABLE void requestPlayerStats(const QString & player);
     Q_INVOKABLE void uploadMap(const  QString & selectedFilePath);
     Q_INVOKABLE void requestDownloadMap(const QJsonObject & objData);
+    Q_INVOKABLE void showDownloadMap();
     void requestAvailableMaps(const QJsonObject & objData);
 signals:
     void sigExitMenue();

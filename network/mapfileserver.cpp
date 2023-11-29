@@ -195,6 +195,7 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
         response.insert(JsonKeys::JSONKEY_MAPLIST, foundMaps);
     }
     response.insert(JsonKeys::JSONKEY_FOUNDITEMS, itemCount);
+    response.insert(JsonKeys::JSONKEY_STARTINDEX, startItem);
     QJsonDocument doc(response);
     CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(socketID), GameConsole::eDEBUG);
     emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);

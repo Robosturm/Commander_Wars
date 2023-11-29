@@ -76,7 +76,7 @@
                 <y>lastY</y>
                 <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Download map")</text>
-                <onEvent></onEvent>
+                <onEvent>currentMenu.showDownloadMap()</onEvent>
             </Button>
         </childs>
     </Panel>

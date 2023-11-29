@@ -1,25 +1,152 @@
 <?xml version="1.0"?>
 <ui>
-    <Panel>
+    <Button>
         <x>10</x>
         <y>10</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Select map filter")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Select the filter for which maps you see for downloading.")</tooltip>
+        <onEvent>currentMenu.showMapFilter();</onEvent>
+    </Button>
+    <Panel>
+        <x>10</x>
+        <y>lastY + lastHeight + 10</y>
         <width>settings.getStageWidth() - 20</width>
-        <height>settings.getStageHeight() - 80</height>
+        <height>settings.getStageHeight() - 160</height>
         <childs>
-            <Button>
-                <x>10</x>
-                <y>10</y>
-                <width>150</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Select map filter")</text>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Select the filter for which maps you see for downloading.")</tooltip>
-                <onEvent>currentMenu.close();</onEvent>
-            </Button>
-
-
             <loop count="currentMenu.getMapCounts()">
-
+                <Label>
+                    <x>10</x>
+                    <y>SelectDownloadMap.getInitialY()</y>
+                    <width>200</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Map name:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>currentMenu.getMapName(loopIdx)</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>200</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Author:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>currentMenu.getMapAuthor(loopIdx)</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>200</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Players:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>currentMenu.getMapPlayers(loopIdx)</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>200</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Width:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>currentMenu.getMapWidth(loopIdx)</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>200</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Height:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>SelectDownloadMap.updateY();lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>currentMenu.getMapHeight(loopIdx)</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Button>
+                    <x>10</x>
+                    <y>10</y>
+                    <width>150</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Download")</text>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Downloads this map from the server.")</tooltip>
+                    <onEvent>currentMenu.downloadMap(loopIdx);</onEvent>
+                </Button>
+                <Custom>
+                    <x>510</x>
+                    <y>SelectDownloadMap.updateMapY();10</y>
+                    <scale>1</scale>
+                    <customItem>"MINIMAP"</customItem>
+                </Custom>
             </loop>
-
         </childs>
-    </Panel>
+    </Panel>    
+
+    <IconButton>
+        <x>10</x>
+        <y>lastY + lastHeight + 10</y>
+        <sprite>"toStart"</sprite>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Goes to the first page.")</tooltip>
+        <onEvent>currentMenu.changeCurrentPageToEnd(true);</onEvent>
+    </IconButton>
+    <IconButton>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <sprite>"toStart"</sprite>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Goes to the previous page.")</tooltip>
+        <onEvent>currentMenu.changeCurrentPage(-1);</onEvent>
+    </IconButton>
+    <Label>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <width>200</width>
+        <text>SelectDownloadMap.getPageText()</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+    </Label>
+    <IconButton>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <sprite>"next_unit"</sprite>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Goes to the next page.")</tooltip>
+        <onEvent>currentMenu.changeCurrentPage(1);</onEvent>
+    </IconButton>
+    <IconButton>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <sprite>"toEnd"</sprite>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Goes to the last page.")</tooltip>
+        <onEvent>currentMenu.changeCurrentPageToEnd(false);</onEvent>
+    </IconButton>
 </ui>
