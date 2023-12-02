@@ -12,7 +12,6 @@
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/networkgamedataview.h"
 #include "multiplayer/dialogotherlobbyinfo.h"
-#include "multiplayer/dialogselectdownloadmap.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
@@ -1056,10 +1055,4 @@ void LobbyMenu::requestAvailableMaps(const QJsonObject & objData)
 {
     QJsonDocument doc(objData);
     emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-}
-
-void LobbyMenu::showDownloadMap()
-{
-    spDialogSelectDownloadMap pSelectDownloadMap = MemoryManagement::create<DialogSelectDownloadMap>(this);
-    addChild(pSelectDownloadMap);
 }

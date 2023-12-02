@@ -2,7 +2,7 @@ name: Commnader_Wars
 on: [push]
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.6.1'
+  QT_Version: '6.5.2'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
   GCC_PATH: 'D:/a/Commander_Wars/Commander_Wars/qt/Qt/Tools/mingw1120_64/bin/'
   JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/11.0.21-9/x64/'

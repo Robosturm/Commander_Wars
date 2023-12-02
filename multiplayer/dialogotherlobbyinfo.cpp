@@ -3,6 +3,7 @@
 #include "multiplayer/dialogotherlobbyinfo.h"
 #include "multiplayer/dialogcostatsinfo.h"
 #include "multiplayer/lobbymenu.h"
+#include "multiplayer/dialogselectdownloadmap.h"
 
 #include "ui_reader/uifactory.h"
 
@@ -70,6 +71,12 @@ void DialogOtherLobbyInfo::receivedPlayerStats(const QJsonObject &objData)
 void DialogOtherLobbyInfo::showAutoMatches()
 {
     m_pLobbyMenu->requestShowAutoMatches();
+}
+
+void DialogOtherLobbyInfo::showDownloadMap()
+{
+    spDialogSelectDownloadMap pSelectDownloadMap = MemoryManagement::create<DialogSelectDownloadMap>(m_pLobbyMenu);
+    addChild(pSelectDownloadMap);
 }
 
 void DialogOtherLobbyInfo::receivedShowAutoMatches(const QJsonObject & objData)

@@ -22,6 +22,7 @@ DialogSelectDownloadMap::DialogSelectDownloadMap(LobbyMenu* pBaseMenu)
     m_uiXml = "ui/multiplayer/selectDownloadMap.xml";
     loadXmlFile(m_uiXml);
     connect(m_pBaseMenu, &LobbyMenu::sigOnDownloadedResponse, this, &DialogSelectDownloadMap::onMapDownloaded, Qt::QueuedConnection);
+    connect(m_pBaseMenu, &LobbyMenu::sigReceivedAvailableMaps, this, &DialogSelectDownloadMap::receivedMapData, Qt::QueuedConnection);
 }
 
 void DialogSelectDownloadMap::showMapFilter()
@@ -84,6 +85,7 @@ qint32 DialogSelectDownloadMap::getPageCount()
 void DialogSelectDownloadMap::filterChanged()
 {
     QString command = QString(NetworkCommands::REQUESTAVAILABLEMAPS);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data = m_mapFilter.toJson();
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_ITEMSPERPAGE, ITEMS_PER_PAGE);
@@ -93,8 +95,8 @@ void DialogSelectDownloadMap::filterChanged()
 
 void DialogSelectDownloadMap::receivedMapData(const QJsonObject &objData)
 {
-    m_currentStartIndex = objData.value(JsonKeys::JSONKEY_STARTINDEX).toInt();
     m_mapData = objData;
+    m_currentStartIndex = objData.value(JsonKeys::JSONKEY_STARTINDEX).toInt();
     m_minimapImages.clear();
     QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toArray();
     for (const auto & mapData : mapArray)
@@ -109,6 +111,7 @@ void DialogSelectDownloadMap::receivedMapData(const QJsonObject &objData)
         Mainapp::getInstance()->loadResAnim(minimapImage, img, 1, 1, 1);
         m_minimapSprites.push_back(minimapImage);
     }
+    CONSOLE_PRINT("Refreshing ui with the received maps " + QString::number(m_minimapImages.size()), GameConsole::eDEBUG);
     refreshUi();
 }
 

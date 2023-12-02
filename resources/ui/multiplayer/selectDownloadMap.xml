@@ -3,7 +3,7 @@
     <Button>
         <x>10</x>
         <y>10</y>
-        <width>150</width>
+        <width>250</width>
         <text>QT_TRANSLATE_NOOP("GAME","Select map filter")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Select the filter for which maps you see for downloading.")</tooltip>
         <onEvent>currentMenu.showMapFilter();</onEvent>
@@ -114,7 +114,7 @@
     </Panel>    
 
     <IconButton>
-        <x>10</x>
+        <x>(settings.getStageWidth() - 20) / 2 - 135</x>
         <y>lastY + lastHeight + 10</y>
         <sprite>"toStart"</sprite>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Goes to the first page.")</tooltip>
@@ -130,10 +130,11 @@
     <Label>
         <x>lastX + lastWidth + 10</x>
         <y>lastY</y>
-        <width>200</width>
+        <width>100</width>
         <text>SelectDownloadMap.getPageText()</text>
         <font>"main"</font>
         <fontSize>24</fontSize>
+        <hAlign>"Middle"</hAlign>
     </Label>
     <IconButton>
         <x>lastX + lastWidth + 10</x>

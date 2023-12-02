@@ -359,6 +359,10 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         {
             m_mapFileServer.onRequestDownloadMap(socketID, objData);
         }
+        else if (messageType == NetworkCommands::REQUESTAVAILABLEMAPS)
+        {
+            m_mapFileServer.onRequestFilteredMaps(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in MainServer::recieveData " + messageType + " received", GameConsole::eDEBUG);
