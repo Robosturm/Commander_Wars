@@ -175,6 +175,7 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
         QJsonArray foundMaps;
         if (query.seek(startItem))
         {
+            itemCount = startItem;
             do
             {
                 ++itemCount;

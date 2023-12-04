@@ -60,6 +60,7 @@ void CustomDialog::loadXmlFile(const QString& uiXml)
 
 void CustomDialog::refreshUi()
 {
+    resetUi();
     loadXmlFile(m_uiXml);
 }
 

@@ -34,7 +34,7 @@ void DialogSelectDownloadMap::showMapFilter()
 
 qint32 DialogSelectDownloadMap::getCurrentPage() const
 {
-    return m_currentStartIndex % ITEMS_PER_PAGE;
+    return m_currentStartIndex / ITEMS_PER_PAGE;
 }
 
 void DialogSelectDownloadMap::changeCurrentPageToEnd(bool start)
@@ -51,6 +51,7 @@ void DialogSelectDownloadMap::changeCurrentPageToEnd(bool start)
 
 void DialogSelectDownloadMap::changeCurrentPage(qint32 direction)
 {
+    auto curIdx = m_currentStartIndex;
     if (direction > 0)
     {
         m_currentStartIndex += ITEMS_PER_PAGE;
@@ -63,12 +64,15 @@ void DialogSelectDownloadMap::changeCurrentPage(qint32 direction)
     {
         m_currentStartIndex = 0;
     }
-    qint32 pageCount = getPageCount();
+    qint32 pageCount = getPageCount() * ITEMS_PER_PAGE;
     if (m_currentStartIndex >= pageCount)
     {
         m_currentStartIndex = pageCount - 1;
     }
-    filterChanged();
+    if (curIdx != m_currentStartIndex)
+    {
+        filterChanged();
+    }
 }
 
 qint32 DialogSelectDownloadMap::getPageCount()

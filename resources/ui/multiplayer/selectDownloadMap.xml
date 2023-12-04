@@ -97,7 +97,7 @@
                 </Label>
                 <Button>
                     <x>10</x>
-                    <y>SelectDownloadMap.getAndUpdateMapY()</y>
+                    <y>lastY + lastHeight + 10</y>
                     <width>150</width>
                     <text>QT_TRANSLATE_NOOP("GAME","Download")</text>
                     <tooltip>QT_TRANSLATE_NOOP("GAME","Downloads this map from the server.")</tooltip>
@@ -123,7 +123,7 @@
     <IconButton>
         <x>lastX + lastWidth + 10</x>
         <y>lastY</y>
-        <sprite>"toStart"</sprite>
+        <sprite>"previous_unit"</sprite>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Goes to the previous page.")</tooltip>
         <onEvent>currentMenu.changeCurrentPage(-1);</onEvent>
     </IconButton>
