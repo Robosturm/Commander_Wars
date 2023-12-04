@@ -98,7 +98,8 @@ void DialogSelectDownloadMap::receivedMapData(const QJsonObject &objData)
     m_mapData = objData;
     m_currentStartIndex = objData.value(JsonKeys::JSONKEY_STARTINDEX).toInt();
     m_minimapImages.clear();
-    QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toArray();
+    m_minimapSprites.clear();
+    QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_MAPLIST ).toArray();
     for (const auto & mapData : mapArray)
     {
         QByteArray data = GlobalUtils::toByteArray(mapData.toObject().value(JsonKeys::JSONKEY_MINIMAPDATA).toArray());
@@ -116,8 +117,8 @@ void DialogSelectDownloadMap::receivedMapData(const QJsonObject &objData)
 }
 
 oxygine::spActor DialogSelectDownloadMap::loadCustomId(const QString & item, qint32 x, qint32 y, bool enabled, bool visible, float scale,
-                                                   const QString & id, const QString & tooltip, const QString & onEvent,
-                                                   UiFactory* pFactoty, CreatedGui* pMenu, qint32 loopIdx, qint32 & scaledWidth, qint32 & scaledHeight)
+                                                       const QString & id, const QString & tooltip, const QString & onEvent,
+                                                       UiFactory* pFactoty, CreatedGui* pMenu, qint32 loopIdx, qint32 & scaledWidth, qint32 & scaledHeight)
 {
     if (item == "MINIMAP")
     {
@@ -148,12 +149,20 @@ oxygine::spActor DialogSelectDownloadMap::loadCustomId(const QString & item, qin
 
 qint32 DialogSelectDownloadMap::getMapImageHeight(qint32 mapIndex)
 {
-    return m_minimapSprites[mapIndex]->getHeight();
+    if (mapIndex >= 0 && mapIndex < m_minimapSprites.size())
+    {
+        return m_minimapSprites[mapIndex]->getHeight();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 void DialogSelectDownloadMap::downloadMap(qint32 mapIndex)
 {
-    QString command = QString(NetworkCommands::FILEDOWNLOAD);
+    QString command = QString(NetworkCommands::FILEDOWNLOADREQUEST);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_MAPPATH, getMapPath(mapIndex));
@@ -164,6 +173,9 @@ void DialogSelectDownloadMap::onMapDownloaded(bool success)
 {
     if (success)
     {
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Downloaded map successfully."));
+        m_pBaseMenu->addChild(pDialogMessageBox);
         exit();
     }
     else
@@ -176,48 +188,97 @@ void DialogSelectDownloadMap::onMapDownloaded(bool success)
 
 QString DialogSelectDownloadMap::getMapPath(qint32 mapIndex)
 {
-    QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toArray();
-    return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPPATH).toString();
+    QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_MAPLIST).toArray();
+    if (mapIndex >= 0 && mapIndex < mapArray.size())
+    {
+        return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPPATH).toString();
+    }
+    else
+    {
+        return "";
+    }
 }
 
 QString DialogSelectDownloadMap::getMapName(qint32 mapIndex)
 {
-    QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toArray();
-    return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPNAME).toString();
+    QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_MAPLIST).toArray();
+    if (mapIndex >= 0 && mapIndex < mapArray.size())
+    {
+        return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPNAME).toString();
+    }
+    else
+    {
+        return "";
+    }
 }
 
 QString DialogSelectDownloadMap::getMapAuthor(qint32 mapIndex)
 {
-    QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toArray();
-    return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPAUTHOR).toString();
+    if (mapIndex >= 0 && mapIndex < m_minimapSprites.size())
+    {
+        QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_MAPLIST).toArray();
+        return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPAUTHOR).toString();
+    }
+    else
+    {
+        return "";
+    }
 }
 
 qint32 DialogSelectDownloadMap::getMapPlayers(qint32 mapIndex)
 {
-    QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toArray();
-    return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPPLAYERS).toInt();
+    if (mapIndex >= 0 && mapIndex < m_minimapSprites.size())
+    {
+        QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_MAPLIST).toArray();
+        return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPPLAYERS).toInt();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 qint32 DialogSelectDownloadMap::getMapWidth(qint32 mapIndex)
 {
-    QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toArray();
-    return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPWIDTH).toInt();
+    if (mapIndex >= 0 && mapIndex < m_minimapSprites.size())
+    {
+        QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_MAPLIST).toArray();
+        return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPWIDTH).toInt();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 qint32 DialogSelectDownloadMap::getMapHeight(qint32 mapIndex)
 {
-    QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toArray();
-    return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPHEIGHT).toInt();
+    if (mapIndex >= 0 && mapIndex < m_minimapSprites.size())
+    {
+        QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_MAPLIST).toArray();
+        return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPHEIGHT).toInt();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 qint64 DialogSelectDownloadMap::getMapFlags(qint32 mapIndex)
 {
-    QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toArray();
-    return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPFLAGS).toInteger();
+    if (mapIndex >= 0 && mapIndex < m_minimapSprites.size())
+    {
+        QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_MAPLIST).toArray();
+        return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPFLAGS).toInteger();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 qint32 DialogSelectDownloadMap::getMapCounts()
 {
-    return m_mapData.value(JsonKeys::JSONKEY_FOUNDITEMS).toArray().size();
+    return m_minimapSprites.size();
 }
 

@@ -2,25 +2,36 @@ var SelectDownloadMap =
 {
     curHeightPos : 10,
 
-    updateY : function(y)
+    updateY : function()
     {
-        SelectDownloadMap.curHeightPos = lastY + lastHeight * 2 + 10
+        SelectDownloadMap.curHeightPos = lastY + lastHeight + 10
     },
 
     updateMapY : function()
     {
-        var y = currentMenu.getMapImageHeight();
+        var y = currentMenu.getMapImageHeight(loopIdx);
         if (y > SelectDownloadMap.curHeightPos)
         {
             SelectDownloadMap.curHeightPos = y;
         }
+    },
+    getAndUpdateMapY : function()
+    {
+        SelectDownloadMap.updateY();
+        return lastY + lastHeight + 10;
+    },
+
+    getMapY : function()
+    {
+        SelectDownloadMap.updateMapY();
+        return 10;
     },
 
     getInitialY : function()
     {
         if (loopIdx === 0)
         {
-            return lastY + lastHeight + 10;
+            return 10;
         }
         else
         {

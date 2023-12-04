@@ -25,7 +25,7 @@
                 </Label>
                 <Label>
                     <x>lastX + lastWidth + 10</x>
-                    <y>lastY + lastHeight + 10</y>
+                    <y>lastY</y>
                     <width>300</width>
                     <text>currentMenu.getMapName(loopIdx)</text>
                     <font>"main"</font>
@@ -41,7 +41,7 @@
                 </Label>
                 <Label>
                     <x>lastX + lastWidth + 10</x>
-                    <y>lastY + lastHeight + 10</y>
+                    <y>lastY</y>
                     <width>300</width>
                     <text>currentMenu.getMapAuthor(loopIdx)</text>
                     <font>"main"</font>
@@ -57,7 +57,7 @@
                 </Label>
                 <Label>
                     <x>lastX + lastWidth + 10</x>
-                    <y>lastY + lastHeight + 10</y>
+                    <y>lastY</y>
                     <width>300</width>
                     <text>currentMenu.getMapPlayers(loopIdx)</text>
                     <font>"main"</font>
@@ -73,7 +73,7 @@
                 </Label>
                 <Label>
                     <x>lastX + lastWidth + 10</x>
-                    <y>lastY + lastHeight + 10</y>
+                    <y>lastY</y>
                     <width>300</width>
                     <text>currentMenu.getMapWidth(loopIdx)</text>
                     <font>"main"</font>
@@ -89,7 +89,7 @@
                 </Label>
                 <Label>
                     <x>lastX + lastWidth + 10</x>
-                    <y>SelectDownloadMap.updateY();lastY + lastHeight + 10</y>
+                    <y>lastY</y>
                     <width>300</width>
                     <text>currentMenu.getMapHeight(loopIdx)</text>
                     <font>"main"</font>
@@ -97,7 +97,7 @@
                 </Label>
                 <Button>
                     <x>10</x>
-                    <y>10</y>
+                    <y>SelectDownloadMap.getAndUpdateMapY()</y>
                     <width>150</width>
                     <text>QT_TRANSLATE_NOOP("GAME","Download")</text>
                     <tooltip>QT_TRANSLATE_NOOP("GAME","Downloads this map from the server.")</tooltip>
@@ -105,7 +105,7 @@
                 </Button>
                 <Custom>
                     <x>510</x>
-                    <y>SelectDownloadMap.updateMapY();10</y>
+                    <y>SelectDownloadMap.getMapY()</y>
                     <scale>1</scale>
                     <customItem>"MINIMAP"</customItem>
                 </Custom>

@@ -164,34 +164,46 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
         filterCommand +=  ";";
     }
     QSqlQuery query = m_mainServer->getDatabase().exec(filterCommand);
+    bool success = !MainServer::sqlQueryFailed(query);
+    success = success && query.first();
+    bool active = query.isActive() && query.isSelect();
     qint32 startItem = objData.value(JsonKeys::JSONKEY_STARTINDEX).toInt();
     qint32 itemsPerPage = objData.value(JsonKeys::JSONKEY_ITEMSPERPAGE).toInt();
-    qint32 itemCount = query.size();
-    if (!MainServer::sqlQueryFailed(query) && itemCount >= startItem)
-    {
+    qint32 itemCount = 0;
+    if (success && active)
+    {        
         QJsonArray foundMaps;
-        query.seek(startItem);
-        do
+        if (query.seek(startItem))
         {
-
-            QJsonObject mapData;
-            mapData.insert(JsonKeys::JSONKEY_MAPPATH, query.value(MainServer::SQL_MAPPATH).toString());
-            mapData.insert(JsonKeys::JSONKEY_MAPNAME, query.value(MainServer::SQL_MAPNAME).toString());
-            mapData.insert(JsonKeys::JSONKEY_MAPAUTHOR, query.value(MainServer::SQL_MAPAUTHOR).toString());
-            mapData.insert(JsonKeys::JSONKEY_MAPPLAYERS, query.value(MainServer::SQL_MAPPLAYERS).toInt());
-            mapData.insert(JsonKeys::JSONKEY_MAPWIDTH, query.value(MainServer::SQL_MAPWIDTH).toInt());
-            mapData.insert(JsonKeys::JSONKEY_MAPHEIGHT, query.value(MainServer::SQL_MAPHEIGHT).toInt());
-            mapData.insert(JsonKeys::JSONKEY_MAPFLAGS, query.value(MainServer::SQL_MAPFLAGS).toLongLong());
-            QImage image;
-            image.load(query.value(MainServer::SQL_MAPIMAGEPATH).toString());
-            QByteArray imageArray;
-            QBuffer buffer(&imageArray);
-            buffer.open(QIODevice::WriteOnly);
-            image.save(&buffer, "PNG");
-            buffer.close();
-            mapData.insert(JsonKeys::JSONKEY_MINIMAPDATA, GlobalUtils::toJsonArray(imageArray));
-            foundMaps.append(mapData);
-        } while (foundMaps.size() < itemsPerPage && query.next());
+            do
+            {
+                ++itemCount;
+                if (foundMaps.size() < itemsPerPage)
+                {
+                    QJsonObject mapData;
+                    mapData.insert(JsonKeys::JSONKEY_MAPPATH, query.value(MainServer::SQL_MAPPATH).toString());
+                    mapData.insert(JsonKeys::JSONKEY_MAPNAME, query.value(MainServer::SQL_MAPNAME).toString());
+                    mapData.insert(JsonKeys::JSONKEY_MAPAUTHOR, query.value(MainServer::SQL_MAPAUTHOR).toString());
+                    mapData.insert(JsonKeys::JSONKEY_MAPPLAYERS, query.value(MainServer::SQL_MAPPLAYERS).toInt());
+                    mapData.insert(JsonKeys::JSONKEY_MAPWIDTH, query.value(MainServer::SQL_MAPWIDTH).toInt());
+                    mapData.insert(JsonKeys::JSONKEY_MAPHEIGHT, query.value(MainServer::SQL_MAPHEIGHT).toInt());
+                    mapData.insert(JsonKeys::JSONKEY_MAPFLAGS, query.value(MainServer::SQL_MAPFLAGS).toLongLong());
+                    QImage image;
+                    image.load(query.value(MainServer::SQL_MAPIMAGEPATH).toString());
+                    QByteArray imageArray;
+                    QBuffer buffer(&imageArray);
+                    buffer.open(QIODevice::WriteOnly);
+                    image.save(&buffer, "PNG");
+                    buffer.close();
+                    mapData.insert(JsonKeys::JSONKEY_MINIMAPDATA, GlobalUtils::toJsonArray(imageArray));
+                    foundMaps.append(mapData);
+                }
+            } while (query.next());
+        }
+        else
+        {
+            itemCount = startItem - 1;
+        }
         response.insert(JsonKeys::JSONKEY_MAPLIST, foundMaps);
     }
     response.insert(JsonKeys::JSONKEY_FOUNDITEMS, itemCount);
