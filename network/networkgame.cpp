@@ -27,6 +27,7 @@ NetworkGame::NetworkGame(QObject* pParent, const QString & serverName)
 NetworkGame::~NetworkGame()
 {
     CONSOLE_PRINT("Deleting NetworkGame " + m_serverName, GameConsole::eDEBUG);
+
 }
 
 void NetworkGame::startCloseTimer()

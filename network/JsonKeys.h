@@ -70,8 +70,10 @@ namespace JsonKeys
     const char* const JSONKEY_MMR = "mmr";
     const char* const JSONKEY_RESULT = "result";
     // map filter
+    const char* const JSONKEY_PLAYERDATA = "mapPlayerData";
     const char* const JSONKEY_MAPNAME = "mapName";
     const char* const JSONKEY_MAPAUTHOR = "mapAuthor";
+    const char* const JSONKEY_MAPDESCRIPTION = "mapDescription";
     const char* const JSONKEY_MINPLAYERS = "minPlayers";
     const char* const JSONKEY_MINWIDTH = "minWidth";
     const char* const JSONKEY_MAXWIDTH = "maxWidth";

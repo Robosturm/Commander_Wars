@@ -38,7 +38,7 @@ class ReplayRecorder final : public QObject
         Type m_type{Type::Action};
         qint64 m_nextSeekPos{0};
     };
-    static const qint32 VERSION = 1;
+    static const qint32 VERSION = 2;
 public:
     explicit ReplayRecorder(GameMap* pMap);
     virtual ~ReplayRecorder();
@@ -107,15 +107,20 @@ public:
     void seekToDay(qint32 day);
     qint32 getCount() const;
 
+
+    QString getRecordJson() const;
+
 private:
     bool validRecord(QByteArray & envData);
     void writeAction(const spGameAction & action);
     void writeMapState();
     ReplayRecorder::HeaderInfo seekToNextType(Type type, bool & success);
+    QString createRecordJson() const;
 private:
     QFile m_recordFile;
     QDataStream m_stream{&m_recordFile};
     QStringList m_mods;
+    QString m_recordJson;
     qint32 m_count = 0;
     qint32 m_progress = 0;
     qint64 m_countPos = 0;

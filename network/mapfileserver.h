@@ -15,6 +15,7 @@ public:
     void onMapUpload(quint64 socketID, const QJsonObject & objData);
     void onRequestFilteredMaps(quint64 socketID, const QJsonObject & objData);
     void onRequestDownloadMap(quint64 socketID, const QJsonObject & objData);
+    Q_INVOKABLE void removeMapFromServer(const QString & sqlFilter);
 private:
     bool sameUploader(const QJsonObject & objData);
     void addFilterOption(QString & filterCommand, qint32 value, qint32 & filterCount, const char* const item, const char* const opCommand);

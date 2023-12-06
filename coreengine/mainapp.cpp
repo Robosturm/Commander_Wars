@@ -859,6 +859,7 @@ void Mainapp::createBaseDirs()
 
 void Mainapp::onQuit()
 {
+    const qint64 waitTime = 120;
     QCoreApplication::processEvents();
     if (m_Worker != nullptr)
     {
@@ -867,8 +868,10 @@ void Mainapp::onQuit()
     }
     if (m_Workerthread->isRunning())
     {
+        auto curTimte = QDateTime::currentSecsSinceEpoch();
         m_Workerthread->quit();
-        while (!m_Workerthread->wait(1))
+        while (!m_Workerthread->wait(1) &&
+               QDateTime::currentSecsSinceEpoch() - curTimte < waitTime)
         {
             QCoreApplication::processEvents();
         }
@@ -883,8 +886,10 @@ void Mainapp::onQuit()
     }
     if (m_audioThread->isRunning())
     {
+        auto curTimte = QDateTime::currentSecsSinceEpoch();
         m_audioThread->quit();
-        while (!m_audioThread->wait(1))
+        while (!m_audioThread->wait(1) &&
+               QDateTime::currentSecsSinceEpoch() - curTimte < waitTime)
         {
             QCoreApplication::processEvents();
         }
@@ -894,7 +899,9 @@ void Mainapp::onQuit()
     if (m_Networkthread->isRunning())
     {
         m_Networkthread->quit();
-        while (!m_Networkthread->wait(1))
+        auto curTimte = QDateTime::currentSecsSinceEpoch();
+        while (!m_Networkthread->wait(1) &&
+               QDateTime::currentSecsSinceEpoch() - curTimte < waitTime)
         {
             QCoreApplication::processEvents();
         }

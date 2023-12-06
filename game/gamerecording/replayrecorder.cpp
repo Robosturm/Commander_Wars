@@ -1,15 +1,20 @@
 #include <QByteArray>
 #include <QDateTime>
+#include <QJsonDocument>
+#include <QJsonObject>
 
+#include "network/JsonKeys.h"
 #include "game/gamerecording/replayrecorder.h"
 
 #include "game/gamemap.h"
 #include "game/gameaction.h"
+#include "objects/minimap.h"
 
 #include "coreengine/settings.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/filesupport.h"
 #include "coreengine/gameconsole.h"
+#include "coreengine/mainapp.h"
 
 #include "gameinput/basegameinputif.h"
 
@@ -56,6 +61,7 @@ void ReplayRecorder::startRecording(const QString & file)
         m_recordFile.open(QIODevice::WriteOnly);
         m_stream << VERSION;
         m_stream << QString(RECORD_INFO_MARKER);
+        m_stream << createRecordJson();
         qint64 streamStartPos = m_recordFile.pos();
         m_stream << m_streamStart;
         m_stream << static_cast<qint32>(data.size());
@@ -195,6 +201,10 @@ bool ReplayRecorder::validRecord(QByteArray & envData)
     bool success = marker == RECORD_INFO_MARKER;
     if (success)
     {
+        if (version > 1)
+        {
+            m_stream >> m_recordJson;
+        }
         m_stream >> m_streamStart;
         qint32 size = 0;
         m_stream >> size;
@@ -256,6 +266,11 @@ ReplayRecorder::HeaderInfo ReplayRecorder::seekToNextType(Type type, bool & succ
         }
     }
     return info;
+}
+
+QString ReplayRecorder::getRecordJson() const
+{
+    return m_recordJson;
 }
 
 void ReplayRecorder::seekToDay(qint32 day)
@@ -352,4 +367,49 @@ qint32 ReplayRecorder::getDayFromPosition(qint32 count)
     }
     m_recordFile.seek(curPos);
     return rDay;
+}
+
+QString ReplayRecorder::createRecordJson() const
+{
+    if (m_pMap != nullptr)
+    {
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_MAPNAME, m_pMap->getMapName());
+        data.insert(JsonKeys::JSONKEY_MAPAUTHOR, m_pMap->getMapAuthor());
+        data.insert(JsonKeys::JSONKEY_MAPDESCRIPTION, m_pMap->getMapDescription());
+        data.insert(JsonKeys::JSONKEY_MAPWIDTH, m_pMap->getMapWidth());
+        data.insert(JsonKeys::JSONKEY_MAPHEIGHT, m_pMap->getMapHeight());
+        QJsonArray playerData;
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+        {
+            QJsonObject obj;
+            auto* pPlayer = m_pMap->getPlayer(i);
+            obj.insert(JsonKeys::JSONKEY_USERNAME, pPlayer->getPlayerNameId());
+            QJsonArray coData;
+            for (qint32 i = 0; i < pPlayer->getCoCount(); ++i)
+            {
+                auto* pCO = pPlayer->getCO(i);
+                if (pCO != nullptr)
+                {
+                    coData.append(pCO->getCOName());
+                }
+            }
+            obj.insert(JsonKeys::JSONKEY_COS, coData);
+            playerData.append(obj);
+        }
+        data.insert(JsonKeys::JSONKEY_PLAYERDATA, playerData);
+        Minimap minimap;
+        minimap.updateMinimap(m_pMap);
+        QImage image;
+        Mainapp::getInstance()->saveMapAsImage(&minimap, &image);
+        QByteArray imageArray;
+        QBuffer buffer(&imageArray);
+        buffer.open(QIODevice::WriteOnly);
+        image.save(&buffer, "PNG");
+        buffer.close();
+        data.insert(JsonKeys::JSONKEY_MINIMAPDATA, GlobalUtils::toJsonArray(imageArray));
+        QJsonDocument doc(data);
+        return doc.toJson(QJsonDocument::Compact);
+    }
+    return "";
 }

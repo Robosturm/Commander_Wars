@@ -138,7 +138,6 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
                             MainServer::SQL_MAPWIDTH + ", " +
                             MainServer::SQL_MAPHEIGHT + ", " +
                             MainServer::SQL_MAPFLAGS + ", " +
-                            MainServer::SQL_MAPPATH + ", " +
                             MainServer::SQL_MAPIMAGEPATH +
                             " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
                             " WHERE ";
@@ -326,4 +325,25 @@ void MapFileServer::onRequestDownloadMap(quint64 socketID, const QJsonObject & o
     QJsonDocument doc(data);
     CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(socketID), GameConsole::eDEBUG);
     emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void MapFileServer::removeMapFromServer(const QString & sqlFilter)
+{
+    QString filterCommand = QString("SELECT ") + MainServer::SQL_MAPPATH + ", " +
+                            MainServer::SQL_MAPIMAGEPATH +
+                            " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
+                            " WHERE " + sqlFilter + ";";
+    QSqlQuery query = m_mainServer->getDatabase().exec(filterCommand);
+    bool success = !MainServer::sqlQueryFailed(query);
+    if (success)
+    {
+        do
+        {
+            QFile::remove(query.value(MainServer::SQL_MAPPATH).toString());
+            QFile::remove(query.value(MainServer::SQL_MAPIMAGEPATH).toString());
+        } while (query.next());
+        QString command = QString("DELETE FROM ") + MainServer::SQL_TABLE_PLAYERS + " WHERE " + sqlFilter + ";";
+        query = m_mainServer->getDatabase().exec(command);
+        MainServer::sqlQueryFailed(query);
+    }
 }
