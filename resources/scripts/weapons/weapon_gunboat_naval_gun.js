@@ -4,6 +4,10 @@ var Constructor = function()
     {
         return qsTr("Naval gun");
     };
+    this.getEnviromentDamage = function(enviromentId)
+    {
+        return 10;
+    };
     this.damageTable = [["GUNBOAT", 55],
                         ["CANNONBOAT", 55],
                         ["BLACK_BOAT", 55],
