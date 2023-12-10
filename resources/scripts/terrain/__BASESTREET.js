@@ -100,7 +100,7 @@ var Constructor = function()
     this.getStreetSurrounding = function(terrain)
     {
         var surroundings = terrain.getSurroundings("STREET,STREET1,BRIDGE,BRIDGE1,BRIDGE2,SNOW_STREET,DESERT_PATH,DESERT_PATH1,WASTE_PATH",
-                                                false, false, GameEnums.Directions_Direct, false, true);
+                                                false, false, GameEnums.Directions_Direct, false, false);
         return surroundings;
     };
 
