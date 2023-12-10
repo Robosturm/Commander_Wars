@@ -109,8 +109,10 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Extend map"),         "EXTENDMAP",    1, tr("Extends this map with another map"));
     m_Topbar->addItem(tr("Flip map X"),         "FLIPX",        1, tr("Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed."));
     m_Topbar->addItem(tr("Flip map Y"),         "FLIPY",        1, tr("Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed."));
-    m_Topbar->addItem(tr("Rotate map X"),       "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
-    m_Topbar->addItem(tr("Rotate map Y"),       "ROTATEY",      1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
+    m_Topbar->addItem(tr("Rotate map X 180°"),  "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
+    m_Topbar->addItem(tr("Rotate map X 90°"),   "ROTATEX90",    1, tr("Rotates the upper left quarter into the upper right quarter of the map and rotates the lower right quarter into the lower left quarter of the map "));
+    m_Topbar->addItem(tr("Rotate map Y 180°"),  "ROTATEY",      1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
+    m_Topbar->addItem(tr("Rotate map Y 90°"),   "ROTATEY90",    1, tr("Rotates the upper left quarter into the lower left quarter of the map and rotates the lower right quarter into the upper right quarter of the map "));
     m_Topbar->addItem(tr("Random map"),         "RANDOMMAP",    1, tr("Creates a new random map."));
     m_Topbar->addItem(tr("Toggle grid Strg+G"), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
     m_Topbar->addItem(tr("Toggle cross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
@@ -387,7 +389,9 @@ void EditorMenue::clickedTopbar(QString itemID)
         MenuItem("FLIPX",               &EditorMenue::flipX),
         MenuItem("FLIPY",               &EditorMenue::flipY),
         MenuItem("ROTATEX",             &EditorMenue::rotateX),
-        MenuItem("ROTATEY",             &EditorMenue::rotateY),
+        MenuItem("ROTATEY",             &EditorMenue::rotateY),        
+        MenuItem("ROTATEX90",           &EditorMenue::rotateX90),
+        MenuItem("ROTATEY90",           &EditorMenue::rotateY90),
         MenuItem("RANDOMMAP",           &EditorMenue::showRandomMap),
         MenuItem("PLACESELECTION",      &EditorMenue::changePlaceSelection),
         MenuItem("DELETEUNITS",         &EditorMenue::deleteUnits),
@@ -730,6 +734,20 @@ void EditorMenue::rotateY()
     createTempFile();
     spGameMap  pGameMap = m_pMap;
     pGameMap->rotateY();
+}
+
+void EditorMenue::rotateX90()
+{
+    createTempFile();
+    spGameMap  pGameMap = m_pMap;
+    pGameMap->rotateX90();
+}
+
+void EditorMenue::rotateY90()
+{
+    createTempFile();
+    spGameMap  pGameMap = m_pMap;
+    pGameMap->rotateY90();
 }
 
 void EditorMenue::showRandomMap()

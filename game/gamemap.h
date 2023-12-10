@@ -113,9 +113,17 @@ public:
      */
     void rotateX();
     /**
+     * @brief rotateX90
+     */
+    void rotateX90();
+    /**
      * @brief rotateY
      */
     void rotateY();
+    /**
+     * @brief rotate90Y
+     */
+    void rotateY90();
 
     /**
      * @brief getTerrain smart pointer
