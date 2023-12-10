@@ -104,6 +104,9 @@ public:
     static const char *const SQL_MAPLASTDOWNLOADDATE;
     static const char *const SQL_MAPPATH;
     static const char *const SQL_MAPIMAGEPATH;
+    static const char *const SQL_TABLE_REPLAYINFO;
+    static const char *const SQL_REPLAYPATH;
+    static const char *const SQL_REPLAYCREATIONTIME;
 
     static MainServer* getInstance();
     static bool exists();
@@ -187,6 +190,8 @@ public:
      * @brief exit
      */
     Q_INVOKABLE void exit();
+    Q_INVOKABLE MapFileServer* getMapFileServer();
+
 signals:
     void sigRemoveGame(NetworkGame* pGame);
     void sigStartRemoteGame(QString initScript, QString id);

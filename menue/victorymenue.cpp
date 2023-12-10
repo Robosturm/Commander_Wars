@@ -592,6 +592,7 @@ void VictoryMenue::multiplayerGameFinished()
             }
         }
         data.insert(JsonKeys::JSONKEY_GAMERESULTARRAY, winnerInfo);
+        data.insert(JsonKeys::JSONKEY_REPLAYFILE, m_pMap->getRecordFile());
         QJsonDocument doc(data);
         CONSOLE_PRINT("Sending command " + command + "", GameConsole::eDEBUG);
         emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);

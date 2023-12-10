@@ -25,3 +25,4 @@ private:
     MainServer* m_mainServer{nullptr};
 };
 
+Q_DECLARE_INTERFACE(MapFileServer, "MapFileServer");

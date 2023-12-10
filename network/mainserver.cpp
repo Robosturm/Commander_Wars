@@ -61,6 +61,10 @@ const char *const MainServer::SQL_MAPDOWNLOADCOUNT = "mapDownloadCount";
 const char *const MainServer::SQL_MAPUPLOADDATE = "mapUploadDate";
 const char *const MainServer::SQL_MAPLASTDOWNLOADDATE = "mapLastDownloadDate";
 
+const char *const MainServer::SQL_TABLE_REPLAYINFO = "replayInfo";
+const char *const MainServer::SQL_REPLAYPATH = "replayPath";
+const char *const MainServer::SQL_REPLAYCREATIONTIME = "replayCreationTime";
+
 spMainServer MainServer::m_pInstance{nullptr};
 QSqlDatabase *MainServer::m_serverData{nullptr};
 
@@ -205,7 +209,18 @@ void MainServer::startDatabase()
                                SQL_MAPDOWNLOADCOUNT + " INTEGER, " +
                                SQL_MAPUPLOADDATE + " TEXT, " +
                                SQL_METADATA + " TEXT, " +
-                               SQL_MAPLASTDOWNLOADDATE + " TEXT)");
+                               SQL_MAPLASTDOWNLOADDATE + " TEXT)");    
+    // create table for record file server
+    query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_REPLAYINFO + " (" +
+                               SQL_REPLAYPATH + " TEXT PRIMARY KEY, " +
+                               SQL_REPLAYCREATIONTIME + " BIGINT" +
+                               SQL_METADATA + " TEXT, " +
+                               SQL_MAPPLAYERS + " INTEGER, " +
+                               SQL_MAPWIDTH + " INTEGER, " +
+                               SQL_MAPHEIGHT + " INTEGER, " +
+                               SQL_MAPFLAGS + " BIGINT," +
+                               SQL_MAPAUTHOR + " TEXT, " +
+                               + ")");
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create map table: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
@@ -638,6 +653,11 @@ MainServer::InternNetworkGame *MainServer::getInternGame(const QString &slaveNam
         *index = -1;
     }
     return nullptr;
+}
+
+MapFileServer* MainServer::getMapFileServer()
+{
+    return &m_mapFileServer;
 }
 
 void MainServer::onSlaveReady(quint64 socketID, const QJsonObject &objData)

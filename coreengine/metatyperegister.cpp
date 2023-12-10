@@ -238,7 +238,8 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<GeneratorMenu>("GeneratorMenu", 1);
     qmlRegisterInterface<PageData>("PageData", 1);
     qmlRegisterInterface<DialogOtherLobbyInfo>("DialogOtherLobbyInfo", 1);
-    qmlRegisterInterface<DialogCoStatsInfo>("DialogCoStatsInfo", 1);    
+    qmlRegisterInterface<DialogCoStatsInfo>("DialogCoStatsInfo", 1);
+    qmlRegisterInterface<MapFileServer>("MapFileServer", 1);
 
     qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
     qmlRegisterInterface<MainServer>("MainServer", 1);
