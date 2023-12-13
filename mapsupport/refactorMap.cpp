@@ -647,7 +647,6 @@ void GameMap::rotateY90()
     Mainapp::getInstance()->continueRendering();
 }
 
-
 void GameMap::flipY()
 {
     Mainapp::getInstance()->pauseRendering();

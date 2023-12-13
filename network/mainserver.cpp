@@ -219,7 +219,7 @@ void MainServer::startDatabase()
                                SQL_MAPWIDTH + " INTEGER, " +
                                SQL_MAPHEIGHT + " INTEGER, " +
                                SQL_MAPFLAGS + " BIGINT," +
-                               SQL_MAPAUTHOR + " TEXT, " +
+                               SQL_MAPAUTHOR + " TEXT" +
                                + ")");
     if (sqlQueryFailed(query))
     {
@@ -262,7 +262,7 @@ bool MainServer::sqlQueryFailed(const QSqlQuery &query)
     bool failed = !query.isActive() && type != QSqlError::NoError;
     if (failed)
     {
-        CONSOLE_PRINT("Sql query failed with " + error.text(), GameConsole::eERROR);
+        CONSOLE_PRINT("Sql query failed with " + error.text() + " Query: " + query.lastQuery(), GameConsole::eERROR);
     }
     return failed;
 }

@@ -6,7 +6,7 @@ class ReplayRecordFileserver : public QObject
 {
     Q_OBJECT
 public:
-    explicit ReplayRecordFileserver(QObject *parent = nullptr);
+    explicit ReplayRecordFileserver();
 
 signals:
 

@@ -141,8 +141,6 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Export AWDS Aws"), "EXPORTAWDSAWS", 3, tr("Exports the map to an AWS Map Editor file"));
     m_Topbar->addItem(tr("Import AW4 Aw4"), "IMPORTAW4AW4", 3, tr("Deletes the current map and imports an AW 4 map editor file."));
     m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWBYWEB", 3, tr("Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/"));
-    m_Topbar->finishCreation();
-    addChild(m_Topbar);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
@@ -190,6 +188,9 @@ EditorMenue::EditorMenue()
             }
         }
     });
+
+    m_Topbar->finishCreation();
+    addChild(m_Topbar);
 
     // connecting stuff
     connect(this, &EditorMenue::sigLeftClick, this, &EditorMenue::onMapClickedLeft, Qt::QueuedConnection);

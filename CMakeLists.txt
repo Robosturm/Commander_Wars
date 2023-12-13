@@ -647,7 +647,8 @@ set(${PROJECT_NAME}_SRCS
     network/networkgame.cpp network/networkgame.h
     network/matchmakingcoordinator.h network/matchmakingcoordinator.cpp
     network/mapfileserver.h network/mapfileserver.cpp
-    network/replayrecordfileserver.h network/replayrecordfileserver.cpp
+    network/replayrecordfileserver.h network/replayrecordfileserver.cpp    
+    network/filepeer.h network/filepeer.cpp
     network/JsonKeys.h
 
     # game

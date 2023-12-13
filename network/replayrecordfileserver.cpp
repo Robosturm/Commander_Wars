@@ -1,7 +1,6 @@
-#include "replayrecordfileserver.h"
+#include "network/replayrecordfileserver.h"
 
-ReplayRecordFileserver::ReplayRecordFileserver(QObject *parent)
-    : QObject{parent}
+ReplayRecordFileserver::ReplayRecordFileserver()
 {
 
 }

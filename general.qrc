@@ -2069,5 +2069,6 @@
         <file>templates/serverscript/matchMaking/automatchmaker.json</file>
         <file>resources/scripts/building/field_base.js</file>
         <file>resources/scripts/actions/ACTION_FOCUSMAP.js</file>
+        <file>maps/2_player/Where Giants Have Fallen.map</file>
     </qresource>
 </RCC>

@@ -95,7 +95,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Naval Unit. Strong against air units and submarines. </r><div c='#00ff00'>Transports X 2</div><r> Helis.</r>");
+        return qsTr("<r>Naval Unit. Strong against air units and submarines. </r><div c='#00ff00'>Transports X 2</div><r> Helis. Cruisers can get remove mines and take no damge from them.</r>");
     };
 
     this.getUnitType = function()
