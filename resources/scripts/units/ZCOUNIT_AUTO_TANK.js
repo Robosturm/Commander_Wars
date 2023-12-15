@@ -89,6 +89,10 @@ var Constructor = function()
                 unit.setHasMoved(false);
                 unit.addMovementBonus(-999, 1);
                 unitAttackVariable.writeDataInt32(1);
+            } else if (attackedOnce === 1)
+            {
+                unitAttackVariable.writeDataInt32(0);
+                unit.addMovementBonus(999, 1);
             }
         }
     };
