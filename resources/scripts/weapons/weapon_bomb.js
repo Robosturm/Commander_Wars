@@ -19,8 +19,8 @@ var Constructor = function()
                         ["RECON", 105],
 
                         // tanks
-                        ["FLAK", 55],
-                        ["HOVERFLAK", 55],
+                        ["FLAK", 85],
+                        ["HOVERFLAK", 85],
                         ["LIGHT_TANK", 105],
                         ["HOVERCRAFT", 105],
 

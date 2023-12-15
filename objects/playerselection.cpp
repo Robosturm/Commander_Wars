@@ -1155,7 +1155,9 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
 
 void PlayerSelection::selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType)
 {
-    if (player >= 0 && player < m_pMap->getPlayerCount())
+    if (m_pMap != nullptr &&
+        player >= 0 &&
+        player < m_pMap->getPlayerCount())
     {
         CONSOLE_PRINT("PlayerSelection::selectPlayerAi for player " + QString::number(player) + " with control type " + QString::number(eAiType), GameConsole::eDEBUG);
         m_pMap->getPlayer(player)->setControlType(eAiType);

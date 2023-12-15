@@ -40,8 +40,8 @@ var Constructor = function()
 
                         //air
                         ["DUSTER", 75],
-                        ["FIGHTER", 75],
-                        ["BOMBER", 75],
+                        ["FIGHTER", 70],
+                        ["BOMBER", 70],
                         ["STEALTHBOMBER", 75],
                         ["TRANSPORTPLANE", 75],
                         ["BLACK_BOMB", 75],

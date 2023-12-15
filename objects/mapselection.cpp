@@ -306,6 +306,10 @@ void MapSelection::updateSelection()
                         m_Items[i]->setHtmlText(headerInfo.m_mapName + mapNameEnding);
                     }
                 }
+                else
+                {
+                    CONSOLE_PRINT("Filtered out map: " + fullFilename, GameConsole::eDEBUG);
+                }
             }
         }
     }
