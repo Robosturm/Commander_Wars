@@ -119,6 +119,7 @@ MainServer::MainServer()
     m_pSlaveServer(MemoryManagement::create<TCPServer>(this)),
     m_matchMakingCoordinator(this),
     m_mapFileServer(this),
+    m_replayRecordFileserver(this),
     m_mailSenderThread(this)
 {
     CONSOLE_PRINT("Game server launched", GameConsole::eDEBUG);
@@ -440,6 +441,7 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         else if (messageType == NetworkCommands::SLAVEMULTIPLAYERGAMERESULT)
         {
             m_matchMakingCoordinator.onSlaveInfoGameResult(socketID, objData);
+            m_replayRecordFileserver.onSlaveInfoGameResult(socketID, objData);
         }
         else
         {

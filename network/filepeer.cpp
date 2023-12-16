@@ -15,7 +15,6 @@ FilePeer::FilePeer(NetworkInterface* pNetworkInterface, const QString & filePath
 {
 }
 
-
 void FilePeer::startUpload()
 {
     m_file.open(QIODevice::ReadOnly);

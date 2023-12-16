@@ -1,6 +1,14 @@
 #include "network/replayrecordfileserver.h"
 
-ReplayRecordFileserver::ReplayRecordFileserver()
+class MainServer;
+
+ReplayRecordFileserver::ReplayRecordFileserver(MainServer *parent)
+    : m_mainServer(parent)
+{
+
+}
+
+void ReplayRecordFileserver::onSlaveInfoGameResult(quint64 socketID, const QJsonObject &objData)
 {
 
 }

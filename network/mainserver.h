@@ -11,6 +11,7 @@
 #include "network/smtpmailsender.h"
 #include "network/matchmakingcoordinator.h"
 #include "network/mapfileserver.h"
+#include "network/replayrecordfileserver.h"
 
 #include "coreengine/fileserializable.h"
 
@@ -539,6 +540,7 @@ private:
 
     MatchMakingCoordinator m_matchMakingCoordinator;
     MapFileServer m_mapFileServer;
+    ReplayRecordFileserver m_replayRecordFileserver;
     /**
      * @brief m_serverData
      */
