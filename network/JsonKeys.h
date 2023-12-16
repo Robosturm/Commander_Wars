@@ -94,6 +94,10 @@ namespace JsonKeys
     const char* const JSONKEY_MAPFLAGS = "mapFlags";
     const char* const JSONKEY_MAPUPLOADER = "mapUploader";
     const char* const JSONKEY_DOWNLOADRESULT = "downloadResult";
+    const char* const JSONKEY_BYTEDATA = "byteData";
+    const char* const JSONKEY_SENDBYTES = "sendBytes";
+    const char* const JSONKEY_AVAILABLEBYTES = "availableBytes";
+    const char* const JSONKEY_ATEND = "atEnd";
 
     // bracket graph data
     const char* const JSONKEY_BRACKETGRAPHINFO = "bracketGraphInfo";

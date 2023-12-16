@@ -138,6 +138,7 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
                             MainServer::SQL_MAPWIDTH + ", " +
                             MainServer::SQL_MAPHEIGHT + ", " +
                             MainServer::SQL_MAPFLAGS + ", " +
+                            MainServer::SQL_MAPUPLOADER + ", " +
                             MainServer::SQL_MAPIMAGEPATH +
                             " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
                             " WHERE ";
@@ -184,6 +185,7 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
                     mapData.insert(JsonKeys::JSONKEY_MAPPATH, query.value(MainServer::SQL_MAPPATH).toString());
                     mapData.insert(JsonKeys::JSONKEY_MAPNAME, query.value(MainServer::SQL_MAPNAME).toString());
                     mapData.insert(JsonKeys::JSONKEY_MAPAUTHOR, query.value(MainServer::SQL_MAPAUTHOR).toString());
+                    mapData.insert(JsonKeys::JSONKEY_MAPUPLOADER, query.value(MainServer::SQL_MAPUPLOADER).toString());
                     mapData.insert(JsonKeys::JSONKEY_MAPPLAYERS, query.value(MainServer::SQL_MAPPLAYERS).toInt());
                     mapData.insert(JsonKeys::JSONKEY_MAPWIDTH, query.value(MainServer::SQL_MAPWIDTH).toInt());
                     mapData.insert(JsonKeys::JSONKEY_MAPHEIGHT, query.value(MainServer::SQL_MAPHEIGHT).toInt());
@@ -287,6 +289,21 @@ void MapFileServer::addFilterOption(QString & filterCommand, QString value, qint
     }
 }
 
+void MapFileServer::onRequestDeleteMap(quint64 socketID, const QJsonObject & objData)
+{
+    spTCPServer pServer = m_mainServer->getGameServer();
+    QString filter = QString(MainServer::SQL_MAPPATH) + " = '" + objData.value(JsonKeys::JSONKEY_MAPPATH).toString() + "' AND " +
+                     MainServer::SQL_MAPUPLOADER + " = '" + objData.value(JsonKeys::JSONKEY_USERNAME).toString() + "'";
+    bool success = removeMapFromServer(filter);
+    QString command = QString(NetworkCommands::SERVERDELETERESPONSE);
+    QJsonObject response;
+    response.insert(JsonKeys::JSONKEY_COMMAND, command);
+    response.insert(JsonKeys::JSONKEY_RESULT, success);
+    QJsonDocument doc(response);
+    CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(socketID), GameConsole::eDEBUG);
+    emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
 void MapFileServer::onRequestDownloadMap(quint64 socketID, const QJsonObject & objData)
 {
     spTCPServer pServer = m_mainServer->getGameServer();
@@ -327,7 +344,7 @@ void MapFileServer::onRequestDownloadMap(quint64 socketID, const QJsonObject & o
     emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void MapFileServer::removeMapFromServer(const QString & sqlFilter)
+bool MapFileServer::removeMapFromServer(const QString & sqlFilter)
 {
     QString filterCommand = QString("SELECT ") + MainServer::SQL_MAPPATH + ", " +
                             MainServer::SQL_MAPIMAGEPATH +
@@ -346,4 +363,5 @@ void MapFileServer::removeMapFromServer(const QString & sqlFilter)
         query = m_mainServer->getDatabase().exec(command);
         MainServer::sqlQueryFailed(query);
     }
+    return success;
 }

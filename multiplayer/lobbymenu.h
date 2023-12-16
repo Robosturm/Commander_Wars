@@ -50,7 +50,7 @@ public:
     Q_INVOKABLE void requestPlayerStats(const QString & player);
     Q_INVOKABLE void uploadMap(const  QString & selectedFilePath);
     Q_INVOKABLE void requestDownloadMap(const QJsonObject & objData);
-    void requestAvailableMaps(const QJsonObject & objData);
+    void sendCommandToServer(const QJsonObject & objData);
 signals:
     void sigExitMenue();
     void sigHostServer();
@@ -72,6 +72,7 @@ signals:
     void sigRequestShowAutoMatches(const QJsonObject & objData);
     void sigReceivedAvailableMaps(const QJsonObject & objData);
     void sigOnDownloadedResponse(bool success);
+    void sigOnMapDeleteResponse(bool success);
 
 public slots:
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
@@ -108,6 +109,7 @@ private:
     void requestServerGames();
     void requestUserUpdateGames();
     void onDownloadResponse(const QJsonObject & objData);
+    void onMapDeleteResponse(const QJsonObject & objData);
     /**
      * @brief getMinimapImage
      * @param img

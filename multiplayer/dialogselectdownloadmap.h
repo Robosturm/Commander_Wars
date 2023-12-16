@@ -24,9 +24,11 @@ public:
     Q_INVOKABLE qint32 getCurrentPage() const;
     Q_INVOKABLE qint32 getPageCount();
     Q_INVOKABLE void downloadMap(qint32 mapIndex);
+    Q_INVOKABLE void requestDeleteMap(qint32 mapIndex);
     Q_INVOKABLE QString getMapPath(qint32 mapIndex);
     Q_INVOKABLE QString getMapName(qint32 mapIndex);
     Q_INVOKABLE QString getMapAuthor(qint32 mapIndex);
+    Q_INVOKABLE QString getMapUploader(qint32 mapIndex);
     Q_INVOKABLE qint32 getMapPlayers(qint32 mapIndex);
     Q_INVOKABLE qint32 getMapWidth(qint32 mapIndex);
     Q_INVOKABLE qint32 getMapHeight(qint32 mapIndex);
@@ -39,6 +41,7 @@ private slots:
     void filterChanged();
     void receivedMapData(const QJsonObject &objData);
     void onMapDownloaded(bool success);
+    void onMapDeleteResponse(bool success);
 private:
     LobbyMenu* m_pBaseMenu{nullptr};
     qint32 m_currentStartIndex{0};

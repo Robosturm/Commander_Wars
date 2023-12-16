@@ -13,7 +13,7 @@
 
 #include "ui_reader/uifactory.h"
 
-static constexpr qint32 ITEMS_PER_PAGE = 20;
+static constexpr qint32 ITEMS_PER_PAGE = 10;
 
 DialogSelectDownloadMap::DialogSelectDownloadMap(LobbyMenu* pBaseMenu)
     : CustomDialog("", "", pBaseMenu, tr("Close")),
@@ -22,6 +22,7 @@ DialogSelectDownloadMap::DialogSelectDownloadMap(LobbyMenu* pBaseMenu)
     m_uiXml = "ui/multiplayer/selectDownloadMap.xml";
     loadXmlFile(m_uiXml);
     connect(m_pBaseMenu, &LobbyMenu::sigOnDownloadedResponse, this, &DialogSelectDownloadMap::onMapDownloaded, Qt::QueuedConnection);
+    connect(m_pBaseMenu, &LobbyMenu::sigOnMapDeleteResponse, this, &DialogSelectDownloadMap::onMapDeleteResponse, Qt::QueuedConnection);
     connect(m_pBaseMenu, &LobbyMenu::sigReceivedAvailableMaps, this, &DialogSelectDownloadMap::receivedMapData, Qt::QueuedConnection);
 }
 
@@ -94,8 +95,20 @@ void DialogSelectDownloadMap::filterChanged()
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_ITEMSPERPAGE, ITEMS_PER_PAGE);
     data.insert(JsonKeys::JSONKEY_STARTINDEX, m_currentStartIndex);
-    m_pBaseMenu->requestAvailableMaps(data);
+    m_pBaseMenu->sendCommandToServer(data);
 }
+
+void DialogSelectDownloadMap::requestDeleteMap(qint32 mapIndex)
+{
+    QString command = QString(NetworkCommands::SERVERDELETEMAPFILE);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_MAPPATH, getMapPath(mapIndex));
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
+    m_pBaseMenu->sendCommandToServer(data);
+}
+
 
 void DialogSelectDownloadMap::receivedMapData(const QJsonObject &objData)
 {
@@ -165,7 +178,7 @@ qint32 DialogSelectDownloadMap::getMapImageHeight(qint32 mapIndex)
 
 void DialogSelectDownloadMap::downloadMap(qint32 mapIndex)
 {
-    QString command = QString(NetworkCommands::FILEDOWNLOADREQUEST);
+    QString command = QString(NetworkCommands::MAPFILEDOWNLOADREQUEST);
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
@@ -186,6 +199,23 @@ void DialogSelectDownloadMap::onMapDownloaded(bool success)
     {
         spDialogMessageBox pDialogMessageBox;
         pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Failed to download map from the server."));
+        addChild(pDialogMessageBox);
+    }
+}
+
+void DialogSelectDownloadMap::onMapDeleteResponse(bool success)
+{
+    if (success)
+    {
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Map deleted successfully."));
+        m_pBaseMenu->addChild(pDialogMessageBox);
+        exit();
+    }
+    else
+    {
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Failed to delete map from the server."));
         addChild(pDialogMessageBox);
     }
 }
@@ -222,6 +252,19 @@ QString DialogSelectDownloadMap::getMapAuthor(qint32 mapIndex)
     {
         QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_MAPLIST).toArray();
         return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPAUTHOR).toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+QString DialogSelectDownloadMap::getMapUploader(qint32 mapIndex)
+{
+    if (mapIndex >= 0 && mapIndex < m_minimapSprites.size())
+    {
+        QJsonArray mapArray = m_mapData.value(JsonKeys::JSONKEY_MAPLIST).toArray();
+        return mapArray[mapIndex].toObject().value(JsonKeys::JSONKEY_MAPUPLOADER).toString();
     }
     else
     {

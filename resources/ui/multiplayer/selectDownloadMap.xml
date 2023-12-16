@@ -95,6 +95,16 @@
                     <font>"main"</font>
                     <fontSize>24</fontSize>
                 </Label>
+                <if condition="settings.getUsername() == currentMenu.getMapUploader(loopIdx)">
+                    <Button>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 10</y>
+                        <width>150</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Delete")</text>
+                        <tooltip>QT_TRANSLATE_NOOP("GAME","Delete this map from the server.")</tooltip>
+                        <onEvent>currentMenu.requestDeleteMap(loopIdx);</onEvent>
+                    </Button>
+                </if>
                 <Button>
                     <x>10</x>
                     <y>lastY + lastHeight + 10</y>

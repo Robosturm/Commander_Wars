@@ -370,13 +370,17 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         {
             m_mapFileServer.onMapUpload(socketID, objData);
         }
-        else if (messageType == NetworkCommands::FILEDOWNLOADREQUEST)
+        else if (messageType == NetworkCommands::MAPFILEDOWNLOADREQUEST)
         {
             m_mapFileServer.onRequestDownloadMap(socketID, objData);
         }
         else if (messageType == NetworkCommands::REQUESTAVAILABLEMAPS)
         {
             m_mapFileServer.onRequestFilteredMaps(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::SERVERDELETEMAPFILE)
+        {
+            m_mapFileServer.onRequestDeleteMap(socketID, objData);
         }
         else
         {

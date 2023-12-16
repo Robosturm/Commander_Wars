@@ -19,9 +19,21 @@ namespace NetworkCommands
         Max,
     };
     /**
-     * @brief FILEDOWNLOADREQUEST
+     * @brief MAPFILEDOWNLOADREQUEST
      */
-    const char* const FILEDOWNLOADREQUEST = "FILEDOWNLOADREQUEST";
+    const char* const MAPFILEDOWNLOADREQUEST = "MAPFILEDOWNLOADREQUEST";
+    /**
+     * @brief RECORDFILEDOWNLOADREQUEST
+     */
+    const char* const RECORDFILEDOWNLOADREQUEST = "RECORDFILEDOWNLOADREQUEST";
+    /**
+     * @brief FILEPACKET
+     */
+    const char* const FILEPACKET = "filePacket";
+    /**
+     * @brief REQUESTFILEPACKET
+     */
+    const char* const REQUESTFILEPACKET = "requestFilePacket";
     /**
      * @brief REQUESTAVAILABLEMAPS
      */
@@ -314,6 +326,14 @@ namespace NetworkCommands
      * @brief SERVERREQUESTAUTOMATCHINFO
      */
     const char* const SERVERREQUESTAUTOMATCHINFO = "SERVERREQUESTAUTOMATCHINFO";
+    /**
+     * @brief SERVERDELETEMAPFILE
+     */
+    const char* const SERVERDELETEMAPFILE = "SERVERDELETEMAPFILE";
+    /**
+     * @brief SERVERDELETERESPONSE
+     */
+    const char* const SERVERDELETERESPONSE = "SERVERDELETERESPONSE";
     /**
      * @brief SERVERSENDAUTOMATCHINFO
      */
