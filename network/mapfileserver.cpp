@@ -215,80 +215,6 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
     emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void MapFileServer::addFlagFilterOption(QString & filterCommand, qint32 & filterCount, const QVector<MapFilter::FlagFilter> & filters)
-{
-    bool requiresOptional = true;
-    for (const auto & filter : filters)
-    {
-        if (filter.isActive && !filter.isOptional)
-        {
-            requiresOptional = false;
-            if (filterCount > 0)
-            {
-                filterCommand += " AND ";
-            }
-            filterCommand += QString(MainServer::SQL_MAPFLAGS) + " & " + QString::number(filter.flag) + " > 0";
-            ++filterCount;
-        }
-    }
-    bool initialAnd = false;
-    if (requiresOptional)
-    {
-        for (const auto & filter : filters)
-        {
-            if (filter.isActive && filter.isOptional)
-            {
-                if (filterCount > 0 && !initialAnd)
-                {
-                    filterCommand += " AND ( ";
-                    initialAnd = true;
-                }
-                else if (!initialAnd)
-                {
-                    filterCommand += " ( ";
-                    initialAnd = true;
-                }
-                else
-                {
-                    filterCommand += " OR ";
-                }
-                filterCommand += QString(MainServer::SQL_MAPFLAGS) + " & " + QString::number(filter.flag) + " > 0";
-                ++filterCount;
-            }
-        }
-    }
-    if (initialAnd)
-    {
-        filterCommand += ")";
-    }
-}
-
-void MapFileServer::addFilterOption(QString & filterCommand, qint32 value, qint32 & filterCount, const char* const item, const char* const opCommand)
-{
-    if (value > 0)
-    {
-        if (filterCount > 0)
-        {
-            filterCommand += " AND ";
-        }
-        filterCommand += QString(item) + " " + opCommand + " "  + QString::number(value);
-        ++filterCount;
-    }
-}
-
-void MapFileServer::addFilterOption(QString & filterCommand, QString value, qint32 & filterCount, const char* const item)
-{
-    if (!value.isEmpty())
-    {
-        if (filterCount > 0)
-        {
-            filterCommand += " AND ";
-        }
-        filterCommand += QString(item) + " LIKE '"  + value + "%'";
-        ++filterCount;
-    }
-}
-
 void MapFileServer::onRequestDeleteMap(quint64 socketID, const QJsonObject & objData)
 {
     spTCPServer pServer = m_mainServer->getGameServer();
@@ -359,7 +285,7 @@ bool MapFileServer::removeMapFromServer(const QString & sqlFilter)
             QFile::remove(query.value(MainServer::SQL_MAPPATH).toString());
             QFile::remove(query.value(MainServer::SQL_MAPIMAGEPATH).toString());
         } while (query.next());
-        QString command = QString("DELETE FROM ") + MainServer::SQL_TABLE_PLAYERS + " WHERE " + sqlFilter + ";";
+        QString command = QString("DELETE FROM ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " WHERE " + sqlFilter + ";";
         query = m_mainServer->getDatabase().exec(command);
         MainServer::sqlQueryFailed(query);
     }

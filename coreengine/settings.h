@@ -791,6 +791,9 @@ public:
     bool getAllowMapUpload() const;
     void setAllowMapUpload(bool newAllowMapUpload);
 
+    std::chrono::seconds getReplayDeleteTime() const;
+    void setReplayDeleteTime(const std::chrono::seconds & newReplayDeleteTime);
+
 private:
     friend class MemoryManagement;
     explicit Settings();
@@ -899,6 +902,7 @@ private:
     QString m_slaveHostOptions{"::1&&10000&20000;::1&&50000&65535"};
     std::chrono::seconds m_slaveDespawnTime{std::chrono::minutes(0)};
     std::chrono::seconds m_suspendedDespawnTime{std::chrono::minutes(0)};
+    std::chrono::seconds m_replayDeleteTime{std::chrono::minutes(0)};
 
     // mailing
     QString m_mailServerAddress;

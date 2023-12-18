@@ -593,6 +593,12 @@ void VictoryMenue::multiplayerGameFinished()
         }
         data.insert(JsonKeys::JSONKEY_GAMERESULTARRAY, winnerInfo);
         data.insert(JsonKeys::JSONKEY_REPLAYFILE, m_pMap->getRecordFile());
+        data.insert(JsonKeys::JSONKEY_MAPNAME, m_pMap->getMapName());
+        data.insert(JsonKeys::JSONKEY_MAPWIDTH, m_pMap->getMapWidth());
+        data.insert(JsonKeys::JSONKEY_MAPPLAYERS, m_pMap->getPlayerCount());
+        data.insert(JsonKeys::JSONKEY_MAPAUTHOR, m_pMap->getMapAuthor());
+        data.insert(JsonKeys::JSONKEY_MAPFLAGS, static_cast<qint64>(m_pMap->getMapFlags()));
+        data.insert(JsonKeys::JSONKEY_MAPAUTHOR, m_pMap->getMapAuthor());
         QJsonDocument doc(data);
         CONSOLE_PRINT("Sending command " + command + "", GameConsole::eDEBUG);
         emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);

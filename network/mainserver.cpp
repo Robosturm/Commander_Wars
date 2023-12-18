@@ -215,6 +215,7 @@ void MainServer::startDatabase()
     query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_REPLAYINFO + " (" +
                                SQL_REPLAYPATH + " TEXT PRIMARY KEY, " +
                                SQL_REPLAYCREATIONTIME + " BIGINT" +
+                               SQL_MAPNAME + " TEXT, " +
                                SQL_METADATA + " TEXT, " +
                                SQL_MAPPLAYERS + " INTEGER, " +
                                SQL_MAPWIDTH + " INTEGER, " +
@@ -382,6 +383,10 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         else if (messageType == NetworkCommands::SERVERDELETEMAPFILE)
         {
             m_mapFileServer.onRequestDeleteMap(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::REQUESTAVAILABLERECORDS)
+        {
+            m_replayRecordFileserver.onRequestFilteredRecords(socketID, objData);
         }
         else
         {

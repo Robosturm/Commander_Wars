@@ -48,6 +48,16 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
+std::chrono::seconds Settings::getReplayDeleteTime() const
+{
+    return m_replayDeleteTime;
+}
+
+void Settings::setReplayDeleteTime(const std::chrono::seconds & newReplayDeleteTime)
+{
+    m_replayDeleteTime = newReplayDeleteTime;
+}
+
 bool Settings::getAllowMapUpload() const
 {
     return m_allowMapUpload;
@@ -1306,6 +1316,7 @@ void Settings::setup()
         MemoryManagement::create<Value<QString>>("Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&&10000&20000;::1&&50000&65535", "", ""),
         MemoryManagement::create<Value<std::chrono::seconds>>("Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
         MemoryManagement::create<Value<std::chrono::seconds>>("Network", "SuspendedDespawnTime", &m_suspendedDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
+        MemoryManagement::create<Value<std::chrono::seconds>>("Network", "ReplayDeleteTime", &m_replayDeleteTime, std::chrono::seconds(60 * 60 * 24 * 7), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
         // mailing
         MemoryManagement::create<Value<QString>>("Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""),
         MemoryManagement::create<Value<quint16>>("Mailing", "MailServerPort", &m_mailServerPort, 0, 0, std::numeric_limits<quint16>::max()),

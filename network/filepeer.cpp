@@ -12,7 +12,7 @@ FilePeer::FilePeer(NetworkInterface* pNetworkInterface, const QString & filePath
     m_filePath(filePath),
     m_file{filePath},
     m_connectSocket{socketId}
-{
+{    
 }
 
 void FilePeer::startUpload()

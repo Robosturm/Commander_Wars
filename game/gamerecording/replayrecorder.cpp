@@ -194,17 +194,9 @@ bool ReplayRecorder::loadRecord(const QString & filename)
 bool ReplayRecorder::validRecord(QByteArray & envData)
 {
     m_recordFile.open(QIODevice::ReadOnly);
-    qint32 version = 0;
-    m_stream >> version;
-    QString marker;
-    m_stream >> marker;
-    bool success = marker == RECORD_INFO_MARKER;
+    bool success = readRecordInfo(m_stream, m_recordJson);
     if (success)
     {
-        if (version > 1)
-        {
-            m_stream >> m_recordJson;
-        }
         m_stream >> m_streamStart;
         qint32 size = 0;
         m_stream >> size;
@@ -219,6 +211,23 @@ bool ReplayRecorder::validRecord(QByteArray & envData)
         m_stream >> m_count;
         envData = qUncompress(envData);
         success = m_mods == Settings::getInstance()->getMods();
+    }
+    return success;
+}
+
+bool ReplayRecorder::readRecordInfo(QDataStream & stream, QByteArray & jsonRecordInfo)
+{
+    qint32 version = 0;
+    stream >> version;
+    QString marker;
+    stream >> marker;
+    bool success = marker == RECORD_INFO_MARKER;
+    if (success)
+    {
+        if (version > 1)
+        {
+            stream >> jsonRecordInfo;
+        }
     }
     return success;
 }
@@ -369,7 +378,7 @@ qint32 ReplayRecorder::getDayFromPosition(qint32 count)
     return rDay;
 }
 
-QString ReplayRecorder::createRecordJson() const
+QByteArray ReplayRecorder::createRecordJson() const
 {
     if (m_pMap != nullptr)
     {
@@ -398,16 +407,20 @@ QString ReplayRecorder::createRecordJson() const
             playerData.append(obj);
         }
         data.insert(JsonKeys::JSONKEY_PLAYERDATA, playerData);
-        Minimap minimap;
-        minimap.updateMinimap(m_pMap);
-        QImage image;
-        Mainapp::getInstance()->saveMapAsImage(&minimap, &image);
-        QByteArray imageArray;
-        QBuffer buffer(&imageArray);
-        buffer.open(QIODevice::WriteOnly);
-        image.save(&buffer, "PNG");
-        buffer.close();
-        data.insert(JsonKeys::JSONKEY_MINIMAPDATA, GlobalUtils::toJsonArray(imageArray));
+        if (!Mainapp::getInstance()->getNoUi())
+        {
+            // we can only render an image if opengl and textures are loaded / available
+            Minimap minimap;
+            minimap.updateMinimap(m_pMap);
+            QImage image;
+            Mainapp::getInstance()->saveMapAsImage(&minimap, &image);
+            QByteArray imageArray;
+            QBuffer buffer(&imageArray);
+            buffer.open(QIODevice::WriteOnly);
+            image.save(&buffer, "PNG");
+            buffer.close();
+            data.insert(JsonKeys::JSONKEY_MINIMAPDATA, GlobalUtils::toJsonArray(imageArray));
+        }
         QJsonDocument doc(data);
         return doc.toJson(QJsonDocument::Compact);
     }

@@ -107,20 +107,21 @@ public:
     void seekToDay(qint32 day);
     qint32 getCount() const;
 
-
     QString getRecordJson() const;
+
+    static bool readRecordInfo(QDataStream & stream, QByteArray & jsonRecordInfo);
 
 private:
     bool validRecord(QByteArray & envData);
     void writeAction(const spGameAction & action);
     void writeMapState();
     ReplayRecorder::HeaderInfo seekToNextType(Type type, bool & success);
-    QString createRecordJson() const;
+    QByteArray createRecordJson() const;
 private:
     QFile m_recordFile;
     QDataStream m_stream{&m_recordFile};
     QStringList m_mods;
-    QString m_recordJson;
+    QByteArray m_recordJson;
     qint32 m_count = 0;
     qint32 m_progress = 0;
     qint64 m_countPos = 0;

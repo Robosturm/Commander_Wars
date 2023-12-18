@@ -98,6 +98,7 @@ namespace JsonKeys
     const char* const JSONKEY_SENDBYTES = "sendBytes";
     const char* const JSONKEY_AVAILABLEBYTES = "availableBytes";
     const char* const JSONKEY_ATEND = "atEnd";
+    const char* const JSONKEY_REPLAYRECORDHEADER = "replayRecordHeader";
 
     // bracket graph data
     const char* const JSONKEY_BRACKETGRAPHINFO = "bracketGraphInfo";

@@ -43,6 +43,14 @@ namespace NetworkCommands
      */
     const char* const RECEIVEAVAILABLEMAPS = "RECEIVEAVAILABLEMAPS";
     /**
+     * @brief RECEIVEAVAILABLERECORDS
+     */
+    const char* const RECEIVEAVAILABLERECORDS = "RECEIVEAVAILABLERECORDS";
+    /**
+     * @brief REQUESTAVAILABLERECORDS
+     */
+    const char* const REQUESTAVAILABLERECORDS = "REQUESTAVAILABLERECORDS";
+    /**
      * @brief FILEDOWNLOAD
      */
     const char* const FILEDOWNLOAD = "FILEDOWNLOAD";

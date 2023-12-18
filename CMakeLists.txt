@@ -649,6 +649,7 @@ set(${PROJECT_NAME}_SRCS
     network/mapfileserver.h network/mapfileserver.cpp
     network/replayrecordfileserver.h network/replayrecordfileserver.cpp    
     network/filepeer.h network/filepeer.cpp
+    network/sqlmapfiltercreator.h network/sqlmapfiltercreator.cpp
     network/JsonKeys.h
 
     # game
