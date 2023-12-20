@@ -433,6 +433,19 @@ QByteArray ReplayRecorder::createRecordJson() const
             buffer.close();
             data.insert(JsonKeys::JSONKEY_MINIMAPDATA, GlobalUtils::toJsonArray(imageArray));
         }
+        QJsonArray modsInfos;
+        Settings* pSettings = Settings::getInstance();
+        auto activeMods = pSettings->getActiveMods();
+        for (auto mod : activeMods)
+        {
+            QJsonObject modInfo;
+            modInfo.insert(JsonKeys::JSONKEY_MODPATH, mod);
+            modInfo.insert(JsonKeys::JSONKEY_MODNAME, pSettings->getModName(mod));
+            modInfo.insert(JsonKeys::JSONKEY_MODVERSION, pSettings->getModVersion(mod));
+            modsInfos.append(modInfo);
+        }
+        data.insert(JsonKeys::JSONKEY_MODINFOS, modsInfos);
+
         QJsonDocument doc(data);
         return doc.toJson(QJsonDocument::Compact);
     }

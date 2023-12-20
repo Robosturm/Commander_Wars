@@ -692,6 +692,12 @@ public:
      */
     Q_INVOKABLE QString getModName(QString mod);
     /**
+     * @brief getModVersion
+     * @param mod
+     * @return
+     */
+    Q_INVOKABLE QString getModVersion(QString mod);
+    /**
      * @brief getIsCosmetic
      * @param mod
      * @return

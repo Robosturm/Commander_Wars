@@ -100,6 +100,10 @@ namespace JsonKeys
     const char* const JSONKEY_AVAILABLEBYTES = "availableBytes";
     const char* const JSONKEY_ATEND = "atEnd";
     const char* const JSONKEY_REPLAYRECORDHEADER = "replayRecordHeader";
+    const char* const JSONKEY_MODPATH = "modPath";
+    const char* const JSONKEY_MODNAME = "modName";
+    const char* const JSONKEY_MODINFOS = "modInfos";
+    const char* const JSONKEY_MODVERSION = "modVersion";
 
     // bracket graph data
     const char* const JSONKEY_BRACKETGRAPHINFO = "bracketGraphInfo";

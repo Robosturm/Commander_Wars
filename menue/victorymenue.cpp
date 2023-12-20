@@ -217,6 +217,11 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     if (m_pMap->getCurrentDay() > 1)
     {
         m_lineLength = m_pGraphBackground->getScaledWidth() / static_cast<float>(m_pMap->getCurrentDay() - 1);
+        if (m_lineLength < MIN_LINE_LENGTH)
+        {
+            m_lineLength = MIN_LINE_LENGTH;
+            m_stepSize = m_pGraphBackground->getScaledWidth() / m_lineLength;
+        }
     }
     else
     {
@@ -990,10 +995,10 @@ void VictoryMenue::finishGraph()
 qint32 VictoryMenue::drawGraphStep(qint32 progress)
 {
     constexpr qint32 lineWidth = 5;
-    
     DayToDayRecord* pStartRecord = nullptr;
     DayToDayRecord* pEndRecord = nullptr;
-    qint32 endProgress = progress + 1;
+
+    qint32 endProgress = progress + m_stepSize;
     if (m_lineLength < lineWidth * 2.5f)
     {
         endProgress = progress + qCeil(lineWidth * 2.5f / m_lineLength);
@@ -1007,6 +1012,11 @@ qint32 VictoryMenue::drawGraphStep(qint32 progress)
     {
         pStartRecord = m_pMap->getGameRecorder()->getDayRecord(progress);
         pEndRecord = m_pMap->getGameRecorder()->getDayRecord(endProgress);
+    }
+    else
+    {
+        pStartRecord = m_pMap->getGameRecorder()->getDayRecord(progress);
+        pEndRecord = m_pMap->getGameRecorder()->getDayRecord(m_pMap->getCurrentDay() - 1);
     }
     if (pStartRecord != nullptr &&
         pEndRecord != nullptr)

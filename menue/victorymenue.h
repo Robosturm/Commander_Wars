@@ -25,6 +25,7 @@ using spVictoryMenue = std::shared_ptr<VictoryMenue>;
 class VictoryMenue final : public Basemenu
 {
     Q_OBJECT
+    static constexpr qint32 MIN_LINE_LENGTH = 8;
 public:
     enum class GraphModes
     {
@@ -203,6 +204,7 @@ private:
     spGameMap m_pMap;
 
     bool m_isReplay{false};
+    qint32 m_stepSize{1};
 };
 
 Q_DECLARE_INTERFACE(VictoryMenue, "VictoryMenue");

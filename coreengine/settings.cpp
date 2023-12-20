@@ -1882,6 +1882,22 @@ QString Settings::getModName(QString mod)
     return name;
 }
 
+
+QString Settings::getModVersion(QString mod)
+{
+    QString name;
+    QString description;
+    QString version;
+    QStringList compatibleMods;
+    QStringList incompatibleMods;
+    QStringList requiredMods;
+    bool isCosmetic = false;
+    QStringList tags;
+    QString thumbnail;
+    getModInfos(mod, name, description, version, compatibleMods, incompatibleMods, requiredMods, isCosmetic, tags, thumbnail);
+    return version;
+}
+
 bool Settings::getIsCosmetic(QString mod)
 {
     QString name;
