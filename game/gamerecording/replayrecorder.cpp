@@ -410,6 +410,10 @@ QByteArray ReplayRecorder::createRecordJson() const
                 {
                     coData.append(pCO->getCOName());
                 }
+                else
+                {
+                    coData.append("");
+                }
             }
             obj.insert(JsonKeys::JSONKEY_COS, coData);
             playerData.append(obj);

@@ -94,7 +94,29 @@
                     <text>currentMenu.getMapHeight(loopIdx)</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
-                </Label>                
+                </Label>
+                <loop count="SelectDownloadRecord.getPlayerCount(loopIdx)">
+                    <Label>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 10</y>
+                        <width>200</width>
+                        <text>SelectDownloadRecord.getPlayerName(loopIdx)</text>
+                        <font>"main"</font>
+                        <fontSize>24</fontSize>
+                    </Label>
+                    <Sprite>
+                        <x>CoStatsInfo.getNextX()</x>
+                        <y>CoStatsInfo.getNextY()</y>
+                        <scale>2</scale>
+                        <sprite>SelectDownloadRecord.getCoId(loopIdx, 0).toLowerCase() + "+face"</sprite>
+                    </Sprite>
+                    <Sprite>
+                        <x>CoStatsInfo.getNextX()</x>
+                        <y>CoStatsInfo.getNextY()</y>
+                        <scale>2</scale>
+                        <sprite>SelectDownloadRecord.getCoId(loopIdx, 1).toLowerCase() + "+face"</sprite>
+                    </Sprite>
+                </loop>
                 <Button>
                     <x>10</x>
                     <y>lastY + lastHeight + 10</y>
