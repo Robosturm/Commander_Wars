@@ -37,6 +37,8 @@
 #include "multiplayer/networkgamedataview.h"
 #include "multiplayer/dialogotherlobbyinfo.h"
 #include "multiplayer/dialogcostatsinfo.h"
+#include "multiplayer/dialogselectdownloadmap.h"
+#include "multiplayer/dialogselectdownloadrecord.h"
 
 #include "ui_reader/uifactory.h"
 #include "ui_reader/createdgui.h"
@@ -240,6 +242,9 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<DialogOtherLobbyInfo>("DialogOtherLobbyInfo", 1);
     qmlRegisterInterface<DialogCoStatsInfo>("DialogCoStatsInfo", 1);
     qmlRegisterInterface<MapFileServer>("MapFileServer", 1);
+    qmlRegisterInterface<ReplayRecordFileserver>("ReplayRecordFileserver", 1);
+    qmlRegisterInterface<DialogSelectDownloadRecord>("DialogSelectDownloadRecord", 1);
+    qmlRegisterInterface<DialogSelectDownloadMap>("DialogSelectDownloadMap", 1);
 
     qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
     qmlRegisterInterface<MainServer>("MainServer", 1);

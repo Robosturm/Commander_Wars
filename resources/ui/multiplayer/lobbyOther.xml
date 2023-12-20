@@ -78,6 +78,13 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Download map")</text>
                 <onEvent>currentMenu.showDownloadMap()</onEvent>
             </Button>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>250</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Download replays")</text>
+                <onEvent>currentMenu.showDownloadReplay()</onEvent>
+            </Button>
         </childs>
     </Panel>
 </ui>

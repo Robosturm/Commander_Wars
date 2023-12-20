@@ -5122,5 +5122,7 @@
         <file>resources/ui/multiplayer/lobbyOther.js</file>
         <file>resources/ui/multiplayer/selectDownloadMap.xml</file>
         <file>resources/ui/multiplayer/selectDownloadMap.js</file>
+        <file>resources/ui/multiplayer/selectDownloadRecord.js</file>
+        <file>resources/ui/multiplayer/selectDownloadRecord.xml</file>
     </qresource>
 </RCC>

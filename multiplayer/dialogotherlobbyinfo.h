@@ -24,6 +24,7 @@ public:
     Q_INVOKABLE void showAutoMatches();
     Q_INVOKABLE LobbyMenu* getLobbyMenu();
     Q_INVOKABLE void showDownloadMap();
+    Q_INVOKABLE void showDownloadReplay();
 private slots:
     void onSearchedPlayersReceived(const QStringList & foundPlayers);
     void receivedPlayerStats(const QJsonObject & objData);

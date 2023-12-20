@@ -183,7 +183,7 @@ void DialogSelectDownloadMap::downloadMap(qint32 mapIndex)
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_MAPPATH, getMapPath(mapIndex));
-    m_pBaseMenu->requestDownloadMap(data);
+    m_pBaseMenu->sendCommandToServer(data);
 }
 
 void DialogSelectDownloadMap::onMapDownloaded(bool success)
@@ -328,4 +328,3 @@ qint32 DialogSelectDownloadMap::getMapCounts()
 {
     return m_minimapSprites.size();
 }
-

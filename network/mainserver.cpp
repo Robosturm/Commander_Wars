@@ -388,6 +388,14 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         {
             m_replayRecordFileserver.onRequestFilteredRecords(socketID, objData);
         }
+        else if (messageType == NetworkCommands::RECORDFILEDOWNLOADREQUEST)
+        {
+            m_replayRecordFileserver.onRequestDownloadRecord(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::REQUESTFILEPACKET)
+        {
+            emit sigOnRequestFilePacket(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in MainServer::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -664,6 +672,11 @@ MainServer::InternNetworkGame *MainServer::getInternGame(const QString &slaveNam
         *index = -1;
     }
     return nullptr;
+}
+
+ReplayRecordFileserver* MainServer::getReplayRecordFileserver()
+{
+    return &m_replayRecordFileserver;
 }
 
 MapFileServer* MainServer::getMapFileServer()

@@ -769,6 +769,7 @@ set(${PROJECT_NAME}_SRCS
     multiplayer/dialogcostatsinfo.cpp multiplayer/dialogcostatsinfo.h
     multiplayer/dialogAutoMatches.cpp multiplayer/dialogAutoMatches.h
     multiplayer/dialogselectdownloadmap.cpp multiplayer/dialogselectdownloadmap.h
+    multiplayer/dialogselectdownloadrecord.cpp multiplayer/dialogselectdownloadrecord.h
     multiplayer/networkcommands.h
 
     #campaign support

@@ -49,8 +49,9 @@ public:
     Q_INVOKABLE void requestPlayersFromServer(const QString & searchFilter);
     Q_INVOKABLE void requestPlayerStats(const QString & player);
     Q_INVOKABLE void uploadMap(const  QString & selectedFilePath);
-    Q_INVOKABLE void requestDownloadMap(const QJsonObject & objData);
     void sendCommandToServer(const QJsonObject & objData);
+    NetworkInterface* getTcpClient() const;
+
 signals:
     void sigExitMenue();
     void sigHostServer();
@@ -71,6 +72,7 @@ signals:
     void sigReceivedPlayerStats(const QJsonObject & objData);
     void sigRequestShowAutoMatches(const QJsonObject & objData);
     void sigReceivedAvailableMaps(const QJsonObject & objData);
+    void sigReceivedAvailableRecords(const QJsonObject & objData);
     void sigOnDownloadedResponse(bool success);
     void sigOnMapDeleteResponse(bool success);
 

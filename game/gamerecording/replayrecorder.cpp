@@ -232,6 +232,14 @@ bool ReplayRecorder::readRecordInfo(QDataStream & stream, QByteArray & jsonRecor
     return success;
 }
 
+bool ReplayRecorder::readRecordInfo(QDataStream & stream, QJsonObject & jsonRecordInfo)
+{
+    QByteArray data;
+    bool ret = readRecordInfo(stream, data);
+    jsonRecordInfo = QJsonDocument::fromJson(data).object();
+    return ret;
+}
+
 qint32 ReplayRecorder::getCount() const
 {
     return m_count;

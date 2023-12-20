@@ -192,10 +192,12 @@ public:
      */
     Q_INVOKABLE void exit();
     Q_INVOKABLE MapFileServer* getMapFileServer();
+    Q_INVOKABLE ReplayRecordFileserver* getReplayRecordFileserver();
 
 signals:
     void sigRemoveGame(NetworkGame* pGame);
     void sigStartRemoteGame(QString initScript, QString id);
+    void sigOnRequestFilePacket(quint64 socketID, const QJsonObject & objData);
 public slots:
     /**
      * @brief recieveData we received data from

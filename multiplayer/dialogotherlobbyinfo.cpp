@@ -79,6 +79,11 @@ void DialogOtherLobbyInfo::showDownloadMap()
     addChild(pSelectDownloadMap);
 }
 
+void DialogOtherLobbyInfo::showDownloadReplay()
+{
+
+}
+
 void DialogOtherLobbyInfo::receivedShowAutoMatches(const QJsonObject & objData)
 {
 

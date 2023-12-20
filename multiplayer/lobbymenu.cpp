@@ -591,6 +591,10 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             emit sigReceivedAvailableMaps(objData);
         }
+        else if (messageType == NetworkCommands::RECEIVEAVAILABLERECORDS)
+        {
+            emit sigReceivedAvailableRecords(objData);
+        }
         else if (messageType == NetworkCommands::FILEDOWNLOAD)
         {
             onDownloadResponse(objData);
@@ -1031,6 +1035,11 @@ void LobbyMenu::onMapUploadResponse(const QJsonObject & objData)
     }
 }
 
+NetworkInterface* LobbyMenu::getTcpClient() const
+{
+    return m_pTCPClient.get();
+}
+
 void LobbyMenu::onDownloadResponse(const QJsonObject & objData)
 {
     bool success = objData.value(JsonKeys::JSONKEY_DOWNLOADRESULT).toBool();
@@ -1053,12 +1062,6 @@ void LobbyMenu::onMapDeleteResponse(const QJsonObject & objData)
 {
     bool success = objData.value(JsonKeys::JSONKEY_RESULT).toBool();
     emit sigOnMapDeleteResponse(success);
-}
-
-void LobbyMenu::requestDownloadMap(const QJsonObject & objData)
-{
-    QJsonDocument doc(objData);
-    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::sendCommandToServer(const QJsonObject & objData)

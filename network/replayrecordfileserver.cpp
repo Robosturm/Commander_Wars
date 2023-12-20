@@ -14,11 +14,41 @@ ReplayRecordFileserver::ReplayRecordFileserver(MainServer *parent)
     : m_mainServer(parent)
 {
     connect(&m_timer, &QTimer::timeout, this, &ReplayRecordFileserver::onDeleteOldReplays, Qt::QueuedConnection);
+    connect(m_mainServer, &MainServer::sigOnRequestFilePacket, this, &ReplayRecordFileserver::onRequestFilePacket, Qt::QueuedConnection);
+
     m_timer.setSingleShot(false);
     m_timer.start(60 * 1000 * 60);
 }
 
 void ReplayRecordFileserver::onSlaveInfoGameResult(quint64 socketID, const QJsonObject &objData)
+{
+    addRecordToDatabase(objData);
+}
+
+void ReplayRecordFileserver::addRecordToDatabase(const QString & filePath)
+{
+    if (QFile::exists(filePath))
+    {
+        QJsonObject objData;
+        objData.insert(JsonKeys::JSONKEY_REPLAYFILE, filePath);
+        QFile file(filePath);
+        file.open(QFile::ReadOnly);
+        QDataStream stream(&file);
+        QJsonObject recordInfo;
+        if (ReplayRecorder::readRecordInfo(stream, recordInfo))
+        {
+            objData.insert(JsonKeys::JSONKEY_MAPNAME, recordInfo.value(JsonKeys::JSONKEY_MAPNAME).toString());
+            objData.insert(JsonKeys::JSONKEY_MAPAUTHOR, recordInfo.value(JsonKeys::JSONKEY_MAPAUTHOR).toString());
+            objData.insert(JsonKeys::JSONKEY_MAPPLAYERS, recordInfo.value(JsonKeys::JSONKEY_PLAYERDATA).toArray().size());
+            objData.insert(JsonKeys::JSONKEY_MAPWIDTH, recordInfo.value(JsonKeys::JSONKEY_MAPWIDTH).toInt());
+            objData.insert(JsonKeys::JSONKEY_MAPHEIGHT, recordInfo.value(JsonKeys::JSONKEY_MAPHEIGHT).toInt());
+            objData.insert(JsonKeys::JSONKEY_MAPFLAGS, recordInfo.value(JsonKeys::JSONKEY_MAPFLAGS).toInteger());
+            addRecordToDatabase(objData);
+        }
+    }
+}
+
+void ReplayRecordFileserver::addRecordToDatabase(const QJsonObject &objData)
 {
     QString recordFile = objData.value(JsonKeys::JSONKEY_REPLAYFILE).toString();
     if (!recordFile.isEmpty())
@@ -111,14 +141,14 @@ void ReplayRecordFileserver::onRequestFilteredRecords(quint64 socketID, const QJ
     qint32 itemCount = 0;
     if (success && active)
     {
-        QJsonArray foundMaps;
+        QJsonArray foundRecords;
         if (query.seek(startItem))
         {
             itemCount = startItem;
             do
             {
                 ++itemCount;
-                if (foundMaps.size() < itemsPerPage)
+                if (foundRecords.size() < itemsPerPage)
                 {
                     auto path = query.value(MainServer::SQL_REPLAYPATH).toString();
                     if (QFile::exists(path))
@@ -134,19 +164,42 @@ void ReplayRecordFileserver::onRequestFilteredRecords(quint64 socketID, const QJ
                         QFile file(path);
                         file.open(QFile::ReadOnly);
                         QDataStream stream(&file);
-                        QByteArray jsonRecordInfo;
+                        QJsonObject jsonRecordInfo;
                         ReplayRecorder::readRecordInfo(stream, jsonRecordInfo);
-                        QJsonDocument recordDoc = QJsonDocument::fromJson(jsonRecordInfo);
-                        mapData.insert(JsonKeys::JSONKEY_REPLAYRECORDHEADER, recordDoc.object());
-                        foundMaps.append(mapData);
+                        mapData.insert(JsonKeys::JSONKEY_REPLAYRECORDHEADER, jsonRecordInfo);
+                        foundRecords.append(mapData);
                     }
                 }
             } while (query.next());
         }
+        else
+        {
+            itemCount = startItem - 1;
+        }
+        response.insert(JsonKeys::JSONKEY_RECORDLIST, foundRecords);
     }
     response.insert(JsonKeys::JSONKEY_FOUNDITEMS, itemCount);
     response.insert(JsonKeys::JSONKEY_STARTINDEX, startItem);
     QJsonDocument doc(response);
     CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(socketID), GameConsole::eDEBUG);
     emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void ReplayRecordFileserver::onRequestDownloadRecord(quint64 socketID, const QJsonObject & objData)
+{
+    spTCPServer pServer = m_mainServer->getGameServer();
+    spFilePeer filePeer = MemoryManagement::create<FilePeer>(pServer.get(), objData.value(JsonKeys::JSONKEY_REPLAYFILE).toString(), socketID);
+    m_filePeers[socketID] = filePeer;
+    filePeer->startUpload();
+}
+
+void ReplayRecordFileserver::onRequestFilePacket(quint64 socketID, const QJsonObject & objData)
+{
+    if (m_filePeers.contains(socketID))
+    {
+        if (m_filePeers[socketID]->sendNextPacket())
+        {
+            m_filePeers.erase(socketID);
+        }
+    }
 }

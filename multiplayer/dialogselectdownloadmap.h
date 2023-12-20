@@ -51,3 +51,4 @@ private:
     std::vector<oxygine::spSingleResAnim> m_minimapSprites;
 };
 
+Q_DECLARE_INTERFACE(DialogSelectDownloadMap, "DialogSelectDownloadMap");

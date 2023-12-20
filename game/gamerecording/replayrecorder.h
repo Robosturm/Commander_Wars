@@ -110,6 +110,7 @@ public:
     QString getRecordJson() const;
 
     static bool readRecordInfo(QDataStream & stream, QByteArray & jsonRecordInfo);
+    static bool readRecordInfo(QDataStream & stream, QJsonObject & jsonRecordInfo);
 
 private:
     bool validRecord(QByteArray & envData);

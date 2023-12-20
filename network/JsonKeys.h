@@ -70,6 +70,7 @@ namespace JsonKeys
     const char* const JSONKEY_MMR = "mmr";
     const char* const JSONKEY_RESULT = "result";
     const char* const JSONKEY_REPLAYFILE = "replayFile";
+    const char* const JSONKEY_RECORDLIST = "recordList";
     // map filter
     const char* const JSONKEY_PLAYERDATA = "mapPlayerData";
     const char* const JSONKEY_MAPNAME = "mapName";
