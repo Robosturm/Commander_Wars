@@ -17,7 +17,7 @@
             <loop count="currentMenu.getRecordCounts()">
                 <Label>
                     <x>10</x>
-                    <y>SelectDownloadMap.getInitialY()</y>
+                    <y>SelectDownloadRecord.getInitialY()</y>
                     <width>200</width>
                     <text>QT_TRANSLATE_NOOP("GAME","Map name:")</text>
                     <font>"main"</font>
@@ -147,7 +147,7 @@
         <x>lastX + lastWidth + 10</x>
         <y>lastY</y>
         <width>100</width>
-        <text>SelectDownloadMap.getPageText()</text>
+        <text>SelectDownloadRecord.getPageText()</text>
         <font>"main"</font>
         <fontSize>24</fontSize>
         <hAlign>"Middle"</hAlign>

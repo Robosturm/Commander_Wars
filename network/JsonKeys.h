@@ -41,6 +41,7 @@ namespace JsonKeys
     const char* const JSONKEY_PLAYER = "player";
     const char* const JSONKEY_COS = "cos";
     const char* const JSONKEY_COID = "coid";
+    const char* const JSONKEY_CONAME = "coName";
     const char* const JSONKEY_FILTER = "filter";
     const char* const JSONKEY_COSTATS = "coStats";
     const char* const JSONKEY_COSTATSMADE = "coStatsGamesMade";

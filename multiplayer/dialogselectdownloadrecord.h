@@ -7,6 +7,9 @@
 #include "network/filepeer.h"
 
 class LobbyMenu;
+class DialogSelectDownloadRecord;
+using spDialogSelectDownloadRecord = std::shared_ptr<DialogSelectDownloadRecord>;
+
 
 class DialogSelectDownloadRecord : public CustomDialog
 {

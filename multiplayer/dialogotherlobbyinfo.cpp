@@ -4,6 +4,7 @@
 #include "multiplayer/dialogcostatsinfo.h"
 #include "multiplayer/lobbymenu.h"
 #include "multiplayer/dialogselectdownloadmap.h"
+#include "multiplayer/dialogselectdownloadrecord.h"
 
 #include "ui_reader/uifactory.h"
 
@@ -81,7 +82,8 @@ void DialogOtherLobbyInfo::showDownloadMap()
 
 void DialogOtherLobbyInfo::showDownloadReplay()
 {
-
+    spDialogSelectDownloadRecord pSelectDownloadRecord = MemoryManagement::create<DialogSelectDownloadRecord>(m_pLobbyMenu);
+    addChild(pSelectDownloadRecord);
 }
 
 void DialogOtherLobbyInfo::receivedShowAutoMatches(const QJsonObject & objData)

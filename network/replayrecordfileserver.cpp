@@ -110,7 +110,7 @@ void ReplayRecordFileserver::onRequestFilteredRecords(quint64 socketID, const QJ
                             MainServer::SQL_MAPHEIGHT + ", " +
                             MainServer::SQL_MAPFLAGS + ", " +
                             MainServer::SQL_REPLAYCREATIONTIME +
-                            " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
+                            " from " + MainServer::SQL_TABLE_REPLAYINFO +
                             " WHERE ";
     qint32 filterCount = 0;
     MapFilter mapFilter;
@@ -126,7 +126,7 @@ void ReplayRecordFileserver::onRequestFilteredRecords(quint64 socketID, const QJ
     addFlagFilterOption(filterCommand, filterCount, mapFilter.getFlagFilter());
     if (filterCount == 0)
     {
-        filterCommand += QString(MainServer::SQL_MAPPATH) + " LIKE '%';";
+        filterCommand += QString(MainServer::SQL_REPLAYPATH) + " LIKE '%';";
     }
     else
     {
