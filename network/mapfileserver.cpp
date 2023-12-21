@@ -65,7 +65,7 @@ void MapFileServer::onMapUpload(quint64 socketID, const QJsonObject & objData)
                                   MainServer::SQL_MAPDOWNLOADCOUNT + ", " +
                                   MainServer::SQL_MAPUPLOADDATE + ", " +
                                   MainServer::SQL_MAPLASTDOWNLOADDATE +
-                                  ") VALUES(" +
+                                  ") VALUES (" +
                                   "'" + objData.value(JsonKeys::JSONKEY_MAPNAME).toString() + "', " +
                                   "'" + objData.value(JsonKeys::JSONKEY_MAPAUTHOR).toString() + "', " +
                                   "'" + filePath + "', " +

@@ -25,7 +25,7 @@ using spVictoryMenue = std::shared_ptr<VictoryMenue>;
 class VictoryMenue final : public Basemenu
 {
     Q_OBJECT
-    static constexpr qint32 MIN_LINE_LENGTH = 8;
+    static constexpr qint32 MIN_LINE_LENGTH = 10;
 public:
     enum class GraphModes
     {

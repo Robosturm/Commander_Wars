@@ -98,21 +98,21 @@
                 <loop count="SelectDownloadRecord.getPlayerCount(loopIdx)">
                     <Label>
                         <x>10</x>
-                        <y>lastY + lastHeight + 10</y>
+                        <y>lastY + lastHeight + 20</y>
                         <width>200</width>
                         <text>SelectDownloadRecord.getPlayerName(loopIdx)</text>
                         <font>"main"</font>
                         <fontSize>24</fontSize>
                     </Label>
                     <Sprite>
-                        <x>CoStatsInfo.getNextX()</x>
-                        <y>CoStatsInfo.getNextY()</y>
+                        <x>lastX + lastWidth + 10</x>
+                        <y>lastY - 10</y>
                         <scale>2</scale>
                         <sprite>SelectDownloadRecord.getCoId(loopIdx, 0).toLowerCase() + "+face"</sprite>
                     </Sprite>
                     <Sprite>
-                        <x>CoStatsInfo.getNextX()</x>
-                        <y>CoStatsInfo.getNextY()</y>
+                        <x>lastX + lastWidth + 10</x>
+                        <y>lastY</y>
                         <scale>2</scale>
                         <sprite>SelectDownloadRecord.getCoId(loopIdx, 1).toLowerCase() + "+face"</sprite>
                     </Sprite>

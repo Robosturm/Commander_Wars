@@ -210,11 +210,15 @@ void MainServer::startDatabase()
                                SQL_MAPDOWNLOADCOUNT + " INTEGER, " +
                                SQL_MAPUPLOADDATE + " TEXT, " +
                                SQL_METADATA + " TEXT, " +
-                               SQL_MAPLASTDOWNLOADDATE + " TEXT)");    
+                               SQL_MAPLASTDOWNLOADDATE + " TEXT)");
+    if (sqlQueryFailed(query))
+    {
+        CONSOLE_PRINT("Unable to create map table: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+    }
     // create table for record file server
     query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_REPLAYINFO + " (" +
                                SQL_REPLAYPATH + " TEXT PRIMARY KEY, " +
-                               SQL_REPLAYCREATIONTIME + " BIGINT" +
+                               SQL_REPLAYCREATIONTIME + " BIGINT, " +
                                SQL_MAPNAME + " TEXT, " +
                                SQL_METADATA + " TEXT, " +
                                SQL_MAPPLAYERS + " INTEGER, " +
@@ -225,7 +229,7 @@ void MainServer::startDatabase()
                                + ")");
     if (sqlQueryFailed(query))
     {
-        CONSOLE_PRINT("Unable to create map table: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+        CONSOLE_PRINT("Unable to create record table: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
     }
     bool success = false;
     query = getAllUsers(*m_serverData, success);

@@ -62,14 +62,14 @@ void ReplayRecordFileserver::addRecordToDatabase(const QJsonObject &objData)
                           MainServer::SQL_MAPHEIGHT + ", " +
                           MainServer::SQL_MAPFLAGS + "," +
                           MainServer::SQL_REPLAYCREATIONTIME +
-                          ") VALUES(" +
+                          ") VALUES (" +
                           "'" + objData.value(JsonKeys::JSONKEY_MAPNAME).toString() + "', " +
                           "'" + objData.value(JsonKeys::JSONKEY_MAPAUTHOR).toString() + "', " +
                           "'" + recordFile + "', " +
                           QString::number(objData.value(JsonKeys::JSONKEY_MAPPLAYERS).toInt()) + ", " +
                           QString::number(objData.value(JsonKeys::JSONKEY_MAPWIDTH).toInt()) + ", " +
                           QString::number(objData.value(JsonKeys::JSONKEY_MAPHEIGHT).toInt()) + ", " +
-                          QString::number(objData.value(JsonKeys::JSONKEY_MAPFLAGS).toInteger()) + "," +
+                          QString::number(objData.value(JsonKeys::JSONKEY_MAPFLAGS).toInteger()) + ", " +
                           QString::number(QDateTime::currentSecsSinceEpoch()) + ")";
         QSqlQuery query = m_mainServer->getDatabase().exec(command);
         if (MainServer::sqlQueryFailed(query))
