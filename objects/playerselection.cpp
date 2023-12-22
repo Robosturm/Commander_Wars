@@ -671,8 +671,8 @@ void PlayerSelection::createInitialAi(DropDownmenu *pPlayerAi, qint32 ai, qint32
     if (pPlayerAi != nullptr)
     {
         displayName = pPlayerAi->getCurrentItemText();
+        pPlayer->setPlayerNameId(displayName);
     }
-
     if (getIsCampaign() && ai > 0)
     {
         createAi(player, static_cast<GameEnums::AiTypes>(ai), displayName);

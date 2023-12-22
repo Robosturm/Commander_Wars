@@ -220,7 +220,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         if (m_lineLength < MIN_LINE_LENGTH)
         {
             m_lineLength = MIN_LINE_LENGTH;
-            m_stepSize = m_pGraphBackground->getScaledWidth() / m_lineLength;
+            m_stepSize = GlobalUtils::roundUp(static_cast<float>(m_pGraphBackground->getScaledWidth()) / m_lineLength);
         }
     }
     else

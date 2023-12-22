@@ -13,7 +13,7 @@ var Init =
     randomCos       = true,
     // ai's and names that will be used for training
     topAis          = 2,    
-    trainingAis     =  [["normal0.ini",   2],
+    trainingAis     =  [["normal.ini",   2],
                         ["normal1.ini",   2],
                         ["normal2.ini",   2],
                         ["normal3.ini",   2],
@@ -305,7 +305,7 @@ var Init =
         {
             GameConsole.print("AI " + i + " got a score of " + Init.matchData[i] + " points", Init.logLevel);
             var aiScore = Init.matchData[i];
-            if (aiScore > 0)
+            if (aiScore > 0 && i > 0  && aiScore > Init.matchData[0])
             {
                 if (bestAis.length < Init.topAis)
                 {
@@ -338,7 +338,7 @@ var Init =
             GameConsole.print(aiNames[i] + " with a score of " + bestAis[i][1] + " points", Init.logLevel);
         }
         var mutateCount = 0;
-        for (i = 0; i < Init.trainingAis.length; ++i)
+        for (i = 1; i < Init.trainingAis.length; ++i)
         {
             var mutate = true;
             for (var i2 = 0; i2 < aiNames.length; ++i2)

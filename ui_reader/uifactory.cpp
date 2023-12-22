@@ -1741,10 +1741,7 @@ QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx
             {
                 *success = false;
             }
-            else
-            {
-                CONSOLE_PRINT_MODULE("Error while parsing " + line + " Error: " + erg.toString() + ". Using \"" + value + "\" as value.", GameConsole::eDEBUG, GameConsole::eUiFactory);
-            }
+            CONSOLE_PRINT_MODULE("Error while parsing " + line + " Error: " + erg.toString() + ". Using \"" + value + "\" as value.", GameConsole::eDEBUG, GameConsole::eUiFactory);
         }
         else if (erg.isString())
         {

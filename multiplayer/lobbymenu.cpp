@@ -603,6 +603,10 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             onMapDeleteResponse(objData);
         }
+        else if (messageType == NetworkCommands::FILEPACKET)
+        {
+            emit sigReceivedFilePacket(objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in LobbyMenu::recieveData " + messageType + " received", GameConsole::eDEBUG);

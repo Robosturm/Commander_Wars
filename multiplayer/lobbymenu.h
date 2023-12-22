@@ -75,7 +75,7 @@ signals:
     void sigReceivedAvailableRecords(const QJsonObject & objData);
     void sigOnDownloadedResponse(bool success);
     void sigOnMapDeleteResponse(bool success);
-
+    void sigReceivedFilePacket(const QJsonObject &objData);
 public slots:
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     void exitMenue();

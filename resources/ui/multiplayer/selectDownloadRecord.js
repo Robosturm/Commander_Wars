@@ -45,6 +45,6 @@ var SelectDownloadRecord =
         {
             coid = "no_co";
         }
-        return coid;
+        return coid.toLowerCase() + "+face";
     },
 }

@@ -108,13 +108,13 @@
                         <x>lastX + lastWidth + 10</x>
                         <y>lastY - 10</y>
                         <scale>2</scale>
-                        <sprite>SelectDownloadRecord.getCoId(loopIdx, 0).toLowerCase() + "+face"</sprite>
+                        <sprite>SelectDownloadRecord.getCoId(loopIdx, 0)</sprite>
                     </Sprite>
                     <Sprite>
                         <x>lastX + lastWidth + 10</x>
                         <y>lastY</y>
                         <scale>2</scale>
-                        <sprite>SelectDownloadRecord.getCoId(loopIdx, 1).toLowerCase() + "+face"</sprite>
+                        <sprite>SelectDownloadRecord.getCoId(loopIdx, 1)</sprite>
                     </Sprite>
                 </loop>
                 <Button>

@@ -111,6 +111,7 @@ void DialogSelectDownloadRecord::downloadRecord(qint32 recordIndex)
     m_filePeer = MemoryManagement::create<FilePeer>(m_pBaseMenu->getTcpClient(), getRecordPath(recordIndex), 0);
     m_filePeer->startDownload(NetworkCommands::RECORDFILEDOWNLOADREQUEST);
     connect(m_filePeer.get(), &FilePeer::sigDownloadInfo, this, &DialogSelectDownloadRecord::receivedChunk, Qt::QueuedConnection);
+    connect(m_pBaseMenu, &LobbyMenu::sigReceivedFilePacket, m_filePeer.get(), &FilePeer::receivedPacket, Qt::QueuedConnection);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->show();
     pLoadingScreen->setProgress("Downloading record from server...", 0);
