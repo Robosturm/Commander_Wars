@@ -45,10 +45,11 @@ LobbyMenu::LobbyMenu()
 
     if (!Settings::getInstance()->getServer())
     {
-        m_pTCPClient = MemoryManagement::create<TCPClient>(nullptr);
+        m_pTCPClient = MemoryManagement::create<TCPClient>(nullptr);        
         m_pTCPClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         connect(m_pTCPClient.get(), &TCPClient::sigConnected, this, &LobbyMenu::connected, Qt::QueuedConnection);
+        connect(m_pTCPClient.get(), &TCPClient::sigDisconnected, this, &LobbyMenu::disconnected, Qt::QueuedConnection);
         emit m_pTCPClient->sig_connect(Settings::getInstance()->getServerAdress(), Settings::getInstance()->getServerPort(), Settings::getInstance()->getSecondaryServerAdress());
     }
 
@@ -505,6 +506,14 @@ void LobbyMenu::observeGamePassword(QString password)
         emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         oxygine::Actor::detach();
     }
+}
+
+void LobbyMenu::disconnected(quint64 socketID)
+{
+    spDialogMessageBox pDialogMessageBox;
+    pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Connection to server lost leaving server lobby."));
+    addChild(pDialogMessageBox);
+    connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &LobbyMenu::exitMenue, Qt::QueuedConnection);
 }
 
 void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)

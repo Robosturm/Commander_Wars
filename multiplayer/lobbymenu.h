@@ -100,7 +100,11 @@ public slots:
     void showEnd();
     void requestShowAutoMatches();
 protected slots:
-    virtual void onEnter() override;
+    virtual void onEnter() override;    /**
+     * @brief disconnected
+     * @param socketID
+     */
+    void disconnected(quint64 socketID);
 private:
     void onShowOtherDialog();
     void receivedShowAutoMatches(const QJsonObject & objData);

@@ -409,13 +409,13 @@ QByteArray ReplayRecorder::createRecordJson() const
                 auto* pCO = pPlayer->getCO(i);
                 if (pCO != nullptr)
                 {
-                    coData.insert(JsonKeys::JSONKEY_COID, pCO->getCoID());
-                    coData.insert(JsonKeys::JSONKEY_CONAME, pCO->getCOName());
+                    coInfo.insert(JsonKeys::JSONKEY_COID, pCO->getCoID());
+                    coInfo.insert(JsonKeys::JSONKEY_CONAME, pCO->getCOName());
                 }
                 else
                 {
-                    coData.insert(JsonKeys::JSONKEY_COID, "");
-                    coData.insert(JsonKeys::JSONKEY_CONAME, "");
+                    coInfo.insert(JsonKeys::JSONKEY_COID, "");
+                    coInfo.insert(JsonKeys::JSONKEY_CONAME, "");
                 }
                 coData.append(coInfo);
             }
