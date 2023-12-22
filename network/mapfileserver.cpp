@@ -278,7 +278,7 @@ bool MapFileServer::removeMapFromServer(const QString & sqlFilter)
                             " WHERE " + sqlFilter + ";";
     QSqlQuery query = m_mainServer->getDatabase().exec(filterCommand);
     bool success = !MainServer::sqlQueryFailed(query);
-    if (success)
+    if (success && query.first())
     {
         do
         {

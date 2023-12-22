@@ -87,9 +87,12 @@ void ReplayRecordFileserver::onDeleteOldReplays()
                             " WHERE " + sqlFilter + ";";
     QSqlQuery query = m_mainServer->getDatabase().exec(filterCommand);
     bool success = !MainServer::sqlQueryFailed(query);
-    if (success)
+    if (success && query.first())
     {
-        QFile::remove(query.value(MainServer::SQL_REPLAYPATH).toString());
+        do
+        {
+            QFile::remove(query.value(MainServer::SQL_REPLAYPATH).toString());
+        } while (query.next());
         QString command = QString("DELETE FROM ") + MainServer::SQL_TABLE_REPLAYINFO + " WHERE " + sqlFilter + ";";
         query = m_mainServer->getDatabase().exec(command);
         MainServer::sqlQueryFailed(query);
