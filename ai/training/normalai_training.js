@@ -2,7 +2,7 @@ var Init =
         {
     // training setup data
     trainingFolder  = "maps/2_player/",             // map folder used
-    trainingMap     = "Amber Valley.map",           // map that will be used for training
+    trainingMap     = "Where Giants Have Fallen.map",           // map that will be used for training
     playerCount     = 2,
     mutationChance  = 0.1,                          // chance for a weight to mutate at random
     mutationRate    = 0.2,                          // how much the weight gets altered.
