@@ -266,6 +266,10 @@ protected:
      * @param duration
      */
     void playSoundInternal(SoundData *soundData, qint32 soundIndex, qint32 duration);
+    /**
+     * @brief cleanUpSounds
+     */
+    void cleanUpSounds();
 #endif
     void loadMediaForFile(QString filePath);
 
@@ -502,6 +506,7 @@ private:
                                                        SoundEffect(this),
                                                        SoundEffect(this),
                                                        SoundEffect(this)};
+    std::vector<spQSoundEffect> m_toDeleteSounds;
     qint32 m_lastUsedSoundSlot{0};
 #endif
     bool m_loadBaseGameFolders{true};

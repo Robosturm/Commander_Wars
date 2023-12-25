@@ -80,7 +80,7 @@ private:
             {
                 bool ok = false;
                 *m_value = settings.value(m_name, m_defaultValue).toFloat(&ok);
-                if(!ok || *m_value <= m_minValue || *m_value >= m_maxValue)
+                if(!ok || *m_value <= m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
                     CONSOLE_PRINT(error, GameConsole::eERROR);

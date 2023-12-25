@@ -101,18 +101,41 @@ void AudioManager::stopSoundInternal(qint32 soundIndex)
 {
     CONSOLE_PRINT_MODULE("Stopping sound at index " + QString::number(soundIndex), GameConsole::eDEBUG, GameConsole::eAudio);
     m_soundEffectData[soundIndex].timer.stop();
-    // m_soundEffectData[soundIndex].sound->stop();
+    //m_soundEffectData[soundIndex].sound->stop();
     m_soundEffectData[soundIndex].sound->setVolume(0);
     m_soundEffectData[soundIndex].sound->setMuted(true);
+    m_toDeleteSounds.push_back(m_soundEffectData[soundIndex].sound);
+    m_soundEffectData[soundIndex].sound = MemoryManagement::createNamedQObject<QSoundEffect>("QSoundEffect", this);
     m_soundEffectData[soundIndex].sound->setObjectName("SoundEffect" + QString::number(soundIndex));
-    connect(
-        m_soundEffectData[soundIndex].sound.get(), &QSoundEffect::statusChanged, this, [this, soundIndex]()
-        {
+    connect(m_soundEffectData[soundIndex].sound.get(), &QSoundEffect::statusChanged, this, [this, soundIndex]()
+    {
         if (m_soundEffectData[soundIndex].sound->status() == QSoundEffect::Error)
         {
             CONSOLE_PRINT_MODULE("Error: Occured when playing sound: " + m_soundEffectData[soundIndex].sound->source().toString(), GameConsole::eDEBUG, GameConsole::eAudio);
-        } },
-        Qt::QueuedConnection);
+        }
+    },
+    Qt::QueuedConnection);
+
+    if (m_toDeleteSounds.size() > 20)
+    {
+        cleanUpSounds();
+    }
+}
+
+void AudioManager::cleanUpSounds()
+{
+    qint32 i = 0;
+    while (i < m_toDeleteSounds.size())
+    {
+        if (!m_toDeleteSounds[i]->isPlaying())
+        {
+            m_toDeleteSounds.erase(m_toDeleteSounds.cbegin() + i);
+        }
+        else
+        {
+            ++i;
+        }
+    }
 }
 
 void AudioManager::playDelayedSound(SoundData *soundData, qint32 soundIndex, bool stopOldestSound, qint32 duration)
