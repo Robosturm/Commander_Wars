@@ -484,7 +484,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& 
         pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
         addChild(pLabel);
         x += 150;
-        if (x + 160 > width && i < pUnitSpriteManager->getCount() - 1)
+        if (x + 160 > width)
         {
             x = 0;
             y += 40;
@@ -508,7 +508,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& 
     }
     pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
     addChild(pLabel);
-
+    x += 150;
 }
 
 void UnitInfo::createLoadingTable(Unit* pUnit, const QStringList & loadables, qint32& y, qint32 width)
