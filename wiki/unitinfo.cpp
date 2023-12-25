@@ -490,6 +490,25 @@ void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& 
             y += 40;
         }
     }
+    const QString terrainId = "WELD";
+    spTerrain pTerrain = Terrain::createTerrain(terrainId, -10, -10, "", pUnit->getMap());
+    pTerrain->loadSprites();
+    pTerrain->setPosition(x, y);
+    addChild(pTerrain);
+    float damage = pWeaponManager->getEnviromentDamage(weaponID, terrainId);
+    spLabel pLabel = MemoryManagement::create<Label>(width);
+    pLabel->setStyle(style);
+    if (damage > 0)
+    {
+        pLabel->setHtmlText((QString::number(static_cast<qint32>(damage))  + " %"));
+    }
+    else
+    {
+        pLabel->setHtmlText("-");
+    }
+    pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
+    addChild(pLabel);
+
 }
 
 void UnitInfo::createLoadingTable(Unit* pUnit, const QStringList & loadables, qint32& y, qint32 width)
