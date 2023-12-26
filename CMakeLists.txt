@@ -122,10 +122,6 @@ else()
     )
 endif()
 
-# todo kernel32.dll
-# todo shell32.dll
-# todo msvcrt.dll
-
 ###################################################################################
 # Set build dependend defines
 ###################################################################################
@@ -228,7 +224,7 @@ set(COW_ANDROID_VERSION_CODE "46")
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}")
+        set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj -g ${CMAKE_CXX_FLAGS}")
         set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}")
         add_definitions(-DWIN32_LEAN_AND_MEAN
         )
@@ -238,7 +234,9 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         add_link_options("-long-plt")
     endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+    set(CMAKE_CXX_FLAGS "-g -rdynamic ${CMAKE_CXX_FLAGS}")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+    set(CMAKE_CXX_FLAGS "-g -rdynamic ${CMAKE_CXX_FLAGS}")
 else()
     message(FATAL_ERROR "Unsupported OS found")
 endif()
