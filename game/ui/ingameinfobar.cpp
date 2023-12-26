@@ -456,7 +456,11 @@ void IngameInfoBar::updateMinimap()
 
 void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
 {
-    updateTerrainInfo(x, y, false);
+    if (m_pMenu->getCursor()->getMapPointX() == x &&
+        m_pMenu->getCursor()->getMapPointY() == y)
+    {
+        updateTerrainInfo(x, y, false);
+    }
 }
 
 void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)

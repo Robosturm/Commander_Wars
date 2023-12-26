@@ -1,5 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/Input.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 namespace oxygine
 {
@@ -28,6 +29,10 @@ namespace oxygine
 
     void Input::sendPointerButtonEvent(spStage & stage, MouseButton button, qint32 x, qint32 y, float pressure, qint32 type, PointerState* ps)
     {
+        if (GameWindow::getWindow()->renderingPaused())
+        {
+            return;
+        }
         if (!m_multiTouch && ps->getIndex() != 1 && ps != &m_pointerMouse)
         {
             if (type == TouchEvent::TOUCH_UP)
@@ -65,7 +70,10 @@ namespace oxygine
 
     void Input::sendPointerMotionEvent(spStage & stage, qint32 x, qint32 y, float pressure, PointerState* ps)
     {
-
+        if (GameWindow::getWindow()->renderingPaused())
+        {
+            return;
+        }
         if (!m_multiTouch && ps->getIndex() != 1 && ps != &m_pointerMouse)
         {
             return;
@@ -82,6 +90,10 @@ namespace oxygine
 
     void Input::sendPointerWheelEvent(spStage & stage, const QPoint& dir, PointerState* ps)
     {
+        if (GameWindow::getWindow()->renderingPaused())
+        {
+            return;
+        }
         TouchEvent te(TouchEvent::WHEEL_DIR, true, ps->getPosition());
         te.index = ps->getIndex();
         te.wheelDirection = dir;
