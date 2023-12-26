@@ -182,8 +182,6 @@ bool Mainwindow::isValidSavegame()
 
 void Mainwindow::enterSingleplayer(const QStringList & filter)
 {
-    Settings* a = nullptr;
-    a->changeBrightness(50);
     Mainapp::getInstance()->pauseRendering();
     auto view = MemoryManagement::create<MapSelectionView>(filter);
     auto window = MemoryManagement::create<MapSelectionMapsMenue>(view);
