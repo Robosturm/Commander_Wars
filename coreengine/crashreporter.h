@@ -11,6 +11,7 @@ using spQProcess = std::shared_ptr<QProcess>;
 class CrashReporter final
 {
 public:
+    static qint32 constexpr STACKSIZE = 20;
     static constexpr const char* const getTypeName()
     {
         return "CrashReporter";
@@ -26,7 +27,15 @@ public:
     /// @param inLogWrittenCallback A function to call after we've written the log file.
     ///   You might use this to display a message to the user about where to find the log for example.
     static void setSignalHandler(logWrittenCallback inLogWrittenCallback = nullptr );
-    static void _writeLog( const QString &inSignal);
+    static void _writeLog(const QString &inSignal, const QStringList & frameList);
+    static QString getProgramName()
+    {
+        return m_programName;
+    }
+    static QProcess* getCrashProcess()
+    {
+        return m_crashProcess.get();
+    }
 private:
     friend class MemoryManagement;
     static void setOsSignalHandler();
@@ -34,9 +43,9 @@ private:
 private:
     static spCrashReporter m_instance;
     QString sCrashReportDirPath;             // log file path
-    QString sProgramName;                    // the full path to the executable (which we need to resolve symbols)
+    static QString m_programName;             // the full path to the executable (which we need to resolve symbols)
     logWrittenCallback sLogWrittenCallback{nullptr};  // function to call after we've written the log file
-    spQProcess sProcess;               // process used to capture output of address mapping tool
+    static spQProcess m_crashProcess;               // process used to capture output of address mapping tool
 };
 
 #endif // CRASHREPORTER_H

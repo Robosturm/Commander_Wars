@@ -21,159 +21,95 @@ PlayerInfo::PlayerInfo(GameMap* pMap)
 void PlayerInfo::updateData()
 {    
     Mainapp::getInstance()->pauseRendering();
-    // clean up
-    removeChildren();
-    // recreate the ui
-    
-    qint32 playerIdx = 0;
-    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    if (m_pMap != nullptr)
     {
-        if (m_pMap->getCurrentPlayer() == m_pMap->getPlayer(i))
-        {
-            playerIdx = i;
-            break;
-        }
-    }
-    GameManager* pGameManager = GameManager::getInstance();
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+        // clean up
+        removeChildren();
+        // recreate the ui
 
-    Player* pViewPlayer = m_pMap->getCurrentViewPlayer();
-    qint32 yPos = 0;
-    qint32 currentPlayer = playerIdx;
-    qint32 count = m_pMap->getPlayerCount();
-    qint32 maxCount = count;
-    if (Settings::getInstance()->getShowCoCount() > 0 &&
-        Settings::getInstance()->getShowCoCount() < m_pMap->getPlayerCount())
-    {
-        maxCount = Settings::getInstance()->getShowCoCount();
-    }
-    qint32 playerShown = 0;
-    bool hasShownTurnStartInfo = false;
-    for (qint32 i = 0; i < count; i++)
-    {
-        currentPlayer = playerIdx + i;
-        if (currentPlayer >= m_pMap->getPlayerCount())
+        qint32 playerIdx = 0;
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            currentPlayer -= m_pMap->getPlayerCount();
-        }
-
-        if (currentPlayer == 0)
-        {
-            showTurnStartInfo(yPos);
-            hasShownTurnStartInfo = true;
-        }
-        
-        spPlayer pPlayer = m_pMap->getSpPlayer(currentPlayer);
-        // draw player if he is alive
-        if (!pPlayer->getIsDefeated())
-        {
-            playerShown++;
-            oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
-            oxygine::ResAnim* pAnim = nullptr;
-            if (pPlayer->getCO(1) == nullptr)
+            if (m_pMap->getCurrentPlayer() == m_pMap->getPlayer(i))
             {
-                pAnim = pGameManager->getResAnim("co");
+                playerIdx = i;
+                break;
             }
-            else
-            {
-                pAnim = pGameManager->getResAnim("2co");
-            }
-            if (pAnim != nullptr)
-            {
-                pSprite->setResAnim(pAnim);
-                pSprite->setColorTable(pPlayer->getColorTableAnim(), true);
-                pSprite->setY(yPos);
-                pSprite->setFlippedX(m_flippedX);
-                if (m_flippedX)
-                {
-                    pSprite->setX(-pSprite->getScaledWidth());
-                }
-                addChild(pSprite);
-                qint32 itemHeigth = static_cast<qint32>(pAnim->getHeight()) + 5;
+        }
+        GameManager* pGameManager = GameManager::getInstance();
+        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
 
-                spCO pCO = pPlayer->getSpCO(0);
-                if (pCO.get() != nullptr)
+        Player* pViewPlayer = m_pMap->getCurrentViewPlayer();
+        qint32 yPos = 0;
+        qint32 currentPlayer = playerIdx;
+        qint32 count = m_pMap->getPlayerCount();
+        qint32 maxCount = count;
+        if (Settings::getInstance()->getShowCoCount() > 0 &&
+            Settings::getInstance()->getShowCoCount() < m_pMap->getPlayerCount())
+        {
+            maxCount = Settings::getInstance()->getShowCoCount();
+        }
+        qint32 playerShown = 0;
+        bool hasShownTurnStartInfo = false;
+        for (qint32 i = 0; i < count; i++)
+        {
+            currentPlayer = playerIdx + i;
+            if (currentPlayer >= m_pMap->getPlayerCount())
+            {
+                currentPlayer -= m_pMap->getPlayerCount();
+            }
+
+            if (currentPlayer == 0)
+            {
+                showTurnStartInfo(yPos);
+                hasShownTurnStartInfo = true;
+            }
+
+            spPlayer pPlayer = m_pMap->getSpPlayer(currentPlayer);
+            // draw player if he is alive
+            if (!pPlayer->getIsDefeated())
+            {
+                playerShown++;
+                oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+                oxygine::ResAnim* pAnim = nullptr;
+                if (pPlayer->getCO(1) == nullptr)
                 {
-                    QString resAnim = pCO->getCoID() + "+info";
-                    pAnim = pCO->getResAnim(resAnim.toLower());
+                    pAnim = pGameManager->getResAnim("co");
                 }
                 else
                 {
-                    pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                    pAnim = pGameManager->getResAnim("2co");
                 }
-                pSprite = MemoryManagement::create<oxygine::Sprite>();
-                pSprite->setResAnim(pAnim);
                 if (pAnim != nullptr)
                 {
-                    pSprite->setWidth(pAnim->getWidth());
-                }
-                pSprite->setY(yPos);
-                if (pAnim != nullptr)
-                {
-                    pSprite->setScale(2.0f * static_cast<float>(pAnim->getWidth()) / 32.0f);
-                }
-                else
-                {
-                    pSprite->setScale(2.0f);
-                }
-                pSprite->setFlippedX(m_flippedX);
-                if (m_flippedX)
-                {
-                    pSprite->setX(-pSprite->getScaledWidth());
-                }
-                addChild(pSprite);
-
-                // online info
-                qint32 coWidth = pSprite->getScaledWidth();
-                pSprite = MemoryManagement::create<oxygine::Sprite>();
-                if (pPlayer->getIsOnline())
-                {
-                    pAnim = pGameManager->getResAnim("online");
-                }
-                else
-                {
-                    pAnim = pGameManager->getResAnim("offline");
-                }
-                pSprite->setResAnim(pAnim);
-                pSprite->setY(yPos);
-                pSprite->setX(coWidth + 5);
-                pSprite->setFlippedX(m_flippedX);
-                if (m_flippedX)
-                {
-                    pSprite->setX(-pSprite->getScaledWidth() - 5 - coWidth);
-                }
-                addChild(pSprite);
-
-                if (pCO != nullptr)
-                {
-                    spCoPowermeter pCoPowermeter = MemoryManagement::create<CoPowermeter>(m_pMap, pCO.get());
-                    pCoPowermeter->setY(pSprite->getY() + 3);
-                    pCoPowermeter->setFlippedX(m_flippedX);
+                    pSprite->setResAnim(pAnim);
+                    pSprite->setColorTable(pPlayer->getColorTableAnim(), true);
+                    pSprite->setY(yPos);
+                    pSprite->setFlippedX(m_flippedX);
                     if (m_flippedX)
                     {
-                        pCoPowermeter->setX(-68);
+                        pSprite->setX(-pSprite->getScaledWidth());
+                    }
+                    addChild(pSprite);
+                    qint32 itemHeigth = static_cast<qint32>(pAnim->getHeight()) + 5;
+
+                    spCO pCO = pPlayer->getSpCO(0);
+                    if (pCO.get() != nullptr)
+                    {
+                        QString resAnim = pCO->getCoID() + "+info";
+                        pAnim = pCO->getResAnim(resAnim.toLower());
                     }
                     else
                     {
-                        pCoPowermeter->setX(68);
+                        pAnim = pCOSpriteManager->getResAnim("no_co+info");
                     }
-                    pCoPowermeter->drawPowerMeter();
-                    addChild(pCoPowermeter);
-                }
-
-                pCO = pPlayer->getSpCO(1);
-                if (pCO.get() != nullptr)
-                {
-                    QString resAnim = pCO->getCoID() + "+info";
-                    pAnim = pCO->getResAnim(resAnim.toLower());
                     pSprite = MemoryManagement::create<oxygine::Sprite>();
                     pSprite->setResAnim(pAnim);
-                    pSprite->setY(yPos + 62);
-                    spCoPowermeter pCoPowermeter = MemoryManagement::create<CoPowermeter>(m_pMap, pCO.get());
-                    pCoPowermeter->setY(pSprite->getY() + 3);
-                    pCoPowermeter->setFlippedX(m_flippedX);
-                    pCoPowermeter->drawPowerMeter();
-                    addChild(pCoPowermeter);
+                    if (pAnim != nullptr)
+                    {
+                        pSprite->setWidth(pAnim->getWidth());
+                    }
+                    pSprite->setY(yPos);
                     if (pAnim != nullptr)
                     {
                         pSprite->setScale(2.0f * static_cast<float>(pAnim->getWidth()) / 32.0f);
@@ -185,51 +121,118 @@ void PlayerInfo::updateData()
                     pSprite->setFlippedX(m_flippedX);
                     if (m_flippedX)
                     {
-                        pCoPowermeter->setX(-68);
                         pSprite->setX(-pSprite->getScaledWidth());
+                    }
+                    addChild(pSprite);
+
+                    // online info
+                    qint32 coWidth = pSprite->getScaledWidth();
+                    pSprite = MemoryManagement::create<oxygine::Sprite>();
+                    if (pPlayer->getIsOnline())
+                    {
+                        pAnim = pGameManager->getResAnim("online");
                     }
                     else
                     {
-                        pCoPowermeter->setX(68);
+                        pAnim = pGameManager->getResAnim("offline");
+                    }
+                    pSprite->setResAnim(pAnim);
+                    pSprite->setY(yPos);
+                    pSprite->setX(coWidth + 5);
+                    pSprite->setFlippedX(m_flippedX);
+                    if (m_flippedX)
+                    {
+                        pSprite->setX(-pSprite->getScaledWidth() - 5 - coWidth);
                     }
                     addChild(pSprite);
-                }
-                oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("fundsInfo24"));
-                oxygine::spTextField Text = MemoryManagement::create<oxygine::TextField>();
-                Text->setStyle(style);
-                QString number = QString::number(pPlayer->getFunds());
-                if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                    m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
-                    m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
-                {
-                    number = "?";
-                }
-                Text->setHtmlText(number);
-                Text->setY(yPos + 30);
-                if (m_flippedX)
-                {
-                    Text->setX(-Text->getTextRect().width());
-                }
-                else
-                {
-                    Text->setX(3);
-                }
-                addChild(Text);
 
-                yPos += itemHeigth;
+                    if (pCO != nullptr)
+                    {
+                        spCoPowermeter pCoPowermeter = MemoryManagement::create<CoPowermeter>(m_pMap, pCO.get());
+                        pCoPowermeter->setY(pSprite->getY() + 3);
+                        pCoPowermeter->setFlippedX(m_flippedX);
+                        if (m_flippedX)
+                        {
+                            pCoPowermeter->setX(-68);
+                        }
+                        else
+                        {
+                            pCoPowermeter->setX(68);
+                        }
+                        pCoPowermeter->drawPowerMeter();
+                        addChild(pCoPowermeter);
+                    }
+
+                    pCO = pPlayer->getSpCO(1);
+                    if (pCO.get() != nullptr)
+                    {
+                        QString resAnim = pCO->getCoID() + "+info";
+                        pAnim = pCO->getResAnim(resAnim.toLower());
+                        pSprite = MemoryManagement::create<oxygine::Sprite>();
+                        pSprite->setResAnim(pAnim);
+                        pSprite->setY(yPos + 62);
+                        spCoPowermeter pCoPowermeter = MemoryManagement::create<CoPowermeter>(m_pMap, pCO.get());
+                        pCoPowermeter->setY(pSprite->getY() + 3);
+                        pCoPowermeter->setFlippedX(m_flippedX);
+                        pCoPowermeter->drawPowerMeter();
+                        addChild(pCoPowermeter);
+                        if (pAnim != nullptr)
+                        {
+                            pSprite->setScale(2.0f * static_cast<float>(pAnim->getWidth()) / 32.0f);
+                        }
+                        else
+                        {
+                            pSprite->setScale(2.0f);
+                        }
+                        pSprite->setFlippedX(m_flippedX);
+                        if (m_flippedX)
+                        {
+                            pCoPowermeter->setX(-68);
+                            pSprite->setX(-pSprite->getScaledWidth());
+                        }
+                        else
+                        {
+                            pCoPowermeter->setX(68);
+                        }
+                        addChild(pSprite);
+                    }
+                    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("fundsInfo24"));
+                    oxygine::spTextField Text = MemoryManagement::create<oxygine::TextField>();
+                    Text->setStyle(style);
+                    QString number = QString::number(pPlayer->getFunds());
+                    if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
+                    {
+                        number = "?";
+                    }
+                    Text->setHtmlText(number);
+                    Text->setY(yPos + 30);
+                    if (m_flippedX)
+                    {
+                        Text->setX(-Text->getTextRect().width());
+                    }
+                    else
+                    {
+                        Text->setX(3);
+                    }
+                    addChild(Text);
+
+                    yPos += itemHeigth;
+                }
+            }
+            if (playerShown >= maxCount)
+            {
+                break;
             }
         }
-        if (playerShown >= maxCount)
-        {
-            break;
-        }
-    }
 
-    if (!hasShownTurnStartInfo)
-    {
-        showTurnStartInfo(yPos);
+        if (!hasShownTurnStartInfo)
+        {
+            showTurnStartInfo(yPos);
+        }
+        setHeight(yPos);
     }
-    setHeight(yPos);
     Mainapp::getInstance()->continueRendering();
 }
 

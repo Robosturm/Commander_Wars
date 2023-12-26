@@ -84,6 +84,8 @@ message("Qt-Version: ${QT_VERSION}")
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+    find_program(ADDR_2_LINE addr2line)
+    message("addr2Line: ${ADDR_2_LINE}")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
 endif()
@@ -224,7 +226,7 @@ set(COW_ANDROID_VERSION_CODE "46")
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj -g ${CMAKE_CXX_FLAGS}")
+        set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}")
         set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}")
         add_definitions(-DWIN32_LEAN_AND_MEAN
         )
@@ -234,9 +236,9 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         add_link_options("-long-plt")
     endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
-    set(CMAKE_CXX_FLAGS "-g -rdynamic ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_CXX_FLAGS "-rdynamic ${CMAKE_CXX_FLAGS}")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-    set(CMAKE_CXX_FLAGS "-g -rdynamic ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_CXX_FLAGS "-rdynamic ${CMAKE_CXX_FLAGS}")
 else()
     message(FATAL_ERROR "Unsupported OS found")
 endif()
@@ -1069,6 +1071,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_BIN_DIR}/libgcc_s_seh-1.dll
         ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1-x64.dll
         ${OPENSSL_INCLUDE_DIR}/../bin/libcrypto-1_1.dll
+        ${ADDR_2_LINE}
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}

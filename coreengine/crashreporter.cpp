@@ -10,10 +10,12 @@
 #include <QStandardPaths>
 
 spCrashReporter CrashReporter::m_instance;
+QString CrashReporter::m_programName;
+spQProcess CrashReporter::m_crashProcess;
 
-void CrashReporter::_writeLog( const QString &inSignal)
+void CrashReporter::_writeLog(const QString &inSignal, const QStringList & frameList)
 {
-    const QStringList cReportHeader
+    QStringList cReportHeader
     {
         QStringLiteral("%1 v%2 Builddate: %3 %4").arg(QCoreApplication::applicationName(), QCoreApplication::applicationVersion(), GameConsole::compileDate,  GameConsole::compileTime ),
                 QDateTime::currentDateTime().toString("dd MMM yyyy @ HH:mm:ss"),
@@ -21,6 +23,8 @@ void CrashReporter::_writeLog( const QString &inSignal)
                 inSignal,
                 QString(),
     };
+    cReportHeader.append(frameList);
+    cReportHeader.append("");
 
     QDir().mkpath(m_instance->sCrashReportDirPath);
 
@@ -63,16 +67,16 @@ void CrashReporter::_writeLog( const QString &inSignal)
 void CrashReporter::setSignalHandler(logWrittenCallback inLogWrittenCallback )
 {
     m_instance = MemoryManagement::create<CrashReporter>();
-    m_instance->sProgramName = QCoreApplication::arguments().at(0);
+    m_instance->m_programName = QCoreApplication::arguments().at(0);
     m_instance->sCrashReportDirPath = QCoreApplication::applicationDirPath() + "/logs";
     m_instance->sLogWrittenCallback = inLogWrittenCallback;
-    if (m_instance->sProcess == nullptr)
+    if (m_instance->m_crashProcess == nullptr)
     {
-        m_instance->sProcess = MemoryManagement::createNamedQObject<QProcess>("QProcess");
+        m_instance->m_crashProcess = MemoryManagement::createNamedQObject<QProcess>("QProcess");
 #ifdef GRAPHICSUPPORT
-        m_instance->sProcess->setObjectName("CrashreporterProcess");
+        m_instance->m_crashProcess->setObjectName("CrashreporterProcess");
 #endif
-        m_instance->sProcess->setProcessChannelMode( QProcess::MergedChannels );
+        m_instance->m_crashProcess->setProcessChannelMode( QProcess::MergedChannels );
     }
     setOsSignalHandler();
 }
