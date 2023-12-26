@@ -917,6 +917,7 @@ void EditorMenue::optimizePlayers()
         {
             m_pMap->getPlayer(i)->setTeam(i);
         }
+        m_pMap->getPlayer(i)->updatePlayerID();
     }
     m_EditorSelection->createPlayerSelection();
     

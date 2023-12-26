@@ -140,6 +140,10 @@ public:
      * @return
      */
     static oxygine::spResAnim getNeutralTableAnim();
+    /**
+     * @brief Player::updatePlayerID
+     */
+    void updatePlayerID();
 #ifdef GRAPHICSUPPORT
     /**
      * @brief getColorTable
@@ -762,10 +766,6 @@ private:
      * @param pUnit
      */
     qint32 calculatePlayerStrength(Unit* pUnit) const;
-    /**
-     * @brief Player::updatePlayerID
-     */
-    void updatePlayerID();
 protected:
     GameMap* m_pMap{nullptr};
 

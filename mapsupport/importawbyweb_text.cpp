@@ -1051,6 +1051,8 @@ void GameMap::importAWByWebMap(QString file, EditorMenue* pMenu)
         m_headerInfo.m_mapAuthor = Settings::getInstance()->getUsername();
     }
     pMenu->optimizePlayers();
+    m_players[0]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
+    m_players[0]->setControlType(GameEnums::AiTypes::AiTypes_Human);
     // update the whole fucking map
     pLoadingScreen->setProgress(tr("Loading Sprites"), 90);
     updateSprites();

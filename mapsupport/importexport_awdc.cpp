@@ -469,6 +469,8 @@ void GameMap::importAW4Map(QString file, EditorMenue* pMenu)
         m_headerInfo.m_mapDescription = "";
     }
     pMenu->optimizePlayers();
+    m_players[0]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
+    m_players[0]->setControlType(GameEnums::AiTypes::AiTypes_Human);
     // update the whole fucking map
     updateSprites();
 }
