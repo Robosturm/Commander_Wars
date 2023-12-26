@@ -61,12 +61,12 @@ void Cursor::setMapPoint(qint32 x, qint32 y)
                 (y != m_MapPointY))
             {
                 Mainapp::getInstance()->getAudioManager()->playSound("switchfield.wav");
+                m_MapPointX = x;
+                m_MapPointY = y;
+                setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
+                // provide cursor move signal
+                emit sigCursorMoved(m_MapPointX, m_MapPointY);
             }
-            m_MapPointX = x;
-            m_MapPointY = y;
-            setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
-            // provide cursor move signal
-            emit sigCursorMoved(m_MapPointX, m_MapPointY);
         }
     }
 }
