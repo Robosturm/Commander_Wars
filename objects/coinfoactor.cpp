@@ -190,6 +190,7 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
 
 void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
 {
+    Mainapp::getInstance()->pauseRendering();
     GameManager* pGameManager = GameManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = nullptr;
@@ -452,7 +453,8 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         y += GameMap::getImageSize() * 2 + textAdvance;
     }
     setHeight(y + 100);
-    connect(this, &COInfoActor::sigShowLink, this, &COInfoActor::showLink, Qt::QueuedConnection);    
+    connect(this, &COInfoActor::sigShowLink, this, &COInfoActor::showLink, Qt::QueuedConnection);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)

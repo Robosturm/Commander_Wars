@@ -85,6 +85,8 @@ namespace oxygine
     {
         if (stop)
         {
+            oxygine::Input* input = &oxygine::Input::getInstance();
+            input->handlePausePointerEvents();
             m_timer.stop();
         }
         else

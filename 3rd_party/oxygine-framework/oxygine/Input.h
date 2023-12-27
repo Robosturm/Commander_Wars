@@ -1,6 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
+#include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
 
 #include "coreengine/memorymanagement.h"
 
@@ -38,6 +39,7 @@ namespace oxygine
         void sendPointerButtonEvent(spStage & stage, MouseButton button, qint32 x, qint32 y, float pressure, qint32 type, PointerState* ps);
         void sendPointerMotionEvent(spStage & stage, qint32 x, qint32 y, float pressure, PointerState* ps);
         void sendPointerWheelEvent(spStage & stage, const QPoint& dir, PointerState* ps);
+        void handlePausePointerEvents();
     private:
         explicit Input();
     private:
@@ -47,5 +49,9 @@ namespace oxygine
         PointerState m_pointerMouse;
         qint64 m_ids[MAX_TOUCHES + 1];
         bool m_multiTouch;
+        TouchEvent m_movePauseEvent{TouchEvent::__FIRST};
+        TouchEvent m_wheelPauseEvent{TouchEvent::__FIRST};
+        TouchEvent m_downPauseEvent{TouchEvent::__FIRST};
+        TouchEvent m_upPauseEvent{TouchEvent::__FIRST};
     };
 }
