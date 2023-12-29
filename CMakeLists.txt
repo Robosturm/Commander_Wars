@@ -423,25 +423,9 @@ if (UPDATESUPPORT AND NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         -DCOW_UPDATETARGET="${COW_UPDATETARGET}"
         -DCOW_INSTALLDIR="${COW_INSTALL_DIR}"
     )
-    include_directories("updater/zipSupport")
     set(${PROJECT_NAME}_UPDATE_SRCS
         updater/gameupdater.h updater/gameupdater.cpp
         updater/filedownloader.h updater/filedownloader.cpp
-        updater/zipSupport/qzipreader.cpp updater/zipSupport/qzipreader.h
-        updater/zipSupport/adler32.c
-        updater/zipSupport/crc32.c updater/zipSupport/crc32.h
-        updater/zipSupport/deflate.c updater/zipSupport/deflate.h
-        updater/zipSupport/gzguts.h
-        updater/zipSupport/gzlib.c
-        updater/zipSupport/gzread.c
-        updater/zipSupport/inflate.c updater/zipSupport/inflate.h
-        updater/zipSupport/inftrees.c updater/zipSupport/inftrees.h
-        updater/zipSupport/inffast.c updater/zipSupport/inffast.h
-        updater/zipSupport/inffixed.h
-        updater/zipSupport/trees.c updater/zipSupport/trees.h
-        updater/zipSupport/zlib.h
-        updater/zipSupport/uncompr.c
-        updater/zipSupport/zutil.c updater/zipSupport/zutil.h
     )
 else()
     message("Building without update support")
@@ -481,8 +465,26 @@ set(${PROJECT_NAME}_SmtpClient_SRCS
 ###################################################################################
 # source list of commander wars specific files
 ###################################################################################
+include_directories("zipSupport")
+
 set(${PROJECT_NAME}_SRCS
     main.cpp
+
+    zipSupport/qzipreader.cpp zipSupport/qzipreader.h
+    zipSupport/adler32.c
+    zipSupport/crc32.c zipSupport/crc32.h
+    zipSupport/deflate.c zipSupport/deflate.h
+    zipSupport/gzguts.h
+    zipSupport/gzlib.c
+    zipSupport/gzread.c
+    zipSupport/inflate.c zipSupport/inflate.h
+    zipSupport/inftrees.c zipSupport/inftrees.h
+    zipSupport/inffast.c zipSupport/inffast.h
+    zipSupport/inffixed.h
+    zipSupport/trees.c zipSupport/trees.h
+    zipSupport/zlib.h
+    zipSupport/uncompr.c
+    zipSupport/zutil.c zipSupport/zutil.h
 
     #objects --> i don't have a good place to put them right now
     objects/coinfoactor.cpp objects/coinfoactor.h

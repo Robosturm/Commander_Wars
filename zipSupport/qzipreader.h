@@ -46,6 +46,7 @@ public:
 
     FileInfo entryInfoAt(int index) const;
     QByteArray fileData(const QString &fileName) const;
+    QByteArray unzipContent(bool gzib) const;
     bool extractAll(const QString &destinationDir);
 
     enum Status {

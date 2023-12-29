@@ -1,4 +1,4 @@
-#include "updater/zipSupport/qzipreader.h"
+#include "zipSupport/qzipreader.h"
 #include <QtGlobal>
 #include <QDateTime>
 #include <QtEndian>
@@ -76,7 +76,7 @@ static void writeMSDosDate(uchar *dest, const QDateTime& dt)
     }
 }
 
-static int inflate(Bytef *dest, ulong *destLen, const Bytef *source, ulong sourceLen)
+static int inflate(Bytef *dest, ulong *destLen, const Bytef *source, ulong sourceLen, bool gzib)
 {
     z_stream stream;
     int err;
@@ -94,15 +94,28 @@ static int inflate(Bytef *dest, ulong *destLen, const Bytef *source, ulong sourc
     stream.zalloc = (alloc_func)nullptr;
     stream.zfree = (free_func)nullptr;
 
-    err = inflateInit2(&stream, -MAX_WBITS);
+    if (gzib)
+    {
+        constexpr qint32 GZIP_WINDOWS_BIT = 15 + 16;
+        err = inflateInit2(&stream, GZIP_WINDOWS_BIT);
+    }
+    else
+    {
+        err = inflateInit2(&stream, -MAX_WBITS);
+    }
     if (err != Z_OK)
+    {
         return err;
+    }
 
     err = inflate(&stream, Z_FINISH);
-    if (err != Z_STREAM_END) {
+    if (err != Z_STREAM_END)
+    {
         inflateEnd(&stream);
         if (err == Z_NEED_DICT || (err == Z_BUF_ERROR && stream.avail_in == 0))
+        {
             return Z_DATA_ERROR;
+        }
         return err;
     }
     *destLen = stream.total_out;
@@ -577,68 +590,6 @@ void QZipReaderPrivate::scanFiles()
     }
 }
 
-//////////////////////////////  Reader
-
-/*!
-    \class QZipReader::FileInfo
-    \internal
-    Represents one entry in the zip table of contents.
-*/
-
-/*!
-    \variable FileInfo::filePath
-    The full filepath inside the archive.
-*/
-
-/*!
-    \variable FileInfo::isDir
-    A boolean type indicating if the entry is a directory.
-*/
-
-/*!
-    \variable FileInfo::isFile
-    A boolean type, if it is one this entry is a file.
-*/
-
-/*!
-    \variable FileInfo::isSymLink
-    A boolean type, if it is one this entry is symbolic link.
-*/
-
-/*!
-    \variable FileInfo::permissions
-    A list of flags for the permissions of this entry.
-*/
-
-/*!
-    \variable FileInfo::crc
-    The calculated checksum as a crc type.
-*/
-
-/*!
-    \variable FileInfo::size
-    The total size of the unpacked content.
-*/
-
-/*!
-    \class QZipReader
-    \internal
-    \since 4.5
-
-    \brief the QZipReader class provides a way to inspect the contents of a zip
-    archive and extract individual files from it.
-
-    QZipReader can be used to read a zip archive either from a file or from any
-    device. An in-memory QBuffer for instance.  The reader can be used to read
-    which files are in the archive using fileInfoList() and entryInfoAt() but
-    also to extract individual files using fileData() or even to extract all
-    files in the archive using extractAll()
-*/
-
-/*!
-    Create a new zip archive that operates on the \a fileName.  The file will be
-    opened with the \a mode.
-*/
 QZipReader::QZipReader(const QString &archive, QIODevice::OpenMode mode)
 {
     auto f = std::make_unique<QFile>(archive);
@@ -754,15 +705,19 @@ QZipReader::FileInfo QZipReader::entryInfoAt(int index) const
 */
 QByteArray QZipReader::fileData(const QString &fileName) const
 {
+    int i = 0;
     d->scanFiles();
-    int i;
-    for (i = 0; i < d->fileHeaders.size(); ++i) {
+    for (i = 0; i < d->fileHeaders.size(); ++i)
+    {
         if (QString::fromLocal8Bit(d->fileHeaders.at(i).file_name) == fileName)
+        {
             break;
+        }
     }
     if (i == d->fileHeaders.size())
+    {
         return QByteArray();
-
+    }
     FileHeader header = d->fileHeaders.at(i);
 
     ushort version_needed = readUShort(header.h.version_needed);
@@ -793,26 +748,32 @@ QByteArray QZipReader::fileData(const QString &fileName) const
 
     //qDebug("file at %lld", d->device->pos());
     QByteArray compressed = d->device->read(compressed_size);
-    if (compression_method == CompressionMethodStored) {
+    if (compression_method == CompressionMethodStored)
+    {
         // no compression
         compressed.truncate(uncompressed_size);
         return compressed;
-    } else if (compression_method == CompressionMethodDeflated) {
+    }
+    else if (compression_method == CompressionMethodDeflated)
+    {
         // Deflate
         //qDebug("compressed=%d", compressed.size());
         compressed.truncate(compressed_size);
         QByteArray baunzip;
         ulong len = qMax(uncompressed_size,  1);
         int res;
-        do {
+        do
+        {
             baunzip.resize(len);
-            res = inflate((uchar*)baunzip.data(), &len,
-                          (const uchar*)compressed.constData(), compressed_size);
+            res = inflate(reinterpret_cast<uchar*>(baunzip.data()), &len,
+                          reinterpret_cast<const uchar*>(compressed.constData()), compressed_size, false);
 
             switch (res) {
             case Z_OK:
                 if ((int)len != baunzip.size())
+                {
                     baunzip.resize(len);
+                }
                 break;
             case Z_MEM_ERROR:
                 qWarning("QZip: Z_MEM_ERROR: Not enough memory");
@@ -936,6 +897,7 @@ bool QZipReader::extractAll(const QString &destinationDir)
     return true;
 }
 
+
 /*!
     \enum QZipReader::Status
 
@@ -963,4 +925,37 @@ QZipReader::Status QZipReader::status() const
 void QZipReader::close()
 {
     d->device->close();
+}
+
+QByteArray QZipReader::unzipContent(bool gzib) const
+{
+    QByteArray compressed = d->device->readAll();
+    QByteArray baunzip;
+    ulong len = compressed.size();
+    int res;
+    do
+    {
+        baunzip.resize(len);
+        res = inflate(reinterpret_cast<uchar*>(baunzip.data()), &len,
+                      reinterpret_cast<const uchar*>(compressed.constData()), compressed.size(), gzib);
+
+        switch (res) {
+        case Z_OK:
+            if ((int)len != baunzip.size())
+            {
+                baunzip.resize(len);
+            }
+            break;
+        case Z_MEM_ERROR:
+            qWarning("QZip: Z_MEM_ERROR: Not enough memory");
+            break;
+        case Z_BUF_ERROR:
+            len *= 2;
+            break;
+        case Z_DATA_ERROR:
+            qWarning("QZip: Z_DATA_ERROR: Input data is corrupted");
+            break;
+        }
+    } while (res == Z_BUF_ERROR);
+    return baunzip;
 }

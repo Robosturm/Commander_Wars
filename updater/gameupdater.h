@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QTimer>
 #include "updater/filedownloader.h"
-#include "updater/zipSupport/qzipreader.h"
+#include "zipSupport/qzipreader.h"
 
 class GameUpdater;
 using spGameUpdater = std::shared_ptr<GameUpdater>;
