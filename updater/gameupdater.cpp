@@ -24,8 +24,9 @@ GameUpdater::GameUpdater()
                        LATEST,
                        QString(COW_BUILD_TAG),
                        DOWNLOADTARGET),
-      m_downloadFile(DOWNLOADTARGET),
-      m_zipReader(&m_downloadFile)
+    m_downloadFile(DOWNLOADTARGET),
+    m_zipReader(&m_downloadFile),
+    m_updateTimer(this)
 {
     QString mode = Settings::getInstance()->getUpdateStep();
     if (mode == MODE_INSTALL)
@@ -34,9 +35,11 @@ GameUpdater::GameUpdater()
     }
     else
     {
+        connect(&m_updateTimer, &QTimer::timeout, this, &GameUpdater::updateUi, Qt::QueuedConnection);
         connect(&m_filedownloader, &FileDownloader::sigNewProgress, this, &GameUpdater::onNewProgress);
         connect(&m_filedownloader, &FileDownloader::sigNewState, this, &GameUpdater::onNewState);
         connect(&m_zipReader, &QZipReader::sigExtractProgress, this, &GameUpdater::onExtractProgress);
+        m_updateTimer.setSingleShot(false);
         spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
         pLoadingScreen->setProgress(tr("Cleaning up old update artifacts ..."), 0);
         Mainapp::getInstance()->redrawUi();
@@ -105,39 +108,47 @@ void GameUpdater::install()
 
 void GameUpdater::onNewState(FileDownloader::State state)
 {
+    m_updateTimer.stop();
     switch (state)
     {
-        case FileDownloader::State::DownloadingFailed:
-        {
-            GameConsole::print("Downloading new version failed.", GameConsole::eINFO);
-            continueBooting();
-            break;
-        }
-        case FileDownloader::State::SameVersion:
-        {
-            continueBooting();
-            break;
-        }
-        case FileDownloader::State::DownloadingNewVersion:
-        {
-            GameConsole::print("Start downloading new version.", GameConsole::eINFO);
-            break;
-        }
-        case FileDownloader::State::DownloadingFinished:
-        {
-            finishDownload();
-            break;
-        }
-        case FileDownloader::State::NewVersion:
-        {
-            spDialogMessageBox pMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Do you wist to update the current version?"), true, tr("Yes"), tr("No"));
-            spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-            pLoadingScreen->addChild(pMessageBox);
-            connect(pMessageBox.get(), &DialogMessageBox::sigOk, &m_filedownloader, &FileDownloader::startDownloading, Qt::QueuedConnection);
-            connect(pMessageBox.get(), &DialogMessageBox::sigCancel, this, &GameUpdater::continueBooting, Qt::QueuedConnection);
-            break;
-        }
+    case FileDownloader::State::DownloadingFailed:
+    {
+        GameConsole::print("Downloading new version failed.", GameConsole::eINFO);
+        continueBooting();
+        break;
     }
+    case FileDownloader::State::SameVersion:
+    {
+        continueBooting();
+        break;
+    }
+    case FileDownloader::State::DownloadingNewVersion:
+    {
+        GameConsole::print("Start downloading new version.", GameConsole::eINFO);
+        break;
+    }
+    case FileDownloader::State::DownloadingFinished:
+    {
+        finishDownload();
+        break;
+    }
+    case FileDownloader::State::NewVersion:
+    {
+        spDialogMessageBox pMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Do you wist to update the current version?"), true, tr("Yes"), tr("No"));
+        spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+        pLoadingScreen->addChild(pMessageBox);
+        connect(pMessageBox.get(), &DialogMessageBox::sigOk, &m_filedownloader, &FileDownloader::startDownloading, Qt::QueuedConnection);
+        connect(pMessageBox.get(), &DialogMessageBox::sigCancel, this, &GameUpdater::continueBooting, Qt::QueuedConnection);
+        m_updateTimer.start(33);
+        break;
+    }
+    }
+}
+
+void GameUpdater::updateUi()
+{
+    Mainapp::getInstance()->redrawUi();
+    QCoreApplication::processEvents();
 }
 
 void GameUpdater::finishDownload()

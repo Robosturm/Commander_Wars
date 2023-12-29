@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QTimer>
 #include "updater/filedownloader.h"
 #include "updater/zipSupport/qzipreader.h"
 
@@ -25,6 +26,7 @@ public slots:
     void onExtractProgress(qint32 progress);
 private slots:
     void continueBooting();
+    void updateUi();
 private:
     void finishDownload();
     void install();
@@ -33,5 +35,6 @@ private:
     QFile m_downloadFile;
     QZipReader m_zipReader;
     bool m_continued{false};
+    QTimer m_updateTimer;
 };
 
