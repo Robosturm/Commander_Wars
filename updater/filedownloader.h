@@ -12,6 +12,7 @@ public:
     enum class State
     {
         SameVersion,
+        NewVersion,
         DownloadingNewVersion,
         DownloadingFailed,
         DownloadingFinished,
@@ -27,6 +28,8 @@ public:
 signals:
     void sigNewProgress(qint64 bytesReceived, qint64 bytesTotal);
     void sigNewState(State state);
+public slots:
+    void startDownloading();
 private slots:
     void onResponseFinished(QNetworkReply* pReply);
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
@@ -41,6 +44,7 @@ private:
     QString m_baseUrl;
     QString m_resolveEnd;
     QString m_currentTag;
+    QString m_latestTag;
     QUrl m_requestUrl;
 
     bool m_downloading{false};

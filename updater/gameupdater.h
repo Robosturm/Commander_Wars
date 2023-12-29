@@ -23,8 +23,9 @@ public slots:
     void onNewState(FileDownloader::State state);
     void onNewProgress(qint64 bytesReceived, qint64 bytesTotal);
     void onExtractProgress(qint32 progress);
-private:
+private slots:
     void continueBooting();
+private:
     void finishDownload();
     void install();
 private:

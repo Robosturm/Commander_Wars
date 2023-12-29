@@ -1,6 +1,7 @@
 #include "updater/gameupdater.h"
 
 #include "objects/loadingscreen.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
@@ -125,6 +126,15 @@ void GameUpdater::onNewState(FileDownloader::State state)
         case FileDownloader::State::DownloadingFinished:
         {
             finishDownload();
+            break;
+        }
+        case FileDownloader::State::NewVersion:
+        {
+            spDialogMessageBox pMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Do you wist to update the current version?"), true, tr("Yes"), tr("No"));
+            spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+            pLoadingScreen->addChild(pMessageBox);
+            connect(pMessageBox.get(), &DialogMessageBox::sigOk, &m_filedownloader, &FileDownloader::startDownloading, Qt::QueuedConnection);
+            connect(pMessageBox.get(), &DialogMessageBox::sigCancel, this, &GameUpdater::continueBooting, Qt::QueuedConnection);
             break;
         }
     }
