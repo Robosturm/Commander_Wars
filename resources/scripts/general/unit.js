@@ -237,7 +237,8 @@ var UNIT =
 
     canAttackStealthedUnit : function(attacker, defender, map)
     {
-        if (attacker.getBaseMaxRange() === 1)
+        if (attacker.getBaseMaxRange() === 1 ||
+            attacker.hasDirectWeapon())
         {
             var attackerType = attacker.getUnitType();
             attackerType = UNIT.unitTypeToGround(attackerType);
