@@ -304,7 +304,7 @@ var Constructor = function()
     };
     this.getAiCoUnitBonus = function(co, unit, map)
     {
-        if (unit.getUnitID !== "INFANTRY")
+        if (unit.getUnitID() !== "INFANTRY")
         {
             if (unit.getUnitType() === GameEnums.UnitType_Infantry)
             {
