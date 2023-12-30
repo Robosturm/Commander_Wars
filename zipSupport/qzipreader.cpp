@@ -96,8 +96,8 @@ static int inflate(Bytef *dest, ulong *destLen, const Bytef *source, ulong sourc
 
     if (gzib)
     {
-        constexpr qint32 GZIP_WINDOWS_BIT = 15 + 16;
-        err = inflateInit2(&stream, GZIP_WINDOWS_BIT);
+        constexpr qint32 WINDOWS_BIT = 15 + 16;
+        err = inflateInit2(&stream, WINDOWS_BIT);
     }
     else
     {
@@ -111,6 +111,7 @@ static int inflate(Bytef *dest, ulong *destLen, const Bytef *source, ulong sourc
     err = inflate(&stream, Z_FINISH);
     if (err != Z_STREAM_END)
     {
+        qWarning(stream.msg);
         inflateEnd(&stream);
         if (err == Z_NEED_DICT || (err == Z_BUF_ERROR && stream.avail_in == 0))
         {
@@ -955,6 +956,11 @@ QByteArray QZipReader::unzipContent(bool gzib) const
         case Z_DATA_ERROR:
             qWarning("QZip: Z_DATA_ERROR: Input data is corrupted");
             break;
+        default:
+        {
+            qWarning("QZip: Unknown error %d", res);
+            break;
+        }
         }
     } while (res == Z_BUF_ERROR);
     return baunzip;

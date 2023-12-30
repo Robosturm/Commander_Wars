@@ -259,7 +259,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
 #ifdef UPDATESUPPORT
             GameUpdater::cleanUpOldArtifacts();
             QString updateStep = Settings::getInstance()->getUpdateStep();
-            if (!getSlave())
+            if (!getSlave() && !Settings::getInstance()->getAiSlave())
             {
                 if ((!getGameVersion().endsWith("dev") && Settings::getInstance()->getAutomaticUpdates()) ||
                     updateStep == GameUpdater::MODE_FORCE ||

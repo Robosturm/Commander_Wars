@@ -848,6 +848,9 @@ set(${PROJECT_NAME}_SRCS
     # ui
     ui_reader/uifactory.cpp ui_reader/uifactory.h
     ui_reader/createdgui.cpp ui_reader/createdgui.h
+
+    # awbw replayer reader for ai training support
+    awbwReplayReader/awbwreplayerreader.h awbwReplayReader/awbwreplayerreader.cpp
 )
 
 ##############################################################################

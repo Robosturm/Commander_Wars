@@ -72,7 +72,6 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     setObjectName("GameMenue");
 #endif
     CONSOLE_PRINT("Creating game menu", GameConsole::eDEBUG);
-    loadingAiPipe();
     Interpreter::setCppOwnerShip(this);
     loadHandling();
     m_pNetworkInterface = pNetworkInterface;
@@ -174,7 +173,6 @@ GameMenue::GameMenue(QString map, bool saveGame)
     setObjectName("GameMenue");
 #endif
     CONSOLE_PRINT("Creating game menu", GameConsole::eDEBUG);
-    loadingAiPipe();
     Interpreter::setCppOwnerShip(this);
     loadHandling();
     loadGameMenue();
@@ -2387,7 +2385,8 @@ void GameMenue::startGame()
     {
         return;
     }
-    CONSOLE_PRINT("GameMenue::startGame", GameConsole::eDEBUG);
+    CONSOLE_PRINT("GameMenue::startGame", GameConsole::eDEBUG);    
+    loadingAiPipe();
     auto mapHash = m_pMap->getMapHash();
     if (m_pMap.get() != nullptr &&
         m_pMap->getGameScript() != nullptr)
