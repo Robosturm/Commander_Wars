@@ -157,10 +157,6 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     {
         startDespawnTimer();
     }
-    if (Settings::getInstance()->getAutoSavingCycle() > 0)
-    {
-        m_enabledAutosaving = true;
-    }
 }
 
 GameMenue::GameMenue(QString map, bool saveGame)
@@ -177,10 +173,6 @@ GameMenue::GameMenue(QString map, bool saveGame)
     loadHandling();
     loadGameMenue();
     loadUIButtons();
-    if (Settings::getInstance()->getAutoSavingCycle() > 0)
-    {
-        m_enabledAutosaving = true;
-    }
 }
 
 void GameMenue::loadingAiPipe()
@@ -2323,19 +2315,23 @@ void GameMenue::doSaveMap()
         CONSOLE_PRINT("Saving map under " + m_saveFile, GameConsole::eDEBUG);
         if (m_saveAllowed)
         {
+            Mainapp::getInstance()->pauseRendering();
             if (m_saveFile.endsWith(".sav") || m_saveFile.endsWith(".msav"))
             {
                 QFile file(m_saveFile);
-                file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-                QDataStream stream(&file);
-                stream.setVersion(QDataStream::Version::Qt_6_5);
-                m_pMap->setReplayActionCount(m_ReplayRecorder.getCount());
-                m_pMap->serializeObject(stream);
-                file.close();
-                Settings::getInstance()->setLastSaveGame(m_saveFile);
+                if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+                {
+                    QDataStream stream(&file);
+                    stream.setVersion(QDataStream::Version::Qt_6_5);
+                    m_pMap->setReplayActionCount(m_ReplayRecorder.getCount());
+                    m_pMap->serializeObject(stream);
+                    file.close();
+                    Settings::getInstance()->setLastSaveGame(m_saveFile);
+                }
             }
             m_saveMap = false;
             m_saveFile = "";
+            Mainapp::getInstance()->continueRendering();
             if (m_exitAfterSave)
             {
                 exitGame();

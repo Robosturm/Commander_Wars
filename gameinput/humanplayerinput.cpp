@@ -86,6 +86,7 @@ void HumanPlayerInput::rightClickUp(qint32, qint32)
 
 void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
 {
+    Mainapp::getInstance()->pauseRendering();
     bool isViewPlayer = (m_pMap->getCurrentViewPlayer() == m_pPlayer);
     if (isCurrentPlayer(m_pPlayer) ||
         m_pPlayer == nullptr)
@@ -159,6 +160,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
     {
         // do nothing
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 bool HumanPlayerInput::isCurrentPlayer(Player* pPlayer) const
@@ -209,6 +211,7 @@ void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
 
 void HumanPlayerInput::cancelSelection(qint32 x, qint32 y)
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("HumanPlayerInput::cancelSelection", GameConsole::eDEBUG);
     Unit* pUnit = m_pGameAction->getTargetUnit();
     if (pUnit != nullptr && !pUnit->getHasMoved() &&
@@ -231,6 +234,7 @@ void HumanPlayerInput::cancelSelection(qint32 x, qint32 y)
     {
         cleanUpInput();
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::cancelActionInput()
@@ -393,6 +397,7 @@ void HumanPlayerInput::clearMarkedFields()
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
+    Mainapp::getInstance()->pauseRendering();
     if (m_pMenu != nullptr &&
         GameAnimationFactory::getAnimationCount() == 0 &&
         m_leftClickEnabled)
@@ -606,10 +611,12 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         }
         m_lastClickPoint = QPoint(pCursor->getMapPointX(), pCursor->getMapPointY());
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::showInfoMenu(qint32 x, qint32 y)
 {
+    Mainapp::getInstance()->pauseRendering();
     // prepare action
     m_pGameAction = MemoryManagement::create<GameAction>(m_pMap);
     m_pGameAction->setTarget(QPoint(x, y));
@@ -635,7 +642,7 @@ void HumanPlayerInput::showInfoMenu(qint32 x, qint32 y)
         Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
         createActionMenu(possibleActions, x, y);
     }
-
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::markedFieldSelected(QPoint point)
@@ -742,6 +749,7 @@ void HumanPlayerInput::getNextStepData()
 
 void HumanPlayerInput::finishAction()
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("HumanPlayerInput::finishAction", GameConsole::eDEBUG);
     if (m_pGameAction.get() != nullptr)
     {
@@ -790,6 +798,7 @@ void HumanPlayerInput::finishAction()
         m_pGameAction.reset();
     }
     cleanUpInput();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x, qint32 y)
@@ -846,6 +855,7 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
 
 void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Selecting unit", GameConsole::eDEBUG);
     Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
     
@@ -884,6 +894,7 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     }
     m_pUnitPathFindingSystem->explore();
     createMarkedMoveFields();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::createMarkedField(QPoint point, QColor color)

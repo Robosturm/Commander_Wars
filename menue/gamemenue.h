@@ -543,8 +543,6 @@ protected:
     QVector<Userdata> m_userData;
     QVector<Userdata> m_requestData;
 
-    bool m_enabledAutosaving{false};
-
     QString m_saveFile;
     bool m_saveMap{false};
     bool m_exitAfterSave{false};

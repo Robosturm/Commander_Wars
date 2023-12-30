@@ -185,38 +185,40 @@ void AudioManager::readSoundCacheFromXml(QString folder)
         CONSOLE_PRINT_MODULE("Loading sound cache from " + folder + "res.xml", GameConsole::eDEBUG, GameConsole::eAudio);
         QDomDocument document;
         QFile file(folder + "res.xml");
-        file.open(QIODevice::ReadOnly);
-        QString error;
-        qint32 line;
-        qint32 column;
-        bool loaded = document.setContent(&file, &error, &line, &column);
-        if (loaded)
+        if (file.open(QIODevice::ReadOnly))
         {
-            auto rootElement = document.documentElement();
-            auto node = rootElement.firstChild();
-            while (!node.isNull())
+            QString error;
+            qint32 line;
+            qint32 column;
+            bool loaded = document.setContent(&file, &error, &line, &column);
+            if (loaded)
             {
-                while (node.isComment())
+                auto rootElement = document.documentElement();
+                auto node = rootElement.firstChild();
+                while (!node.isNull())
                 {
+                    while (node.isComment())
+                    {
+                        node = node.nextSibling();
+                    }
+                    if (!node.isNull())
+                    {
+                        if (node.nodeName() == "sound")
+                        {
+                            auto element = node.toElement();
+                            QString file = element.attribute("file");
+                            qint32 cacheSize = element.attribute("cachesize").toInt();
+                            fillSoundCache(cacheSize, folder, file);
+                        }
+                    }
                     node = node.nextSibling();
                 }
-                if (!node.isNull())
-                {
-                    if (node.nodeName() == "sound")
-                    {
-                        auto element = node.toElement();
-                        QString file = element.attribute("file");
-                        qint32 cacheSize = element.attribute("cachesize").toInt();
-                        fillSoundCache(cacheSize, folder, file);
-                    }
-                }
-                node = node.nextSibling();
             }
-        }
-        else
-        {
-            CONSOLE_PRINT_MODULE("Unable to load: " + folder + "res.xml", GameConsole::eERROR, GameConsole::eAudio);
-            CONSOLE_PRINT_MODULE("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR, GameConsole::eAudio);
+            else
+            {
+                CONSOLE_PRINT_MODULE("Unable to load: " + folder + "res.xml", GameConsole::eERROR, GameConsole::eAudio);
+                CONSOLE_PRINT_MODULE("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR, GameConsole::eAudio);
+            }
         }
     }
 }

@@ -111,7 +111,6 @@ static int inflate(Bytef *dest, ulong *destLen, const Bytef *source, ulong sourc
     err = inflate(&stream, Z_FINISH);
     if (err != Z_STREAM_END)
     {
-        qWarning(stream.msg);
         inflateEnd(&stream);
         if (err == Z_NEED_DICT || (err == Z_BUF_ERROR && stream.avail_in == 0))
         {
