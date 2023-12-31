@@ -188,7 +188,11 @@ jobs:
       if: matrix.target == 'android'
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --target all -j4
-            
+        
+    - name: build artifacts
+      if: matrix.COMPILER_VERSION != 'win64_mingw'
+      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createPdb     
+      
     - name: Bundle APK
       if: matrix.target == 'android'
       env:

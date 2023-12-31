@@ -226,10 +226,9 @@ set(COW_ANDROID_VERSION_CODE "47")
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}")
-        set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}")
+        set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj -g ${CMAKE_CXX_FLAGS}")
+        set(CMAKE_C_FLAGS "-Wa,-mbig-obj -g ${CMAKE_C_FLAGS}")
         add_definitions(-DWIN32_LEAN_AND_MEAN)
-        add_link_options("-Wl,-Map=commander_wars.map")
     endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     if ("${ANDROID_ABI}" STREQUAL armeabi-v7a)
@@ -1271,6 +1270,11 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
                 --no-quick-import
                 --no-translations
         COMMENT "Running windeployqt..."
+    )
+    # create pdb information
+    add_custom_target(createPdb
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cv2pdb/cv2pdb.exe ${CMAKE_INSTALL_PREFIX}/Commander_Wars.exe
+        COMMENT "Running cv2pdb.exe..."
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     message("Build will run macdeployqt ${MACDEPLOYQT_EXECUTABLE}")

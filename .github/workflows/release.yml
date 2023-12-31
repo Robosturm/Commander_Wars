@@ -258,6 +258,10 @@ jobs:
 #----------------------------------------------------------------------------------------------------------------------------------------------
         
     - name: build artifacts
+      if: matrix.COMPILER_VERSION != 'win64_mingw'
+      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createPdb      
+        
+    - name: build artifacts
       if: matrix.target != 'android'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createReleaseZip
       
