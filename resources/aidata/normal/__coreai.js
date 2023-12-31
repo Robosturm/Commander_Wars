@@ -521,14 +521,16 @@ var COREAI =
     },
 
     fundsModes : [[0,     0, 0, 0],
-                  [2, 12000, 0, 1],
-                  [3, 7000,  0, 1],
+                  [0, 12000, 0, 1],
+                  [2, 12000, 0, 2],
+                  [0, 7000,  0, 1],
                   [6, 5500,  0, 1],
                   [10,   0,  0, 1],
                   [3, 18000, 0, 2],
                   [0, 22000, 0, 3],
-                  [6, 22000, 1, 3],
-                  [6, 30000, 2, 3],],
+                  [3, 22000, 1, 3],
+                  [0, 30000, 2, 3],
+                  [0, 33000, 3, 3],],
 
     buildUnitSimpleProductionSystem : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
     {
@@ -547,9 +549,11 @@ var COREAI =
         var productionCount = buildings.getBuildingGroupCount(COREAI.productionBuildings, true);
         var variables = system.getVariables();
         var turnProducedUnits = system.getCurrentTurnProducedUnitsCounter();
-        if (productionCount > COREAI.targetProductionCount - turnProducedUnits)
+        var toProduceUnits = COREAI.targetProductionCount - turnProducedUnits;
+        if (toProduceUnits > 0 &&
+            productionCount > toProduceUnits)
         {
-            productionCount = COREAI.targetProductionCount - turnProducedUnits;
+            productionCount = toProduceUnits - 1;
         }
         if (productionCount < 0)
         {
@@ -575,9 +579,10 @@ var COREAI =
             {
                 maxBaseCost = COREAI.minMaxFundsPerFactory;
             }
-            else if (maxBaseCost > COREAI.minMaxFundsOvercharge)
+            else if (maxBaseCost > COREAI.minMaxFundsOvercharge &&
+                     productionCount > 0)
             {
-                maxBaseCost += (maxBaseCost - COREAI.minMaxFundsOvercharge) * (productionCount - 1);
+                maxBaseCost = maxBaseCost + (maxBaseCost - COREAI.minMaxFundsOvercharge) * (productionCount - 1);
             }
         }
         for (var i = COREAI.fundsModes.length - 1; i >= 0; --i)
