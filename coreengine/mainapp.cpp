@@ -686,26 +686,29 @@ void Mainapp::keyReleaseEvent(QKeyEvent *event)
 
 bool Mainapp::event(QEvent *event)
 {
-    FocusableObject* pObj(FocusableObject::getFocusedObject());
     bool handled = false;
-    if (pObj != nullptr)
+    if (!m_shuttingDown)
     {
-        handled = FocusableObject::handleEvent(event);
-    }
-    if (!handled)
-    {
-        if (event->type() == QEvent::InputMethod)
+        FocusableObject* pObj(FocusableObject::getFocusedObject());
+        if (pObj != nullptr)
         {
-#ifdef GRAPHICSUPPORT
-            QInputMethodEvent* inputEvent = static_cast<QInputMethodEvent*>(event);
-            handled = keyInputMethodEvent(inputEvent);
-#else
-            handled = oxygine::GameWindow::event(event);
-#endif
+            handled = FocusableObject::handleEvent(event);
         }
-        else
+        if (!handled)
         {
-            handled = oxygine::GameWindow::event(event);
+            if (event->type() == QEvent::InputMethod)
+            {
+#ifdef GRAPHICSUPPORT
+                QInputMethodEvent* inputEvent = static_cast<QInputMethodEvent*>(event);
+                handled = keyInputMethodEvent(inputEvent);
+#else
+                    handled = oxygine::GameWindow::event(event);
+#endif
+            }
+            else
+            {
+                handled = oxygine::GameWindow::event(event);
+            }
         }
     }
     return handled;
