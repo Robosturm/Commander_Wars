@@ -61,117 +61,76 @@ QString getExeptionName(EXCEPTION_POINTERS *inExceptionInfo)
     return cExceptionType;
 }
 
-QString _addressToLine( const QString &inProgramName, void const * const inAddr )
+void _fetchError(QStringList & frameList)
 {
-    QProcess* crashProcess = CrashReporter::getCrashProcess();
-    if (crashProcess->state() == QProcess::NotRunning)
-    {
-        const QString  cAddrStr = QStringLiteral("0x%1").arg(quintptr(inAddr), 16, 16, QChar('0'));
-        // Uses addr2line
-        const QString  cProgram = QStringLiteral("%1/addr2line.exe").arg(QCoreApplication::applicationDirPath());
-        if (QFile::exists(cProgram))
-        {
-            const QStringList  cArguments =
-                {
-                    "-f",
-                    "-p",
-                    "-e", inProgramName,
-                    cAddrStr
-                };
-            crashProcess->setProgram(cProgram);
-            crashProcess->setArguments(cArguments);
-            crashProcess->start(QIODevice::ReadOnly);
-            if (!crashProcess->waitForFinished())
-            {
-                return QStringLiteral( "* Error running command\n   %1 %2\n   %3" ).arg(
-                    crashProcess->program(),
-                    crashProcess->arguments().join( ' ' ),
-                    crashProcess->errorString() );
-            }
-            const QString  cLocationStr = QString( crashProcess->readAll() ).trimmed();
-            if (cLocationStr == cAddrStr)
-            {
-                return cAddrStr;
-            }
-            else
-            {
-                return cLocationStr;
-            }
-        }
-        else
-        {
-            return cAddrStr;
-        }
-    }
-    else
-    {
-        return "Crash reporting already running.\n Critical error caused another thread to crash. Only one crash can be gathered and reported";
-    }
+    DWORD dw = GetLastError();
+    frameList += (QString("Failed error: ") + QString::number(dw));
 }
 
 QStringList _stackTrace( CONTEXT* context )
 {
     HANDLE process = GetCurrentProcess();
     HANDLE thread = GetCurrentThread();
-
-    SymInitialize(process, nullptr, true);
-
+    QStringList frameList;
     STACKFRAME64 stackFrame;
     memset(&stackFrame, 0, sizeof(STACKFRAME64));
 
     DWORD   image;
-
 #ifdef _M_IX86
-    image = IMAGE_FILE_MACHINE_I386;
-
-    stackFrame.AddrPC.Offset = context->Eip;
-    stackFrame.AddrPC.Mode = AddrModeFlat;
-    stackFrame.AddrStack.Offset = context->Esp;
-    stackFrame.AddrStack.Mode = AddrModeFlat;
+    image                 = IMAGE_FILE_MACHINE_I386;
+    stackFrame.AddrPC.Offset    = context->Eip;
+    stackFrame.AddrPC.Mode      = AddrModeFlat;
     stackFrame.AddrFrame.Offset = context->Ebp;
-    stackFrame.AddrFrame.Mode = AddrModeFlat;
+    stackFrame.AddrFrame.Mode   = AddrModeFlat;
+    stackFrame.AddrStack.Offset = context->Esp;
+    stackFrame.AddrStack.Mode   = AddrModeFlat;
 #elif _M_X64
-    image = IMAGE_FILE_MACHINE_AMD64;
-
-    stackFrame.AddrPC.Offset = context->Rip;
-    stackFrame.AddrPC.Mode = AddrModeFlat;
+    image                 = IMAGE_FILE_MACHINE_AMD64;
+    stackFrame.AddrPC.Offset    = context->Rip;
+    stackFrame.AddrPC.Mode      = AddrModeFlat;
     stackFrame.AddrFrame.Offset = context->Rsp;
-    stackFrame.AddrFrame.Mode = AddrModeFlat;
+    stackFrame.AddrFrame.Mode   = AddrModeFlat;
     stackFrame.AddrStack.Offset = context->Rsp;
-    stackFrame.AddrStack.Mode = AddrModeFlat;
-#else \
-    // see http://theorangeduck.com/page/printing-stack-trace-mingw
-#error You need to define the stack frame layout for this architecture
+    stackFrame.AddrStack.Mode   = AddrModeFlat;
+#elif _M_IA64
+    image                 = IMAGE_FILE_MACHINE_IA64;
+    stackFrame.AddrPC.Offset    = context->StIIP;
+    stackFrame.AddrPC.Mode      = AddrModeFlat;
+    stackFrame.AddrFrame.Offset = context->IntSp;
+    stackFrame.AddrFrame.Mode   = AddrModeFlat;
+    stackFrame.AddrBStore.Offset= context->RsBSP;
+    stackFrame.AddrBStore.Mode  = AddrModeFlat;
+    stackFrame.AddrStack.Offset = context->IntSp;
+    stackFrame.AddrStack.Mode   = AddrModeFlat;
+#else
+#error "Unsupported platform"
 #endif
-    QRegularExpression sSymbolMatching("^.*(_Z[^ ]+).*$");
-    QStringList frameList;
     try
     {
         qint32         frameNumber = 0;
-        while (StackWalk64(image, process, thread,
-                           &stackFrame, context, nullptr,
-                           SymFunctionTableAccess64, SymGetModuleBase64, nullptr))
+        while (StackWalk64(image, process, thread, &stackFrame, context, nullptr,
+                         SymFunctionTableAccess64, SymGetModuleBase64, nullptr))
         {
-            QString  locationStr = _addressToLine(CrashReporter::getProgramName(), reinterpret_cast<void*>(stackFrame.AddrPC.Offset));
-            // match the mangled name and demangle if we can
-            QRegularExpressionMatch match = sSymbolMatching.match(locationStr);
-            const QString cSymbol(match.captured(1));
-
-            if (!cSymbol.isNull())
+            char buffer[sizeof(SYMBOL_INFO) + MAX_SYM_NAME * sizeof(TCHAR)];
+            PSYMBOL_INFO pSymbol = (PSYMBOL_INFO)buffer;
+            DWORD64  dwDisplacement = 0;
+            pSymbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+            pSymbol->MaxNameLen = MAX_SYM_NAME;
+            QString symbolName = "Unknown";
+            if (!SymFromAddr(process, stackFrame.AddrPC.Offset, &dwDisplacement, pSymbol))
             {
-                qint32 demangleStatus = 0;
-                const char *cFunctionName = abi::__cxa_demangle( cSymbol.toLatin1().constData(), nullptr, nullptr, &demangleStatus);
-                if ( demangleStatus == 0 )
-                {
-                    locationStr.replace(cSymbol, cFunctionName);
-                }
+                _fetchError(frameList);
             }
-            QString line = QStringLiteral("[%1] 0x%2 %3")
-                               .arg(QString::number(frameNumber))
-                               .arg(quintptr(reinterpret_cast<void*>(stackFrame.AddrPC.Offset)), 16, 16, QChar('0'))
-                               .arg(locationStr);
-            frameList += line;
-
+            else
+            {
+                symbolName = QString(pSymbol->Name);
+            }
+            frameList += QStringLiteral("Frame : %1 PC address: 0x%2 Stack address: 0x%3 Frame address:  0x%4 Symbol name: %5")
+                             .arg(frameNumber)
+                             .arg(stackFrame.AddrPC.Offset, 16, 16, QChar('0'))
+                             .arg(stackFrame.AddrStack.Offset  , 16, 16, QChar('0'))
+                             .arg(stackFrame.AddrFrame.Offset, 16, 16, QChar('0'))
+                             .arg(symbolName);
             ++frameNumber;
             // anything above isn't really helpful
             if (frameNumber > CrashReporter::STACKSIZE)
@@ -184,7 +143,7 @@ QStringList _stackTrace( CONTEXT* context )
     {
         frameList.append("Error while determing stacktrace crashing without stacktrace.");
     }
-    SymCleanup(GetCurrentProcess());
+    SymCleanup(process);
     return frameList;
 }
 
@@ -195,14 +154,7 @@ LONG WINAPI _winExceptionHandler( EXCEPTION_POINTERS *inExceptionInfo )
     QStringList frameInfoList;
     if ( inExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_STACK_OVERFLOW )
     {
-        // https://stackoverflow.com/a/38019482
-#ifdef _M_IX86
-        frameInfoList += _addressToLine( CrashReporter::getProgramName(), reinterpret_cast<void*>(inExceptionInfo->ContextRecord->Eip) );
-#elif _M_X64
-        frameInfoList += _addressToLine( CrashReporter::getProgramName(), reinterpret_cast<void*>(inExceptionInfo->ContextRecord->Rip) );
-#else
-#error You need to implement the call to _addressToLine for this architecture
-#endif
+        CrashReporter::_writeLog(getExeptionName(inExceptionInfo), frameInfoList);
     }
     else
     {
@@ -215,4 +167,15 @@ LONG WINAPI _winExceptionHandler( EXCEPTION_POINTERS *inExceptionInfo )
 void CrashReporter::setOsSignalHandler()
 {
     SetUnhandledExceptionFilter( _winExceptionHandler );
+
+    HANDLE process = GetCurrentProcess();
+    SymSetOptions(SYMOPT_UNDNAME |
+                  SYMOPT_DEFERRED_LOADS |
+                  SYMOPT_ALLOW_ZERO_ADDRESS |
+                  SYMOPT_ALLOW_ABSOLUTE_SYMBOLS |
+                  SYMOPT_DEBUG);
+    if (!SymInitialize(process, nullptr, true))
+    {
+        qWarning("SymInitialize returned error : %d", GetLastError());
+    }
 }
