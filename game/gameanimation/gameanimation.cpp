@@ -37,6 +37,7 @@ void GameAnimation::restart()
 {    
     if (m_pMap != nullptr)
     {
+        Mainapp::getInstance()->pauseRendering();
         m_stopped = false;
         m_previousAnimation.reset();
         for (auto & tween : m_stageTweens)
@@ -45,6 +46,7 @@ void GameAnimation::restart()
         }
         m_pMap->addChild(getSharedPtr<Actor>());
         start();
+        Mainapp::getInstance()->continueRendering();
     }
 }
 
@@ -52,6 +54,7 @@ void GameAnimation::start()
 {
     if (!m_started)
     {
+        Mainapp::getInstance()->pauseRendering();
         m_started = true;
         setVisible(true);
         m_previousAnimation.reset();
@@ -61,6 +64,7 @@ void GameAnimation::start()
         {
             pAudioThread->playSound(data.soundFile, data.loops, static_cast<float>(data.delayMs) / Settings::getInstance()->getAnimationSpeed(), data.volume, data.stopOldestSound);
         }
+        Mainapp::getInstance()->continueRendering();
     }
 }
 
@@ -83,12 +87,11 @@ GameMap *GameAnimation::getMap() const
 
 void GameAnimation::stop()
 {
-    for (auto & tween : m_stageTweens)
-    {
-        tween->complete();
-    }
+    Mainapp::getInstance()->pauseRendering();
     m_stopped = true;
     setVisible(false);
+    emitFinished();
+    Mainapp::getInstance()->continueRendering();
 }
 
 qint32 GameAnimation::getFontWidth(const QString & font, const QString & text) const
@@ -393,6 +396,7 @@ bool GameAnimation::onFinished(bool skipping)
     if (!m_finished)
     {
         m_finished = true;
+        Mainapp::getInstance()->pauseRendering();
         m_skipping |= skipping;
         GameAnimationFactory::removeAnimationFromQueue(getSharedPtr<GameAnimation>());
         if (!m_started)
@@ -420,10 +424,6 @@ bool GameAnimation::onFinished(bool skipping)
                                JsThis::getJsThis(m_pMap)});
             pInterpreter->doFunction(m_jsPostActionObject, m_jsPostActionFunction, args);
         }
-        for (auto & tween : m_stageTweens)
-        {
-            tween->complete();
-        }
         m_stageTweens.clear();
         GameAnimationFactory::removeAnimation(getSharedPtr<GameAnimation>(), m_skipping, false);
         if (!skipping && GameAnimationFactory::getAnimationCount() > 0)
@@ -434,6 +434,7 @@ bool GameAnimation::onFinished(bool skipping)
                 emit GameAnimationFactory::getInstance()->animationsFinished();
             }
         }
+        Mainapp::getInstance()->continueRendering();
     }
     return true;
 }

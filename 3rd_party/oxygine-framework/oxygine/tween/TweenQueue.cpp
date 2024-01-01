@@ -13,20 +13,6 @@ namespace oxygine
         return t;
     }
 
-    void TweenQueue::complete(timeMS deltaTime)
-    {
-        if (m_status == status_remove)
-        {
-            return;
-        }
-        UpdateState us;
-        us.dt = deltaTime;
-        while (m_status != status_done)
-        {
-            update(*m_client, us);
-        }
-    }
-
     void TweenQueue::_start(Actor& actor)
     {
         if (m_tweens.size() > 0)

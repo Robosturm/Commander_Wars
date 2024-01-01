@@ -407,6 +407,7 @@ void GameAnimationFactory::finishAllAnimations()
         {
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameAnimationFactory::finishAllAnimationsWithEmitFinished()

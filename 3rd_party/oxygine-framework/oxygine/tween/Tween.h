@@ -136,11 +136,7 @@ public:
     {
         m_detach = detach;
     }
-    /**immediately completes tween, calls doneCallback and mark tween as completed and removes self from Actor. If tween has infinity loops (=-1) then do nothing*/
-    virtual void complete(timeMS deltaTime = timeMS(TWEEN_COMPLETE_DT));
-
     /**removes self from Actor, complete callback not called*/
-    void removeFromActor();
     void start(Actor& actor);
     void update(Actor& actor, const UpdateState& us);
     static float calcEase(QEasingCurve::Type ease, float v);

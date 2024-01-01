@@ -13,7 +13,6 @@ public:
     virtual ~TweenQueue() = default;
     /*Add tween to Queue, returns added tween*/
     spTween add(spTween t);
-    virtual void complete(timeMS deltaTime) override;
 private:
     virtual void _start(Actor& actor) override;
     virtual void _update(Actor& actor, const UpdateState& us) override;

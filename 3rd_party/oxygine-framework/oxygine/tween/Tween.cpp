@@ -90,41 +90,6 @@ namespace oxygine
         m_elapsed = elapsed;
     }
 
-    void Tween::complete(timeMS deltaTime)
-    {
-        if (m_loops == -1)
-        {
-            return;
-        }
-        //if already done
-        if (m_status >= status_done)
-        {
-            return;
-        }
-        if (!m_client)
-        {
-            return;
-        }
-        //not started yet because has delay
-        if (m_status == status_delayed)
-        {
-            _start(*m_client);
-            m_status = status_started;
-        }
-
-        if (m_status != status_started)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Tween::complete finishing none started tween");
-        }
-        UpdateState us;
-        us.dt = deltaTime;
-        update(*m_client, us);
-        if (m_status != status_done)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Tween::complete tween not done after completion");
-        }
-    }
-
     void Tween::start(Actor& actor)
     {
         m_client = &actor;
