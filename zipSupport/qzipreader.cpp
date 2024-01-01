@@ -78,49 +78,61 @@ static void writeMSDosDate(uchar *dest, const QDateTime& dt)
 
 static int inflate(Bytef *dest, ulong *destLen, const Bytef *source, ulong sourceLen, bool gzib)
 {
-    z_stream stream;
-    int err;
-
-    stream.next_in = const_cast<Bytef*>(source);
-    stream.avail_in = (uInt)sourceLen;
-    if ((uLong)stream.avail_in != sourceLen)
-        return Z_BUF_ERROR;
-
-    stream.next_out = dest;
-    stream.avail_out = (uInt)*destLen;
-    if ((uLong)stream.avail_out != *destLen)
-        return Z_BUF_ERROR;
-
-    stream.zalloc = (alloc_func)nullptr;
-    stream.zfree = (free_func)nullptr;
-
-    if (gzib)
+    qint32 read = 0;
+    qint32 total_out = 0;
+    int err = Z_OK;
+    while (read < sourceLen)
     {
-        constexpr qint32 WINDOWS_BIT = 15 + 16;
-        err = inflateInit2(&stream, WINDOWS_BIT);
-    }
-    else
-    {
-        err = inflateInit2(&stream, -MAX_WBITS);
-    }
-    if (err != Z_OK)
-    {
-        return err;
-    }
+        z_stream stream;
 
-    err = inflate(&stream, Z_FINISH);
-    if (err != Z_STREAM_END)
-    {
-        inflateEnd(&stream);
-        if (err == Z_NEED_DICT || (err == Z_BUF_ERROR && stream.avail_in == 0))
+        stream.next_in = const_cast<Bytef*>(source + read);
+        stream.avail_in = (uInt)sourceLen - read;
+        if ((uLong)stream.avail_in != (uInt)sourceLen - read)
         {
-            return Z_DATA_ERROR;
+            return Z_BUF_ERROR;
         }
-        return err;
-    }
-    *destLen = stream.total_out;
 
-    err = inflateEnd(&stream);
+        stream.next_out = dest;
+        stream.avail_out = (uInt)*destLen - total_out;
+        if ((uLong)stream.avail_out != (uInt)*destLen - total_out)
+        {
+            return Z_BUF_ERROR;
+        }
+
+        stream.zalloc = (alloc_func)nullptr;
+        stream.zfree = (free_func)nullptr;
+
+        if (gzib)
+        {
+            constexpr qint32 WINDOWS_BIT = 15 + 16;
+            err = inflateInit2(&stream, WINDOWS_BIT);
+        }
+        else
+        {
+            err = inflateInit2(&stream, -MAX_WBITS);
+        }
+        if (err != Z_OK)
+        {
+            return err;
+        }
+
+        err = inflate(&stream, Z_FINISH);
+        if (err != Z_STREAM_END)
+        {
+            inflateEnd(&stream);
+            if (err == Z_NEED_DICT || (err == Z_BUF_ERROR && stream.avail_in == 0))
+            {
+                return Z_DATA_ERROR;
+            }
+            return err;
+        }
+        total_out += stream.total_out;
+        read += stream.total_in;
+
+        err = inflateEnd(&stream);
+    }
+    *destLen = total_out;
+
     return err;
 }
 
@@ -931,7 +943,7 @@ QByteArray QZipReader::unzipContent(bool gzib) const
 {
     QByteArray compressed = d->device->readAll();
     QByteArray baunzip;
-    ulong len = compressed.size();
+    ulong len = compressed.size() * 20;
     int res;
     do
     {
