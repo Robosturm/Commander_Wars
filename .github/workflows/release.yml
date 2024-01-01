@@ -257,7 +257,7 @@ jobs:
 # release creation and upload part
 #----------------------------------------------------------------------------------------------------------------------------------------------
         
-    - name: build artifacts
+    - name: create pdb
       if: matrix.COMPILER_VERSION == 'win64_mingw'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createPdb      
         

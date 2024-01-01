@@ -1075,6 +1075,17 @@ bool NormalAi::moveUnit(spGameAction &pAction, MoveUnitData *pUnitData, spQmlVec
         {
             auto movePath = turnPfs.getClosestReachableMovePath(targetFields, pUnitData->movementPoints);
             pAction->setMovepath(movePath, turnPfs.getCosts(movePath));
+            if (actions.contains(ACTION_CAPTURE))
+            {
+                pAction->setActionID(ACTION_CAPTURE);
+                if (pAction->canBePerformed())
+                {
+                    m_updatePoints.push_back(pUnit->getPosition());
+                    m_updatePoints.push_back(pAction->getActionTarget());
+                    emit sigPerformAction(pAction);
+                    return true;
+                }
+            }
             pAction->setActionID(ACTION_WAIT);
             if (pAction->canBePerformed())
             {
@@ -1230,6 +1241,17 @@ bool NormalAi::moveUnit(spGameAction &pAction, MoveUnitData *pUnitData, spQmlVec
                             emit sigPerformAction(pAction);
                             return true;
                         }
+                    }
+                }
+                if (actions.contains(ACTION_CAPTURE))
+                {
+                    pAction->setActionID(ACTION_CAPTURE);
+                    if (pAction->canBePerformed())
+                    {
+                        m_updatePoints.push_back(pUnit->getPosition());
+                        m_updatePoints.push_back(pAction->getActionTarget());
+                        emit sigPerformAction(pAction);
+                        return true;
                     }
                 }
                 pAction->setActionID(ACTION_WAIT);
