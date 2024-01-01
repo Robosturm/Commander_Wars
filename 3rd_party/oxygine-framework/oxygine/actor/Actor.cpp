@@ -233,63 +233,70 @@ namespace oxygine
 
     void Actor::handleEventImpl(Event* event)
     {
-        bool touchEvent = TouchEvent::isTouchEvent(event->type);
-        if (touchEvent)
+        if (event != nullptr)
         {
+            bool touchEvent = TouchEvent::isTouchEvent(event->type);
+            if (touchEvent)
+            {
 #ifdef GRAPHICSUPPORT
-            if (!(m_flags & flag_visible))
-            {
-                return;
-            }
-            if (getAlpha() == 0 && !(m_flags & flag_clickableWithZeroAlpha))
-            {
-                return;
-            }
-#endif
-        }
-
-        QPoint originalLocalPos;
-        float originalLocalScale = 1.0f;
-
-        if (touchEvent)
-        {
-#ifdef GRAPHICSUPPORT
-            TouchEvent* me = safeCast<TouchEvent*>(event);
-            originalLocalPos = me->localPosition;
-            originalLocalScale = me->__localScale;
-            me->localPosition = parent2local(originalLocalPos);
-            me->__localScale *= m_transform.m11();
-            if (me->__localScale == NAN)
-            {
-                oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::handleEvent locale scale is NAN");
-            }
-#endif
-        }
-
-        event->phase = Event::phase_capturing;
-        auto iter = m_children.end();
-        while (iter != m_children.begin())
-        {
-            iter--;
-            iter->get()->handleEventImpl(event);
-        }
-        if (touchEvent)
-        {
-            TouchEvent* me = safeCast<TouchEvent*>(event);
-            if (!event->target)
-            {
-                if (isOn(me->localPosition))
+                if (!(m_flags & flag_visible))
                 {
-                    event->phase = Event::phase_target;
-                    event->target = getSharedPtr<EventDispatcher>();
+                    return;
+                }
+                if (getAlpha() == 0 && !(m_flags & flag_clickableWithZeroAlpha))
+                {
+                    return;
+                }
+#endif
+            }
 
-                    me->position = me->localPosition;
-                    dispatchEvent(event);
+            QPoint originalLocalPos;
+            float originalLocalScale = 1.0f;
+
+            if (touchEvent)
+            {
+#ifdef GRAPHICSUPPORT
+                TouchEvent* me = safeCast<TouchEvent*>(event);
+                originalLocalPos = me->localPosition;
+                originalLocalScale = me->__localScale;
+                me->localPosition = parent2local(originalLocalPos);
+                me->__localScale *= m_transform.m11();
+                if (me->__localScale == NAN)
+                {
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::handleEvent locale scale is NAN");
+                }
+#endif
+            }
+
+            event->phase = Event::phase_capturing;
+            auto iter = m_children.end();
+            while (iter != m_children.begin())
+            {
+                iter--;
+                spActor actor = *iter;
+                if (actor.get() != nullptr)
+                {
+                    actor->handleEventImpl(event);
                 }
             }
+            if (touchEvent)
+            {
+                TouchEvent* me = safeCast<TouchEvent*>(event);
+                if (!event->target)
+                {
+                    if (isOn(me->localPosition))
+                    {
+                        event->phase = Event::phase_target;
+                        event->target = getSharedPtr<EventDispatcher>();
 
-            me->localPosition = originalLocalPos;
-            me->__localScale = originalLocalScale;
+                        me->position = me->localPosition;
+                        dispatchEvent(event);
+                    }
+                }
+
+                me->localPosition = originalLocalPos;
+                me->__localScale = originalLocalScale;
+            }
         }
     }
 

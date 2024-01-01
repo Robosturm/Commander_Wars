@@ -869,9 +869,10 @@ void BattleAnimationSprite::addUnitshakeToLastLoadedFrame(qint32 startIntensity,
 
 void BattleAnimationSprite::detachChild(oxygine::spActor pActor)
 {
-    
-    pActor->detach();
-    
+    if (pActor.get() != nullptr)
+    {
+        pActor->detach();
+    }
 }
 
 qint32 BattleAnimationSprite::getHpRounded() const

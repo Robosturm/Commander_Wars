@@ -8,17 +8,20 @@ namespace oxygine
 
     void ClipRectActor::handleEventImpl(Event* event)
     {
-        if (TouchEvent::isTouchEvent(event->type))
+        if (event != nullptr)
         {
-            TouchEvent* te = safeCast<TouchEvent*>(event);
-            QPoint localPosition = parent2local(te->localPosition);
-            if (!isOn(localPosition))
+            if (TouchEvent::isTouchEvent(event->type))
             {
-                return;
+                TouchEvent* te = safeCast<TouchEvent*>(event);
+                QPoint localPosition = parent2local(te->localPosition);
+                if (!isOn(localPosition))
+                {
+                    return;
+                }
             }
-        }
 
-        Actor::handleEventImpl(event);
+            Actor::handleEventImpl(event);
+        }
     }
 
     void ClipRectActor::render(const RenderState& parentRS)

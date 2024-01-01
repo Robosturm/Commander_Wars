@@ -765,7 +765,8 @@ void GameRules::onWeatherChanged()
 }
 
 void GameRules::createWeatherSprites()
-{    
+{
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("creating weather Sprites", GameConsole::eDEBUG);
     if ((m_CurrentWeather < 0) && (m_CurrentWeather < m_Weathers.size()))
     {
@@ -806,11 +807,13 @@ void GameRules::createWeatherSprites()
                 }
             }
         }
-    }    
+    }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameRules::resetWeatherSprites()
 {
+    Mainapp::getInstance()->pauseRendering();
     for (auto & sprite : m_WeatherSprites)
     {
         if (sprite.get() != nullptr)
@@ -820,10 +823,12 @@ void GameRules::resetWeatherSprites()
         }
     }
     m_WeatherSprites.clear();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameRules::resetFogSprites()
 {
+    Mainapp::getInstance()->pauseRendering();
     for (auto & sprites : m_FogSprites)
     {
         for (auto & sprite : sprites)
@@ -836,6 +841,7 @@ void GameRules::resetFogSprites()
         }
     }
     m_FogSprites.clear();
+    Mainapp::getInstance()->continueRendering();
 }
 
 qint32 GameRules::getUnitLimit() const

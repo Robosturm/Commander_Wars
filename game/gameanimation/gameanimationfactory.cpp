@@ -31,6 +31,7 @@ GameAnimationFactory::GameAnimationFactory()
 
 void GameAnimationFactory::queueAnimation(GameAnimation* pGameAnimation)
 {
+    Mainapp::getInstance()->pauseRendering();
     for (qint32 i = 0; i < m_Animations.size(); i++)
     {
         if (m_Animations[i].get() == pGameAnimation)
@@ -40,6 +41,7 @@ void GameAnimationFactory::queueAnimation(GameAnimation* pGameAnimation)
             break;
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameAnimationFactory::startQueuedAnimation(GameAnimation* pGameAnimation)
@@ -383,17 +385,19 @@ void GameAnimationFactory::removeAnimation(spGameAnimation pAnimation, bool skip
 
 void GameAnimationFactory::clearAllAnimations()
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("GameAnimationFactory -> clearAllAnimations()", GameConsole::eDEBUG);
     for (qint32 i = 0; i < m_Animations.size(); i++)
     {
         m_Animations[i]->detach();
     }
     m_Animations.clear();
-
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameAnimationFactory::finishAllAnimations()
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("GameAnimationFactory::finishAllAnimations()", GameConsole::eDEBUG);
     qint32 i = 0;
     while (i < m_Animations.size())
@@ -413,10 +417,12 @@ void GameAnimationFactory::finishAllAnimationsWithEmitFinished()
         CONSOLE_PRINT("GameAnimationFactory -> emitting animationsFinished()", GameConsole::eDEBUG);
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameAnimationFactory::skipAllAnimations()
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("skipAllAnimations()", GameConsole::eDEBUG);
     qint32 i = 0;
     while (i < GameAnimationFactory::getAnimationCount())
@@ -455,6 +461,7 @@ void GameAnimationFactory::skipAllAnimations()
     }
     CONSOLE_PRINT("skipAllAnimations remaining Animations=" + QString::number(GameAnimationFactory::getAnimationCount()), GameConsole::eDEBUG);
     GameAnimationFactory::printActiveAnimations();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameAnimationFactory::printActiveAnimations()
