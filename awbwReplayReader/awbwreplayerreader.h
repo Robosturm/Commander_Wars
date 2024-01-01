@@ -14,7 +14,6 @@ public:
 signals:
 
 private:
-    QByteArray m_gameStateContent;
-    QByteArray m_replayFileContent;
+    // QList<QByteArray>
 };
 

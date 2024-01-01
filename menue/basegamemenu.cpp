@@ -548,3 +548,4 @@ bool BaseGamemenu::getGameStarted() const
 {
     return m_gameStarted;
 }
+

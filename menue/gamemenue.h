@@ -483,6 +483,7 @@ protected slots:
      * @brief closeSlave
      */
     void closeSlave();
+    void autosaveTimer();
 protected:
     /**
      * @brief startDespawnTimer
@@ -535,6 +536,7 @@ protected:
     QTimer m_slaveDespawnTimer{this};
     QTimer m_UpdateTimer{this};
     QTimer m_exitDelayedTimer{this};
+    QTimer m_autosaveTimer{this};
     struct Userdata
     {
         QString username;

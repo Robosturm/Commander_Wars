@@ -1526,6 +1526,7 @@ void GameMenue::loadGameMenue()
     connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigNicknameUnit, this, &GameMenue::nicknameUnit, Qt::QueuedConnection);
     connect(this, &GameMenue::sigLoadSaveGame, this, &GameMenue::loadSaveGame, Qt::QueuedConnection);
+    connect(&m_autosaveTimer, &QTimer::timeout, this, &GameMenue::autosaveTimer, Qt::QueuedConnection);
     connect(&m_actionPerformer, &ActionPerformer::sigActionPerformed, this, &GameMenue::checkMovementPlanner, Qt::QueuedConnection);
 
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, &m_actionPerformer, &ActionPerformer::actionPerformed, Qt::QueuedConnection);
@@ -2484,6 +2485,9 @@ void GameMenue::startGame()
         }
     }
     updateQuickButtons();
+    m_autosaveTimer.setSingleShot(false);
+    m_autosaveTimer.start(Settings::getInstance()->getAutoSavingCylceTimeRaw());
+
     m_pMap->setVisible(true);    
     m_gameStarted = true;
     if (!isNetworkGame() && !m_isReplay)
@@ -2901,4 +2905,10 @@ void GameMenue::executeCommand(QString command)
     {
         Interpreter::getInstance()->doString(command);
     }
+}
+
+void GameMenue::autosaveTimer()
+{
+    autoSaveMap();
+    m_autosaveTimer.start(Settings::getInstance()->getAutoSavingCylceTimeRaw());
 }

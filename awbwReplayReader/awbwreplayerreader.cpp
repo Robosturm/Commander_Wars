@@ -14,6 +14,9 @@ static const char* const JSON_REPLAYSTART = "p:";
 
 AwbwReplayerReader::AwbwReplayerReader(const QString & awbwReplayZip)
 {
+
+    QByteArray gameStateContent;
+    QByteArray replayFileContent;
     QZipReader reader(awbwReplayZip);
     auto files = reader.fileInfoList();
     for (auto file : files)
@@ -25,17 +28,12 @@ AwbwReplayerReader::AwbwReplayerReader(const QString & awbwReplayZip)
         auto unzipContent = unzipReader.unzipContent(true);
         if (unzipContent.startsWith(JSON_TURNSTART))
         {
-            m_gameStateContent = unzipContent;
+            gameStateContent = unzipContent;
         }
         else if (unzipContent.startsWith(JSON_REPLAYSTART))
         {
-            m_replayFileContent = unzipContent;
+            replayFileContent = unzipContent;
         }
     }
-    QFile file("dummy.txt");
-    file.open(QIODevice::WriteOnly);
-    file.write(m_gameStateContent);
-    QFile file1("dummy1.txt");
-    file1.open(QIODevice::WriteOnly);
-    file1.write(m_replayFileContent);
+    // gameStateContent.split(JSON_TURNSTART);
 }
