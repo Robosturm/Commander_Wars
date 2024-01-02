@@ -17,33 +17,6 @@ namespace oxygine
         m_multiTouch = true;
     }
 
-    void Input::handlePausePointerEvents()
-    {
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
-        Q_ASSERT(!GameWindow::getWindow()->renderingPaused());
-        spStage stage = oxygine::Stage::getStage();
-        if (m_movePauseEvent.type == TouchEvent::MOVE)
-        {
-            stage->handleEvent(&m_movePauseEvent);
-            m_movePauseEvent.type = TouchEvent::__FIRST;
-        }
-        if (m_downPauseEvent.type == TouchEvent::TOUCH_DOWN)
-        {
-            stage->handleEvent(&m_downPauseEvent);
-            m_downPauseEvent.type = TouchEvent::__FIRST;
-        }
-        if (m_upPauseEvent.type == TouchEvent::TOUCH_UP)
-        {
-            stage->handleEvent(&m_upPauseEvent);
-            m_upPauseEvent.type = TouchEvent::__FIRST;
-        }
-        if (m_wheelPauseEvent.type == TouchEvent::WHEEL_DIR)
-        {
-            stage->handleEvent(&m_wheelPauseEvent);
-            m_wheelPauseEvent.type = TouchEvent::__FIRST;
-        }
-    }
-
     const PointerState* TouchEvent::getPointer() const
     {
         return Input::getInstance().getTouchByIndex(index);
@@ -56,7 +29,7 @@ namespace oxygine
 
     void Input::sendPointerButtonEvent(spStage & stage, MouseButton button, qint32 x, qint32 y, float pressure, qint32 type, PointerState* ps)
     {
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isWorker());
         if (!m_multiTouch && ps->getIndex() != 1 && ps != &m_pointerMouse)
         {
             if (type == TouchEvent::TOUCH_UP)
@@ -81,19 +54,7 @@ namespace oxygine
             ps->m_pressed &= ~(1 << button);
         }
         ps->m_position = p;
-        if (GameWindow::getWindow()->renderingPaused())
-        {
-            if (type == TouchEvent::TOUCH_DOWN)
-            {
-                m_downPauseEvent = me;
-            }
-            else if (type == TouchEvent::TOUCH_UP)
-            {
-                m_upPauseEvent = me;
-            }
-            return;
-        }
-        else if (stage != nullptr)
+        if (stage != nullptr)
         {
             stage->handleEvent(&me);
         }
@@ -106,7 +67,7 @@ namespace oxygine
 
     void Input::sendPointerMotionEvent(spStage & stage, qint32 x, qint32 y, float pressure, PointerState* ps)
     {
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isWorker());
         if (!m_multiTouch && ps->getIndex() != 1 && ps != &m_pointerMouse)
         {
             return;
@@ -115,12 +76,7 @@ namespace oxygine
         me.index = ps->getIndex();
         me.pressure = pressure;
         ps->m_position = QPoint(x, y);
-        if (GameWindow::getWindow()->renderingPaused())
-        {
-            m_movePauseEvent = me;
-            return;
-        }
-        else if (stage != nullptr)
+        if (stage != nullptr)
         {
             stage->handleEvent(&me);
         }
@@ -128,16 +84,11 @@ namespace oxygine
 
     void Input::sendPointerWheelEvent(spStage & stage, const QPoint& dir, PointerState* ps)
     {
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isWorker());
         TouchEvent te(TouchEvent::WHEEL_DIR, true, ps->getPosition());
         te.index = ps->getIndex();
         te.wheelDirection = dir;
-        if (GameWindow::getWindow()->renderingPaused())
-        {
-            m_wheelPauseEvent = te;
-            return;
-        }
-        else if (stage != nullptr)
+        if (stage != nullptr)
         {
             stage->handleEvent(&te);
         }

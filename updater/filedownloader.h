@@ -25,6 +25,8 @@ public:
                    const QString & downloadFile);
     virtual ~FileDownloader() = default;
 
+    QString getLatestTag() const;
+
 signals:
     void sigNewProgress(qint64 bytesReceived, qint64 bytesTotal);
     void sigNewState(State state);

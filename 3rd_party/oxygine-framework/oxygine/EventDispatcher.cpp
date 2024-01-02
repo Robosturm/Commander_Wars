@@ -103,11 +103,11 @@ namespace oxygine
 
     void EventDispatcher::dispatchEvent(Event* event)
     {
-        if (!m_enabled || GameWindow::getWindow()->renderingPaused())
+        if (!m_enabled)
         {
             return;
         }
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread() || oxygine::GameWindow::getWindow()->renderingPaused());
         if (!event->target)
         {
             event->target = getSharedPtr<EventDispatcher>();

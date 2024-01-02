@@ -225,17 +225,17 @@ namespace oxygine
 
     void Actor::handleEvent(Event* event)
     {
-        if (!m_enabled || GameWindow::getWindow()->renderingPaused())
+        if (!m_enabled)
         {
             return;
         }
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isWorker());
         handleEventImpl(event);
     }
 
     void Actor::handleEventImpl(Event* event)
     {
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isWorker());
         if (event != nullptr)
         {
             bool touchEvent = TouchEvent::isTouchEvent(event->type);
@@ -1000,7 +1000,6 @@ namespace oxygine
         {
             m_tweens.clear();
         }
-
 #endif
     }
 

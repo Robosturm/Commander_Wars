@@ -2,6 +2,8 @@
 #define RENDERTHREAD_H
 
 #include <QObject>
+#include <QElapsedTimer>
+#include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 
 class WorkerThread;
 using spWorkerThread = std::shared_ptr<WorkerThread>;
@@ -21,8 +23,14 @@ public slots:
     void start();
     void showMainwindow();
     void startSlaveGame();
+private slots:
+    void mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
+    void mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
+    void mouseMoveEvent(qint32 x, qint32 y);
+    void wheelEvent(qint32 x, qint32 y);
 private:
     bool m_started{false};
+    QElapsedTimer m_moveTimer;
 };
 
 #endif // RENDERTHREAD_H

@@ -85,8 +85,6 @@ namespace oxygine
     {
         if (stop)
         {
-            oxygine::Input* input = &oxygine::Input::getInstance();
-            input->handlePausePointerEvents();
             m_timer.stop();
         }
         else
@@ -207,9 +205,6 @@ namespace oxygine
                 // do nothing
             }
         }
-        oxygine::Input* input = &oxygine::Input::getInstance();
-        input->sendPointerButtonEvent(oxygine::Stage::getStage(), b, event->position().x(), event->position().y(), 1.0f,
-                                      oxygine::TouchEvent::TOUCH_DOWN, input->getPointerMouse());
         emit sigMousePressEvent(b, event->position().x(), event->position().y());
     }
 
@@ -238,23 +233,16 @@ namespace oxygine
                 // do nothing
             }
         }
-        oxygine::Input* input = &oxygine::Input::getInstance();
-        input->sendPointerButtonEvent(oxygine::Stage::getStage(), b, event->position().x(), event->position().y(), 1.0f,
-                                      oxygine::TouchEvent::TOUCH_UP, input->getPointerMouse());
         emit sigMouseReleaseEvent(b, event->position().x(), event->position().y());
     }
 
     void GameWindow::wheelEvent(QWheelEvent *event)
     {
-        oxygine::Input* input = &oxygine::Input::getInstance();
-        input->sendPointerWheelEvent(oxygine::Stage::getStage(), QPoint(event->angleDelta().x(), event->angleDelta().y()), input->getPointerMouse());
         emit sigWheelEvent(event->angleDelta().x(), event->angleDelta().y());
     }
 
     void GameWindow::mouseMoveEvent(QMouseEvent *event)
     {
-        oxygine::Input* input = &oxygine::Input::getInstance();
-        input->sendPointerMotionEvent(oxygine::Stage::getStage(), event->position().x(), event->position().y(), 1.0f, input->getPointerMouse());
         emit sigMouseMoveEvent(event->position().x(), event->position().y());
     }
 
@@ -268,9 +256,6 @@ namespace oxygine
                 if (touchPoints.count() == 1)
                 {
                 const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                oxygine::Input* input = &oxygine::Input::getInstance();
-                input->sendPointerButtonEvent(oxygine::Stage::getStage(), MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y(), 1.0f,
-                                              oxygine::TouchEvent::TOUCH_DOWN, input->getPointerMouse());
                 emit sigMousePressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
                 m_longPressSent = false;
                 m_touchMousePressSent = true;
@@ -285,12 +270,7 @@ namespace oxygine
                 if (sameTouchpoint(touchPoint0.pressPosition(), touchPoint0.position()) &&
                     touchPoint0.timeHeld() >= 0.5)
                 {
-                    oxygine::Input* input = &oxygine::Input::getInstance();
-                    input->sendPointerButtonEvent(oxygine::Stage::getStage(), MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y(), 1.0f,
-                                                  oxygine::TouchEvent::TOUCH_DOWN, input->getPointerMouse());
                     emit sigMousePressEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
-                    input->sendPointerButtonEvent(oxygine::Stage::getStage(), MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y(), 1.0f,
-                                                  oxygine::TouchEvent::TOUCH_UP, input->getPointerMouse());
                     emit sigMouseReleaseEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
                     m_longPressSent = true;
                 }
@@ -310,12 +290,7 @@ namespace oxygine
                 {
                     if (touchPoint0.timeHeld() >= 0.5)
                     {
-                        oxygine::Input* input = &oxygine::Input::getInstance();
-                        input->sendPointerButtonEvent(oxygine::Stage::getStage(), MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y(), 1.0f,
-                                                      oxygine::TouchEvent::TOUCH_DOWN, input->getPointerMouse());
                         emit sigMousePressEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
-                        input->sendPointerButtonEvent(oxygine::Stage::getStage(), MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y(), 1.0f,
-                                                      oxygine::TouchEvent::TOUCH_UP, input->getPointerMouse());
                         emit sigMouseReleaseEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
                         m_longPressSent = true;
                     }
@@ -324,9 +299,6 @@ namespace oxygine
                 if (m_touchMousePressSent && !m_longPressSent)
                 {
                 const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                oxygine::Input* input = &oxygine::Input::getInstance();
-                input->sendPointerButtonEvent(oxygine::Stage::getStage(), MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y(), 1.0f,
-                                              oxygine::TouchEvent::TOUCH_UP, input->getPointerMouse());
                 emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
                 }
                 m_touchMousePressSent = false;

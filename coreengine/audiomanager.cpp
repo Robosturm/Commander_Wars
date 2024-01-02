@@ -724,7 +724,7 @@ void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float
         }
         else
         {
-            CONSOLE_PRINT("Unable to locate sound: " + file, GameConsole::eERROR);
+            CONSOLE_PRINT("Unable to locate sound: " + file, GameConsole::eDEBUG);
         }
     }
 #endif

@@ -165,10 +165,16 @@ void GameConsole::init()
 
 void GameConsole::release()
 {
-    m_pBackgroundsprite->detach();
-    m_pBackgroundsprite = oxygine::spSprite();
-    m_text->detach();
-    m_text = oxygine::spTextField();
+    if (m_pBackgroundsprite.get() != nullptr)
+    {
+        m_pBackgroundsprite->detach();
+        m_pBackgroundsprite = oxygine::spSprite();
+    }
+    if (m_text.get() != nullptr)
+    {
+        m_text->detach();
+        m_text = oxygine::spTextField();
+    }
 }
 
 void GameConsole::createSprites(QString input, QString colorTable, QString maskTable)

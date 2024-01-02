@@ -49,7 +49,13 @@ WorkerThread::WorkerThread()
     connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigShowMainwindow, this, &WorkerThread::showMainwindow, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigStartSlaveGame, this, &WorkerThread::startSlaveGame, Qt::QueuedConnection);
+    Mainapp* pApp = Mainapp::getInstance();
+    connect(pApp, &Mainapp::sigMousePressEvent, this, &WorkerThread::mousePressEvent, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerThread::mouseReleaseEvent, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
     moveToThread(Mainapp::getWorkerthread());
+    m_moveTimer.start();
 }
 
 WorkerThread::~WorkerThread()
@@ -67,9 +73,12 @@ WorkerThread::~WorkerThread()
     if (oxygine::Stage::getStage())
     {
         oxygine::Stage::getStage()->cleanup();
-        for (qint32 i = 0; i < 20; ++i)
+        if (pInterpreter != nullptr)
         {
-            pInterpreter->threadProcessEvents();
+            for (qint32 i = 0; i < 20; ++i)
+            {
+                pInterpreter->threadProcessEvents();
+            }
         }
     }
 
@@ -93,8 +102,11 @@ WorkerThread::~WorkerThread()
     Player::releaseStaticData();
     Mainapp::getAiProcessPipe().quit();
     GameConsole::getInstance()->release();
-    pInterpreter->threadProcessEvents();
-    Interpreter::release();
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->threadProcessEvents();
+        Interpreter::release();
+    }
     for (qint32 i = 0; i < 20; ++i)
     {
         QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
@@ -238,4 +250,42 @@ void WorkerThread::startSlaveGame()
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     Mainapp::getInstance()->getParser().startSlaveGame();
+}
+
+void WorkerThread::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y)
+{
+    Mainapp::getInstance()->pauseRendering();
+    oxygine::Input* input = &oxygine::Input::getInstance();
+    input->sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
+                                  oxygine::TouchEvent::TOUCH_DOWN, input->getPointerMouse());
+    Mainapp::getInstance()->continueRendering();
+}
+
+void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y)
+{
+    Mainapp::getInstance()->pauseRendering();
+    oxygine::Input* input = &oxygine::Input::getInstance();
+    input->sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
+                                  oxygine::TouchEvent::TOUCH_UP, input->getPointerMouse());
+    Mainapp::getInstance()->continueRendering();
+}
+
+void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
+{
+    if (m_moveTimer.elapsed() > 50)
+    {
+        Mainapp::getInstance()->pauseRendering();
+        oxygine::Input* input = &oxygine::Input::getInstance();
+        input->sendPointerMotionEvent(oxygine::Stage::getStage(), x, y, 1.0f, input->getPointerMouse());
+        Mainapp::getInstance()->continueRendering();
+        m_moveTimer.restart();
+    }
+}
+
+void WorkerThread::wheelEvent(qint32 x, qint32 y)
+{
+    Mainapp::getInstance()->pauseRendering();
+    oxygine::Input* input = &oxygine::Input::getInstance();
+    input->sendPointerWheelEvent(oxygine::Stage::getStage(), QPoint(x, y), input->getPointerMouse());
+    Mainapp::getInstance()->continueRendering();
 }

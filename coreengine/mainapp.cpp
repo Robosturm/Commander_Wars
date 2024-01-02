@@ -236,6 +236,12 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
             m_AudioManager = MemoryManagement::create<AudioManager>(m_noAudio);
+            // start after ressource loading
+#ifdef GRAPHICSUPPORT
+            m_Networkthread->setObjectName("NetworkThread");
+            m_Workerthread->setObjectName("WorkerThread");
+#endif
+            m_Workerthread->start(QThread::Priority::HighestPriority);
 #ifdef AUDIOSUPPORT
             m_audioThread->start(QThread::Priority::TimeCriticalPriority);
             m_AudioManager->moveToThread(m_audioThread.get());
@@ -405,13 +411,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::LoadingScripts:
         {
-            // start after ressource loading
-#ifdef GRAPHICSUPPORT
-            m_Networkthread->setObjectName("NetworkThread");
-            m_Workerthread->setObjectName("WorkerThread");
-#endif
             m_Networkthread->start(QThread::Priority::NormalPriority);
-            m_Workerthread->start(QThread::Priority::HighestPriority);
             redrawUi();
             if (!m_noUi)
             {

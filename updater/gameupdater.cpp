@@ -134,7 +134,7 @@ void GameUpdater::onNewState(FileDownloader::State state)
     }
     case FileDownloader::State::NewVersion:
     {
-        spDialogMessageBox pMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Do you wist to update the current version?"), true, tr("Yes"), tr("No"));
+        spDialogMessageBox pMessageBox = MemoryManagement::create<DialogMessageBox>(QString(tr("Do you wist to update the current version to %1 ?")).arg(m_filedownloader.getLatestTag()), true, tr("Yes"), tr("No"));
         spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
         pLoadingScreen->addChild(pMessageBox);
         connect(pMessageBox.get(), &DialogMessageBox::sigOk, &m_filedownloader, &FileDownloader::startDownloading, Qt::QueuedConnection);

@@ -77,6 +77,11 @@ void FileDownloader::downloadFile(const QUrl & fileUrl)
     connect(m_reply, &QNetworkReply::errorOccurred, this, &FileDownloader::errorOccurred);
 }
 
+QString FileDownloader::getLatestTag() const
+{
+    return m_latestTag;
+}
+
 void FileDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
     if (bytesTotal < 0 && bytesReceived < 0)

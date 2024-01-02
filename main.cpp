@@ -19,6 +19,8 @@
 #include "updater/gameupdater.h"
 #endif
 
+#include "awbwReplayReader/awbwreplayerreader.h"
+
 int main(qint32 argc, char* argv[])
 {
 #ifdef GRAPHICSUPPORT
@@ -82,7 +84,7 @@ int main(qint32 argc, char* argv[])
     // give os time to save the settings
     for (qint32 i = 0; i < 150; ++i)
     {
-        QCoreApplication::processEvents();
+        QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
         QThread::currentThread()->msleep(1);
     }
     CONSOLE_PRINT("Shutting down main window", GameConsole::eDEBUG);
@@ -90,7 +92,7 @@ int main(qint32 argc, char* argv[])
     // give os time to save the settings
     for (qint32 i = 0; i < 150; ++i)
     {
-        QCoreApplication::processEvents();
+        QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
         QThread::currentThread()->msleep(1);
     }
     CONSOLE_PRINT("Remaing allocated objects: " + QString::number(MemoryManagement::getObjectCounter()), GameConsole::eDEBUG);

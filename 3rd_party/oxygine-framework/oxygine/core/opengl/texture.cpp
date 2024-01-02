@@ -75,7 +75,7 @@ quint32 Texture::getHighestTextureCount()
 void Texture::release()
 {
     GameWindow* window = oxygine::GameWindow::getWindow();
-    if (m_id > 0)
+    if (m_id > 0 && window != nullptr)
     {
         GLuint ids[] = {m_id};
         window->glDeleteTextures(1, ids);
