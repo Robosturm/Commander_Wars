@@ -96,7 +96,7 @@ void LoadingScreen::setProgress(QString workText, qint32 value)
         m_LoadingBar->setWidth(value * oxygine::Stage::getStage()->getWidth() / 100);
         if (Mainapp::getInstance()->isMainThread())
         {
-            QCoreApplication::processEvents();
+            QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
         }
     }
 }

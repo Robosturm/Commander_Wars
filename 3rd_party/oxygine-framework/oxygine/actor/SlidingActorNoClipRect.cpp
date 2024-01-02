@@ -15,6 +15,7 @@ namespace oxygine
 
     void SlidingActorNoClipRect::destroy()
     {
+        Q_ASSERT(!requiresThreadChange());
         removeChildren();
         m_drag.destroy();
         m_content.reset();
@@ -53,6 +54,7 @@ namespace oxygine
 
     void SlidingActorNoClipRect::setContent(spActor content)
     {
+        Q_ASSERT(!requiresThreadChange());
         if (m_content.get() != nullptr)
         {
             m_content->removeEventListener(m_touchDownId);

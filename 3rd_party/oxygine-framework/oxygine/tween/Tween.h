@@ -74,10 +74,7 @@ public:
     {
         return m_delay;
     }
-    Actor* getClient() const
-    {
-        return m_client;
-    }
+
     float getPercent() const
     {
         return m_percent;
@@ -201,7 +198,7 @@ public:
     {
     }
     virtual ~TweenT() = default;
-
+protected:
     virtual void _update(Actor& actor, const UpdateState& us) override
     {
         TActor& rActor = *oxygine::safeCast<TActor*>(&actor);
@@ -244,26 +241,4 @@ public:
     virtual void update(Actor&, float, const UpdateState&) {}
 };
 
-template<class TTween>
-class TweenProxy final
-{
-public:
-    TweenProxy(std::shared_ptr<TTween> object)
-    {
-        m_obj = object;
-    }
-    void init(Actor& actor)
-    {
-        m_obj->init(actor);
-    }
-    void done(Actor& actor)
-    {
-        m_obj->done(actor);
-    }
-    void update(Actor& actor, float p, const UpdateState& us)
-    {
-        m_obj->update(actor, p, us);
-    }
-    std::shared_ptr<TTween> m_obj;
-};
 }

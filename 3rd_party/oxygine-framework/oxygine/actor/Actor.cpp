@@ -35,6 +35,7 @@ namespace oxygine
 
     void Actor::added2stage(Stage* stage)
     {
+        Q_ASSERT(!requiresThreadChange());
         if (m_stage == nullptr)
         {
             m_stage = stage;
@@ -50,6 +51,7 @@ namespace oxygine
 
     void Actor::removedFromStage()
     {
+        Q_ASSERT(!requiresThreadChange());
         if (m_stage != nullptr)
         {
             m_stage->removeEventListeners(this);
@@ -233,6 +235,7 @@ namespace oxygine
 
     void Actor::handleEventImpl(Event* event)
     {
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
         if (event != nullptr)
         {
             bool touchEvent = TouchEvent::isTouchEvent(event->type);
@@ -788,6 +791,7 @@ namespace oxygine
     void Actor::internalUpdate(const UpdateState& us)
     {
 #ifdef GRAPHICSUPPORT
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
         auto iter = m_tweens.begin();
         while (iter != m_tweens.end())
         {

@@ -19,10 +19,6 @@ namespace oxygine
 
         void destroy();
 
-        Actor* getDragClient() const
-        {
-            return m_dragClient;
-        }
         const QRect& getDragBounds() const
         {
             return m_bounds;
@@ -50,7 +46,6 @@ namespace oxygine
         void setNoLockForMiddleButton(bool newNoLockForMiddleButton);
 
     protected:
-        Actor* getClient();
         void onEvent(Event* event);
         void startDrag(const QPoint& localPos);
 

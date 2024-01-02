@@ -64,7 +64,7 @@ public:
     void threadProcessEvents()
     {
         Q_ASSERT(m_inJsCall == 0);
-        QCoreApplication::processEvents();
+        QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
     }
 
 signals:

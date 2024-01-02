@@ -50,7 +50,7 @@ namespace oxygine
 
     void GameWindow::shutdown()
     {
-        QCoreApplication::processEvents();
+        QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
         m_timerCycle = -1;
         m_timer.stop();
         rsCache().reset();

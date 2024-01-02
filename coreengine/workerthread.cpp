@@ -97,7 +97,7 @@ WorkerThread::~WorkerThread()
     Interpreter::release();
     for (qint32 i = 0; i < 20; ++i)
     {
-        QCoreApplication::processEvents();
+        QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
     }
 }
 

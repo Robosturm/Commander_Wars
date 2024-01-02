@@ -252,7 +252,7 @@ void Multiplayermenu::closeSlave()
     if (m_pNetworkInterface.get() != nullptr)
     {
         emit m_pNetworkInterface->sigDisconnectTCP();
-        QCoreApplication::processEvents();
+        QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
     }
     QCoreApplication::exit(0);
 }

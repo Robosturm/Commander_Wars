@@ -26,7 +26,7 @@ namespace oxygine
         std::vector<spResAnim> anims;
         while (true)
         {
-            QCoreApplication::processEvents();
+            QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
             XmlWalker walker = context.m_walker.next();
             if (walker.empty())
             {

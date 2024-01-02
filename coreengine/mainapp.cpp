@@ -863,7 +863,7 @@ void Mainapp::createBaseDirs()
 void Mainapp::onQuit()
 {
     const qint64 waitTime = 120;
-    QCoreApplication::processEvents();
+    QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
     if (m_Worker != nullptr)
     {
 
@@ -876,10 +876,10 @@ void Mainapp::onQuit()
         while (!m_Workerthread->wait(1) &&
                QDateTime::currentSecsSinceEpoch() - curTimte < waitTime)
         {
-            QCoreApplication::processEvents();
+            QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
         }
     }
-    QCoreApplication::processEvents();
+    QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
     m_aiProcessPipe.reset();
 #ifdef AUDIOSUPPORT
     if (m_AudioManager.get() != nullptr)
@@ -894,11 +894,11 @@ void Mainapp::onQuit()
         while (!m_audioThread->wait(1) &&
                QDateTime::currentSecsSinceEpoch() - curTimte < waitTime)
         {
-            QCoreApplication::processEvents();
+            QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
         }
     }
 #endif
-    QCoreApplication::processEvents();
+    QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
     if (m_Networkthread->isRunning())
     {
         m_Networkthread->quit();
@@ -906,10 +906,10 @@ void Mainapp::onQuit()
         while (!m_Networkthread->wait(1) &&
                QDateTime::currentSecsSinceEpoch() - curTimte < waitTime)
         {
-            QCoreApplication::processEvents();
+            QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
         }
     }
-    QCoreApplication::processEvents();
+    QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
 }
 
 bool Mainapp::getTrainingSession()

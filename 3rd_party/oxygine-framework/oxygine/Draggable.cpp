@@ -15,6 +15,7 @@ namespace oxygine
     {
         if (m_dragClient != nullptr)
         {
+            Q_ASSERT(!m_dragClient->requiresThreadChange());
             if (oxygine::Stage::getStage().get() != nullptr)
             {
                 oxygine::Stage::getStage()->removeEventListeners(this);
@@ -23,16 +24,19 @@ namespace oxygine
             m_dragClient->detach();
             m_dragClient = nullptr;
         }
-
         m_pressed = false;
     }
 
     void Draggable::init(Actor* actor)
     {
         destroy();
-        m_dragClient = actor;
-        actor->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &Draggable::onEvent));
-        actor->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
+        if (actor != nullptr)
+        {
+            Q_ASSERT(!actor->requiresThreadChange());
+            m_dragClient = actor;
+            actor->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &Draggable::onEvent));
+            actor->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
+        }
     }
 
     void Draggable::startDrag(const QPoint& localCenter)
@@ -136,11 +140,6 @@ namespace oxygine
             child = child->getParent();
         }
         return false;
-    }
-
-    Actor* Draggable::getClient()
-    {
-        return m_dragClient;
     }
 
     void Draggable::snapClient2Bounds()

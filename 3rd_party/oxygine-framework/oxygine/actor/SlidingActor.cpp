@@ -23,6 +23,7 @@ namespace oxygine
 
     void SlidingActor::destroy()
     {
+        Q_ASSERT(!requiresThreadChange());
         m_clip->removeChildren();
         m_drag.destroy();
         m_content.reset();
@@ -60,6 +61,7 @@ namespace oxygine
 
     void SlidingActor::setContent(spActor content)
     {
+        Q_ASSERT(!requiresThreadChange());
         if (m_content)
         {
             m_drag.destroy();

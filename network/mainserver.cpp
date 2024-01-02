@@ -170,7 +170,7 @@ MainServer::~MainServer()
         m_mailSenderThread.quit();
         while (!m_mailSenderThread.wait(1))
         {
-            QCoreApplication::processEvents();
+            QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
         }
     }
     m_pGameServer->disconnectTCP();

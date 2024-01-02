@@ -890,7 +890,7 @@ bool QZipReader::extractAll(const QString &destinationDir)
 
     for (const FileInfo &fi : allFiles)
     {
-        QCoreApplication::processEvents();
+        QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
         const QString absPath = destinationDir + QDir::separator() + fi.filePath;
         if (fi.isFile)
         {

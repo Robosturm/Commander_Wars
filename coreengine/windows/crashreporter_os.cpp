@@ -169,11 +169,7 @@ void CrashReporter::setOsSignalHandler()
     SetUnhandledExceptionFilter( _winExceptionHandler );
 
     HANDLE process = GetCurrentProcess();
-    SymSetOptions(SYMOPT_UNDNAME |
-                  SYMOPT_DEFERRED_LOADS |
-                  SYMOPT_ALLOW_ZERO_ADDRESS |
-                  SYMOPT_ALLOW_ABSOLUTE_SYMBOLS |
-                  SYMOPT_DEBUG);
+    SymSetOptions(SYMOPT_UNDNAME | SYMOPT_DEFERRED_LOADS);
     if (!SymInitialize(process, nullptr, true))
     {
         qWarning("SymInitialize returned error : %d", GetLastError());

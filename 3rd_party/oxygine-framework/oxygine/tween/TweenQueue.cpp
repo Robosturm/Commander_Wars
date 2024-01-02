@@ -1,9 +1,12 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/TweenQueue.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 namespace oxygine
 {
     spTween TweenQueue::add(spTween t)
     {
+        Q_ASSERT(m_current.get() == nullptr ||
+                 (m_client != nullptr && !m_client->requiresThreadChange()));
         if (!t)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "TweenQueue::add adding empty item");

@@ -482,6 +482,7 @@ void GameAnimation::addTweenPosition(QPoint point, qint32 duration, QEasingCurve
 
 void GameAnimation::addTweenColor(qint32 spriteIdx, QColor startColor, QColor endColor, qint32 duration, bool twoSided, qint32 delay, QEasingCurve::Type easeType)
 {
+    Mainapp::getInstance()->pauseRendering();
     if (spriteIdx < m_children.size())
     {
         oxygine::spActor actor = m_children[spriteIdx];
@@ -494,6 +495,7 @@ void GameAnimation::addTweenColor(qint32 spriteIdx, QColor startColor, QColor en
             sprite->addTween(tween);
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameAnimation::addTweenWait(qint32 duration, QEasingCurve::Type easeType)

@@ -92,6 +92,7 @@ namespace oxygine
 
     void Tween::start(Actor& actor)
     {
+        Q_ASSERT(!actor.requiresThreadChange());
         m_client = &actor;
         m_status = status_delayed;
         if (m_delay == timeMS(0))
@@ -109,6 +110,7 @@ namespace oxygine
 
     void Tween::update(Actor& actor, const UpdateState& us)
     {
+        Q_ASSERT(!actor.requiresThreadChange());
         m_elapsed += us.dt;
         switch (m_status)
         {
