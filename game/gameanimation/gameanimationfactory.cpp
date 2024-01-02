@@ -412,6 +412,7 @@ void GameAnimationFactory::finishAllAnimations()
 
 void GameAnimationFactory::finishAllAnimationsWithEmitFinished()
 {
+    Mainapp::getInstance()->pauseRendering();
     GameAnimationFactory::finishAllAnimations();
     if (m_Animations.size() == 0)
     {

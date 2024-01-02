@@ -120,53 +120,59 @@ void GameAnimationDialog::keyInput(oxygine::KeyEvent event)
 
 void GameAnimationDialog::nextDialogStep()
 {
-    if (m_paused)
+    if (!m_stopped)
     {
-        m_paused = false;
-        m_writePosition += 1;
-        m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
-    }
-    else
-    {
-        if (m_writePosition >= m_Text.size())
+        if (m_paused)
         {
-            onFinished(false);
+            m_paused = false;
+            m_writePosition += 1;
+            m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
         }
         else
         {
-            float textHeight = m_TextField->getTextRect().height();
-            qint32 nextHeight = (static_cast<qint32>(textHeight) / dialogHeigth + 1) * dialogHeigth;
-            // loop till two lines of text will be shown
-            while (m_writePosition < m_Text.size())
+            if (m_writePosition >= m_Text.size())
             {
-                m_writePosition += 1;
-                m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
-                textHeight = m_TextField->getTextRect().height();
-                if (textHeight > nextHeight)
+                onFinished(false);
+            }
+            else
+            {
+                float textHeight = m_TextField->getTextRect().height();
+                qint32 nextHeight = (static_cast<qint32>(textHeight) / dialogHeigth + 1) * dialogHeigth;
+                // loop till two lines of text will be shown
+                while (m_writePosition < m_Text.size())
                 {
-                    m_writePosition -= 1;
-                    break;
+                    m_writePosition += 1;
+                    m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
+                    textHeight = m_TextField->getTextRect().height();
+                    if (textHeight > nextHeight)
+                    {
+                        m_writePosition -= 1;
+                        break;
+                    }
                 }
+                updateShownText();
+                if (m_writePosition < m_Text.size())
+                {
+                    m_paused = true;
+                }
+
             }
-            updateShownText();
-            if (m_writePosition < m_Text.size())
-            {
-                m_paused = true;
-            }
-            
         }
     }
 }
 
 void GameAnimationDialog::startFinishTimer()
 {
-    m_finishTimer.setSingleShot(true);
-    m_finishTimer.start(m_autoFinishMs);
+    if (!m_stopped)
+    {
+        m_finishTimer.setSingleShot(true);
+        m_finishTimer.start(m_autoFinishMs);
+    }
 }
 
 void GameAnimationDialog::update(const oxygine::UpdateState& us)
 {
-    if (m_textTimer.elapsed() > m_textSpeed && !m_paused)
+    if (m_textTimer.elapsed() > m_textSpeed && !m_paused && !m_stopped)
     {
         m_writePosition += 1;
         // check for auto pause
@@ -315,6 +321,7 @@ void GameAnimationDialog::restart()
         auto* pMenu = m_pMap->getMenu();
         if (pMenu != nullptr)
         {
+            m_writePosition = 0;
             m_stopped = false;
             pMenu->addChild(getSharedPtr<oxygine::Actor>());
         }

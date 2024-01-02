@@ -30,7 +30,6 @@ private slots:
     void wheelEvent(qint32 x, qint32 y);
 private:
     bool m_started{false};
-    QElapsedTimer m_moveTimer;
 };
 
 #endif // RENDERTHREAD_H

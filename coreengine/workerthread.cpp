@@ -55,7 +55,6 @@ WorkerThread::WorkerThread()
     connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
     moveToThread(Mainapp::getWorkerthread());
-    m_moveTimer.start();
 }
 
 WorkerThread::~WorkerThread()
@@ -272,14 +271,8 @@ void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint
 
 void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 {
-    if (m_moveTimer.elapsed() > 50)
-    {
-        Mainapp::getInstance()->pauseRendering();
-        oxygine::Input* input = &oxygine::Input::getInstance();
-        input->sendPointerMotionEvent(oxygine::Stage::getStage(), x, y, 1.0f, input->getPointerMouse());
-        Mainapp::getInstance()->continueRendering();
-        m_moveTimer.restart();
-    }
+    oxygine::Input* input = &oxygine::Input::getInstance();
+    input->sendPointerMotionEvent(oxygine::Stage::getStage(), x, y, 1.0f, input->getPointerMouse());
 }
 
 void WorkerThread::wheelEvent(qint32 x, qint32 y)

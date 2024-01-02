@@ -2,6 +2,8 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
+#include "coreengine/mainapp.h"
+
 namespace oxygine
 {
     spInput Input::m_instance;
@@ -15,6 +17,7 @@ namespace oxygine
         }
         memset(m_ids, 0, sizeof(m_ids));
         m_multiTouch = true;
+        m_moveTimer.start();
     }
 
     const PointerState* TouchEvent::getPointer() const
@@ -72,13 +75,19 @@ namespace oxygine
         {
             return;
         }
-        TouchEvent me(TouchEvent::MOVE, true, QPoint(x, y));
-        me.index = ps->getIndex();
-        me.pressure = pressure;
-        ps->m_position = QPoint(x, y);
-        if (stage != nullptr)
+        if (m_moveTimer.elapsed() > 33)
         {
-            stage->handleEvent(&me);
+            Mainapp::getInstance()->pauseRendering();
+            TouchEvent me(TouchEvent::MOVE, true, QPoint(x, y));
+            me.index = ps->getIndex();
+            me.pressure = pressure;
+            ps->m_position = QPoint(x, y);
+            if (stage != nullptr)
+            {
+                stage->handleEvent(&me);
+            }
+            Mainapp::getInstance()->continueRendering();
+            m_moveTimer.restart();
         }
     }
 

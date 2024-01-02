@@ -48,5 +48,6 @@ namespace oxygine
         PointerState m_pointerMouse;
         qint64 m_ids[MAX_TOUCHES + 1];
         bool m_multiTouch;
+        QElapsedTimer m_moveTimer;
     };
 }
