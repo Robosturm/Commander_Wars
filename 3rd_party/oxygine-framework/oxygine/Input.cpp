@@ -32,7 +32,7 @@ namespace oxygine
 
     void Input::sendPointerButtonEvent(spStage & stage, MouseButton button, qint32 x, qint32 y, float pressure, qint32 type, PointerState* ps)
     {
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isWorker());
+        // Q_ASSERT(oxygine::GameWindow::getWindow()->isWorker());
         if (!m_multiTouch && ps->getIndex() != 1 && ps != &m_pointerMouse)
         {
             if (type == TouchEvent::TOUCH_UP)
@@ -70,7 +70,6 @@ namespace oxygine
 
     void Input::sendPointerMotionEvent(spStage & stage, qint32 x, qint32 y, float pressure, PointerState* ps)
     {
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isWorker());
         if (!m_multiTouch && ps->getIndex() != 1 && ps != &m_pointerMouse)
         {
             return;
@@ -93,7 +92,6 @@ namespace oxygine
 
     void Input::sendPointerWheelEvent(spStage & stage, const QPoint& dir, PointerState* ps)
     {
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isWorker());
         TouchEvent te(TouchEvent::WHEEL_DIR, true, ps->getPosition());
         te.index = ps->getIndex();
         te.wheelDirection = dir;

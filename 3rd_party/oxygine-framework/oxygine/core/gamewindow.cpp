@@ -184,27 +184,30 @@ namespace oxygine
     {
         MouseButton b = MouseButton_Left;
         switch (event->button())
-            {
-            case Qt::MouseButton::LeftButton:
-            {
-                b = MouseButton_Left;
-                break;
-            }
-            case Qt::MouseButton::MiddleButton:
-            {
-                b = MouseButton_Middle;
-                break;
-            }
-            case Qt::MouseButton::RightButton:
-            {
-                b = MouseButton_Right;
-                break;
-            }
-            default:
-            {
-                // do nothing
-            }
+        {
+        case Qt::MouseButton::LeftButton:
+        {
+            b = MouseButton_Left;
+            break;
         }
+        case Qt::MouseButton::MiddleButton:
+        {
+            b = MouseButton_Middle;
+            break;
+        }
+        case Qt::MouseButton::RightButton:
+        {
+            b = MouseButton_Right;
+            break;
+        }
+        default:
+        {
+            // do nothing
+        }
+        }
+        //oxygine::Input* input = &oxygine::Input::getInstance();
+        //input->sendPointerButtonEvent(oxygine::Stage::getStage(), b, event->position().x(), event->position().y(), 1.0f,
+        //                              oxygine::TouchEvent::TOUCH_DOWN, input->getPointerMouse());
         emit sigMousePressEvent(b, event->position().x(), event->position().y());
     }
 
@@ -213,36 +216,43 @@ namespace oxygine
         MouseButton b = MouseButton_Left;
         switch (event->button())
         {
-            case Qt::MouseButton::LeftButton:
-            {
-                b = MouseButton_Left;
-                break;
-            }
-            case Qt::MouseButton::MiddleButton:
-            {
-                b = MouseButton_Middle;
-                break;
-            }
-            case Qt::MouseButton::RightButton:
-            {
-                b = MouseButton_Right;
-                break;
-            }
-            default:
-            {
-                // do nothing
-            }
+        case Qt::MouseButton::LeftButton:
+        {
+            b = MouseButton_Left;
+            break;
         }
+        case Qt::MouseButton::MiddleButton:
+        {
+            b = MouseButton_Middle;
+            break;
+        }
+        case Qt::MouseButton::RightButton:
+        {
+            b = MouseButton_Right;
+            break;
+        }
+        default:
+        {
+            // do nothing
+        }
+        }
+        //oxygine::Input* input = &oxygine::Input::getInstance();
+        //input->sendPointerButtonEvent(oxygine::Stage::getStage(), b, event->position().x(), event->position().y(), 1.0f,
+        //                              oxygine::TouchEvent::TOUCH_UP, input->getPointerMouse());
         emit sigMouseReleaseEvent(b, event->position().x(), event->position().y());
     }
 
     void GameWindow::wheelEvent(QWheelEvent *event)
     {
+        //oxygine::Input* input = &oxygine::Input::getInstance();
+        //input->sendPointerWheelEvent(oxygine::Stage::getStage(), QPoint(event->angleDelta().x(), event->angleDelta().y()), input->getPointerMouse());
         emit sigWheelEvent(event->angleDelta().x(), event->angleDelta().y());
     }
 
     void GameWindow::mouseMoveEvent(QMouseEvent *event)
     {
+        //oxygine::Input* input = &oxygine::Input::getInstance();
+        //input->sendPointerMotionEvent(oxygine::Stage::getStage(), event->position().x(), event->position().y(), 1.0f, input->getPointerMouse());
         emit sigMouseMoveEvent(event->position().x(), event->position().y());
     }
 

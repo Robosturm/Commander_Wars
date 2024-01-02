@@ -229,13 +229,11 @@ namespace oxygine
         {
             return;
         }
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isWorker());
         handleEventImpl(event);
     }
 
     void Actor::handleEventImpl(Event* event)
     {
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isWorker());
         if (event != nullptr)
         {
             bool touchEvent = TouchEvent::isTouchEvent(event->type);
