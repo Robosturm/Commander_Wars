@@ -1,9 +1,9 @@
 #include "awbwReplayReader/awbwreplayerreader.h"
 #include "zipSupport/qzipreader.h"
+
 #include <QBuffer>
 
-
-#include <QFile>
+#include "awbwReplayReader/awbwdataparser.h"
 
 static const char* const JSON_TURNSTART = "O:8:\"awbwGame\":";
 static const char* const JSON_PLAYERSTART = "O:10:\"awbwPlayer\":";
@@ -35,5 +35,10 @@ AwbwReplayerReader::AwbwReplayerReader(const QString & awbwReplayZip)
             replayFileContent = unzipContent;
         }
     }
-    // gameStateContent.split(JSON_TURNSTART);
+    auto playerTurns = gameStateContent.split('\n');
+//    for (const auto & turn : playerTurns)
+//    {
+//        auto turnData = AwbwDataParser::readList(turn);
+//        qint32 a = 0;
+//    }
 }

@@ -162,6 +162,7 @@ protected:
 
     bool m_shuttingDown{false};
     bool m_launched{false};
+    bool m_workerLaunched{false};
     QThread* m_pMainThread{nullptr};
 };
 }
