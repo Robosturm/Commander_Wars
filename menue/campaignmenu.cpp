@@ -500,39 +500,42 @@ void CampaignMenu::mapSelectionItemChanged(QString item)
 
 void CampaignMenu::slotButtonNext()
 {
-    Mainapp::getInstance()->pauseRendering();
-
-    Mainapp::getInstance()->getAudioManager()->playSound("moveOut.wav");
-    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    if (pMap.get() != nullptr &&
-        GameAnimationFactory::getAnimationCount() == 0)
+    if (!m_starting)
     {
-        if (pMap->getGameScript()->immediateStart())
+        Mainapp::getInstance()->pauseRendering();
+        m_starting = true;
+        Mainapp::getInstance()->getAudioManager()->playSound("moveOut.wav");
+        spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+        if (pMap.get() != nullptr &&
+            GameAnimationFactory::getAnimationCount() == 0)
         {
-            CONSOLE_PRINT("Leaving Campaign Menue", GameConsole::eDEBUG);
-            pMap->setVisible(false);
-            pMap->initPlayersAndSelectCOs();
-            pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
-            pMap->getGameScript()->gameStart();
-            bool applyRulesPalette = pMap->getGameRules()->getMapPalette() > 0;
-            pMap->updateSprites(-1, -1, false, false, applyRulesPalette);
-            // start game
-            spGameMenue window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
-            oxygine::Stage::getStage()->addChild(window);
-            oxygine::Actor::detach();
+            if (pMap->getGameScript()->immediateStart())
+            {
+                CONSOLE_PRINT("Leaving Campaign Menue", GameConsole::eDEBUG);
+                pMap->setVisible(false);
+                pMap->initPlayersAndSelectCOs();
+                pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+                pMap->getGameScript()->gameStart();
+                bool applyRulesPalette = pMap->getGameRules()->getMapPalette() > 0;
+                pMap->updateSprites(-1, -1, false, false, applyRulesPalette);
+                // start game
+                spGameMenue window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
+                oxygine::Stage::getStage()->addChild(window);
+                oxygine::Actor::detach();
+            }
+            else if (m_Multiplayer)
+            {
+                // todo
+            }
+            else
+            {
+                auto window = MemoryManagement::create<MapSelectionMapsMenue>(m_pMapSelectionView);
+                oxygine::Stage::getStage()->addChild(window);
+                oxygine::Actor::detach();
+            }
         }
-        else if (m_Multiplayer)
-        {
-            // todo
-        }
-        else
-        {
-            auto window = MemoryManagement::create<MapSelectionMapsMenue>(m_pMapSelectionView);
-            oxygine::Stage::getStage()->addChild(window);
-            oxygine::Actor::detach();
-        }
+        Mainapp::getInstance()->continueRendering();
     }
-    Mainapp::getInstance()->continueRendering();
 }
 
 void CampaignMenu::showSaveCampaign()

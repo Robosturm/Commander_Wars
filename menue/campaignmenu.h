@@ -64,6 +64,7 @@ private:
     oxygine::spButton m_pButtonSave;
 
     bool m_Multiplayer{false};
+    bool m_starting{false};
 };
 
 Q_DECLARE_INTERFACE(CampaignMenu, "CampaignMenu");
