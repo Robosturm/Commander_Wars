@@ -113,6 +113,7 @@ protected:
     spPlayerSelection m_pPlayerSelection;
 
     MapSelectionStep m_MapSelectionStep{MapSelectionStep::selectMap};
+    bool m_starting{false};
 };
 
 Q_DECLARE_INTERFACE(MapSelectionMapsMenue, "MapSelectionMapsMenue");

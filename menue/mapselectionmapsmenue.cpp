@@ -390,23 +390,26 @@ void MapSelectionMapsMenue::hidePlayerSelection()
 
 void MapSelectionMapsMenue::startGame()
 {
-    CONSOLE_PRINT("Start game", GameConsole::eDEBUG);
-    m_onEnterTimer.stop();
-    defeatClosedPlayers();
+    if (!m_starting)
+    {
+        CONSOLE_PRINT("Start game", GameConsole::eDEBUG);
+        m_onEnterTimer.stop();
+        defeatClosedPlayers();
 
-    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    pMap->setVisible(false);
-    pMap->initPlayersAndSelectCOs();
-    pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
-    pMap->getGameScript()->gameStart();
-    bool applyRulesPalette = pMap->getGameRules()->getMapPalette() > 0;
-    pMap->updateSprites(-1, -1, false, false, applyRulesPalette);
-    // start game
-    CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
-    
-    spGameMenue window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
-    oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();
+        spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+        pMap->setVisible(false);
+        pMap->initPlayersAndSelectCOs();
+        pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+        pMap->getGameScript()->gameStart();
+        bool applyRulesPalette = pMap->getGameRules()->getMapPalette() > 0;
+        pMap->updateSprites(-1, -1, false, false, applyRulesPalette);
+        // start game
+        CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
+
+        spGameMenue window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
+        oxygine::Stage::getStage()->addChild(window);
+        oxygine::Actor::detach();
+    }
 }
 
 void MapSelectionMapsMenue::defeatClosedPlayers()
