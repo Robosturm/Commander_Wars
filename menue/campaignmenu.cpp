@@ -462,39 +462,45 @@ void CampaignMenu::onEnter()
 }
 
 void CampaignMenu::mapSelectionItemClicked(QString item)
-{    
-    QFileInfo info = QFileInfo(item);
-    if (!info.exists())
+{
+    if (!m_starting)
     {
-        info = QFileInfo(Settings::getInstance()->getUserPath() + item);
+        QFileInfo info = QFileInfo(item);
         if (!info.exists())
         {
-            info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
+            info = QFileInfo(Settings::getInstance()->getUserPath() + item);
+            if (!info.exists())
+            {
+                info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
+            }
+        }
+        if (info.isFile())
+        {
+            m_pMapSelectionView->setCurrentFile(info.filePath());
+            m_pMapSelectionView->loadCurrentMap();
+            emit sigButtonNext();
         }
     }
-    if (info.isFile())
-    {
-        m_pMapSelectionView->setCurrentFile(info.filePath());
-        m_pMapSelectionView->loadCurrentMap();
-        emit sigButtonNext();
-    }    
 }
 
 void CampaignMenu::mapSelectionItemChanged(QString item)
-{    
-    QFileInfo info = QFileInfo(item);
-    if (!info.exists())
+{
+    if (!m_starting)
     {
-        info = QFileInfo(Settings::getInstance()->getUserPath() + item);
+        QFileInfo info = QFileInfo(item);
         if (!info.exists())
         {
-            info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
+            info = QFileInfo(Settings::getInstance()->getUserPath() + item);
+            if (!info.exists())
+            {
+                info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
+            }
         }
-    }
-    if (info.isFile())
-    {
-        m_pMapSelectionView->setCurrentFile(info.filePath());
-        m_pMapSelectionView->loadCurrentMap();
+        if (info.isFile())
+        {
+            m_pMapSelectionView->setCurrentFile(info.filePath());
+            m_pMapSelectionView->loadCurrentMap();
+        }
     }
 }
 

@@ -222,75 +222,78 @@ void MapSelectionMapsMenue::buttonBack()
 }
 
 void MapSelectionMapsMenue::buttonNext()
-{    
-    CONSOLE_PRINT("slotButtonNext()", GameConsole::eDEBUG);
-    Mainapp::getInstance()->pauseRendering();
-    switch (m_MapSelectionStep)
+{
+    if (!m_starting)
     {
-        case MapSelectionStep::selectMap:
-        {
-            QString mapFile = m_pMapSelectionView->getCurrentFile().filePath();
-            bool isExternal = (mapFile == NetworkCommands::RANDOMMAPIDENTIFIER ||
-                               mapFile == NetworkCommands::SERVERMAPIDENTIFIER);
-            if (QFile::exists(mapFile) || isExternal)
+            CONSOLE_PRINT("slotButtonNext()", GameConsole::eDEBUG);
+            Mainapp::getInstance()->pauseRendering();
+            switch (m_MapSelectionStep)
             {
-                if (!isExternal)
+            case MapSelectionStep::selectMap:
+            {
+                QString mapFile = m_pMapSelectionView->getCurrentFile().filePath();
+                bool isExternal = (mapFile == NetworkCommands::RANDOMMAPIDENTIFIER ||
+                                   mapFile == NetworkCommands::SERVERMAPIDENTIFIER);
+                if (QFile::exists(mapFile) || isExternal)
                 {
-                    m_pMapSelectionView->loadCurrentMap();
-                }
-                QString file = m_pMapSelectionView->getMapSelection()->getCurrentFile();
+                    if (!isExternal)
+                    {
+                        m_pMapSelectionView->loadCurrentMap();
+                    }
+                    QString file = m_pMapSelectionView->getMapSelection()->getCurrentFile();
 
-                if ((m_pMapSelectionView->getCurrentMap().get() != nullptr && file.endsWith(".map")) ||
-                    isExternal)
-                {
-                    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-                    pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
-                    if (pMap->getGameScript()->immediateStart())
+                    if ((m_pMapSelectionView->getCurrentMap().get() != nullptr && file.endsWith(".map")) ||
+                        isExternal)
                     {
-                        startGame();
-                    }
-                    else
-                    {
-                        hideMapSelection();
-                        loadRules(Settings::getInstance()->getDefaultRuleset());
-                        showRuleSelection();
-                        m_MapSelectionStep = MapSelectionStep::selectRules;
-                    }
-                }
-                else
-                {
-                    if (file.endsWith(".jsm") &&
-                        m_pMapSelectionView->getCurrentLoadedCampaign().get() != nullptr)
-                    {
-                        CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
-                        m_onEnterTimer.stop();
-                        if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
+                        spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+                        pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+                        if (pMap->getGameScript()->immediateStart())
                         {
-                            oxygine::Stage::getStage()->addChild(MemoryManagement::create<CampaignMenu>(m_pMapSelectionView->getCurrentLoadedCampaign(), true));
+                            startGame();
                         }
                         else
                         {
-                            oxygine::Stage::getStage()->addChild(MemoryManagement::create<CampaignMenu>(m_pMapSelectionView->getCurrentLoadedCampaign(), false));
+                            hideMapSelection();
+                            loadRules(Settings::getInstance()->getDefaultRuleset());
+                            showRuleSelection();
+                            m_MapSelectionStep = MapSelectionStep::selectRules;
                         }
-                        oxygine::Actor::detach();
+                    }
+                    else
+                    {
+                        if (file.endsWith(".jsm") &&
+                            m_pMapSelectionView->getCurrentLoadedCampaign().get() != nullptr)
+                        {
+                            CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
+                            m_onEnterTimer.stop();
+                            if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
+                            {
+                                oxygine::Stage::getStage()->addChild(MemoryManagement::create<CampaignMenu>(m_pMapSelectionView->getCurrentLoadedCampaign(), true));
+                            }
+                            else
+                            {
+                                oxygine::Stage::getStage()->addChild(MemoryManagement::create<CampaignMenu>(m_pMapSelectionView->getCurrentLoadedCampaign(), false));
+                            }
+                            oxygine::Actor::detach();
+                        }
                     }
                 }
+                break;
             }
-            break;
-        }
-        case MapSelectionStep::selectRules:
-        {
-            hideRuleSelection();
-            showPlayerSelection();
-            m_MapSelectionStep = MapSelectionStep::selectPlayer;
-            break;
-        }
-        case MapSelectionStep::selectPlayer:
-        {
-            break;
-        }
+            case MapSelectionStep::selectRules:
+            {
+                hideRuleSelection();
+                showPlayerSelection();
+                m_MapSelectionStep = MapSelectionStep::selectPlayer;
+                break;
+            }
+            case MapSelectionStep::selectPlayer:
+            {
+                break;
+            }
+            }
+            Mainapp::getInstance()->continueRendering();
     }
-    Mainapp::getInstance()->continueRendering();
 }
 
 void MapSelectionMapsMenue::exitMenu()
