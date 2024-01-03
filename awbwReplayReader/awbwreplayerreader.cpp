@@ -36,9 +36,8 @@ AwbwReplayerReader::AwbwReplayerReader(const QString & awbwReplayZip)
         }
     }
     auto playerTurns = gameStateContent.split('\n');
-//    for (const auto & turn : playerTurns)
-//    {
-//        auto turnData = AwbwDataParser::readList(turn);
-//        qint32 a = 0;
-//    }
+    for (const auto & turn : playerTurns)
+    {
+
+    }
 }

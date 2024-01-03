@@ -491,12 +491,17 @@ void CampaignMenu::mapSelectionItemChanged(QString item)
             info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
         }
     }
-    m_pMapSelectionView->loadMap(info);    
+    if (info.isFile())
+    {
+        m_pMapSelectionView->setCurrentFile(info.filePath());
+        m_pMapSelectionView->loadCurrentMap();
+    }
 }
 
 void CampaignMenu::slotButtonNext()
 {
     Mainapp::getInstance()->pauseRendering();
+
     Mainapp::getInstance()->getAudioManager()->playSound("moveOut.wav");
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     if (pMap.get() != nullptr &&
