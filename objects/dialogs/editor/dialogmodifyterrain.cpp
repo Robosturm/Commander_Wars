@@ -362,7 +362,7 @@ void DialogModifyTerrain::showLoadDialog()
 void DialogModifyTerrain::loadCustomSprite(QString id)
 {
     QString imageId = GlobalUtils::makePathRelative(id);
-    if (QFile::exists(imageId))
+    if (QFile::exists(imageId) || QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + imageId))
     {
         terrainClicked(imageId);
     }

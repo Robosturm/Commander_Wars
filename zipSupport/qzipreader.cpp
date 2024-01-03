@@ -92,7 +92,7 @@ static int inflate(Bytef *dest, ulong *destLen, const Bytef *source, ulong sourc
             return Z_BUF_ERROR;
         }
 
-        stream.next_out = dest;
+        stream.next_out = (dest + total_out);
         stream.avail_out = (uInt)*destLen - total_out;
         if ((uLong)stream.avail_out != (uInt)*destLen - total_out)
         {
