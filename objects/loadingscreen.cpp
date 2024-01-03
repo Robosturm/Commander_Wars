@@ -90,11 +90,12 @@ void LoadingScreen::setProgress(QString workText, qint32 value)
 {
     if (oxygine::Stage::getStage().get() != nullptr)
     {
+        Mainapp* pApp = Mainapp::getInstance();
         CONSOLE_PRINT("LoadingScreen::setProgress " + workText + " " + QString::number(value), GameConsole::eDEBUG);
         m_workText->setHtmlText(workText);
         m_loadingProgress->setHtmlText(QString::number(value) + " %");
         m_LoadingBar->setWidth(value * oxygine::Stage::getStage()->getWidth() / 100);
-        if (Mainapp::getInstance()->isMainThread())
+        if (pApp->isMainThread())
         {
             QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
         }

@@ -87,78 +87,82 @@ void HumanPlayerInput::rightClickUp(qint32, qint32)
 void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
 {
     Mainapp::getInstance()->pauseRendering();
-    bool isViewPlayer = (m_pMap->getCurrentViewPlayer() == m_pPlayer);
-    if (isCurrentPlayer(m_pPlayer) ||
-        m_pPlayer == nullptr)
+    if (m_pMenu != nullptr &&
+        m_pMenu->getGameStarted())
     {
-        if (GameAnimationFactory::getAnimationCount() > 0)
+        bool isViewPlayer = (m_pMap->getCurrentViewPlayer() == m_pPlayer);
+        if (isCurrentPlayer(m_pPlayer) ||
+            m_pPlayer == nullptr)
         {
-            GameAnimationFactory::finishAllAnimations();
-            if (GameAnimationFactory::getAnimationCount() == 0)
+            if (GameAnimationFactory::getAnimationCount() > 0)
             {
-                emit GameAnimationFactory::getInstance()->animationsFinished();
+                GameAnimationFactory::finishAllAnimations();
+                if (GameAnimationFactory::getAnimationCount() == 0)
+                {
+                    emit GameAnimationFactory::getInstance()->animationsFinished();
+                }
             }
-        }
-        else if (m_pGameAction.get() != nullptr)
-        {
-            Mainapp::getInstance()->getAudioManager()->playSound("cancel.wav");
-            if ((m_pGameAction->getInputStep() > 0) ||
-                (m_pGameAction->getActionID() != ""))
+            else if (m_pGameAction.get() != nullptr)
             {
-                cancelActionInput();
+                Mainapp::getInstance()->getAudioManager()->playSound("cancel.wav");
+                if ((m_pGameAction->getInputStep() > 0) ||
+                    (m_pGameAction->getActionID() != ""))
+                {
+                    cancelActionInput();
+                }
+                else if (m_CurrentMenu.get() == nullptr)
+                {
+                    cancelSelection(x, y);
+                }
+                else
+                {
+                    cancelActionInput();
+                }
+
             }
-            else if (m_CurrentMenu.get() == nullptr)
+            else if (m_pMap->onMap(x, y))
             {
-                cancelSelection(x, y);
-            }
-            else
-            {
-                cancelActionInput();
-            }
-            
-        }
-        else if (m_pMap->onMap(x, y))
-        {
-            if (m_FieldPoints.size() == 0 && m_pGameAction.get() == nullptr)
-            {
-                showAttackableFields(x, y);
-                if (m_FieldPoints.size() == 0)
+                if (m_FieldPoints.size() == 0 && m_pGameAction.get() == nullptr)
+                {
+                    showAttackableFields(x, y);
+                    if (m_FieldPoints.size() == 0)
+                    {
+                        showVisionFields(x, y);
+                    }
+                }
+                else if (!m_showVisionFields)
                 {
                     showVisionFields(x, y);
                 }
-            }
-            else if (!m_showVisionFields)
-            {
-                showVisionFields(x, y);
+                else
+                {
+                    cleanUpInput();
+                }
             }
             else
             {
                 cleanUpInput();
             }
         }
-        else
+        else if (isViewPlayer)
         {
-            cleanUpInput();
-        }
-    }
-    else if (isViewPlayer)
-    {
-        if (GameAnimationFactory::getAnimationCount() > 0)
-        {
-            GameAnimationFactory::finishAllAnimations();
-            if (GameAnimationFactory::getAnimationCount() == 0)
+            if (GameAnimationFactory::getAnimationCount() > 0)
             {
-                emit GameAnimationFactory::getInstance()->animationsFinished();
+                GameAnimationFactory::finishAllAnimations();
+                if (GameAnimationFactory::getAnimationCount() == 0)
+                {
+                    emit GameAnimationFactory::getInstance()->animationsFinished();
+                }
+            }
+            else
+            {
+                cancelActionInput();
             }
         }
         else
         {
-            cancelActionInput();
+            // do nothing
         }
-    }
-    else
-    {
-        // do nothing
     }
     Mainapp::getInstance()->continueRendering();
 }
@@ -400,7 +404,8 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
     Mainapp::getInstance()->pauseRendering();
     if (m_pMenu != nullptr &&
         GameAnimationFactory::getAnimationCount() == 0 &&
-        m_leftClickEnabled)
+        m_leftClickEnabled &&
+        m_pMenu->getGameStarted())
     {
         CONSOLE_PRINT("humanplayer input leftClick() with X " + QString::number(x) + " Y " + QString::number(y), GameConsole::eDEBUG);
         Cursor* pCursor = m_pMenu->getCursor();
@@ -1136,7 +1141,8 @@ bool HumanPlayerInput::inputAllowed()
 {
     if (m_pMenu != nullptr &&
         GameAnimationFactory::getAnimationCount() == 0 &&
-        m_pMenu->getFocused())
+        m_pMenu->getFocused() &&
+        m_pMenu->getGameStarted())
     {        
         if (isCurrentPlayer(m_pPlayer) &&
             m_pGameAction.get() == nullptr)

@@ -663,8 +663,9 @@ bool ActionPerformer::isTrap(const QString & function, spGameAction pAction, Uni
 
 void ActionPerformer::delayedActionPerformed()
 {
-    if (m_pCurrentAction.get() == nullptr)
+    if (m_pCurrentAction.get() == nullptr && !m_exit)
     {
+        onTriggeringActionFinished();
         emit sigActionPerformed();
     }
 }

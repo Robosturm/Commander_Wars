@@ -496,6 +496,7 @@ void CampaignMenu::mapSelectionItemChanged(QString item)
 
 void CampaignMenu::slotButtonNext()
 {
+    Mainapp::getInstance()->pauseRendering();
     Mainapp::getInstance()->getAudioManager()->playSound("moveOut.wav");
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     if (pMap.get() != nullptr &&
@@ -504,12 +505,12 @@ void CampaignMenu::slotButtonNext()
         if (pMap->getGameScript()->immediateStart())
         {
             CONSOLE_PRINT("Leaving Campaign Menue", GameConsole::eDEBUG);
-            spGameMap pMap = m_pMapSelectionView->getCurrentMap();
             pMap->setVisible(false);
             pMap->initPlayersAndSelectCOs();
             pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
             pMap->getGameScript()->gameStart();
-            pMap->updateSprites(-1, -1, false, false);
+            bool applyRulesPalette = pMap->getGameRules()->getMapPalette() > 0;
+            pMap->updateSprites(-1, -1, false, false, applyRulesPalette);
             // start game
             spGameMenue window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
             oxygine::Stage::getStage()->addChild(window);
@@ -526,6 +527,7 @@ void CampaignMenu::slotButtonNext()
             oxygine::Actor::detach();
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void CampaignMenu::showSaveCampaign()

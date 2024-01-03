@@ -48,6 +48,7 @@ void PathFindingSystem::explore()
         || m_StartPoint.x() >= m_width || m_StartPoint.y() >= m_heigth)
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "PathFindingSystem::explore invalid start point");
+        return;
     }
     qint32 neighboursIndex = getIndex(m_StartPoint.x(), m_StartPoint.y());
     m_OpenList.push_back(Node(m_StartPoint.x(), m_StartPoint.y(), neighboursIndex, 0, 0,

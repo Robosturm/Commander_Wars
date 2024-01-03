@@ -389,7 +389,7 @@ void MapSelectionMapsMenue::hidePlayerSelection()
 }
 
 void MapSelectionMapsMenue::startGame()
-{    
+{
     CONSOLE_PRINT("Start game", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
     defeatClosedPlayers();

@@ -603,6 +603,7 @@ void GameMap::onWeatherChanged(Weather* pWeather)
 
 void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool showLoadingScreen, bool applyRulesPalette)
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     if (showLoadingScreen)
@@ -648,6 +649,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     updateFlowTiles(flowPoints, applyRulesPalette);
     syncTerrainAnimations(showLoadingScreen);
     finishUpdateSprites(showLoadingScreen);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::updateSpritesOfTiles(const QVector<QPoint> & points, bool editor, bool showLoadingScreen)
@@ -2496,7 +2498,7 @@ spQmlVectorUnit GameMap::getSpUnits(Player* pPlayer)
             spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
-                if ((pUnit->getOwner() == pPlayer))
+                if (pUnit->getOwner() == pPlayer && pUnit->getHp() > 0)
                 {
                     ret->append(pUnit.get());
                 }

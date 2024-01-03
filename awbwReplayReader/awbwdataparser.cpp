@@ -1,24 +1,25 @@
 #include "awbwReplayReader/awbwdataparser.h"
-#include <QList>
 
 QString AwbwDataParser::readString(const QByteArray & input)
 {
     auto data = input.split(':');
     if (data[0] == "s")
     {
-        QString ret = data[2].split('\"')[1];
-        if (ret.size() == data[1].toInt())
-        {
-            return ret;
-        }
-        else
-        {
-            return "";
-        }
+        return getStringValue(data[2], data[1].toInt());
     }
     else if (data[0] =="N")
     {
         return "";
+    }
+    return "";
+}
+
+QString AwbwDataParser::getStringValue(const QByteArray & stringPart, qint32 size)
+{
+    QString ret = stringPart.split('\"')[1];
+    if (ret.size() == size)
+    {
+        return ret;
     }
     return "";
 }
@@ -68,4 +69,29 @@ bool AwbwDataParser::readBool(const QByteArray & input)
         }
     }
     return false;
+}
+
+QList<QByteArray> AwbwDataParser::readList(const QByteArray & input)
+{
+    QList<QByteArray> ret;
+    auto data = input.split('{');
+    auto data2 = data[0].split(':');
+    if (data2[0 ] == "O")
+    {
+        for (qint32 i = 1; i < data.size(); ++i)
+        {
+            if (i == 1)
+            {
+                auto fraction = data[i].split(';');
+                ret.append(fraction);
+            }
+            else
+            {
+                auto supArray = data[i].split('}');
+                ret.append(QByteArray("{") + supArray[0] + QByteArray("}"));
+                ret.append(supArray[1].split(';'));
+            }
+        }
+    }
+    return ret;
 }

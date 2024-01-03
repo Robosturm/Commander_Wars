@@ -6,7 +6,7 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
         var building = action.getTargetBuilding();
-        if ((unit.getHasMoved() === true))
+        if (unit === null || unit.getHasMoved() === true)
         {
             return false;
         }

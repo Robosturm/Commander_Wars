@@ -827,50 +827,56 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
     
     for (auto & pUnit : pUnits->getVector())
     {
-        Terrain* pTerrain =  pUnit->getTerrain();
-        Building* pBuilding = pTerrain->getBuilding();
-        // can we use the unit and does it block a production center cause it has nothing to do this turn?
-        bool isOnProduction = pBuilding != nullptr &&
-                              !m_pPlayer->isEnemy(pBuilding->getOwner()) &&
-                              pBuilding->isProductionBuilding();
-        qint32 remainingSpace = pUnit->getLoadingPlace() - pUnit->getLoadedUnitCount();
-        if (!pUnit->getHasMoved() &&
-           (isOnProduction ||
-           (pTerrain->isLoadingTile() && remainingSpace == 0)))
+        if (pUnit != nullptr)
         {
-            UnitPathFindingSystem turnPfs(m_pMap, pUnit.get());
-            turnPfs.explore();
-            auto points = turnPfs.getAllNodePointsFast();
-            QPoint target(-1 , -1);
-            for (auto & point : points)
+            Terrain* pTerrain =  pUnit->getTerrain();
+            if (pTerrain != nullptr)
             {
-                Terrain* pNewTerrain = m_pMap->getTerrain(point.x(), point.y());
-                if (pNewTerrain->getUnit() == nullptr &&
-                    !pNewTerrain->isLoadingTile() &&
-                    turnPfs.getTargetCosts(point.x(), point.y()) > 0)
+                Building* pBuilding = pTerrain->getBuilding();
+                // can we use the unit and does it block a production center cause it has nothing to do this turn?
+                bool isOnProduction = pBuilding != nullptr &&
+                                      !m_pPlayer->isEnemy(pBuilding->getOwner()) &&
+                                      pBuilding->isProductionBuilding();
+                qint32 remainingSpace = pUnit->getLoadingPlace() - pUnit->getLoadedUnitCount();
+                if (!pUnit->getHasMoved() &&
+                    (isOnProduction ||
+                     (pTerrain->isLoadingTile() && remainingSpace == 0)))
                 {
-                    if (pNewTerrain->getBuilding() == nullptr)
+                    UnitPathFindingSystem turnPfs(m_pMap, pUnit.get());
+                    turnPfs.explore();
+                    auto points = turnPfs.getAllNodePointsFast();
+                    QPoint target(-1 , -1);
+                    for (auto & point : points)
                     {
-                        target = point;
-                        break;
+                        Terrain* pNewTerrain = m_pMap->getTerrain(point.x(), point.y());
+                        if (pNewTerrain->getUnit() == nullptr &&
+                            !pNewTerrain->isLoadingTile() &&
+                            turnPfs.getTargetCosts(point.x(), point.y()) > 0)
+                        {
+                            if (pNewTerrain->getBuilding() == nullptr)
+                            {
+                                target = point;
+                                break;
+                            }
+                            else if (!pNewTerrain->getBuilding()->isProductionBuilding())
+                            {
+                                target = point;
+                                break;
+                            }
+                        }
                     }
-                    else if (!pNewTerrain->getBuilding()->isProductionBuilding())
+                    if (target.x() >= 0 && target.y() >= 0)
                     {
-                        target = point;
-                        break;
+                        spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
+                        pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+                        auto path = turnPfs.getPathFast(target.x(), target.y());
+                        pAction->setMovepath(path, turnPfs.getCosts(path));
+                        if (pAction->canBePerformed())
+                        {
+                            emit sigPerformAction(pAction);
+                            return true;
+                        }
                     }
-                }
-            }
-            if (target.x() >= 0 && target.y() >= 0)
-            {
-                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
-                pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                auto path = turnPfs.getPathFast(target.x(), target.y());
-                pAction->setMovepath(path, turnPfs.getCosts(path));
-                if (pAction->canBePerformed())
-                {
-                    emit sigPerformAction(pAction);
-                    return true;
                 }
             }
         }
