@@ -468,6 +468,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR
         # awbw replayer reader for ai training support
         awbwReplayReader/awbwreplayerreader.h awbwReplayReader/awbwreplayerreader.cpp
         awbwReplayReader/awbwdataparser.h awbwReplayReader/awbwdataparser.cpp
+        awbwReplayReader/iAwbwAction.h
     )
     ###################################################################################
     # start update support stuff
