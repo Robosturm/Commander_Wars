@@ -8,6 +8,8 @@
 class AwbwReplayerReader : public QObject
 {
     Q_OBJECT
+
+
 public:
     explicit AwbwReplayerReader(const QString & awbwReplayZip);
 
@@ -16,4 +18,3 @@ signals:
 private:
     // QList<QByteArray>
 };
-

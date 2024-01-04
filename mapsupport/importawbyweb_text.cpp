@@ -14,14 +14,12 @@
 
 #include "objects/loadingscreen.h"
 
-void GameMap::importAWByWebMap(QString file, EditorMenue* pMenu)
+void GameMap::importAWByWebMap(QString file)
 {
-    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-    pLoadingScreen->show();
     if (QFile::exists(file))
     {
-        clearMap();        
-
+        spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+        pLoadingScreen->show();
         QFile data(file);
         data.open(QFile::ReadOnly);
         QTextStream stream(&data);
@@ -43,1014 +41,1032 @@ void GameMap::importAWByWebMap(QString file, EditorMenue* pMenu)
                 }
             }
         }
-        pLoadingScreen->setProgress(tr("Creating Player"), 10);
-        // load 16 players :)
-        for (qint32 i = 0; i < 16; i++)
-        {
-            m_players.append(MemoryManagement::create<Player>(this));
-            m_players[i]->init();
-            if (i == 0)
-            {
-                m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
-                m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Human);
-            }
-            else
-            {
-                m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Normal));
-                m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Normal);
-            }
-        }
-        // load empty map
-        qint32 mapHeigth = mapIDs.size();
-
-        m_rowSprites.reserve(mapHeigth);
-        m_fields.reserve(mapHeigth);
-        for (qint32 y = 0; y < mapHeigth; y++)
-        {
-            pLoadingScreen->setProgress(tr("Loading Empty Map Row ") + QString::number(y) + tr(" of ") + QString::number(mapHeigth), 10 + 20 * y / mapHeigth);
-            m_fields.push_back(std::vector<spTerrain>(mapIDs[y].size(), spTerrain()));
-            auto pActor = MemoryManagement::create<oxygine::Actor>();
-            pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
-            m_rowSprites.push_back(pActor);
-            addChild(pActor);
-            for (qint32 x = 0; x < mapIDs[y].size(); x++)
-            {
-                spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, x, y, "", this);
-                m_rowSprites[y]->addChild(pTerrain);
-                m_fields[y][x] = pTerrain;
-                pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
-            }
-        }
-
-        for (qint32 y = 0; y < mapIDs.size(); y++)
-        {
-            pLoadingScreen->setProgress(tr("Importing Map Row ") + QString::number(y) + tr(" of ") + QString::number(mapHeigth), 30 + 50 * y / mapHeigth);
-            for (qint32 x = 0; x < mapIDs[y].size(); x++)
-            {
-                switch (mapIDs[y][x])
-                {
-                    case std::numeric_limits<quint32>::max():
-                    {
-                        replaceTerrain("TELEPORTTILE", x, y, false, false, false);
-                        break;
-                    }
-                    case 0:
-                        break;
-                        // plains
-                    case 1:
-                    {
-                        replaceTerrain(GameMap::PLAINS, x, y, false, false, false);
-                        break;
-                    }
-                    case 2:
-                    {
-                        replaceTerrain("MOUNTAIN", x, y, false, false, false);
-                        break;
-                    }
-                        // forest
-                    case 3:
-                    {
-                        replaceTerrain("FOREST", x, y, false, false, false);
-                        break;
-                    }
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                    case 13:
-                    case 14:
-                    {
-                        replaceTerrain("RIVER", x, y, false, false, false);
-                        break;
-                    }
-                    case 15:
-                    case 16:
-                    case 17:
-                    case 18:
-                    case 19:
-                    case 20:
-                    case 21:
-                    case 22:
-                    case 23:
-                    case 24:
-                    case 25:
-                    {
-                        replaceTerrain("STREET", x, y, false, false, false);
-                        break;
-                    }
-                    case 26:
-                    case 27:
-                    {
-                        replaceTerrain("SEA", x, y, false, false, false);
-                        replaceTerrain("BRIDGE1", x, y, true, false, false);
-                        break;
-                    }
-                    case 28:
-                    {
-                        replaceTerrain("SEA", x, y, false, false, false);
-                        break;
-                    }
-                        // beach
-                    case 29:
-                    case 30:
-                    case 31:
-                    case 32:
-                    {
-                        replaceTerrain("BEACH", x, y, false, false, false);
-                        break;
-                    }
-                        // reaf
-                    case 33:
-                    {
-                        replaceTerrain("REAF", x, y, false, false, false);
-                        break;
-                    }
-                    case 34:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 35:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 36:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 37:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 38:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 39:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 40:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 41:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 42:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 43:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 44:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 45:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 46:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 47:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 48:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 49:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 50:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 51:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 52:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 53:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 54:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 55:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 56:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 57:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 81:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 82:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 83:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 84:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 85:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 86:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 87:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 88:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 89:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 90:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 91:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 92:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 93:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 94:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 95:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 96:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 97:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 98:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 99:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 100:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 101:
-                    case 102:
-                    case 103:
-                    case 104:
-                    case 105:
-                    case 106:
-                    case 107:
-                    case 108:
-                    case 109:
-                    case 110:
-                    {
-                        replaceTerrain("PIPELINE", x, y, false, false, false);
-                        break;
-                    }
-                    case 111:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("SILO_ROCKET", this);
-                        pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 112:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("SILO", this);
-                        pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 113:
-                    case 114:
-                    {
-                        replaceTerrain("WELD", x, y, false, false, false);
-                        break;
-                    }
-                    case 115:
-                    case 116:
-                    {
-                        replaceTerrain("DESTROYEDWELD", x, y, false, false, false);
-                        break;
-                    }
-                    case 117:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 118:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 119:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 120:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 121:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 122:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 123:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 124:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 125:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 126:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 127:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 128:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 129:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 130:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 131:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 132:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 133:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 134:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 135:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 136:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 137:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 138:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 139:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 140:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 141:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 142:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 143:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 144:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 145:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 146:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 147:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 148:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 149:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 150:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 151:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 152:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 153:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 154:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 155:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 156:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 157:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 158:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 159:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 160:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 161:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 162:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-
-                    case 163:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 164:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 165:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 166:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 167:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 168:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 169:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 170:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 171:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 172:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 173:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 174:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 175:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 176:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 185:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 181:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 182:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 183:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 184:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 186:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 187:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-
-                    case 192:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
-                        pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 188:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
-                        pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 189:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
-                        pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 190:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
-                        pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 191:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
-                        pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 193:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
-                        pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    case 194:
-                    {
-                        spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
-                        pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding);
-                        break;
-                    }
-                    default:
-                        CONSOLE_PRINT("Unable terrain id: " + QString::number(mapIDs[y][x]), GameConsole::eERROR);
-                        break;
-                }
-            }
-        }
-
+        QVector<ImporterUnitInfo> units;
+        importAWByWebMap(mapIDs, units);
         QStringList list = file.split("/");
         m_headerInfo.m_mapName = list[list.size() - 1].remove(list[list.size() - 1].lastIndexOf("."), list[list.size() - 1].size());
-        m_headerInfo.m_mapDescription = "";
-        m_headerInfo.m_mapAuthor = Settings::getInstance()->getUsername();
     }
-    pMenu->optimizePlayers();
+}
+
+void GameMap::importAWByWebMap(const QVector<QVector<quint32>> & mapIDs, QVector<ImporterUnitInfo> units)
+{
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+    pLoadingScreen->show();
+    clearMap();
+
+    pLoadingScreen->setProgress(tr("Creating Player"), 10);
+    // load 16 players :)
+    for (qint32 i = 0; i < 16; i++)
+    {
+        m_players.append(MemoryManagement::create<Player>(this));
+        m_players[i]->init();
+        if (i == 0)
+        {
+            m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
+            m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Human);
+        }
+        else
+        {
+            m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Normal));
+            m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Normal);
+        }
+    }
+    // load empty map
+    qint32 mapHeigth = mapIDs.size();
+
+    m_rowSprites.reserve(mapHeigth);
+    m_fields.reserve(mapHeigth);
+    for (qint32 y = 0; y < mapHeigth; y++)
+    {
+        pLoadingScreen->setProgress(tr("Loading Empty Map Row ") + QString::number(y) + tr(" of ") + QString::number(mapHeigth), 10 + 20 * y / mapHeigth);
+        m_fields.push_back(std::vector<spTerrain>(mapIDs[y].size(), spTerrain()));
+        auto pActor = MemoryManagement::create<oxygine::Actor>();
+        pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+        m_rowSprites.push_back(pActor);
+        addChild(pActor);
+        for (qint32 x = 0; x < mapIDs[y].size(); x++)
+        {
+            spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, x, y, "", this);
+            m_rowSprites[y]->addChild(pTerrain);
+            m_fields[y][x] = pTerrain;
+            pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
+        }
+    }
+
+    for (qint32 y = 0; y < mapIDs.size(); y++)
+    {
+        pLoadingScreen->setProgress(tr("Importing Map Row ") + QString::number(y) + tr(" of ") + QString::number(mapHeigth), 30 + 50 * y / mapHeigth);
+        for (qint32 x = 0; x < mapIDs[y].size(); x++)
+        {
+            switch (mapIDs[y][x])
+            {
+            case std::numeric_limits<quint32>::max():
+            {
+                replaceTerrain("TELEPORTTILE", x, y, false, false, false);
+                break;
+            }
+            case 0:
+                break;
+                // plains
+            case 1:
+            {
+                replaceTerrain(GameMap::PLAINS, x, y, false, false, false);
+                break;
+            }
+            case 2:
+            {
+                replaceTerrain("MOUNTAIN", x, y, false, false, false);
+                break;
+            }
+            // forest
+            case 3:
+            {
+                replaceTerrain("FOREST", x, y, false, false, false);
+                break;
+            }
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+            case 14:
+            {
+                replaceTerrain("RIVER", x, y, false, false, false);
+                break;
+            }
+            case 15:
+            case 16:
+            case 17:
+            case 18:
+            case 19:
+            case 20:
+            case 21:
+            case 22:
+            case 23:
+            case 24:
+            case 25:
+            {
+                replaceTerrain("STREET", x, y, false, false, false);
+                break;
+            }
+            case 26:
+            case 27:
+            {
+                replaceTerrain("SEA", x, y, false, false, false);
+                replaceTerrain("BRIDGE1", x, y, true, false, false);
+                break;
+            }
+            case 28:
+            {
+                replaceTerrain("SEA", x, y, false, false, false);
+                break;
+            }
+            // beach
+            case 29:
+            case 30:
+            case 31:
+            case 32:
+            {
+                replaceTerrain("BEACH", x, y, false, false, false);
+                break;
+            }
+            // reaf
+            case 33:
+            {
+                replaceTerrain("REAF", x, y, false, false, false);
+                break;
+            }
+            case 34:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(nullptr);
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 35:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(nullptr);
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 36:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(nullptr);
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 37:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(nullptr);
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 38:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(0));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 39:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(0));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 40:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(0));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 41:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(0));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 42:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(0));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 43:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(1));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 44:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(1));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 45:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(1));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 46:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(1));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 47:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(1));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 48:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(2));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 49:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(2));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 50:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(2));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 51:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(2));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 52:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(2));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 53:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(3));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 54:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(3));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 55:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(3));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 56:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(3));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 57:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(3));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 81:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(5));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 82:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(5));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 83:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(5));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 84:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(5));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 85:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(5));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 86:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(6));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 87:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(6));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 88:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(6));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 89:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(6));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 90:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(6));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 91:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(4));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 92:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(4));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 93:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(4));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 94:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(4));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 95:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(4));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 96:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(7));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 97:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(7));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 98:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(7));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 99:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(7));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 100:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(7));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 101:
+            case 102:
+            case 103:
+            case 104:
+            case 105:
+            case 106:
+            case 107:
+            case 108:
+            case 109:
+            case 110:
+            {
+                replaceTerrain("PIPELINE", x, y, false, false, false);
+                break;
+            }
+            case 111:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("SILO_ROCKET", this);
+                pBuilding->setOwner(nullptr);
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 112:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("SILO", this);
+                pBuilding->setOwner(nullptr);
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 113:
+            case 114:
+            {
+                replaceTerrain("WELD", x, y, false, false, false);
+                break;
+            }
+            case 115:
+            case 116:
+            {
+                replaceTerrain("DESTROYEDWELD", x, y, false, false, false);
+                break;
+            }
+            case 117:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(8));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 118:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(8));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 119:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(8));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 120:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(8));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 121:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(8));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 122:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(9));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 123:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(9));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 124:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(9));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 125:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(9));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 126:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(9));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 127:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(8));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 128:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(4));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 129:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(1));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 130:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(7));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 131:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(2));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 132:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(9));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 133:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(nullptr);
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 134:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(0));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 135:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(5));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 136:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(3));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 137:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(6));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 138:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(8));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 139:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(4));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 140:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(1));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 141:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(7));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 142:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(2));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 143:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(6));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 144:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(9));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 145:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(nullptr);
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 146:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(0));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 147:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(5));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 148:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(3));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 149:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(10));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 150:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(10));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 151:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(10));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 152:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(10));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 153:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(10));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 154:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(10));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 155:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(10));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 156:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(11));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 157:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(11));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 158:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(11));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 159:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(11));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 160:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(11));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 161:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(11));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 162:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(11));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+
+            case 163:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(12));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 164:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(12));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 165:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(12));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 166:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(12));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 167:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(12));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 168:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(12));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 169:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(12));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 170:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(13));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 171:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(13));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 172:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(13));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 173:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(13));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 174:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(13));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 175:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(13));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 176:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(13));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 185:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(14));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 181:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(14));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 182:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(14));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 183:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(14));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 184:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(14));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 186:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(14));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 187:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(14));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+
+            case 192:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HQ", this);
+                pBuilding->setOwner(getPlayer(15));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 188:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("AIRPORT", this);
+                pBuilding->setOwner(getPlayer(15));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 189:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("FACTORY", this);
+                pBuilding->setOwner(getPlayer(15));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 190:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWN", this);
+                pBuilding->setOwner(getPlayer(15));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 191:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("TOWER", this);
+                pBuilding->setOwner(getPlayer(15));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 193:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("LABOR", this);
+                pBuilding->setOwner(getPlayer(15));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            case 194:
+            {
+                spBuilding pBuilding = MemoryManagement::create<Building>("HARBOUR", this);
+                pBuilding->setOwner(getPlayer(15));
+                getTerrain(x, y)->setBuilding(pBuilding);
+                break;
+            }
+            default:
+                CONSOLE_PRINT("Unable terrain id: " + QString::number(mapIDs[y][x]), GameConsole::eERROR);
+                break;
+            }
+        }
+    }
+    for (const auto & unit : units)
+    {
+        if (onMap(unit.x, unit.y))
+        {
+            spUnit pUnit = MemoryManagement::create<Unit>(unit.unitId, getPlayer(unit.player), true, this);
+            getTerrain(unit.x, unit.y)->setUnit(pUnit);
+        }
+    }
+
+    m_headerInfo.m_mapDescription = "";
+    m_headerInfo.m_mapAuthor = Settings::getInstance()->getUsername();
+    optimizePlayers();
     m_players[0]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
     m_players[0]->setControlType(GameEnums::AiTypes::AiTypes_Human);
     // update the whole fucking map

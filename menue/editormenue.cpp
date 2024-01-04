@@ -141,6 +141,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Export AWDS Aws"), "EXPORTAWDSAWS", 3, tr("Exports the map to an AWS Map Editor file"));
     m_Topbar->addItem(tr("Import AW4 Aw4"), "IMPORTAW4AW4", 3, tr("Deletes the current map and imports an AW 4 map editor file."));
     m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWBYWEB", 3, tr("Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/"));
+    m_Topbar->addItem(tr("Import AW by Web ID"), "IMPORTAWBYWEBBYMAPID", 3, tr("Deletes the current map and imports an Advance Wars by Web Map from https://awbw.amarriner.com/ via the map id"));
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
@@ -201,6 +202,7 @@ EditorMenue::EditorMenue()
     connect(m_Topbar.get(), &Topbar::sigItemClicked, this, &EditorMenue::clickedTopbar, Qt::QueuedConnection);
     connect(m_EditorSelection.get(), &EditorSelection::sigSelectionChanged, this, &EditorMenue::selectionChanged, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigResizeMap, this, &EditorMenue::resizeMap, Qt::QueuedConnection);
+    connect(&m_awbwMapDownloader, &AwbwMapDownloader::sigDownloadResult, this, &EditorMenue::onAwbwMapDownloadResult, Qt::QueuedConnection);
 
     m_HumanInput = MemoryManagement::create<HumanPlayerInput>(m_pMap.get());
     m_HumanInput->init(this);
@@ -384,6 +386,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         MenuItem("EXPORTAWDSAWS",       &EditorMenue::showExportAwdsAws),
         MenuItem("IMPORTAW4AW4",        &EditorMenue::showImportAwdsAw4),
         MenuItem("IMPORTAWBYWEB",       &EditorMenue::showImportAwByWeb),
+        MenuItem("IMPORTAWBYWEBBYMAPID",&EditorMenue::showImportAwByWebByMapId),
         MenuItem("NEWMAP",              &EditorMenue::showNewMap),
         MenuItem("EDITMAP",             &EditorMenue::showEditMap),
         MenuItem("EXTENDMAP",           &EditorMenue::showExtendMap),
@@ -660,6 +663,36 @@ void EditorMenue::showImportAwByWeb()
     setFocused(false);
 }
 
+void EditorMenue::showImportAwByWebByMapId()
+{
+    spCustomDialog pDialog = MemoryManagement::create<CustomDialog>("", "ui/editor/importAwbwmapById.xml", this);
+    addChild(pDialog);
+    setFocused(false);
+}
+
+void EditorMenue::downloadAwbwMapById(quint32 mapId)
+{
+    m_awbwMapDownloader.startMapDownload(mapId);
+}
+
+void EditorMenue::onAwbwMapDownloadResult(bool success)
+{
+    if (success)
+    {
+        cleanTemp(-1);
+        m_awbwMapDownloader.loadMap(m_pMap.get());
+        editFinishedCanceled();
+        m_EditorSelection->createPlayerSelection();
+    }
+    else
+    {
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Failed to download map."));
+        addChild(pDialogMessageBox);
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    }
+}
+
 void EditorMenue::showNewMap()
 {
     MapEditDialog::MapEditInfo info;
@@ -881,44 +914,7 @@ void EditorMenue::optimizePlayers()
 {
     CONSOLE_PRINT("EditorMenue::optimizePlayers", GameConsole::eDEBUG);
     createTempFile();
-    
-    QVector<bool> foundPlayers(m_pMap->getPlayerCount(), false);
-    qint32 mapWidth = m_pMap->getMapWidth();
-    qint32 mapHeigth = m_pMap->getMapHeight();
-    for (qint32 x = 0; x < mapWidth; x++)
-    {
-        for (qint32 y = 0; y < mapHeigth; y++)
-        {
-            Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
-            Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-            if (pBuilding != nullptr && pBuilding->getOwner() != nullptr)
-            {
-                foundPlayers[pBuilding->getOwner()->getPlayerID()] = true;
-            }
-            if (pUnit != nullptr)
-            {
-                foundPlayers[pUnit->getOwner()->getPlayerID()] = true;
-            }
-        }
-    }
-    for (qint32 i = foundPlayers.size() - 1; i >= 0; i--)
-    {
-        if (m_pMap->getPlayerCount() > 2)
-        {
-            if (foundPlayers[i] == false)
-            {
-                m_pMap->removePlayer(i);
-            }
-        }
-    }
-    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
-    {
-        if (m_pMap->getPlayer(i)->getTeam() >= m_pMap->getPlayerCount())
-        {
-            m_pMap->getPlayer(i)->setTeam(i);
-        }
-        m_pMap->getPlayer(i)->updatePlayerID();
-    }
+    m_pMap->optimizePlayers();
     m_EditorSelection->createPlayerSelection();
     
 }
@@ -1786,7 +1782,7 @@ void EditorMenue::importAWByWeb(QString filename)
         if (file.exists())
         {
             cleanTemp(-1);
-            m_pMap->importAWByWebMap(filename, this);
+            m_pMap->importAWByWebMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
     }

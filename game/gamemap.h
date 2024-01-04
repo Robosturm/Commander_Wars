@@ -57,6 +57,15 @@ public:
         QByteArray m_mapMagic;
         mutable GameEnums::MapFilterFlags m_mapFlags{GameEnums::MapFilterFlags_None};
     };
+
+    struct ImporterUnitInfo
+    {
+        QString unitId;
+        qint32 x;
+        qint32 y;
+        qint32 player;
+    };
+
     /**
      * @brief GameMap
      */
@@ -882,7 +891,18 @@ public:
      * @brief importAWByWebMap
      * @param file
      */
-    Q_INVOKABLE void importAWByWebMap(QString file, EditorMenue* pMenu);
+    Q_INVOKABLE void importAWByWebMap(QString file);
+    /**
+     * @brief importAWByWebMap
+     * @param mapIDs
+     * @param units
+     * @param pMenu
+     */
+    Q_INVOKABLE void importAWByWebMap(const QVector<QVector<quint32>> & mapIDs, QVector<ImporterUnitInfo> units);
+    /**
+     * @brief optimizePlayers
+     */
+    Q_INVOKABLE void optimizePlayers();
     /**
      * @brief exportAW4Map
      * @param file

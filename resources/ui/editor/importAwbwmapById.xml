@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<ui>
+    <Label>
+        <x>10</x>
+        <y>10</y>
+        <width>250</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Map id:")</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+    </Label>
+        <Spinbox>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <Id>MapId</Id>
+        <width>200</width>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","The map id on the Advance Wars by Web page.")</tooltip>
+        <startValue>0</startValue>
+        <infinite>-1</infinite>
+        <min>0</min>
+        <max>2147483647</max>
+        <onEvent></onEvent>
+    </Spinbox>
+    <Button>
+        <x>settings.getStageWidth() - 180</x>
+        <y>settings.getStageHeight() - 60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Import")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Imports the given map from Advance Wars by Web.")</tooltip>
+        <onEvent>currentMenu.getBaseMenu().downloadAwbwMapById(currentMenu.getObject("MapId").getCurrentValue());currentMenu.exit();</onEvent>
+    </Button>
+    <Button>
+        <x>30</x>
+        <y>settings.getStageHeight() - 60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Cancel the map importing from Advance Wars by Web")</tooltip>
+        <onEvent>currentMenu.getBaseMenu().editFinishedCanceled();currentMenu.exit();</onEvent>
+    </Button>
+</ui>

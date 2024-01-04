@@ -13,6 +13,8 @@
 #include "objects/base/topbar.h"
 #include "objects/base/label.h"
 
+#include "awbwReplayReader/awbwmapdownloader.h"
+
 class EditorMenue;
 using spEditorMenue = std::shared_ptr<EditorMenue>;
 
@@ -355,7 +357,15 @@ public slots:
      * @brief copy
      */
     void copy();
-
+    /**
+     * @brief showImportAwByWebByMapId
+     */
+    void showImportAwByWebByMapId();
+    /**
+     * @brief downloadAwbwMapById
+     * @param mapId
+     */
+    void downloadAwbwMapById(quint32 mapId);
 protected slots:
     /**
      * @brief KeyInput called on any key input
@@ -416,6 +426,11 @@ protected slots:
      * @brief onEnter
      */
     virtual void onEnter() override;
+    /**
+     * @brief onAwbwMapDownloadResult
+     */
+    void onAwbwMapDownloadResult(bool success);
+
 private:
     void updateGrids();
     void getSquareTiles(QVector<QPoint> & points, QPoint start, QPoint end, QPoint currentPos);
@@ -435,6 +450,7 @@ private:
     bool m_middleCrossGridVisible{false};
     QTimer m_autosaveTimer;
     spHumanPlayerInput m_HumanInput;
+    AwbwMapDownloader m_awbwMapDownloader;
 };
 
 Q_DECLARE_INTERFACE(EditorMenue, "EditorMenue");

@@ -2924,3 +2924,44 @@ QColor GameMap::getGridColor()
     }
     return gridColor;
 }
+
+void GameMap::optimizePlayers()
+{
+    QVector<bool> foundPlayers(getPlayerCount(), false);
+    qint32 mapWidth = getMapWidth();
+    qint32 mapHeigth = getMapHeight();
+    for (qint32 x = 0; x < mapWidth; x++)
+    {
+        for (qint32 y = 0; y < mapHeigth; y++)
+        {
+            Building* pBuilding = getTerrain(x, y)->getBuilding();
+            Unit* pUnit = getTerrain(x, y)->getUnit();
+            if (pBuilding != nullptr && pBuilding->getOwner() != nullptr)
+            {
+                foundPlayers[pBuilding->getOwner()->getPlayerID()] = true;
+            }
+            if (pUnit != nullptr)
+            {
+                foundPlayers[pUnit->getOwner()->getPlayerID()] = true;
+            }
+        }
+    }
+    for (qint32 i = foundPlayers.size() - 1; i >= 0; i--)
+    {
+        if (getPlayerCount() > 2)
+        {
+            if (foundPlayers[i] == false)
+            {
+                removePlayer(i);
+            }
+        }
+    }
+    for (qint32 i = 0; i < getPlayerCount(); i++)
+    {
+        if (getPlayer(i)->getTeam() >= getPlayerCount())
+        {
+            getPlayer(i)->setTeam(i);
+        }
+        getPlayer(i)->updatePlayerID();
+    }
+}

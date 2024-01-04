@@ -70,26 +70,3 @@ bool AwbwDataParser::readBool(const QByteArray & input)
     }
     return false;
 }
-
-QList<QByteArray> AwbwDataParser::readList(const QByteArray & input)
-{
-    QList<QByteArray> ret;
-    auto data = input.split('{');
-    auto data2 = data[0].split(':');
-    if (data2[0] == "O")
-    {
-        qint32 depth = 0;
-        for (qint32 i = 1; i < data.size(); ++i)
-        {
-            if (i == 1)
-            {
-
-            }
-        }
-        if (ret.size() != data2[3].toInt())
-        {
-
-        }
-    }
-    return ret;
-}

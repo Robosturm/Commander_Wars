@@ -36,8 +36,12 @@ AwbwReplayerReader::AwbwReplayerReader(const QString & awbwReplayZip)
         }
     }
     auto playerTurns = gameStateContent.split('\n');
-    for (const auto & turn : playerTurns)
-    {
 
-    }
+    // constexpr  MAP_TABLE
+
+    //for (const auto & turn : playerTurns)
+    //{
+    //    //auto content = turn.split(''{")[1];
+
+    //}
 }
