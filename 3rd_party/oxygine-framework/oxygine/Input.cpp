@@ -74,7 +74,7 @@ namespace oxygine
         {
             return;
         }
-        if (m_moveTimer.elapsed() > 33)
+        if (m_moveTimer.elapsed() >= Settings::getInstance()->getMouseUpdateRate())
         {
             Mainapp::getInstance()->pauseRendering();
             TouchEvent me(TouchEvent::MOVE, true, QPoint(x, y));

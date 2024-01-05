@@ -201,6 +201,25 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Mouse update rate:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Slider>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getStageWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Sets update rate for the mouse lower values may slow down the ai if you move the cursor during it's turns.")</tooltip>
+                <startValue>settings.getMouseUpdateRate();</startValue>
+                <min>1</min>
+                <max>200</max>
+                <unit>"ms"</unit>
+                <onEvent>settings.setMouseUpdateRate(input);</onEvent>
+            </Slider>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Automatic updates:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

@@ -793,12 +793,15 @@ public:
      * @param newCreateAiTrainingData
      */
     Q_INVOKABLE void setCreateAiTrainingData(bool newCreateAiTrainingData);
+    Q_INVOKABLE qint32 getMouseUpdateRate() const;
+    Q_INVOKABLE void setMouseUpdateRate(qint32 newMouseUpdateRate);
 
     bool getAllowMapUpload() const;
     void setAllowMapUpload(bool newAllowMapUpload);
 
     std::chrono::seconds getReplayDeleteTime() const;
     void setReplayDeleteTime(const std::chrono::seconds & newReplayDeleteTime);
+
 
 private:
     friend class MemoryManagement;
@@ -824,6 +827,7 @@ private:
     bool m_automaticUpdates{true};
     float m_gameScale{1.0f};
     float m_zoomModifier{2.0f};
+    qint32 m_mouseUpdateRate{33};
 
     bool m_borderless{true};
     bool m_fullscreen{false};

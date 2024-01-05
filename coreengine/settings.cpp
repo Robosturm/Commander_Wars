@@ -48,6 +48,16 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
+qint32 Settings::getMouseUpdateRate() const
+{
+    return m_mouseUpdateRate;
+}
+
+void Settings::setMouseUpdateRate(qint32 newMouseUpdateRate)
+{
+    m_mouseUpdateRate = newMouseUpdateRate;
+}
+
 std::chrono::seconds Settings::getReplayDeleteTime() const
 {
     return m_replayDeleteTime;
@@ -1202,6 +1212,8 @@ void Settings::setup()
         MemoryManagement::create<Value<bool>>("General", "AutomaticUpdates", &m_automaticUpdates, true, false, true),
         MemoryManagement::create<Value<float>>("General", "GamepadSensitivity", &m_gamepadSensitivity, 1.0f, 0.1f, 100),
         MemoryManagement::create<Value<qint32>>("General", "MaxFPS", &m_framesPerSecond, 60, 30, 60),
+        MemoryManagement::create<Value<qint32>>("General", "MouseUpdateRate", &m_mouseUpdateRate, 33, 1, 200),
+
         // keys
         MemoryManagement::create<Value<Qt::Key>>("Keys", "key_escape", &m_key_escape, Qt::Key_Escape, static_cast<Qt::Key>(0), Qt::Key_unknown),
         MemoryManagement::create<Value<Qt::Key>>("Keys", "key_console", &m_key_console, Qt::Key_F1, static_cast<Qt::Key>(0), Qt::Key_unknown),

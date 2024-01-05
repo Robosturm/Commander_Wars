@@ -246,6 +246,7 @@ void MapSelectionView::loadCurrentMap()
 
 void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("MapSelectionView::loadMap " + info.filePath(), GameConsole::eDEBUG);
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
@@ -353,6 +354,7 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
     }
     m_MapInfo->setContentWidth(maxWidth + 30);
     m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().height() + 30 + Userdata::MAX_VICTORY_INFO_PER_MAP * 55 + m_MapTags->getTextRect().height());
+    Mainapp::getInstance()->continueRendering();
 }
 
 void MapSelectionView::loadMapVictoryInfo()
