@@ -21,10 +21,21 @@ ScriptEventModifyTerrain::ScriptEventModifyTerrain(GameMap* pMap)
 void ScriptEventModifyTerrain::readEvent(QTextStream& rStream, QString line)
 {
     line = line.simplified();
-    QStringList items = line.replace("map.replaceTerrain(\"", "")
-                            .replace(", ", ",")
-                            .replace("\",", ",")
-                            .replace("); // " , ",").split(",");
+    QStringList items;
+    if (line.endsWith(QString("// 0 ") + EventModifyTerrain))
+    {
+        items = line.replace("map.replaceTerrain(\"", "")
+                    .replace(", ", ",")
+                    .replace("\",", ",")
+                    .replace("); // " , ",").split(",");
+    }
+    else
+    {
+        items = line.replace("map.replaceTerrainOnly(\"", "")
+                    .replace(", ", ",")
+                    .replace("\",", ",")
+                    .replace("); // " , ",").split(",");
+    }
     if (items.size() >= 3)
     {
         m_newTerrainID = items[0];
@@ -35,7 +46,7 @@ void ScriptEventModifyTerrain::readEvent(QTextStream& rStream, QString line)
 
 void ScriptEventModifyTerrain::writeEvent(QTextStream& rStream)
 {
-    rStream <<  "            map.replaceTerrain(\""
+    rStream <<  "            map.replaceTerrainOnly(\""
             << m_newTerrainID << "\", "
             << QString::number(m_x) << ", "
             << QString::number(m_y) << ", false, true); // "
