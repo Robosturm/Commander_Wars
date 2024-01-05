@@ -8,15 +8,15 @@ var Constructor = function()
     {
         return 55;
     };
-    this.damageTable = [["APC", 90],
-                        ["FLARE", 90],
-                        ["RECON", 95],
+    this.damageTable = [["APC", 100],
+                        ["FLARE", 100],
+                        ["RECON", 105],
 
                         // tanks
-                        ["FLAK", 90],
-                        ["HOVERFLAK", 90],
-                        ["LIGHT_TANK", 70],
-                        ["HOVERCRAFT", 70],
+                        ["FLAK", 100],
+                        ["HOVERFLAK", 100],
+                        ["LIGHT_TANK", 80],
+                        ["HOVERCRAFT", 80],
 
                         // heavy tanks
                         ["HEAVY_HOVERCRAFT", 55],
@@ -29,12 +29,12 @@ var Constructor = function()
                         ["HOELLIUM", 20],
 
                         // ranged land units
-                        ["ARTILLERY", 85],
-                        ["ARTILLERYCRAFT", 85],
-                        ["ANTITANKCANNON", 35],
-                        ["MISSILE", 90],
-                        ["ROCKETTHROWER", 90],
-                        ["PIPERUNNER", 90],
+                        ["ARTILLERY", 95],
+                        ["ARTILLERYCRAFT", 95],
+                        ["ANTITANKCANNON", 45],
+                        ["MISSILE", 100],
+                        ["ROCKETTHROWER", 100],
+                        ["PIPERUNNER", 100],
                         // ships
                         ["GUNBOAT", 55],
                         ["CANNONBOAT", 55],

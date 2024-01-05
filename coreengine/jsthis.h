@@ -7,6 +7,7 @@ class JsThis
 {
 public:
     explicit JsThis() = default;
+    ~JsThis();
 
     static constexpr QJSValue & getJsThis(JsThis * me)
     {
@@ -19,7 +20,10 @@ public:
             return me->getJsThis();
         }
     }
-
+    static void setupJsThis(QObject* object, JsThis* me)
+    {
+        me->setupJsThis(object);
+    }
 protected:
     void setupJsThis(QObject * me);
 private:

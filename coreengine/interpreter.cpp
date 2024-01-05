@@ -49,10 +49,16 @@ Interpreter::Interpreter()
 
 bool Interpreter::reloadInterpreter(const QString runtime)
 {
+    Q_ASSERT(m_pOwner == QThread::currentThread());
     CONSOLE_PRINT_MODULE("Reloading interpreter", GameConsole::eDEBUG, GameConsole::eJavaScript);
+    auto reloadObjects = m_pInstance->m_ownedObjects;
     m_pInstance.reset();
     m_pInstance = MemoryManagement::create<Interpreter>();
     m_pInstance->init();
+    for (auto & obj : reloadObjects)
+    {
+        JsThis::setupJsThis(obj.pObject, obj.pThis);
+    }
     bool success = m_pInstance->loadScript(runtime, "Interpreter Runtime");
     if (!success)
     {

@@ -11,6 +11,7 @@
 #include "gameinput/humanplayerinput.h"
 #include "game/viewplayer.h"
 #include "game/gameanimation/animationskipper.h"
+#include "game/gamerecording/iReplayReader.h"
 
 class ReplayMenu;
 using spReplayMenu = std::shared_ptr<ReplayMenu>;
@@ -127,6 +128,7 @@ private:
     bool m_valid{false};
     oxygine::spActor m_seekActor;
     spLabel m_seekDayLabel;
+    spIReplayReader m_replayReader;
 };
 
 #endif // REPLAYMENU_H

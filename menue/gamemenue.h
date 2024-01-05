@@ -512,7 +512,6 @@ protected:
     void loadingAiPipe();
     void sendDrawVoteResult(bool result);
 protected:
-    ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
     spIngameInfoBar m_IngameInfoBar;
     oxygine::spBox9Sprite m_pButtonBox;
@@ -554,6 +553,8 @@ protected:
 
     ActionPerformer m_actionPerformer;
     spMovementPlanner m_pMovementPlanner;
+private:
+    ReplayRecorder m_ReplayRecorder;
 };
 
 Q_DECLARE_INTERFACE(GameMenue, "GameMenue");

@@ -668,3 +668,18 @@ void AwbwReplayerReader::parseActions(QList<QByteArray> & data)
         }
     }
 }
+
+const QVector<AwbwReplayerReader::ActionInfo> &  AwbwReplayerReader::getActions() const
+{
+    return m_actions;
+}
+
+const QVector<AwbwReplayerReader::GameState> & AwbwReplayerReader::getGameStates() const
+{
+    return m_gameStates;
+}
+
+bool AwbwReplayerReader::getValid() const
+{
+    return m_valid;
+}

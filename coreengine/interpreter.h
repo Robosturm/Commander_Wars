@@ -5,7 +5,9 @@
 #include <QQmlEngine>
 #include <QVector>
 #include <QThread>
+#include <list>
 #include <QCoreApplication>
+#include "coreengine/jsthis.h"
 
 using spQObject = std::shared_ptr<QObject>;
 
@@ -17,7 +19,11 @@ using spInterpreter = std::shared_ptr<Interpreter>;
 class Interpreter final : public QJSEngine
 {
     Q_OBJECT
-
+    struct JsThisData
+    {
+        QObject* pObject{nullptr};
+        JsThis* pThis{nullptr};
+    };
 public:
     static Interpreter* getInstance()
     {
@@ -162,6 +168,22 @@ public slots:
         }
         return false;
     }
+    QJSValue newQJsObject(QObject* object, JsThis* me)
+    {
+        m_ownedObjects.push_back({object, me});
+        return newQObject(object);
+    }
+    void deleteQJsObject(JsThis* me)
+    {
+        for (auto iter = m_ownedObjects.begin(); iter != m_ownedObjects.end(); ++iter)
+        {
+            if (iter->pThis == me)
+            {
+                m_ownedObjects.erase(iter);
+                break;
+            }
+        }
+    }
 
 private slots:
     void networkGameFinished(qint32 value, QString id);
@@ -190,6 +212,7 @@ private:
     static QString m_runtimeData;
     qint32 m_inJsCall{0};
     std::vector<spQObject> m_jsObjects;
+    std::list<JsThisData> m_ownedObjects;
     qint32 m_jsCallCount{0};
     static QThread* m_pOwner;
 };

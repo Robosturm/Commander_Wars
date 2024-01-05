@@ -689,6 +689,7 @@ set(${PROJECT_NAME}_SRCS
     game/createoutline.cpp game/createoutline.h
     game/actionperformer.h game/actionperformer.cpp
     # cool ingame recording
+    game/gamerecording/iReplayReader.h
     game/gamerecording/daytodayrecord.cpp game/gamerecording/daytodayrecord.h
     game/gamerecording/playerrecord.cpp game/gamerecording/playerrecord.h
     game/gamerecording/specialevent.cpp game/gamerecording/specialevent.h

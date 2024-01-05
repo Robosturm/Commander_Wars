@@ -39,7 +39,8 @@ ReplayMenu::ReplayMenu(QString filename)
     connect(this, &ReplayMenu::sigOneStep, this, &ReplayMenu::oneStep, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigRewindDay, this, &ReplayMenu::rewindDay, Qt::QueuedConnection);
     changeBackground("replaymenu");
-    m_valid = m_ReplayRecorder.loadRecord(filename);
+    m_replayReader = MemoryManagement::create<ReplayRecorder>(m_pMap.get());
+    m_valid = m_replayReader->loadRecord(filename);
     if (m_valid)
     {
         m_Viewplayer = MemoryManagement::create<Viewplayer>(this, m_pMap.get());
@@ -72,7 +73,7 @@ void ReplayMenu::showRecordInvalid()
 {    
     m_Focused = false;
     QString modList;
-    QStringList mods = m_ReplayRecorder.getMods();
+    QStringList mods = m_replayReader->getMods();
     for (auto& mod : mods)
     {
         modList += mod + "\n";
@@ -109,12 +110,12 @@ void ReplayMenu::nextReplayAction()
     }
     if (!m_paused || m_replayCounter > 0)
     {
-        spGameAction pAction = m_ReplayRecorder.nextAction();
+        spGameAction pAction = m_replayReader->nextAction();
         m_HumanInput->cleanUpInput();
         float progress = 0.0f;
-        if (m_ReplayRecorder.getRecordSize() > 0)
+        if (m_replayReader->getRecordSize() > 0)
         {
-            progress = static_cast<float>(m_ReplayRecorder.getProgess()) / static_cast<float>(m_ReplayRecorder.getRecordSize());
+            progress = static_cast<float>(m_replayReader->getProgess()) / static_cast<float>(m_replayReader->getRecordSize());
         }
         m_progressBar->setScrollvalue(progress);
         if (pAction.get() != nullptr)
@@ -233,7 +234,7 @@ void ReplayMenu::loadUIButtons()
     });
     m_taskBar->addChild(m_configButton);
 
-    qint32 content = m_ReplayRecorder.getRecordSize() * actionPixelSize;
+    qint32 content = m_replayReader->getRecordSize() * actionPixelSize;
     if (content < exitGame->getX())
     {
         content = exitGame->getX() + 80;
@@ -244,7 +245,7 @@ void ReplayMenu::loadUIButtons()
     connect(m_progressBar.get(), &V_Scrollbar::sigEndEditValue, this, &ReplayMenu::seekRecord, Qt::QueuedConnection);
     m_progressBar->setContentWidth(content);
     m_progressBar->setPosition(8, y);
-    m_progressBar->setScrollspeed((m_configButton->getX() - 10) / m_ReplayRecorder.getDayFromPosition(m_ReplayRecorder.getRecordSize() - 1));
+    m_progressBar->setScrollspeed((m_configButton->getX() - 10) / m_replayReader->getDayFromPosition(m_replayReader->getRecordSize() - 1));
     m_taskBar->addChild(m_progressBar);
     auto moveButton = MemoryManagement::create<MoveInButton>(m_taskBar.get(), m_taskBar->getScaledHeight(),
                            -1, -1, 2.0f, true);
@@ -326,11 +327,11 @@ void ReplayMenu::startSeeking()
 void ReplayMenu::seekChanged(float value)
 {    
     m_seekActor->setVisible(true);
-    qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
+    qint32 count = static_cast<qint32>(static_cast<float>(m_replayReader->getRecordSize()) * value);
     qint32 day = 0;
-    if (m_ReplayRecorder.getRecordSize() > 0)
+    if (m_replayReader->getRecordSize() > 0)
     {
-        day = m_ReplayRecorder.getDayFromPosition(count);
+        day = m_replayReader->getDayFromPosition(count);
     }
     m_seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));
 }
@@ -338,8 +339,8 @@ void ReplayMenu::seekChanged(float value)
 void ReplayMenu::seekRecord(float value)
 {
     QMutexLocker locker(&m_replayMutex);
-    qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
-    qint32 day = m_ReplayRecorder.getDayFromPosition(count);
+    qint32 count = static_cast<qint32>(static_cast<float>(m_replayReader->getRecordSize()) * value);
+    qint32 day = m_replayReader->getDayFromPosition(count);
     seekToDay(day);
     m_seekActor->setVisible(false);
     m_seeking = false;
@@ -368,7 +369,7 @@ void ReplayMenu::rewindDay()
 void ReplayMenu::seekToDay(qint32 day)
 {
     QMutexLocker locker(&m_replayMutex);
-    if (m_ReplayRecorder.getRecordSize() > 0)
+    if (m_replayReader->getRecordSize() > 0)
     {
         CONSOLE_PRINT("Seeking to day " + QString::number(day), GameConsole::eDEBUG);
         Mainapp::getInstance()->pauseRendering();
@@ -378,7 +379,7 @@ void ReplayMenu::seekToDay(qint32 day)
         auto slidingPos = m_mapSliding->getPosition();
         auto actorPos = m_mapSlidingActor->getPosition();
         // load map state during that day
-        m_ReplayRecorder.seekToDay(day);
+        m_replayReader->seekToDay(day);
         m_mapSlidingActor->addChild(m_pMap);
         // restore map position and scale
         m_pMap->setScale(scale);

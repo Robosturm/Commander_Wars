@@ -6,12 +6,12 @@
 #include <QDataStream>
 #include <QBuffer>
 
+#include "game/gamerecording/iReplayReader.h"
+
 class GameMap;
 using spGameMap = std::shared_ptr<GameMap>;
-class GameAction;
-using spGameAction = std::shared_ptr<GameAction>;
 
-class ReplayRecorder final : public QObject
+class ReplayRecorder final : public QObject, public IReplayReader
 {
     Q_OBJECT
     enum class Type
@@ -60,16 +60,16 @@ public:
      * @brief loadRecord
      * @param filename
      */
-    bool loadRecord(const QString & filename);
+    virtual bool loadRecord(const QString & filename) override;
     /**
      * @brief nextAction
      */
-    spGameAction nextAction();
+    virtual spGameAction nextAction() override;
     /**
      * @brief getMods
      * @return
      */
-    QStringList getMods()
+     virtual QStringList getMods() override
     {
         return m_mods;
     }
@@ -81,7 +81,7 @@ public:
      * @brief getProgess
      * @return
      */
-    qint32 getProgess()
+    virtual qint32 getProgess() override
     {
         return m_progress;
     }
@@ -89,7 +89,7 @@ public:
      * @brief getRecordSize
      * @return
      */
-    qint32 getRecordSize()
+    virtual qint32 getRecordSize() override
     {
         return m_count;
     }
@@ -98,13 +98,13 @@ public:
      * @param count
      * @return
      */
-    qint32 getDayFromPosition(qint32 count);
+    virtual qint32 getDayFromPosition(qint32 count) override;
     /**
      * @brief seekToDay
      * @param day
      * @return
      */
-    void seekToDay(qint32 day);
+    virtual void seekToDay(qint32 day) override;
     qint32 getCount() const;
 
     QString getRecordJson() const;

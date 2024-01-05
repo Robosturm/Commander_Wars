@@ -94,8 +94,21 @@ public:
         qint32 day{0};
         QVector<QJsonObject> actionData;
     };
-
-signals:
+    /**
+     * @brief getValid
+     * @return
+     */
+    bool getValid() const;
+    /**
+     * @brief getGameStates
+     * @return
+     */
+    const QVector<GameState> & getGameStates() const;
+    /**
+     * @brief getActions
+     * @return
+     */
+    const QVector<ActionInfo> & getActions() const;
 
 private:
     void parseGameStates(QList<QByteArray> & data);
