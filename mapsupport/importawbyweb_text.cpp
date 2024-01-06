@@ -1049,8 +1049,13 @@ void GameMap::importAWByWebMap(const QVector<QVector<quint32>> & mapIDs, QVector
                 getTerrain(x, y)->setBuilding(pBuilding);
                 break;
             }
+            case 195:
+            {
+                replaceTerrain("TELEPORTTILE", x, y, false, false, false);
+                break;
+            }
             default:
-                CONSOLE_PRINT("Unable terrain id: " + QString::number(mapIDs[y][x]), GameConsole::eERROR);
+                CONSOLE_PRINT(QString("Unable to load terrain id: ") + QString::number(mapIDs[y][x]) + " during importing of an awbw map", GameConsole::eERROR);
                 break;
             }
         }

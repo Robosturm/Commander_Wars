@@ -213,13 +213,13 @@ endif()
 add_definitions(
     -DVERSION_MAJOR=0
     -DVERSION_MINOR=34
-    -DVERSION_REVISION=4
+    -DVERSION_REVISION=5
     -DVERSION_SUFFIX="main"
     -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     )
 
-set(COW_ANDROID_VERSION_NAME "0.34.4-main")
-set(COW_ANDROID_VERSION_CODE "50")
+set(COW_ANDROID_VERSION_NAME "0.34.5-main")
+set(COW_ANDROID_VERSION_CODE "51")
 
 ###################################################################################
 # Set up some compiler and linking options
@@ -237,6 +237,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     set(CMAKE_CXX_FLAGS "-rdynamic ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_C_FLAGS "-Wno-implicit-function-declaration -g ${CMAKE_C_FLAGS}")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     set(CMAKE_CXX_FLAGS "-rdynamic ${CMAKE_CXX_FLAGS}")
 else()
