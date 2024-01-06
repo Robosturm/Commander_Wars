@@ -444,9 +444,9 @@ set(${PROJECT_NAME}_SmtpClient_SRCS
 # source list of commander wars specific files
 ###################################################################################
 
-if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR
-    "${CMAKE_SYSTEM_NAME}" STREQUAL "Linux" OR
-    "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+#if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR
+#    "${CMAKE_SYSTEM_NAME}" STREQUAL "Linux" OR
+#    "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     include_directories("zipSupport")
     set(${PROJECT_NAME}_ZLIB_SRCS
         zipSupport/qzipreader.cpp zipSupport/qzipreader.h
@@ -468,6 +468,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR
         # awbw replayer reader for ai training support
         awbwReplayReader/awbwreplayerreader.h awbwReplayReader/awbwreplayerreader.cpp
         awbwReplayReader/awbwdataparser.h awbwReplayReader/awbwdataparser.cpp
+        awbwReplayReader/awbwreplayplayer.h awbwReplayReader/awbwreplayplayer.cpp
         awbwReplayReader/iAwbwAction.h
     )
     ###################################################################################
@@ -490,13 +491,13 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR
         set(${PROJECT_NAME}_UPDATE_SRCS
         )
     endif()
-else()
-    set(${PROJECT_NAME}_ZLIB_SRCS
-    )
-    message("Building without update support")
-    set(${PROJECT_NAME}_UPDATE_SRCS
-    )
-endif()
+#else()
+#    set(${PROJECT_NAME}_ZLIB_SRCS
+#    )
+#    message("Building without update support")
+#    set(${PROJECT_NAME}_UPDATE_SRCS
+#    )
+#endif()
 
 set(${PROJECT_NAME}_SRCS
     main.cpp

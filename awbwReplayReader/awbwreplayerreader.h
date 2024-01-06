@@ -11,7 +11,6 @@ class AwbwReplayerReader : public QObject
     Q_OBJECT
 
 public:
-    explicit AwbwReplayerReader(const QString & awbwReplayZip);
 
     struct CoInfo
     {
@@ -94,6 +93,8 @@ public:
         qint32 day{0};
         QVector<QJsonObject> actionData;
     };
+    explicit AwbwReplayerReader() = default;
+    void parseReplay(const QString & awbwReplayZip);
     /**
      * @brief getValid
      * @return

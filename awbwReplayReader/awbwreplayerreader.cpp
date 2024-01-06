@@ -13,9 +13,8 @@ static const char* const JSON_UNITSSTART = "O:8:\"awbwUnit\":";
 static const char* const JSON_ACTIONSTART = "a:a:3:{";
 static const char* const JSON_REPLAYSTART = "p:";
 
-AwbwReplayerReader::AwbwReplayerReader(const QString & awbwReplayZip)
+void AwbwReplayerReader::parseReplay(const QString & awbwReplayZip)
 {
-
     QZipReader reader(awbwReplayZip);
     auto files = reader.fileInfoList();
     for (auto file : files)
