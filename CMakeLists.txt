@@ -445,61 +445,26 @@ set(${PROJECT_NAME}_SmtpClient_SRCS
 ###################################################################################
 # source list of commander wars specific files
 ###################################################################################
+###############################################################################
+# start update support stuff
+###################################################################################
 
-#if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR
-#    "${CMAKE_SYSTEM_NAME}" STREQUAL "Linux" OR
-#    "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    include_directories("zipSupport")
-    set(${PROJECT_NAME}_ZLIB_SRCS
-        zipSupport/qzipreader.cpp zipSupport/qzipreader.h
-        zipSupport/adler32.c
-        zipSupport/crc32.c zipSupport/crc32.h
-        zipSupport/deflate.c zipSupport/deflate.h
-        zipSupport/gzguts.h
-        zipSupport/gzlib.c
-        zipSupport/gzread.c
-        zipSupport/inflate.c zipSupport/inflate.h
-        zipSupport/inftrees.c zipSupport/inftrees.h
-        zipSupport/inffast.c zipSupport/inffast.h
-        zipSupport/inffixed.h
-        zipSupport/trees.c zipSupport/trees.h
-        zipSupport/zlib.h
-        zipSupport/uncompr.c
-        zipSupport/zutil.c zipSupport/zutil.h
-
-        # awbw replayer reader for ai training support
-        awbwReplayReader/awbwreplayerreader.h awbwReplayReader/awbwreplayerreader.cpp
-        awbwReplayReader/awbwdataparser.h awbwReplayReader/awbwdataparser.cpp
-        awbwReplayReader/awbwreplayplayer.h awbwReplayReader/awbwreplayplayer.cpp
-        awbwReplayReader/iAwbwAction.h
+if (UPDATESUPPORT AND NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    message("Building with update support")
+    add_definitions(
+        -DUPDATESUPPORT
+        -DCOW_UPDATETARGET="${COW_UPDATETARGET}"
+        -DCOW_INSTALLDIR="${COW_INSTALL_DIR}"
     )
-    ###################################################################################
-    # start update support stuff
-    ###################################################################################
-
-    if (UPDATESUPPORT AND NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-        message("Building with update support")
-        add_definitions(
-            -DUPDATESUPPORT
-            -DCOW_UPDATETARGET="${COW_UPDATETARGET}"
-            -DCOW_INSTALLDIR="${COW_INSTALL_DIR}"
-        )
-        set(${PROJECT_NAME}_UPDATE_SRCS
-            updater/gameupdater.h updater/gameupdater.cpp
-            updater/filedownloader.h updater/filedownloader.cpp
-        )
-    else()
-        message("Building without update support")
-        set(${PROJECT_NAME}_UPDATE_SRCS
-        )
-    endif()
-#else()
-#    set(${PROJECT_NAME}_ZLIB_SRCS
-#    )
-#    message("Building without update support")
-#    set(${PROJECT_NAME}_UPDATE_SRCS
-#    )
-#endif()
+    set(${PROJECT_NAME}_UPDATE_SRCS
+        updater/gameupdater.h updater/gameupdater.cpp
+        updater/filedownloader.h updater/filedownloader.cpp
+    )
+else()
+    message("Building without update support")
+    set(${PROJECT_NAME}_UPDATE_SRCS
+    )
+endif()
 
 set(${PROJECT_NAME}_SRCS
     main.cpp
@@ -869,8 +834,29 @@ set(${PROJECT_NAME}_SRCS
     ui_reader/uifactory.cpp ui_reader/uifactory.h
     ui_reader/createdgui.cpp ui_reader/createdgui.h
 
-    # awbwReplayReader
+
+    zipSupport/qzipreader.cpp zipSupport/qzipreader.h
+    zipSupport/adler32.c
+    zipSupport/crc32.c zipSupport/crc32.h
+    zipSupport/deflate.c zipSupport/deflate.h
+    zipSupport/gzguts.h
+    zipSupport/gzlib.c
+    zipSupport/gzread.c
+    zipSupport/inflate.c zipSupport/inflate.h
+    zipSupport/inftrees.c zipSupport/inftrees.h
+    zipSupport/inffast.c zipSupport/inffast.h
+    zipSupport/inffixed.h
+    zipSupport/trees.c zipSupport/trees.h
+    zipSupport/zlib.h
+    zipSupport/uncompr.c
+    zipSupport/zutil.c zipSupport/zutil.h
+
+    # awbw replayer reader for ai training support
+    awbwReplayReader/awbwreplayerreader.h awbwReplayReader/awbwreplayerreader.cpp
+    awbwReplayReader/awbwdataparser.h awbwReplayReader/awbwdataparser.cpp
+    awbwReplayReader/awbwreplayplayer.h awbwReplayReader/awbwreplayplayer.cpp
     awbwReplayReader/awbwmapdownloader.h awbwReplayReader/awbwmapdownloader.cpp
+    awbwReplayReader/iAwbwAction.h
 )
 
 ##############################################################################
@@ -999,7 +985,6 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_SmtpClient_SRCS}
     ${${PROJECT_NAME}_OpenNN_SRCS}
     ${${PROJECT_NAME}_UPDATE_SRCS}
-    ${${PROJECT_NAME}_ZLIB_SRCS}
     ICON.rc
     )
 
