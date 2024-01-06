@@ -90,9 +90,9 @@ void GameAnimation::stop()
     Mainapp::getInstance()->pauseRendering();
     m_stopped = true;
     setVisible(false);
-    emitFinished();
     Mainapp::getInstance()->continueRendering();
 }
+
 
 qint32 GameAnimation::getFontWidth(const QString & font, const QString & text) const
 {
@@ -102,7 +102,7 @@ qint32 GameAnimation::getFontWidth(const QString & font, const QString & text) c
     oxygine::TextField testField;
     testField.setStyle(headline);
     testField.setHtmlText(text);
-    return testField.getTextRect().width();;
+    return testField.getTextRect().width();
 }
 
 void GameAnimation::setRotation(float angle)

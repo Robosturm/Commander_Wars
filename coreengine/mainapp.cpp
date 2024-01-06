@@ -242,7 +242,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_Workerthread->setObjectName("WorkerThread");
 #endif
 #ifdef AUDIOSUPPORT
-            m_audioThread->start(QThread::Priority::TimeCriticalPriority);
+            m_audioThread->start(QThread::Priority::HighPriority);
             m_AudioManager->moveToThread(m_audioThread.get());
             m_AudioManager->initAudio();
             m_AudioManager->clearPlayList();
@@ -421,7 +421,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             }
             GameConsole::getInstance()->moveToThread(Mainapp::getWorkerthread());
             m_workerLaunched = true;
-            m_Workerthread->start(QThread::Priority::HighestPriority);
+            m_Workerthread->start(QThread::Priority::NormalPriority);
             if (m_Worker != nullptr)
             {
                 emit m_Worker->sigStart();
