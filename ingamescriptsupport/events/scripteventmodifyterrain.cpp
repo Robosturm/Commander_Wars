@@ -34,7 +34,7 @@ void ScriptEventModifyTerrain::readEvent(QTextStream& rStream, QString line)
         items = line.replace("map.replaceTerrainOnly(\"", "")
                     .replace(", ", ",")
                     .replace("\",", ",")
-                    .replace("); // " , ",").split(",");
+                    .replace(");map.getTerrain(" , ",").split(",");
     }
     if (items.size() >= 3)
     {
@@ -49,7 +49,9 @@ void ScriptEventModifyTerrain::writeEvent(QTextStream& rStream)
     rStream <<  "            map.replaceTerrainOnly(\""
             << m_newTerrainID << "\", "
             << QString::number(m_x) << ", "
-            << QString::number(m_y) << ", false, true); // "
+            << QString::number(m_y) << ", false, true);map.getTerrain("
+            << QString::number(m_x) << ", "
+            << QString::number(m_y) << ").loadSprites(); // "
             << QString::number(getVersion()) << " " << EventModifyTerrain << "\n";
 }
 

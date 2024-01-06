@@ -47,14 +47,18 @@ void HumanPlayerInput::init(BaseGamemenu* pMenu)
         m_pMenu = pMenu;
         if (m_pMenu != nullptr)
         {
+            auto* pActionPerformer = pMenu->getActionPerformer();
+            if (pActionPerformer != nullptr)
+            {
+                connect(this, &HumanPlayerInput::performAction, pActionPerformer, &ActionPerformer::performAction, Qt::DirectConnection);
+                connect(pActionPerformer, &ActionPerformer::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
+            }
             connect(m_pMenu, &GameMenue::sigRightClickDown, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
             connect(m_pMenu, &GameMenue::sigRightClickUp, this, &HumanPlayerInput::rightClickUp, Qt::QueuedConnection);
             connect(m_pMenu, &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
-            connect(pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
             connect(m_pMap, &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
             connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
             connect(m_pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
-            connect(this, &HumanPlayerInput::performAction, pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
             connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
             m_Fields.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
             m_FieldPoints.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);

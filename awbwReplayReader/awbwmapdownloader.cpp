@@ -13,8 +13,7 @@ const char* const AwbwMapDownloader::JSONKEY_UNITY = "Unit Y";
 const char* const AwbwMapDownloader::JSONKEY_COUNTRYCODE = "Country Code";
 AwbwMapDownloader::AwbwMapDownloader()
 {
-    connect(&m_webCtrl, &QNetworkAccessManager::finished, this, &AwbwMapDownloader::onResponseFinished);
-    connect(m_reply, &QNetworkReply::errorOccurred, this, &AwbwMapDownloader::errorOccurred);
+    connect(&m_webCtrl, &QNetworkAccessManager::finished, this, &AwbwMapDownloader::onResponseFinished, Qt::QueuedConnection);
 }
 
 void AwbwMapDownloader::startMapDownload(quint32 mapId)
@@ -22,6 +21,7 @@ void AwbwMapDownloader::startMapDownload(quint32 mapId)
     QUrl requestUrl("https://awbw.amarriner.com/api/map/map_info.php?maps_id=" + QString::number(mapId));
     QNetworkRequest request(requestUrl);
     m_reply = m_webCtrl.get(request);
+    connect(m_reply, &QNetworkReply::errorOccurred, this, &AwbwMapDownloader::errorOccurred, Qt::QueuedConnection);
 }
 
 void AwbwMapDownloader::onResponseFinished(QNetworkReply* pReply)
