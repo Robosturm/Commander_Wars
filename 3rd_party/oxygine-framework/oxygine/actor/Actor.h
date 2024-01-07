@@ -462,6 +462,7 @@ namespace oxygine
         qint32 m_zOrder{0};
         qint32 m_onGlobalTouchUpEvent{-1};
         qint32 m_onGlobalTouchMoveEvent{-1};
+        bool m_internalUpdateRunning{false};
 #endif
     };
 

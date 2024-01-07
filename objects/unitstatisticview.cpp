@@ -74,6 +74,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
                         pUnitPlayer = pMap->getPlayer(player);
                     }
                     spUnit pDummy = MemoryManagement::create<Unit>(item.unitId, pUnitPlayer, false, pMap);
+                    pDummy->removeShineTween();
                     pDummy->setPosition(x, y);
                     pDummy->addClickListener([this, unitId](oxygine::Event*)
                     {
@@ -117,6 +118,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
             {
                 QString unitId = sortedList[i];
                 spUnit pDummy = MemoryManagement::create<Unit>(unitId, pPlayer, false, pMap);
+                pDummy->removeShineTween();
                 pDummy->setPosition(x, y);
                 pDummy->addClickListener([this, unitId](oxygine::Event*)
                 {

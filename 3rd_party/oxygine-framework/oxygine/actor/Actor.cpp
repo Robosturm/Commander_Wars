@@ -270,8 +270,10 @@ namespace oxygine
             }
 
             event->phase = Event::phase_capturing;
+            auto end = m_children.end();
             auto iter = m_children.end();
-            while (iter != m_children.begin())
+            while (end == m_children.end() &&
+                   iter != m_children.begin())
             {
                 iter--;
                 spActor actor = *iter;
@@ -374,6 +376,7 @@ namespace oxygine
             }
             else
             {
+                Q_ASSERT(!m_internalUpdateRunning);
                 m_zOrder = zorder;
                 spActor me = getSharedPtr<Actor>();
                 auto iter = m_parent->m_children.cbegin();
@@ -684,6 +687,7 @@ namespace oxygine
 
     void Actor::insertActor(spActor & actor)
     {
+        Q_ASSERT(!m_internalUpdateRunning);
         qint32 z = actor->getPriority();
         auto iter = m_children.cend();
         auto insertBefore = iter;
@@ -740,6 +744,7 @@ namespace oxygine
             }
             else
             {
+                Q_ASSERT(!m_internalUpdateRunning);
                 setParent(actor.get(), nullptr);
                 auto iter = m_children.cbegin();
                 while (iter != m_children.cend())
@@ -767,6 +772,7 @@ namespace oxygine
         }
         else
         {
+            Q_ASSERT(!m_internalUpdateRunning);
             for (auto & child : m_children)
             {
                 child->setParent(child.get(), nullptr);
@@ -789,6 +795,7 @@ namespace oxygine
     void Actor::internalUpdate(const UpdateState& us)
     {
 #ifdef GRAPHICSUPPORT
+        m_internalUpdateRunning = true;
         Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
         auto iter = m_tweens.begin();
         while (iter != m_tweens.end())
@@ -809,6 +816,7 @@ namespace oxygine
         {
             child->update(us);
         }
+        m_internalUpdateRunning = false;
 #endif
     }
 
@@ -836,7 +844,6 @@ namespace oxygine
         {
             internalUpdate(us);
         }
-
     }
 
     void Actor::doUpdate(const UpdateState&)
@@ -972,6 +979,7 @@ namespace oxygine
         }
         else
         {
+            Q_ASSERT(!m_internalUpdateRunning);
             auto iter = m_tweens.begin();
             while (iter != m_tweens.end())
             {
@@ -996,6 +1004,7 @@ namespace oxygine
         }
         else
         {
+            Q_ASSERT(!m_internalUpdateRunning);
             m_tweens.clear();
         }
 #endif

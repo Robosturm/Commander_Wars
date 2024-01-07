@@ -11,7 +11,7 @@
 class GameMap;
 using spGameMap = std::shared_ptr<GameMap>;
 
-class ReplayRecorder final : public QObject, public IReplayReader
+class ReplayRecorder final : public IReplayReader
 {
     Q_OBJECT
     enum class Type
@@ -42,6 +42,7 @@ class ReplayRecorder final : public QObject, public IReplayReader
 public:
     explicit ReplayRecorder(GameMap* pMap);
     virtual ~ReplayRecorder();
+    void requestReplayStart();
     /**
      * @brief startRecording
      */

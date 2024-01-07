@@ -40,6 +40,7 @@ ReplayMenu::ReplayMenu(QString filename)
     connect(this, &ReplayMenu::sigRewindDay, this, &ReplayMenu::rewindDay, Qt::QueuedConnection);
     changeBackground("replaymenu");
     m_replayReader = MemoryManagement::create<ReplayRecorder>(m_pMap.get());
+    connect(m_replayReader.get(), &IReplayReader::startReplay, this, &ReplayMenu::startReplay, Qt::QueuedConnection);
     m_valid = m_replayReader->loadRecord(filename);
     if (m_valid)
     {
@@ -54,15 +55,20 @@ ReplayMenu::ReplayMenu(QString filename)
         loadUIButtons();
         m_HumanInput = MemoryManagement::create<HumanPlayerInput>(m_pMap.get());
         m_HumanInput->init(this);
-        m_gameStarted = true;
-        CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
-        emit getActionPerformer()->sigActionPerformed();
+        m_replayReader->requestReplayStart();
     }
 }
 
 ReplayMenu::~ReplayMenu()
 {
     m_storedAnimationSettings.restoreAnimationSettings();
+}
+
+void ReplayMenu::startReplay()
+{
+    m_gameStarted = true;
+    CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
+    emit getActionPerformer()->sigActionPerformed();
 }
 
 void ReplayMenu::onEnter()

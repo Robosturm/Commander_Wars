@@ -44,6 +44,7 @@ signals:
     void sigOneStep();
     void sigRewindDay();
 public slots:
+    void startReplay();
     void showRecordInvalid();
     void exitReplay();
     void nextReplayAction();

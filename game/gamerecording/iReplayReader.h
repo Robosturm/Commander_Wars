@@ -7,8 +7,9 @@ using spGameAction = std::shared_ptr<GameAction>;
 class IReplayReader;
 using spIReplayReader = std::shared_ptr<IReplayReader>;
 
-class IReplayReader
+class IReplayReader : public QObject
 {
+    Q_OBJECT
 public:
     virtual bool loadRecord(const QString & filename) = 0;
     virtual QStringList getMods() = 0;
@@ -17,4 +18,7 @@ public:
     virtual qint32 getProgess() = 0;
     virtual qint32 getDayFromPosition(qint32 count) = 0;
     virtual void seekToDay(qint32 day) = 0;
+    virtual void requestReplayStart() = 0;
+signals:
+    void startReplay();
 };

@@ -42,6 +42,11 @@ ReplayRecorder::~ReplayRecorder()
     m_recordFile.close();
 }
 
+void ReplayRecorder::requestReplayStart()
+{
+    emit startReplay();
+}
+
 void ReplayRecorder::startRecording(const QString & file)
 {    
     if (Settings::getInstance()->getRecord() && m_pMap != nullptr && !Settings::getInstance()->getAiSlave())
