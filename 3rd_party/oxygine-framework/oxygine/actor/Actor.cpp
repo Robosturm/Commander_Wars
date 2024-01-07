@@ -687,7 +687,9 @@ namespace oxygine
 
     void Actor::insertActor(spActor & actor)
     {
+#ifdef GRAPHICSUPPORT
         Q_ASSERT(!m_internalUpdateRunning);
+#endif
         qint32 z = actor->getPriority();
         auto iter = m_children.cend();
         auto insertBefore = iter;
@@ -744,7 +746,9 @@ namespace oxygine
             }
             else
             {
+#ifdef GRAPHICSUPPORT
                 Q_ASSERT(!m_internalUpdateRunning);
+#endif
                 setParent(actor.get(), nullptr);
                 auto iter = m_children.cbegin();
                 while (iter != m_children.cend())
@@ -772,7 +776,9 @@ namespace oxygine
         }
         else
         {
+#ifdef GRAPHICSUPPORT
             Q_ASSERT(!m_internalUpdateRunning);
+#endif
             for (auto & child : m_children)
             {
                 child->setParent(child.get(), nullptr);
