@@ -177,11 +177,11 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return CO_CAULDER.d2dCoZoneOffBonus;
+                    return CO_CAULDER.d2dCoZoneDefBonus;
                 }
                 else
                 {
-                    return CO_CAULDER.d2dOffBonus;
+                    return CO_CAULDER.d2dDefBonus;
                 }
             }
         }
@@ -203,11 +203,11 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return CO_CAULDER.d2dCoZoneDefBonus;
+                    return CO_CAULDER.d2dCoZoneOffBonus;
                 }
                 else
                 {
-                    return CO_CAULDER.d2dDefBonus;
+                    return CO_CAULDER.d2dOffBonus;
                 }
             }
         }
