@@ -31,7 +31,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 0;
+        return 1;
     }
     /**
      * @brief getDescription
