@@ -1183,7 +1183,14 @@ void PlayerSelection::selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType)
             }
             else if (eAiType == GameEnums::AiTypes_Closed)
             {
-                pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 2);
+                if (m_pNetworkInterface.get() != nullptr)
+                {
+                    pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 2);
+                }
+                else
+                {
+                    pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
+                }
             }
             else
             {
