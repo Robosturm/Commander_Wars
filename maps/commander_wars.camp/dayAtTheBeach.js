@@ -63,6 +63,19 @@ var Constructor = function() { // scriptStart
             dialog6.queueAnimation(dialog7);
             // Dialog
         } // Start Of Turn End
+        if (turn === 2 && player === 0) { // 0 Start Of Turn
+            // Dialog
+            var dialog0 = GameAnimationFactory.createGameAnimationDialog(map, qsTr("Ma'am? We recovered the specs on those assembly plants."), "co_officier_dm", GameEnums.COMood_Normal, "#ff33cc"); dialog0.loadBackground(""); // 1 ScriptEventDialogItem
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, qsTr("Excellent! Let me see..."), "CO_AMY", GameEnums.COMood_Normal, "#ff33cc"); dialog1.loadBackground(""); // 1 ScriptEventDialogItem
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, qsTr("This is good. They have most of the machinery we need to produce more hovercrafts."), "CO_AMY", GameEnums.COMood_Happy, "#ff33cc"); dialog2.loadBackground(""); // 1 ScriptEventDialogItem
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, qsTr("I'll warn the troops that Smitan might start producing hovercrafts of his own, then."), "co_officier_dm", GameEnums.COMood_Normal, "#ff0000"); dialog3.loadBackground(""); // 1 ScriptEventDialogItem
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, qsTr("That's just it. Green Earth doesn't have the technical aptitude to manufacture these, and even if they did, Smitan isn't technologicaly apt enough to convert the plants in time. We can field hovercraft, but he can't!"), "CO_AMY", GameEnums.COMood_Happy, "#ff0000"); dialog4.loadBackground(""); // 1 ScriptEventDialogItem
+            dialog0.queueAnimation(dialog1);
+            dialog1.queueAnimation(dialog2);
+            dialog2.queueAnimation(dialog3);
+            dialog3.queueAnimation(dialog4);
+            // Dialog
+        } // Start Of Turn End
     }; // turnStart
     this.actionDone = function(action, map) { // actionConditions
     // precondition
