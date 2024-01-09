@@ -140,10 +140,13 @@ bool CaptureBuildingSelector::findSingleCaptureBuilding(TargetBuildings & captur
         else
         {
             bool isProductionBuilding = m_owner.getMap()->getTerrain(captures[i2].m_x, captures[i2].m_y)->getBuilding()->isProductionBuilding();
-            if ((captureCount == 1 && perform == false) ||
-                (captureCount == 1 && perform == true && isProductionBuilding))
+            if ((captureCount == 1 && perform == false) || isProductionBuilding)
             {
                 qint32 testPrio = getPrio(captures[i2]);
+                if (isProductionBuilding && captureCount == 1)
+                {
+                    testPrio += 1;
+                }
                 if (!perform)
                 {
                     prio = testPrio;
