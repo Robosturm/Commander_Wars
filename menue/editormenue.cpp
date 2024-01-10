@@ -53,6 +53,7 @@ EditorMenue::EditorMenue()
     setObjectName("EditorMenue");
 #endif
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     qint32 selectionWidth = oxygine::Stage::getStage()->getWidth() / 4;
     bool smallScreen = Settings::getInstance()->getSmallScreenDevice();
     Interpreter::setCppOwnerShip(this);
@@ -217,6 +218,7 @@ EditorMenue::EditorMenue()
     connect(&m_autosaveTimer, &QTimer::timeout, this, &EditorMenue::autosave, Qt::QueuedConnection);
     m_autosaveTimer.start(60 * 1000);
     UiFactory::getInstance().createUi("ui/editormenu.xml", this);
+    pApp->continueRendering();
 }
 
 void EditorMenue::onEnter()

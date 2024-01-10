@@ -1473,6 +1473,8 @@ bool GameMenue::isNetworkGame()
 
 void GameMenue::loadGameMenue()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     CONSOLE_PRINT("GameMenue::loadGameMenue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     if (m_pNetworkInterface.get() != nullptr)
@@ -1534,6 +1536,7 @@ void GameMenue::loadGameMenue()
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &GameMenue::cursorMoved, Qt::QueuedConnection);
 
     UiFactory::getInstance().createUi("ui/gamemenu.xml", this);
+    pApp->continueRendering();
 }
 
 void GameMenue::connectMap()

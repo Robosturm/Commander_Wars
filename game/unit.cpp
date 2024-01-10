@@ -1821,6 +1821,15 @@ qint32 Unit::getRepairBonus(QPoint position)
     {
         bonus += pCO->getRepairBonus(this, position);
     }
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = m_pMap->getPlayer(i);
+        if (pPlayer != nullptr &&
+            pPlayer != m_pOwner)
+        {
+            bonus += pPlayer->getCoBonus(position, this, "getOtherRepairBonus");
+        }
+    }
     return bonus;
 }
 

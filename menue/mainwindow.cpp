@@ -312,7 +312,9 @@ void Mainwindow::enterReplayGame()
 {
     Mainapp::getInstance()->pauseRendering();
     QStringList wildcards;
+    wildcards.append("*.rec;*.zip");
     wildcards.append("*.rec");
+    wildcards.append("*.zip");
     QString path = Settings::getInstance()->getUserPath() + "data/records";
     spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
@@ -352,7 +354,8 @@ void Mainwindow::loadGame(QString filename)
 
 void Mainwindow::replayGame(QString filename)
 {
-    if (filename.endsWith(".rec"))
+    if (filename.endsWith(".rec") ||
+        filename.endsWith(".zip"))
     {
         QFile file(filename);
         if (file.exists())

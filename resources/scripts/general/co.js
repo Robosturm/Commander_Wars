@@ -148,6 +148,11 @@ var CO =
         return 0;
     },
 
+    getOtherRepairBonus : function(co, unit, posX, posY, map)
+    {
+        return 0;
+    },
+
     getBonusLuck : function(co, unit, posX, posY, map)
     {
         return 0;

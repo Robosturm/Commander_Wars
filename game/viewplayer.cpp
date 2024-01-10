@@ -21,7 +21,15 @@ bool Viewplayer::getFieldVisible(qint32 x, qint32 y)
     {
         case ViewType::CurrentTeam:
         {
-            return m_pMap->getCurrentPlayer()->getFieldVisible(x, y);
+            auto* pCurrentPlayer = m_pMap->getCurrentPlayer();
+            if (pCurrentPlayer != nullptr)
+            {
+                return pCurrentPlayer->getFieldVisible(x, y);
+            }
+            else
+            {
+                return m_pMap->getPlayer(0)->getFieldVisible(x, y);
+            }
         }
         case ViewType::Map:
         {
@@ -59,7 +67,15 @@ GameEnums::VisionType Viewplayer::getFieldVisibleType(qint32 x, qint32 y) const
     {
         case ViewType::CurrentTeam:
         {
-            return m_pMap->getCurrentPlayer()->getFieldVisibleType(x, y);
+            auto* pCurrentPlayer = m_pMap->getCurrentPlayer();
+            if (pCurrentPlayer != nullptr)
+            {
+                return pCurrentPlayer->getFieldVisibleType(x, y);
+            }
+            else
+            {
+                return m_pMap->getPlayer(0)->getFieldVisibleType(x, y);
+            }
         }
         case ViewType::Map:
         {
@@ -98,7 +114,15 @@ bool Viewplayer::getFieldDirectVisible(qint32 x, qint32 y)
     {
         case ViewType::CurrentTeam:
         {
-            return m_pMap->getCurrentPlayer()->getFieldDirectVisible(x, y);
+            auto* pCurrentPlayer = m_pMap->getCurrentPlayer();
+            if (pCurrentPlayer != nullptr)
+            {
+                return pCurrentPlayer->getFieldDirectVisible(x, y);
+            }
+            else
+            {
+                return m_pMap->getPlayer(0)->getFieldDirectVisible(x, y);
+            }
         }
         case ViewType::Map:
         {

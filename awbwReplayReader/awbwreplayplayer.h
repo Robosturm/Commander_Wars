@@ -22,9 +22,13 @@ public:
 private slots:
     void onDownloadResult(bool success);
 private:
+    void startReplayInternal();
+    void loadMap(bool withOutUnits);
+private:
     GameMap* m_pMap;
     AwbwMapDownloader m_mapDownloader;
     AwbwReplayerReader m_replayReader;
     bool m_startReplay{false};
+    qint32 m_currentActionPos{0};
 };
 
