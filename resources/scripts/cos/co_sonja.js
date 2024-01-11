@@ -154,7 +154,7 @@ var Constructor = function()
     };
     this.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getIsCO0() === true)
+        if (CO.isActive(co))
         {
             switch (co.getPowerMode())
             {

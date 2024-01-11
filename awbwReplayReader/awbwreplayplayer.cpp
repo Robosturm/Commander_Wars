@@ -112,4 +112,5 @@ void AwbwReplayPlayer::loadMap(bool withOutUnits)
     {
         m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
     }
+    m_pMap->setCurrentPlayer(0);
 }

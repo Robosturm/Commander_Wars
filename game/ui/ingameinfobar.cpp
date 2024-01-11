@@ -467,7 +467,11 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 {
     if (m_pMap != nullptr && m_pMap->onMap(x, y) && (m_LastX != x || m_LastY != y || update))
     {
-        m_pDetailedViewBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
+        auto* pCurrentPlayer = m_pMap->getCurrentPlayer();
+        if (pCurrentPlayer != nullptr)
+        {
+            m_pDetailedViewBox->setColorTable(pCurrentPlayer->getColorTableAnim(), true);
+        }
         m_LastX = x;
         m_LastY = y;
         m_pCursorInfoBox->removeChildren();
