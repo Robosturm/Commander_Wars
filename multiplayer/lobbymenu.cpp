@@ -510,10 +510,13 @@ void LobbyMenu::observeGamePassword(QString password)
 
 void LobbyMenu::disconnected(quint64 socketID)
 {
-    spDialogMessageBox pDialogMessageBox;
-    pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Connection to server lost leaving server lobby."));
-    addChild(pDialogMessageBox);
-    connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &LobbyMenu::exitMenue, Qt::QueuedConnection);
+    if (m_loggedIn)
+    {
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Connection to server lost leaving server lobby."));
+        addChild(pDialogMessageBox);
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &LobbyMenu::exitMenue, Qt::QueuedConnection);
+    }
 }
 
 void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
