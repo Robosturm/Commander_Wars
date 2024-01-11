@@ -284,7 +284,7 @@ var Constructor = function()
     };
     this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getIsCO0() === true)
+        if (CO.isActive(co))
         {
             if (unit.getOwner() === co.getOwner() &&
                 unit.getUnitType() === GameEnums.UnitType_Infantry)
