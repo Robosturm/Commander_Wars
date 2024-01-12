@@ -898,7 +898,7 @@ public:
      * @param units
      * @param pMenu
      */
-    Q_INVOKABLE void importAWByWebMap(const QVector<QVector<quint32>> & mapIDs, QVector<ImporterUnitInfo> units);
+    Q_INVOKABLE void importAWByWebMap(const QVector<QVector<quint32>> & mapIDs, QVector<ImporterUnitInfo> units, bool optimizePlayer);
     /**
      * @brief optimizePlayers
      */

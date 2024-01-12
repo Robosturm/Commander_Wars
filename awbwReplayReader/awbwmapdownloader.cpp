@@ -1,4 +1,5 @@
 #include "awbwReplayReader/awbwmapdownloader.h"
+#include "awbwReplayReader/awbwdatatypes.h"
 #include "game/gamemap.h"
 #include <QJsonDocument>
 
@@ -37,7 +38,7 @@ void AwbwMapDownloader::errorOccurred(QNetworkReply::NetworkError code)
     emit sigDownloadResult(false);
 }
 
-void AwbwMapDownloader::loadMap(GameMap* pMap, bool withOutUnits)
+void AwbwMapDownloader::loadMap(GameMap* pMap, bool withOutUnits, bool optimizePlayer)
 {
     QJsonArray terrainMap = m_data.value(JSONKEY_TERRAINMAP).toArray();
     if (terrainMap.size() > 0)
@@ -59,48 +60,6 @@ void AwbwMapDownloader::loadMap(GameMap* pMap, bool withOutUnits)
         QVector<GameMap::ImporterUnitInfo> units;
         if (!withOutUnits)
         {
-            std::map<qint32, QString> UNITID_MAP = {{1, "INFANTRY"},
-                                                    {2, "MECH"},
-                                                    {3, "HEAVY_TANK"},
-                                                    {4, "LIGHT_TANK"},
-                                                    {5, "RECON"},
-                                                    {6, "APC"},
-                                                    {7, "ARTILLERY"},
-                                                    {8, "ROCKETTHROWER"},
-                                                    {9, "FLAK"},
-                                                    {10, "MISSILE"},
-                                                    {11, "FIGHTER"},
-                                                    {12, "BOMBER"},
-                                                    {13, "K_HELI"},
-                                                    {14, "T_HELI"},
-                                                    {15, "BATTLESHIP"},
-                                                    {16, "CRUISER"},
-                                                    {17, "LANDER"},
-                                                    {18, "SUBMARINE"},
-                                                    {28, "BLACK_BOAT"},
-                                                    {29, "AIRCRAFTCARRIER"},
-                                                    {30, "STEALTHBOMBER"},
-                                                    {46, "NEOTANK"},
-                                                    {960900, "PIPERUNNER"},
-                                                    {968731, "BLACK_BOMB"},
-                                                    {1141438, "MEGATANK"},
-                                                    };
-            std::map<QString, qint32> FACTION_MAP = {{"os", 0},
-                {"bm", 1},
-                {"ge", 2},
-                {"yc", 3},
-                {"bh", 4},
-                {"rf", 5},
-                {"gs", 6},
-                {"bd", 7},
-                {"ab", 8},
-                {"js", 9},
-                {"ci", 10},
-                {"pc", 11},
-                {"tg", 12},
-                {"pl", 13},
-                {"ar", 14},
-                {"wn", 15},};
             QJsonArray unitsArray = m_data.value(JSONKEY_PREDEPLOYEDUNITS).toArray();
             for (const auto & unit : unitsArray)
             {
@@ -108,12 +67,12 @@ void AwbwMapDownloader::loadMap(GameMap* pMap, bool withOutUnits)
                 GameMap::ImporterUnitInfo info;
                 info.x = obj.value(JSONKEY_UNITX).toInt();
                 info.y = obj.value(JSONKEY_UNITY).toInt();
-                info.unitId = UNITID_MAP[obj.value(JSONKEY_UNITID).toInt()];
-                info.player = FACTION_MAP[obj.value(JSONKEY_COUNTRYCODE).toString()];
+                info.unitId = AwbwDataTypes::UNITID_MAP[obj.value(JSONKEY_UNITID).toInt()];
+                info.player = AwbwDataTypes::FACTION_MAP[obj.value(JSONKEY_COUNTRYCODE).toString()];
                 units.append(info);
             }
         }
-        pMap->importAWByWebMap(mapIDs, units);
+        pMap->importAWByWebMap(mapIDs, units, optimizePlayer);
         pMap->setMapName(m_data.value(JSONKEY_NAME).toString());
         pMap->setMapAuthor(m_data.value(JSONKEY_AUTHOR).toString());
     }

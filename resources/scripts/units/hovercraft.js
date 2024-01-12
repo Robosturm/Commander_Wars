@@ -12,7 +12,7 @@ var Constructor = function()
 
         unit.setFuel(70);
         unit.setMaxFuel(70);
-        unit.setBaseMovementPoints(5);
+        unit.setBaseMovementPoints(6);
         unit.setMinRange(1);
         unit.setMaxRange(1);
         unit.setVision(2);
@@ -28,7 +28,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 7000;
+        return 8000;
     };
     this.doWalkingAnimation = function(action, map)
     {

@@ -29,6 +29,7 @@ class Unit final : public Tooltip, public FileSerializable, public JsThis
 public:
     static constexpr qreal MAX_UNIT_HP = 10.0f;
     static constexpr qreal DAMAGE_100 = 100.0f;
+    static constexpr qint32 MAX_CAPTURE_POINTS = 20;
 
     struct IconDuration
     {

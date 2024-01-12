@@ -989,13 +989,12 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
         if (pBuilding.get() != nullptr ||
             (pUnit != nullptr && pUnit->getCapturePoints() > 0))
         {
-            constexpr qint32 maxCapturepoints = 20;
-            qint32 resistance = maxCapturepoints;
+            qint32 resistance = Unit::MAX_CAPTURE_POINTS;
             if (pUnit != nullptr)
             {
-                resistance = maxCapturepoints - pUnit->getCapturePoints();
+                resistance = Unit::MAX_CAPTURE_POINTS - pUnit->getCapturePoints();
             }
-            addColorbar(static_cast<float>(resistance) / static_cast<float>(maxCapturepoints), posX, posY, Qt::cyan);
+            addColorbar(static_cast<float>(resistance) / static_cast<float>(Unit::MAX_CAPTURE_POINTS), posX, posY, Qt::cyan);
             pTextfield = MemoryManagement::create<Label>(pAnim->getWidth() - 5);
             pTextfield->setPosition(posX + 5, posY);
             pTextfield->setStyle(smallStyle);

@@ -24,7 +24,7 @@ public:
     static const char* const JSONKEY_COUNTRYCODE;
 
     void startMapDownload(quint32 mapId);
-    void loadMap(GameMap* pMap, bool withOutUnits = false);
+    void loadMap(GameMap* pMap, bool withOutUnits = false, bool optimizePlayer = true);
 
 signals:
     void sigDownloadResult(bool success);

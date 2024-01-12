@@ -23,7 +23,12 @@ private slots:
     void onDownloadResult(bool success);
 private:
     void startReplayInternal();
-    void loadMap(bool withOutUnits);
+    void loadMap(bool withOutUnits, qint32 day);
+    void loadBuildings(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 day);
+    void loadBuilding(const AwbwReplayerReader::BuildingInfo & building);
+    void loadUnits(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 day);
+    void loadUnit(const AwbwReplayerReader::UnitInfo & unit, qint32 player4);
+    void updateCapturePoints(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 day);
 private:
     GameMap* m_pMap;
     AwbwMapDownloader m_mapDownloader;

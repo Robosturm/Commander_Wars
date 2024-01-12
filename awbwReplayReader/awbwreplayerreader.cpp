@@ -423,7 +423,7 @@ void AwbwReplayerReader::readBuildings(QTextStream & stream, GameState & newStat
                     }
                     if (item == "id")
                     {
-                        building.buildingId = AwbwDataParser::readNullableInteger(stream, m_valid);
+                        building.ownerId = AwbwDataParser::readNullableInteger(stream, m_valid);
                     }
                     else if (item == "terrain_id")
                     {
@@ -509,7 +509,7 @@ void AwbwReplayerReader::readUnits(QTextStream & stream, GameState & newState)
                     }
                     else if (item == "name")
                     {
-                        unit.name = AwbwDataParser::readString(stream, m_valid);
+                        unit.name = AwbwDataParser::readString(stream, m_valid).toLower();
                     }
                     else if (item == "movement_points")
                     {

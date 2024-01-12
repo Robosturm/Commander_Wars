@@ -37,7 +37,7 @@ public:
     };
     struct BuildingInfo
     {
-        qint32 buildingId{0};
+        qint32 ownerId{0};
         qint32 terrainId{0};
         qint32 x{0};
         qint32 y{0};
