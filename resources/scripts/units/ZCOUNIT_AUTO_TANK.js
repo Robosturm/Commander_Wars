@@ -96,6 +96,21 @@ var Constructor = function()
             }
         }
     };
+
+    this.postAction = function(unit, action, map){
+        if (unit.getUnitID() === "ZCOUNIT_AUTO_TANK")
+        {
+            var variables = unit.getVariables();
+            var unitAttackVariable = variables.createVariable("SECOND_ATTACK");
+            var attackedOnce = unitAttackVariable.readDataInt32();
+            //reset the variable if waited
+            if (unit.getHasMoved() && attackedOnce === 1){
+                unitAttackVariable.writeDataInt32(0);
+                unit.addMovementBonus(999, 1);
+            }
+        }
+    }
+    
     this.getEditorPlacementSound = function()
     {
         return "moveheavytank.wav";
