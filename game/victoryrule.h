@@ -5,13 +5,14 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/jsthis.h"
 
 class Player;
 class GameMap;
 class VictoryRule;
 using spVictoryRule = std::shared_ptr<VictoryRule>;
 
-class VictoryRule final : public QObject, public FileSerializable
+class VictoryRule final : public QObject, public FileSerializable, public JsThis
 {
     Q_OBJECT
 public:
@@ -61,6 +62,8 @@ public:
     Q_INVOKABLE QStringList getRuleType();
     Q_INVOKABLE QString getRuleName(qint32 itemNumber = 0);
     Q_INVOKABLE qint32 getRuleValue(qint32 itemNumber);
+    Q_INVOKABLE qint32 getRuleTargetValue();
+    Q_INVOKABLE qint32 getMaxValue(qint32 itemNumber);
     Q_INVOKABLE QString getRuleDescription(qint32 itemNumber = 0);
     Q_INVOKABLE qint32 getRuleProgress(Player* pPlayer);
     Q_INVOKABLE QString getRuleID() const;

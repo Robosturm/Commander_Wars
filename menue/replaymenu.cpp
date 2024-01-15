@@ -260,7 +260,7 @@ void ReplayMenu::loadUIButtons()
     connect(m_progressBar.get(), &V_Scrollbar::sigEndEditValue, this, &ReplayMenu::seekRecord, Qt::QueuedConnection);
     m_progressBar->setContentWidth(content);
     m_progressBar->setPosition(8, y);
-    m_progressBar->setScrollspeed((m_configButton->getX() - 10) / m_replayReader->getDayFromPosition(m_replayReader->getRecordSize() - 1));
+    m_progressBar->setScrollspeed((m_configButton->getX() - 10) / m_replayReader->getDayFromPosition(m_replayReader->getRecordSize() - 1).day);
     m_taskBar->addChild(m_progressBar);
     auto moveButton = MemoryManagement::create<MoveInButton>(m_taskBar.get(), m_taskBar->getScaledHeight(),
                            -1, -1, 2.0f, true);
@@ -307,12 +307,12 @@ void ReplayMenu::loadSeekUi()
     pDayBox->setResAnim(pAnim);
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    m_seekDayLabel = MemoryManagement::create<Label>(140);
+    m_seekDayLabel = MemoryManagement::create<Label>(200);
     m_seekDayLabel->setStyle(style);
     m_seekDayLabel->setHtmlText(tr("Day: "));
     m_seekDayLabel->setPosition(8, 8);
     pDayBox->addChild(m_seekDayLabel);
-    pDayBox->setSize(160, 50);
+    pDayBox->setSize(220, 50);
     pDayBox->setPosition(0, oxygine::Stage::getStage()->getHeight() - pDayBox->getScaledHeight() + 6 - pDayBox->getScaledHeight());
     pDayBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pDayBox);
@@ -343,20 +343,20 @@ void ReplayMenu::seekChanged(float value)
 {    
     m_seekActor->setVisible(true);
     qint32 count = static_cast<qint32>(static_cast<float>(m_replayReader->getRecordSize()) * value);
-    qint32 day = 0;
+    IReplayReader::DayInfo dayInfo;
     if (m_replayReader->getRecordSize() > 0)
     {
-        day = m_replayReader->getDayFromPosition(count);
+        dayInfo = m_replayReader->getDayFromPosition(count);
     }
-    m_seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));
+    m_seekDayLabel->setHtmlText(tr("Day: ") + QString::number(dayInfo.day) + tr(" Player: ") + QString::number(dayInfo.player + 1));
 }
 
 void ReplayMenu::seekRecord(float value)
 {
     QMutexLocker locker(&m_replayMutex);
     qint32 count = static_cast<qint32>(static_cast<float>(m_replayReader->getRecordSize()) * value);
-    qint32 day = m_replayReader->getDayFromPosition(count);
-    seekToDay(day);
+    IReplayReader::DayInfo dayInfo = m_replayReader->getDayFromPosition(count);
+    seekToDay(dayInfo);
     m_seekActor->setVisible(false);
     m_seeking = false;
 }
@@ -365,28 +365,30 @@ void ReplayMenu::rewindDay()
 {
     startSeeking();
     QMutexLocker locker(&m_replayMutex);
-    qint32 day = m_pMap->getCurrentDay();
+    IReplayReader::DayInfo dayInfo;
+    dayInfo.day = m_pMap->getCurrentDay();
+    dayInfo.player = 0;
     auto currentTimestamp = QDateTime::currentMSecsSinceEpoch();
     constexpr auto msPerSec = 1000;
     if (currentTimestamp - m_lastRewind <= msPerSec * 10)
     {
-        day -= 1;
+        dayInfo.day -= 1;
     }
     m_lastRewind = currentTimestamp;
-    if (day < 0)
+    if (dayInfo.day < 0)
     {
-        day = 0;
+        dayInfo.day = 0;
     }
-    seekToDay(day);
+    seekToDay(dayInfo);
     m_seeking = false;
 }
 
-void ReplayMenu::seekToDay(qint32 day)
+void ReplayMenu::seekToDay(IReplayReader::DayInfo dayInfo)
 {
     QMutexLocker locker(&m_replayMutex);
     if (m_replayReader->getRecordSize() > 0)
     {
-        CONSOLE_PRINT("Seeking to day " + QString::number(day), GameConsole::eDEBUG);
+        CONSOLE_PRINT("Seeking to day " + QString::number(dayInfo.day) + " and player " + QString::number(dayInfo.player), GameConsole::eDEBUG);
         Mainapp::getInstance()->pauseRendering();
         
         // save map position and scale
@@ -394,7 +396,7 @@ void ReplayMenu::seekToDay(qint32 day)
         auto slidingPos = m_mapSliding->getPosition();
         auto actorPos = m_mapSlidingActor->getPosition();
         // load map state during that day
-        m_replayReader->seekToDay(day);
+        m_replayReader->seekToDay(dayInfo);
         m_mapSlidingActor->addChild(m_pMap);
         // restore map position and scale
         m_pMap->setScale(scale);

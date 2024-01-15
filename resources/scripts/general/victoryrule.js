@@ -31,6 +31,22 @@ var VICTORYRULE =
         // disable value of the rule for spinboxes. :)
         return 0;
     },
+    getMaxValue : function(itemNumber)
+    {
+        return 99999;
+    },
+    getRuleTargetValue  : function(rule, map)
+    {
+        var ruleTypes = rule.getRuleType();
+        if (ruleTypes[0] === "checkbox")
+        {
+            return 0;
+        }
+        else
+        {
+            return rule.getRuleValue(0);
+        }
+    },
     // create and initialize the variables for this rule
     init : function(rule, map)
     {

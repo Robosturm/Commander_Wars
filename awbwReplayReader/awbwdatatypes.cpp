@@ -261,3 +261,38 @@ std::map<QString, QString> AwbwDataTypes::UNIT_ID_ID_MAP =
      { "black bomb", "BLACK_BOMB" },
      { "mega tank", "MEGATANK" },
      };
+std::map<qint32, QString> AwbwDataTypes::CO_MAP =
+    {{1, "CO_ANDY"},
+     {7, "CO_MAX"},
+     {8, "CO_SAMI"},
+     {17, "CO_HACHI"},
+     {22, "CO_JAKE"},
+     {24, "CO_NELL"},
+     {28, "CO_RACHEL"},
+
+     {2, "CO_GRIT"},
+     {9, "CO_OLAF"},
+     {15, "CO_COLIN"},
+     {19, "CO_SASHA"},
+
+     {5, "CO_DRAKE"},
+     {10, "CO_EAGLE"},
+     {14, "CO_JESS"},
+     {27, "CO_JAVIER"},
+
+     {3, "CO_KANBEI"},
+     {13, "CO_SENSEI"},
+     {18, "CO_SONJA"},
+     {20, "CO_GRIMM"},
+
+     {11, "CO_ADDER"},
+     {12, "CO_HAWKE"},
+     {16, "CO_LASH"},
+     {21, "CO_KOAL"},
+     {23, "CO_KINDLE"},
+     {25, "CO_FLAK"},
+     {26, "CO_JUGGER"},
+     {29, "CO_STURM"},
+     {30, "CO_VON_BOLT"},
+     {31, ""},
+     };

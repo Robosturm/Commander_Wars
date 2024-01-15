@@ -102,6 +102,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
 
 void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
 {
+    Mainapp::getInstance()->pauseRendering();
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("battle_back+mask", oxygine::ep_ignore_error);
     oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
@@ -148,6 +149,7 @@ void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
         pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
         addChild(pSprite);
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, Unit* pDefUnit, float defStartHp)

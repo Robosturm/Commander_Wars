@@ -295,16 +295,16 @@ QString ReplayRecorder::getRecordJson() const
     return m_recordJson;
 }
 
-void ReplayRecorder::seekToDay(qint32 day)
+void ReplayRecorder::seekToDay(IReplayReader::DayInfo dayInfo)
 {
-    if (day <= 1)
+    if (dayInfo.day <= 1)
     {
         seekToStart();
     }
     else
     {        
         m_pMap->clearMap();
-        if (day <= m_pMap->getCurrentDay())
+        if (dayInfo.day <= m_pMap->getCurrentDay())
         {
             m_recordFile.seek(m_streamStart);
         }
@@ -317,7 +317,7 @@ void ReplayRecorder::seekToDay(qint32 day)
             {
                 qint32 curDay;
                 m_stream >> curDay;
-                if (curDay == day)
+                if (curDay == dayInfo.day)
                 {
                     found = true;
                     m_stream >> m_progress;
@@ -356,10 +356,12 @@ void ReplayRecorder::seekToStart()
     }    
 }
 
-qint32 ReplayRecorder::getDayFromPosition(qint32 count)
+IReplayReader::DayInfo ReplayRecorder::getDayFromPosition(qint32 count)
 {
     qint64 curPos = m_recordFile.pos();
-    qint32 rDay = 1;
+    DayInfo dayInfo;
+    dayInfo.day = 0;
+    dayInfo.player = 0;
     m_recordFile.seek(m_streamStart);
     bool found = false;
     while (!found && !m_stream.atEnd())
@@ -374,7 +376,7 @@ qint32 ReplayRecorder::getDayFromPosition(qint32 count)
             m_stream >> curCount;
             if (curCount < count)
             {
-                rDay = curDay;
+                dayInfo.day = curDay;
                 m_recordFile.seek(info.m_nextSeekPos);
             }
             else
@@ -388,7 +390,7 @@ qint32 ReplayRecorder::getDayFromPosition(qint32 count)
         }
     }
     m_recordFile.seek(curPos);
-    return rDay;
+    return dayInfo;
 }
 
 QByteArray ReplayRecorder::createRecordJson() const

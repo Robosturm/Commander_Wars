@@ -99,13 +99,13 @@ public:
      * @param count
      * @return
      */
-    virtual qint32 getDayFromPosition(qint32 count) override;
+    virtual DayInfo getDayFromPosition(qint32 count) override;
     /**
      * @brief seekToDay
      * @param day
      * @return
      */
-    virtual void seekToDay(qint32 day) override;
+    virtual void seekToDay(DayInfo dayInfo) override;
     qint32 getCount() const;
 
     QString getRecordJson() const;

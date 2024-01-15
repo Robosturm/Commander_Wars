@@ -15,6 +15,7 @@ VictoryRule::VictoryRule(GameMap* pMap)
     setObjectName("VictoryRule");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
 }
 
 VictoryRule::VictoryRule(QString ruleID, GameMap* pMap)
@@ -25,6 +26,7 @@ VictoryRule::VictoryRule(QString ruleID, GameMap* pMap)
     setObjectName("VictoryRule");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
     init();
 }
 
@@ -68,6 +70,23 @@ QString VictoryRule::getRuleName(qint32 itemNumber)
     else
     {
         return "";
+    }
+}
+
+qint32 VictoryRule::getRuleTargetValue()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getRuleTargetValue";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       JsThis::getJsThis(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
     }
 }
 
@@ -135,6 +154,24 @@ qint32 VictoryRule::getRuleValue(qint32 itemNumber)
     }
 }
 
+qint32 VictoryRule::getMaxValue(qint32 itemNumber)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getMaxValue";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       itemNumber,
+                       JsThis::getJsThis(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 QString VictoryRule::getRuleDescription(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -157,7 +194,7 @@ qint32 VictoryRule::getRuleProgress(Player* pPlayer)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleProgress";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({JsThis::getJsThis(this),
                        JsThis::getJsThis(pPlayer),
                        JsThis::getJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);

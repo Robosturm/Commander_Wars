@@ -97,12 +97,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
             Player* pPlayer = pMap->getPlayer(i2);
             if (pPlayer->getIsDefeated() == false)
             {
-                qint32 ruleValue = pVictoryRule->getRuleValue(0);
-                auto ruleTypes = pVictoryRule->getRuleType();
-                if (ruleTypes[0] == VictoryRule::checkbox)
-                {
-                    ruleValue = 0;
-                }
+                qint32 ruleValue = pVictoryRule->getRuleTargetValue();
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
                 info = QString(tr("Player %1: %2/%3")).arg(i2 + 1).arg(playerValue).arg(ruleValue);
                 spBuilding building = MemoryManagement::create<Building>("HQ", pMap);

@@ -864,7 +864,7 @@
                 <Label>
                     <x>RuleSelectionScript.getVictoryRuleX(loopIdx)</x>
                     <y>RuleSelectionScript.getVictoryRuleY(loopIdx)</y>
-                    <width>300</width>
+                    <width>220</width>
                     <text>RuleSelectionScript.getVictoryRulename(loopIdx)</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
@@ -885,13 +885,13 @@
                         <x>lastX + lastWidth + 10</x>
                         <y>lastY</y>
                         <Id>gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex)</Id>
-                        <width>280</width>
+                        <width>200</width>
                         <tooltip>RuleSelectionScript.getVictoryRuleDescription(loopIdx)</tooltip>
                         <startValue>RuleSelectionScript.getVictoryRuleValue(loopIdx)</startValue>
                         <infinite>RuleSelectionScript.getVictoryRuleInfiniteValue(loopIdx)</infinite>
                         <spinSpeed>1</spinSpeed>
                         <min>RuleSelectionScript.getVictoryRuleInfiniteValue(loopIdx)</min>
-                        <max>9999</max>
+                        <max>RuleSelectionScript.getVictoryRuleMaxValue(loopIdx)</max>
                         <onEvent>RuleSelectionScript.setVictoryRuleValue(input, loopIdx)</onEvent>
                         <enabled>currentMenu.getRuleChangeEabled()</enabled>
                     </Spinbox>

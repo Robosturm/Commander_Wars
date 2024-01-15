@@ -125,6 +125,11 @@ var RuleSelectionScript =
         var rule = RuleSelectionScript.getVictoryRule();
         return rule.getRuleName(loopIdx);
     },
+    getVictoryRuleMaxValue : function(loopIdx)
+    {
+        var rule = RuleSelectionScript.getVictoryRule();
+        return rule.getMaxValue(loopIdx);
+    },
     getVictoryRuleDescription : function(loopIdx)
     {
         var rule = RuleSelectionScript.getVictoryRule();
@@ -153,7 +158,7 @@ var RuleSelectionScript =
         }
         else
         {
-            return lastX + 300 + 10;
+            return lastX + 200 + 10;
         }
     },
     getVictoryRuleY : function(loopIdx)

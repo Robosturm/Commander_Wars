@@ -100,7 +100,7 @@ protected:
      * @brief seekToDay
      * @param day
      */
-    void seekToDay(qint32 day);
+    void seekToDay(IReplayReader::DayInfo dayInfo);
 private:
     bool m_paused{false};
     bool m_uiPause{false};

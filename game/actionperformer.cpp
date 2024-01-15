@@ -371,6 +371,7 @@ void ActionPerformer::finishActionPerformed()
 
 void ActionPerformer::actionPerformed()
 {
+    Mainapp::getInstance()->pauseRendering();
     if (m_pMenu != nullptr &&
         m_pMap != nullptr)
     {
@@ -486,6 +487,7 @@ void ActionPerformer::actionPerformed()
     {
         CONSOLE_PRINT("Skipping action performed", GameConsole::eDEBUG);
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void ActionPerformer::onTriggeringActionFinished()
