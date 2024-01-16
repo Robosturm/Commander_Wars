@@ -143,6 +143,7 @@ var Constructor = function()
     this.powerMovementBonus = 2;
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
+    this.powerCanFactoryBuildHovercraft = true;
 
     this.d2dCoZoneHoverCraftBoost = 80;
     this.d2dCoZoneOffBonus = 10;
@@ -150,6 +151,7 @@ var Constructor = function()
 
     this.d2dHoverCraftBoost = 0;
     this.d2dMovementBonus = 1;
+    this.d2dCanFactoryBuildHovercraft = false;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -280,6 +282,23 @@ var Constructor = function()
         return 1;
     };
 
+    this.getCOUnits = function(co, building, map)
+    {
+        if (CO.isActive(co) && (
+            (CO_AMY.powerCanFactoryBuildHovercraft && co.getPowerMode() === GameEnums.PowerMode_Power) ||
+            (CO_AMY.d2dCanFactoryBuildHovercraft)))
+        {
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
+            {
+                return ["HOVERCRAFT", "HOVERFLAK", "HEAVY_HOVERCRAFT", "ARTILLERYCRAFT"];
+            }
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -299,14 +318,21 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units. Her hovercraft have +%0 movement and gain +%1% firepower.") +
-                   qsTr("\n\nCO Zone Effect: \nAmy's hovercraft gain +%2% firepower. All of her other units gain +%3% firepower. All of her units gain +%4% defense.");
+        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units. Her hovercraft have +%0 movement and gain +%1% firepower.");
+        if (CO_AMY.d2dCanFactoryBuildHovercraft){
+            test += qsTr(" Can build hovercraft out of factories.");
+        }
+        text += qsTr("\n\nCO Zone Effect: \nAmy's hovercraft gain +%2% firepower. All of her other units gain +%3% firepower. All of her units gain +%4% defense.");
         text = replaceTextArgs(text, [CO_AMY.d2dMovementBonus, CO_AMY.d2dHoverCraftBoost, CO_AMY.d2dCoZoneHoverCraftBoost, CO_AMY.d2dCoZoneOffBonus, CO_AMY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("All of Amy's hovercraft units gain +%4 movement, +%0% firepower, and a -%2% reduction in deployment costs. All of her other units gain +%1% firepower. Her units gain +%3% defence.");
+        var text = qsTr("All of Amy's hovercraft units gain +%4 movement, +%0% firepower, and a -%2% reduction in deployment costs. ");
+        if (CO_AMY.powerCanFactoryBuildHovercraft){
+            text += qsTr("Can build hovercraft out of factories. ");
+        }
+        text += qsTr("All of her other units gain +%1% firepower. Her units gain +%3% defence.");
         text = replaceTextArgs(text, [CO_AMY.powerHoverCraftBoost, CO_AMY.powerOffBonus, CO_AMY.powerCostReduction * 100, CO_AMY.powerOffBonus, CO_AMY.powerMovementBonus]);
         return text;
     };
