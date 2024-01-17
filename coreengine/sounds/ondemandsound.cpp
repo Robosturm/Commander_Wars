@@ -15,10 +15,10 @@ void AudioManager::fillSoundCache(qint32 count, QString folder, QString file)
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        //        if (count > SoundData::MAX_SAME_SOUNDS)
-        //        {
-        //        }
-        count = SoundData::MAX_SAME_SOUNDS;
+        if (count > SoundData::MAX_SAME_SOUNDS)
+        {
+            count = SoundData::MAX_SAME_SOUNDS;
+        }
         QUrl cacheUrl = GlobalUtils::getUrlForFile(folder + file);
         if (QFile::exists(folder + file))
         {
