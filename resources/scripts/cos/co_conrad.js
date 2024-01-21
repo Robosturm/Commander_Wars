@@ -194,7 +194,7 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            return -unit.getHpRounded();
+            return -10;
         }
         return 0;
     };
