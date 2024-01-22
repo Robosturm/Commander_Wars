@@ -47,6 +47,13 @@ public:
 private:
     // this section contains the information about the elements and the attributes supported by the xml
     /**
+     * Nodename: ColoredRect
+     * supported attributes are:
+     * mandatory: x, y, width, heigth, color
+     * optional: id, visible
+     */
+    bool createColoredRect(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
      * Nodename: Label
      * supported attributes are:
      * mandatory: x, y, width, heigth, text, font, fontSize

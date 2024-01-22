@@ -1,5 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include "objects/editorselection.h"
 #include "objects/base/moveinbutton.h"
@@ -741,12 +742,20 @@ void EditorSelection::createBuildingSectionLabel(qint32 item, qint32 & currentId
     qint32 newIdentifier = m_Buildings[item]->getBuildingGroup();
     if (newIdentifier != currentIdentifier)
     {
-        posY += GameMap::getImageSize();
+        posY += GameMap::getImageSize() + 5;
         currentIdentifier = newIdentifier;
         xCounter = 0;
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
+
+        oxygine::spColorRectSprite pRect = MemoryManagement::create<oxygine::ColorRectSprite>();
+        pRect->setColor(FontManager::getFontColor());
+        pRect->setPosition(getPosX(xCounter), posY);
+        pRect->setSize(m_labelWidth, 5);
+        m_PlacementActor->addChild(pRect);
+        m_buildingActors.append(pRect);
+        posY += pRect->getHeight() + 3;
 
         spLabel pTextfield = MemoryManagement::create<Label>(m_labelWidth);
         pTextfield->setStyle(style);
@@ -801,12 +810,20 @@ void EditorSelection::createTerrainSectionLabel(qint32 item, qint32 & currentIde
     qint32 newIdentifier = m_Terrains[item]->getTerrainGroup();
     if (newIdentifier != currentIdentifier)
     {
-        posY += GameMap::getImageSize();
+        posY += GameMap::getImageSize() + 5;
         currentIdentifier = newIdentifier;
         xCounter = 0;
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
+
+        oxygine::spColorRectSprite pRect = MemoryManagement::create<oxygine::ColorRectSprite>();
+        pRect->setColor(FontManager::getFontColor());
+        pRect->setPosition(getPosX(xCounter), posY);
+        pRect->setSize(m_labelWidth, 5);
+        m_PlacementActor->addChild(pRect);
+        m_terrainActors.append(pRect);
+        posY += pRect->getHeight() + 3;
 
         spLabel pTextfield = MemoryManagement::create<Label>(m_labelWidth);
         pTextfield->setStyle(style);
@@ -858,12 +875,20 @@ void EditorSelection::createUnitSectionLabel(qint32 item, qint32 & currentIdenti
     qint32 newIdentifier = m_Units[item]->getUnitType();
     if (newIdentifier != currentIdentifier)
     {
-        posY += GameMap::getImageSize();
+        posY += GameMap::getImageSize() + 5;
         currentIdentifier = newIdentifier;
         xCounter = 0;
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
+
+        oxygine::spColorRectSprite pRect = MemoryManagement::create<oxygine::ColorRectSprite>();
+        pRect->setColor(FontManager::getFontColor());
+        pRect->setPosition(getPosX(xCounter), posY);
+        pRect->setSize(m_labelWidth, 5);
+        m_PlacementActor->addChild(pRect);
+        m_unitActors.append(pRect);
+        posY += pRect->getHeight() + 3;
 
         spLabel pTextfield = MemoryManagement::create<Label>(m_labelWidth);
         pTextfield->setStyle(style);

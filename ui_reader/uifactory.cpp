@@ -7,6 +7,8 @@
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/gamemanager.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
+
 #include "coreengine/mainapp.h"
 
 #include "objects/base/label.h"
@@ -30,6 +32,7 @@
 
 #include "wiki/wikidatabase.h"
 
+static const char* const itemColoredRect = "ColoredRect";
 static const char* const itemLabel = "Label";
 static const char* const itemCheckbox = "Checkbox";
 static const char* const itemSpinbox = "Spinbox";
@@ -70,6 +73,7 @@ static const char* const attrText = "text";
 static const char* const attrOnUpdate = "onUpdate";
 static const char* const attrFont = "font";
 static const char* const attrFontColor = "fontColor";
+static const char* const attrColor = "color";
 static const char* const attrInfinite = "infinite";
 static const char* const attrMin = "min";
 static const char* const attrMax = "max";
@@ -129,6 +133,7 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemMultilineTextbox), std::bind(&UiFactory::createMultilineTextbox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemMultiSlider), std::bind(&UiFactory::createMultiSlider, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemCustom), std::bind(&UiFactory::createCustom, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.append({QString(itemColoredRect), std::bind(&UiFactory::createColoredRect, this, _1, _2, _3, _4, _5)});
 
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
@@ -324,6 +329,41 @@ bool UiFactory::createItem(oxygine::spActor parent, QDomElement element, oxygine
         {
             pMenu->addFactoryUiItem(item);
         }
+    }
+    return success;
+}
+
+bool UiFactory::createColoredRect(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight, attrColor});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
+        qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
+        qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
+        qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
+        qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
+        QString color = getStringValue(getAttribute(childs, attrColor), id, loopIdx, pMenu);
+        oxygine::spColorRectSprite pRect = MemoryManagement::create<oxygine::ColorRectSprite>();
+        bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
+        pRect->setVisible(visible);
+        pRect->setX(x);
+        pRect->setY(y);
+        if (height > 0)
+        {
+            pRect->setHeight(height);
+        }
+        if (width > 0)
+        {
+            pRect->setWidth(width);
+        }
+        pRect->setColor(color);
+        parent->addChild(pRect);
+        item = pRect;
+
+        m_lastCoordinates = QRect(x, y, pRect->getScaledWidth(), pRect->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
