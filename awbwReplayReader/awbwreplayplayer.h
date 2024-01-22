@@ -33,6 +33,7 @@ private:
     void loadPlayers(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 gameStateIndex);
     void loadPlayer(const AwbwReplayerReader::PlayerInfo & player);
     void loadCo(const AwbwReplayerReader::CoInfo & coInfo, Player* pPlayer, qint32 coIdx);
+    void loadGameRules(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 gameStateIndex);
 private:
     GameMap* m_pMap;
     AwbwMapDownloader m_mapDownloader;

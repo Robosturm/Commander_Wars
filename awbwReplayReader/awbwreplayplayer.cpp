@@ -203,10 +203,43 @@ void AwbwReplayPlayer::loadMap(bool withOutUnits, IReplayReader::DayInfo dayInfo
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
+        if (gameStateIndex < states.size())
+        {
+            m_pMap->getPlayer(i)->setFundsModifier(gameStates[gameStateIndex].fundsPerBuilding / 1000);
+        }
     }
     m_pMap->setCurrentPlayer(dayInfo.player);
+    if (gameStateIndex < states.size())
+    {
+    }
     m_pMap->updateSprites();
     Mainapp::getInstance()->continueRendering();
+}
+
+void AwbwReplayPlayer::loadGameRules(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 gameStateIndex)
+{
+    GameRules* pRule = m_pMap->getGameRules();
+    if (gameStates[gameStateIndex].fog)
+    {
+        pRule->setFogMode(GameEnums::Fog_OfWar);
+    }
+    else
+    {
+        pRule->setFogMode(GameEnums::Fog_Off);
+    }
+    if (gameStates[gameStateIndex].currentWeather.toLower() == "c")
+    {
+        pRule->changeWeather("WEATHER_1SUN", m_pMap->getPlayerCount());
+    }
+    else if (gameStates[gameStateIndex].currentWeather.toLower() == "r")
+    {
+        pRule->changeWeather("WEATHER_RAIN", m_pMap->getPlayerCount());
+    }
+    else if (gameStates[gameStateIndex].currentWeather.toLower() == "s")
+    {
+        pRule->changeWeather("WEATHER_SNOW", m_pMap->getPlayerCount());
+    }
+    pRule->setEnableDayToDayCoAbilities(gameStates[gameStateIndex].usePowers);
 }
 
 void AwbwReplayPlayer::loadBuildings(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 gameStateIndex)
