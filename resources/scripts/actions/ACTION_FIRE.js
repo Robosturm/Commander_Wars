@@ -206,6 +206,12 @@ var Constructor = function()
                                         luckMode, fastInaccurate);
         return damage;
     };
+
+    this.getDefaultLuck = function(unit)
+    {
+        return 10;
+    };
+
     this.calcDamage = function(action, attacker, attackerWeapon, attackerPosition, attackerBaseHp,
                                defender, defenderPosition, isDefender,
                                luckMode, fastInaccurate = false)
@@ -231,7 +237,7 @@ var Constructor = function()
                 attackerHp += attacker.getAttackHpBonus(attackerPosition);
                 if (luckMode !== GameEnums.LuckDamageMode_Off)
                 {
-                    var luck = 10 + attacker.getBonusLuck(attackerPosition);
+                    var luck = ACTION_FIRE.getDefaultLuck(attacker) + attacker.getBonusLuck(attackerPosition);
                     var misfortune = attacker.getBonusMisfortune(attackerPosition);
                     // only roll if we have valid luck misfortune pair
                     if (luck > -misfortune)

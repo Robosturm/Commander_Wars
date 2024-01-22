@@ -194,7 +194,7 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            return -unit.getHpRounded();
+            return -ACTION_FIRE.getDefaultLuck(unit);
         }
         return 0;
     };
