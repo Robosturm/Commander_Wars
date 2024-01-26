@@ -456,7 +456,7 @@ protected:
      * @brief updateAllUnitData
      * @param pUnits
      */
-    void updateAllUnitData(spQmlVectorUnit & pUnits);
+    void updateAllUnitData(spQmlVectorUnit & pUnits, spQmlVectorBuilding &pBuildings);
     /**
      * @brief updateUnitData
      * @param pUnitData

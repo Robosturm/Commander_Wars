@@ -4,6 +4,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
+#include "resource_management/unitspritemanager.h"
 
 SimpleProductionSystem::SimpleProductionSystem(CoreAI * owner)
     : m_owner(owner)
@@ -90,15 +91,16 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
     return m_init && m_enabled;
 }
 
-void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
+void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, spQmlVectorUnit &pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
+    m_pEnemyUnits = pEnemyUnits;
     QString function1 = "onNewBuildQueue";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_owner),
                        JsThis::getJsThis(pBuildings),
                        JsThis::getJsThis(pUnits),
-                       JsThis::getJsThis(pEnemyUnits),
+                       JsThis::getJsThis(pEnemyUnits.get()),
                        JsThis::getJsThis(pEnemyBuildings),
                        JsThis::getJsThis(m_owner->getMap())});
     QJSValue erg(false);
@@ -151,6 +153,26 @@ void SimpleProductionSystem::updateActiveProductionSystem(QmlVectorBuilding* pBu
             distribution.second.totalChance += itemChance;
         }
     }
+}
+
+qint32 SimpleProductionSystem::getMaxSingleDamage() const
+{
+    return m_maxSingleDamage;
+}
+
+void SimpleProductionSystem::setMaxSingleDamage(qint32 newMaxSingleDamage)
+{
+    m_maxSingleDamage = newMaxSingleDamage;
+}
+
+qint32 SimpleProductionSystem::getMaxDamageCheckRange() const
+{
+    return m_maxDamageCheckRange;
+}
+
+void SimpleProductionSystem::setMaxDamageCheckRange(qint32 newMaxDamageCheckRange)
+{
+    m_maxDamageCheckRange = newMaxDamageCheckRange;
 }
 
 qint32 SimpleProductionSystem::getCurrentTurnProducedUnitsCounter() const
@@ -624,7 +646,8 @@ bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
 {
     Building* pBuilding = m_owner->getMap()->getTerrain(x, y)->getBuilding();
     if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS) &&
-        pBuilding->getTerrain()->getUnit() == nullptr)
+        pBuilding->getTerrain()->getUnit() == nullptr &&
+        reasonableBuildField(x, y, unitId, m_maxDamageCheckRange, m_maxSingleDamage))
     {
         spGameAction pAction = MemoryManagement::create<GameAction>(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
         pAction->setTarget(QPoint(x, y));
@@ -654,6 +677,52 @@ bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
         }
     }
     return false;
+}
+
+bool SimpleProductionSystem::reasonableBuildField(qint32 x, qint32 y, QString unitId, qint32 maxDamageCheckRange, qint32 maxSingleDamage)
+{
+    bool allowed = true;
+    auto* pMap = m_owner->getMap();
+    for (auto & pEnemey : m_pEnemyUnits->getVector())
+    {
+        if (GlobalUtils::getDistance(x, y, pEnemey->getX(), pEnemey->getY()) <= maxDamageCheckRange &&
+            (pEnemey->hasAmmo1() || pEnemey->hasAmmo2()))
+        {
+            auto baseDamage = UnitSpriteManager::getInstance()->getBaseDamage(pEnemey->getUnitIdx(), UnitSpriteManager::getInstance()->getIndex(unitId));
+            if (baseDamage >= maxSingleDamage)
+            {
+                QPoint position = pEnemey->getPosition();
+                bool canMoveAndFire = pEnemey->canMoveAndFire(position);
+                qint32 maxRange = pEnemey->getMaxRange(position);
+                qint32 minRange = pEnemey->getMinRange(position);
+                std::vector<QPoint> points;
+                if (canMoveAndFire)
+                {
+                    UnitPathFindingSystem pfs(pMap, pEnemey.get(), pEnemey->getOwner());
+                    pfs.explore();
+                    points = pfs.getAllNodePointsFast();
+                }
+                else
+                {
+                    points.push_back(position);
+                }
+                for (auto & point : points)
+                {
+                    auto distance = GlobalUtils::getDistance(x, y, point.x(), point.y());
+                    if (distance >= minRange && distance <= maxRange)
+                    {
+                        allowed = false;
+                        break;
+                    }
+                }
+                if (!allowed)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    return allowed;
 }
 
 bool SimpleProductionSystem::getEnabled() const

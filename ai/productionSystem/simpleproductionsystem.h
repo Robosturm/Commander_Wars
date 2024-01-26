@@ -76,7 +76,7 @@ public:
     }
     void initialize();
     bool buildUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings, bool & executed);
-    void onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
+    void onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, spQmlVectorUnit &pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
     Q_INVOKABLE bool getInit() const;
     Q_INVOKABLE bool getEnabled() const;
     Q_INVOKABLE void setEnabled(bool newEnabled);
@@ -106,8 +106,14 @@ public:
     Q_INVOKABLE qint32 getProductionFromList(const QStringList & unitIds, QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, qint32 minBuildMode, qint32 maxBuildMode, const QVector<bool> & enableList = QVector<bool>());
     Q_INVOKABLE void updateIslandSizeForBuildings(QmlVectorBuilding* pBuildings);
     Q_INVOKABLE qint32 getCurrentTurnProducedUnitsCounter() const;
-    void setCurrentTurnProducedUnitsCounter(qint32 newCurrentTurnProducedUnitsCounter);
+    Q_INVOKABLE void setCurrentTurnProducedUnitsCounter(qint32 newCurrentTurnProducedUnitsCounter);
 
+    Q_INVOKABLE qint32 getMaxDamageCheckRange() const;
+    Q_INVOKABLE void setMaxDamageCheckRange(qint32 newMaxDamageCheckRange);
+
+    Q_INVOKABLE qint32 getMaxSingleDamage() const;
+    Q_INVOKABLE void setMaxSingleDamage(qint32 newMaxSingleDamage);
+    Q_INVOKABLE bool reasonableBuildField(qint32 x, qint32 y, QString unitId, qint32 maxDamageCheckRange, qint32 maxSingleDamage);
 private:
     bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize);
     bool buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits);
@@ -119,6 +125,9 @@ private:
     CoreAI * m_owner{nullptr};
     bool m_init{false};
     bool m_enabled{true};
+    spQmlVectorUnit m_pEnemyUnits;
+    qint32 m_maxDamageCheckRange{10};
+    qint32 m_maxSingleDamage{70};
     std::vector<InitialProduction> m_initialProduction;
     std::vector<ForcedProduction> m_forcedProduction;
     std::map<QString, BuildDistribution> m_buildDistribution;

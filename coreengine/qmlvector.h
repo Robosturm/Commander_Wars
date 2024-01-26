@@ -68,7 +68,7 @@ public:
      * @param pOwnUnits
      * @param distanceMultiplier
      */
-    Q_INVOKABLE void pruneEnemies(const QmlVectorUnit * pOwnUnits, double distanceMultiplier);
+    Q_INVOKABLE void pruneEnemies(const QmlVectorUnit * pOwnUnits, const QmlVectorBuilding * pOwnBuildings, qint32 buildingDistance, double distanceMultiplier);
 
     Q_INVOKABLE inline Unit* at(qint32 i) const
     {

@@ -50,6 +50,7 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
                   {"MinHpDamage", "General", &m_minHpDamage, -2.0f, -10.0f, 10.0f},
                   {"EnemyPruneRange", "General", &m_enemyPruneRange, 3.0f, 1.0f, 5.0f},
+                  {"OwnBuildingPruneRange", "Production", &m_ownBuildingPruneRange, 10.0f, 7.0f, 10.0f},
                 };
     
     if (m_pMap != nullptr &&
@@ -68,7 +69,7 @@ void VeryEasyAI::process()
     pUnits->randomize();
     spQmlVectorUnit pEnemyUnits = m_pPlayer->getSpEnemyUnits();
     spQmlVectorBuilding pEnemyBuildings = m_pPlayer->getSpEnemyBuildings();
-    prepareEnemieData(pUnits, pEnemyUnits, pEnemyBuildings);
+    prepareEnemieData(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings);
     pBuildings->sortClosestToEnemy(pEnemyUnits);
 
     qint32 cost = 0;
@@ -137,7 +138,7 @@ bool VeryEasyAI::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & 
         {
             m_usedTransportSystem = true;
             m_aiStep = AISteps::moveUnits;
-            prepareEnemieData(pUnits, pEnemyUnits, pEnemyBuildings);
+            prepareEnemieData(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings);
             return performActionSteps(pUnits, pEnemyUnits,  pBuildings, pEnemyBuildings);
         }
         else if (m_aiStep <= AISteps::loadUnits && loadUnits(pUnits)){}
@@ -652,11 +653,11 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
                             spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("VeryEasyAI::buildUnits()", GameConsole::eDEBUG);
-    pEnemyUnits->pruneEnemies(pUnits.get(), m_enemyPruneRange);
+    pEnemyUnits->pruneEnemies(pUnits.get(), pBuildings.get(), m_ownBuildingPruneRange, m_enemyPruneRange);
     pBuildings->sortClosestToEnemy(pEnemyUnits);
     if (m_aiStep < AISteps::buildUnits)
     {
-        m_productionSystem.onNewBuildQueue(pBuildings.get(), pUnits.get(), pEnemyUnits.get(), pEnemyBuildings.get());
+        m_productionSystem.onNewBuildQueue(pBuildings.get(), pUnits.get(), pEnemyUnits, pEnemyBuildings.get());
     }
     m_aiStep = AISteps::buildUnits;
     bool executed = false;

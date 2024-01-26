@@ -101,7 +101,7 @@ qint32 QmlVectorUnit::getUnitCount(const QString & unitId)
     return count;
 }
 
-void QmlVectorUnit::pruneEnemies(const QmlVectorUnit * pOwnUnits, double distanceMultiplier)
+void QmlVectorUnit::pruneEnemies(const QmlVectorUnit * pOwnUnits, const QmlVectorBuilding * pOwnBuildings, qint32 buildingDistance, double distanceMultiplier)
 {
     qint32 i = 0;
     while (i < m_Vector.size())
@@ -116,6 +116,18 @@ void QmlVectorUnit::pruneEnemies(const QmlVectorUnit * pOwnUnits, double distanc
             {
                 inRange = true;
                 break;
+            }
+        }
+        if (!inRange)
+        {
+            for (auto & ownBuilding : pOwnBuildings->getVector())
+            {
+                auto distance = GlobalUtils::getDistance(ownBuilding->getPosition(), position);
+                if (distance < distanceMultiplier * (movepoints + buildingDistance))
+                {
+                    inRange = true;
+                    break;
+                }
             }
         }
         if (inRange)

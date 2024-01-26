@@ -1166,7 +1166,7 @@ void Player::updatePlayerVision(bool reduceTimer)
     if (m_FogVisionFields.size() != width ||
         m_FogVisionFields[width - 1].size() != heigth)
     {
-        CONSOLE_PRINT("Loading player for player " + m_playerNameId + " vision cause it's not loaded yet", GameConsole::eWARNING);
+        CONSOLE_PRINT("Loading player for player " + m_playerNameId + " vision cause it's not loaded yet", GameConsole::eDEBUG);
         loadVisionFields();
     }
     for (qint32 x = 0; x < width; x++)

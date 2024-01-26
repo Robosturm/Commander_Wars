@@ -332,13 +332,13 @@ void CoreAI::nextAction()
     }
 }
 
-void CoreAI::prepareEnemieData(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
+void CoreAI::prepareEnemieData(spQmlVectorUnit & pUnits, spQmlVectorBuilding &pBuildings, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
     pEnemyUnits = m_pPlayer->getSpEnemyUnits();
     pEnemyBuildings = m_pPlayer->getSpEnemyBuildings();
     if (!m_usedTransportSystem)
     {
-        pEnemyUnits->pruneEnemies(pUnits.get(), m_enemyPruneRange);
+        pEnemyUnits->pruneEnemies(pUnits.get(), pBuildings.get(), m_ownBuildingPruneRange, m_enemyPruneRange);
         pEnemyBuildings->pruneEnemieBuildings(pUnits, m_enemyPruneRange);
     }
     pEnemyUnits->randomize();

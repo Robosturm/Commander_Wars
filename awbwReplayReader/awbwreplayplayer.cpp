@@ -211,6 +211,7 @@ void AwbwReplayPlayer::loadMap(bool withOutUnits, IReplayReader::DayInfo dayInfo
     m_pMap->setCurrentPlayer(dayInfo.player);
     if (gameStateIndex < states.size())
     {
+        loadGameRules(states, gameStateIndex);
     }
     m_pMap->updateSprites();
     Mainapp::getInstance()->continueRendering();

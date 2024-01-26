@@ -25,8 +25,8 @@ var COREAI =
                                                         [100,],
                                                         20, 2, "", 1.0],
     lightAirGroup : ["LIGHT_AIR_GROUP", ["K_HELI", "DUSTER"],
-                                        [90,       10,],
-                                        30, 1, "", 1.0],
+                                        [60,       30,],
+                                        20, 1, "", 1.0],
     heavyAirGroup : ["HEAVY_AIR_GROUP", ["BOMBER", "STEALTHBOMBER", "ZCOUNIT_KIROV"],
                                         [50,       25,              50],
                                         10, 3, "", 1.0],
@@ -246,6 +246,9 @@ var COREAI =
     onNewBuildQueue : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map, groupDistribution)
     {
         system.resetForcedProduction();
+        // setup the ai to not build units which can be immediatly attacked and deal that much damage in a singleshot the ai won't build that unit at that base
+        system.setMaxDamageCheckRange(10);
+        system.setMaxSingleDamage(70);
         // get all allied units and remove units that are far away from our enemy units
         var variables = system.getVariables();
         var variableTurnProducedUnits = variables.createVariable("TURNPRODUCEDUNITS");

@@ -620,7 +620,7 @@ protected:
      * @param pEnemyUnits
      * @param pEnemyBuildings
      */
-    void prepareEnemieData(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
+    void prepareEnemieData(spQmlVectorUnit & pUnits, spQmlVectorBuilding &pBuildings, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
     void sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
 
     /**
@@ -832,6 +832,7 @@ protected:
     double m_fuelResupply{0.33f};
     double m_ammoResupply{0.25f};
     double m_enemyPruneRange{3.0};
+    double m_ownBuildingPruneRange{10};
 
     double m_minCoUnitScore{5000.0f};
     double m_coUnitValue{6000};

@@ -168,6 +168,7 @@ NormalAi::NormalAi(GameMap *pMap, const QString &configurationFile, GameEnums::A
         {"SameFundsMatchUpNoMatchUpValue", "Production", &m_sameFundsMatchUpNoMatchUpValue, 0.5f, 0.0f, 1.0f},
         {"SpamLightUnitChance", "Production", &m_spamLightUnitChance, 30.0f, 0.0f, 100.0f},
         {"SpamMediumUnitChance", "Production", &m_spamMediumUnitChance, 30.0f, 0.0f, 100.0f},
+        {"OwnBuildingPruneRange", "Production", &m_ownBuildingPruneRange, 10.0f, 7.0f, 10.0f},
     };
 
     if (m_pMap != nullptr &&
@@ -204,8 +205,8 @@ void NormalAi::process()
     else
     {
         AI_CONSOLE_PRINT("NormalAi::creating unit arrays()", GameConsole::eDEBUG);
-        prepareEnemieData(pUnits, pEnemyUnits, pEnemyBuildings);
-        updateAllUnitData(pUnits);
+        prepareEnemieData(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings);
+        updateAllUnitData(pUnits, pBuildings);
         if (useCOPower(pUnits, pEnemyUnits))
         {
             clearUnitData();
@@ -367,7 +368,7 @@ bool NormalAi::performActionSteps(spQmlVectorUnit &pUnits, spQmlVectorUnit &pEne
             m_usedTransportSystem = true;
             m_aiStep = AISteps::moveUnits;
             m_aiFunctionStep = 0;
-            prepareEnemieData(pUnits, pEnemyUnits, pEnemyBuildings);
+            prepareEnemieData(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings);
             for (auto &unit : m_OwnUnits)
             {
                 if (!unit.pUnit->getHasMoved())
@@ -1790,12 +1791,12 @@ float NormalAi::calculateCounteBuildingDamage(Unit *pUnit, QPoint newPosition, s
     return counterDamage;
 }
 
-void NormalAi::updateAllUnitData(spQmlVectorUnit &pUnits)
+void NormalAi::updateAllUnitData(spQmlVectorUnit &pUnits, spQmlVectorBuilding &pBuildings)
 {
     AI_CONSOLE_PRINT("NormalAi::updateAllUnitData()", GameConsole::eDEBUG);
     bool initial = m_EnemyUnits.size() == 0;
     spQmlVectorUnit enemyUnits = m_pPlayer->getSpEnemyUnits();
-    enemyUnits->pruneEnemies(pUnits.get(), m_enemyPruneRange);
+    enemyUnits->pruneEnemies(pUnits.get(), pBuildings.get(), m_ownBuildingPruneRange, m_enemyPruneRange);
     rebuildIsland(pUnits);
     rebuildIsland(enemyUnits);
 
@@ -2064,12 +2065,12 @@ bool NormalAi::buildUnits(spQmlVectorBuilding &pBuildings, spQmlVectorUnit &pUni
                           spQmlVectorUnit &pEnemyUnits, spQmlVectorBuilding &pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("NormalAi::buildUnits()", GameConsole::eDEBUG);
-    pEnemyUnits->pruneEnemies(pUnits.get(), m_enemyPruneRange);
+    pEnemyUnits->pruneEnemies(pUnits.get(), pBuildings.get(), m_ownBuildingPruneRange, m_enemyPruneRange);
     pBuildings->sortClosestToEnemy(pEnemyUnits);
     if (m_aiStep < AISteps::buildUnits)
     {
         m_productionData.clear();
-        m_productionSystem.onNewBuildQueue(pBuildings.get(), pUnits.get(), pEnemyUnits.get(), pEnemyBuildings.get());
+        m_productionSystem.onNewBuildQueue(pBuildings.get(), pUnits.get(), pEnemyUnits, pEnemyBuildings.get());
     }
     m_aiStep = AISteps::buildUnits;
     bool executed = false;

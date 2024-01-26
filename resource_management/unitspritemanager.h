@@ -17,7 +17,11 @@ public:
 
     qint32 getBaseDamage(Unit* pAttacker, Unit* pDefender)
     {
-        return m_baseDamgeTable[pAttacker->getUnitIdx() * m_loadedRessources.size() + pDefender->getUnitIdx()];
+        return getBaseDamage(pAttacker->getUnitIdx(), pDefender->getUnitIdx());
+    }
+    qint32 getBaseDamage(qint32 attackerIdx, qint32 defenderIdx)
+    {
+        return m_baseDamgeTable[attackerIdx * m_loadedRessources.size() + defenderIdx];
     }
     /**
      * @brief getUnitType
