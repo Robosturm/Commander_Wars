@@ -5,7 +5,7 @@ env:
   QT_Version: '6.5.2'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
   GCC_PATH: 'D:/a/Commander_Wars/Commander_Wars/qt/Qt/Tools/mingw1120_64/bin/'
-  JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/11.0.21-9/x64/'
+  JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/11.0.22-7/x64/'
   ANDROID_OPEN_SSL_TAG: '7f5f34d16040883f7353b3f99bc3fc83ecdc2a4b'
   
 jobs:
