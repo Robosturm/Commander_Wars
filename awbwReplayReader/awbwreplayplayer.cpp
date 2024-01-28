@@ -8,7 +8,7 @@
 
 AwbwReplayPlayer::AwbwReplayPlayer(GameMap* pMap)
     : m_pMap(pMap),
-    m_actionParser(pMap)
+      m_actionParser(*this, pMap)
 {
     connect(&m_mapDownloader, &AwbwMapDownloader::sigDownloadResult, this, &AwbwReplayPlayer::onDownloadResult, Qt::QueuedConnection);
 }
@@ -52,6 +52,11 @@ spGameAction AwbwReplayPlayer::nextAction()
     return action;
 }
 
+void AwbwReplayPlayer::onPostAction()
+{
+    m_actionParser.onPostAction();
+}
+
 qint32 AwbwReplayPlayer::getRecordSize()
 {
     qint32 count = 0;
@@ -85,14 +90,14 @@ IReplayReader::DayInfo AwbwReplayPlayer::getDayFromPosition(qint32 count)
         qint32 index = 0;
         dayInfo.day = gameStates[0].day;
         dayInfo.player = playerMapping[gameStates[0].turn];
-        while (index < actions.size() &&
-               index < gameStates.size() &&
+        while (index < actions.size() - 1 &&
+               index < gameStates.size() - 1 &&
                currentCount < count)
         {
             currentCount += actions[index].actionData.size();
+            ++index;
             dayInfo.day = gameStates[index].day;
             dayInfo.player = playerMapping[gameStates[index].turn];
-            ++index;
         }
     }
     return dayInfo;
@@ -113,7 +118,6 @@ void AwbwReplayPlayer::seekToDay(IReplayReader::DayInfo dayInfo)
     while (gameStateIndex < actions.size() &&
            gameStateIndex < gameStates.size())
     {
-        m_currentActionPos += actions[gameStateIndex].actionData.size();
         if (dayInfo.day == gameStates[gameStateIndex].day &&
             dayInfo.player == playerMapping[gameStates[gameStateIndex].turn])
         {
@@ -121,6 +125,7 @@ void AwbwReplayPlayer::seekToDay(IReplayReader::DayInfo dayInfo)
         }
         else
         {
+            m_currentActionPos += actions[gameStateIndex].actionData.size();
             ++gameStateIndex;
         }
     }
@@ -205,13 +210,15 @@ void AwbwReplayPlayer::loadMap(bool withOutUnits, IReplayReader::DayInfo dayInfo
         m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
         if (gameStateIndex < states.size())
         {
-            m_pMap->getPlayer(i)->setFundsModifier(gameStates[gameStateIndex].fundsPerBuilding / 1000);
+            m_pMap->getPlayer(i)->setFundsModifier(static_cast<float>(gameStates[gameStateIndex].fundsPerBuilding) / 1000.0f);
+            m_pMap->getPlayer(i)->setFunds(gameStates[gameStateIndex].players[i].funds);
         }
     }
     m_pMap->setCurrentPlayer(dayInfo.player);
     if (gameStateIndex < states.size())
     {
         loadGameRules(states, gameStateIndex);
+        m_pMap->setCurrentDay(dayInfo.day);
     }
     m_pMap->updateSprites();
     Mainapp::getInstance()->continueRendering();
@@ -241,6 +248,17 @@ void AwbwReplayPlayer::loadGameRules(const QVector<AwbwReplayerReader::GameState
         pRule->changeWeather("WEATHER_SNOW", m_pMap->getPlayerCount());
     }
     pRule->setEnableDayToDayCoAbilities(gameStates[gameStateIndex].usePowers);
+    pRule->setRandomWeather(false);
+}
+
+const AwbwReplayerReader & AwbwReplayPlayer::getReplayReader() const
+{
+    return m_replayReader;
+}
+
+qint32 AwbwReplayPlayer::getCurrentActionPos() const
+{
+    return m_currentActionPos;
 }
 
 void AwbwReplayPlayer::loadBuildings(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 gameStateIndex)
@@ -363,7 +381,7 @@ void AwbwReplayPlayer::loadCo(const AwbwReplayerReader::CoInfo & coInfo, Player*
         auto powerStars = pCO->getPowerStars();
         if (powerStars > 0)
         {
-            pCO->setPowerFilled(coInfo.power / (coInfo.maxPower / powerStars));
+            pCO->setPowerFilled(static_cast<double>(coInfo.power) / (static_cast<double>(coInfo.maxPower) / static_cast<double>(powerStars)));
         }
     }
 }

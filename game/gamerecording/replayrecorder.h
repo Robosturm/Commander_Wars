@@ -67,6 +67,10 @@ public:
      */
     virtual spGameAction nextAction() override;
     /**
+     * @brief onPostAction
+     */
+    virtual void onPostAction() override;
+    /**
      * @brief getMods
      * @return
      */

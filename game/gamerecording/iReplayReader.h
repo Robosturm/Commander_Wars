@@ -20,6 +20,7 @@ public:
     virtual bool loadRecord(const QString & filename) = 0;
     virtual QStringList getMods() = 0;
     virtual spGameAction nextAction() = 0;
+    virtual void onPostAction() = 0;
     virtual qint32 getRecordSize() = 0;
     virtual qint32 getProgess() = 0;
     virtual DayInfo getDayFromPosition(qint32 count) = 0;

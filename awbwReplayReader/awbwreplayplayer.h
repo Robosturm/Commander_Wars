@@ -15,11 +15,15 @@ public:
     virtual bool loadRecord(const QString & filename) override;
     virtual QStringList getMods() override;
     virtual spGameAction nextAction() override;
+    virtual void onPostAction() override;
     virtual qint32 getRecordSize() override;
     virtual qint32 getProgess() override;
     virtual DayInfo getDayFromPosition(qint32 count) override;
     virtual void seekToDay(DayInfo dayInfo) override;
     virtual void requestReplayStart() override;
+    qint32 getCurrentActionPos() const;
+    const AwbwReplayerReader & getReplayReader() const;
+
 private slots:
     void onDownloadResult(bool success);
 private:

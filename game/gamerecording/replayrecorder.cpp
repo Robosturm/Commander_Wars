@@ -271,6 +271,11 @@ spGameAction ReplayRecorder::nextAction()
     return spGameAction();
 }
 
+void ReplayRecorder::onPostAction()
+{
+
+}
+
 ReplayRecorder::HeaderInfo ReplayRecorder::seekToNextType(Type type, bool & success)
 {
     HeaderInfo info(m_stream);

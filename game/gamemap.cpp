@@ -1568,6 +1568,11 @@ void GameMap::updateMapFlags() const
     }
 }
 
+void GameMap::setCurrentDay(qint32 newCurrentDay)
+{
+    m_currentDay = newCurrentDay;
+}
+
 qint32 GameMap::getReplayActionCount() const
 {
     return m_replayActionCount;

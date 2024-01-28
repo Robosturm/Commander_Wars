@@ -118,6 +118,7 @@ void ReplayMenu::exitReplay()
 void ReplayMenu::nextReplayAction()
 {
     QMutexLocker locker(&m_replayMutex);
+    m_replayReader->onPostAction();
     if (m_pauseRequested && m_replayCounter == 0)
     {
         m_pauseRequested = false;

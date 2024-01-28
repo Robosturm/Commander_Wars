@@ -987,6 +987,8 @@ public:
         return &m_trainingDataGenerator;
     }
 
+    void setCurrentDay(qint32 newCurrentDay);
+
 private slots:
     void zoomChanged();
 private:

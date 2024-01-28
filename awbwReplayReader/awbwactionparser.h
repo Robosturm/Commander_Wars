@@ -3,6 +3,8 @@
 #include <QJsonObject>
 #include "game/gameaction.h"
 
+class AwbwReplayPlayer;
+
 class AwbwActionParser
 {
 public:
@@ -29,16 +31,26 @@ public:
     static const char* const JSONKEY_COMBATINFO;
     static const char* const JSONKEY_FIRE;
     static const char* const JSONKEY_MOVE;
+    static const char* const JSONKEY_AMMO;
+    static const char* const JSONKEY_BUILDINGINFO;
+    static const char* const JSONKEY_BUILDINGS_X;
+    static const char* const JSONKEY_BUILDINGS_Y;
+    static const char* const JSONKEY_CAPT;
+    static const char* const JSONKEY_PLAYERID;
 
-    AwbwActionParser(GameMap* pMap);
+    AwbwActionParser(AwbwReplayPlayer & pParent, GameMap* pMap);
 
     spGameAction getAction(const QJsonObject & object);
-
+    void onPostAction();
 private:
-    void addMovepath(const QJsonObject & object, spGameAction & action);
+    void addMovepath(const QJsonObject & object, spGameAction & action, qint32 x, qint32 y);
     void addBuildInfo(const QJsonObject & object, spGameAction & action);
     void addActionFireInfo(const QJsonObject & object, spGameAction & action);
+    void addDamageData(Unit* pAtk, Unit* pDef, const QJsonObject & atkData, const QJsonObject & defData, spGameAction & action);
+    void updateCoData(const QJsonObject & data);
 private:
+    AwbwReplayPlayer & m_pParent;
     GameMap* m_pMap;
+    QJsonObject m_lastAction;
 };
 

@@ -301,7 +301,7 @@ void AwbwReplayerReader::readPlayers(QTextStream & stream, GameState & newState)
                     }
                     else if (item == "eliminated")
                     {
-                        player.funds = AwbwDataParser::readBool(stream, m_valid);
+                        player.eliminated = AwbwDataParser::readBool(stream, m_valid);
                     }
                     else if (item == "co_power")
                     {
