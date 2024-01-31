@@ -31,10 +31,6 @@ var Constructor = function()
     {
         return "minimap_weld";
     };
-    this.getFirerangeModifier = function(terrain, unit)
-    {
-        return -1;
-    };
     this.onDestroyed = function(terrain, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
