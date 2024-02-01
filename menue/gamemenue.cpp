@@ -2362,10 +2362,7 @@ void GameMenue::exitGame()
 {    
     CONSOLE_PRINT("Finishing running animations and exiting game", GameConsole::eDEBUG);
     m_gameStarted = false;
-    while (GameAnimationFactory::getAnimationCount() > 0)
-    {
-        GameAnimationFactory::finishAllAnimations();
-    }
+    GameAnimationFactory::finishAllAnimations();
     if (m_pMap.get() != nullptr &&
         m_pMap->getCurrentPlayer() &&
         m_pMap->getCurrentPlayer()->getBaseGameInput() != nullptr &&

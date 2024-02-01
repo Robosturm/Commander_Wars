@@ -50,7 +50,7 @@ public:
 
     AwbwActionParser(AwbwReplayPlayer & pParent, GameMap* pMap);
 
-    spGameAction getAction(const QJsonObject & object);
+    spGameAction getAction(const QJsonObject & object, bool & fetchNextAction);
     void onPostAction();
     void setCurrentPlayerData(qint32 playerId, const QString & team);
 

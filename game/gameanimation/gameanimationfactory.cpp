@@ -399,12 +399,22 @@ void GameAnimationFactory::finishAllAnimations()
 {
     Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("GameAnimationFactory::finishAllAnimations()", GameConsole::eDEBUG);
-    qint32 i = 0;
-    while (i < m_Animations.size())
+    while (m_Animations.size() > 0)
     {
-        spGameAnimation spAnimation = m_Animations[i];
-        while (!spAnimation->onFinished(true))
+        qint32 i = 0;
+        while (i < m_Animations.size())
         {
+            spGameAnimation spAnimation = m_Animations[i];
+            if (spAnimation->getStarted())
+            {
+                while (!spAnimation->onFinished(true))
+                {
+                }
+            }
+            else
+            {
+                ++i;
+            }
         }
     }
     Mainapp::getInstance()->continueRendering();

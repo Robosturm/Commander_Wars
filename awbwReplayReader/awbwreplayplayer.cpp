@@ -43,8 +43,12 @@ spGameAction AwbwReplayPlayer::nextAction()
     if (turnIndex < actions.size() &&
         actionIndex < actions[turnIndex].actionData.size())
     {
-        action = m_actionParser.getAction(actions[turnIndex].actionData[actionIndex]);
-        ++m_currentActionPos;
+        bool fetchNextAction = true;
+        while (fetchNextAction)
+        {
+            action = m_actionParser.getAction(actions[turnIndex].actionData[actionIndex], fetchNextAction);
+            ++m_currentActionPos;
+        }
     }
     return action;
 }

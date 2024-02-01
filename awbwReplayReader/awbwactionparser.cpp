@@ -54,9 +54,10 @@ AwbwActionParser::AwbwActionParser(AwbwReplayPlayer & pParent, GameMap* pMap)
 {
 }
 
-spGameAction AwbwActionParser::getAction(const QJsonObject & object)
+spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetchNextAction)
 {
     m_lastAction = object;
+    fetchNextAction = false;
     spGameAction action = MemoryManagement::create<GameAction>(m_pMap);
     QString actionType = object.value(JSONKEY_ACTION).toString().toLower();
     if (actionType == "move")
@@ -90,7 +91,8 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object)
     }
     else if (actionType == "eliminated")
     {
-        qint32 a = 0;
+        action = nullptr;
+        fetchNextAction = true;
     }
     else if (actionType == "unload")
     {
