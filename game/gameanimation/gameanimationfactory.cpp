@@ -437,7 +437,8 @@ void GameAnimationFactory::skipAllAnimations()
             GameAnimationCapture* pGameAnimationCapture = dynamic_cast<GameAnimationCapture*>(pAnimation);
             GameAnimationNextDay* pGameAnimationNextDay = dynamic_cast<GameAnimationNextDay*>(pAnimation);
             GameAnimationWalk* pGameAnimationWalk = dynamic_cast<GameAnimationWalk*>(pAnimation);
-            if (shouldSkipDialog(pDialogAnimation) ||
+            if (pAnimation->getStarted() &&
+                (shouldSkipDialog(pDialogAnimation) ||
                 shouldSkipBattleAnimation(pBattleAnimation) ||
                 shouldSkipCapture(pGameAnimationCapture) ||
                 shouldSkipDay2Day(pGameAnimationNextDay) ||
@@ -447,8 +448,9 @@ void GameAnimationFactory::skipAllAnimations()
                  pGameAnimationCapture == nullptr &&
                  pGameAnimationWalk == nullptr &&
                  pGameAnimationNextDay == nullptr &&
-                 shouldSkipOtherAnimation(pAnimation)))
+                 shouldSkipOtherAnimation(pAnimation))))
             {
+
                 while (!pAnimation->onFinished(true));
             }
             else

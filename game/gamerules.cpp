@@ -38,6 +38,11 @@ void GameRules::resetArrays()
     m_FogSprites.clear();
 }
 
+void GameRules::setVictory(bool newVictory)
+{
+    m_victory = newVictory;
+}
+
 bool GameRules::getDrawVotingRunning() const
 {
     return m_drawVoting.votingInProgress;

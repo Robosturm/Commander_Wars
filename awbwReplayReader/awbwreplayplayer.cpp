@@ -6,9 +6,12 @@
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
 
-AwbwReplayPlayer::AwbwReplayPlayer(GameMap* pMap)
+#include "menue/replaymenu.h"
+
+AwbwReplayPlayer::AwbwReplayPlayer(ReplayMenu * pReplayMenu, GameMap* pMap)
     : m_pMap(pMap),
-      m_actionParser(*this, pMap)
+    m_pReplayMenu(pReplayMenu),
+    m_actionParser(*this, pMap)
 {
     connect(&m_mapDownloader, &AwbwMapDownloader::sigDownloadResult, this, &AwbwReplayPlayer::onDownloadResult, Qt::QueuedConnection);
 }
@@ -35,14 +38,8 @@ spGameAction AwbwReplayPlayer::nextAction()
 {
     const auto & actions = m_replayReader.getActions();
     spGameAction action;
-    qint32 actionIndex = m_currentActionPos;
-    qint32 turnIndex = 0;
-    while (turnIndex < actions.size() &&
-           actionIndex >= actions[turnIndex].actionData.size())
-    {
-        actionIndex -= actions[turnIndex].actionData.size();
-        ++turnIndex;
-    }
+    qint32 actionIndex = 0;
+    qint32 turnIndex = getCurrentTurnIndex(actionIndex);
     if (turnIndex < actions.size() &&
         actionIndex < actions[turnIndex].actionData.size())
     {
@@ -50,6 +47,20 @@ spGameAction AwbwReplayPlayer::nextAction()
         ++m_currentActionPos;
     }
     return action;
+}
+
+qint32 AwbwReplayPlayer::getCurrentTurnIndex(qint32 & actionIndex) const
+{
+    const auto & actions = m_replayReader.getActions();
+    actionIndex = m_currentActionPos;
+    qint32 turnIndex = 0;
+    while (turnIndex < actions.size() &&
+           actionIndex >= actions[turnIndex].actionData.size())
+    {
+        actionIndex -= actions[turnIndex].actionData.size();
+        ++turnIndex;
+    }
+    return turnIndex;
 }
 
 void AwbwReplayPlayer::onPostAction()
@@ -207,18 +218,31 @@ void AwbwReplayPlayer::loadMap(bool withOutUnits, IReplayReader::DayInfo dayInfo
     // swap out all ai's / or players with a proxy ai.
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
+        m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));        
         if (gameStateIndex < states.size())
         {
             m_pMap->getPlayer(i)->setFundsModifier(static_cast<float>(gameStates[gameStateIndex].fundsPerBuilding) / 1000.0f);
             m_pMap->getPlayer(i)->setFunds(gameStates[gameStateIndex].players[i].funds);
+            // m_pMap->getPlayer(i)->setMenu(m_);
         }
     }
     m_pMap->setCurrentPlayer(dayInfo.player);
+    m_pMap->setIsHumanMatch(false);
     if (gameStateIndex < states.size())
     {
         loadGameRules(states, gameStateIndex);
         m_pMap->setCurrentDay(dayInfo.day);
+        QString team;
+        qint32 playerId = actions[gameStateIndex].playerId;
+        for (const auto & player : gameStates[gameStateIndex].players)
+        {
+            if (player.playerId == playerId)
+            {
+                team = player.team;
+                break;
+            }
+        }
+        m_actionParser.setCurrentPlayerData(playerId, team);
     }
     m_pMap->updateSprites();
     Mainapp::getInstance()->continueRendering();
@@ -249,6 +273,7 @@ void AwbwReplayPlayer::loadGameRules(const QVector<AwbwReplayerReader::GameState
     }
     pRule->setEnableDayToDayCoAbilities(gameStates[gameStateIndex].usePowers);
     pRule->setRandomWeather(false);
+    pRule->setVictory(false);
 }
 
 const AwbwReplayerReader & AwbwReplayPlayer::getReplayReader() const
@@ -299,11 +324,11 @@ void AwbwReplayPlayer::loadUnits(const QVector<AwbwReplayerReader::GameState> & 
                 break;
             }
         }
-        loadUnit(unit, playerIdx);
+        loadUnit(unit, playerIdx, gameStates[gameStateIndex].units);
     }
 }
 
-void AwbwReplayPlayer::loadUnit(const AwbwReplayerReader::UnitInfo & unit, qint32 player)
+void AwbwReplayPlayer::loadUnit(const AwbwReplayerReader::UnitInfo & unit, qint32 player, const QVector<AwbwReplayerReader::UnitInfo> & units)
 {
     if (!unit.carried)
     {
@@ -315,11 +340,27 @@ void AwbwReplayPlayer::loadUnit(const AwbwReplayerReader::UnitInfo & unit, qint3
         pUnit->setHidden(unit.stealthed.toLower() == "y");
         if (unit.loadedUnitId1 != 0)
         {
-
+            loadLoadedUnit(unit.loadedUnitId1, pUnit, units);
         }
         if (unit.loadedUnitId2 != 0)
         {
+            loadLoadedUnit(unit.loadedUnitId1, pUnit, units);
+        }
+    }
+}
 
+void AwbwReplayPlayer::loadLoadedUnit(qint32 unitId, Unit* pTransporter, const QVector<AwbwReplayerReader::UnitInfo> & units)
+{
+    for (const auto & unit : units)
+    {
+        if (unit.unitId == unitId)
+        {
+            auto* pUnit = pTransporter->spawnUnit(AwbwDataTypes::UNIT_ID_ID_MAP[unit.name]);
+            pUnit->setFuel(unit.fuel);
+            pUnit->setAmmo1(unit.ammo);
+            pUnit->setHp(unit.hp);
+            pUnit->setHasMoved(true);
+            break;
         }
     }
 }
@@ -351,12 +392,14 @@ void AwbwReplayPlayer::loadPlayer(const AwbwReplayerReader::PlayerInfo & player)
 {
     auto* pPlayer = m_pMap->getPlayer(player.playerIdx);
     pPlayer->setFunds(player.funds);
+    pPlayer->setMenu(m_pReplayMenu);
     pPlayer->setIsDefeated(player.eliminated);
     loadCo(player.coData, pPlayer, 0);
     loadCo(player.tagCoData, pPlayer, 0);
     auto* pCo0 = pPlayer->getCO(0);
     if (pCo0 != nullptr)
     {
+        pCo0->setMenu(m_pReplayMenu);
         if (player.powerOn.toLower() == "n")
         {
             pCo0->setPowerMode(GameEnums::PowerMode_Off);
@@ -369,6 +412,11 @@ void AwbwReplayPlayer::loadPlayer(const AwbwReplayerReader::PlayerInfo & player)
         {
             pCo0->setPowerMode(GameEnums::PowerMode_Superpower);
         }
+    }
+    pCo0 = pPlayer->getCO(1);
+    if (pCo0 != nullptr)
+    {
+        pCo0->setMenu(m_pReplayMenu);
     }
 }
 

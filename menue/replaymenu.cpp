@@ -43,7 +43,7 @@ ReplayMenu::ReplayMenu(QString filename)
     changeBackground("replaymenu");
     if (filename.endsWith(".zip"))
     {
-        m_replayReader = MemoryManagement::create<AwbwReplayPlayer>(m_pMap.get());
+        m_replayReader = MemoryManagement::create<AwbwReplayPlayer>(this, m_pMap.get());
     }
     else
     {

@@ -673,6 +673,8 @@ public:
      * @param coUnits
      */
     Q_INVOKABLE void setCoUnits(bool coUnits);
+    void setVictory(bool newVictory);
+
 private:
     /**
      * @brief resetArrays

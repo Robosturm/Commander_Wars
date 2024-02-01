@@ -21,6 +21,7 @@ GameAnimation::GameAnimation(quint32 frameTime, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimation");
 #endif
+    Q_ASSERT(Mainapp::getInstance()->renderingPaused());
     Interpreter::setCppOwnerShip(this);
     m_actionData.setVersion(QDataStream::Version::Qt_6_5);
     if (m_frameTime <= 0)
@@ -34,7 +35,8 @@ GameAnimation::GameAnimation(quint32 frameTime, GameMap* pMap)
 }
 
 void GameAnimation::restart()
-{    
+{
+    Q_ASSERT(Mainapp::getInstance()->renderingPaused());
     if (m_pMap != nullptr)
     {
         Mainapp::getInstance()->pauseRendering();
@@ -80,6 +82,11 @@ void GameAnimation::doPreAnimationCall()
     }
 }
 
+bool GameAnimation::getStarted() const
+{
+    return m_started;
+}
+
 GameMap *GameAnimation::getMap() const
 {
     return m_pMap;
@@ -88,11 +95,11 @@ GameMap *GameAnimation::getMap() const
 void GameAnimation::stop()
 {
     Mainapp::getInstance()->pauseRendering();
+    Q_ASSERT(!m_started);
     m_stopped = true;
     setVisible(false);
     Mainapp::getInstance()->continueRendering();
 }
-
 
 qint32 GameAnimation::getFontWidth(const QString & font, const QString & text) const
 {
@@ -112,6 +119,7 @@ void GameAnimation::setRotation(float angle)
 
 void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
 {
+    Q_ASSERT(Mainapp::getInstance()->renderingPaused());
     if (pGameAnimation != nullptr)
     {
         pGameAnimation->setPreviousAnimation(getSharedPtr<GameAnimation>());
@@ -150,12 +158,11 @@ void GameAnimation::removeQueuedAnimation(GameAnimation* pGameAnimation)
 
 void GameAnimation::update(const oxygine::UpdateState& us)
 {
-    if (!m_stopped)
+    Q_ASSERT(!m_stopped);
+    oxygine::Sprite::update(us);
+    if (!m_startEmitted)
     {
-        oxygine::Sprite::update(us);
-    }
-    if (!m_started)
-    {
+        m_startEmitted = true;
         emit sigStart();
     }
 }
@@ -393,6 +400,7 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
 
 bool GameAnimation::onFinished(bool skipping)
 {
+    Q_ASSERT(m_started);
     if (!m_finished)
     {
         m_finished = true;

@@ -329,6 +329,8 @@ public:
      * @return
      */
     Q_INVOKABLE quint32 getFrameTime() const;
+    bool getStarted() const;
+
 protected:
     void emitFinished();
 
@@ -377,6 +379,7 @@ protected:
     bool m_stopped{false};
     bool m_finishQueued{false};
     bool m_started{false};
+    bool m_startEmitted{false};
     bool m_skipping{false};
     spGameAnimation m_previousAnimation{nullptr};
     struct SoundData

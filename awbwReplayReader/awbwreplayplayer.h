@@ -6,11 +6,13 @@
 #include "awbwReplayReader/awbwactionparser.h"
 #include "game/gamerecording/iReplayReader.h"
 
+class ReplayMenu;
+
 class AwbwReplayPlayer : public IReplayReader
 {
     Q_OBJECT
 public:
-    explicit AwbwReplayPlayer(GameMap* pMap);
+    explicit AwbwReplayPlayer(ReplayMenu * pReplayMenu, GameMap* pMap);
 
     virtual bool loadRecord(const QString & filename) override;
     virtual QStringList getMods() override;
@@ -23,7 +25,7 @@ public:
     virtual void requestReplayStart() override;
     qint32 getCurrentActionPos() const;
     const AwbwReplayerReader & getReplayReader() const;
-
+    qint32 getCurrentTurnIndex(qint32 & actionIndex) const;
 private slots:
     void onDownloadResult(bool success);
 private:
@@ -32,7 +34,8 @@ private:
     void loadBuildings(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 gameStateIndex);
     void loadBuilding(const AwbwReplayerReader::BuildingInfo & building);
     void loadUnits(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 gameStateIndex);
-    void loadUnit(const AwbwReplayerReader::UnitInfo & unit, qint32 player4);
+    void loadUnit(const AwbwReplayerReader::UnitInfo & unit, qint32 player, const QVector<AwbwReplayerReader::UnitInfo> & units);
+    void loadLoadedUnit(qint32 unitId, Unit* pTransporter, const QVector<AwbwReplayerReader::UnitInfo> & units);
     void updateCapturePoints(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 gameStateIndex);
     void loadPlayers(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 gameStateIndex);
     void loadPlayer(const AwbwReplayerReader::PlayerInfo & player);
@@ -40,6 +43,7 @@ private:
     void loadGameRules(const QVector<AwbwReplayerReader::GameState> & gameStates, qint32 gameStateIndex);
 private:
     GameMap* m_pMap;
+    ReplayMenu * m_pReplayMenu;
     AwbwMapDownloader m_mapDownloader;
     AwbwReplayerReader m_replayReader;
     AwbwActionParser m_actionParser;
