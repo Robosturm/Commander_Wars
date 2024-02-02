@@ -53,7 +53,10 @@ public:
             {
                 emit sigChangeUpdateTimerState(true);
             }
-            ++m_pausedCounter;
+            else
+            {
+                ++m_pausedCounter;
+            }
         }
     }
     /**
@@ -63,10 +66,13 @@ public:
     {
         if (!isMainThread())
         {
-            --m_pausedCounter;
-            if (m_pausedCounter == 0)
+            if (m_pausedCounter == 1)
             {
                 emit sigChangeUpdateTimerState(false);
+            }
+            else
+            {
+                --m_pausedCounter;
             }
         }
     }

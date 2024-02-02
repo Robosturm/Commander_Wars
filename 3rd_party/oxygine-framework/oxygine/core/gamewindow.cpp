@@ -85,10 +85,14 @@ namespace oxygine
     {
         if (stop)
         {
+            Q_ASSERT(m_pausedCounter == 0);
+            ++m_pausedCounter;
             m_timer.stop();
         }
         else
         {
+            --m_pausedCounter;
+            Q_ASSERT(m_pausedCounter == 0);
             m_timer.start();
         }
     }

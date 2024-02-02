@@ -344,7 +344,8 @@ void AwbwActionParser::addUnloadData(const QJsonObject & object, spGameAction & 
     {
         if (unit.unitId == object[JSONKEY_TRANSPORTID].toInt())
         {
-            QJsonObject unitData = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject());
+            Q_ASSERT(m_pMap->getTerrain(unit.x, unit.y)->getUnit() != nullptr);
+            QJsonObject unitData = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject());            
             QPoint pos(unit.x, unit.y);
             action->setTarget(pos);
             QVector<QPoint> path = {pos};
