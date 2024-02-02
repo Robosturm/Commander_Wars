@@ -332,10 +332,7 @@ void ReplayMenu::startSeeking()
     m_replayCounter = 0;
 
     m_storedSeekingAnimationSettings.startSeeking();
-    while (GameAnimationFactory::getAnimationCount() > 0)
-    {
-        GameAnimationFactory::finishAllAnimations();
-    }
+    GameAnimationFactory::clearAllAnimations();
     m_storedSeekingAnimationSettings.restoreAnimationSettings();
     m_seeking = true;
 }

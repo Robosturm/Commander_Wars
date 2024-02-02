@@ -369,7 +369,7 @@ private:
      * @param pGameAnimation
      */
     void removeQueuedAnimation(GameAnimation* pGameAnimation);
-protected slots:
+public slots:
     virtual void start();
 protected:
     virtual void update(const oxygine::UpdateState& us) override;

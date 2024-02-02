@@ -413,6 +413,10 @@ void GameAnimationFactory::finishAllAnimations()
             }
             else
             {
+                if (spAnimation->getParent() != nullptr)
+                {
+                    spAnimation->start();
+                }
                 ++i;
             }
         }
@@ -506,7 +510,6 @@ bool GameAnimationFactory::shouldSkipDay2Day(GameAnimationNextDay* pGameAnimatio
     bool day2dayEnabled = Settings::getInstance()->getDay2dayScreen();
     return pGameAnimationNextDay != nullptr && !day2dayEnabled;
 }
-
 
 bool GameAnimationFactory::shouldSkipMovement(GameAnimationWalk* pGameAnimationWalk)
 {

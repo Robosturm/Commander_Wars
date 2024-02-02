@@ -47,6 +47,9 @@ const char* const AwbwActionParser::JSONKEY_COPOWER = "coPower";
 const char* const AwbwActionParser::JSONKEY_TRANSPORTID = "transportID";
 const char* const AwbwActionParser::JSONKEY_UNITS_ID = "units_id";
 const char* const AwbwActionParser::JSONKEY_REPAIRED = "repaired";
+const char* const AwbwActionParser::JSONKEY_LOAD = "Load";
+const char* const AwbwActionParser::JSONKEY_TRANSPORT = "transport";
+const char* const AwbwActionParser::JSONKEY_LOADED = "loaded";
 
 AwbwActionParser::AwbwActionParser(AwbwReplayPlayer & pParent, GameMap* pMap)
     : m_pParent(pParent),
@@ -65,18 +68,21 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
         action->setActionID(CoreAI::ACTION_WAIT);
         QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject());
         addMovepath(object, action, startPoint.value(JSONKEY_UNITS_X).toInt(), startPoint.value(JSONKEY_UNITS_Y).toInt());
+        updateUnitPos(action);
     }
     else if (actionType == "capt")
     {
         action->setActionID(CoreAI::ACTION_CAPTURE);
         QJsonObject startPoint = object.value(JSONKEY_CAPT).toObject()[JSONKEY_BUILDINGINFO].toObject();
         addMovepath(object.value(JSONKEY_MOVE).toObject(), action, startPoint[JSONKEY_BUILDINGS_X].toInt(), startPoint[JSONKEY_BUILDINGS_Y].toInt());
+        updateUnitPos(action);
     }
     else if (actionType == "fire")
     {
         action->setActionID(CoreAI::ACTION_FIRE);
         addMovepath(object.value(JSONKEY_MOVE).toObject(), action, -1, -1);
         addActionFireInfo(object, action);
+        updateUnitPos(action);
     }
     else if (actionType == "build")
     {
@@ -104,6 +110,7 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
         action->setActionID(CoreAI::ACTION_UNSTEALTH);
         QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject());
         addMovepath(object.value(JSONKEY_MOVE).toObject(), action, startPoint.value(JSONKEY_UNITS_X).toInt(), startPoint.value(JSONKEY_UNITS_Y).toInt());
+        updateUnitPos(action);
     }
     else if (actionType == "tag")
     {
@@ -142,6 +149,7 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
     {
         action->setActionID(CoreAI::ACTION_LOAD);
         addMovepath(object.value(JSONKEY_MOVE).toObject(), action, -1, -1);
+        updateLoadInfo(object);
     }
     else if (actionType == "launch")
     {
@@ -150,6 +158,7 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
         addMovepath(object.value(JSONKEY_MOVE).toObject(), action, launchData[JSONKEY_SILOX].toInt(), launchData[JSONKEY_SILOY].toInt());
         action->writeDataInt32(launchData[JSONKEY_TARGETX].toInt());
         action->writeDataInt32(launchData[JSONKEY_TARGETY].toInt());
+        updateUnitPos(action);
     }
     else if (actionType == "join")
     {
@@ -161,6 +170,7 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
         action->setActionID(CoreAI::ACTION_STEALTH);
         QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject());
         addMovepath(object.value(JSONKEY_MOVE).toObject(), action, startPoint.value(JSONKEY_UNITS_X).toInt(), startPoint.value(JSONKEY_UNITS_Y).toInt());
+        updateUnitPos(action);
     }
     else if (actionType == "gameover")
     {
@@ -178,11 +188,18 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
     }
 
     action->setMapHash(m_pMap->getMapHash());
+
+    return action;
+}
+
+void AwbwActionParser::updateUnitPos(const spGameAction & action)
+{
     if (action->getMovePathLength() > 0)
     {
         QVector<QPoint> path = action->getMovePath();
         QPoint start = path[path.size() - 1];
         QPoint end = path[0];
+        bool done = false;
         for (auto & unit : m_currentGameState.units)
         {
             if (start.x() == unit.x &&
@@ -190,12 +207,11 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
             {
                 unit.x = end.x();
                 unit.y = end.y();
-                break;
+                done = true;
             }
         }
+        Q_ASSERT(done);
     }
-
-    return action;
 }
 
 void AwbwActionParser::onPostAction()
@@ -294,7 +310,15 @@ void AwbwActionParser::addDamageData(Unit* pAtk, Unit* pDef, const QJsonObject &
 {
     if (pAtk->getHp() > 0)
     {
-        action->writeDataInt32((pDef->getHp() - defData[JSONKEY_UNITS_HIT_POINTS].toInt()) * Unit::MAX_UNIT_HP);
+        qint32 hp = (pDef->getHp() - defData[JSONKEY_UNITS_HIT_POINTS].toInt()) * Unit::MAX_UNIT_HP;
+        if (hp > 0)
+        {
+            action->writeDataInt32(hp);
+        }
+        else
+        {
+            action->writeDataInt32(-1);
+        }
         if (pAtk->getAmmo1() > atkData[JSONKEY_AMMO].toInt() ||
             !pAtk->hasAmmo2())
         {
@@ -332,6 +356,28 @@ void AwbwActionParser::updateCoData(const QJsonObject & data)
             {
                 auto powerStars = pCO->getPowerStars();
                 pCO->setPowerFilled(data[JSONKEY_TAGVALUE].toDouble() / (static_cast<double>(player.tagCoData.maxPower) / static_cast<double>(powerStars)));
+            }
+            break;
+        }
+    }
+}
+
+void AwbwActionParser::updateLoadInfo(const QJsonObject & object)
+{
+    QJsonObject loadData = object.value(JSONKEY_LOAD).toObject();
+    qint32 transport = loadData[JSONKEY_TRANSPORT].toObject()[JSONKEY_GLOBAL].toInt();
+    qint32 loaded = loadData[JSONKEY_LOADED].toObject()[JSONKEY_GLOBAL].toInt();
+    for (auto & unit : m_currentGameState.units)
+    {
+        if (unit.unitId == transport)
+        {
+            if (unit.loadedUnitId1 == 0)
+            {
+                unit.loadedUnitId1 = loaded;
+            }
+            else
+            {
+                unit.loadedUnitId2 = loaded;
             }
             break;
         }

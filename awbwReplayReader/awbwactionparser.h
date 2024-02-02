@@ -47,6 +47,9 @@ public:
     static const char* const JSONKEY_COPOWER;
     static const char* const JSONKEY_TRANSPORTID;
     static const char* const JSONKEY_UNITS_ID;
+    static const char* const JSONKEY_LOAD;
+    static const char* const JSONKEY_TRANSPORT;
+    static const char* const JSONKEY_LOADED;
 
     AwbwActionParser(AwbwReplayPlayer & pParent, GameMap* pMap);
 
@@ -64,6 +67,8 @@ private:
     void addRepairData(const QJsonObject & object, spGameAction & action);
     QJsonObject getPlayerObjectData(const QJsonObject & object);
     void storeCurrentGameState();
+    void updateUnitPos(const spGameAction & action);
+    void updateLoadInfo(const QJsonObject & object);
 private:
     AwbwReplayPlayer & m_pParent;
     GameMap* m_pMap;
