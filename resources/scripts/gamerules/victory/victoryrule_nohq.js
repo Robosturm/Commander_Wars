@@ -69,7 +69,7 @@ var Constructor = function()
         }
         return GameEnums.DefeatType_Alive;
     };
-    this.getRuleProgress = function(rule, player, map)
+    this.getRuleProgress = function(rule, player, map, item)
     {
         return player.getBuildingListCount(BUILDING.hqIds);
     };

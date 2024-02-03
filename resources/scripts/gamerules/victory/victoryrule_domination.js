@@ -124,10 +124,55 @@ var Constructor = function()
     this.init = function(rule, map)
     {
     };
-    this.getRuleTargetValue = function(rule, map)
+    this.getRuleTargetValue = function(rule, map, itemNumber, player)
     {
-        return 0;
+        var team = VICTORYRULE_DOMINATION.getRuleValue(rule, 4, map);
+        var startDay = VICTORYRULE_DOMINATION.getRuleValue(rule, 0, map);
+        var currentDay = map.getCurrentDay();
+        var target = -1;
+        if (currentDay >= startDay)
+        {
+            var players = map.getPlayerCount();
+            for (var i = 0; i < players; i++)
+            {
+                var enemy = map.getPlayer(i);
+                if ((player !== enemy) &&
+                    !enemy.getIsDefeated() &&
+                    (player.getTeam() !== enemy.getTeam()))
+                {
+                    var enemyValues = VICTORYRULE_DOMINATION.getCurrentValues(player, map, team);
+                    var factor = 0;
+                    if (itemNumber === 0)
+                    {
+                        factor = VICTORYRULE_DOMINATION.getRuleValue(rule, 1, map);
+                    }
+                    else if (itemNumber === 1)
+                    {
+                        factor = VICTORYRULE_DOMINATION.getRuleValue(rule, 2, map);
+                    }
+                    else
+                    {
+                        factor = VICTORYRULE_DOMINATION.getRuleValue(rule, 3, map);
+                    }
+                    var output = enemyValues[itemNumber] * factor / 100;
+                    if (output < target || target < 0)
+                    {
+                        target = output;
+                    }
+                }
+            }
+        }
+        else
+        {
+            target = 0;
+        }
+        return target;
     };
+    this.getRuleTargetCount = function(rule, map)
+    {
+        return 3;
+    };
+
     this.getCurrentValues = function(player, map, team)
     {
         var unitValue = player.calculatePlayerStrength();
@@ -149,7 +194,7 @@ var Constructor = function()
                 }
             }
         }
-        return Qt.vector3d(unitValue, unitCount, income);
+        return [unitValue, unitCount, income];
     };
 
     this.getAliveCount = function(rule, player, map)
@@ -177,15 +222,15 @@ var Constructor = function()
                 {
                     var enemyValues = VICTORYRULE_DOMINATION.getCurrentValues(player, map, team);
 
-                    if (ownValues.x >= enemyValues.x * unitValue / 100)
+                    if (ownValues[0] >= enemyValues[0] * unitValue / 100)
                     {
                         unitValueAlive = true;
                     }
-                    if (ownValues.y >= enemyValues.y * income / 100)
+                    if (ownValues[1] >= enemyValues[1] * income / 100)
                     {
                         unitCountAlive = true;
                     }
-                    if (ownValues.z >= enemyValues.z * unitValue / 100)
+                    if (ownValues[2] >= enemyValues[2] * unitValue / 100)
                     {
                         incomeAlive = true;
                     }
@@ -221,10 +266,11 @@ var Constructor = function()
         }
         return GameEnums.DefeatType_Alive;
     };
-    this.getRuleProgress = function(rule, player, map)
+    this.getRuleProgress = function(rule, player, map, item)
     {
-        var progress = VICTORYRULE_DOMINATION.getAliveCount(rule, player, map);
-        return progress;
+        var team = VICTORYRULE_DOMINATION.getRuleValue(rule, 4, map);
+        var ownValues = VICTORYRULE_DOMINATION.getCurrentValues(player, map, team);
+        return ownValues[item];
     };
 };
 

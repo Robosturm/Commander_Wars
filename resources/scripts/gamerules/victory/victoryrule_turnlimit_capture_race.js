@@ -128,7 +128,7 @@ var Constructor = function()
         // all players loose if the time limit is exceeded
         return GameEnums.DefeatType_Defeated;
     };
-    this.getRuleProgress = function(rule, player, map)
+    this.getRuleProgress = function(rule, player, map, item)
     {
         return VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getBuildingCount(rule, player, map);
     };

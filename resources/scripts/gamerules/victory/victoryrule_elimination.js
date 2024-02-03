@@ -107,7 +107,7 @@ var Constructor = function()
 		}
         return GameEnums.DefeatType_Alive;
     };
-    this.getRuleProgress = function(rule, player, map)
+    this.getRuleProgress = function(rule, player, map, item)
     {
         return VICTORYRULE_ELIMINATION.getKilledUnits(rule, player, map);
     };

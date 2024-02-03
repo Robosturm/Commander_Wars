@@ -91,32 +91,40 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
         y += 50 + pTextfield->getTextRect().height();
 
         qint32 x = 10;
-        qint32 stepWidth = 250;
+        qint32 stepWidth = 340;
+
+        qint32 itemCount = pVictoryRule->getRuleTargetCount();
         for (qint32 i2 = 0; i2 < pMap->getPlayerCount(); i2++)
         {
             Player* pPlayer = pMap->getPlayer(i2);
             if (pPlayer->getIsDefeated() == false)
             {
-                qint32 ruleValue = pVictoryRule->getRuleTargetValue();
-                qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
-                info = QString(tr("Player %1: %2/%3")).arg(i2 + 1).arg(playerValue).arg(ruleValue);
-                spBuilding building = MemoryManagement::create<Building>("HQ", pMap);
-                building->setOwner(pPlayer);
-                building->setPosition(x, y);
-                building->setTooltipText(pPlayer->getPlayerNameId());
-                pPanel->addItem(building);
-
-                spLabel pLabel = MemoryManagement::create<Label>(stepWidth - GameMap::getImageSize() - 10);
-                pLabel->setStyle(style);
-                pLabel->setHtmlText(info);
-                pLabel->setTooltipText(pPlayer->getPlayerNameId());
-                pLabel->setPosition(x + GameMap::getImageSize() + 5, y - 15);
-                pPanel->addItem(pLabel);
-                x += stepWidth;
-                if (x + stepWidth > oxygine::Stage::getStage()->getWidth() - 90 && i2 < pMap->getPlayerCount() - 1)
+                for (qint32 item = 0; item < itemCount; ++item)
                 {
-                    x = 10;
-                    y += 60;
+                    qint32 ruleValue = pVictoryRule->getRuleTargetValue(item, pPlayer);
+                    qint32 playerValue = pVictoryRule->getRuleProgress(item, pPlayer);
+                    info = QString(tr("Player %1: %2/%3")).arg(i2 + 1).arg(playerValue).arg(ruleValue);
+                    spBuilding building = MemoryManagement::create<Building>("HQ", pMap);
+                    building->setOwner(pPlayer);
+                    building->setPosition(x, y);
+                    building->setTooltipText(pPlayer->getPlayerNameId());
+                    pPanel->addItem(building);
+
+                    spLabel pLabel = MemoryManagement::create<Label>(stepWidth - GameMap::getImageSize() - 10);
+                    pLabel->setStyle(style);
+                    pLabel->setHtmlText(info);
+                    pLabel->setTooltipText(pPlayer->getPlayerNameId());
+                    pLabel->setPosition(x + GameMap::getImageSize() + 5, y - 15);
+                    pPanel->addItem(pLabel);
+                    x += stepWidth;
+                    if (x + stepWidth > oxygine::Stage::getStage()->getWidth() - 90)
+                    {
+                        if (!(i2 == pMap->getPlayerCount() - 1 && item == itemCount - 1))
+                        {
+                            x = 10;
+                            y += 60;
+                        }
+                    }
                 }
             }
         }
@@ -147,7 +155,7 @@ void DialogVictoryConditions::showPopup(QString rule)
         BaseGamemenu* pMenu = m_pMap->getMenu();
         if (pMenu != nullptr && !VictoryRulePopup::exists(rule))
         {
-            spVictoryRulePopup pPopup = MemoryManagement::create<VictoryRulePopup>(m_pMap, rule, 180, 250);
+            spVictoryRulePopup pPopup = MemoryManagement::create<VictoryRulePopup>(m_pMap, rule, 250, 250);
             pPopup->setY(oxygine::Stage::getStage()->getHeight() - pPopup->getScaledHeight());
             pMenu->addChild(pPopup);
         }

@@ -73,10 +73,29 @@ QString VictoryRule::getRuleName(qint32 itemNumber)
     }
 }
 
-qint32 VictoryRule::getRuleTargetValue()
+qint32 VictoryRule::getRuleTargetValue(qint32 itemNumber, Player* pPlayer)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleTargetValue";
+    QJSValueList args({pInterpreter->newQObject(this),                       
+                       JsThis::getJsThis(m_pMap),
+                       itemNumber,
+                       JsThis::getJsThis(pPlayer)});
+    QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 VictoryRule::getRuleTargetCount()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getRuleTargetCount";
     QJSValueList args({pInterpreter->newQObject(this),
                        JsThis::getJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
@@ -86,7 +105,7 @@ qint32 VictoryRule::getRuleTargetValue()
     }
     else
     {
-        return 0;
+        return 1;
     }
 }
 
@@ -190,13 +209,14 @@ QString VictoryRule::getRuleDescription(qint32 itemNumber)
     }
 }
 
-qint32 VictoryRule::getRuleProgress(Player* pPlayer)
+qint32 VictoryRule::getRuleProgress(qint32 itemNumber, Player* pPlayer)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleProgress";
     QJSValueList args({JsThis::getJsThis(this),
                        JsThis::getJsThis(pPlayer),
-                       JsThis::getJsThis(m_pMap)});
+                       JsThis::getJsThis(m_pMap),
+                       itemNumber});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isNumber())
     {

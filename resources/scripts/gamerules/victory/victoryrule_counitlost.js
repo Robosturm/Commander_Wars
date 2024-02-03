@@ -123,7 +123,7 @@ var Constructor = function()
         }
         return GameEnums.DefeatType_Alive;
     };
-    this.getRuleProgress = function(rule, player, map)
+    this.getRuleProgress = function(rule, player, map, item)
     {
         // return co unit count
         return VICTORYRULE_COUNITLOST.checkCOUnitCount(rule, player, map);

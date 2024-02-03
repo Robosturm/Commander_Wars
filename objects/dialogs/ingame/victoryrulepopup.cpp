@@ -56,35 +56,44 @@ void VictoryRulePopup::updateInfo()
         addItem(pTextfield);
         y += 30 + pTextfield->getTextRect().height();
 
+        qint32 width = pTextfield->getTextRect().width();
+
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = true;
+
+        qint32 itemCount = pVictoryRule->getRuleTargetCount();
+
 
         for (qint32 i2 = 0; i2 < m_pMap->getPlayerCount(); i2++)
         {
             Player* pPlayer = m_pMap->getPlayer(i2);
             if (pPlayer->getIsDefeated() == false)
             {
-                qint32 ruleValue = pVictoryRule->getRuleValue(0);
-                auto ruleTypes = pVictoryRule->getRuleType();
-                if (ruleTypes[0] == VictoryRule::checkbox)
+                for (qint32 item = 0; item < itemCount; ++item)
                 {
-                    ruleValue = 0;
+                    qint32 ruleValue = pVictoryRule->getRuleTargetValue(item, pPlayer);
+                    qint32 playerValue = pVictoryRule->getRuleProgress(item, pPlayer);
+
+                    spBuilding building = MemoryManagement::create<Building>("HQ", m_pMap);
+                    building->setOwner(pPlayer);
+                    building->setPosition(x, y);
+                    addItem(building);
+                    QString info = QString::number(playerValue) + "/" + QString::number(ruleValue);
+                    spLabel pTextfield = MemoryManagement::create<Label>(getWidth() - 20);
+                    pTextfield->setStyle(style);
+                    pTextfield->setHtmlText(info);
+                    pTextfield->setPosition(x + GameMap::getImageSize() + 5, y - 15);
+                    if (width < pTextfield->getTextRect().width() + x + 10)
+                    {
+                        width = pTextfield->getTextRect().width() + x + 10;
+                    }
+                    addItem(pTextfield);
+                    y += GameMap::getImageSize() * 2 + 5;
                 }
-                qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
-                spBuilding building = MemoryManagement::create<Building>("HQ", m_pMap);
-                building->setOwner(pPlayer);
-                building->setPosition(x, y);
-                addItem(building);
-                QString info = QString::number(playerValue) + "/" + QString::number(ruleValue);
-                spLabel pTextfield = MemoryManagement::create<Label>(getWidth() - 20);
-                pTextfield->setStyle(style);
-                pTextfield->setHtmlText(info);
-                pTextfield->setPosition(x + GameMap::getImageSize() + 5, y - 15);
-                addItem(pTextfield);
-                y += GameMap::getImageSize() * 2 + 5;
             }
         }
         setContentHeigth(y);
+        setContentWidth(width);
     }
 }

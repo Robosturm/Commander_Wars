@@ -5,7 +5,7 @@ var VICTORYRULE =
         return "";
     },
 
-    getRuleProgress : function(rule, player, map)
+    getRuleProgress : function(rule, player, map, item)
     {
         return 0;
     },
@@ -35,7 +35,7 @@ var VICTORYRULE =
     {
         return 99999;
     },
-    getRuleTargetValue  : function(rule, map)
+    getRuleTargetValue  : function(rule, map, itemNumber, player)
     {
         var ruleTypes = rule.getRuleType();
         if (ruleTypes[0] === "checkbox")
@@ -46,6 +46,10 @@ var VICTORYRULE =
         {
             return rule.getRuleValue(0);
         }
+    },
+    getRuleTargetCount : function(rule, map)
+    {
+        return 1;
     },
     // create and initialize the variables for this rule
     init : function(rule, map)

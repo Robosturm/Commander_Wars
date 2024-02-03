@@ -62,10 +62,11 @@ public:
     Q_INVOKABLE QStringList getRuleType();
     Q_INVOKABLE QString getRuleName(qint32 itemNumber = 0);
     Q_INVOKABLE qint32 getRuleValue(qint32 itemNumber);
-    Q_INVOKABLE qint32 getRuleTargetValue();
+    Q_INVOKABLE qint32 getRuleTargetValue(qint32 itemNumber, Player* pPlayer);
+    Q_INVOKABLE qint32 getRuleTargetCount();
     Q_INVOKABLE qint32 getMaxValue(qint32 itemNumber);
     Q_INVOKABLE QString getRuleDescription(qint32 itemNumber = 0);
-    Q_INVOKABLE qint32 getRuleProgress(Player* pPlayer);
+    Q_INVOKABLE qint32 getRuleProgress(qint32 itemNumber, Player* pPlayer);
     Q_INVOKABLE QString getRuleID() const;
     Q_INVOKABLE ScriptVariables* getVariables()
     {

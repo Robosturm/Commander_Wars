@@ -495,6 +495,7 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
                     const auto ai = GameEnums::AiTypes_Human;
                     m_pMap->getPlayer(i)->setControlType(ai);
                     m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, m_pMap->getPlayer(i)->getControlType()));
+                    m_pMap->getPlayer(i)->setPlayerNameId(Settings::getInstance()->getUsername());
                 }
             }
         }
@@ -502,7 +503,16 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
         {
             for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, m_pMap->getPlayer(i)->getControlType()));
+                auto controType = m_pMap->getPlayer(i)->getControlType();
+                m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, controType));
+                if (controType == GameEnums::AiTypes_Human)
+                {
+                    m_pMap->getPlayer(i)->setPlayerNameId(Settings::getInstance()->getUsername());
+                }
+                else
+                {
+                    m_pMap->getPlayer(i)->setPlayerNameId(getNameFromAiType(controType));
+                }
             }
         }
     }
