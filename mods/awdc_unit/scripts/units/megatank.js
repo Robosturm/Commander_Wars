@@ -10,7 +10,7 @@ MEGATANK.init = function(unit)
 
     unit.setFuel(50);
     unit.setMaxFuel(50);
-    unit.setBaseMovementPoints(5);
+    unit.setBaseMovementPoints(4);
     unit.setMinRange(1);
     unit.setMaxRange(1);
     unit.setVision(2);
