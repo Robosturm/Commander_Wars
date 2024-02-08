@@ -21,6 +21,12 @@ class ReplayMenu final : public GameMenue
     Q_OBJECT
     static constexpr qint32 actionPixelSize = 5;
 public:
+    struct PlayerUiInfo
+    {
+        QString playerArmy{""};
+        QColor color;
+    };
+
     ReplayMenu(QString filename);
     virtual ~ReplayMenu();
     /**
@@ -33,6 +39,10 @@ public:
      * @return
      */
     bool getValid() const;
+
+    void updatePlayerUiData();
+    void fetchPlayerUiData();
+    Q_INVOKABLE Viewplayer* getViewplayer();
 
 signals:
     void sigShowRecordInvalid();
@@ -130,6 +140,7 @@ private:
     oxygine::spActor m_seekActor;
     spLabel m_seekDayLabel;
     spIReplayReader m_replayReader;
+    QVector<PlayerUiInfo> m_playerUiInfo;
 };
 
 #endif // REPLAYMENU_H

@@ -20,6 +20,8 @@
 oxygine::spResAnim Player::m_neutralTableAnim;
 QImage Player::m_neutralTableImage;
 
+const char *const Player::CO_ARMY = "CO_ARMY";
+
 void Player::releaseStaticData()
 {
     m_neutralTableAnim.reset();
@@ -2167,6 +2169,110 @@ void Player::setControlType(const GameEnums::AiTypes newControlType)
 void Player::setMenu(GameMenue *newMenu)
 {
     m_pMenu = newMenu;
+}
+
+qint32 Player::getDefaultColorCount()
+{
+    Interpreter *pInterpreter = Interpreter::getInstance();
+    QString function = "getDefaultPlayerColors";
+    QJSValueList args;
+    QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
+    qint32 colorCount = 0;
+    if (ret.isNumber())
+    {
+        colorCount = ret.toInt();
+    }
+    return colorCount;
+}
+
+QStringList Player::getDropDownColorNames()
+{
+    qint32 colorCount = getDefaultColorCount();
+    QStringList playerColors;
+    for (qint32 i = 0; i < colorCount; i++)
+    {
+        bool exists = false;
+        QColor color = getDisplayColor(i, exists);
+        playerColors.append(color.name());
+    }
+    return playerColors;
+}
+
+QColor Player::getDefaultColor(qint32 index)
+{
+    Interpreter *pInterpreter = Interpreter::getInstance();
+    QString function = "getDefaultColor";
+    QJSValueList args({QJSValue(index)});
+    QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
+    QColor color(ret.toString());
+    return color;
+}
+
+QColor Player::getDisplayColor(qint32 index, bool &exists)
+{
+    exists = false;
+    Interpreter *pInterpreter = Interpreter::getInstance();
+    QString function = "getDisplayColor";
+    QJSValueList args({QJSValue(index)});
+    QColor displayColor;
+    QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
+    if (ret.isString())
+    {
+        QString colorName = ret.toString();
+        if (!colorName.isEmpty())
+        {
+            displayColor = QColor(colorName);
+            exists = true;
+        }
+    }
+    return displayColor;
+}
+
+QColor Player::tableColorToDisplayColor(QColor tableColor)
+{
+    qint32 colorCount = getDefaultColorCount();
+    QColor displayColor = tableColor;
+    for (qint32 i = 0; i < colorCount; ++i)
+    {
+        QColor color = getDefaultColor(i);
+        if (color == tableColor)
+        {
+            bool exists = false;
+            displayColor = getDisplayColor(i, exists);
+            if (!exists)
+            {
+                displayColor = tableColor;
+            }
+            break;
+        }
+    }
+    return displayColor;
+}
+
+QColor Player::displayColorToTableColor(QColor displayColor)
+{
+    qint32 colorCount = getDefaultColorCount();
+    QColor tableColor = displayColor;
+    for (qint32 i = 0; i < colorCount; ++i)
+    {
+        bool exists = false;
+        QColor color = getDisplayColor(i, exists);
+        if (color == displayColor && exists)
+        {
+            tableColor = getDefaultColor(i);
+            break;
+        }
+    }
+    return tableColor;
+}
+
+QStringList Player::getSelectableArmies()
+{
+    Interpreter *pInterpreter = Interpreter::getInstance();
+    QJSValue erg = pInterpreter->doFunction("PLAYER", "getArmies");
+    QStringList ret = erg.toVariant().toStringList();
+    ret.push_front(CO_ARMY);
+    return ret;
 }
 
 void Player::serializeObject(QDataStream& pStream) const

@@ -34,6 +34,8 @@ public:
         bool drawAccepted{false};
         QString powerOn; // "N", "Y" or "S"
         QString coImage;
+        QString uniqueId;
+        QString signature;
     };
     struct BuildingInfo
     {

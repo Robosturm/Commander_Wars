@@ -31,6 +31,7 @@ class Player : public QObject, public oxygine::Actor, public FileSerializable, p
 {
     Q_OBJECT
 public:
+    static const char *const CO_ARMY;
     /**
      * @brief Player
      */
@@ -144,6 +145,7 @@ public:
      * @brief Player::updatePlayerID
      */
     void updatePlayerID();
+
 #ifdef GRAPHICSUPPORT
     /**
      * @brief getColorTable
@@ -159,6 +161,13 @@ public:
     void setMenu(GameMenue *newMenu);
 
     void setIsOnline(bool newIsOnline);
+    Q_INVOKABLE static qint32 getDefaultColorCount();
+    Q_INVOKABLE static QStringList getDropDownColorNames();
+    Q_INVOKABLE static QColor getDefaultColor(qint32 index);
+    Q_INVOKABLE static QColor getDisplayColor(qint32 index, bool &exists);
+    Q_INVOKABLE static QColor tableColorToDisplayColor(QColor tableColor);
+    Q_INVOKABLE static QColor displayColorToTableColor(QColor displayColor);
+    Q_INVOKABLE static QStringList getSelectableArmies();
     /**
      * @brief setUniqueIdentifier
      * @param newUniqueIdentifier
@@ -718,6 +727,7 @@ public:
      * @return
      */
     Q_INVOKABLE qreal getRepairCostModifier(Unit* pUnit);
+
 private:
     /**
      * @brief loadTable

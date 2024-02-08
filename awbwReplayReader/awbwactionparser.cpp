@@ -9,6 +9,8 @@
 #include "game/unit.h"
 #include "ai/coreai.h"
 
+#include "menue/replaymenu.h"
+
 const char* const AwbwActionParser::JSONKEY_ACTION = "action";
 const char* const AwbwActionParser::JSONKEY_UNIT = "unit";
 const char* const AwbwActionParser::JSONKEY_UNITNAME = "units_name";
@@ -222,6 +224,8 @@ void AwbwActionParser::onPostAction()
         if (actionType == "end")
         {
             m_pParent.seekToDay(m_pParent.getDayFromPosition(m_pParent.getCurrentActionPos()));
+            m_pParent.getReplayMenu()->updatePlayerUiData();
+            m_pMap->updateSprites();
         }
         else if (actionType == "fire")
         {

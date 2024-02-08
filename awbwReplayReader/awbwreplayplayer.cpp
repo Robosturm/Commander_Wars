@@ -177,6 +177,7 @@ void AwbwReplayPlayer::startReplayInternal()
     IReplayReader::DayInfo dayInfo;
     dayInfo.day = 1;
     loadMap(true, dayInfo);
+    m_pMap->updateSprites();
     emit startReplay();
 }
 
@@ -248,7 +249,6 @@ void AwbwReplayPlayer::loadMap(bool withOutUnits, IReplayReader::DayInfo dayInfo
         }
         m_actionParser.setCurrentPlayerData(playerId, team);
     }
-    m_pMap->updateSprites();
     Mainapp::getInstance()->continueRendering();
 }
 
@@ -278,6 +278,12 @@ void AwbwReplayPlayer::loadGameRules(const QVector<AwbwReplayerReader::GameState
     pRule->setEnableDayToDayCoAbilities(gameStates[gameStateIndex].usePowers);
     pRule->setRandomWeather(false);
     pRule->setVictory(false);
+    pRule->setMoveVision(false);
+}
+
+ReplayMenu * AwbwReplayPlayer::getReplayMenu() const
+{
+    return m_pReplayMenu;
 }
 
 const AwbwReplayerReader & AwbwReplayPlayer::getReplayReader() const
@@ -398,6 +404,7 @@ void AwbwReplayPlayer::loadPlayer(const AwbwReplayerReader::PlayerInfo & player)
     pPlayer->setFunds(player.funds);
     pPlayer->setMenu(m_pReplayMenu);
     pPlayer->setIsDefeated(player.eliminated);
+    // pPlayer->setPlayerNameId(player.);
     loadCo(player.coData, pPlayer, 0);
     loadCo(player.tagCoData, pPlayer, 0);
     auto* pCo0 = pPlayer->getCO(0);

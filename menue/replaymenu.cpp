@@ -9,6 +9,8 @@
 
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/dropdownmenu.h"
+#include "objects/base/dropdownmenucolor.h"
+#include "objects/base/dropdownmenusprite.h"
 #include "objects/base/slider.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/moveinbutton.h"
@@ -17,6 +19,7 @@
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
+#include "resource_management/gamemanager.h"
 
 #include "ingamescriptsupport/genericbox.h"
 
@@ -65,6 +68,7 @@ ReplayMenu::~ReplayMenu()
 void ReplayMenu::startReplay()
 {
     m_Viewplayer = MemoryManagement::create<Viewplayer>(this, m_pMap.get());
+    fetchPlayerUiData();
     // store animation modes
     m_storedAnimationSettings.storeAnimationSettings();
 
@@ -400,9 +404,9 @@ void ReplayMenu::seekToDay(IReplayReader::DayInfo dayInfo)
         m_pMap->setScale(scale);
         m_mapSliding->setPosition(slidingPos);
         m_mapSlidingActor->setPosition(actorPos);
+        updatePlayerinfo();
         m_pMap->updateSprites();
         m_pMap->getGameRules()->createFogVision();
-        updatePlayerinfo();
         Mainapp::getInstance()->continueRendering();
         if (!m_uiPause)
         {
@@ -411,9 +415,36 @@ void ReplayMenu::seekToDay(IReplayReader::DayInfo dayInfo)
     }
 }
 
+Viewplayer* ReplayMenu::getViewplayer()
+{
+    return m_Viewplayer.get();
+}
+
 bool ReplayMenu::getValid() const
 {
     return m_valid;
+}
+
+void ReplayMenu::fetchPlayerUiData()
+{
+    m_playerUiInfo.clear();
+    for (qint32 i = 0; i <  m_pMap->getPlayerCount(); ++i)
+    {
+        Player* pPlayer = m_pMap->getPlayer(i);
+        m_playerUiInfo.append(PlayerUiInfo());
+        m_playerUiInfo[i].color = pPlayer->getColor();
+        m_playerUiInfo[i].playerArmy = pPlayer->getPlayerArmy();
+    }
+}
+
+void ReplayMenu::updatePlayerUiData()
+{
+    for (qint32 i = 0; i < m_playerUiInfo.size(); ++i)
+    {
+        Player* pPlayer = m_pMap->getPlayer(i);
+        pPlayer->setColor(m_playerUiInfo[i].color);
+        pPlayer->setPlayerArmy(m_playerUiInfo[i].playerArmy);
+    }
 }
 
 void ReplayMenu::swapPlay()
@@ -528,6 +559,7 @@ void ReplayMenu::showConfig()
     {
         dropDown->setCurrentItem(viewType);
     }
+
     connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, &ReplayMenu::setViewTeam, Qt::QueuedConnection);
     y += pText->getHeight() + 10;
 
@@ -733,6 +765,65 @@ void ReplayMenu::showConfig()
     });
     y += pTextfield->getHeight() + 10;
 
+    pTextfield = MemoryManagement::create<Label>(800);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Player settings"));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    y += pTextfield->getHeight() + 10;
+
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    {
+        Player* pPlayer = m_pMap->getPlayer(i);
+        pTextfield = MemoryManagement::create<Label>(width - 140);
+        pTextfield->setStyle(style);
+        pTextfield->setHtmlText(pPlayer->getPlayerNameId());
+        pTextfield->setPosition(10, y);
+        pPanel->addItem(pTextfield);
+
+        auto playerColorNames = Player::getDropDownColorNames();
+        QVector<QColor> playerColors;
+        for (const auto & name : playerColorNames)
+        {
+            playerColors.append(name);
+        }
+        spDropDownmenuColor pPlayerColor = MemoryManagement::create<DropDownmenuColor>(110, playerColors);
+        pPlayerColor->setCurrentItem(pPlayer->getColor());
+        connect(pPlayerColor.get(),  &DropDownmenuColor::sigItemChanged, this, [this, i](QColor displayColor)
+        {
+            QColor tableColor = Player::displayColorToTableColor(displayColor);
+            Player* pPlayer = m_pMap->getPlayer(i);
+            pPlayer->setColor(tableColor);
+            m_playerUiInfo[i].color = pPlayer->getColor();
+            m_pMap->updateSprites();
+        });
+        pPlayerColor->setPosition(width - 130, y);
+        pPanel->addItem(pPlayerColor);
+
+        GameManager* pGameManager = GameManager::getInstance();
+        std::function<oxygine::spActor(QString item)> creator = [pGameManager](QString army)
+        {
+            oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_" + army.toLower());
+            oxygine::spSprite ret = MemoryManagement::create<oxygine::Sprite>();
+            ret->setResAnim(pAnim);
+            return ret;
+        };
+        spDropDownmenuSprite pPlayerArmy = MemoryManagement::create<DropDownmenuSprite>(110, Player::getSelectableArmies(), creator, 30);
+        pPlayerArmy->setCurrentItem(pPlayer->getPlayerArmy());
+        connect(pPlayerArmy.get(),  &DropDownmenuSprite::sigItemString, this, [this, i](QString army)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            pPlayer->setPlayerArmy(army);
+            m_playerUiInfo[i].playerArmy = pPlayer->getPlayerArmy();
+            m_pMap->updateSprites();
+        });
+        pPlayerArmy->setPosition(pPlayerColor->getWidth() + 10, y);
+        pPanel->addItem(pPlayerArmy);
+        y += pTextfield->getHeight() + 10;
+    }
+
+
+    pPanel->setContentHeigth(y + 20);
     addChild(pBox);
 }
 

@@ -488,6 +488,22 @@
             <x>5</x>
             <y>lastY + lastHeight + 10</y>
             <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Move vision:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked units create vision while they move. This is similar to AW4.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getMoveVision()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setMoveVision(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
             <text>QT_TRANSLATE_NOOP("GAME","Vision block:")</text>
             <font>"main"</font>
             <fontSize>24</fontSize>

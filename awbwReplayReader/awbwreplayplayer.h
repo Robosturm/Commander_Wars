@@ -26,6 +26,8 @@ public:
     qint32 getCurrentActionPos() const;
     const AwbwReplayerReader & getReplayReader() const;
     qint32 getCurrentTurnIndex(qint32 & actionIndex) const;
+    ReplayMenu * getReplayMenu() const;
+
 private slots:
     void onDownloadResult(bool success);
 private:

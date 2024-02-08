@@ -349,7 +349,7 @@ void AwbwReplayerReader::readPlayers(QTextStream & stream, GameState & newState)
                     }
                     else if (item == "signature")
                     {
-                        AwbwDataParser::readString(stream, m_valid);
+                        player.signature = AwbwDataParser::readString(stream, m_valid);
                     }
                     else if (item == "turn")
                     {
@@ -369,7 +369,7 @@ void AwbwReplayerReader::readPlayers(QTextStream & stream, GameState & newState)
                     }
                     else if (item == "uniq_id")
                     {
-                        AwbwDataParser::readString(stream, m_valid);
+                        player.uniqueId = AwbwDataParser::readString(stream, m_valid);
                     }
                     else if (item == "interface")
                     {

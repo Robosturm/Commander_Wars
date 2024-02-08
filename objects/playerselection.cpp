@@ -34,7 +34,6 @@
 #include "network/tcpserver.h"
 #include "network/JsonKeys.h"
 
-constexpr const char *const CO_ARMY = "CO_ARMY";
 constexpr const char *const OBJECT_AI_PREFIX = "AI_";
 constexpr const char *const OBJECT_COLOR_PREFIX = "PlayerColor_";
 constexpr const char *const OBJECT_TEAM_PREFIX = "Team_";
@@ -313,84 +312,27 @@ bool PlayerSelection::isNotServerChangeable(Player *pPlayer) const
 
 qint32 PlayerSelection::getDefaultColorCount() const
 {
-    Interpreter *pInterpreter = Interpreter::getInstance();
-    QString function = "getDefaultPlayerColors";
-    QJSValueList args;
-    QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
-    qint32 colorCount = 0;
-    if (ret.isNumber())
-    {
-        colorCount = ret.toInt();
-    }
-    return colorCount;
+    return Player::getDefaultColorCount();
 }
 
 QColor PlayerSelection::getDefaultColor(qint32 index)
 {
-    Interpreter *pInterpreter = Interpreter::getInstance();
-    QString function = "getDefaultColor";
-    QJSValueList args({QJSValue(index)});
-    QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
-    QColor color(ret.toString());
-    return color;
+    return Player::getDefaultColor(index);
 }
 
 QColor PlayerSelection::getDisplayColor(qint32 index, bool &exists) const
 {
-    exists = false;
-    Interpreter *pInterpreter = Interpreter::getInstance();
-    QString function = "getDisplayColor";
-    QJSValueList args({QJSValue(index)});
-    QColor displayColor;
-    QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
-    if (ret.isString())
-    {
-        QString colorName = ret.toString();
-        if (!colorName.isEmpty())
-        {
-            displayColor = QColor(colorName);
-            exists = true;
-        }
-    }
-    return displayColor;
+    return Player::getDisplayColor(index, exists);
 }
 
 QColor PlayerSelection::tableColorToDisplayColor(QColor tableColor)
 {
-    qint32 colorCount = getDefaultColorCount();
-    QColor displayColor = tableColor;
-    for (qint32 i = 0; i < colorCount; ++i)
-    {
-        QColor color = getDefaultColor(i);
-        if (color == tableColor)
-        {
-            bool exists = false;
-            displayColor = getDisplayColor(i, exists);
-            if (!exists)
-            {
-                displayColor = tableColor;
-            }
-            break;
-        }
-    }
-    return displayColor;
+    return Player::tableColorToDisplayColor(tableColor);
 }
 
 QColor PlayerSelection::displayColorToTableColor(QColor displayColor)
 {
-    qint32 colorCount = getDefaultColorCount();
-    QColor tableColor = displayColor;
-    for (qint32 i = 0; i < colorCount; ++i)
-    {
-        bool exists = false;
-        QColor color = getDisplayColor(i, exists);
-        if (color == displayColor && exists)
-        {
-            tableColor = getDefaultColor(i);
-            break;
-        }
-    }
-    return tableColor;
+    return Player::displayColorToTableColor(displayColor);
 }
 
 QString PlayerSelection::getStartColorName(qint32 player)
@@ -747,17 +689,13 @@ void PlayerSelection::selectInitialCos(qint32 player)
 
 QStringList PlayerSelection::getSelectableArmies() const
 {
-    Interpreter *pInterpreter = Interpreter::getInstance();
-    QJSValue erg = pInterpreter->doFunction("PLAYER", "getArmies");
-    QStringList ret = erg.toVariant().toStringList();
-    ret.push_front(CO_ARMY);
-    return ret;
+    return Player::getSelectableArmies();
 }
 
 void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
 {
     Player *pPlayer = m_pMap->getPlayer(player);
-    if (army == CO_ARMY)
+    if (army == Player::CO_ARMY)
     {
         pPlayer->setPlayerArmySelected(false);
     }
@@ -1386,15 +1324,7 @@ QStringList PlayerSelection::getTeamNames() const
 
 QStringList PlayerSelection::getDropDownColorNames() const
 {
-    qint32 colorCount = getDefaultColorCount();
-    QStringList playerColors;
-    for (qint32 i = 0; i < colorCount; i++)
-    {
-        bool exists = false;
-        QColor color = getDisplayColor(i, exists);
-        playerColors.append(color.name());
-    }
-    return playerColors;
+    return Player::getDropDownColorNames();
 }
 
 void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -2184,7 +2114,7 @@ void PlayerSelection::recievePlayerArmy(quint64, QDataStream &stream)
     stream >> playerIdx;
     stream >> army;
     Player *pPlayer = m_pMap->getPlayer(playerIdx);
-    if (army == CO_ARMY)
+    if (army == Player::CO_ARMY)
     {
         pPlayer->setPlayerArmySelected(false);
     }

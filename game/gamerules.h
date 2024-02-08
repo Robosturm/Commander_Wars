@@ -66,7 +66,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 30;
+        return 31;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -675,6 +675,9 @@ public:
     Q_INVOKABLE void setCoUnits(bool coUnits);
     void setVictory(bool newVictory);
 
+    Q_INVOKABLE bool getMoveVision() const;
+    Q_INVOKABLE void setMoveVision(bool newMoveVision);
+
 private:
     /**
      * @brief resetArrays
@@ -698,6 +701,7 @@ private:
     bool m_NoPower{false};
     GameEnums::Fog m_FogMode{GameEnums::Fog_Off};
     qint32 m_UnitLimit{0};
+    bool m_moveVision{true};
 
     std::vector<std::vector<oxygine::spSprite>> m_FogSprites;
     std::vector<oxygine::spSprite> m_WeatherSprites;

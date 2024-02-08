@@ -20,8 +20,11 @@ var UNIT =
     moveUnit : function(unit, action, map)
     {
         unit.moveUnitAction(action);
-        // the following line create dor like vision
-        unit.createMoveVisionAction(action);
+        if (map.getGameRules().getMoveVision())
+        {
+            // the following line create dor like vision
+            unit.createMoveVisionAction(action);
+        }
     },
 
     init : function(unit, map)

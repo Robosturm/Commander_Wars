@@ -38,6 +38,16 @@ void GameRules::resetArrays()
     m_FogSprites.clear();
 }
 
+bool GameRules::getMoveVision() const
+{
+    return m_moveVision;
+}
+
+void GameRules::setMoveVision(bool newMoveVision)
+{
+    m_moveVision = newMoveVision;
+}
+
 void GameRules::setVictory(bool newVictory)
 {
     m_victory = newVictory;
@@ -1653,6 +1663,7 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
     {
         pStream << static_cast<qint32>(m_drawVoting.votingResults[i]);
     }
+    pStream << m_moveVision;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1996,7 +2007,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     {
         pStream >> m_parallelCos;
     }
-     if (version > 29)
+    if (version > 29)
     {
         pStream >> m_drawVoting.votingInProgress;
         pStream >> size;
@@ -2006,6 +2017,10 @@ void GameRules::deserializer(QDataStream& pStream, bool)
             pStream >> value;
             m_drawVoting.votingResults.push_back(static_cast<GameEnums::DrawVoting>(value));
         }
+    }
+    if (version > 30)
+    {
+        pStream >> m_moveVision;
     }
     CONSOLE_PRINT("Weather prediction for days after restoring " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
 }
