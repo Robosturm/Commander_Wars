@@ -94,3 +94,13 @@ void DayToDayRecord::addPlayerRecord(qint32 player, qint32 day)
                                                                          pPlayer->getBuildingCount(), pPlayer->getUnitCount(), pPlayer->calculatePlayerStrength());
     }
 }
+
+void DayToDayRecord::addPlayerRecord(qint32 day, qint32 player, qint32 funds, qint32 income,
+                                     qint32 buildings, qint32 units, qint32 playerStrength)
+{
+    Player* pPlayer = m_pMap->getPlayer(player);
+    if (!pPlayer->getIsDefeated())
+    {
+        m_PlayerRecords[player] = MemoryManagement::create<PlayerRecord>(day, player, funds, income, buildings, units, playerStrength);
+    }
+}

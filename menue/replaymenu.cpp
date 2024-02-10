@@ -404,7 +404,7 @@ void ReplayMenu::seekToDay(IReplayReader::DayInfo dayInfo)
         m_pMap->setScale(scale);
         m_mapSliding->setPosition(slidingPos);
         m_mapSlidingActor->setPosition(actorPos);
-        updatePlayerinfo();
+        updatePlayerUiData();
         m_pMap->updateSprites();
         m_pMap->getGameRules()->createFogVision();
         Mainapp::getInstance()->continueRendering();
@@ -690,7 +690,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Animation Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
+    spSlider pAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 60 - width, 1, 100, "");
     pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Note: This does not include capture or battle animations."));
     pAnimationSpeed->setPosition(width - 130, y);
     pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getAnimationSpeedValue()));
@@ -706,7 +706,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Walk Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pWalkSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
+    spSlider pWalkSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 60 - width, 1, 100, "");
     pWalkSpeed->setTooltipText(tr("Selects the speed at which units walk across the map."));
     pWalkSpeed->setPosition(width - 130, y);
     pWalkSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getWalkAnimationSpeedValue()));
@@ -722,7 +722,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Battle Anim. Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pBattleAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
+    spSlider pBattleAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 60 - width, 1, 100, "");
     pBattleAnimationSpeed->setTooltipText(tr("Selects the speed at which battle animations are played."));
     pBattleAnimationSpeed->setPosition(width - 130, y);
     pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getBattleAnimationSpeedValue()));
@@ -738,7 +738,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Capture Anim. Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pCaptureAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
+    spSlider pCaptureAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 60 - width, 1, 100, "");
     pCaptureAnimationSpeed->setTooltipText(tr("Selects the speed at which capture animations are played."));
     pCaptureAnimationSpeed->setPosition(width - 130, y);
     pCaptureAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getCaptureAnimationSpeedValue()));
@@ -754,7 +754,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Dialog Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pDialogAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
+    spSlider pDialogAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 60 - width, 1, 100, "");
     pDialogAnimationSpeed->setTooltipText(tr("Selects the speed at which dialog animations are played."));
     pDialogAnimationSpeed->setPosition(width - 130, y);
     pDialogAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getDialogAnimationSpeedValue()));
@@ -817,13 +817,14 @@ void ReplayMenu::showConfig()
             m_playerUiInfo[i].playerArmy = pPlayer->getPlayerArmy();
             m_pMap->updateSprites();
         });
-        pPlayerArmy->setPosition(pPlayerColor->getWidth() + 10, y);
+        pPlayerArmy->setPosition(pPlayerColor->getX() + pPlayerColor->getWidth() + 10, y);
         pPanel->addItem(pPlayerArmy);
         y += pTextfield->getHeight() + 10;
     }
 
 
     pPanel->setContentHeigth(y + 20);
+    pPanel->setContentWidth(width + 10);
     addChild(pBox);
 }
 

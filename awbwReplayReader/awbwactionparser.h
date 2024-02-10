@@ -50,12 +50,16 @@ public:
     static const char* const JSONKEY_LOAD;
     static const char* const JSONKEY_TRANSPORT;
     static const char* const JSONKEY_LOADED;
+    static const char* const JSONKEY_ACTIONTYPE_POWER;
+    static const char* const JSONKEY_ACTIONTYPE_FIRE;
+    static const char* const JSONKEY_ACTIONTYPE_BUILD;
 
     AwbwActionParser(AwbwReplayPlayer & pParent, GameMap* pMap);
 
     spGameAction getAction(const QJsonObject & object, bool & fetchNextAction);
     void onPostAction();
     void setCurrentPlayerData(qint32 playerId, const QString & team);
+    static QJsonObject getPlayerObjectData(const QJsonObject & object, const QString & playerId, const QString & team);
 
 private:
     void addMovepath(const QJsonObject & object, spGameAction & action, qint32 x, qint32 y);
@@ -65,7 +69,6 @@ private:
     void updateCoData(const QJsonObject & data);
     void addUnloadData(const QJsonObject & object, spGameAction & action);
     void addRepairData(const QJsonObject & object, spGameAction & action);
-    QJsonObject getPlayerObjectData(const QJsonObject & object);
     void storeCurrentGameState();
     void updateUnitPos(const spGameAction & action);
     void updateLoadInfo(const QJsonObject & object);

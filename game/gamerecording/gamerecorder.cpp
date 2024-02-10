@@ -64,6 +64,18 @@ void GameRecorder::serializeObject(QDataStream& pStream) const
     }
 }
 
+void GameRecorder::reset()
+{
+    m_Record.clear();
+    m_Attackreports.clear();
+    m_destroyedUnits.clear();
+    m_lostUnits.clear();
+    m_damageDealt.clear();
+    m_attackNumbers.clear();
+    m_deployedUnits.clear();
+    m_playerDataRecords.clear();
+}
+
 void GameRecorder::saveUnitVector(QDataStream& pStream, const QVector<UnitData> & data) const
 {
     pStream << static_cast<qint32>(data.size());
@@ -359,11 +371,19 @@ void GameRecorder::setMapTime(const qint32 mapTime)
 }
 
 void GameRecorder::updatePlayerData(qint32 player)
-{
-    
+{    
     if (m_Record.size() > 0 && m_pMap != nullptr)
     {
         m_Record[m_Record.size() - 1]->addPlayerRecord(player, m_pMap->getCurrentDay());
+    }
+}
+
+void GameRecorder::updatePlayerData(qint32 day, qint32 player, qint32 funds, qint32 income,
+                                    qint32 buildings, qint32 units, qint32 playerStrength)
+{
+    if (m_Record.size() > 0 && m_pMap != nullptr)
+    {
+        m_Record[m_Record.size() - 1]->addPlayerRecord(day, player, funds, income, buildings, units, playerStrength);
     }
 }
 

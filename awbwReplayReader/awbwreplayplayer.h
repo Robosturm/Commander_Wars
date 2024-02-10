@@ -4,6 +4,7 @@
 #include "awbwReplayReader/awbwmapdownloader.h"
 #include "awbwReplayReader/awbwreplayerreader.h"
 #include "awbwReplayReader/awbwactionparser.h"
+#include "awbwReplayReader/awbwrecordcreator.h"
 #include "game/gamerecording/iReplayReader.h"
 
 class ReplayMenu;
@@ -49,6 +50,7 @@ private:
     AwbwMapDownloader m_mapDownloader;
     AwbwReplayerReader m_replayReader;
     AwbwActionParser m_actionParser;
+    AwbwRecordCreator m_recordCreator;
     bool m_startReplay{false};
     qint32 m_currentActionPos{0};
 };

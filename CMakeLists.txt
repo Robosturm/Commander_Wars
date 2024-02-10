@@ -858,6 +858,7 @@ set(${PROJECT_NAME}_SRCS
     awbwReplayReader/awbwmapdownloader.h awbwReplayReader/awbwmapdownloader.cpp
     awbwReplayReader/awbwdatatypes.h awbwReplayReader/awbwdatatypes.cpp
     awbwReplayReader/awbwactionparser.h awbwReplayReader/awbwactionparser.cpp
+    awbwReplayReader/awbwrecordcreator.h awbwReplayReader/awbwrecordcreator.cpp
     awbwReplayReader/iAwbwAction.h
 )
 
@@ -987,7 +988,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_SmtpClient_SRCS}
     ${${PROJECT_NAME}_OpenNN_SRCS}
     ${${PROJECT_NAME}_UPDATE_SRCS}
-    ICON.rc
+    ICON.rc    
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES

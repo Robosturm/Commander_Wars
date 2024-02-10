@@ -51,6 +51,18 @@ public:
      */
     Q_INVOKABLE void addPlayerRecord(qint32 player, qint32 day);
     /**
+     * @brief addPlayerRecord
+     * @param day
+     * @param player
+     * @param funds
+     * @param income
+     * @param buildings
+     * @param units
+     * @param playerStrength
+     */
+    Q_INVOKABLE void addPlayerRecord(qint32 day, qint32 player, qint32 funds, qint32 income,
+                                     qint32 buildings, qint32 units, qint32 playerStrength);
+    /**
      * @brief getPlayerRecord
      * @param player
      * @return

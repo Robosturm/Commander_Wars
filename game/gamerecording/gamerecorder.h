@@ -127,6 +127,7 @@ public:
     {
         return 8;
     }
+    void reset();
     /**
      * @brief calculateRang
      * @param player
@@ -186,6 +187,8 @@ public:
      * @param player
      */
     Q_INVOKABLE void updatePlayerData(qint32 player);
+    Q_INVOKABLE void updatePlayerData(qint32 day, qint32 player, qint32 funds, qint32 income,
+                                      qint32 buildings, qint32 units, qint32 playerStrength);
     /**
      * @brief addSpecialEvent
      * @param player
@@ -270,6 +273,7 @@ public:
     Q_INVOKABLE void logAttack(qint32 day,
                                qint32 attackerDamage, qint32 attackerX, qint32 attackerY, const QString attackerID, qint32 attackerOwnerID, bool attackerKilled,
                                qint32 defenderDamage, qint32 defenderX, qint32 defenderY, const QString defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker = true);
+
 private:
     void saveUnitVector(QDataStream& pStream, const QVector<UnitData> & data) const;
     void loadUnitVector(QDataStream& pStream, QVector<UnitData> & data);

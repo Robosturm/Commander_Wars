@@ -11,7 +11,8 @@
 AwbwReplayPlayer::AwbwReplayPlayer(ReplayMenu * pReplayMenu, GameMap* pMap)
     : m_pMap(pMap),
     m_pReplayMenu(pReplayMenu),
-    m_actionParser(*this, pMap)
+    m_actionParser(*this, pMap),
+    m_recordCreator(pMap)
 {
     connect(&m_mapDownloader, &AwbwMapDownloader::sigDownloadResult, this, &AwbwReplayPlayer::onDownloadResult, Qt::QueuedConnection);
 }
@@ -248,6 +249,7 @@ void AwbwReplayPlayer::loadMap(bool withOutUnits, IReplayReader::DayInfo dayInfo
             }
         }
         m_actionParser.setCurrentPlayerData(playerId, team);
+        m_recordCreator.loadRecordData(m_replayReader, gameStateIndex);
     }
     Mainapp::getInstance()->continueRendering();
 }
@@ -279,6 +281,11 @@ void AwbwReplayPlayer::loadGameRules(const QVector<AwbwReplayerReader::GameState
     pRule->setRandomWeather(false);
     pRule->setVictory(false);
     pRule->setMoveVision(false);
+    pRule->setRankingSystem(false);
+    pRule->setParallelCos(false);
+    pRule->setDamageFormula(GameEnums::DamageFormula_AdvanceWars1_3);
+    pRule->setShipBridges(false);
+    pRule->setTransporterRefresh(false);
 }
 
 ReplayMenu * AwbwReplayPlayer::getReplayMenu() const
@@ -404,7 +411,7 @@ void AwbwReplayPlayer::loadPlayer(const AwbwReplayerReader::PlayerInfo & player)
     pPlayer->setFunds(player.funds);
     pPlayer->setMenu(m_pReplayMenu);
     pPlayer->setIsDefeated(player.eliminated);
-    // pPlayer->setPlayerNameId(player.);
+    pPlayer->setPlayerNameId(QString(tr("Player ")) + QString::number(player.playerIdx + 1));
     loadCo(player.coData, pPlayer, 0);
     loadCo(player.tagCoData, pPlayer, 0);
     auto* pCo0 = pPlayer->getCO(0);
