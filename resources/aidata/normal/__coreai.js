@@ -255,7 +255,7 @@ var COREAI =
         variableTurnProducedUnits.writeDataInt32(0);
         var owner = ai.getPlayer();
         var alliedUnits = owner.getAlliedUnits();
-        alliedUnits.pruneEnemies(units, COREAI.pruneRange, buildings, 10, 3);
+        alliedUnits.pruneEnemies(units,  buildings, 10, COREAI.pruneRange);
         // force production of units overwritting normal build behaviour
         // counter unit production
         COREAI.forceAntiAirProduction(system, ai, units, enemyUnits, alliedUnits);

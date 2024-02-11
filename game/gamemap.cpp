@@ -1480,23 +1480,22 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << heigth;
     pStream << m_headerInfo.m_uniqueIdCounter;
     pStream << getPlayerCount();
-
-    QByteArray uncompressedData;
-    QDataStream uncompressedStream(&uncompressedData, QIODevice::WriteOnly);
-    uncompressedStream.setVersion(QDataStream::Version::Qt_6_5);
     if (!forHash)
     {
         updateMapFlags();
-        uncompressedStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
+        pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
     }
     qint32 currentPlayerIdx = 0;
+    QByteArray uncompressedData;
+    QDataStream uncompressedStream(&uncompressedData, QIODevice::WriteOnly);
+    uncompressedStream.setVersion(QDataStream::Version::Qt_6_5);
     for (qint32 i = 0; i < m_players.size(); i++)
     {
         if (m_CurrentPlayer.get() == m_players[i].get())
         {
             currentPlayerIdx = i;
         }
-        m_players[i]->serializeObject(pStream, forHash);
+        m_players[i]->serializeObject(uncompressedStream, forHash);
     }
     CONSOLE_PRINT("Storing currentPlayerIdx " + QString::number(currentPlayerIdx), GameConsole::eDEBUG);
     uncompressedStream << currentPlayerIdx;
@@ -1507,7 +1506,7 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
         for (qint32 x = 0; x < width; x++)
         {
             // serialize
-            m_fields[y][x]->serializeObject(pStream, forHash);
+            m_fields[y][x]->serializeObject(uncompressedStream, forHash);
         }
     }
     m_gameRules->serializeObject(uncompressedStream, forHash);
@@ -1538,7 +1537,7 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
     m_Variables.serializeObject(uncompressedStream, forHash);
     m_trainingDataGenerator.serializeObject(uncompressedStream, forHash);
 
-    const qint32 compressionLevel = 9;
+    static const qint32 compressionLevel = 9;
     pStream << qCompress(uncompressedData, compressionLevel);
 }
 

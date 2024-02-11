@@ -124,7 +124,7 @@ void ReplayRecorder::recordAction(const spGameAction & action)
     {
         qint32 curDay = m_pMap->getCurrentDay();
         if ((m_currentDay != curDay || m_currentPlayer != m_pMap->getCurrentPlayer()->getPlayerID())
-            && curDay > 1)
+            && m_currentPlayer >= 1)
         {
             writeMapState();
         }
