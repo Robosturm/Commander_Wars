@@ -25,6 +25,14 @@ class ReplayRecorder final : public IReplayReader
         HeaderInfo(Type type)
             : m_type(type)
         {
+            if (type == Type::Map)
+            {
+                m_version = 2;
+            }
+            else if (type == Type::Action)
+            {
+                m_version = 1;
+            }
         }
         HeaderInfo(QDataStream & stream)
         {
@@ -137,6 +145,7 @@ private:
     bool m_recording {false};
     bool m_playing{false};
     qint32 m_currentDay{0};
+    qint32 m_currentPlayer{0};
     GameMap* m_pMap{nullptr};
 };
 

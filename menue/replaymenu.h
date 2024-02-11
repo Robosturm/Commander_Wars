@@ -53,6 +53,7 @@ signals:
     void sigShowConfig();
     void sigOneStep();
     void sigRewindDay();
+    void sigRewindOneStep();
 public slots:
     void startReplay();
     void showRecordInvalid();
@@ -90,6 +91,10 @@ public slots:
      * @brief rewind
      */
     void rewindDay();
+    /**
+     * @brief rewindOneStep
+     */
+    void rewindOneStep();
 protected slots:
     virtual void onEnter() override;
     /**
@@ -111,6 +116,7 @@ protected:
      * @param day
      */
     void seekToDay(IReplayReader::DayInfo dayInfo);
+    void endOneStepRewind();
 private:
     bool m_paused{false};
     bool m_uiPause{false};
@@ -123,6 +129,7 @@ private:
     oxygine::spButton m_fastForwardButton;
     oxygine::spButton m_oneStepButton;
     oxygine::spButton m_rewindDayButton;
+    oxygine::spButton m_rewindOneStepButton;
     oxygine::spButton m_configButton;
     oxygine::spBox9Sprite m_taskBar;
 
@@ -134,6 +141,8 @@ private:
     spViewplayer m_Viewplayer;
 
     qint64 m_lastRewind = 0;
+    qint32 m_rewindTarget{-1};
+    qint32 m_rewindPause{false};
 
     bool m_seeking{false};
     bool m_valid{false};

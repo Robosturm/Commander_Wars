@@ -87,6 +87,7 @@ void ReplayRecorder::startRecording(const QString & file)
         m_recordFile.flush();
         m_recording = true;
         m_currentDay = m_pMap->getCurrentDay();
+        m_currentPlayer = m_pMap->getCurrentPlayer()->getPlayerID();
         m_pMap->setRecordFile(fileName);
     }
 }
@@ -122,7 +123,8 @@ void ReplayRecorder::recordAction(const spGameAction & action)
     if (m_recording && !action->getIsLocal() && m_pMap != nullptr)
     {
         qint32 curDay = m_pMap->getCurrentDay();
-        if (m_currentDay != curDay && curDay > 1)
+        if ((m_currentDay != curDay || m_currentPlayer != m_pMap->getCurrentPlayer()->getPlayerID())
+            && curDay > 1)
         {
             writeMapState();
         }
@@ -151,6 +153,7 @@ void ReplayRecorder::writeAction(const spGameAction & action)
 void ReplayRecorder::writeMapState()
 {
     m_currentDay = m_pMap->getCurrentDay();
+    m_currentPlayer = m_pMap->getCurrentPlayer()->getPlayerID();
     qint64 nextSeekPos = 0;
     HeaderInfo info(Type::Map);
     m_stream << info.m_version;
@@ -158,6 +161,7 @@ void ReplayRecorder::writeMapState()
     qint64 curPos = m_recordFile.pos();
     m_stream << nextSeekPos;
     m_stream << m_pMap->getCurrentDay();
+    m_stream << m_pMap->getCurrentPlayer()->getPlayerID();
     m_stream << m_count;
     m_pMap->serializeObject(m_stream);
     // seek to start and write size
@@ -321,8 +325,14 @@ void ReplayRecorder::seekToDay(IReplayReader::DayInfo dayInfo)
             if (success)
             {
                 qint32 curDay;
+                qint32 curPlayer = 0;
                 m_stream >> curDay;
-                if (curDay == dayInfo.day)
+                if (info.m_version > 1)
+                {
+                    m_stream >> curPlayer;
+                }
+                if (curDay == dayInfo.day &&
+                    curPlayer == dayInfo.player)
                 {
                     found = true;
                     m_stream >> m_progress;
@@ -376,12 +386,18 @@ IReplayReader::DayInfo ReplayRecorder::getDayFromPosition(qint32 count)
         if (success)
         {
             qint32 curDay;
+            qint32 player = 0;
             qint32 curCount;
             m_stream >> curDay;
+            if (info.m_version > 1)
+            {
+                m_stream >> player;
+            }
             m_stream >> curCount;
             if (curCount < count)
             {
                 dayInfo.day = curDay;
+                dayInfo.player = player;
                 m_recordFile.seek(info.m_nextSeekPos);
             }
             else

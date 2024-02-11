@@ -60,14 +60,17 @@ void AwbwRecordCreator::updatePlayerData(const AwbwReplayerReader::GameState & g
     }
     for (const auto & building : gameState.buildings)
     {
-        if (building.ownerId == gameState.players[player].playerId)
+        const auto & info = AwbwDataTypes::TERRAIN_BUILDING_DATA[building.terrainId];
+        if (!info.id.isEmpty())
         {
-            ++buildings;
-            auto* pBuilding = m_pMap->getTerrain(building.x, building.y)->getBuilding();
-            if (pBuilding != nullptr &&
-                pBuilding->getIncome() > 0)
+            if (info.owner == AwbwDataTypes::COUNTRYID_PLAYERID_MAP[gameState.players[player].countryId])
             {
-                income += gameState.fundsPerBuilding;
+                ++buildings;
+                auto* pBuilding = m_pMap->getTerrain(building.x, building.y)->getBuilding();
+                if (pBuilding != nullptr && pBuilding->getIncome() > 0)
+                {
+                    income += gameState.fundsPerBuilding;
+                }
             }
         }
     }

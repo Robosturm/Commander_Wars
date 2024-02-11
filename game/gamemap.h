@@ -208,7 +208,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 16;
+        return 17;
     }
     /**
      * @brief clearMap

@@ -345,7 +345,7 @@ void AudioManager::SlotClearPlayList()
         m_player->m_currentMedia = -1;
         m_player->m_nextMedia = -1;
         m_player->m_player.stop();
-        m_player->m_player.setSource(QUrl());
+        m_player->m_fileStream.close();
         CONSOLE_PRINT_MODULE("AudioThread::SlotClearPlayList() playlist cleared", GameConsole::eDEBUG, GameConsole::eAudio);
     }
 #endif
@@ -380,8 +380,24 @@ void AudioManager::loadMediaForFile(QString filePath)
     if (!m_noAudio)
     {
         m_player->m_player.setPosition(0);
-        m_player->m_player.setSource(QUrl());
-        m_player->m_player.setSource(GlobalUtils::getUrlForFile(filePath));
+        m_player->m_fileStream.close();
+        m_player->m_fileStream.setFileName("temp/currentMusic.mp3");
+        m_player->m_fileStream.open(QIODevice::WriteOnly);
+        QFile file(filePath);
+        file.open(QIODevice::ReadOnly);
+        char buffer[4096];
+        while (true)
+        {
+            qint64 len = file.read(buffer, sizeof(buffer));
+            if (len < 1)
+            {
+                break;
+            }
+            m_player->m_fileStream.write(buffer, len);
+        }
+        m_player->m_fileStream.close();
+        m_player->m_fileStream.open(QIODevice::ReadOnly);
+        m_player->m_player.setSourceDevice(&(m_player->m_fileStream));
     }
 #endif
 }
@@ -400,6 +416,8 @@ void AudioManager::SlotPlayRandom()
                 m_player->m_player.stop();
                 m_player->m_currentMedia = GlobalUtils::randIntBase(0, size - 1);
                 loadMediaForFile(m_PlayListdata[m_player->m_currentMedia].m_file);
+
+
                 m_player->m_player.play();
                 CONSOLE_PRINT_MODULE("Buffering music for player: " + m_PlayListdata[m_player->m_currentMedia].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
             }

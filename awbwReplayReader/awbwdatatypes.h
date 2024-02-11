@@ -19,4 +19,5 @@ public:
     static std::map<qint32, TileInfo> TERRAIN_BUILDING_DATA;
     static std::map<QString, QString> UNIT_ID_ID_MAP;
     static std::map<qint32, QString> CO_MAP;
+    static std::map<qint32, qint32> COUNTRYID_PLAYERID_MAP;
 };

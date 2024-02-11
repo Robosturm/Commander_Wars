@@ -1480,10 +1480,14 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << heigth;
     pStream << m_headerInfo.m_uniqueIdCounter;
     pStream << getPlayerCount();
+
+    QByteArray uncompressedData;
+    QDataStream uncompressedStream(&uncompressedData, QIODevice::WriteOnly);
+    uncompressedStream.setVersion(QDataStream::Version::Qt_6_5);
     if (!forHash)
     {
         updateMapFlags();
-        pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
+        uncompressedStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
     }
     qint32 currentPlayerIdx = 0;
     for (qint32 i = 0; i < m_players.size(); i++)
@@ -1495,8 +1499,8 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
         m_players[i]->serializeObject(pStream, forHash);
     }
     CONSOLE_PRINT("Storing currentPlayerIdx " + QString::number(currentPlayerIdx), GameConsole::eDEBUG);
-    pStream << currentPlayerIdx;
-    pStream << m_currentDay;
+    uncompressedStream << currentPlayerIdx;
+    uncompressedStream << m_currentDay;
     // store map
     for (qint32 y = 0; y < heigth; y++)
     {
@@ -1506,33 +1510,36 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
             m_fields[y][x]->serializeObject(pStream, forHash);
         }
     }
-    m_gameRules->serializeObject(pStream, forHash);
+    m_gameRules->serializeObject(uncompressedStream, forHash);
     if (!forHash)
     {
-        m_Recorder->serializeObject(pStream);
+        m_Recorder->serializeObject(uncompressedStream);
     }
-    m_GameScript->serializeObject(pStream, forHash);
+    m_GameScript->serializeObject(uncompressedStream, forHash);
     if (m_Campaign.get() != nullptr)
     {
-        pStream << true;
-        m_Campaign->serializeObject(pStream, forHash);
+        uncompressedStream << true;
+        m_Campaign->serializeObject(uncompressedStream, forHash);
     }
     else
     {
-        pStream << false;
+        uncompressedStream << false;
     }
     if (!forHash)
     {
-        pStream << m_mapPath;
-        pStream << m_mapMusic;
-        pStream << m_startLoopMs;
-        pStream << m_endLoopMs;
-        pStream << m_isHumanMatch;
-        pStream << m_recordFile;
-        pStream << m_replayActionCount;
+        uncompressedStream << m_mapPath;
+        uncompressedStream << m_mapMusic;
+        uncompressedStream << m_startLoopMs;
+        uncompressedStream << m_endLoopMs;
+        uncompressedStream << m_isHumanMatch;
+        uncompressedStream << m_recordFile;
+        uncompressedStream << m_replayActionCount;
     }
-    m_Variables.serializeObject(pStream, forHash);
-    m_trainingDataGenerator.serializeObject(pStream, forHash);
+    m_Variables.serializeObject(uncompressedStream, forHash);
+    m_trainingDataGenerator.serializeObject(uncompressedStream, forHash);
+
+    const qint32 compressionLevel = 9;
+    pStream << qCompress(uncompressedData, compressionLevel);
 }
 
 void GameMap::updateMapFlags() const
@@ -1714,20 +1721,33 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         pLoadingScreen->setProgress(tr("Loading Players"), 5);
     }
     CONSOLE_PRINT("Loading players count: " + QString::number(m_headerInfo.m_playerCount), GameConsole::eDEBUG);
+
+    QByteArray uncompressedData;
+    if (m_headerInfo.m_Version > 16)
+    {
+        pStream >> uncompressedData;
+        uncompressedData = qUncompress(uncompressedData);
+    }
+    QDataStream dataStream(&uncompressedData, QIODevice::ReadOnly);
+    QDataStream* uncompressedStream = &pStream;
+    if (m_headerInfo.m_Version > 16)
+    {
+        uncompressedStream = &dataStream;
+    }
     for (qint32 i = 0; i < m_headerInfo.m_playerCount; i++)
     {
          CONSOLE_PRINT("Loading player " + QString::number(i), GameConsole::eDEBUG);
         // create player
         m_players.append(MemoryManagement::create<Player>(this));
         // get player data from stream
-        m_players[i]->deserializer(pStream, fast);
+        m_players[i]->deserializer(*uncompressedStream, fast);
     }
 
     qint32 currentPlayerIdx = 0;
     if (m_headerInfo.m_Version > 1)
     {
-        pStream >> currentPlayerIdx;
-        pStream >> m_currentDay;
+        *uncompressedStream >> currentPlayerIdx;
+        *uncompressedStream >> m_currentDay;
     }
 
     // restore map
@@ -1753,7 +1773,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "", this);
             m_fields[y][x] = pTerrain;
-            pTerrain->deserializer(pStream, fast);
+            pTerrain->deserializer(*uncompressedStream, fast);
             if (pTerrain->isValid())
             {
                 if (!fast)
@@ -1776,7 +1796,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     }
     if (m_headerInfo.m_Version > 2)
     {
-        m_gameRules->deserializer(pStream, fast);
+        m_gameRules->deserializer(*uncompressedStream, fast);
     }
     if (showLoadingScreen)
     {
@@ -1784,7 +1804,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     }
     if (m_headerInfo.m_Version > 3)
     {
-        m_Recorder->deserializeObject(pStream);
+        m_Recorder->deserializeObject(*uncompressedStream);
     }
     if (showLoadingScreen)
     {
@@ -1792,7 +1812,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     }
     if (m_headerInfo.m_Version > 5)
     {
-        m_GameScript->deserializeObject(pStream);
+        m_GameScript->deserializeObject(*uncompressedStream);
     }
     else
     {
@@ -1805,42 +1825,42 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     if (m_headerInfo.m_Version > 7)
     {
         bool exists = false;
-        pStream >> exists;
+        *uncompressedStream >> exists;
         if (exists)
         {
             m_Campaign = MemoryManagement::create<Campaign>();
-            m_Campaign->deserializeObject(pStream);
+            m_Campaign->deserializeObject(*uncompressedStream);
         }
     }
     if (!fast)
     {
         if (m_headerInfo.m_Version > 8)
         {
-            pStream >> m_mapPath;
+            *uncompressedStream >> m_mapPath;
         }
         if (m_headerInfo.m_Version > 9)
         {
-            pStream >> m_mapMusic;
-            pStream >> m_startLoopMs;
-            pStream >> m_endLoopMs;
+            *uncompressedStream >> m_mapMusic;
+            *uncompressedStream >> m_startLoopMs;
+            *uncompressedStream >> m_endLoopMs;
         }
         if (m_headerInfo.m_Version > 10)
         {
-            pStream >> m_isHumanMatch;
+            *uncompressedStream >> m_isHumanMatch;
         }
         if (m_headerInfo.m_Version > 12)
         {
-            pStream >> m_recordFile;
-            pStream >> m_replayActionCount;
+            *uncompressedStream >> m_recordFile;
+            *uncompressedStream >> m_replayActionCount;
         }
     }
     if (m_headerInfo.m_Version > 13)
     {
-        m_Variables.deserializeObject(pStream);
+        m_Variables.deserializeObject(*uncompressedStream);
     }
     if (m_headerInfo.m_Version > 14)
     {
-        m_trainingDataGenerator.deserializeObject(pStream);
+        m_trainingDataGenerator.deserializeObject(*uncompressedStream);
     }
     if (showLoadingScreen)
     {

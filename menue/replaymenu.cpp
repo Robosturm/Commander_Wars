@@ -43,6 +43,7 @@ ReplayMenu::ReplayMenu(QString filename)
     connect(this, &ReplayMenu::sigShowConfig, this, &ReplayMenu::showConfig, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigOneStep, this, &ReplayMenu::oneStep, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigRewindDay, this, &ReplayMenu::rewindDay, Qt::QueuedConnection);
+    connect(this, &ReplayMenu::sigRewindOneStep, this, &ReplayMenu::rewindOneStep, Qt::QueuedConnection);
     changeBackground("replaymenu");
     if (filename.endsWith(".zip"))
     {
@@ -153,6 +154,18 @@ void ReplayMenu::nextReplayAction()
             swapPlay();
             togglePlayUi();
         }
+        endOneStepRewind();
+    }
+}
+
+void ReplayMenu::endOneStepRewind()
+{
+    if (m_rewindTarget >= 0 && m_replayReader->getProgess() >= m_rewindTarget)
+    {
+        m_storedSeekingAnimationSettings.restoreAnimationSettings();
+        getActionPerformer()->skipAnimations(false);
+        m_paused = m_rewindPause;
+        m_rewindTarget = -1;
     }
 }
 
@@ -238,7 +251,7 @@ void ReplayMenu::loadUIButtons()
     {
         emit sigStopFastForward();
     });
-    m_rewindDayButton = ObjectManager::createIconButton("rewind", 36);
+    m_rewindDayButton = ObjectManager::createIconButton("rewindTurn", 36);
     m_rewindDayButton->setPosition(m_fastForwardButton->getX() - 4 - m_rewindDayButton->getScaledWidth(), y);
     m_rewindDayButton->addClickListener([this](oxygine::Event*)
     {
@@ -246,8 +259,16 @@ void ReplayMenu::loadUIButtons()
     });
     m_taskBar->addChild(m_rewindDayButton);
 
+    m_rewindOneStepButton = ObjectManager::createIconButton("rewind", 36);
+    m_rewindOneStepButton->setPosition(m_rewindDayButton->getX() - 4 - m_rewindOneStepButton->getScaledWidth(), y);
+    m_rewindOneStepButton->addClickListener([this](oxygine::Event*)
+    {
+        emit sigRewindOneStep();
+    });
+    m_taskBar->addChild(m_rewindOneStepButton);
+
     m_configButton = ObjectManager::createIconButton("settings", 36);
-    m_configButton->setPosition(m_rewindDayButton->getX() - 4 - m_configButton->getScaledWidth(), y);
+    m_configButton->setPosition(m_rewindOneStepButton->getX() - 4 - m_configButton->getScaledWidth(), y);
     m_configButton->addClickListener([this](oxygine::Event*)
     {
         emit sigShowConfig();
@@ -385,6 +406,42 @@ void ReplayMenu::rewindDay()
     m_seeking = false;
 }
 
+void ReplayMenu::rewindOneStep()
+{
+    startSeeking();
+    QMutexLocker locker(&m_replayMutex);
+    m_rewindTarget = m_replayReader->getProgess() - 1;
+    if (m_rewindTarget < 0)
+    {
+        m_rewindTarget = 0;
+    }
+    m_storedSeekingAnimationSettings.startSeeking();
+    auto dayInfo = m_replayReader->getDayFromPosition(m_rewindTarget);
+    CONSOLE_PRINT("Seeking to day " + QString::number(dayInfo.day) + " and player " + QString::number(dayInfo.player), GameConsole::eDEBUG);
+    Mainapp::getInstance()->pauseRendering();
+
+    // save map position and scale
+    auto scale = m_pMap->getScale();
+    auto slidingPos = m_mapSliding->getPosition();
+    auto actorPos = m_mapSlidingActor->getPosition();
+    // load map state during that day
+    m_replayReader->seekToDay(dayInfo);
+    m_mapSlidingActor->addChild(m_pMap);
+
+    // restore map position and scale
+    m_pMap->setScale(scale);
+    m_mapSliding->setPosition(slidingPos);
+    m_mapSlidingActor->setPosition(actorPos);
+    updatePlayerUiData();
+    m_pMap->updateSprites();
+    m_pMap->getGameRules()->createFogVision();
+    Mainapp::getInstance()->continueRendering();
+    m_seeking = false;
+    m_rewindPause = m_paused;
+    m_paused = false;
+    emit getActionPerformer()->sigActionPerformed();
+}
+
 void ReplayMenu::seekToDay(IReplayReader::DayInfo dayInfo)
 {
     QMutexLocker locker(&m_replayMutex);
@@ -392,7 +449,7 @@ void ReplayMenu::seekToDay(IReplayReader::DayInfo dayInfo)
     {
         CONSOLE_PRINT("Seeking to day " + QString::number(dayInfo.day) + " and player " + QString::number(dayInfo.player), GameConsole::eDEBUG);
         Mainapp::getInstance()->pauseRendering();
-        
+
         // save map position and scale
         auto scale = m_pMap->getScale();
         auto slidingPos = m_mapSliding->getPosition();
