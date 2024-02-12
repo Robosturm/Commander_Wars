@@ -106,6 +106,7 @@ var Constructor = function()
         var fields = globals.getCircle(0, radius);
         // check all fields we can attack
         var size = fields.size();
+        var specialDestruction = map.getGameRules().getSpecialDestruction();
         for (var i = 0; i < size; i++)
         {
             var x = fields.at(i).x + ACTION_MISSILE.postAnimationTargetX;
@@ -116,15 +117,15 @@ var Constructor = function()
                 var unit = map.getTerrain(x, y).getUnit();
                 if (unit !== null)
                 {
-                    var hp = unit.getHpRounded();
-                    if (hp - damage <= 0.1)
+                    var newHp = unit.getHpRounded() - damage;
+                    if (!specialDestruction && newHp <= 0.1)
                     {
-                        // set hp to very very low
-                        unit.setHp(0.1);
+                        newHp = 0.1;
                     }
-                    else
+                    unit.setHp(newHp);
+                    if (unit.getHp() <= 0)
                     {
-                        unit.setHp(hp - damage);
+                        unit.killUnit();
                     }
                 }
             }

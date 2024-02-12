@@ -115,7 +115,13 @@ var Constructor = function()
         if (targetUnit !== null &&
             targetUnit.getUnitType() !== GameEnums.UnitType_Air)
         {
-            targetUnit.setHp(targetUnit.getHpRounded() - 5);
+            var specialDestruction = map.getGameRules().getSpecialDestruction();
+            var newHp = targetUnit.getHpRounded() - 5;
+            if (!specialDestruction && newHp <= 0.1)
+            {
+                newHp = 0.1;
+            }
+            targetUnit.setHp(newHp);
             if (targetUnit.getHp() <= 0)
             {
                 // we destroyed a unit

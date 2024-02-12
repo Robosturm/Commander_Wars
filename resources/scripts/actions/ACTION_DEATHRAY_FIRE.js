@@ -52,6 +52,7 @@ var Constructor = function()
         var building = ACTION_DEATHRAY_FIRE.postAnimationBuilding;
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var size = fields.size();
+        var specialDestruction = map.getGameRules().getSpecialDestruction();
         for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
@@ -62,7 +63,12 @@ var Constructor = function()
                 if ((unit !== null) &&
                     (building.getOwner().isEnemyUnit(unit)))
                 {
-                    unit.setHp(unit.getHpRounded() - damage);
+                    var newHp = unit.getHpRounded() - damage;
+                    if (!specialDestruction && newHp <= 0.1)
+                    {
+                        newHp = 0.1;
+                    }
+                    unit.setHp(newHp);
                     if (unit.getHp() <= 0)
                     {
                         unit.killUnit();

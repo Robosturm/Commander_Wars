@@ -678,6 +678,9 @@ public:
     Q_INVOKABLE bool getMoveVision() const;
     Q_INVOKABLE void setMoveVision(bool newMoveVision);
 
+    Q_INVOKABLE bool getSpecialDestruction() const;
+    Q_INVOKABLE void setSpecialDestruction(bool newSpecialDestruction);
+
 private:
     /**
      * @brief resetArrays
@@ -742,6 +745,7 @@ private:
     qreal m_powerLoose{0.0};
     GameMap* m_pMap{nullptr};
     qint32 m_mapPalette{0};
+    bool m_specialDestruction{true};
 
     GameEnums::DamageFormula m_damageFormula{GameEnums::DamageFormula::DamageFormula_AdvanceWars4};
     bool m_parallelCos{true};

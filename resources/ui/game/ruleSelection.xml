@@ -702,6 +702,22 @@
             <x>5</x>
             <y>lastY + lastHeight + 10</y>
             <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Special destruction:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: units can by special actions like black bombs or Black Hole buildings.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getSpecialDestruction()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setSpecialDestruction(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
             <text>QT_TRANSLATE_NOOP("GAME","Round time:")</text>
             <font>"main"</font>
             <fontSize>24</fontSize>

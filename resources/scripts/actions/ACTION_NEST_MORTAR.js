@@ -62,6 +62,7 @@ var Constructor = function()
         var damage = Global[building.getBuildingID()].getDamage();
         var targets = globals.getCircle(0, ACTION_NEST_MORTAR.radius);
         var size = targets.size();
+        var specialDestruction = map.getGameRules().getSpecialDestruction();
         for (var i = 0; i < size; i++)
         {
             var point = targets.at(i);
@@ -70,7 +71,12 @@ var Constructor = function()
                 var unit = map.getTerrain(targetX + point.x, targetY + point.y).getUnit();
                 if (unit !== null)
                 {
-                    unit.setHp(unit.getHpRounded() - damage);
+                    var newHp = unit.getHpRounded() - damage;
+                    if (!specialDestruction && newHp <= 0.1)
+                    {
+                        newHp = 0.1;
+                    }
+                    unit.setHp(newHp);
                     if (unit.getHp() <= 0)
                     {
                         unit.killUnit();

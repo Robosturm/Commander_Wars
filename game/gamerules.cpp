@@ -38,6 +38,16 @@ void GameRules::resetArrays()
     m_FogSprites.clear();
 }
 
+bool GameRules::getSpecialDestruction() const
+{
+    return m_specialDestruction;
+}
+
+void GameRules::setSpecialDestruction(bool newSpecialDestruction)
+{
+    m_specialDestruction = newSpecialDestruction;
+}
+
 bool GameRules::getMoveVision() const
 {
     return m_moveVision;
@@ -1664,6 +1674,7 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
         pStream << static_cast<qint32>(m_drawVoting.votingResults[i]);
     }
     pStream << m_moveVision;
+    pStream << m_specialDestruction;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -2021,6 +2032,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 30)
     {
         pStream >> m_moveVision;
+        pStream >> m_specialDestruction;
     }
     CONSOLE_PRINT("Weather prediction for days after restoring " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
 }

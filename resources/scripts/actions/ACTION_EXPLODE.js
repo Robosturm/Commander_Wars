@@ -87,6 +87,7 @@ var Constructor = function()
         var y = ACTION_EXPLODE.postAnimationTargetY;
         var fields = globals.getCircle(1, ACTION_EXPLODE.getRange());
         var size = fields.size();
+        var specialDestruction = map.getGameRules().getSpecialDestruction();
         for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
@@ -96,7 +97,12 @@ var Constructor = function()
                 var unit = terrain.getUnit();
                 if (unit !== null)
                 {
-                    unit.setHp(unit.getHpRounded() - ACTION_EXPLODE.getDamage());
+                    var newHp = unit.getHpRounded() - ACTION_EXPLODE.getDamage();
+                    if (!specialDestruction && newHp <= 0.1)
+                    {
+                        newHp = 0.1;
+                    }
+                    unit.setHp(newHp);
                     if (unit.getHp() <= 0)
                     {
                         // we destroyed a unit

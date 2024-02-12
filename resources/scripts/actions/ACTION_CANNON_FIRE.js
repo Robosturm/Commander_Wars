@@ -109,9 +109,15 @@ var Constructor = function()
     var postAnimationBuilding = null;
     this.performPostAnimation = function(postAnimation, map)
     {
+        var specialDestruction = map.getGameRules().getSpecialDestruction();
         var damage = Global[ACTION_CANNON_FIRE.postAnimationBuilding.getBuildingID()].getDamage(ACTION_CANNON_FIRE.postAnimationBuilding,
                                                                                                 ACTION_CANNON_FIRE.postAnimationUnit);
-        ACTION_CANNON_FIRE.postAnimationUnit.setHp(ACTION_CANNON_FIRE.postAnimationUnit.getHpRounded() - damage);
+        var newHp = ACTION_CANNON_FIRE.postAnimationUnit.getHpRounded() - damage;
+        if (!specialDestruction && newHp <= 0.1)
+        {
+            newHp = 0.1;
+        }
+        ACTION_CANNON_FIRE.postAnimationUnit.setHp(newHp);
         if (ACTION_CANNON_FIRE.postAnimationUnit.getHp() <= 0)
         {
             ACTION_CANNON_FIRE.postAnimationUnit.killUnit();
