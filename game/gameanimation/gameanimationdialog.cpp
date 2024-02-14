@@ -120,7 +120,7 @@ void GameAnimationDialog::keyInput(oxygine::KeyEvent event)
 
 void GameAnimationDialog::nextDialogStep()
 {
-    if (!m_stopped)
+    if (!m_stopped && m_started)
     {
         if (m_paused)
         {

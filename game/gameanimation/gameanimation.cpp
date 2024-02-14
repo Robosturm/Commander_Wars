@@ -159,8 +159,11 @@ void GameAnimation::removeQueuedAnimation(GameAnimation* pGameAnimation)
 void GameAnimation::update(const oxygine::UpdateState& us)
 {
     Q_ASSERT(!m_stopped);
-    oxygine::Sprite::update(us);
-    if (!m_startEmitted)
+    if (m_started)
+    {
+        oxygine::Sprite::update(us);
+    }
+    else if (!m_startEmitted)
     {
         m_startEmitted = true;
         emit sigStart();
@@ -562,6 +565,7 @@ void GameAnimation::emitFinished()
 {
     if (!m_finished)
     {
+        Q_ASSERT(m_started);
         emit sigFinished(m_skipping);
     }
 }

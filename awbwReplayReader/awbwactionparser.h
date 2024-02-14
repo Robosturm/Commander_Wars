@@ -30,6 +30,7 @@ public:
     static const char* const JSONKEY_UNITS_HIT_POINTS;
     static const char* const JSONKEY_COMBATINFOVISION;
     static const char* const JSONKEY_REPAIRED;
+    static const char* const JSONKEY_REPAIR;
     static const char* const JSONKEY_COMBATINFO;
     static const char* const JSONKEY_FIRE;
     static const char* const JSONKEY_MOVE;

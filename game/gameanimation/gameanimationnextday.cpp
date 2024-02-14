@@ -171,15 +171,18 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
 
 void GameAnimationNextDay::rightClick()
 {
-    if (!m_permanent)
+    if (m_started)
     {
-        stop();
-        onFinished(false);
-    }
-    else
-    {
-        onFinished(false);
-        detach();
+        if (!m_permanent)
+        {
+            stop();
+            onFinished(false);
+        }
+        else
+        {
+            onFinished(false);
+            detach();
+        }
     }
 }
 

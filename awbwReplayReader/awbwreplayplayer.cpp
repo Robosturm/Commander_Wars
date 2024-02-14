@@ -286,6 +286,7 @@ void AwbwReplayPlayer::loadGameRules(const QVector<AwbwReplayerReader::GameState
     pRule->setDamageFormula(GameEnums::DamageFormula_AdvanceWars1_3);
     pRule->setShipBridges(false);
     pRule->setTransporterRefresh(false);
+    pRule->setSpecialDestruction(false);
 }
 
 ReplayMenu * AwbwReplayPlayer::getReplayMenu() const

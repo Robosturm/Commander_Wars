@@ -123,8 +123,10 @@ void ReplayRecorder::recordAction(const spGameAction & action)
     if (m_recording && !action->getIsLocal() && m_pMap != nullptr)
     {
         qint32 curDay = m_pMap->getCurrentDay();
-        if ((m_currentDay != curDay || m_currentPlayer != m_pMap->getCurrentPlayer()->getPlayerID())
-            && m_currentPlayer >= 1)
+        qint32 curPlayer = m_pMap->getCurrentPlayer()->getPlayerID();
+        bool started = (curPlayer >= 1 && curDay >= 1) || curDay > 1;
+        if ((m_currentDay != curDay || m_currentPlayer != curPlayer)
+            && started)
         {
             writeMapState();
         }
@@ -375,8 +377,8 @@ IReplayReader::DayInfo ReplayRecorder::getDayFromPosition(qint32 count)
 {
     qint64 curPos = m_recordFile.pos();
     DayInfo dayInfo;
-    dayInfo.day = 0;
-    dayInfo.player = 0;
+    dayInfo.day = 1;
+    dayInfo.player = 1;
     m_recordFile.seek(m_streamStart);
     bool found = false;
     while (!found && !m_stream.atEnd())
