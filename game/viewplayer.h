@@ -47,6 +47,12 @@ public:
      */
     Q_INVOKABLE virtual bool getFieldDirectVisible(qint32 x, qint32 y) override;
     /**
+     * @brief checkAlliance
+     * @param pPlayer
+     * @return
+     */
+    Q_INVOKABLE virtual GameEnums::Alliance checkAlliance(Player* pPlayer) override;
+    /**
      * @brief getViewType
      * @return
      */

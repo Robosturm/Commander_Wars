@@ -164,6 +164,7 @@ void ReplayMenu::endOneStepRewind()
     {
         m_storedSeekingAnimationSettings.restoreAnimationSettings();
         getActionPerformer()->skipAnimations(false);
+        m_replayCounter = m_rewindReplayCounter;
         m_paused = m_rewindPause;
         m_rewindTarget = -1;
     }
@@ -403,7 +404,7 @@ void ReplayMenu::rewindDay()
         dayInfo.day = 0;
     }
     seekToDay(dayInfo);
-    m_seeking = false;
+    m_seeking = false;    
 }
 
 void ReplayMenu::rewindOneStep()
@@ -411,6 +412,10 @@ void ReplayMenu::rewindOneStep()
     startSeeking();
     QMutexLocker locker(&m_replayMutex);
     m_rewindTarget = m_replayReader->getProgess() - 1;
+    m_seeking = false;
+    m_rewindReplayCounter = m_replayCounter;
+    m_rewindPause = m_paused;
+    m_paused = false;
     if (m_rewindTarget < 0)
     {
         m_rewindTarget = 0;
@@ -436,9 +441,6 @@ void ReplayMenu::rewindOneStep()
     m_pMap->updateSprites();
     m_pMap->getGameRules()->createFogVision();
     Mainapp::getInstance()->continueRendering();
-    m_seeking = false;
-    m_rewindPause = m_paused;
-    m_paused = false;
     emit getActionPerformer()->sigActionPerformed();
 }
 

@@ -633,8 +633,8 @@ void AwbwReplayerReader::parseActions(QList<QByteArray> & data)
         {
             ActionInfo actionInfo;
             QTextStream stream(&item);
-            actionInfo.playerId = m_valid && AwbwDataParser::readNullableInteger(stream, m_valid, "p");
-            actionInfo.day = m_valid && AwbwDataParser::readNullableInteger(stream, m_valid, "d");
+            actionInfo.playerId = AwbwDataParser::readNullableInteger(stream, m_valid, "p");
+            actionInfo.day = AwbwDataParser::readNullableInteger(stream, m_valid, "d");
             m_valid = m_valid && stream.read(QString(JSON_ACTIONSTART).size()) == JSON_ACTIONSTART;
             AwbwDataParser::readNullableInteger(stream, m_valid);
             AwbwDataParser::readNullableInteger(stream, m_valid);

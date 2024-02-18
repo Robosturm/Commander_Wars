@@ -524,14 +524,15 @@ var COREAI =
     },
 
     fundsModes : [[0,     0, 0, 0],
-                  [0, 12000, 0, 1],
-                  [2, 12000, 0, 2],
-                  [0, 7000,  0, 1],
+                  [0, 12000, 1, 1],
+                  [2, 12000, 1, 2],
+                  [3, 9000,  1, 2],
+                  [0, 7000,  1, 1],
                   [6, 5500,  0, 1],
                   [10,   0,  0, 1],
-                  [3, 18000, 0, 2],
-                  [0, 22000, 0, 3],
-                  [3, 22000, 1, 3],
+                  [3, 18000, 1, 2],
+                  [0, 22000, 2, 3],
+                  [3, 22000, 2, 3],
                   [0, 30000, 2, 3],
                   [0, 33000, 3, 3],],
 
@@ -598,7 +599,16 @@ var COREAI =
                 break;
             }
         }
-        var build = system.buildNextUnit(buildings, units, minMode, maxMode, COREAI.minAverageIslandSize, minBaseCost, maxBaseCost);
+        var build = false;
+        while (minMode >= 0 && ! build)
+        {
+            build = system.buildNextUnit(buildings, units, minMode, maxMode, COREAI.minAverageIslandSize, minBaseCost, maxBaseCost);
+            if (!build)
+            {
+                minMode = minMode - 1;
+            }
+        }
+
         if (!build && turnProducedUnits === 0)
         {
             for (var i = 0; i < COREAI.specialProductionCount; ++i)

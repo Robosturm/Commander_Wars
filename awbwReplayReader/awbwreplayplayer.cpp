@@ -238,17 +238,16 @@ void AwbwReplayPlayer::loadMap(bool withOutUnits, IReplayReader::DayInfo dayInfo
     {
         loadGameRules(states, gameStateIndex);
         m_pMap->setCurrentDay(dayInfo.day);
-        QString team;
-        qint32 playerId = actions[gameStateIndex].playerId;
-        for (const auto & player : gameStates[gameStateIndex].players)
+        qint32 playerIdx = 0;
+        for (qint32 i = 0; i < gameStates[gameStateIndex].players.size(); ++i)
         {
-            if (player.playerId == playerId)
+            if (actions[gameStateIndex].playerId == gameStates[gameStateIndex].players[i].playerId)
             {
-                team = player.team;
+                playerIdx = i;
                 break;
             }
         }
-        m_actionParser.setCurrentPlayerData(playerId, team);
+        m_actionParser.setCurrentPlayerData(actions[gameStateIndex].playerId, gameStates[gameStateIndex].players[playerIdx].team);
         m_recordCreator.loadRecordData(m_replayReader, gameStateIndex);
     }
     Mainapp::getInstance()->continueRendering();

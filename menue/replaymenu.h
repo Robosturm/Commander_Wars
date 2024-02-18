@@ -142,7 +142,8 @@ private:
 
     qint64 m_lastRewind = 0;
     qint32 m_rewindTarget{-1};
-    qint32 m_rewindPause{false};
+    bool m_rewindPause{false};
+    qint32 m_rewindReplayCounter{-1};
 
     bool m_seeking{false};
     bool m_valid{false};

@@ -310,7 +310,7 @@ public:
      * @param pPlayer the player we want to check if he's an enemy
      * @return the alliance of the player with us
      */
-    Q_INVOKABLE GameEnums::Alliance checkAlliance(Player* pPlayer);
+    Q_INVOKABLE virtual GameEnums::Alliance checkAlliance(Player* pPlayer);
     /**
      * @brief isEnemyUnit checks if the given unit is an enemy
      * @param pUnit

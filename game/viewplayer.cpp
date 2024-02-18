@@ -153,6 +153,38 @@ bool Viewplayer::getFieldDirectVisible(qint32 x, qint32 y)
     return false;
 }
 
+GameEnums::Alliance Viewplayer::checkAlliance(Player* pPlayer)
+{
+    switch (m_ViewType)
+    {
+        case ViewType::CurrentTeam:
+        {
+            auto* pCurrentPlayer = m_pMap->getCurrentPlayer();
+            if (pCurrentPlayer != nullptr)
+            {
+                return pCurrentPlayer->checkAlliance(pPlayer);
+            }
+            else
+            {
+                return m_pMap->getPlayer(0)->checkAlliance(pPlayer);
+            }
+        }
+        case ViewType::Map:
+        {
+            return GameEnums::Alliance_Friend;
+        }
+        case ViewType::AllTeams:
+        {
+            return GameEnums::Alliance_Friend;
+        }
+        default:
+        {
+            return GameEnums::Alliance_Friend;
+        }
+    }
+    return GameEnums::Alliance_Friend;
+}
+
 qint32 Viewplayer::getViewType() const
 {
     return m_ViewType;

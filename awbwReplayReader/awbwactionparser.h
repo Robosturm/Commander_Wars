@@ -13,6 +13,8 @@ public:
     static const char* const JSONKEY_NEWUNIT;
     static const char* const JSONKEY_UNITNAME;
     static const char* const JSONKEY_UNIT;
+    static const char* const JSONKEY_UNIT_ID;
+    static const char* const JSONKEY_DELETE;
     static const char* const JSONKEY_UNITS_FUEL;
     static const char* const JSONKEY_PATH;
     static const char* const JSONKEY_GLOBAL;
@@ -54,16 +56,20 @@ public:
     static const char* const JSONKEY_ACTIONTYPE_POWER;
     static const char* const JSONKEY_ACTIONTYPE_FIRE;
     static const char* const JSONKEY_ACTIONTYPE_BUILD;
+    static const char* const JSONKEY_SUPPLY;
+    static const char* const JSONKEY_HIDE;
+    static const char* const JSONKEY_UNHIDE;
+    static const char* const JSONKEY_EXPLODE;
 
     AwbwActionParser(AwbwReplayPlayer & pParent, GameMap* pMap);
 
     spGameAction getAction(const QJsonObject & object, bool & fetchNextAction);
     void onPostAction();
     void setCurrentPlayerData(qint32 playerId, const QString & team);
-    static QJsonObject getPlayerObjectData(const QJsonObject & object, const QString & playerId, const QString & team);
+    static QJsonValue getPlayerObjectData(const QJsonObject & object, const QString & playerId, const QString & team);
 
 private:
-    void addMovepath(const QJsonObject & object, spGameAction & action, qint32 x, qint32 y);
+    void addMovepath(const QJsonObject & object, spGameAction & action, QPoint unitPos);
     void addBuildInfo(const QJsonObject & object, spGameAction & action);
     void addActionFireInfo(const QJsonObject & object, spGameAction & action);
     void addDamageData(Unit* pAtk, Unit* pDef, const QJsonObject & atkData, const QJsonObject & defData, spGameAction & action);
@@ -73,6 +79,7 @@ private:
     void storeCurrentGameState();
     void updateUnitPos(const spGameAction & action);
     void updateLoadInfo(const QJsonObject & object);
+    QPoint getUnitPosFromObject(const QJsonValue & object);
 private:
     AwbwReplayPlayer & m_pParent;
     GameMap* m_pMap;

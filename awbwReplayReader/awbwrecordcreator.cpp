@@ -104,7 +104,7 @@ void AwbwRecordCreator::updateActionData(const AwbwReplayerReader::GameState & g
         }
         else if (actionType == AwbwActionParser::JSONKEY_ACTIONTYPE_BUILD)
         {
-            QJsonObject unitObj = AwbwActionParser::getPlayerObjectData(action.value(AwbwActionParser::JSONKEY_NEWUNIT).toObject(), playerId, team);
+            QJsonObject unitObj = AwbwActionParser::getPlayerObjectData(action.value(AwbwActionParser::JSONKEY_NEWUNIT).toObject(), playerId, team).toObject();
             QString unitId = AwbwDataTypes::UNIT_ID_ID_MAP[unitObj[AwbwActionParser::JSONKEY_UNITS_NAME].toString().toLower()];
             recorder->buildUnit(player, unitId, player);
         }
@@ -115,7 +115,7 @@ void AwbwRecordCreator::addAttackData(AwbwReplayerReader::GameState & gameState,
 {
     auto* recorder = m_pMap->getGameRecorder();
     QJsonObject fireInfo = action.value(AwbwActionParser::JSONKEY_FIRE).toObject();
-    QJsonObject combatInfo = AwbwActionParser::getPlayerObjectData(fireInfo.value(AwbwActionParser::JSONKEY_COMBATINFOVISION).toObject(), playerId, team).value(AwbwActionParser::JSONKEY_COMBATINFO).toObject();
+    QJsonObject combatInfo = AwbwActionParser::getPlayerObjectData(fireInfo.value(AwbwActionParser::JSONKEY_COMBATINFOVISION).toObject(), playerId, team).toObject().value(AwbwActionParser::JSONKEY_COMBATINFO).toObject();
     QJsonObject attackerData = combatInfo.value(AwbwActionParser::JSONKEY_ATTACKER).toObject();
     auto atkHp = attackerData[AwbwActionParser::JSONKEY_UNITS_HIT_POINTS].toInt();
     QJsonObject defenderData = combatInfo.value(AwbwActionParser::JSONKEY_DEFENDER).toObject();

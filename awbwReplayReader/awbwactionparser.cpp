@@ -4,6 +4,7 @@
 #include "awbwReplayReader/awbwreplayplayer.h"
 #include "awbwReplayReader/awbwdatatypes.h"
 #include "coreengine/memorymanagement.h"
+#include "coreengine/mainapp.h"
 #include "game/gameaction.h"
 #include "game/gamemap.h"
 #include "game/unit.h"
@@ -56,6 +57,12 @@ const char* const AwbwActionParser::JSONKEY_LOADED = "loaded";
 const char* const AwbwActionParser::JSONKEY_ACTIONTYPE_POWER = "power";
 const char* const AwbwActionParser::JSONKEY_ACTIONTYPE_FIRE = "fire";
 const char* const AwbwActionParser::JSONKEY_ACTIONTYPE_BUILD = "build";
+const char* const AwbwActionParser::JSONKEY_SUPPLY= "Supply";
+const char* const AwbwActionParser::JSONKEY_HIDE = "Hide";
+const char* const AwbwActionParser::JSONKEY_UNIT_ID = "unitId";
+const char* const AwbwActionParser::JSONKEY_DELETE = "Delete";
+const char* const AwbwActionParser::JSONKEY_UNHIDE = "Unhide";
+const char* const AwbwActionParser::JSONKEY_EXPLODE = "Explode";
 
 AwbwActionParser::AwbwActionParser(AwbwReplayPlayer & pParent, GameMap* pMap)
     : m_pParent(pParent),
@@ -72,21 +79,22 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
     if (actionType == "move")
     {
         action->setActionID(CoreAI::ACTION_WAIT);
-        QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
-        addMovepath(object, action, startPoint.value(JSONKEY_UNITS_X).toInt(-1), startPoint.value(JSONKEY_UNITS_Y).toInt(-1));
+        QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team).toObject();
+        addMovepath(object, action, getUnitPosFromObject(startPoint));
         updateUnitPos(action);
     }
     else if (actionType == "capt")
     {
         action->setActionID(CoreAI::ACTION_CAPTURE);
-        QJsonObject startPoint = object.value(JSONKEY_CAPT).toObject()[JSONKEY_BUILDINGINFO].toObject();
-        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, startPoint[JSONKEY_BUILDINGS_X].toInt(-1), startPoint[JSONKEY_BUILDINGS_Y].toInt(-1));
+        QJsonValue startPoint = object.value(JSONKEY_CAPT);
+        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, getUnitPosFromObject(startPoint));
         updateUnitPos(action);
     }
     else if (actionType == JSONKEY_ACTIONTYPE_FIRE)
     {
         action->setActionID(CoreAI::ACTION_FIRE);
-        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, -1, -1);
+        QJsonValue startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
+        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, getUnitPosFromObject(startPoint));
         addActionFireInfo(object, action);
         updateUnitPos(action);
     }
@@ -98,8 +106,8 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
     else if (actionType == "delete")
     {
         action->setActionID("ACTION_DELETE_UNIT");
-        QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
-        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, startPoint.value(JSONKEY_UNITS_X).toInt(-1), startPoint.value(JSONKEY_UNITS_Y).toInt(-1));
+        QJsonValue startPoint = getPlayerObjectData(object.value(JSONKEY_DELETE).toObject().value(JSONKEY_UNIT_ID).toObject(), m_playerId, m_team);
+        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, getUnitPosFromObject(startPoint));
     }
     else if (actionType == "eliminated")
     {
@@ -114,8 +122,8 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
     else if (actionType == "unhide")
     {
         action->setActionID(CoreAI::ACTION_UNSTEALTH);
-        QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
-        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, startPoint.value(JSONKEY_UNITS_X).toInt(-1), startPoint.value(JSONKEY_UNITS_Y).toInt(-1));
+        QJsonValue startPoint = getPlayerObjectData(object.value(JSONKEY_UNHIDE).toObject().value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
+        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, getUnitPosFromObject(startPoint));
         updateUnitPos(action);
     }
     else if (actionType == "tag")
@@ -125,8 +133,9 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
     else if (actionType == "supply")
     {
         action->setActionID(CoreAI::ACTION_SUPPORTALL_RATION);
-        QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
-        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, startPoint.value(JSONKEY_UNITS_X).toInt(-1), startPoint.value(JSONKEY_UNITS_Y).toInt(-1));
+        QJsonValue startPoint = getPlayerObjectData(object.value(JSONKEY_SUPPLY).toObject().value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
+        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, getUnitPosFromObject(startPoint));
+        updateUnitPos(action);
     }
     else if (actionType == "resign")
     {
@@ -135,9 +144,10 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
     else if (actionType == "repair")
     {
         action->setActionID(CoreAI::ACTION_SUPPORTSINGLE_REPAIR);
-        QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
-        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, startPoint.value(JSONKEY_UNITS_X).toInt(-1), startPoint.value(JSONKEY_UNITS_Y).toInt(-1));
+        QJsonValue startPoint = getPlayerObjectData(object.value(JSONKEY_REPAIR).toObject().value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
+        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, getUnitPosFromObject(startPoint));
         addRepairData(object.value(JSONKEY_REPAIR).toObject(), action);
+        updateUnitPos(action);
     }
     else if (actionType == JSONKEY_ACTIONTYPE_POWER)
     {
@@ -154,14 +164,16 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
     else if (actionType == "load")
     {
         action->setActionID(CoreAI::ACTION_LOAD);
-        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, -1, -1);
+        QJsonValue startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
+        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, getUnitPosFromObject(startPoint));
         updateLoadInfo(object);
     }
     else if (actionType == "launch")
     {
         action->setActionID(CoreAI::ACTION_MISSILE);
-        QJsonObject launchData = object.value(JSONKEY_LAUNCH).toObject();
-        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, launchData[JSONKEY_SILOX].toInt(-1), launchData[JSONKEY_SILOY].toInt(-1));
+        QJsonValue launchValue= object.value(JSONKEY_LAUNCH);
+        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, getUnitPosFromObject(launchValue));
+        QJsonObject launchData = launchValue.toObject();
         action->writeDataInt32(launchData[JSONKEY_TARGETX].toInt(-1));
         action->writeDataInt32(launchData[JSONKEY_TARGETY].toInt(-1));
         updateUnitPos(action);
@@ -169,13 +181,14 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
     else if (actionType == "join")
     {
         action->setActionID(CoreAI::ACTION_JOIN);
-        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, -1, -1);
+        QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team).toObject();
+        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, getUnitPosFromObject(startPoint));
     }
     else if (actionType == "hide")
     {
         action->setActionID(CoreAI::ACTION_STEALTH);
-        QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
-        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, startPoint.value(JSONKEY_UNITS_X).toInt(-1), startPoint.value(JSONKEY_UNITS_Y).toInt(-1));
+        QJsonValue startPoint = getPlayerObjectData(object.value(JSONKEY_HIDE).toObject().value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
+        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, getUnitPosFromObject(startPoint));
         updateUnitPos(action);
     }
     else if (actionType == "gameover")
@@ -185,8 +198,8 @@ spGameAction AwbwActionParser::getAction(const QJsonObject & object, bool & fetc
     else if (actionType == "explode")
     {
         action->setActionID(CoreAI::ACTION_EXPLODE);
-        QJsonObject startPoint = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
-        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, startPoint.value(JSONKEY_UNITS_X).toInt(-1), startPoint.value(JSONKEY_UNITS_Y).toInt(-1));
+        QJsonValue startPoint = getPlayerObjectData(object.value(JSONKEY_EXPLODE).toObject().value(JSONKEY_UNIT_ID).toObject(), m_playerId, m_team);
+        addMovepath(object.value(JSONKEY_MOVE).toObject(), action, getUnitPosFromObject(startPoint));
     }
     else if (actionType == "end")
     {
@@ -232,9 +245,12 @@ void AwbwActionParser::onPostAction()
         QString actionType = m_lastAction.value(JSONKEY_ACTION).toString().toLower();
         if (actionType == "end")
         {
+            Mainapp::getInstance()->pauseRendering();
             m_pParent.seekToDay(m_pParent.getDayFromPosition(m_pParent.getCurrentActionPos()));
             m_pParent.getReplayMenu()->updatePlayerUiData();
             m_pMap->updateSprites();
+            m_pMap->getGameRules()->createFogVision();
+            Mainapp::getInstance()->continueRendering();
         }
         else if (actionType == "fire")
         {
@@ -256,10 +272,10 @@ void AwbwActionParser::storeCurrentGameState()
     m_currentGameState = gameStates[dayIndex];
 }
 
-void AwbwActionParser::addMovepath(const QJsonObject & object, spGameAction & action, qint32 x, qint32 y)
+void AwbwActionParser::addMovepath(const QJsonObject & object, spGameAction & action, QPoint unitPos)
 {
-    QJsonArray jsonPath = object.value(JSONKEY_PATH).toObject().value(JSONKEY_GLOBAL).toArray();
-    QJsonObject unitObj = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
+    QJsonArray jsonPath = getPlayerObjectData(object.value(JSONKEY_PATH).toObject(), m_playerId, m_team).toArray();
+    QJsonObject unitObj = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team).toObject();
     if (jsonPath.size() > 0)
     {
         QJsonObject startPoint = jsonPath[0].toObject();
@@ -278,16 +294,15 @@ void AwbwActionParser::addMovepath(const QJsonObject & object, spGameAction & ac
     }
     else
     {
-        QPoint pos(x, y);
-        action->setTarget(pos);
-        QVector<QPoint> path = {pos};
+        action->setTarget(unitPos);
+        QVector<QPoint> path = {unitPos};
         action->setMovepath(path, 0);
     }
 }
 
 void AwbwActionParser::addBuildInfo(const QJsonObject & object, spGameAction & action)
 {
-    QJsonObject unitObj = getPlayerObjectData(object.value(JSONKEY_NEWUNIT).toObject(), m_playerId, m_team);
+    QJsonObject unitObj = getPlayerObjectData(object.value(JSONKEY_NEWUNIT).toObject(), m_playerId, m_team).toObject();
     QString unitId = AwbwDataTypes::UNIT_ID_ID_MAP[unitObj[JSONKEY_UNITS_NAME].toString().toLower()];
     action->setTarget(QPoint(unitObj[JSONKEY_UNITS_X].toInt(-1), unitObj[JSONKEY_UNITS_Y].toInt(-1)));
     action->setCosts(action->getCosts() + unitObj[JSONKEY_UNITS_COST].toInt(-1));
@@ -298,7 +313,7 @@ void AwbwActionParser::addBuildInfo(const QJsonObject & object, spGameAction & a
 void AwbwActionParser::addActionFireInfo(const QJsonObject & object, spGameAction & action)
 {
     QJsonObject fireInfo = object.value(JSONKEY_FIRE).toObject();
-    QJsonObject combatInfo = getPlayerObjectData(fireInfo.value(JSONKEY_COMBATINFOVISION).toObject(), m_playerId, m_team).value(JSONKEY_COMBATINFO).toObject();
+    QJsonObject combatInfo = getPlayerObjectData(fireInfo.value(JSONKEY_COMBATINFOVISION).toObject(), m_playerId, m_team).toObject().value(JSONKEY_COMBATINFO).toObject();
     QJsonObject attackerData = combatInfo.value(JSONKEY_ATTACKER).toObject();
     QJsonObject defenderData = combatInfo.value(JSONKEY_DEFENDER).toObject();
     if (action->getTarget().x() < 0)
@@ -371,8 +386,8 @@ void AwbwActionParser::updateCoData(const QJsonObject & data)
 void AwbwActionParser::updateLoadInfo(const QJsonObject & object)
 {
     QJsonObject loadData = object.value(JSONKEY_LOAD).toObject();
-    qint32 transport = loadData[JSONKEY_TRANSPORT].toObject()[JSONKEY_GLOBAL].toInt(-1);
-    qint32 loaded = loadData[JSONKEY_LOADED].toObject()[JSONKEY_GLOBAL].toInt(-1);
+    qint32 transport = getPlayerObjectData(loadData[JSONKEY_TRANSPORT].toObject(), m_playerId, m_team).toInt(-1);
+    qint32 loaded = getPlayerObjectData(loadData[JSONKEY_LOADED].toObject(), m_playerId, m_team).toInt(-1);
     for (auto & unit : m_currentGameState.units)
     {
         if (unit.unitId == transport)
@@ -397,7 +412,7 @@ void AwbwActionParser::addUnloadData(const QJsonObject & object, spGameAction & 
         if (unit.unitId == object[JSONKEY_TRANSPORTID].toInt(-1))
         {
             Q_ASSERT(m_pMap->getTerrain(unit.x, unit.y)->getUnit() != nullptr);
-            QJsonObject unitData = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team);
+            QJsonObject unitData = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team).toObject();
             QPoint pos(unit.x, unit.y);
             action->setTarget(pos);
             QVector<QPoint> path = {pos};
@@ -421,7 +436,7 @@ void AwbwActionParser::addUnloadData(const QJsonObject & object, spGameAction & 
 
 void AwbwActionParser::addRepairData(const QJsonObject & object, spGameAction & action)
 {
-    QJsonObject data = getPlayerObjectData(object.value(JSONKEY_REPAIRED).toObject(), m_playerId, m_team);
+    QJsonObject data = getPlayerObjectData(object.value(JSONKEY_REPAIRED).toObject(), m_playerId, m_team).toObject();
     for (const auto & unit : m_currentGameState.units)
     {
         if (unit.unitId == data[JSONKEY_UNITS_ID].toInt(-1))
@@ -433,7 +448,7 @@ void AwbwActionParser::addRepairData(const QJsonObject & object, spGameAction & 
     }
     if (action->getTarget().x() < 0)
     {
-        auto id = object.value(JSONKEY_UNIT).toObject()[JSONKEY_GLOBAL].toInt();
+        auto id = getPlayerObjectData(object.value(JSONKEY_UNIT).toObject(), m_playerId, m_team).toInt();
         for (const auto & unit : m_currentGameState.units)
         {
             if (unit.unitId == id)
@@ -455,18 +470,62 @@ void AwbwActionParser::setCurrentPlayerData(qint32 playerId, const QString & tea
     storeCurrentGameState();
 }
 
-QJsonObject AwbwActionParser::getPlayerObjectData(const QJsonObject & object, const QString & playerId, const QString & team)
+QJsonValue AwbwActionParser::getPlayerObjectData(const QJsonObject & object, const QString & playerId, const QString & team)
 {
-    if (object.value(playerId).isObject())
+    if (!object.value(playerId).isUndefined())
     {
-        return object.value(playerId).toObject();
+        return object.value(playerId);
     }
-    else if (object.value(team).isObject())
+    else if (!object.value(team).isUndefined())
     {
-        return object.value(team).toObject();
+        return object.value(team);
     }
     else
     {
-        return object.value(JSONKEY_GLOBAL).toObject();
+        return object.value(JSONKEY_GLOBAL);
     }
+}
+
+QPoint AwbwActionParser::getUnitPosFromObject(const QJsonValue & value)
+{
+    if (value.isObject())
+    {
+        QJsonObject object = value.toObject();
+        if (object.value(JSONKEY_BUILDINGINFO).isObject())
+        {
+            QJsonObject building = object.value(JSONKEY_BUILDINGINFO).toObject();
+            return QPoint(building.value(JSONKEY_BUILDINGS_X).toInt(-1), building.value(JSONKEY_BUILDINGS_Y).toInt(-1));
+        }
+        else if (object.value(JSONKEY_UNITS_X).isUndefined())
+        {
+            auto unitId = getPlayerObjectData(object, m_playerId, m_team).toInt();
+            for (const auto & unit : m_currentGameState.units)
+            {
+                if (unitId == unit.unitId)
+                {
+                    return QPoint(unit.x, unit.y);
+                }
+            }
+        }
+        else if (object.value(JSONKEY_SILOX).isDouble())
+        {
+            return QPoint(object.value(JSONKEY_SILOX).toInt(-1), object.value(JSONKEY_SILOY).toInt(-1));
+        }
+        else
+        {
+            return QPoint(object.value(JSONKEY_UNITS_X).toInt(-1), object.value(JSONKEY_UNITS_Y).toInt(-1));
+        }
+    }
+    else
+    {
+        auto unitId = value.toInt();
+        for (const auto & unit : m_currentGameState.units)
+        {
+            if (unitId == unit.unitId)
+            {
+                return QPoint(unit.x, unit.y);
+            }
+        }
+    }
+    return QPoint(-1, -1);
 }
