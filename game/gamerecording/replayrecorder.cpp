@@ -129,6 +129,11 @@ void ReplayRecorder::recordAction(const spGameAction & action)
             && started)
         {
             writeMapState();
+            qint64 curPos = m_recordFile.pos();
+            m_recordFile.seek(m_countPos);
+            m_stream << m_count;
+            m_recordFile.flush();
+            m_recordFile.seek(curPos);
         }
         writeAction(action);
     }
