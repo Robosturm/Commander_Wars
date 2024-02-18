@@ -14,7 +14,7 @@ using spQSoundEffect = std::shared_ptr<QSoundEffect>;
 #include <QIODevice>
 #include <QTimer>
 #include <QUrl>
-#include <QFile>
+#include <QBuffer>
 
 #include "coreengine/memorymanagement.h"
 
@@ -54,7 +54,8 @@ private:
         QMediaPlayer m_player;
         qint32 m_currentMedia{-1};
         qint32 m_nextMedia{-1};
-        QFile m_fileStream;
+        QByteArray m_content;
+        QBuffer m_fileStream;
     };
     using spPlayer = std::shared_ptr<Player>;
 #endif

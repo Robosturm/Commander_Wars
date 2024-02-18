@@ -120,7 +120,6 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
         {
             emitFinished();
         });
-        m_endTimer.start();
         addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *pEvent )->void
         {
             oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
@@ -186,8 +185,18 @@ void GameAnimationNextDay::rightClick()
     }
 }
 
+void GameAnimationNextDay::start()
+{
+    if (!m_started)
+    {
+        GameAnimation::start();
+        m_endTimer.start();
+    }
+}
+
 void GameAnimationNextDay::stop()
 {
+    GameAnimation::stop();
     m_endTimer.stop();
 }
 
@@ -200,7 +209,7 @@ void GameAnimationNextDay::restart()
         {
             if (!m_permanent)
             {
-                pMenu->addChild(getSharedPtr<oxygine::Actor>());
+                GameAnimation::restart();
                 m_endTimer.start();
             }
         }

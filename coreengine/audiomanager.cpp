@@ -231,6 +231,7 @@ void AudioManager::createPlayer()
         CONSOLE_PRINT_MODULE("AudioThread::createPlayer()", GameConsole::eDEBUG, GameConsole::eAudio);
         m_player = MemoryManagement::create<Player>(this);
         m_player->m_player.setAudioOutput(&m_audioOutput);
+        m_player->m_fileStream.setBuffer(&m_player->m_content);
         connect(&m_player->m_player, &QMediaPlayer::mediaStatusChanged, this, &AudioManager::mediaStatusChanged, Qt::QueuedConnection);
         connect(&m_player->m_player, &QMediaPlayer::playbackStateChanged, this, &AudioManager::mediaPlaybackStateChanged, Qt::QueuedConnection);
         connect(&m_player->m_player, &QMediaPlayer::errorOccurred, this, &AudioManager::reportReplayError, Qt::QueuedConnection);
@@ -381,21 +382,9 @@ void AudioManager::loadMediaForFile(QString filePath)
     {
         m_player->m_player.setPosition(0);
         m_player->m_fileStream.close();
-        m_player->m_fileStream.setFileName("temp/currentMusic.mp3");
-        m_player->m_fileStream.open(QIODevice::WriteOnly);
         QFile file(filePath);
         file.open(QIODevice::ReadOnly);
-        char buffer[4096];
-        while (true)
-        {
-            qint64 len = file.read(buffer, sizeof(buffer));
-            if (len < 1)
-            {
-                break;
-            }
-            m_player->m_fileStream.write(buffer, len);
-        }
-        m_player->m_fileStream.close();
+        m_player->m_content = file.readAll();
         m_player->m_fileStream.open(QIODevice::ReadOnly);
         m_player->m_player.setSourceDevice(&(m_player->m_fileStream));
     }

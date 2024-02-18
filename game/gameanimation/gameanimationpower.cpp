@@ -223,6 +223,7 @@ void GameAnimationPower::rightClick()
 
 void GameAnimationPower::stop()
 {
+    GameAnimation::stop();
     m_endTimer.stop();
 }
 
@@ -230,13 +231,13 @@ void GameAnimationPower::start()
 {
     if (!m_started)
     {
+        GameAnimation::start();
         AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         pAudioThread->clearPlayList();
         m_pCO->loadCOMusic();
         pAudioThread->playRandom();
         m_endTimer.start();
     }
-    GameAnimation::start();
 }
 
 void GameAnimationPower::restart()
@@ -246,7 +247,7 @@ void GameAnimationPower::restart()
         auto* pMenu = m_pMap->getMenu();
         if (pMenu != nullptr)
         {
-            pMenu->addChild(getSharedPtr<oxygine::Actor>());
+            GameAnimation::restart();
             m_endTimer.start();
         }
     }

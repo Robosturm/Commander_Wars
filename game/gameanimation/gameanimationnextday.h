@@ -23,6 +23,8 @@ signals:
     void sigRightClick();
 public slots:
     void rightClick();
+protected slots:
+    virtual void start() override;
 private:
     QTimer m_endTimer;
     bool m_permanent;
