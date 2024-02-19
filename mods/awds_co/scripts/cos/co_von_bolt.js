@@ -1,5 +1,5 @@
 CO_VON_BOLT.superPowerDamage = 3;
-CO_VON_BOLT.superPowerRange = 3;
+CO_VON_BOLT.superPowerRange = 2;
 CO_VON_BOLT.powerDamage = 1;
 CO_VON_BOLT.powerRange = 2;
 CO_VON_BOLT.powerOffBonus = 20;

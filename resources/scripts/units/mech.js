@@ -2,13 +2,13 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.setAmmo1(10);
-        unit.setMaxAmmo1(10);
-        unit.setWeapon1ID("WEAPON_MECH_MG");
+        unit.setAmmo1(3);
+        unit.setMaxAmmo1(3);
+        unit.setWeapon1ID("WEAPON_BAZOOKA");
 
-        unit.setAmmo2(3);
-        unit.setMaxAmmo2(3);
-        unit.setWeapon2ID("WEAPON_BAZOOKA");
+        unit.setAmmo2(10);
+        unit.setMaxAmmo2(10);
+        unit.setWeapon2ID("WEAPON_MECH_MG");
 
         unit.setFuel(70);
         unit.setMaxFuel(70);

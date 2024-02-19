@@ -2109,18 +2109,18 @@ void CoreAI::sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQm
 bool CoreAI::needsRefuel(const Unit *pUnit) const
 {
     if (pUnit->getMaxFuel() > 0 &&
-        static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < m_fuelResupply)
+        static_cast<float>(pUnit->getFuel()) <= m_fuelResupply * static_cast<float>(pUnit->getMaxFuel()))
     {
         return true;
     }
     if (pUnit->getMaxAmmo1() > 0 &&
-        static_cast<float>(pUnit->getAmmo1()) / static_cast<float>(pUnit->getMaxAmmo1()) < m_ammoResupply &&
+        static_cast<float>(pUnit->getAmmo1()) <= m_ammoResupply * static_cast<float>(pUnit->getMaxAmmo1()) &&
         !pUnit->getWeapon1ID().isEmpty())
     {
         return true;
     }
     if (pUnit->getMaxAmmo2() > 0 &&
-        static_cast<float>(pUnit->getAmmo2()) / static_cast<float>(pUnit->getMaxAmmo2()) < m_ammoResupply &&
+        static_cast<float>(pUnit->getAmmo2()) <= m_ammoResupply * static_cast<float>(pUnit->getMaxAmmo2()) &&
         !pUnit->getWeapon2ID().isEmpty())
     {
         return true;

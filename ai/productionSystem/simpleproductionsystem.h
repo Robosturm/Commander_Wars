@@ -92,7 +92,7 @@ public:
     Q_INVOKABLE void resetForcedProduction();
     Q_INVOKABLE void resetInitialProduction();
     Q_INVOKABLE bool buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode,
-                                   qreal minAverageIslandSize = 0.025, qint32 minBaseCost = 0, qint32 maxBaseCost = -1);
+                                   qreal minAverageIslandSize = 0.025, qint32 minBaseCost = 0, qint32 maxBaseCost = -1, bool alwaysBuild = false);
     Q_INVOKABLE void addInitialProduction(const QStringList & unitIds, qint32 count);
     Q_INVOKABLE void addForcedProduction(const QStringList & unitId, qint32 x = -1, qint32 y = -1);
     Q_INVOKABLE void addForcedProductionCloseToTargets(const QStringList & unitIds, QmlVectorUnit* targets);
@@ -115,9 +115,9 @@ public:
     Q_INVOKABLE void setMaxSingleDamage(qint32 newMaxSingleDamage);
     Q_INVOKABLE bool reasonableBuildField(qint32 x, qint32 y, QString unitId, qint32 maxDamageCheckRange, qint32 maxSingleDamage);
 private:
-    bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize);
-    bool buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits);
-    bool buildUnit(qint32 x, qint32 y, QString unitId);
+    bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, bool alwaysBuild);
+    bool buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits, bool alwaysBuild);
+    bool buildUnit(qint32 x, qint32 y, QString unitId, bool alwaysBuild);
     void getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits,
                               qint32 minBuildMode, qint32 maxBuildMode, qint32 minBaseCost, qint32 maxBaseCost);
     void updateActiveProductionSystem(QmlVectorBuilding* pBuildings);

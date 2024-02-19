@@ -303,7 +303,7 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, c
 }
 
 bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode,
-                                           qreal minAverageIslandSize, qint32 minBaseCost, qint32 maxBaseCost)
+                                           qreal minAverageIslandSize, qint32 minBaseCost, qint32 maxBaseCost, bool alwaysBuild)
 {
     if (maxBaseCost < 0)
     {
@@ -316,7 +316,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
         auto & item = m_initialProduction[i];
         for (auto & unitId : item.unitIds)
         {
-            success = buildUnit(pBuildings, unitId, minAverageIslandSize);
+            success = buildUnit(pBuildings, unitId, minAverageIslandSize, alwaysBuild);
             if (success)
             {
                 --item.count;
@@ -359,7 +359,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
             {
                 for (auto & unitId : forcedProduction.unitIds)
                 {
-                    success = buildUnit(forcedProduction.x, forcedProduction.y, unitId);
+                    success = buildUnit(forcedProduction.x, forcedProduction.y, unitId, alwaysBuild);
                     if (success)
                     {
                         break;
@@ -372,11 +372,11 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
                 {
                     if (forcedProduction.targets.get() != nullptr)
                     {
-                        success = buildUnitCloseTo(pBuildings, unitId, minAverageIslandSize, forcedProduction.targets);
+                        success = buildUnitCloseTo(pBuildings, unitId, minAverageIslandSize, forcedProduction.targets, alwaysBuild);
                     }
                     else
                     {
-                        success = buildUnit(pBuildings, unitId, minAverageIslandSize);
+                        success = buildUnit(pBuildings, unitId, minAverageIslandSize, alwaysBuild);
                     }
                     if (success)
                     {
@@ -403,7 +403,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
             {
                 if (count == 1)
                 {
-                    success = buildUnit(pBuildings, item.distribution.unitIds[0], minAverageIslandSize);
+                    success = buildUnit(pBuildings, item.distribution.unitIds[0], minAverageIslandSize, alwaysBuild);
                 }
                 else
                 {
@@ -415,7 +415,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
                         {
                             if (roll < chance + item.distribution.chance[i2])
                             {
-                                success = buildUnit(pBuildings, item.distribution.unitIds[i2], minAverageIslandSize);
+                                success = buildUnit(pBuildings, item.distribution.unitIds[i2], minAverageIslandSize, alwaysBuild);
                                 break;
                             }
                             else
@@ -595,7 +595,7 @@ bool SimpleProductionSystem::getInit() const
     return m_init;
 }
 
-bool SimpleProductionSystem::buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits)
+bool SimpleProductionSystem::buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits, bool alwaysBuild)
 {
     bool success = false;
     spQmlVectorBuilding buildings = MemoryManagement::create<QmlVectorBuilding>();
@@ -606,7 +606,7 @@ bool SimpleProductionSystem::buildUnitCloseTo(QmlVectorBuilding* pBuildings, QSt
         auto & item = m_averageMoverange[pBuilding.get()];
         if (item.averageValue * minAverageIslandSize <= item.islandSizes[unitId])
         {
-            success = buildUnit(pBuilding->getX(), pBuilding->getY(), unitId);
+            success = buildUnit(pBuilding->getX(), pBuilding->getY(), unitId, alwaysBuild);
             if (success)
             {
                 break;
@@ -620,7 +620,7 @@ bool SimpleProductionSystem::buildUnitCloseTo(QmlVectorBuilding* pBuildings, QSt
     return success;
 }
 
-bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize)
+bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, bool alwaysBuild)
 {
     bool success = false;
     for (auto & pBuilding : pBuildings->getVector())
@@ -628,7 +628,7 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
         auto & item = m_averageMoverange[pBuilding.get()];
         if (item.averageValue * minAverageIslandSize <= item.islandSizes[unitId])
         {
-            success = buildUnit(pBuilding->getX(), pBuilding->getY(), unitId);
+            success = buildUnit(pBuilding->getX(), pBuilding->getY(), unitId, alwaysBuild);
             if (success)
             {
                 break;
@@ -642,12 +642,12 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
     return success;
 }
 
-bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
+bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId, bool alwaysBuild)
 {
     Building* pBuilding = m_owner->getMap()->getTerrain(x, y)->getBuilding();
     if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS) &&
         pBuilding->getTerrain()->getUnit() == nullptr &&
-        reasonableBuildField(x, y, unitId, m_maxDamageCheckRange, m_maxSingleDamage))
+        (alwaysBuild || reasonableBuildField(x, y, unitId, m_maxDamageCheckRange, m_maxSingleDamage)))
     {
         spGameAction pAction = MemoryManagement::create<GameAction>(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
         pAction->setTarget(QPoint(x, y));

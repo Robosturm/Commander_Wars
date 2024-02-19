@@ -190,7 +190,15 @@ void GameAnimationNextDay::start()
     if (!m_started)
     {
         GameAnimation::start();
-        m_endTimer.start();
+        auto* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr)
+        {
+            pMenu->addChild(getSharedPtr<oxygine::Actor>());
+        }
+        if (!m_permanent)
+        {
+            m_endTimer.start();
+        }
     }
 }
 
@@ -207,9 +215,10 @@ void GameAnimationNextDay::restart()
         auto* pMenu = m_pMap->getMenu();
         if (pMenu != nullptr)
         {
+            GameAnimation::restart();
+            pMenu->addChild(getSharedPtr<oxygine::Actor>());
             if (!m_permanent)
             {
-                GameAnimation::restart();
                 m_endTimer.start();
             }
         }

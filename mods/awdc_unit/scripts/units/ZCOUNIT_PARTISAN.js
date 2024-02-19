@@ -1,12 +1,12 @@
 ZCOUNIT_PARTISAN.init = function(unit)
 {
-    unit.setAmmo1(-1);
-    unit.setMaxAmmo1(-1);
-    unit.setWeapon1ID("WEAPON_INFANTRY_MG");
+    unit.setAmmo1(1);
+    unit.setMaxAmmo1(1);
+    unit.setWeapon1ID("WEAPON_FIREBOMB");
 
-    unit.setAmmo2(1);
-    unit.setMaxAmmo2(1);
-    unit.setWeapon2ID("WEAPON_FIREBOMB");
+    unit.setAmmo2(-1);
+    unit.setMaxAmmo2(-1);
+    unit.setWeapon2ID("WEAPON_INFANTRY_MG");
 
     unit.setFuel(100);
     unit.setMaxFuel(100);

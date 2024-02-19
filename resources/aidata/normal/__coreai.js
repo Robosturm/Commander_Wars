@@ -600,16 +600,28 @@ var COREAI =
             }
         }
         var build = false;
-        while (minMode >= 0 && ! build)
+        var curMinMode = minMode;
+        while (curMinMode >= 0 && !build)
         {
-            build = system.buildNextUnit(buildings, units, minMode, maxMode, COREAI.minAverageIslandSize, minBaseCost, maxBaseCost);
+            build = system.buildNextUnit(buildings, units, curMinMode, maxMode, COREAI.minAverageIslandSize, minBaseCost, maxBaseCost);
             if (!build)
             {
-                minMode = minMode - 1;
+                curMinMode = curMinMode - 1;
             }
         }
-
-        if (!build && turnProducedUnits === 0)
+        if (!build)
+        {
+            curMinMode = minMode;
+            while (curMinMode >= 0 && !build)
+            {
+                build = system.buildNextUnit(buildings, units, curMinMode, maxMode, COREAI.minAverageIslandSize, minBaseCost, maxBaseCost, true);
+                if (!build)
+                {
+                    curMinMode = curMinMode - 1;
+                }
+            }
+        }
+        if (!build)
         {
             for (var i = 0; i < COREAI.specialProductionCount; ++i)
             {

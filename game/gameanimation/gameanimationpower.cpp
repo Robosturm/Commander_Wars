@@ -236,6 +236,11 @@ void GameAnimationPower::start()
         pAudioThread->clearPlayList();
         m_pCO->loadCOMusic();
         pAudioThread->playRandom();
+        auto* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr)
+        {
+            pMenu->addChild(getSharedPtr<oxygine::Actor>());
+        }
         m_endTimer.start();
     }
 }
@@ -245,10 +250,11 @@ void GameAnimationPower::restart()
     if (m_pMap != nullptr)
     {
         auto* pMenu = m_pMap->getMenu();
+        GameAnimation::restart();
         if (pMenu != nullptr)
         {
-            GameAnimation::restart();
-            m_endTimer.start();
+            pMenu->addChild(getSharedPtr<oxygine::Actor>());
         }
+        m_endTimer.start();
     }
 }
