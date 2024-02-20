@@ -61,7 +61,8 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
                          tr("Player in area"),
                          tr("Unit in area"),
                          tr("Check variable"),
-                         tr("Is selected co")};
+                         tr("Is selected co"),
+                         tr("Gathered Funds")};
     m_Conditions = MemoryManagement::create<DropDownmenu>(300, items);
     m_Conditions->setTooltipText(tr("Condition type you want to create. If another condition is selected both must be fulfilled to activate the event."));
     m_Conditions->setPosition(30, oxygine::Stage::getStage()->getHeight() / 2 - 45);
@@ -517,6 +518,7 @@ void ScriptEditor::addConditionToData(spScriptCondition pCondition)
         case ScriptCondition::ConditionType::playerReachedArea:
         case ScriptCondition::ConditionType::checkVariable:
         case ScriptCondition::ConditionType::isCo:
+        case ScriptCondition::ConditionType::gatheredFunds:
         {
             m_Data->addActionCondition(pCondition);
             break;

@@ -13,6 +13,7 @@
 #include "ingamescriptsupport/conditions/scriptconditionplayerreachedarea.h"
 #include "ingamescriptsupport/conditions/scriptconditioncheckvariable.h"
 #include "ingamescriptsupport/conditions/scriptconditionisco.h"
+#include "ingamescriptsupport/conditions/scriptconditiongatheredfunds.h"
 
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
@@ -31,6 +32,7 @@ const char* const ScriptCondition::ConditionPlayerReachedArea = "Player in Area"
 const char* const ScriptCondition::ConditionUnitReachedArea = "Unit in Area";
 const char* const ScriptCondition::ConditionCheckVariable = "Check Variable";
 const char* const ScriptCondition::ConditionIsCo = "Is selected Co";
+const char* const ScriptCondition::ConditionGatheredFunds = "Gathered Funds";
 
 ScriptCondition::ScriptCondition(GameMap* pMap, ConditionType type)
     : m_Type(type),
@@ -153,6 +155,10 @@ spScriptCondition ScriptCondition::createCondition(GameMap* pMap, ConditionType 
         {
             return MemoryManagement::create<ScriptConditionIsCo>(pMap);
         }
+        case ConditionType::gatheredFunds:
+        {
+            return MemoryManagement::create<ScriptConditionGatheredFunds>(pMap);
+        }
     }
     return spScriptCondition();
 }
@@ -218,6 +224,10 @@ spScriptCondition ScriptCondition::createReadCondition(GameMap* pMap, QTextStrea
     else if (line.endsWith(ConditionIsCo))
     {
         ret = MemoryManagement::create<ScriptConditionIsCo>(pMap);
+    }
+    else if (line.endsWith(ConditionGatheredFunds))
+    {
+        ret = MemoryManagement::create<ScriptConditionGatheredFunds>(pMap);
     }
     if (ret.get() != nullptr)
     {
@@ -286,6 +296,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
                 case ScriptCondition::ConditionType::eachDay:
                 case ScriptCondition::ConditionType::checkVariable:
                 case ScriptCondition::ConditionType::isCo:
+                case ScriptCondition::ConditionType::gatheredFunds:
                 {
                     return true;
                 }
@@ -304,6 +315,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
         case ScriptCondition::ConditionType::unitDestroyed:
         case ScriptCondition::ConditionType::unitReachedArea:
         case ScriptCondition::ConditionType::playerReachedArea:
+        case ScriptCondition::ConditionType::gatheredFunds:
         {
             switch (type2)
             {
@@ -318,6 +330,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
                 case ScriptCondition::ConditionType::playerReachedArea:
                 case ScriptCondition::ConditionType::checkVariable:
                 case ScriptCondition::ConditionType::isCo:
+                case ScriptCondition::ConditionType::gatheredFunds:
                 {
                     return true;
                 }

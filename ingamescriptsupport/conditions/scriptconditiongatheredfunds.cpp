@@ -1,4 +1,4 @@
-#include "ingamescriptsupport/conditions/scriptconditionisco.h"
+#include "ingamescriptsupport/conditions/scriptconditiongatheredfunds.h"
 #include "ingamescriptsupport/scriptdata.h"
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
@@ -7,17 +7,16 @@
 
 #include "objects/base/label.h"
 #include "objects/base/spinbox.h"
-#include "objects/base/dropdownmenusprite.h"
 
-#include "resource_management/cospritemanager.h"
 #include "resource_management/fontmanager.h"
 
-ScriptConditionIsCo::ScriptConditionIsCo(GameMap* pMap)
-    : ScriptCondition(pMap, ConditionType::buildingCaptured)
+ScriptConditionGatheredFunds::ScriptConditionGatheredFunds(GameMap* pMap)
+    : ScriptCondition(pMap, ConditionType::gatheredFunds)
 {
 }
 
-void ScriptConditionIsCo::writePreCondition(QTextStream& rStream)
+
+void ScriptConditionGatheredFunds::writePreCondition(QTextStream& rStream)
 {
     m_executed = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
@@ -27,7 +26,7 @@ void ScriptConditionIsCo::writePreCondition(QTextStream& rStream)
     }
 }
 
-void ScriptConditionIsCo::writePostCondition(QTextStream& rStream)
+void ScriptConditionGatheredFunds::writePostCondition(QTextStream& rStream)
 {
     ScriptCondition::writePostCondition(rStream);
     for (qint32 i = 0; i < events.size(); i++)
@@ -37,11 +36,13 @@ void ScriptConditionIsCo::writePostCondition(QTextStream& rStream)
     rStream << "            " << m_executed << ".writeDataBool(true);\n";
 }
 
-void ScriptConditionIsCo::writeCondition(QTextStream& rStream)
+void ScriptConditionGatheredFunds::writeCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionIsCo", GameConsole::eDEBUG);
-    rStream << "        if (map.getPlayer(" << QString::number(m_player) << ").getCO(" << QString::number(m_playerCo) << ").getCoID() === \"" << m_coid << "\" && " << m_executed << ".readDataBool() === false) {"
-            << "// " << QString::number(getVersion()) << " "  << ConditionIsCo << "\n";
+    CONSOLE_PRINT("Writing GatheredFunds", GameConsole::eDEBUG);
+    QString compare = m_Compare;
+    compare = compare.replace("&gt;", ">").replace("&lt;", "<");
+    rStream << "        if (map.getPlayer(" << QString::number(m_player) << ").getFunds() " << compare << " " << QString::number(m_funds) << " && " << m_executed << ".readDataBool() === false) {"
+            << "// " << QString::number(getVersion()) << " "  << ConditionGatheredFunds << "\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writeCondition(rStream);
@@ -63,27 +64,27 @@ void ScriptConditionIsCo::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + QString(ConditionIsCo) + " End\n";
+    rStream << "        } // " + QString(ConditionGatheredFunds) + " End\n";
 }
 
-void ScriptConditionIsCo::readCondition(QTextStream& rStream, QString line)
+void ScriptConditionGatheredFunds::readCondition(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading ConditionIsCo", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Reading GatheredFunds", GameConsole::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if (map.getPlayer(", "")
-                            .replace(").getCO(", ",")
-                            .replace(").getCoID() === \"", ",")
+                            .replace(".getFunds() ", ",")
+                            .replace(" ", ",")
                             .replace("\" && ", ",")
                             .split(",");
     if (items.size() >= 3)
     {
         m_player = items[0].toInt();
-        m_playerCo = items[1].toInt();
-        m_coid = items[2];
+        m_Compare = items[1].replace(">", "&gt;").replace("<", "&lt;");
+        m_funds = items[2].toInt();
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(m_pMap, rStream, ConditionIsCo, line))
+        if (readSubCondition(m_pMap, rStream, ConditionGatheredFunds, line))
         {
             break;
         }
@@ -95,7 +96,7 @@ void ScriptConditionIsCo::readCondition(QTextStream& rStream, QString line)
     }
 }
 
-void ScriptConditionIsCo::showEditCondition(spScriptEditor pScriptEditor)
+void ScriptConditionGatheredFunds::showEditCondition(spScriptEditor pScriptEditor)
 {
     spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
@@ -114,8 +115,7 @@ void ScriptConditionIsCo::showEditCondition(spScriptEditor pScriptEditor)
     spinBox->setTooltipText(tr("Player of which a co should be checked."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [this](qreal value)
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
         m_player = static_cast<qint32>(value) - 1;
     });
@@ -123,57 +123,35 @@ void ScriptConditionIsCo::showEditCondition(spScriptEditor pScriptEditor)
 
     pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
-    pText->setHtmlText(tr("CO Position: "));
+    pText->setHtmlText(tr("Compare: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = MemoryManagement::create<SpinBox>(300, 1, 2);
-    spinBox->setTooltipText(tr("CO of the player which should be checked."));
-    spinBox->setPosition(width, 70);
-    spinBox->setCurrentValue(m_playerCo + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this,
-            [this](qreal value)
+    QStringList items = {"===", "!==", "&gt;=", "&lt;="};
+    spDropDownmenu dropDown = MemoryManagement::create<DropDownmenu>(150, items);
+    dropDown->setTooltipText(tr("The way how the funds gets compared with the constant.\n=== equal\n!== unequal\n>= greater or equal\n<= smaller or equal"));
+    dropDown->setPosition(width, 70);
+    dropDown->setCurrentItemText(m_Compare);
+    DropDownmenu* pDropDown = dropDown.get();
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [this, pDropDown](qint32)
     {
-        m_playerCo = value - 1;
+        m_Compare = pDropDown->getCurrentItemText();
     });
-    pBox->addItem(spinBox);
+    pBox->addItem(dropDown);
 
     pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
-    pText->setHtmlText(tr("CO: "));
+    pText->setHtmlText(tr("Funds: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    auto coCreator = [this, pCOSpriteManager](QString id)
+    spinBox = MemoryManagement::create<SpinBox>(300, 0, 99999);
+    spinBox->setTooltipText(tr("Funds the player needs to gather."));
+    spinBox->setPosition(width, 110);
+    spinBox->setCurrentValue(m_funds);
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, [this](qreal value)
     {
-        oxygine::ResAnim* pAnim = nullptr;
-        if (id.isEmpty())
-        {
-            pAnim = pCOSpriteManager->getResAnim("no_co+info");
-        }
-        else
-        {
-            pAnim = pCOSpriteManager->getResAnim(id + "+info");
-        }
-        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
-        pSprite->setResAnim(pAnim);
-        pSprite->setScale(static_cast<float>(pAnim->getWidth()) / 32.0f);
-        pSprite->setSize(pAnim->getSize());
-        return pSprite;
-    };
-    QStringList coIds;
-    pCOSpriteManager->getCoGroups(coIds);
-    coIds.push_front("");
-    spDropDownmenuSprite pCoSelector = MemoryManagement::create<DropDownmenuSprite>(150, coIds, coCreator);
-    pCoSelector->setTooltipText(tr("CO which should be selected."));
-    pCoSelector->setPosition(width, 110);
-    pCoSelector->setCurrentItem(m_coid);
-    connect(pCoSelector.get(), &DropDownmenuSprite::sigItemChanged, this,
-            [this, coIds](qint32 value)
-    {
-        m_coid = coIds[value];
+        m_funds = static_cast<qint32>(value);
     });
-    pBox->addItem(pCoSelector);
+    pBox->addItem(spinBox);
 
     pScriptEditor->addChild(pBox);
     connect(pBox.get(), &GenericBox::sigFinished, pScriptEditor.get(), &ScriptEditor::updateConditios, Qt::QueuedConnection);

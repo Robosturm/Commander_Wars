@@ -783,6 +783,7 @@ set(${PROJECT_NAME}_SRCS
     ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.h
     ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp ingamescriptsupport/conditions/scriptconditioncheckvariable.h
     ingamescriptsupport/conditions/scriptconditionisco.cpp ingamescriptsupport/conditions/scriptconditionisco.h
+    ingamescriptsupport/conditions/scriptconditiongatheredfunds.h ingamescriptsupport/conditions/scriptconditiongatheredfunds.cpp
     # event stuff
     ingamescriptsupport/events/scriptevent.cpp ingamescriptsupport/events/scriptevent.h
     ingamescriptsupport/events/scripteventdialog.cpp ingamescriptsupport/events/scripteventdialog.h
@@ -988,7 +989,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_SmtpClient_SRCS}
     ${${PROJECT_NAME}_OpenNN_SRCS}
     ${${PROJECT_NAME}_UPDATE_SRCS}
-    ICON.rc    
+    ICON.rc
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES

@@ -37,6 +37,7 @@ public:
         unitReachedArea,
         checkVariable,
         isCo,
+        gatheredFunds,
     };
     static const char* const ConditionVictory;
     static const char* const ConditionStartOfTurn;
@@ -52,6 +53,7 @@ public:
     static const char* const ConditionUnitReachedArea;
     static const char* const ConditionCheckVariable;
     static const char* const ConditionIsCo;
+    static const char* const ConditionGatheredFunds;
 
     /**
      * @brief createCondition

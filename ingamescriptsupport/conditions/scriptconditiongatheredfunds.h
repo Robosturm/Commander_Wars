@@ -2,14 +2,14 @@
 
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
-class ScriptConditionIsCo;
-using spScriptConditionIsCo = std::shared_ptr<ScriptConditionIsCo>;
+class ScriptConditionGatheredFunds;
+using spScriptConditionGatheredFunds = std::shared_ptr<ScriptConditionGatheredFunds>;
 
-class ScriptConditionIsCo final : public ScriptCondition
+class ScriptConditionGatheredFunds : public ScriptCondition
 {
     Q_OBJECT
 public:
-    explicit ScriptConditionIsCo(GameMap* pMap);
+    ScriptConditionGatheredFunds(GameMap* pMap);
     /**
      * @brief readCondition
      * @param rStream
@@ -21,6 +21,14 @@ public:
      */
     virtual void writeCondition(QTextStream& rStream) override;
     /**
+     * @brief getDescription
+     * @return
+     */
+    virtual QString getDescription() override
+    {
+        return tr("Gathered funds: ") + QString::number(m_funds);
+    }
+    /**
      * @brief writePreCondition
      * @param rStream
      */
@@ -30,14 +38,6 @@ public:
      * @param rStream
      */
     virtual void writePostCondition(QTextStream& rStream) override;
-    /**
-     * @brief getDescription
-     * @return
-     */
-    virtual QString getDescription() override
-    {
-        return tr("Is co player: ") + QString::number(m_player + 1) +  tr(" co index: ") + QString::number(m_playerCo) +  tr(" equal ") + m_coid;
-    }
     /**
      * @brief showEditConditin
      */
@@ -52,8 +52,8 @@ public:
     }
 private:
     qint32 m_player{0};
-    qint32 m_playerCo{0};
-    QString m_coid{"CO_ANDY"};
+    qint32 m_funds{0};
+    QString m_Compare = "===";
     QString m_executed;
 };
 

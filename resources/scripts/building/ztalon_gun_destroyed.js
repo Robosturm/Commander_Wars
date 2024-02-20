@@ -49,6 +49,10 @@ var Constructor = function()
     {
         return qsTr("Destroyed Talon Gun of Dark Matter.");
     };
+    this.getVision = function(building)
+    {
+        return -1;
+    };
 }
 
 Constructor.prototype = BUILDING;

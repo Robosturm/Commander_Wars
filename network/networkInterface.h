@@ -39,6 +39,7 @@ public:
         ServerSocketInfo,       /**< used inside the rx-task data is not emitted when recieving this data */
         CryptedMessage,
         AiPipe,                 /**< internal pipe for computing what the ai does */
+        Gateway,                /**< internal message for gateway server */
         Max,
     };
 

@@ -37,6 +37,10 @@ var Constructor = function()
     {
         return "back_missile+0";
     };
+    this.getVision = function(building)
+    {
+        return -1;
+    };
 }
 
 Constructor.prototype = BUILDING;
