@@ -57,6 +57,10 @@ var Constructor = function()
         var id = TERRAIN.getTerrainAnimationId(terrain, map);
         return TERRAIN.getTerrainBackgroundId(id, "", true);
     };
+    this.getVision = function(building)
+    {
+        return -1;
+    };
 }
 
 Constructor.prototype = BUILDING;

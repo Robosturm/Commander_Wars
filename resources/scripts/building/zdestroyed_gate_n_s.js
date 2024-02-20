@@ -38,6 +38,10 @@ var Constructor = function()
     {
         return Global[terrain.getTerrainID()].getTerrainAnimationBackground(unit, terrain, defender, map);
     };
+    this.getVision = function(building)
+    {
+        return -1;
+    };
 }
 
 Constructor.prototype = BUILDING;

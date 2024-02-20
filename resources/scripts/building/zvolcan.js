@@ -8,6 +8,10 @@ var Constructor = function()
     {
         return qsTr("Volcan");
     };
+    this.getVision = function(building)
+    {
+        return -1;
+    };
 };
 
 Constructor.prototype = __ZVOLCANBASE;

@@ -61,6 +61,10 @@ var Constructor = function()
     {
         return false;
     };
+    this.getVision = function(building)
+    {
+        return -1;
+    };
 }
 
 Constructor.prototype = BUILDING;

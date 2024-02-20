@@ -50,6 +50,10 @@ var Constructor = function()
     {
         return qsTr("Destroyed Black Hole Building.");
     };
+    this.getVision = function(building)
+    {
+        return -1;
+    };
 }
 
 Constructor.prototype = BUILDING;

@@ -1232,11 +1232,11 @@ void Player::updatePlayerVision(bool reduceTimer)
             if ((pBuilding != nullptr) &&
                 ((isAlly( pBuilding->getOwner())) ||
                  (checkAlliance(pBuilding->getOwner()) == GameEnums::Alliance_Friend)))
-            {
-                m_FogVisionFields[x][y].m_visionType = GameEnums::VisionType_Clear;
+            {                
                 qint32 visionRange = pBuilding->getVision();
                 if (visionRange >= 0)
                 {
+                    m_FogVisionFields[x][y].m_visionType = GameEnums::VisionType_Clear;
                     spQmlVectorPoint pPoints;
                     if (visionBlock)
                     {

@@ -53,6 +53,10 @@ var Constructor = function()
     {
         return map.onMap(terrain.getX(), terrain.getY() + 1);
     };
+    this.getVision = function(building)
+    {
+        return -1;
+    };
 }
 
 Constructor.prototype = BUILDING;
