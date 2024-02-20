@@ -62,7 +62,7 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 1 || defender === null)
+        if (weapon === 0 || defender === null)
         {
             var count = sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
             var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
@@ -91,7 +91,7 @@ var Constructor = function()
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 1 || defender === null)
+        if (weapon === 0 || defender === null)
         {
             var terrainId = unit.getTerrain().getTerrainID();
             if (BATTLEANIMATION_MECH.isMountain(terrainId))
@@ -129,7 +129,7 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 1 || defender === null)
+        if (weapon === 0 || defender === null)
         {
             BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "", 1);
         }
@@ -142,7 +142,7 @@ var Constructor = function()
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
-        if (weapon === 1)
+        if (weapon === 0)
         {
             BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fire", 1, 0, 2);
             var player = unit.getOwner();
@@ -169,7 +169,7 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 1)
+        if (weapon === 0)
         {
             return 700 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
         }
@@ -181,7 +181,7 @@ var Constructor = function()
 
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 1)
+        if (weapon === 0)
         {
             BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fire", 1, 2, 2);
         }
@@ -207,7 +207,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
         var i = 0;
-        if (weapon === 1)
+        if (weapon === 0)
         {
             sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                               1, 1.0, 0, 400, true);
@@ -300,7 +300,7 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 1)
+        if (weapon === 0)
         {
             var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
             var riverName = BATTLEANIMATION_MECH.getRiverString(unit);

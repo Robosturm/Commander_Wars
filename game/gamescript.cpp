@@ -7,6 +7,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
+#include "coreengine/mainapp.h"
 
 #include "menue/basegamemenu.h"
 
@@ -134,6 +135,7 @@ bool GameScript::victory(qint32 team)
 {
     if (m_loaded && !m_victoryCalled)
     {
+        Mainapp::getInstance()->pauseRendering();
         CONSOLE_PRINT("Game script on victory", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({team,
@@ -141,6 +143,7 @@ bool GameScript::victory(qint32 team)
         QString function1 = "victory";
         pInterpreter->doFunction(m_scriptName, function1, args);
         m_victoryCalled = true;
+        Mainapp::getInstance()->continueRendering();
         return false;
     }
     else
@@ -153,11 +156,13 @@ void GameScript::gameStart()
 {
     if (m_loaded)
     {
+        Mainapp::getInstance()->pauseRendering();
         CONSOLE_PRINT("Game script on game start", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "gameStart";
         QJSValueList args({JsThis::getJsThis(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
+        Mainapp::getInstance()->continueRendering();
     }
 }
 
@@ -165,12 +170,14 @@ void GameScript::actionDone(spGameAction & pAction)
 {
     if (m_loaded)
     {
+        Mainapp::getInstance()->pauseRendering();
         CONSOLE_PRINT("Game script on action done", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "actionDone";
         QJSValueList args({JsThis::getJsThis(pAction.get()),
                            JsThis::getJsThis(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
+        Mainapp::getInstance()->continueRendering();
     }
 }
 
@@ -178,6 +185,7 @@ void GameScript::turnStart(qint32 turn, qint32 player)
 {
     if (m_loaded)
     {
+        Mainapp::getInstance()->pauseRendering();
         CONSOLE_PRINT("Game script on turn start", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "turnStart";
@@ -185,6 +193,7 @@ void GameScript::turnStart(qint32 turn, qint32 player)
                            player,
                            JsThis::getJsThis(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
+        Mainapp::getInstance()->continueRendering();
     }
 }
 
@@ -192,11 +201,13 @@ void GameScript::onGameLoaded(BaseGamemenu* pMenu)
 {
     if (m_loaded)
     {
+        Mainapp::getInstance()->pauseRendering();
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "onGameLoaded";
         QJSValueList args({pInterpreter->newQObject(pMenu),
                            JsThis::getJsThis(m_pMap)});
         pInterpreter->doFunction(m_scriptName, function1, args);
+        Mainapp::getInstance()->continueRendering();
     }
 }
 

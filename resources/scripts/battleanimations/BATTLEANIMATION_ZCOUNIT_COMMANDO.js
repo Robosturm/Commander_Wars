@@ -38,7 +38,7 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 1)
+        if (weapon === 0)
         {
             BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "", 1);
         }
@@ -51,7 +51,7 @@ var Constructor = function()
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount());
-        if (weapon === 1)
+        if (weapon === 0)
         {
             BATTLEANIMATION_MECH.loadFireAnimation(sprite, unit, defender, weapon);
         }
@@ -73,7 +73,7 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 1)
+        if (weapon === 0)
         {
             return 700 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount());
         }
@@ -85,7 +85,7 @@ var Constructor = function()
 
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 1)
+        if (weapon === 0)
         {
             BATTLEANIMATION_MECH.loadStandingFiredAnimation(sprite, unit, defender, weapon);
         }
@@ -97,7 +97,7 @@ var Constructor = function()
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 0)
+        if (weapon === 1)
         {
             sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 300);
         }
@@ -123,7 +123,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount());
         var i = 0;
-        if (weapon === 1)
+        if (weapon === 0)
         {
             BATTLEANIMATION_MECH.loadImpactAnimation(sprite, unit, defender, weapon);
         }
@@ -180,7 +180,7 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 1)
+        if (weapon === 0)
         {
             BATTLEANIMATION_MECH.loadDyingAnimation(sprite, unit, defender, weapon);
         }

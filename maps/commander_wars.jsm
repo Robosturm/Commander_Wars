@@ -251,8 +251,40 @@ var Constructor = function()
                 ++mapWinCount;
             }
         }
-        // --------------------------------------------------------------        
 
+        // --------------------------------------------------------------        
+        // --------------------------------------------------------------
+        // Communication Devastation
+        // --------------------------------------------------------------
+        // 2660 752
+        var hurricaneInTheHarborName = "hurricaneInTheHarbor";
+        var hurricaneInTheHarbor = variables.createVariable(hurricaneInTheHarborName);
+        //if (communicationDevastation.readDataBool() === true)
+        //{
+            var hurricaneInTheHarborPos = Qt.point(0.865885, 0.479224);
+            if (hurricaneInTheHarbor.readDataBool() === false)
+            {
+                openMaps.push(hurricaneInTheHarborPos);
+                openMapNames.push("hurricaneInTheHarbor.map");
+                var newHurricaneInTheHarbor = variables.createVariable("new" + hurricaneInTheHarborName);
+                if (newHurricaneInTheHarbor.readDataBool() === false)
+                {
+                    newMapPositions.push(mapCount);
+                    newHurricaneInTheHarbor.writeDataBool(true);
+                }
+                ++mapCount;
+            }
+            else
+            {
+                if (lastWonMapName === hurricaneInTheHarborName)
+                {
+                    data.setNewlyWonMap(mapWinCount);
+                }
+                wonMaps.push(hurricaneInTheHarborPos);
+                ++mapWinCount;
+            }
+        //}
+        // --------------------------------------------------------------
         data.setOpenMapPositions(openMaps);
         data.setNewMapPosition(newMapPositions);
         data.setWonMapPositions(wonMaps);

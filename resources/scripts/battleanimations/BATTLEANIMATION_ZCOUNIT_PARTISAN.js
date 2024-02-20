@@ -21,7 +21,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount());
         var offset = Qt.point(-10, 5);
-        if (weapon === 1)
+        if (weapon === 0)
         {
             sprite.loadSpriteV2("partisan+alt+mask", GameEnums.Recoloring_Matrix,
                               BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount(), offset, count);
@@ -43,7 +43,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount());
         BATTLEANIMATION_ZCOUNIT_PARTISAN.loadSprite(sprite, unit, defender, weapon);
-        if (weapon === 1)
+        if (weapon === 0)
         {
             var offset = Qt.point(-5, 22);
             sprite.loadMovingSprite("firebomb", false, sprite.getMaxUnitCount(), offset,
@@ -98,7 +98,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount());
         var i = 0;
-        if (weapon === 1)
+        if (weapon === 0)
         {
             sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                               1, 1.0, 0, 600, true);

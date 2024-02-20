@@ -2071,5 +2071,7 @@
         <file>resources/scripts/actions/ACTION_FOCUSMAP.js</file>
         <file>maps/2_player/Where Giants Have Fallen.map</file>
         <file>resources/scripts/gamerules/victory/victoryrule_domination.js</file>
+        <file>maps/commander_wars.camp/hurricaneInTheHarbor.js</file>
+        <file>maps/commander_wars.camp/hurricaneInTheHarbor.map</file>
     </qresource>
 </RCC>
