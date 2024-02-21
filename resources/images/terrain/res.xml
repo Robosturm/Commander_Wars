@@ -315,21 +315,23 @@
 
         <image file="fire.png" cols = "6" />
 
-        <image file="reaf/reaf+N+E+S+W+mask.png" cols = "8" />
         <image file="reaf/reaf+E+mask.png" cols = "8" />
         <image file="reaf/reaf+N+mask.png" cols = "8" />
         <image file="reaf/reaf+S+mask.png" cols = "8" />
-        <image file="reaf/reaf+W+mask.png" cols = "8" />
+        <image file="reaf/reaf+W+mask.png" cols = "8" />        
         <image file="reaf/reaf+E+S+mask.png" cols = "8" />
-        <image file="reaf/reaf+N+E+mask.png" cols = "8" />
-        <image file="reaf/reaf+N+W+mask.png" cols = "8" />
         <image file="reaf/reaf+S+W+mask.png" cols = "8" />
-        <image file="reaf/reaf+E+S+W+mask.png" cols = "8" />
+        <image file="reaf/reaf+N+W+mask.png" cols = "8" />
+        <image file="reaf/reaf+N+E+mask.png" cols = "8" />
+        
         <image file="reaf/reaf+E+W+mask.png" cols = "8" />
-        <image file="reaf/reaf+N+E+S+mask.png" cols = "8" />
+        <image file="reaf/reaf+N+S+mask.png" cols = "8" />
+        
+        <image file="reaf/reaf+N+E+S+W+mask.png" cols = "8" />
+        <image file="reaf/reaf+E+S+W+mask.png" cols = "8" />
+        <image file="reaf/reaf+N+E+S+mask.png" cols = "8" />        
         <image file="reaf/reaf+N+E+W+mask.png" cols = "8" />
         <image file="reaf/reaf+N+S+W+mask.png" cols = "8" />
-        <image file="reaf/reaf+N+S+mask.png" cols = "8" />
         <image file="reaf/reaf+NE+NW+S+mask.png" cols = "8" />
         <image file="reaf/reaf+NE+NW+mask.png" cols = "8" />
         <image file="reaf/reaf+NE+S+W+mask.png" cols = "8" />

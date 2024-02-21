@@ -100,6 +100,20 @@ var Constructor = function()
             {
                 terrain.loadBaseSprite("reaf+W+mask");
             }
+            else if (surroundingsPlainsDiagonal.includes("+NE") &&
+                     surroundingsPlainsDiagonal.includes("+SW"))
+            {
+                terrain.loadBaseSprite("reaf+E+W+mask");
+            }
+            else if (surroundingsPlainsDiagonal.includes("+NW") &&
+                     surroundingsPlainsDiagonal.includes("+ES"))
+            {
+                terrain.loadBaseSprite("reaf+N+S+mask");
+            }
+            else
+            {
+                terrain.loadBaseSprite("reaf+N+mask");
+            }
         }
         else
         {
