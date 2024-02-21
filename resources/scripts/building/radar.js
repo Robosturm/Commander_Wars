@@ -34,12 +34,12 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>In Fog of War, Radars make a </r><div c='#00ff00'>5 square </div><r>area around them visible.</r>");
+        return qsTr("<r>In Fog of War, Radars make a </r><div c='#00ff00'>3 square </div><r>area around them visible.</r>");
     };
 
     this.getVision = function(building, map)
     {
-        return 5;
+        return 3 + map.getGameRules().getBuildingVision();
     };
 
     this.getVisionHide = function(building)

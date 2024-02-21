@@ -66,7 +66,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 31;
+        return 32;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -681,6 +681,9 @@ public:
     Q_INVOKABLE bool getSpecialDestruction() const;
     Q_INVOKABLE void setSpecialDestruction(bool newSpecialDestruction);
 
+    Q_INVOKABLE qint32 getBuildingVision() const;
+    Q_INVOKABLE void setBuildingVision(qint32 newBuildingVision);
+
 private:
     /**
      * @brief resetArrays
@@ -720,6 +723,7 @@ private:
     bool m_WeatherPrediction{true};
     bool m_coUnits{true};
     bool m_VisionBlock{false};
+    qint32 m_buildingVision{0};
     bool m_BuildingVisionHide{false};
     bool m_singleRandomCO{false};
     DayToDayScreen m_DayToDayScreen{DayToDayScreen::Default};

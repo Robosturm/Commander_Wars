@@ -154,7 +154,7 @@ void TCPServer::forwardData(quint64 socketID, QByteArray data, NetworkInterface:
         if (client->getSocketID() != socketID &&
             client->getIsActive())
         {
-            emit client->sig_sendData(0, data, service, false);
+            emit client->sig_sendData(socketID, data, service, false);
         }
     }
 }

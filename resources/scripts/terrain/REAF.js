@@ -45,7 +45,8 @@ var Constructor = function()
         {
             terrain.loadBaseSprite(fullName);
         }
-        else if (surroundingsPlainsDirect !== "")
+        else if (surroundingsPlainsDirect !== "" &&
+                 terrain.existsResAnim("reaf" + surroundingsPlainsDirect + "+mask"))
         {
             terrain.loadBaseSprite("reaf" + surroundingsPlainsDirect + "+mask");
         }

@@ -81,6 +81,10 @@ var Constructor = function()
     {
         return TEMPORARY_HARBOUR.baseTerrain;
     };
+    this.getVision = function(building, map)
+    {
+        return map.getGameRules().getBuildingVision();
+    };
 }
 
 Constructor.prototype = BUILDING;

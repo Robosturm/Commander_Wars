@@ -35,6 +35,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.getVision = function(building, map)
+    {
+        return map.getGameRules().getBuildingVision();
+    };
 }
 
 Constructor.prototype = BUILDING;

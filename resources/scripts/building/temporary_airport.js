@@ -79,6 +79,10 @@ var Constructor = function()
 			building.loadWeatherOverlaySpriteV2("temporary_airport+snow", false);
 		};
 	};
+    this.getVision = function(building, map)
+    {
+        return map.getGameRules().getBuildingVision();
+    };
 }
 
 Constructor.prototype = BUILDING;

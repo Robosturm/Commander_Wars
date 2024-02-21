@@ -154,7 +154,7 @@ public:
     {
         return m_connectedPort;
     }
-
+    virtual void recievedGatewayData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service){}
 signals:
     void sigDisconnectTCP();
     /**

@@ -74,6 +74,10 @@ var Constructor = function()
     {
         return HARBOUR.baseTerrain;
     };
+    this.getVision = function(building, map)
+    {
+        return map.getGameRules().getBuildingVision();
+    };
 }
 
 Constructor.prototype = BUILDING;

@@ -504,6 +504,27 @@
             <x>5</x>
             <y>lastY + lastHeight + 10</y>
             <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Building vision:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Spinbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","Bonus vision given to certain buildings. A value of 2 equals AW4 building vision.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getBuildingVision()</startValue>
+            <infinite>-1</infinite>
+            <spinSpeed>1</spinSpeed>
+            <min>0</min>
+            <max>100</max>
+            <onEvent>currentMenu.getMap().getGameRules().setBuildingVision(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Spinbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
             <text>QT_TRANSLATE_NOOP("GAME","Vision block:")</text>
             <font>"main"</font>
             <fontSize>24</fontSize>

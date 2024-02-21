@@ -62,6 +62,10 @@ var Constructor = function()
     {
         return AMPHIBIOUSFACTORY.baseTerrain;
     };
+    this.getVision = function(building, map)
+    {
+        return map.getGameRules().getBuildingVision();
+    };
 }
 
 Constructor.prototype = BUILDING;

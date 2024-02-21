@@ -57,6 +57,10 @@ var Constructor = function()
     {
         animation.addBuildingSprite("oilrig+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Matrix);
     };
+    this.getVision = function(building, map)
+    {
+        return map.getGameRules().getBuildingVision();
+    };
 }
 
 Constructor.prototype = BUILDING;

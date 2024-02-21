@@ -48,6 +48,10 @@ var Constructor = function()
 			building.loadWeatherOverlaySpriteV2("pipestation+snow", false);
 		};
 	};
+    this.getVision = function(building, map)
+    {
+        return map.getGameRules().getBuildingVision();
+    };
 }
 
 Constructor.prototype = BUILDING;

@@ -100,6 +100,10 @@ var Constructor = function()
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.setSound("explosion+land.wav");
     };
+    this.getVision = function(building, map)
+    {
+        return map.getGameRules().getBuildingVision();
+    };
 }
 
 Constructor.prototype = BUILDING;

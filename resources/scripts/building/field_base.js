@@ -65,6 +65,10 @@ var Constructor = function()
     {
         return "placeHq.wav";
     };
+    this.getVision = function(building, map)
+    {
+        return map.getGameRules().getBuildingVision();
+    };
 }
 
 Constructor.prototype = BUILDING;
