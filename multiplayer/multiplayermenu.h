@@ -65,6 +65,10 @@ public:
      * @param filename
      */
     QJsonDocument doSaveLobbyState(const QString & saveFile, const QString & command);
+
+    bool getSameVersionAsServer() const;
+    void setSameVersionAsServer(bool newSameVersionAsServer);
+
 signals:
     void sigConnected();
     void sigHostGameLaunched();
@@ -90,14 +94,14 @@ public slots:
      * @param data
      * @param service
      */
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket);
     /**
      * @brief recieveServerData receive data from the server hosting this slave
      * @param socketID
      * @param data
      * @param service
      */
-    void recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket);
 
     virtual void hideMapSelection() override;
     virtual void showMapSelection() override;
@@ -295,6 +299,10 @@ private:
      */
     void startGameOnServer();
     /**
+     * @brief startGatewayGameOnServer
+     */
+    void startGatewayGameOnServer();
+    /**
      * @brief launchGameOnServer
      * @param stream
      */
@@ -332,7 +340,10 @@ private:
      * @brief initClientConnection
      */
     void initClientConnection(const QString & address, const QString & secondaryAddress, quint16 port);
-
+    /**
+     * @brief waitForServerConnection
+     */
+    void waitForServerConnection();
 private:
     NetworkMode m_networkMode{NetworkMode::Client};
     spNetworkInterface m_pNetworkInterface;
@@ -351,6 +362,7 @@ private:
     QElapsedTimer m_slaveDespawnElapseTimer;
     QTimer m_slaveDespawnTimer{this};
     bool m_despawning{false};
+    bool m_sameVersionAsServer{false};
 };
 
 Q_DECLARE_INTERFACE(Multiplayermenu, "Multiplayermenu");

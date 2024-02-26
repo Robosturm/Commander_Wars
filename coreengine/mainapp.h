@@ -26,8 +26,8 @@ using spWorkerThread = std::shared_ptr<WorkerThread>;
 class AudioManager;
 using spAudioManager = std::shared_ptr<AudioManager>;
 using spAudioThread = std::shared_ptr<AudioManager>;
-class TCPClient;
-using spTCPClient = std::shared_ptr<TCPClient>;
+class NetworkInterface;
+using spNetworkInterface = std::shared_ptr<NetworkInterface>;
 class AiProcessPipe;
 using spAiProcessPipe = std::shared_ptr<AiProcessPipe>;
 class Minimap;
@@ -189,7 +189,7 @@ public:
     {
         return m_gamepad;
     }
-    static spTCPClient getSlaveClient();
+    spNetworkInterface getSlaveClient();
     /**
      * @brief setNoUi
      */
@@ -202,6 +202,11 @@ public:
      * @brief actAsSlave
      */
     void actAsSlave();
+    /**
+     * @brief setSlaveClient
+     * @param client
+     */
+    void setSlaveClient(spNetworkInterface & client);
     /**
      * @brief setInitScript
      * @param newInitScript
@@ -322,7 +327,7 @@ private:
     spWorkerThread m_Worker;
     spAudioManager m_AudioManager;
     spAiProcessPipe m_aiProcessPipe;
-    spTCPClient m_slaveClient;
+    spNetworkInterface m_slaveClient;
     QString m_initScript;
     bool m_createSlaveLogs{false};
     Gamepad m_gamepad{0};

@@ -17,7 +17,7 @@ LocalServer::~LocalServer()
     CONSOLE_PRINT("Server is closed", GameConsole::eLogLevels::eDEBUG);
 }
 
-void LocalServer::connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress)
+void LocalServer::connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress, bool sendAll)
 {
     m_pTCPServer = MemoryManagement::create<QLocalServer>(this);
     m_pTCPServer->listen(primaryAdress);
@@ -84,7 +84,7 @@ void LocalServer::onConnect()
         connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
         m_idCounter++;
         // Start RX-Task
-        spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket, m_idCounter, this, true);
+        spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket, m_idCounter, this);
         m_pRXTasks.append(pRXTask);
         connect(nextSocket, &QLocalSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 

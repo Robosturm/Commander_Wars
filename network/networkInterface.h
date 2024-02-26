@@ -39,7 +39,6 @@ public:
         ServerSocketInfo,       /**< used inside the rx-task data is not emitted when recieving this data */
         CryptedMessage,
         AiPipe,                 /**< internal pipe for computing what the ai does */
-        Gateway,                /**< internal message for gateway server */
         Max,
     };
 
@@ -154,15 +153,14 @@ public:
     {
         return m_connectedPort;
     }
-    virtual void recievedGatewayData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service){}
 signals:
     void sigDisconnectTCP();
     /**
      * @brief recieveData emitted when Data is recieved
      * @param data
      */
-    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
-    void sig_connect(QString primaryAdress, quint16 port, QString secondaryAdress);
+    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket);
+    void sig_connect(QString primaryAdress, quint16 port, QString secondaryAdress, bool sendAll = false);
     void sigConnected(quint64 socket);
     void sigDisconnected(quint64 socket);
     void sig_sendData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData);
@@ -193,7 +191,7 @@ signals:
      */
     void sigChangeThread(quint64 socketID, QThread* pThread);
 public slots:
-    virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress) = 0;
+    virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress, bool sendAll = false) = 0;
     virtual void disconnectTCP() = 0;
     virtual void forwardData(quint64, QByteArray, NetworkInterface::NetworkSerives){}
     virtual QVector<quint64> getConnectedSockets() = 0;

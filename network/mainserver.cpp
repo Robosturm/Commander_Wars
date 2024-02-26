@@ -117,6 +117,7 @@ MainServer::MainServer()
     m_periodicExecutionTimer(this),
     m_pGameServer(MemoryManagement::create<TCPServer>(this)),
     m_pSlaveServer(MemoryManagement::create<TCPServer>(this)),
+    m_GatewayServer(*this),
     m_matchMakingCoordinator(this),
     m_mapFileServer(this),
     m_replayRecordFileserver(this),
@@ -312,7 +313,7 @@ void MainServer::parseSlaveAddressOptions()
     }
 }
 
-void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
 {
     if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
     {
@@ -399,6 +400,10 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         else if (messageType == NetworkCommands::REQUESTFILEPACKET)
         {
             emit sigOnRequestFilePacket(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::LAUNCHGATEWAYGAMEONSERVER)
+        {
+            m_GatewayServer.onLaunchGatewayGameOnServer(socketID, objData);
         }
         else
         {
@@ -676,6 +681,17 @@ MainServer::InternNetworkGame *MainServer::getInternGame(const QString &slaveNam
         *index = -1;
     }
     return nullptr;
+}
+
+quint64 MainServer::getNextSlaveGameIterator()
+{
+    m_slaveGameIterator++;
+    return m_slaveGameIterator;
+}
+
+void MainServer::addGame(spInternNetworkGame & game)
+{
+    m_games.append(game);
 }
 
 ReplayRecordFileserver* MainServer::getReplayRecordFileserver()
@@ -1093,6 +1109,7 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo &slaveInfo)
         game->game->getData().setSlaveSecondaryAddress(slaveSecondaryAddress);
         game->game->getData().setSlavePort(slavePort);
         game->game->getData().setSlaveName(slaveName);
+        game->game->getData().setGameVersion(Mainapp::getGameVersion());
         setUuidForGame(game->game->getData());
         // copy over suspended slave data
         game->game->getData().setPlayerNames(slaveInfo.game.getPlayerNames());
@@ -1186,6 +1203,7 @@ void MainServer::spawnSlave(const QString &initScript, const QStringList &mods, 
         game->game->getData().setSlavePort(slavePort);
         game->game->getData().setMods(mods);
         game->game->getData().setMinimapData(minimapData);
+        game->game->getData().setGameVersion(Mainapp::getGameVersion());
         setUuidForGame(game->game->getData());
         connect(game->process.get(), &QProcess::finished, game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(game->process.get(), &QProcess::errorOccurred, game->game.get(), &NetworkGame::errorOccurred, Qt::QueuedConnection);
@@ -1291,8 +1309,11 @@ void MainServer::closeGame(NetworkGame *pGame)
                           " and port " + QString::number(game->game->getData().getSlavePort()),
                       GameConsole::eDEBUG);
         m_freeAddresses.append(freeAddress);
-        game->process->kill();
-        game->game.reset();
+        if (game->process.get() != nullptr)
+        {
+            game->process->kill();
+            game->game.reset();
+        }
         m_games.removeAt(index);
     }
 }

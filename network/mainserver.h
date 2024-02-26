@@ -12,6 +12,7 @@
 #include "network/matchmakingcoordinator.h"
 #include "network/mapfileserver.h"
 #include "network/replayrecordfileserver.h"
+#include "network/gatewayserver.h"
 
 #include "coreengine/fileserializable.h"
 
@@ -108,6 +109,22 @@ public:
     static const char *const SQL_TABLE_REPLAYINFO;
     static const char *const SQL_REPLAYPATH;
     static const char *const SQL_REPLAYCREATIONTIME;
+    class InternNetworkGame;
+    using spInternNetworkGame = std::shared_ptr<InternNetworkGame>;
+    /**
+     * @brief The InternNetworkGame class information about the process running a slave game
+     */
+    class InternNetworkGame final
+    {
+    public:
+        static constexpr const char* const getTypeName()
+        {
+            return "InternNetworkGame";
+        }
+        spQProcess process;
+        spNetworkGame game;
+        QString slaveName;
+    };
 
     static MainServer* getInstance();
     static bool exists();
@@ -116,7 +133,7 @@ public:
     void release();
     virtual ~MainServer();
 
-    inline spTCPServer getGameServer()
+    inline spTCPServer & getGameServer()
     {
         return m_pGameServer;
     }
@@ -193,7 +210,19 @@ public:
     Q_INVOKABLE void exit();
     Q_INVOKABLE MapFileServer* getMapFileServer();
     Q_INVOKABLE ReplayRecordFileserver* getReplayRecordFileserver();
-
+    /**
+     * @brief getNextFreeSlaveAddress
+     * @param address
+     * @param port
+     */
+    bool getNextFreeSlaveAddress(QString & address, quint16 & port, QString & secondaryAddress);
+    /**
+     * @brief setUuidForGame
+     * @param game
+     */
+    void setUuidForGame(NetworkGameData & game);
+    quint64 getNextSlaveGameIterator();
+    void addGame(spInternNetworkGame & game);
 signals:
     void sigRemoveGame(NetworkGame* pGame);
     void sigStartRemoteGame(QString initScript, QString id);
@@ -205,7 +234,7 @@ public slots:
      * @param data
      * @param service
      */
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket);
     /**
      * @brief receivedSlaveData
      * @param socketID
@@ -218,6 +247,11 @@ public slots:
      * @param socketId
      */
     void playerJoined(qint64 socketId);
+    /**
+     * @brief closeGame
+     * @param pGame
+     */
+    void closeGame(NetworkGame* pGame);
 
 private slots:
     /**
@@ -271,11 +305,6 @@ private:
      */
     void cleanUpSuspendedGames(QVector<SuspendedSlaveInfo> & games);
     /**
-     * @brief setUuidForGame
-     * @param game
-     */
-    void setUuidForGame(NetworkGameData & game);
-    /**
      * @brief spawnSlaveGame checks if a slave game can be spawned and spawns a slave game on the server
      * @param stream
      * @param socketID
@@ -304,11 +333,6 @@ private:
      * @return
      */
     bool tryJoinSuspendedGame(quint64 socketID, const QString & slave, QVector<SuspendedSlaveInfo> & games);
-    /**
-     * @brief closeGame
-     * @param pGame
-     */
-    void closeGame(NetworkGame* pGame);
     /**
      * @brief spawnSlave starts a new slave game on the server
      * @param initScript
@@ -393,12 +417,6 @@ private:
     void onRequestServerAutoMatchInfo(quint64 socketID, const QJsonObject & objData);
     void onRequestPlayersFromServer(quint64 socketID, const QJsonObject & objData);
     /**
-     * @brief getNextFreeSlaveAddress
-     * @param address
-     * @param port
-     */
-    bool getNextFreeSlaveAddress(QString & address, quint16 & port, QString & secondaryAddress);
-    /**
      * @brief parseSlaveAddressOptions
      */
     void parseSlaveAddressOptions();
@@ -469,22 +487,6 @@ private:
     QSqlQuery getAllUsers(QSqlDatabase & database, bool & success);
     
 private:
-    class InternNetworkGame;
-    using spInternNetworkGame = std::shared_ptr<InternNetworkGame>;
-    /**
-     * @brief The InternNetworkGame class information about the process running a slave game
-     */
-    class InternNetworkGame final
-    {
-    public:
-        static constexpr const char* const getTypeName()
-        {
-            return "InternNetworkGame";
-        }
-        spQProcess process;
-        spNetworkGame game;
-        QString slaveName;
-    };
     friend class MemoryManagement;
     explicit MainServer();
     static spMainServer m_pInstance;
@@ -499,6 +501,7 @@ private:
      * to forward the initial package about the game that should be hosted on the slave
      */
     spTCPServer m_pSlaveServer{nullptr};
+    GatewayServer m_GatewayServer;
     /**
      * iterator for naming each slave with a unique identifier
      */

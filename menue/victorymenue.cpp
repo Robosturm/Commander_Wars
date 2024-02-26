@@ -55,8 +55,13 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     if (Mainapp::getSlave())
     {
         CONSOLE_PRINT("VictoryMenue is listening to master server data", GameConsole::eDEBUG);
-        spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &VictoryMenue::recieveServerData, NetworkCommands::UNIQUE_DATA_CONNECTION);
+        spNetworkInterface pSlaveMasterConnection = Mainapp::getInstance()->getSlaveClient();
+        connect(pSlaveMasterConnection.get(), &NetworkInterface::recieveData, this, &VictoryMenue::recieveServerData, NetworkCommands::UNIQUE_DATA_CONNECTION);
+    }
+    else
+    {
+        spNetworkInterface emptyClient;
+        Mainapp::getInstance()->setSlaveClient(emptyClient);
     }
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -554,63 +559,66 @@ void VictoryMenue::quitOnAiPipe()
 
 void VictoryMenue::multiplayerGameFinished()
 {
-    spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-    if (pSlaveMasterConnection.get() != nullptr)
+    if (Mainapp::getSlave())
     {
-        QJsonObject data;
-        QString command = NetworkCommands::SLAVEMULTIPLAYERGAMERESULT;
-        data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        data.insert(JsonKeys::JSONKEY_MATCHTYPE, m_pMap->getGameRules()->getMatchType());
-        QJsonArray winnerInfo;
-        qint32 winnerTeam = m_pMap->getWinnerTeam();
-        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        spNetworkInterface pSlaveMasterConnection = Mainapp::getInstance()->getSlaveClient();
+        if (pSlaveMasterConnection.get() != nullptr)
         {
-            auto * player = m_pMap->getPlayer(i);
-            if (player->getControlType() == GameEnums::AiTypes_Human)
+            QJsonObject data;
+            QString command = NetworkCommands::SLAVEMULTIPLAYERGAMERESULT;
+            data.insert(JsonKeys::JSONKEY_COMMAND, command);
+            data.insert(JsonKeys::JSONKEY_MATCHTYPE, m_pMap->getGameRules()->getMatchType());
+            QJsonArray winnerInfo;
+            qint32 winnerTeam = m_pMap->getWinnerTeam();
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                GameEnums::GameResult result = GameEnums::GameResult_Draw;
-                if (winnerTeam >= 0)
+                auto * player = m_pMap->getPlayer(i);
+                if (player->getControlType() == GameEnums::AiTypes_Human)
                 {
-                    if (m_pMap->getPlayer(i)->getTeam() == winnerTeam)
+                    GameEnums::GameResult result = GameEnums::GameResult_Draw;
+                    if (winnerTeam >= 0)
                     {
-                        result = GameEnums::GameResult_Won;
+                        if (m_pMap->getPlayer(i)->getTeam() == winnerTeam)
+                        {
+                            result = GameEnums::GameResult_Won;
+                        }
+                        else
+                        {
+                            result = GameEnums::GameResult_Lost;
+                        }
                     }
-                    else
+                    QJsonObject object;
+                    object.insert(JsonKeys::JSONKEY_PLAYER, player->getPlayerNameId());
+                    QJsonArray coInfo;
+                    for (quint8 i = 0; i < player->getMaxCoCount(); ++i)
                     {
-                        result = GameEnums::GameResult_Lost;
+                        CO* pCO = player->getCO(i);
+                        if (pCO != nullptr)
+                        {
+                            coInfo.append(pCO->getCoID());
+                        }
                     }
+                    object.insert(JsonKeys::JSONKEY_COS, coInfo);
+                    object.insert(JsonKeys::JSONKEY_GAMERESULT, result);
+                    winnerInfo.append(object);
                 }
-                QJsonObject object;
-                object.insert(JsonKeys::JSONKEY_PLAYER, player->getPlayerNameId());
-                QJsonArray coInfo;
-                for (quint8 i = 0; i < player->getMaxCoCount(); ++i)
-                {
-                    CO* pCO = player->getCO(i);
-                    if (pCO != nullptr)
-                    {
-                        coInfo.append(pCO->getCoID());
-                    }
-                }
-                object.insert(JsonKeys::JSONKEY_COS, coInfo);
-                object.insert(JsonKeys::JSONKEY_GAMERESULT, result);
-                winnerInfo.append(object);
             }
+            data.insert(JsonKeys::JSONKEY_GAMERESULTARRAY, winnerInfo);
+            data.insert(JsonKeys::JSONKEY_REPLAYFILE, m_pMap->getRecordFile());
+            data.insert(JsonKeys::JSONKEY_MAPNAME, m_pMap->getMapName());
+            data.insert(JsonKeys::JSONKEY_MAPWIDTH, m_pMap->getMapWidth());
+            data.insert(JsonKeys::JSONKEY_MAPPLAYERS, m_pMap->getPlayerCount());
+            data.insert(JsonKeys::JSONKEY_MAPAUTHOR, m_pMap->getMapAuthor());
+            data.insert(JsonKeys::JSONKEY_MAPFLAGS, static_cast<qint64>(m_pMap->getMapFlags()));
+            data.insert(JsonKeys::JSONKEY_MAPAUTHOR, m_pMap->getMapAuthor());
+            QJsonDocument doc(data);
+            CONSOLE_PRINT("Sending command " + command + "", GameConsole::eDEBUG);
+            emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
-        data.insert(JsonKeys::JSONKEY_GAMERESULTARRAY, winnerInfo);
-        data.insert(JsonKeys::JSONKEY_REPLAYFILE, m_pMap->getRecordFile());
-        data.insert(JsonKeys::JSONKEY_MAPNAME, m_pMap->getMapName());
-        data.insert(JsonKeys::JSONKEY_MAPWIDTH, m_pMap->getMapWidth());
-        data.insert(JsonKeys::JSONKEY_MAPPLAYERS, m_pMap->getPlayerCount());
-        data.insert(JsonKeys::JSONKEY_MAPAUTHOR, m_pMap->getMapAuthor());
-        data.insert(JsonKeys::JSONKEY_MAPFLAGS, static_cast<qint64>(m_pMap->getMapFlags()));
-        data.insert(JsonKeys::JSONKEY_MAPAUTHOR, m_pMap->getMapAuthor());
-        QJsonDocument doc(data);
-        CONSOLE_PRINT("Sending command " + command + "", GameConsole::eDEBUG);
-        emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        CONSOLE_PRINT("Killing self on slave", GameConsole::eDEBUG);
+        connect(&m_despawnSlaveTimer, &QTimer::timeout, this, &VictoryMenue::despawnSlave, Qt::QueuedConnection);
+        m_despawnSlaveTimer.start(20000);
     }
-    CONSOLE_PRINT("Killing self on slave", GameConsole::eDEBUG);
-    connect(&m_despawnSlaveTimer, &QTimer::timeout, this, &VictoryMenue::despawnSlave, Qt::QueuedConnection);
-    m_despawnSlaveTimer.start(20000);
 }
 
 void VictoryMenue::despawnSlave()
@@ -634,7 +642,7 @@ GameMap* VictoryMenue::getMap()
     return m_pMap.get();
 }
 
-void VictoryMenue::recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+void VictoryMenue::recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
 {
     if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
     {

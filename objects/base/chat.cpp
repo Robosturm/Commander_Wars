@@ -93,7 +93,7 @@ void Chat::setVisible(bool vis)
     
 }
 
-void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
+void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
 {
     if (service == m_serviceMode)
     {

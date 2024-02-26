@@ -18,7 +18,7 @@ public:
     explicit LocalClient(QObject* pParent);
     virtual ~LocalClient();
 public slots:
-    virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress) override;
+    virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress, bool sendAll = false) override;
     virtual void disconnectTCP() override;
     virtual QVector<quint64> getConnectedSockets() override;
     virtual void changeThread(quint64 socketID, QThread* pThread) override;

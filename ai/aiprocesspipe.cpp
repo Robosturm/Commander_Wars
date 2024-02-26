@@ -153,7 +153,7 @@ void AiProcessPipe::quit()
     }
 }
 
-void AiProcessPipe::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
+void AiProcessPipe::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
 {
     if (service == NetworkInterface::NetworkSerives::AiPipe)
     {

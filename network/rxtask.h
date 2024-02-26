@@ -14,7 +14,7 @@ class RxTask final : public QObject
 {
     Q_OBJECT
 public:
-    RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool useReceivedId);
+    RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF);
     virtual ~RxTask() = default;
     void swapNetworkInterface(NetworkInterface* pCommIF)
     {
@@ -30,7 +30,6 @@ private:
    NetworkInterface* m_pIF;
    quint64 m_SocketID;
    QDataStream m_pStream;
-   bool m_useReceivedId{false};
 };
 
 #endif // RXTASK_H

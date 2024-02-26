@@ -21,7 +21,7 @@ TCPServer::~TCPServer()
     CONSOLE_PRINT("Server is closed", GameConsole::eLogLevels::eDEBUG);
 }
 
-void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress)
+void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress, bool sendAll)
 {
     if (secondaryAdress == primaryAdress && !primaryAdress.isEmpty())
     {
@@ -118,7 +118,7 @@ void TCPServer::onConnect()
                     m_idCounter++;
                 }
                 // Start RX-Task
-                spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket.get(), m_idCounter, this, false);
+                spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket.get(), m_idCounter, this);
                 connect(nextSocket.get(), &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
                 // start TX-Task

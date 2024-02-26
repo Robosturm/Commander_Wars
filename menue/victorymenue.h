@@ -114,7 +114,7 @@ protected slots:
      * @param data
      * @param service
      */
-    void recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket);
 protected:
     /**
      * @brief multiplayerGameFinished

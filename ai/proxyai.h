@@ -54,7 +54,7 @@ public:
     virtual void init(BaseGamemenu* pMenu) override;
 public slots:
     virtual void nextAction() override;
-    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket);
 public:
     /**
      * @brief readIni

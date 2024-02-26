@@ -204,7 +204,7 @@ public slots:
     void recievePlayerReady(quint64 socketID, QDataStream& stream);
 protected slots:
     void disconnected(quint64 socketID);
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket);
 protected:
     /**
      * @brief createAi

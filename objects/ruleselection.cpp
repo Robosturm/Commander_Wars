@@ -100,7 +100,12 @@ RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enable
 
 bool RuleSelection::getIsMultiplayerMode()
 {
-    return m_mode == Mode::Multiplayer;
+    return m_mode == Mode::Multiplayer || m_mode == Mode::MultiplayerOnlyGateway;
+}
+
+bool RuleSelection::getIsMultiplayerOnlyGatewayMode()
+{
+    return m_mode == Mode::MultiplayerOnlyGateway;
 }
 
 bool RuleSelection::getIsEditorMode()

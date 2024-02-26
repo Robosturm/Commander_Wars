@@ -48,7 +48,7 @@ private slots:
     void startPipe();
     void onConnected(quint64 socket);
     void disconnected(quint64 socket);
-    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket);
 private:
     void onNewActionForMaster(QDataStream & stream);
     void onNewAction(QDataStream & stream);

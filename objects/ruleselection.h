@@ -16,6 +16,7 @@ public:
         Editor,
         Singleplayer,
         Multiplayer,
+        MultiplayerOnlyGateway,
     };
     explicit RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enabled = true);
     virtual ~RuleSelection() = default;
@@ -25,6 +26,7 @@ public:
     Q_INVOKABLE void setShowAdvanced(bool newShowAdvanced);
     Q_INVOKABLE void showRuleSelection();
     Q_INVOKABLE bool getIsMultiplayerMode();
+    Q_INVOKABLE bool getIsMultiplayerOnlyGatewayMode();
     Q_INVOKABLE bool getIsEditorMode();
     // slots for changing the rules
     Q_INVOKABLE GameMap *getMap() const;

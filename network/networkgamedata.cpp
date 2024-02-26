@@ -41,6 +41,7 @@ QJsonObject NetworkGameData::toJson() const
     obj.insert(JsonKeys::JSONKEY_HASPASSWORD, m_locked);
     obj.insert(JsonKeys::JSONKEY_UUID, QString::number(m_uuid));
     obj.insert(JsonKeys::JSONKEY_CURRENTPLAYER, m_currentPlayer);
+    obj.insert(JsonKeys::JSONKEY_VERSION, m_gameVersion);
     QJsonObject mods;
     for (qint32 i = 0; i < m_Mods.size(); ++i)
     {
@@ -74,7 +75,7 @@ void NetworkGameData::fromJson(const QJsonObject & obj)
     m_Mods.clear();
     m_playerNames.clear();
     m_onlineData.clear();
-
+    m_gameVersion = obj.value(JsonKeys::JSONKEY_VERSION).toString();
     m_players = obj.value(JsonKeys::JSONKEY_JOINEDPLAYERS).toInt();
     m_maxPlayers = obj.value(JsonKeys::JSONKEY_MAXPLAYERS).toInt();
     QJsonObject mods = obj.value(JsonKeys::JSONKEY_USEDMODS).toObject();
@@ -262,6 +263,16 @@ qint32 NetworkGameData::getMaxObservers() const
 void NetworkGameData::setMaxObservers(qint32 newMaxObservers)
 {
     m_maxObservers = newMaxObservers;
+}
+
+QString NetworkGameData::getGameVersion() const
+{
+    return m_gameVersion;
+}
+
+void NetworkGameData::setGameVersion(const QString & newGameVersion)
+{
+    m_gameVersion = newGameVersion;
 }
 
 const QString &NetworkGameData::getSlaveSecondaryAddress() const

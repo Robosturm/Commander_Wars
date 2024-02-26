@@ -3,12 +3,11 @@
 #include "network/rxtask.h"
 #include "network/networkInterface.h"
 
-RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool useReceivedId)
+RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF)
     : m_pSocket(pSocket),
       m_pIF(CommIF),
       m_SocketID(socketID),
-      m_pStream(m_pSocket),
-      m_useReceivedId(useReceivedId)
+      m_pStream(m_pSocket)
 {
     m_pStream.setVersion(QDataStream::Version::Qt_6_5);
     Interpreter::setCppOwnerShip(this);
@@ -29,20 +28,14 @@ void RxTask::recieveData()
         {
             m_pStream.startTransaction();
             qint32 service;
-            qint32 gatewayService;
             m_pStream >> service;
             NetworkInterface::NetworkSerives eService = static_cast<NetworkInterface::NetworkSerives>(service);
             bool forwardData = false;
             quint64 socketId;
             m_pStream >> socketId;
-            if (!m_useReceivedId &&
-                eService != NetworkInterface::NetworkSerives::ServerSocketInfo)
+            if (eService == NetworkInterface::NetworkSerives::ServerSocketInfo)
             {
-                socketId = m_SocketID;
-            }
-            if (eService == NetworkInterface::NetworkSerives::Gateway)
-            {
-                m_pStream >> gatewayService;
+                m_SocketID = socketId;
             }
             m_pStream >> forwardData;
             QByteArray data;
@@ -56,10 +49,6 @@ void RxTask::recieveData()
                 CONSOLE_PRINT("Updating Socket ID to: " + QString::number(socketId), GameConsole::eLogLevels::eDEBUG);
                 m_pIF->setSocketID(socketId);
             }
-            else if (eService == NetworkInterface::NetworkSerives::Gateway)
-            {
-                m_pIF->recievedGatewayData(socketId, data, static_cast<NetworkInterface::NetworkSerives>(gatewayService));
-            }
             else if ((eService < NetworkInterface::NetworkSerives::Game) || (eService >= NetworkInterface::NetworkSerives::Max))
             {
                 oxygine::handleErrorPolicy(oxygine::ep_show_error, "RxTask::recieveData received unknown service");
@@ -70,7 +59,7 @@ void RxTask::recieveData()
                 {
                     emit m_pIF->sigForwardData(socketId, data, eService);
                 }
-                emit m_pIF->recieveData(socketId, data, eService);
+                emit m_pIF->recieveData(socketId, data, eService, m_SocketID);
             }
         }
     }

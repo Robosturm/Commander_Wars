@@ -38,6 +38,16 @@ void GameRules::resetArrays()
     m_FogSprites.clear();
 }
 
+bool GameRules::getGatewayHosting() const
+{
+    return m_gatewayHosting;
+}
+
+void GameRules::setGatewayHosting(bool newGatewayHosting)
+{
+    m_gatewayHosting = newGatewayHosting;
+}
+
 void GameRules::setBuildingVision(qint32 newBuildingVision)
 {
     m_buildingVision = newBuildingVision;
@@ -1686,6 +1696,7 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << m_moveVision;
     pStream << m_specialDestruction;
     pStream << m_buildingVision;
+    pStream << m_gatewayHosting;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -2048,6 +2059,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 31)
     {
         pStream >> m_buildingVision;
+        pStream >> m_gatewayHosting;
     }
     CONSOLE_PRINT("Weather prediction for days after restoring " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
 }

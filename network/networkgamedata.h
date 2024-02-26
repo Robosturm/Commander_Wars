@@ -82,6 +82,9 @@ public:
     qint32 getMaxObservers() const;
     void setMaxObservers(qint32 newMaxObservers);
 
+    QString getGameVersion() const;
+    void setGameVersion(const QString & newGameVersion);
+
 private:
     qint32 m_players{0};
     qint32 m_maxPlayers{0};
@@ -91,6 +94,7 @@ private:
     QString m_mapName;
     QString m_slaveName;
     QString m_currentPlayer;
+    QString m_gameVersion;
     bool m_locked{false};
     bool m_launched{false};
     bool m_runningGame{false};

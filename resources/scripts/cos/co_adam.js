@@ -245,7 +245,7 @@ var Constructor = function()
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (CO.isActive(co))
+        if (CO.isActive(co) && defender !== null)
         {
             var variables = co.getVariables();
             var bonusUnitVariable = variables.createVariable("BONUSUNITS");

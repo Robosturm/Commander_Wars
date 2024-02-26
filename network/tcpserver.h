@@ -11,7 +11,7 @@ using spQSslServer = std::shared_ptr<QSslServer>;
 class TCPServer;
 using spTCPServer = std::shared_ptr<TCPServer>;
 
-class TCPServer final : public NetworkInterface
+class TCPServer : public NetworkInterface
 {
     Q_OBJECT
 public:
@@ -24,17 +24,17 @@ signals:
 
 public slots:
     void setIsActive(quint64 socketID, bool active);
-    virtual void connectTCP(QString adress, quint16 port, QString secondaryAdress) override;
+    virtual void connectTCP(QString adress, quint16 port, QString secondaryAdress, bool sendAll = false) override;
     virtual void disconnectTCP() override;
     virtual void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service) override;
     virtual QVector<quint64> getConnectedSockets() override;
     qint32 getObserverCount();
-    void onConnect();
+    virtual void onConnect();
     void disconnectClient(quint64 socketID);
     void pauseListening();
     void continueListening();
     virtual void changeThread(quint64 socketID, QThread* pThread) override;
-private:
+protected:
     QMap<quint64, spTCPClient> m_pClients;
     quint64 m_idCounter = 0;
     spQSslServer m_pTCPServer[2];

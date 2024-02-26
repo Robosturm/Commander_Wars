@@ -77,7 +77,7 @@ signals:
     void sigOnMapDeleteResponse(bool success);
     void sigReceivedFilePacket(const QJsonObject &objData);
 public slots:
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket);
     void exitMenue();
     void hostLocal();
     void hostServer();
@@ -105,6 +105,7 @@ protected slots:
      * @param socketID
      */
     void disconnected(quint64 socketID);
+    void requestPassword();
 private:
     void onShowOtherDialog();
     void receivedShowAutoMatches(const QJsonObject & objData);
@@ -140,6 +141,12 @@ private:
      * @param objData
      */
     void onMapUploadResponse(const QJsonObject & objData);
+    /**
+     * @brief checkGameVersion
+     * @param game
+     * @return
+     */
+    bool checkGameVersion(NetworkGameData & game);
 private:
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<NetworkGameData> m_games;
@@ -160,6 +167,7 @@ private:
     spComplexTableView m_gamesview;
     QString m_password;
     bool m_loggedIn{false};
+    bool m_sameVersionAsServer{false};
 
     bool m_serverRequestNewPassword;
     GameViewMode m_mode{GameViewMode::OpenGames};

@@ -88,7 +88,7 @@ void ProxyAi::deserializeObject(QDataStream& stream)
     }
 }
 
-void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
+void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
 {
     if (service == NetworkInterface::NetworkSerives::Game)
     {

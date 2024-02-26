@@ -1327,7 +1327,7 @@ QStringList PlayerSelection::getDropDownColorNames() const
     return Player::getDropDownColorNames();
 }
 
-void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
 {
     // data for us?
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
@@ -1459,7 +1459,7 @@ qint32 PlayerSelection::getOpenPlayerCount()
 
 void PlayerSelection::sendOpenPlayerCount()
 {
-    if (Mainapp::getSlaveClient().get() != nullptr)
+    if (Mainapp::getInstance()->getSlaveClient().get() != nullptr)
     {
         QString command = QString(NetworkCommands::SERVEROPENPLAYERCOUNT);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
@@ -1475,7 +1475,7 @@ void PlayerSelection::sendOpenPlayerCount()
             data.insert(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT, m_pMap->getGameRules()->getMultiplayerObserver());
         }
         QJsonDocument doc(data);
-        emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit Mainapp::getInstance()->getSlaveClient()->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 

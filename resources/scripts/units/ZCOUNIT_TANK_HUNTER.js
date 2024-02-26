@@ -66,7 +66,7 @@ var Constructor = function()
     };
     this.postBattleActions = function(unit, damage, otherUnit, gotAttacked, weapon, action)
     {
-        if (weapon === 0 && gotAttacked === false && unit.getUnitID() === "ZCOUNIT_TANK_HUNTER" && damage >= 0)
+        if (weapon === 0 && otherUnit !== null && gotAttacked === false && unit.getUnitID() === "ZCOUNIT_TANK_HUNTER" && damage >= 0)
         {
             var fuelDrain = 35;
             var fuel = otherUnit.getFuel();

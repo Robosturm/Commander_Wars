@@ -94,8 +94,8 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
         if (Mainapp::getSlave())
         {
             CONSOLE_PRINT("GameMenue is listening to master server data", GameConsole::eDEBUG);
-            spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-            connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &GameMenue::recieveServerData, NetworkCommands::UNIQUE_DATA_CONNECTION);
+            spNetworkInterface pSlaveMasterConnection = Mainapp::getInstance()->getSlaveClient();
+            connect(pSlaveMasterConnection.get(), &NetworkInterface::recieveData, this, &GameMenue::recieveServerData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         }
         if (m_pNetworkInterface->getIsServer())
         {
@@ -223,7 +223,7 @@ void GameMenue::onEnter()
     }
 }
 
-void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
 {
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
     {
@@ -1153,7 +1153,7 @@ void GameMenue::playerJoinedFinished()
 
 void GameMenue::sendOpenPlayerCount()
 {
-    if (Mainapp::getSlaveClient().get() != nullptr)
+    if (Mainapp::getInstance()->getSlaveClient().get() != nullptr)
     {
         qint32 openPlayerCount = 0;
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -1187,7 +1187,7 @@ void GameMenue::sendOpenPlayerCount()
         data.insert(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT, m_pMap->getGameRules()->getObserverList().size());
         data.insert(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT, m_pMap->getGameRules()->getMultiplayerObserver());
         QJsonDocument doc(data);
-        emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit Mainapp::getInstance()->getSlaveClient()->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -1382,7 +1382,7 @@ bool GameMenue::doDespawnSlave()
         m_despawning = true;
         QString saveFile = getSaveSlaveMapName();
         saveMap(saveFile);
-        spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+        spNetworkInterface pSlaveMasterConnection = Mainapp::getInstance()->getSlaveClient();
         QString command = NetworkCommands::SLAVEINFODESPAWNING;
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
@@ -2521,7 +2521,7 @@ void GameMenue::startAiPipeGame()
 
 void GameMenue::sendGameStartedToServer()
 {
-    if (Mainapp::getSlaveClient().get() != nullptr)
+    if (Mainapp::getInstance()->getSlaveClient().get() != nullptr)
     {
         QString command = QString(NetworkCommands::SLAVEGAMESTARTED);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
@@ -2546,7 +2546,7 @@ void GameMenue::sendGameStartedToServer()
         }
         data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
         QJsonDocument doc(data);
-        emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit Mainapp::getInstance()->getSlaveClient()->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         startDespawnTimer();
     }
 }

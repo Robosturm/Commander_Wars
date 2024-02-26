@@ -811,6 +811,10 @@ var Constructor = function()
                                                                                   defTerrain, null, -1, -1, defenderWeapon, -1);
             buildBattleAnimation.setEndOfAnimationCall("ACTION_FIRE", "performPostBuildingAnimation");
             ACTION_FIRE.postBuildingAnimationTerrain = defTerrain;
+
+            attacker.getOwner().postBattleActions(attacker, damage, null, false, attackerWeapon, ACTION_FIRE.postAnimationAction);
+            attacker.postBattleActions(damage, null, false, attackerWeapon, ACTION_FIRE.postAnimationAction);
+
             if ((defBuilding !== null) && (defBuilding.getHp() > 0))
             {
                 defBuilding.setHp(defBuilding.getHp() - attackerDamage);

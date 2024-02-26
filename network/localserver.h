@@ -22,7 +22,7 @@ public:
     explicit LocalServer(QObject* pParent);
     virtual ~LocalServer();
 public slots:
-    virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress) override;
+    virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress, bool sendAll = false) override;
     virtual void disconnectTCP() override;
     virtual void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service) override;
     virtual QVector<quint64> getConnectedSockets() override;

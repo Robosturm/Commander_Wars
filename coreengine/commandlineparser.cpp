@@ -426,9 +426,9 @@ void CommandLineParser::startSlaveGame() const
         oxygine::Stage::getStage()->addChild(pMenu);
         emit pServer->sig_connect(slaveAddress, slavePort, secondarySlaveAddress);
         // connect to server
-        spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-        connect(pSlaveMasterConnection.get(), &TCPClient::sigConnected, pMenu.get(), &Multiplayermenu::onSlaveConnectedToMaster, Qt::QueuedConnection);
-        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, pMenu.get(), &Multiplayermenu::recieveServerData, NetworkCommands::UNIQUE_DATA_CONNECTION);
+        spNetworkInterface pSlaveMasterConnection = Mainapp::getInstance()->getSlaveClient();
+        connect(pSlaveMasterConnection.get(), &NetworkInterface::sigConnected, pMenu.get(), &Multiplayermenu::onSlaveConnectedToMaster, Qt::QueuedConnection);
+        connect(pSlaveMasterConnection.get(), &NetworkInterface::recieveData, pMenu.get(), &Multiplayermenu::recieveServerData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         emit pSlaveMasterConnection->sig_connect(masterAddress, masterPort, "");
     }
     else

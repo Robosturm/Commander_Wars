@@ -31,7 +31,7 @@ public:
 signals:
     void sigSendText(QString message);
 public slots:
-    void dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service);
+    void dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket);
     void sendData(QString message);
 private:
     void addMessage(QJsonObject data, bool local = false);

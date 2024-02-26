@@ -378,7 +378,7 @@ protected slots:
      * @param data
      * @param service
      */
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket);
     /**
      * @brief recieveServerData
      * @param socketID

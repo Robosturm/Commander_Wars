@@ -71,6 +71,22 @@
             <x>5</x>
             <y>lastY + lastHeight + 10</y>
             <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Gateway hosting:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked the game is hosted on your pc and the server only acts as a gateway. Useful if you want to play with custom mods or a different game version. Has no effect when hosting locally.")</tooltip>
+            <startValue>RuleSelectionScript.getGatewayDefaultValue()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setGatewayHosting(input);</onEvent>
+            <enabled>RuleSelectionScript.getGatewayOptionEnabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
             <text>QT_TRANSLATE_NOOP("GAME","Observer:")</text>
             <font>"main"</font>
             <fontSize>24</fontSize>

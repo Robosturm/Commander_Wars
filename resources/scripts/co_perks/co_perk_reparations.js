@@ -6,7 +6,7 @@ var Constructor = function()
 		{
 			if (gotAttacked === false && attacker.getOwner() === co.getOwner())
 			{
-				if (atkDamage > 0)
+                if (atkDamage > 0 && defender !== null)
 				{
 					co.getOwner().addFunds(-atkDamage / 10.0 * defender.getUnitCosts() * 0.02);
 				}

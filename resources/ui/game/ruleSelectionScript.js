@@ -244,4 +244,19 @@ var RuleSelectionScript =
             return lastY;
         }
     },
+    getGatewayOptionEnabled : function()
+    {
+        return currentMenu.getRuleChangeEabled() && !currentMenu.getIsMultiplayerOnlyGatewayMode();
+    },
+    getGatewayDefaultValue : function()
+    {
+        if (currentMenu.getIsMultiplayerOnlyGatewayMode())
+        {
+            return true;
+        }
+        else
+        {
+            return currentMenu.getMap().getGameRules().getGatewayHosting()
+        }
+    }
 };

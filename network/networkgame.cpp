@@ -69,10 +69,14 @@ void NetworkGame::slaveRunning(const QJsonObject & objData, spTCPServer & pGameS
 {
     if (!m_slaveRunning)
     {
-        QString description = objData.value(JsonKeys::JSONKEY_DESCRIPTION).toString();
-        bool hasPassword = objData.value(JsonKeys::JSONKEY_HASPASSWORD).toBool();
-        m_data.setDescription(description);
-        m_data.setLocked(hasPassword);
+        if (objData.contains(JsonKeys::JSONKEY_DESCRIPTION) &&
+            objData.contains(JsonKeys::JSONKEY_HASPASSWORD))
+        {
+            QString description = objData.value(JsonKeys::JSONKEY_DESCRIPTION).toString();
+            bool hasPassword = objData.value(JsonKeys::JSONKEY_HASPASSWORD).toBool();
+            m_data.setDescription(description);
+            m_data.setLocked(hasPassword);
+        }
         auto pClient = pGameServer->getClient(m_hostingSocket);
         if (pClient.get() != nullptr)
         {

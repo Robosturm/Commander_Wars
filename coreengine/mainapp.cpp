@@ -792,6 +792,11 @@ void Mainapp::actAsSlave()
     CONSOLE_PRINT("Running as slave with name : " + Settings::getInstance()->getSlaveServerName(), GameConsole::eDEBUG);
 }
 
+void Mainapp::setSlaveClient(spNetworkInterface & client)
+{
+    m_slaveClient = client;
+}
+
 void Mainapp::onActiveChanged()
 {
     if (!isActive())
@@ -938,9 +943,9 @@ void Mainapp::setInitScript(const QString &newInitScript)
     m_initScript = newInitScript;
 }
 
-spTCPClient Mainapp::getSlaveClient()
+spNetworkInterface Mainapp::getSlaveClient()
 {
-    return getInstance()->m_slaveClient;
+    return m_slaveClient;
 }
 
 const QString &Mainapp::getInitScript() const

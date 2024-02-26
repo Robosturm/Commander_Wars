@@ -63,7 +63,7 @@ var Constructor = function()
 
     this.postBattleActions = function(unit, damage, otherUnit, gotAttacked, weapon, action)
     {
-        if (!gotAttacked)
+        if (!gotAttacked && otherUnit !== null)
         {
             // damage can be negativ if we can't do a counter attack the damge is -1
             // avoid loosing hp cause of our passive or power

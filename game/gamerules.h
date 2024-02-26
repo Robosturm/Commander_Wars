@@ -684,6 +684,9 @@ public:
     Q_INVOKABLE qint32 getBuildingVision() const;
     Q_INVOKABLE void setBuildingVision(qint32 newBuildingVision);
 
+    Q_INVOKABLE bool getGatewayHosting() const;
+    Q_INVOKABLE void setGatewayHosting(bool newGatewayHosting);
+
 private:
     /**
      * @brief resetArrays
@@ -758,6 +761,7 @@ private:
     Password m_password;
     QString m_description;
     bool m_cosmeticModsAllowed{false};
+    bool m_gatewayHosting{false};
     qint32 m_multiplayerObserver{0};
     QVector<quint64> m_observerList;
     QString m_matchType;

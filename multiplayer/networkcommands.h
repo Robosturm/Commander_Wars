@@ -215,6 +215,10 @@ namespace NetworkCommands
      */
     const char* const LAUNCHGAMEONSERVER = "LAUNCHGAMEONSERVER";
     /**
+     * @brief LAUNCHGATEWAYGAMEONSERVER
+     */
+    const char* const LAUNCHGATEWAYGAMEONSERVER = "LAUNCHGATEWAYGAMEONSERVER";
+    /**
       * @brief LAUNCHGAMEONSERVER
       */
     const char* const GAMERUNNINGONSERVER = "GAMERUNNINGONSERVER";

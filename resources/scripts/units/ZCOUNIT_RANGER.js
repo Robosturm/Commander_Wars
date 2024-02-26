@@ -119,7 +119,7 @@ var Constructor = function()
 
     this.postBattleActions = function(unit, damage, otherUnit, gotAttacked, weapon, action, map)
     {
-        if (weapon === 1 && gotAttacked === false)
+        if (weapon === 1 && gotAttacked === false && otherUnit !== null)
         {
             var unitPos = unit.getPosition();
             var enemyPos = otherUnit.getPosition();

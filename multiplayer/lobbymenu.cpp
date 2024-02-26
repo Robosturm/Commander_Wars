@@ -352,13 +352,19 @@ void LobbyMenu::hostServer()
     {
         CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
         m_onEnterTimer.stop();
-        oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>(m_pTCPClient, "", Multiplayermenu::NetworkMode::Host));
+        auto pMenu = MemoryManagement::create<Multiplayermenu>(m_pTCPClient, "", Multiplayermenu::NetworkMode::Host);
+        pMenu->setSameVersionAsServer(m_sameVersionAsServer);
+        oxygine::Stage::getStage()->addChild(pMenu);
         oxygine::Actor::detach();
     }
 }
 
 void LobbyMenu::joinGame()
 {
+    if (!checkGameVersion(m_currentGame))
+    {
+        return;
+    }
     if (m_currentGame.getUuid() != 0)
     {
         if ((m_mode == GameViewMode::OwnGames || m_currentGame.hasOpenPlayers()))
@@ -387,6 +393,11 @@ void LobbyMenu::joinGame()
 
 void LobbyMenu::joinGamePassword(QString password)
 {
+    if (!checkGameVersion(m_currentGame))
+    {
+        return;
+    }
+
     bool exists = false;
     if (m_currentGame.getUuid() != 0)
     {
@@ -411,6 +422,19 @@ void LobbyMenu::joinGamePassword(QString password)
         emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         m_password = password;
     }
+}
+
+bool LobbyMenu::checkGameVersion(NetworkGameData & game)
+{
+    bool ret = true;
+    if (game.getGameVersion() != Mainapp::getGameVersion())
+    {
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Game has a different version. Game versuib ") + game.getGameVersion());
+        addChild(pDialogMessageBox);
+        ret = false;
+    }
+    return ret;
 }
 
 void LobbyMenu::showContactingServer()
@@ -462,6 +486,10 @@ void LobbyMenu::observe(QString adress, QString password)
 
 void LobbyMenu::observeGame()
 {
+    if (!checkGameVersion(m_currentGame))
+    {
+        return;
+    }
     if (m_currentGame.getUuid() != 0)
     {
         if (m_currentGame.getLocked())
@@ -479,6 +507,10 @@ void LobbyMenu::observeGame()
 
 void LobbyMenu::observeGamePassword(QString password)
 {
+    if (!checkGameVersion(m_currentGame))
+    {
+        return;
+    }
     bool exists = false;
     if (m_currentGame.getUuid() != 0)
     {
@@ -519,7 +551,7 @@ void LobbyMenu::disconnected(quint64 socketID)
     }
 }
 
-void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
 {
     if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
     {
@@ -773,21 +805,28 @@ void LobbyMenu::checkVersionAndShowInfo(const QJsonObject &objData)
     QString version = objData.value(JsonKeys::JSONKEY_VERSION).toString();
     if (version == Mainapp::getGameVersion())
     {
-        CONSOLE_PRINT("LobbyMenu::connected", GameConsole::eDEBUG);
-        QString password = Settings::getInstance()->getServerPassword();
-        spCustomDialog pDialog = MemoryManagement::create<CustomDialog>("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
-        addChild(pDialog);
-        if (!password.isEmpty())
-        {
-            loginToServerAccount(password);
-        }
+        m_sameVersionAsServer = true;
+        requestPassword();
     }
     else
     {
+        m_sameVersionAsServer = false;
         spDialogMessageBox pDialogMessageBox;
-        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Connection refused. Server has a different version of the game. Server ") + version);
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Server has a different version of the game. Server ") + version + " Some features are not accessible.");
         addChild(pDialogMessageBox);
-        m_pTCPClient.reset();
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &LobbyMenu::requestPassword, Qt::QueuedConnection);
+    }
+}
+
+void LobbyMenu::requestPassword()
+{
+    CONSOLE_PRINT("LobbyMenu::connected", GameConsole::eDEBUG);
+    QString password = Settings::getInstance()->getServerPassword();
+    spCustomDialog pDialog = MemoryManagement::create<CustomDialog>("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
+    addChild(pDialog);
+    if (!password.isEmpty())
+    {
+        loginToServerAccount(password);
     }
 }
 
