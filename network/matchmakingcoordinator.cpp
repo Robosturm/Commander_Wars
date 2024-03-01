@@ -72,12 +72,13 @@ void MatchMakingCoordinator::fixPlayerTable(const QString &player)
                       " from " + MainServer::SQL_TABLE_PLAYERDATA + player +
                       " WHERE " + MainServer::SQL_COID +
                       " = '%';";
-    QSqlQuery query = database.exec(command);
+    QSqlQuery query(database);
+    query.exec(command);
     if (MainServer::sqlQueryFailed(query))
     {
          CONSOLE_PRINT("Fixing user table for player " + player, GameConsole::eDEBUG);
         command = QString("DROP TABLE ") + MainServer::SQL_TABLE_PLAYERDATA + player;
-        query = database.exec(command);
+        query.exec(command);
         if (!MainServer::sqlQueryFailed(query))
         {
             m_mainServer->createUserTable(player);
@@ -132,7 +133,8 @@ void MatchMakingCoordinator::updatePlayerMatchData(const QJsonObject &objData)
                                                 " from " + MainServer::SQL_TABLE_PLAYERDATA + player +
                                                 " WHERE " + MainServer::SQL_COID +
                                                 " = '" + coId + "';";
-                        QSqlQuery query = database.exec(selectCommand);
+                        QSqlQuery query(database);
+                        query.exec(selectCommand);
                         if (MainServer::sqlQueryFailed(query) || !query.first())
                         {
 
@@ -151,16 +153,16 @@ void MatchMakingCoordinator::updatePlayerMatchData(const QJsonObject &objData)
                                               "0," +
                                               "''" +
                                               ")";
-                            query = database.exec(command);
+                            query.exec(command);
                             MainServer::sqlQueryFailed(query);
                         }
-                        query = database.exec(selectCommand);
+                        query.exec(selectCommand);
                         if (!MainServer::sqlQueryFailed(query) && query.first())
                         {
 
-                            database.exec(QString("UPDATE ") + MainServer::SQL_TABLE_PLAYERDATA + player + " SET " +
-                                          entryKey + " = " + QString::number(query.value(entryKey).toInt() + 1) + "  WHERE " +
-                                          MainServer::SQL_COID + " = '" + coId + "';");
+                            query.exec(QString("UPDATE ") + MainServer::SQL_TABLE_PLAYERDATA + player + " SET " +
+                                       entryKey + " = " + QString::number(query.value(entryKey).toInt() + 1) + "  WHERE " +
+                                       MainServer::SQL_COID + " = '" + coId + "';");
                         }
                     }
                 }

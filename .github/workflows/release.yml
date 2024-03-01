@@ -7,7 +7,7 @@ name: Commnader_Wars_Release
 
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.5.2'
+  QT_Version: '6.6.2'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
   JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/11.0.22-7/x64/'
   ANDROID_OPEN_SSL_TAG: '7f5f34d16040883f7353b3f99bc3fc83ecdc2a4b'
@@ -136,7 +136,7 @@ jobs:
     steps:
     - name: Checkout openssl
       if: matrix.target == 'android'
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
           repository: 'KDAB/android_openssl'
           ref: ${{env.ANDROID_OPEN_SSL_TAG}}

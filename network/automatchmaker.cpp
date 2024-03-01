@@ -115,13 +115,14 @@ QStringList AutoMatchMaker::getOpponentsForPlayer(const QString player, qint32 m
     if (mmr >= 0)
     {
         auto & database = m_mainServer.getDatabase();
-        QSqlQuery query = database.exec(QString("SELECT ") + MainServer::SQL_USERNAME +
-                                        " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
-                                        " WHERE " +
-                                        MainServer::SQL_MINGAMES + " > 0 AND " +
-                                        MainServer::SQL_MAXGAMES + " <= " + MainServer::SQL_RUNNINGGAMES + " AND " +
-                                        MainServer::SQL_MMR + " >= '" + QString::number(mmr - mmrSearchRange) + "' AND " +
-                                        MainServer::SQL_MMR + " <= '" + QString::number(mmr + mmrSearchRange) + "';");
+        QSqlQuery query(database);
+        query.exec(QString("SELECT ") + MainServer::SQL_USERNAME +
+                   " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
+                   " WHERE " +
+                   MainServer::SQL_MINGAMES + " > 0 AND " +
+                   MainServer::SQL_MAXGAMES + " <= " + MainServer::SQL_RUNNINGGAMES + " AND " +
+                   MainServer::SQL_MMR + " >= '" + QString::number(mmr - mmrSearchRange) + "' AND " +
+                   MainServer::SQL_MMR + " <= '" + QString::number(mmr + mmrSearchRange) + "';");
         if (!MainServer::sqlQueryFailed(query) &&
             query.first())
         {
@@ -142,19 +143,21 @@ QStringList AutoMatchMaker::getOpponentsForPlayer(const QString player, qint32 m
 bool AutoMatchMaker::setMatchHistoryData(const QString player, QString historyData)
 {
     auto & database = m_mainServer.getDatabase();
-    auto changeQuery = database.exec(QString("UPDATE ") + MainServer::SQL_TABLE_MATCH_DATA + m_matchId + " SET " +
-                                      MainServer::SQL_MATCHHISTORY + " = " + historyData + "  WHERE " +
-                                      MainServer::SQL_USERNAME + " = '" + player + "';");
+    QSqlQuery changeQuery(database);
+    changeQuery.exec(QString("UPDATE ") + MainServer::SQL_TABLE_MATCH_DATA + m_matchId + " SET " +
+                     MainServer::SQL_MATCHHISTORY + " = " + historyData + "  WHERE " +
+                     MainServer::SQL_USERNAME + " = '" + player + "';");
     return MainServer::sqlQueryFailed(changeQuery);
 }
 
 QString AutoMatchMaker::getMatchHistoryData(const QString player)
 {
     auto & database = m_mainServer.getDatabase();
-    QSqlQuery query = database.exec(QString("SELECT ") + MainServer::SQL_MATCHHISTORY +
-                                    " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
-                                    " WHERE " + MainServer::SQL_USERNAME +
-                                    " = '" + player + "';");
+    QSqlQuery query(database);
+    query.exec(QString("SELECT ") + MainServer::SQL_MATCHHISTORY +
+               " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
+               " WHERE " + MainServer::SQL_USERNAME +
+               " = '" + player + "';");
     if (!MainServer::sqlQueryFailed(query) &&
         query.first())
     {
@@ -166,10 +169,11 @@ QString AutoMatchMaker::getMatchHistoryData(const QString player)
 QString AutoMatchMaker::getMatchMetaData(const QString player)
 {
     auto & database = m_mainServer.getDatabase();
-    QSqlQuery query = database.exec(QString("SELECT ") + MainServer::SQL_METADATA +
-                                    " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
-                                    " WHERE " + MainServer::SQL_USERNAME +
-                                    " = '" + player + "';");
+    QSqlQuery query(database);
+    query.exec(QString("SELECT ") + MainServer::SQL_METADATA +
+               " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
+               " WHERE " + MainServer::SQL_USERNAME +
+               " = '" + player + "';");
     if (!MainServer::sqlQueryFailed(query) &&
         query.first())
     {
@@ -181,7 +185,8 @@ QString AutoMatchMaker::getMatchMetaData(const QString player)
 bool AutoMatchMaker::setMatchMetaData(const QString player, QString metaData)
 {
     auto & database = m_mainServer.getDatabase();
-    auto changeQuery = database.exec(QString("UPDATE ") + MainServer::SQL_TABLE_MATCH_DATA + m_matchId + " SET " +
+    QSqlQuery changeQuery(database);
+    changeQuery.exec(QString("UPDATE ") + MainServer::SQL_TABLE_MATCH_DATA + m_matchId + " SET " +
                                       MainServer::SQL_METADATA + " = " + metaData + "  WHERE " +
                                       MainServer::SQL_USERNAME + " = '" + player + "';");
     return MainServer::sqlQueryFailed(changeQuery);
@@ -237,10 +242,11 @@ void AutoMatchMaker::updateMmr(const QString player1, const QString player2, qin
 qint32 AutoMatchMaker::getMmr(const QString player)
 {
     auto & database = m_mainServer.getDatabase();
-    QSqlQuery query = database.exec(QString("SELECT ") + MainServer::SQL_MMR +
-                                    " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
-                                    " WHERE " + MainServer::SQL_USERNAME +
-                                    " = '" + player + "';");
+    QSqlQuery query(database);
+    query.exec(QString("SELECT ") + MainServer::SQL_MMR +
+               " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
+               " WHERE " + MainServer::SQL_USERNAME +
+               " = '" + player + "';");
     if (!MainServer::sqlQueryFailed(query) &&
         query.first())
     {
@@ -252,19 +258,21 @@ qint32 AutoMatchMaker::getMmr(const QString player)
 bool AutoMatchMaker::setMmr(const QString player, qint32 mmr)
 {
     auto & database = m_mainServer.getDatabase();
-    auto changeQuery = database.exec(QString("UPDATE ") + MainServer::SQL_TABLE_MATCH_DATA + m_matchId + " SET " +
-                                      MainServer::SQL_MMR + " = " + QString::number(mmr) + "  WHERE " +
-                                      MainServer::SQL_USERNAME + " = '" + player + "';");
+    QSqlQuery changeQuery(database);
+    changeQuery.exec(QString("UPDATE ") + MainServer::SQL_TABLE_MATCH_DATA + m_matchId + " SET " +
+                     MainServer::SQL_MMR + " = " + QString::number(mmr) + "  WHERE " +
+                     MainServer::SQL_USERNAME + " = '" + player + "';");
     return MainServer::sqlQueryFailed(changeQuery);
 }
 
 qint32 AutoMatchMaker::getMinGames(const QString player)
 {
     auto & database = m_mainServer.getDatabase();
-    QSqlQuery query = database.exec(QString("SELECT ") + MainServer::SQL_MINGAMES +
-                                    " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
-                                    " WHERE " + MainServer::SQL_USERNAME +
-                                    " = '" + player + "';");
+    QSqlQuery query(database);
+    query.exec(QString("SELECT ") + MainServer::SQL_MINGAMES +
+               " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
+               " WHERE " + MainServer::SQL_USERNAME +
+               " = '" + player + "';");
     if (!MainServer::sqlQueryFailed(query) &&
         query.first())
     {
@@ -276,10 +284,11 @@ qint32 AutoMatchMaker::getMinGames(const QString player)
 qint32 AutoMatchMaker::getRunningGames(const QString player)
 {
     auto & database = m_mainServer.getDatabase();
-    QSqlQuery query = database.exec(QString("SELECT ") + MainServer::SQL_RUNNINGGAMES +
-                                    " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
-                                    " WHERE " + MainServer::SQL_USERNAME +
-                                    " = '" + player + "';");
+    QSqlQuery query(database);
+    query.exec(QString("SELECT ") + MainServer::SQL_RUNNINGGAMES +
+               " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
+               " WHERE " + MainServer::SQL_USERNAME +
+               " = '" + player + "';");
     if (!MainServer::sqlQueryFailed(query) &&
         query.first())
     {
@@ -291,19 +300,21 @@ qint32 AutoMatchMaker::getRunningGames(const QString player)
 bool AutoMatchMaker::setRunningGames(const QString player, qint32 count)
 {
     auto & database = m_mainServer.getDatabase();
-    auto changeQuery = database.exec(QString("UPDATE ") + MainServer::SQL_TABLE_MATCH_DATA + m_matchId + " SET " +
-                                      MainServer::SQL_RUNNINGGAMES + " = " + QString::number(count) + "  WHERE " +
-                                      MainServer::SQL_USERNAME + " = '" + player + "';");
+    QSqlQuery changeQuery(database);
+    changeQuery.exec(QString("UPDATE ") + MainServer::SQL_TABLE_MATCH_DATA + m_matchId + " SET " +
+                     MainServer::SQL_RUNNINGGAMES + " = " + QString::number(count) + "  WHERE " +
+                     MainServer::SQL_USERNAME + " = '" + player + "';");
     return MainServer::sqlQueryFailed(changeQuery);
 }
 
 qint32 AutoMatchMaker::getMaxGames(const QString player)
 {
     auto & database = m_mainServer.getDatabase();
-    QSqlQuery query = database.exec(QString("SELECT ") + MainServer::SQL_MAXGAMES +
-                                    " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
-                                    " WHERE " + MainServer::SQL_USERNAME +
-                                    " = '" + player + "';");
+    QSqlQuery query(database);
+    query.exec(QString("SELECT ") + MainServer::SQL_MAXGAMES +
+               " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
+               " WHERE " + MainServer::SQL_USERNAME +
+               " = '" + player + "';");
     if (!MainServer::sqlQueryFailed(query) &&
         query.first())
     {
@@ -361,10 +372,11 @@ void AutoMatchMaker::onNewPlayerData(const QJsonObject & objData)
 bool AutoMatchMaker::getSignedUp(const QString playerId)
 {
     auto & database = m_mainServer.getDatabase();
-    QSqlQuery query = database.exec(QString("SELECT ") + MainServer::SQL_SIGNEDUP +
-                                    " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
-                                    " WHERE " + MainServer::SQL_USERNAME +
-                                    " = '" + playerId + "';");
+    QSqlQuery query(database);
+    query.exec(QString("SELECT ") + MainServer::SQL_SIGNEDUP +
+               " from " + MainServer::SQL_TABLE_MATCH_DATA + m_matchId +
+               " WHERE " + MainServer::SQL_USERNAME +
+               " = '" + playerId + "';");
     if (!MainServer::sqlQueryFailed(query) &&
         query.first())
     {
@@ -398,16 +410,18 @@ bool AutoMatchMaker::doNewPlayerData(const QString & player, qint32 minGames, qi
                           "false,"
                           "''" +
                           ")";
-        auto query = database.exec(command);
+        QSqlQuery query(database);
+        query.exec(command);
         result = !m_mainServer.sqlQueryFailed(query);
     }
     else
     {
-        auto changeQuery = database.exec(QString("UPDATE ") + MainServer::SQL_TABLE_MATCH_DATA + m_matchId + " SET " +
-                                        MainServer::SQL_MINGAMES + " = " + QString::number(minGames) + ", " +
-                                        MainServer::SQL_MINGAMES + " = '" + metaData + "', " +
-                                        MainServer::SQL_MAXGAMES + " = " + QString::number(maxGames) + " WHERE " +
-                                        MainServer::SQL_USERNAME + " = '" + player + "';");
+        QSqlQuery changeQuery(database);
+        changeQuery.exec(QString("UPDATE ") + MainServer::SQL_TABLE_MATCH_DATA + m_matchId + " SET " +
+                         MainServer::SQL_MINGAMES + " = " + QString::number(minGames) + ", " +
+                         MainServer::SQL_MINGAMES + " = '" + metaData + "', " +
+                         MainServer::SQL_MAXGAMES + " = " + QString::number(maxGames) + " WHERE " +
+                         MainServer::SQL_USERNAME + " = '" + player + "';");
         result = !m_mainServer.sqlQueryFailed(changeQuery);
     }
     return result;

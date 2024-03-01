@@ -1396,7 +1396,7 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
     }
     else
     {
-        CONSOLE_PRINT("Unknown serve in PlayerSelection::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+        CONSOLE_PRINT("Unknown service in PlayerSelection::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
     }
 }
 

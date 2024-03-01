@@ -78,7 +78,8 @@ void MapFileServer::onMapUpload(quint64 socketID, const QJsonObject & objData)
                                   "0, " +
                                   "'" + QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + "', " +
                                   "'" + QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + "')";
-                QSqlQuery query = m_mainServer->getDatabase().exec(command);
+                QSqlQuery query(m_mainServer->getDatabase());
+                query.exec(command);
                 if (MainServer::sqlQueryFailed(query))
                 {
                     QFile::remove(filePath);
@@ -105,10 +106,11 @@ bool MapFileServer::sameUploader(const QJsonObject & objData)
 {
     bool success = false;
     QString filePath = objData.value(JsonKeys::JSONKEY_MAPPATH).toString();
-    QSqlQuery query = m_mainServer->getDatabase().exec(QString("SELECT ") + MainServer::SQL_MAPUPLOADER +
-                                                       " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
-                                                       " WHERE " + MainServer::SQL_MAPPATH +
-                                                       " = '" + filePath + "';");
+    QSqlQuery query(m_mainServer->getDatabase());
+    query.exec(QString("SELECT ") + MainServer::SQL_MAPUPLOADER +
+               " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
+               " WHERE " + MainServer::SQL_MAPPATH +
+               " = '" + filePath + "';");
     if (!MainServer::sqlQueryFailed(query) && query.first())
     {
         QString currentUploader = objData.value(JsonKeys::JSONKEY_MAPUPLOADER).toString();
@@ -118,7 +120,7 @@ bool MapFileServer::sameUploader(const QJsonObject & objData)
         {
             QString command = QString("DELETE FROM ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " WHERE " +
                               MainServer::SQL_MAPPATH + " = '" + filePath + "';";
-            query = m_mainServer->getDatabase().exec(command);
+            query.exec(command);
             MainServer::sqlQueryFailed(query);
         }
     }
@@ -163,7 +165,8 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
     {
         filterCommand +=  ";";
     }
-    QSqlQuery query = m_mainServer->getDatabase().exec(filterCommand);
+    QSqlQuery query(m_mainServer->getDatabase());
+    query.exec(filterCommand);
     bool success = !MainServer::sqlQueryFailed(query);
     success = success && query.first();
     bool active = query.isActive() && query.isSelect();
@@ -240,21 +243,23 @@ void MapFileServer::onRequestDownloadMap(quint64 socketID, const QJsonObject & o
     QString mapPath = objData.value(JsonKeys::JSONKEY_MAPPATH).toString();
     if (QFile::exists(mapPath))
     {
-        QSqlQuery query = m_mainServer->getDatabase().exec(QString("SELECT ") +
-                                                           MainServer::SQL_MAPPATH + ", " +
-                                                           MainServer::SQL_MAPDOWNLOADCOUNT + ", " +
-                                                           MainServer::SQL_MAPLASTDOWNLOADDATE +
-                                                           " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
-                                                           " WHERE " + MainServer::SQL_MAPPATH +
-                                                           " = '" + mapPath + "';");
+        QSqlQuery query(m_mainServer->getDatabase());
+        query.exec(QString("SELECT ") +
+                   MainServer::SQL_MAPPATH + ", " +
+                   MainServer::SQL_MAPDOWNLOADCOUNT + ", " +
+                   MainServer::SQL_MAPLASTDOWNLOADDATE +
+                   " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
+                   " WHERE " + MainServer::SQL_MAPPATH +
+                   " = '" + mapPath + "';");
         if (!MainServer::sqlQueryFailed(query) && query.first())
         {
             // update internal data
             qint32 downloadCount = query.value(MainServer::SQL_MAPDOWNLOADCOUNT).toInt();
-            auto changeQuery = m_mainServer->getDatabase().exec(QString("UPDATE ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " SET " +
-                                                                MainServer::SQL_MAPDOWNLOADCOUNT + " = '" + QString::number(downloadCount + 1) + ", " +
-                                                                MainServer::SQL_MAPLASTDOWNLOADDATE + " = '" + QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + "' WHERE " +
-                                                                MainServer::SQL_MAPPATH + " = '" + objData.value(JsonKeys::JSONKEY_MAPPATH).toString() + "';");
+            QSqlQuery changeQuery(m_mainServer->getDatabase());
+            changeQuery.exec(QString("UPDATE ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " SET " +
+                             MainServer::SQL_MAPDOWNLOADCOUNT + " = '" + QString::number(downloadCount + 1) + ", " +
+                             MainServer::SQL_MAPLASTDOWNLOADDATE + " = '" + QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + "' WHERE " +
+                             MainServer::SQL_MAPPATH + " = '" + objData.value(JsonKeys::JSONKEY_MAPPATH).toString() + "';");
             MainServer::sqlQueryFailed(changeQuery);
             // load map data and send it to client
             QFile file(mapPath);
@@ -276,7 +281,8 @@ bool MapFileServer::removeMapFromServer(const QString & sqlFilter)
                             MainServer::SQL_MAPIMAGEPATH +
                             " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
                             " WHERE " + sqlFilter + ";";
-    QSqlQuery query = m_mainServer->getDatabase().exec(filterCommand);
+    QSqlQuery query(m_mainServer->getDatabase());
+    query.exec(filterCommand);
     bool success = !MainServer::sqlQueryFailed(query);
     if (success && query.first())
     {
@@ -286,7 +292,7 @@ bool MapFileServer::removeMapFromServer(const QString & sqlFilter)
             QFile::remove(query.value(MainServer::SQL_MAPIMAGEPATH).toString());
         } while (query.next());
         QString command = QString("DELETE FROM ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " WHERE " + sqlFilter + ";";
-        query = m_mainServer->getDatabase().exec(command);
+        query.exec(command);
         MainServer::sqlQueryFailed(query);
     }
     return success;

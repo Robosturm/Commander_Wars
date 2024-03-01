@@ -71,7 +71,8 @@ void ReplayRecordFileserver::addRecordToDatabase(const QJsonObject &objData)
                           QString::number(objData.value(JsonKeys::JSONKEY_MAPHEIGHT).toInt()) + ", " +
                           QString::number(objData.value(JsonKeys::JSONKEY_MAPFLAGS).toInteger()) + ", " +
                           QString::number(QDateTime::currentSecsSinceEpoch()) + ")";
-        QSqlQuery query = m_mainServer->getDatabase().exec(command);
+        QSqlQuery query(m_mainServer->getDatabase());
+        query.exec(command);
         if (MainServer::sqlQueryFailed(query))
         {
             CONSOLE_PRINT("Unable to create record entry for record " + recordFile, GameConsole::eERROR);
@@ -85,7 +86,8 @@ void ReplayRecordFileserver::onDeleteOldReplays()
     QString filterCommand = QString("SELECT ") + MainServer::SQL_REPLAYPATH +
                             " from " + MainServer::SQL_TABLE_REPLAYINFO +
                             " WHERE " + sqlFilter + ";";
-    QSqlQuery query = m_mainServer->getDatabase().exec(filterCommand);
+    QSqlQuery query(m_mainServer->getDatabase());
+    query.exec(filterCommand);
     bool success = !MainServer::sqlQueryFailed(query);
     if (success && query.first())
     {
@@ -94,7 +96,7 @@ void ReplayRecordFileserver::onDeleteOldReplays()
             QFile::remove(query.value(MainServer::SQL_REPLAYPATH).toString());
         } while (query.next());
         QString command = QString("DELETE FROM ") + MainServer::SQL_TABLE_REPLAYINFO + " WHERE " + sqlFilter + ";";
-        query = m_mainServer->getDatabase().exec(command);
+        query.exec(command);
         MainServer::sqlQueryFailed(query);
     }
 }
@@ -135,7 +137,8 @@ void ReplayRecordFileserver::onRequestFilteredRecords(quint64 socketID, const QJ
     {
         filterCommand +=  ";";
     }
-    QSqlQuery query = m_mainServer->getDatabase().exec(filterCommand);
+    QSqlQuery query(m_mainServer->getDatabase());
+    query.exec(filterCommand);
     bool success = !MainServer::sqlQueryFailed(query);
     success = success && query.first();
     bool active = query.isActive() && query.isSelect();

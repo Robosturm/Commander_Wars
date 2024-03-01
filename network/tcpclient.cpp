@@ -87,10 +87,12 @@ void TCPClient::disconnectTCP()
         {
             if (m_pRXTask.get() != nullptr)
             {
+                m_pRXTask->disconnect();
                 m_pRXTask->close();
             }
             if (m_pTXTask.get() != nullptr)
             {
+                m_pTXTask->disconnect();
                 m_pTXTask->close();
             }
             m_pRXTask.reset();

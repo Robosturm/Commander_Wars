@@ -186,48 +186,49 @@ MainServer::~MainServer()
 void MainServer::startDatabase()
 {
     // create primary table for user data
-    QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
-                                         SQL_USERNAME + " TEXT PRIMARY KEY, " +
-                                         SQL_PASSWORD + " TEXT, " +
-                                         SQL_MAILADRESS + " TEXT, " +
-                                         SQL_MMR + " INTEGER, " +
-                                         SQL_VALIDPASSWORD + " INTEGER, " +
-                                         SQL_LASTLOGIN + " TEXT)");
+    QSqlQuery query(*m_serverData);
+    query.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
+               SQL_USERNAME + " TEXT PRIMARY KEY, " +
+               SQL_PASSWORD + " TEXT, " +
+               SQL_MAILADRESS + " TEXT, " +
+               SQL_MMR + " INTEGER, " +
+               SQL_VALIDPASSWORD + " INTEGER, " +
+               SQL_LASTLOGIN + " TEXT)");
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create player table error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
     }
     // create table for map file server
-    query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_DOWNLOADMAPINFO + " (" +
-                               SQL_MAPPATH + " TEXT PRIMARY KEY, " +
-                               SQL_MAPAUTHOR + " TEXT, " +
-                               SQL_MAPNAME + " TEXT, " +
-                               SQL_MAPIMAGEPATH + " TEXT, " +
-                               SQL_MAPPLAYERS + " INTEGER, " +
-                               SQL_MAPWIDTH + " INTEGER, " +
-                               SQL_MAPHEIGHT + " INTEGER, " +
-                               SQL_MAPFLAGS + " BIGINT," +
-                               SQL_MAPUPLOADER + " TEXT, " +
-                               SQL_MAPDOWNLOADCOUNT + " INTEGER, " +
-                               SQL_MAPUPLOADDATE + " TEXT, " +
-                               SQL_METADATA + " TEXT, " +
-                               SQL_MAPLASTDOWNLOADDATE + " TEXT)");
+    query.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_DOWNLOADMAPINFO + " (" +
+               SQL_MAPPATH + " TEXT PRIMARY KEY, " +
+               SQL_MAPAUTHOR + " TEXT, " +
+               SQL_MAPNAME + " TEXT, " +
+               SQL_MAPIMAGEPATH + " TEXT, " +
+               SQL_MAPPLAYERS + " INTEGER, " +
+               SQL_MAPWIDTH + " INTEGER, " +
+               SQL_MAPHEIGHT + " INTEGER, " +
+               SQL_MAPFLAGS + " BIGINT," +
+               SQL_MAPUPLOADER + " TEXT, " +
+               SQL_MAPDOWNLOADCOUNT + " INTEGER, " +
+               SQL_MAPUPLOADDATE + " TEXT, " +
+               SQL_METADATA + " TEXT, " +
+               SQL_MAPLASTDOWNLOADDATE + " TEXT)");
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create map table: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
     }
     // create table for record file server
-    query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_REPLAYINFO + " (" +
-                               SQL_REPLAYPATH + " TEXT PRIMARY KEY, " +
-                               SQL_REPLAYCREATIONTIME + " BIGINT, " +
-                               SQL_MAPNAME + " TEXT, " +
-                               SQL_METADATA + " TEXT, " +
-                               SQL_MAPPLAYERS + " INTEGER, " +
-                               SQL_MAPWIDTH + " INTEGER, " +
-                               SQL_MAPHEIGHT + " INTEGER, " +
-                               SQL_MAPFLAGS + " BIGINT," +
-                               SQL_MAPAUTHOR + " TEXT" +
-                               + ")");
+    query.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_REPLAYINFO + " (" +
+               SQL_REPLAYPATH + " TEXT PRIMARY KEY, " +
+               SQL_REPLAYCREATIONTIME + " BIGINT, " +
+               SQL_MAPNAME + " TEXT, " +
+               SQL_METADATA + " TEXT, " +
+               SQL_MAPPLAYERS + " INTEGER, " +
+               SQL_MAPWIDTH + " INTEGER, " +
+               SQL_MAPHEIGHT + " INTEGER, " +
+               SQL_MAPFLAGS + " BIGINT," +
+               SQL_MAPAUTHOR + " TEXT" +
+               + ")");
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create record table: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
@@ -428,7 +429,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
     }
     else
     {
-        CONSOLE_PRINT("Unknown serve in MainServer::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+        CONSOLE_PRINT("Unknown service in MainServer::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
     }
 }
 
@@ -476,7 +477,7 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
     }
     else
     {
-        CONSOLE_PRINT("Unknown serve in MainServer::receivedSlaveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+        CONSOLE_PRINT("Unknown service in MainServer::receivedSlaveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
     }
 }
 
@@ -497,15 +498,16 @@ void MainServer::onRequestPlayerStats(quint64 socketID, const QJsonObject &objDa
     QString command = QString(NetworkCommands::SERVERPLAYERSTATS);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    QSqlQuery query = m_serverData->exec(QString("SELECT ") +
-                                         SQL_COID + ", " +
-                                         SQL_GAMESMADE + ", " +
-                                         SQL_GAMESLOST + ", " +
-                                         SQL_GAMESWON + ", " +
-                                         SQL_GAMESDRAW +
-                                         " from " + SQL_TABLE_PLAYERDATA + username +
-                                         " WHERE " + SQL_COID +
-                                         " LIKE '%';");
+    QSqlQuery query(*m_serverData);
+    query.exec(QString("SELECT ") +
+               SQL_COID + ", " +
+               SQL_GAMESMADE + ", " +
+               SQL_GAMESLOST + ", " +
+               SQL_GAMESWON + ", " +
+               SQL_GAMESDRAW +
+               " from " + SQL_TABLE_PLAYERDATA + username +
+               " WHERE " + SQL_COID +
+               " LIKE '%';");
     bool success = !sqlQueryFailed(query);
     QJsonObject coStats;
     if (success && query.first())
@@ -536,11 +538,12 @@ void MainServer::onRequestPlayersFromServer(quint64 socketID, const QJsonObject 
     QString searchFilter = objData.value(JsonKeys::JSONKEY_FILTER).toString();
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    QSqlQuery query = m_serverData->exec(QString("SELECT ") +
-                                         SQL_USERNAME +
-                                         " from " + SQL_TABLE_PLAYERS +
-                                         " WHERE " + SQL_USERNAME +
-                                         " LIKE '" + searchFilter + "%';");
+    QSqlQuery query(*m_serverData);
+    query.exec(QString("SELECT ") +
+               SQL_USERNAME +
+               " from " + SQL_TABLE_PLAYERS +
+               " WHERE " + SQL_USERNAME +
+               " LIKE '" + searchFilter + "%';");
     bool success = !sqlQueryFailed(query);
     QJsonArray usernames;
     if (success && query.first())
@@ -1411,7 +1414,7 @@ void MainServer::createAccount(qint64 socketId, const QJsonObject &objData)
                           "1," +
                           "'" + dateTime + "'" +
                           ")";
-        query = m_serverData->exec(command);
+        query.exec(command);
         createUserTable(username);
         if (sqlQueryFailed(query))
         {
@@ -1451,7 +1454,7 @@ void MainServer::deleteAccount(qint64 socketId, const QJsonObject &objData)
             {
                 QString command = QString("DELETE FROM ") + SQL_TABLE_PLAYERS + " WHERE " +
                                   SQL_USERNAME + " = '" + username + "';";
-                query = m_serverData->exec(command);
+                query.exec(command);
                 if (sqlQueryFailed(query))
                 {
                     result = GameEnums::LoginError_DatabaseNotAccesible;
@@ -1499,13 +1502,14 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonObject &objData)
 
 void MainServer::createUserTable(const QString &username)
 {
-    QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERDATA + username + " (" +
-                                         SQL_COID + " TEXT PRIMARY KEY, " +
-                                         SQL_GAMESMADE + " INTEGER, " +
-                                         SQL_GAMESLOST + " INTEGER, " +
-                                         SQL_GAMESWON + " INTEGER, " +
-                                         SQL_GAMESDRAW + " INTEGER," +
-                                         SQL_METADATA + " TEXT)");
+    QSqlQuery query(*m_serverData);
+    query.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERDATA + username + " (" +
+               SQL_COID + " TEXT PRIMARY KEY, " +
+               SQL_GAMESMADE + " INTEGER, " +
+               SQL_GAMESLOST + " INTEGER, " +
+               SQL_GAMESWON + " INTEGER, " +
+               SQL_GAMESDRAW + " INTEGER," +
+               SQL_METADATA + " TEXT)");
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create user table for user " + username + ". Error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
@@ -1514,15 +1518,16 @@ void MainServer::createUserTable(const QString &username)
 
 void MainServer::createMatchData(const QString &match)
 {
-    QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_MATCH_DATA + match + " (" +
-                                         SQL_USERNAME + " TEXT PRIMARY KEY, " +
-                                         SQL_MMR + " INTEGER, " +
-                                         SQL_MINGAMES + " INTEGER, " +
-                                         SQL_MAXGAMES + " INTEGER, " +
-                                         SQL_RUNNINGGAMES + " INTEGER," +
-                                         SQL_METADATA + " TEXT," +
-                                         SQL_SIGNEDUP + " BOOL," +
-                                         SQL_MATCHHISTORY + " TEXT)");
+    QSqlQuery query(*m_serverData);
+    query.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_MATCH_DATA + match + " (" +
+               SQL_USERNAME + " TEXT PRIMARY KEY, " +
+               SQL_MMR + " INTEGER, " +
+               SQL_MINGAMES + " INTEGER, " +
+               SQL_MAXGAMES + " INTEGER, " +
+               SQL_RUNNINGGAMES + " INTEGER," +
+               SQL_METADATA + " TEXT," +
+               SQL_SIGNEDUP + " BOOL," +
+               SQL_MATCHHISTORY + " TEXT)");
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create match table for match " + match + ". Error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
@@ -1589,10 +1594,11 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonObject &objDat
                               "You have to change your password \n" +
                               "once you logged into the server again\n\n" +
                               "Kind regards\nThe server crew";
-            auto changeQuery = m_serverData->exec(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
-                                                  SQL_PASSWORD + " = " + "'" + password.getHash().toHex() + "', " +
-                                                  SQL_VALIDPASSWORD + " = 0 WHERE " +
-                                                  SQL_USERNAME + " = '" + username + "';");
+            QSqlQuery changeQuery(*m_serverData);
+            changeQuery.exec(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                             SQL_PASSWORD + " = " + "'" + password.getHash().toHex() + "', " +
+                             SQL_VALIDPASSWORD + " = 0 WHERE " +
+                             SQL_USERNAME + " = '" + username + "';");
             if (!sqlQueryFailed(changeQuery))
             {
                 CONSOLE_PRINT("Try sending reset password mail", GameConsole::eDEBUG);
@@ -1708,10 +1714,11 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonObject &objDa
         }
         else
         {
-            auto changeQuery = m_serverData->exec(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
-                                                  SQL_PASSWORD + " = " + "'" + password.toHex() + "', " +
-                                                  SQL_VALIDPASSWORD + " = 1 WHERE " +
-                                                  SQL_USERNAME + " = '" + username + "';");
+            QSqlQuery changeQuery(*m_serverData);
+            changeQuery.exec(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                             SQL_PASSWORD + " = " + "'" + password.toHex() + "', " +
+                             SQL_VALIDPASSWORD + " = 1 WHERE " +
+                             SQL_USERNAME + " = '" + username + "';");
             if (sqlQueryFailed(changeQuery))
             {
                 result = GameEnums::LoginError_InvalidPasswordReset;
@@ -1741,23 +1748,25 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonObject &objDa
 
 QSqlQuery MainServer::getAccountInfo(QSqlDatabase &database, const QString &username, bool &success)
 {
-    QSqlQuery query = database.exec(QString("SELECT ") +
-                                    SQL_USERNAME + ", " +
-                                    SQL_PASSWORD + ", " +
-                                    SQL_MAILADRESS + ", " +
-                                    SQL_MMR + ", " +
-                                    SQL_VALIDPASSWORD + ", " +
-                                    SQL_LASTLOGIN +
-                                    " from " + SQL_TABLE_PLAYERS +
-                                    " WHERE " + SQL_USERNAME +
-                                    " = '" + username + "';");
+    QSqlQuery query(database);
+    query.exec(QString("SELECT ") +
+               SQL_USERNAME + ", " +
+               SQL_PASSWORD + ", " +
+               SQL_MAILADRESS + ", " +
+               SQL_MMR + ", " +
+               SQL_VALIDPASSWORD + ", " +
+               SQL_LASTLOGIN +
+               " from " + SQL_TABLE_PLAYERS +
+               " WHERE " + SQL_USERNAME +
+               " = '" + username + "';");
     success = !sqlQueryFailed(query);
     return query;
 }
 
 QSqlQuery MainServer::getAllUsers(QSqlDatabase &database, bool &success)
 {
-    QSqlQuery query = database.exec(QString("SELECT ") + SQL_USERNAME + " from " + SQL_TABLE_PLAYERS + ";");
+    QSqlQuery query(database);
+    query.exec(QString("SELECT ") + SQL_USERNAME + " from " + SQL_TABLE_PLAYERS + ";");
     success = !sqlQueryFailed(query);
     return query;
 }

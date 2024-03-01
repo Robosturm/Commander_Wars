@@ -120,7 +120,7 @@ void ProxyAi::recieveData(quint64 socketID, QByteArray data, NetworkInterface::N
     }
     else
     {
-        CONSOLE_PRINT("Unknown serve in ProxyAi::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+        CONSOLE_PRINT("Unknown service in ProxyAi::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
     }
 }
 

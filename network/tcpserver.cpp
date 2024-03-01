@@ -74,7 +74,10 @@ void TCPServer::disconnectTCP()
     }
     for (auto & client : m_pClients)
     {
-        client->disconnectTCP();
+        if (client.get() != nullptr)
+        {
+            client->disconnectTCP();
+        }
     }
     m_pClients.clear();
     for (auto & pTcpServer : m_pTCPServer)
@@ -93,11 +96,14 @@ void TCPServer::disconnectClient(quint64 socketID)
     if (iter != m_pClients.end())
     {
         CONSOLE_PRINT("Client " + QString::number(socketID) + " disconnected.", GameConsole::eLogLevels::eDEBUG);
-        auto client = iter.value();
-        client->disconnectTCP();
-        emit client->sigDisconnected(client->getSocketID());
-        emit sigDisconnected(socketID);
-        m_pClients.remove(socketID);
+        spTCPClient client = iter.value();
+        if (client.get() != nullptr)
+        {
+            client->disconnectTCP();
+            emit client->sigDisconnected(client->getSocketID());
+            emit sigDisconnected(socketID);
+            m_pClients.remove(socketID);
+        }
     }
 }
 
@@ -151,7 +157,8 @@ void TCPServer::forwardData(quint64 socketID, QByteArray data, NetworkInterface:
 {
     for (auto & client : m_pClients)
     {
-        if (client->getSocketID() != socketID &&
+        if (client.get() != nullptr &&
+            client->getSocketID() != socketID &&
             client->getIsActive())
         {
             emit client->sig_sendData(socketID, data, service, false);

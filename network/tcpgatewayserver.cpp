@@ -29,32 +29,42 @@ void TcpGatewayServer::onConnect()
     }
     else
     {
-        QString command = NetworkCommands::GATEWAYCLIENTCONNECTED;
-        QJsonObject data;
-        data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        data.insert(JsonKeys::JSONKEY_SOCKETID, static_cast<qint64>(m_idCounter));
-        QJsonDocument doc(data);
-        CONSOLE_PRINT("Sending gateway info command " + command + " to socket " + QString::number(m_gatewayHost), GameConsole::eDEBUG);
-        emit m_pClients[m_gatewayHost]->sig_sendData(m_gatewayHost, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::Gateway, false);
+        auto gatewayHost = m_pClients[m_gatewayHost];
+        if (gatewayHost.get() != nullptr)
+        {
+            QString command = NetworkCommands::GATEWAYCLIENTCONNECTED;
+            QJsonObject data;
+            data.insert(JsonKeys::JSONKEY_COMMAND, command);
+            data.insert(JsonKeys::JSONKEY_SOCKETID, static_cast<qint64>(m_idCounter));
+            QJsonDocument doc(data);
+            CONSOLE_PRINT("Sending gateway info command " + command + " to socket " + QString::number(m_gatewayHost), GameConsole::eDEBUG);
+            emit gatewayHost->sig_sendData(m_gatewayHost, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::Gateway, false);
+        }
     }
 }
 
 void TcpGatewayServer::disconnectClient(quint64 socketID)
 {
-    QString command = NetworkCommands::GATEWAYCLIENTDISCONNECTED;
-    QJsonObject data;
-    data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    data.insert(JsonKeys::JSONKEY_SOCKETID, static_cast<qint64>(socketID));
-    QJsonDocument doc(data);
-    CONSOLE_PRINT("Sending gateway info command " + command + " to socket " + QString::number(m_gatewayHost), GameConsole::eDEBUG);
-    emit m_pClients[m_gatewayHost]->sig_sendData(m_gatewayHost, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::Gateway, false);
+    auto gatewayHost = m_pClients[m_gatewayHost];
+    if (gatewayHost.get() != nullptr &&
+        socketID != m_gatewayHost)
+    {
+        QString command = NetworkCommands::GATEWAYCLIENTDISCONNECTED;
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_SOCKETID, static_cast<qint64>(socketID));
+        QJsonDocument doc(data);
+        CONSOLE_PRINT("Sending gateway info command " + command + " to socket " + QString::number(m_gatewayHost), GameConsole::eDEBUG);
+        emit gatewayHost->sig_sendData(m_gatewayHost, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::Gateway, false);
+    }
 }
 
 void TcpGatewayServer::forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     for (auto & client : m_pClients)
     {
-        if (client->getSocketID() != socketID &&
+        if (client.get() != nullptr &&
+            client->getSocketID() != socketID &&
             client->getSocketID() != m_gatewayHost &&
             client->getIsActive())
         {
@@ -70,15 +80,18 @@ quint64 TcpGatewayServer::getGatewayHost() const
 
 void TcpGatewayServer::receivedData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
 {
+    auto client = m_pClients[socket];
+    auto gatewayHost = m_pClients[m_gatewayHost];
     if (senderSocket == m_gatewayHost &&
         senderSocket != 0 &&
         socket != m_gatewayHost &&
-        m_pClients[socket].get() != nullptr)
+        client.get() != nullptr)
     {
-        emit m_pClients[socket]->sig_sendData(socket, data, service, false);
+        emit client->sig_sendData(socket, data, service, false);
     }
-    else if (senderSocket != m_gatewayHost)
+    else if (senderSocket != m_gatewayHost &&
+             gatewayHost.get() != nullptr)
     {
-        emit m_pClients[m_gatewayHost]->sig_sendData(socket, data, service, false);
+        emit gatewayHost->sig_sendData(socket, data, service, false);
     }
 }
