@@ -20,6 +20,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/gameversion.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/fontmanager.h"
@@ -93,7 +94,7 @@ Mainwindow::Mainwindow(const QString & initialView)
     style.color = Qt::black;
     spLabel pTextfield = MemoryManagement::create<Label>(300);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText("Version: " + Mainapp::getGameVersion());
+    pTextfield->setHtmlText("Version: " + GameVersion().toString());
     pTextfield->setPosition(oxygine::Stage::getStage()->getWidth() - 10 - pTextfield->getTextRect().width(), oxygine::Stage::getStage()->getHeight() - 10 - pTextfield->getTextRect().height());
     pTextfield->addClickListener([this](oxygine::Event*)
     {

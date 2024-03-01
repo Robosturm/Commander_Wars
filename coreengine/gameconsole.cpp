@@ -18,6 +18,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/gameversion.h"
 
 #include "game/gamemap.h"
 
@@ -432,7 +433,7 @@ void GameConsole::logActions(bool log)
 
 void GameConsole::extractResources()
 {
-    QString targetDir = QString("extractedResources_Version_") + Mainapp::getGameVersion().replace(".", "_") + "/";
+    QString targetDir = QString("extractedResources_Version_") + GameVersion().toString().replace(".", "_") + "/";
     QDir target(targetDir);
     if (target.exists())
     {

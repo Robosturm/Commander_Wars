@@ -615,6 +615,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/commandlineparser.cpp coreengine/commandlineparser.h
     coreengine/JsCallback.h
     coreengine/memorymanagement.h coreengine/memorymanagement.cpp
+    coreengine/gameversion.h coreengine/gameversion.cpp
     coreengine/refobject.h
     coreengine/jsthis.h coreengine/jsthis.cpp
 

@@ -9,7 +9,10 @@ namespace JsonKeys
     const char* const JSONKEY_NAME = "name";
     const char* const JSONKEY_HASPASSWORD = "hasPassword";
     const char* const JSONKEY_UUID = "uuid";
-    const char* const JSONKEY_VERSION = "version";
+    const char* const JSONKEY_VERSION_MAJOR = "versionMajor";
+    const char* const JSONKEY_VERSION_MINOR = "versionMinor";
+    const char* const JSONKEY_VERSION_REVISION = "versionRevision";
+    const char* const JSONKEY_VERSION_SUFIX = "versionSufix";
     const char* const JSONKEY_JOINEDPLAYERS = "joinedPlayers";
     const char* const JSONKEY_MAXPLAYERS = "maxPlayers";
     const char* const JSONKEY_USEDMODS = "usedMods";
@@ -72,6 +75,7 @@ namespace JsonKeys
     const char* const JSONKEY_RESULT = "result";
     const char* const JSONKEY_REPLAYFILE = "replayFile";
     const char* const JSONKEY_RECORDLIST = "recordList";
+    const char* const JSONKEY_SOCKETID = "socketId";
     // map filter
     const char* const JSONKEY_PLAYERDATA = "mapPlayerData";
     const char* const JSONKEY_MAPNAME = "mapName";

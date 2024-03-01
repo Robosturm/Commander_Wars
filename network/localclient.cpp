@@ -32,7 +32,7 @@ void LocalClient::connectTCP(QString primaryAdress, quint16 port, QString second
     connect(this, &LocalClient::sigDisconnectTCP, this, &LocalClient::disconnectTCP, Qt::QueuedConnection);
 
     // Start RX-Task
-    m_pRXTask = MemoryManagement::create<RxTask>(m_pSocket.get(), 0, this);
+    m_pRXTask = MemoryManagement::create<RxTask>(m_pSocket.get(), 0, this, true);
     connect(m_pSocket.get(), &QLocalSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task

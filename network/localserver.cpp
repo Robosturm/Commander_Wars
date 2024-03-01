@@ -84,7 +84,7 @@ void LocalServer::onConnect()
         connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
         m_idCounter++;
         // Start RX-Task
-        spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket, m_idCounter, this);
+        spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket, m_idCounter, this, true);
         m_pRXTasks.append(pRXTask);
         connect(nextSocket, &QLocalSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 

@@ -93,11 +93,11 @@ void Chat::setVisible(bool vis)
     
 }
 
-void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
+void Chat::dataRecieved(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
 {
     if (service == m_serviceMode)
     {
-        CONSOLE_PRINT("Receiving chat message", GameConsole::eDEBUG);
+        CONSOLE_PRINT("Receiving chat message from " + QString::number(socketID) , GameConsole::eDEBUG);
         QJsonDocument message = QJsonDocument::fromJson(data);
 
         addMessage(message.object());

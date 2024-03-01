@@ -320,7 +320,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("Network json hosting client server command received: " + messageType, GameConsole::eDEBUG);
+        CONSOLE_PRINT("Network json hosting client server command received: " + messageType + " from " + QString::number(socketID), GameConsole::eDEBUG);
         if (messageType == NetworkCommands::SERVERJOINGAME)
         {
             joinSlaveGame(socketID, objData);
@@ -426,6 +426,10 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
             CONSOLE_PRINT("Unknown command in MainServer::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
+    else
+    {
+        CONSOLE_PRINT("Unknown serve in MainServer::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+    }
 }
 
 void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -435,7 +439,7 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("Network json hosting slave server command received: " + messageType, GameConsole::eDEBUG);
+        CONSOLE_PRINT("Network json hosting slave server command received: " + messageType + " from " + QString::number(socketID), GameConsole::eDEBUG);
         if (messageType == NetworkCommands::SLAVEREADY)
         {
             onSlaveReady(socketID, objData);
@@ -469,6 +473,10 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         {
             CONSOLE_PRINT("Unknown command in MainServer::receivedSlaveData " + messageType + " received", GameConsole::eDEBUG);
         }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown serve in MainServer::receivedSlaveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
     }
 }
 
@@ -752,7 +760,11 @@ void MainServer::onRequestServerVersion(quint64 socketId, const QJsonObject &obj
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    data.insert(JsonKeys::JSONKEY_VERSION, Mainapp::getGameVersion());
+    GameVersion version;
+    data.insert(JsonKeys::JSONKEY_VERSION_MAJOR, version.getMajor());
+    data.insert(JsonKeys::JSONKEY_VERSION_MINOR, version.getMinor());
+    data.insert(JsonKeys::JSONKEY_VERSION_REVISION, version.getRevision());
+    data.insert(JsonKeys::JSONKEY_VERSION_SUFIX, version.getSufix());
     // send server data to all connected clients
     QJsonDocument doc(data);
     emit m_pGameServer->sig_sendData(socketId, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -1109,7 +1121,7 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo &slaveInfo)
         game->game->getData().setSlaveSecondaryAddress(slaveSecondaryAddress);
         game->game->getData().setSlavePort(slavePort);
         game->game->getData().setSlaveName(slaveName);
-        game->game->getData().setGameVersion(Mainapp::getGameVersion());
+        game->game->getData().setGameVersion(GameVersion());
         setUuidForGame(game->game->getData());
         // copy over suspended slave data
         game->game->getData().setPlayerNames(slaveInfo.game.getPlayerNames());
@@ -1203,7 +1215,7 @@ void MainServer::spawnSlave(const QString &initScript, const QStringList &mods, 
         game->game->getData().setSlavePort(slavePort);
         game->game->getData().setMods(mods);
         game->game->getData().setMinimapData(minimapData);
-        game->game->getData().setGameVersion(Mainapp::getGameVersion());
+        game->game->getData().setGameVersion(GameVersion());
         setUuidForGame(game->game->getData());
         connect(game->process.get(), &QProcess::finished, game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(game->process.get(), &QProcess::errorOccurred, game->game.get(), &NetworkGame::errorOccurred, Qt::QueuedConnection);

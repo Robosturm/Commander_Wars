@@ -57,7 +57,7 @@ void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdres
     m_pSocket->connectToHostEncrypted(address, port);
     
     // Start RX-Task
-    m_pRXTask = MemoryManagement::create<RxTask>(m_pSocket.get(), 0, this);
+    m_pRXTask = MemoryManagement::create<RxTask>(m_pSocket.get(), 0, this, false);
     connect(m_pSocket.get(), &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task

@@ -88,7 +88,7 @@ void ProxyAi::deserializeObject(QDataStream& stream)
     }
 }
 
-void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
+void ProxyAi::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64 senderSocket)
 {
     if (service == NetworkInterface::NetworkSerives::Game)
     {
@@ -98,7 +98,7 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
         stream >> player;
         if (m_pPlayer->getPlayerID() == player)
         {
-            CONSOLE_PRINT("Received action from network for player " + QString::number(player), GameConsole::eDEBUG);
+            CONSOLE_PRINT("Received action from network for player " + QString::number(player) + " from " + QString::number(socketID), GameConsole::eDEBUG);
             QMutexLocker locker(&m_ActionMutex);
             spGameAction pAction = MemoryManagement::create<GameAction>(m_pMap);
             pAction->deserializeObject(stream);
@@ -117,6 +117,10 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
                 }
             }
         }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown serve in ProxyAi::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
     }
 }
 

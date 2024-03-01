@@ -10,6 +10,7 @@ class GatewayServer : public QObject
     Q_OBJECT    
 public:
     explicit GatewayServer(MainServer& parent);
+    ~GatewayServer();
 
     void onLaunchGatewayGameOnServer(quint64 socketID, const QJsonObject & objData);
 private:

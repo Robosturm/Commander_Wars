@@ -118,7 +118,7 @@ void TCPServer::onConnect()
                     m_idCounter++;
                 }
                 // Start RX-Task
-                spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket.get(), m_idCounter, this);
+                spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket.get(), m_idCounter, this, m_useReceivedId);
                 connect(nextSocket.get(), &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
                 // start TX-Task

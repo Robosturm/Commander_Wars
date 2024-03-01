@@ -427,10 +427,10 @@ void LobbyMenu::joinGamePassword(QString password)
 bool LobbyMenu::checkGameVersion(NetworkGameData & game)
 {
     bool ret = true;
-    if (game.getGameVersion() != Mainapp::getGameVersion())
+    if (game.getGameVersion() != GameVersion())
     {
         spDialogMessageBox pDialogMessageBox;
-        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Game has a different version. Game versuib ") + game.getGameVersion());
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Game has a different version. Game version: ") + game.getGameVersion().toString());
         addChild(pDialogMessageBox);
         ret = false;
     }
@@ -558,7 +558,7 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("LobbyMenu Command received: " + messageType, GameConsole::eDEBUG);
+        CONSOLE_PRINT("LobbyMenu Command received: " + messageType + " from " + QString::number(socketID), GameConsole::eDEBUG);
         if (messageType == NetworkCommands::SERVERVERSION)
         {
             checkVersionAndShowInfo(objData);
@@ -655,6 +655,10 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             CONSOLE_PRINT("Unknown command in LobbyMenu::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown serve in LobbyMenu::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
     }
 }
 
@@ -797,24 +801,36 @@ void LobbyMenu::connected(quint64 socket)
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     QJsonDocument doc(data);
-    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pTCPClient->sig_sendData(socket, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::checkVersionAndShowInfo(const QJsonObject &objData)
 {
-    QString version = objData.value(JsonKeys::JSONKEY_VERSION).toString();
-    if (version == Mainapp::getGameVersion())
+    GameVersion gatewayVersion(0, 36, 0, "main");
+    GameVersion version;
+    version.setMajor(objData.value(JsonKeys::JSONKEY_VERSION_MAJOR).toInt());
+    version.setMinor(objData.value(JsonKeys::JSONKEY_VERSION_MINOR).toInt());
+    version.setRevision(objData.value(JsonKeys::JSONKEY_VERSION_REVISION).toInt());
+    version.setSufix(objData.value(JsonKeys::JSONKEY_VERSION_SUFIX).toString());
+    if (version == GameVersion())
     {
         m_sameVersionAsServer = true;
         requestPassword();
     }
-    else
+    else if (version >= gatewayVersion && GameVersion() >= gatewayVersion)
     {
         m_sameVersionAsServer = false;
         spDialogMessageBox pDialogMessageBox;
-        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Server has a different version of the game. Server ") + version + " Some features are not accessible.");
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Server has a different version of the game. Server ") + version.toString() + " Some features are not accessible.");
         addChild(pDialogMessageBox);
         connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &LobbyMenu::requestPassword, Qt::QueuedConnection);
+    }
+    else
+    {
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Connection refused. Server has a different version of the game. Server ") + version.toString());
+        addChild(pDialogMessageBox);
+        m_pTCPClient.reset();
     }
 }
 

@@ -10,6 +10,11 @@
 
 #include "coreengine/gameconsole.h"
 
+NetworkInterface::~NetworkInterface()
+{
+    CONSOLE_PRINT("~NetworkInterface", GameConsole::eDEBUG);
+}
+
 void NetworkInterface::attachKeys(QSslConfiguration &sslConfiguration)
 {
     std::unique_ptr<EVP_PKEY_CTX, void (*)(EVP_PKEY_CTX *)> ctx{EVP_PKEY_CTX_new_id(EVP_PKEY_RSA, nullptr), EVP_PKEY_CTX_free};

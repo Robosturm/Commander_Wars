@@ -18,6 +18,7 @@
 #include "coreengine/audiomanager.h"
 #include "coreengine/workerthread.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/gameversion.h"
 
 #include "ai/aiprocesspipe.h"
 
@@ -231,7 +232,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     {
         case StartupPhase::General:
         {
-            CONSOLE_PRINT("Launching game with version: " + getGameVersion(), GameConsole::eDEBUG);
+        CONSOLE_PRINT("Launching game with version: " + GameVersion().toString(), GameConsole::eDEBUG);
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
@@ -266,7 +267,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             QString updateStep = Settings::getInstance()->getUpdateStep();
             if (!getSlave() && !Settings::getInstance()->getAiSlave())
             {
-                if ((!getGameVersion().endsWith("dev") && Settings::getInstance()->getAutomaticUpdates()) ||
+                if ((GameVersion().getSufix() != "dev" && Settings::getInstance()->getAutomaticUpdates()) ||
                     updateStep == GameUpdater::MODE_FORCE ||
                     updateStep == GameUpdater::MODE_INSTALL)
                 {

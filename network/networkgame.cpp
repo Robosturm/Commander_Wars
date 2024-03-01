@@ -86,7 +86,7 @@ void NetworkGame::slaveRunning(const QJsonObject & objData, spTCPServer & pGameS
                           " with address " + m_data.getSlaveAddress() +
                           " secondary address " + m_data.getSlaveSecondaryAddress() +
                           " and port " + QString::number(m_data.getSlavePort()), GameConsole::eDEBUG);
-            QJsonObject data;
+            QJsonObject data = objData;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
             data.insert(JsonKeys::JSONKEY_ADDRESS, m_data.getSlaveAddress());
             data.insert(JsonKeys::JSONKEY_SECONDARYADDRESS, m_data.getSlaveSecondaryAddress());

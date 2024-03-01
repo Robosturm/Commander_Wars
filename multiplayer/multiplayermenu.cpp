@@ -363,14 +363,20 @@ void Multiplayermenu::showMapSelection()
 
 void Multiplayermenu::playerJoined(quint64 socketID)
 {
-    CONSOLE_PRINT("Multiplayermenu::playerJoined " +QString::number(socketID) , GameConsole::eDEBUG);
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    bool gatewayHosting = pMap.get() != nullptr && pMap->getGameRules()->getGatewayHosting();
     if (m_pNetworkInterface->getIsServer() &&
-       (m_local || Mainapp::getSlave()))
+        (m_local || Mainapp::getSlave() || gatewayHosting))
     {
+        CONSOLE_PRINT("Multiplayermenu::playerJoined " + QString::number(socketID) , GameConsole::eDEBUG);
         acceptNewConnection(socketID);
         if (m_pPlayerSelection.get() != nullptr)
         {
             m_pPlayerSelection->sendOpenPlayerCount();
+        }
+        if (gatewayHosting)
+        {
+            emit sigHostGameLaunched();
         }
     }
 }
@@ -579,6 +585,10 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             CONSOLE_PRINT("Unknown command in Multiplayermenu::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
+    else
+    {
+        CONSOLE_PRINT("Unknown serve in Multiplayermenu::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+    }
 }
 
 void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject & objData)
@@ -712,7 +722,7 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID)
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream.setVersion(QDataStream::Version::Qt_6_5);
     stream << command;
-    stream << Mainapp::getGameVersion();
+    GameVersion().serializeObject(stream);
     QStringList mods = Settings::getInstance()->getMods();
     QStringList versions = Settings::getInstance()->getActiveModVersions();
     bool filter = false;
@@ -770,19 +780,23 @@ void Multiplayermenu::connectToSlave(const QJsonObject & objData, quint64 socket
     QString address = objData.value(JsonKeys::JSONKEY_ADDRESS).toString();
     QString secondarySlaveAddress = objData.value(JsonKeys::JSONKEY_SECONDARYADDRESS).toString();
     quint16 port = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    bool isServer = m_pNetworkInterface->getIsServer();
+    bool isGateway = pMap->getGameRules()->getGatewayHosting();
     disconnectNetworkSlots();
     m_pNetworkInterface = MemoryManagement::create<TCPClient>(nullptr);
     m_pNetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
     m_pNetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    if (pMap->getGameRules()->getGatewayHosting())
+    if (isGateway)
     {
         Mainapp::getInstance()->setSlaveClient(m_pNetworkInterface);
+        m_pNetworkInterface->setIsServer(isServer);
+        Settings::getInstance()->setSlaveServerName(objData.value(JsonKeys::JSONKEY_SLAVENAME).toString());
     }
     m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
     createChat();
     connectNetworkSlots();
-    emit m_pNetworkInterface->sig_connect(address, port, secondarySlaveAddress);
+    emit m_pNetworkInterface->sig_connect(address, port, secondarySlaveAddress, isGateway);
 }
 
 void Multiplayermenu::onSlaveConnectedToMaster(quint64 socketID)
@@ -1213,8 +1227,8 @@ bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & ve
 
 void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, bool & sameMods, bool & differentHash, bool & sameVersion)
 {
-    QString version;
-    stream >> version;
+    GameVersion version;
+    version.deserializeObject(stream);
     bool filter = false;
     stream >> filter;
     qint32 size = 0;
@@ -1239,7 +1253,7 @@ void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStri
         CONSOLE_PRINT("Own hash:           " + ownString, GameConsole::eDEBUG);
     }
     differentHash = (hostRuntime != ownRuntime);
-    sameVersion = version == Mainapp::getGameVersion();
+    sameVersion = version == GameVersion();
 }
 
 void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
@@ -1857,14 +1871,19 @@ void Multiplayermenu::buttonBack()
     }
     else if (m_networkMode != NetworkMode::Host ||
         m_MapSelectionStep == MapSelectionStep::selectMap ||
-        !m_local)
+        !m_local ||
+        isGatewayGame())
     {
         CONSOLE_PRINT("Leaving Map Selection Menue button back pressed", GameConsole::eDEBUG);
+        disconnectGateway();
         exitMenuToLobby();
     }
     else if (m_networkMode == NetworkMode::Host)
     {
-        m_pHostAdresse->setVisible(false);
+        if (m_pHostAdresse.get() != nullptr)
+        {
+            m_pHostAdresse->setVisible(false);
+        }
         if (m_Chat.get() != nullptr)
         {
             m_Chat->detach();
@@ -1876,9 +1895,36 @@ void Multiplayermenu::buttonBack()
         {
             MapSelectionMapsMenue::buttonBack();
             m_saveGame = false;
-            m_pPlayerSelection->setSaveGame(m_saveGame);
+            if (m_pPlayerSelection.get() != nullptr)
+            {
+                m_pPlayerSelection->setSaveGame(m_saveGame);
+            }
         }
     }
+}
+
+void Multiplayermenu::disconnectGateway()
+{
+    if (!Mainapp::getSlave())
+    {
+        spNetworkInterface emptyClient;
+        Mainapp::getInstance()->setSlaveClient(emptyClient);
+        if (isGatewayGame())
+        {
+            m_local = false;
+        }
+    }
+}
+
+bool Multiplayermenu::isGatewayGame()
+{
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    if (pMap.get() != nullptr &&
+        pMap->getGameRules()->getGatewayHosting())
+    {
+        return true;
+    }
+    return false;
 }
 
 void Multiplayermenu::showInformingServer()
@@ -1912,6 +1958,7 @@ void Multiplayermenu::buttonNext()
             if (pMap->getGameRules()->getGatewayHosting())
             {
                 connectNetworkSlots();
+                startGatewayGameOnServer();
             }
             else
             {
@@ -1991,7 +2038,7 @@ void Multiplayermenu::startGatewayGameOnServer()
     gameData.setMaxPlayers(pMap->getPlayerCount());
     gameData.setMaxObservers(pMap->getGameRules()->getMultiplayerObserver());
     gameData.setLocked(pMap->getGameRules()->getPassword().getIsSet());
-    gameData.setGameVersion(Mainapp::getGameVersion());
+    gameData.setGameVersion(GameVersion());
     QImage img;
     pApp->saveMapAsImage(m_pMapSelectionView->getMinimap(), &img);
     QByteArray ba;
@@ -2001,7 +2048,9 @@ void Multiplayermenu::startGatewayGameOnServer()
     gameData.setMinimapData(ba);
     data.insert(JsonKeys::JSONKEY_GAMEDATA, gameData.toJson());
     QJsonDocument doc(data);
-    emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    m_pNetworkInterface->setIsServer(true);
+    m_local = true;
+    emit m_pNetworkInterface->sig_sendData(m_pNetworkInterface->getSocketID(), doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     waitForServerConnection();
 }
 

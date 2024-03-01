@@ -12,6 +12,7 @@ TxTask::TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, b
    m_pIF(CommIF),
    m_sendAll(sendAll)
 {
+    setObjectName("TxTask");
     Interpreter::setCppOwnerShip(this);
 }
 

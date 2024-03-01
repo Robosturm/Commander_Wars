@@ -1,14 +1,20 @@
 #include <QIODevice>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 #include "network/rxtask.h"
 #include "network/networkInterface.h"
+#include "network/JsonKeys.h"
+#include "multiplayer/networkcommands.h"
 
-RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF)
+RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool useReceivedId)
     : m_pSocket(pSocket),
       m_pIF(CommIF),
       m_SocketID(socketID),
-      m_pStream(m_pSocket)
+      m_pStream(m_pSocket),
+      m_useReceivedId(useReceivedId)
 {
+    setObjectName("RxTask");
     m_pStream.setVersion(QDataStream::Version::Qt_6_5);
     Interpreter::setCppOwnerShip(this);
 }
@@ -33,6 +39,11 @@ void RxTask::recieveData()
             bool forwardData = false;
             quint64 socketId;
             m_pStream >> socketId;
+            if (!m_useReceivedId &&
+                eService != NetworkInterface::NetworkSerives::ServerSocketInfo)
+            {
+                socketId = m_SocketID;
+            }
             if (eService == NetworkInterface::NetworkSerives::ServerSocketInfo)
             {
                 m_SocketID = socketId;
@@ -44,7 +55,11 @@ void RxTask::recieveData()
             {
                 return;
             }
-            if (eService == NetworkInterface::NetworkSerives::ServerSocketInfo)
+            if (eService == NetworkInterface::NetworkSerives::Gateway)
+            {
+                handleGatewayData(socketId, data);
+            }
+            else if (eService == NetworkInterface::NetworkSerives::ServerSocketInfo)
             {
                 CONSOLE_PRINT("Updating Socket ID to: " + QString::number(socketId), GameConsole::eLogLevels::eDEBUG);
                 m_pIF->setSocketID(socketId);
@@ -73,4 +88,24 @@ quint64 RxTask::getSocketID() const
 void RxTask::setSocketID(const quint64 &SocketID)
 {
     m_SocketID = SocketID;
+}
+
+void RxTask::handleGatewayData(quint64 socketID, QByteArray data)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    QJsonObject objData = doc.object();
+    QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
+    CONSOLE_PRINT("Network json hosting slave server command received: " + messageType, GameConsole::eDEBUG);
+    if (messageType == NetworkCommands::GATEWAYCLIENTCONNECTED)
+    {
+        emit m_pIF->sigConnected(objData.value(JsonKeys::JSONKEY_SOCKETID).toInteger());
+    }
+    else if (messageType == NetworkCommands::GATEWAYCLIENTCONNECTED)
+    {
+        emit m_pIF->sigDisconnected(objData.value(JsonKeys::JSONKEY_SOCKETID).toInteger());
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown command in RxTask::handleGatewayData " + messageType + " received", GameConsole::eDEBUG);
+    }
 }

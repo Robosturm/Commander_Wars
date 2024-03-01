@@ -344,6 +344,14 @@ private:
      * @brief waitForServerConnection
      */
     void waitForServerConnection();
+    /**
+     * @brief disconnectGateway
+     */
+    void disconnectGateway();
+    /**
+     * @brief isGateway
+     */
+    bool isGatewayGame();
 private:
     NetworkMode m_networkMode{NetworkMode::Client};
     spNetworkInterface m_pNetworkInterface;

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QJsonObject>
+#include "coreengine/gameversion.h"
 
 /**
  * @brief The NetworkGameData class Data describing this game
@@ -82,8 +83,8 @@ public:
     qint32 getMaxObservers() const;
     void setMaxObservers(qint32 newMaxObservers);
 
-    QString getGameVersion() const;
-    void setGameVersion(const QString & newGameVersion);
+    const GameVersion & getGameVersion() const;
+    void setGameVersion(const GameVersion & newGameVersion);
 
 private:
     qint32 m_players{0};
@@ -94,7 +95,7 @@ private:
     QString m_mapName;
     QString m_slaveName;
     QString m_currentPlayer;
-    QString m_gameVersion;
+    GameVersion m_gameVersion;
     bool m_locked{false};
     bool m_launched{false};
     bool m_runningGame{false};

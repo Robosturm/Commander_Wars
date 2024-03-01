@@ -39,6 +39,7 @@ protected:
     quint64 m_idCounter = 0;
     spQSslServer m_pTCPServer[2];
     bool m_gameServer{false};
+    bool m_useReceivedId{false};
 };
 
 #endif // TCPSERVER_H

@@ -1394,6 +1394,10 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
             CONSOLE_PRINT("Command not handled in playerselection", GameConsole::eDEBUG);
         }
     }
+    else
+    {
+        CONSOLE_PRINT("Unknown serve in PlayerSelection::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+    }
 }
 
 void PlayerSelection::joinObserver(quint64 socketID)

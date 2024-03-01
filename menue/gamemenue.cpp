@@ -21,6 +21,7 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/settings.h"
 #include "coreengine/filesupport.h"
+#include "coreengine/gameversion.h"
 
 #include "ai/proxyai.h"
 #include "ai/aiprocesspipe.h"
@@ -692,7 +693,7 @@ void GameMenue::sendVerifyGameData(quint64 socketID)
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream.setVersion(QDataStream::Version::Qt_6_5);
     stream << command;
-    stream << Mainapp::getGameVersion();
+    GameVersion().serializeObject(stream);
     QStringList mods = Settings::getInstance()->getMods();
     QStringList versions = Settings::getInstance()->getActiveModVersions();
     bool filter = m_pMap->getGameRules()->getCosmeticModsAllowed();

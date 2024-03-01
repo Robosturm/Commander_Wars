@@ -39,6 +39,7 @@ public:
         ServerSocketInfo,       /**< used inside the rx-task data is not emitted when recieving this data */
         CryptedMessage,
         AiPipe,                 /**< internal pipe for computing what the ai does */
+        Gateway,
         Max,
     };
 
@@ -52,7 +53,7 @@ public:
         connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
         connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);
     }
-    virtual ~NetworkInterface() = default;
+    virtual ~NetworkInterface();
 
     static QString getIPAdresse()
     {

@@ -14,6 +14,7 @@
 
 #include "coreengine/metatyperegister.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/gameversion.h"
 
 #ifdef UPDATESUPPORT
 #include "updater/gameupdater.h"
@@ -30,7 +31,7 @@ int main(qint32 argc, char* argv[])
 #endif
     GlobalUtils::setup();
     app.setApplicationName("Commander Wars");
-    app.setApplicationVersion(Mainapp::getGameVersion());
+    app.setApplicationVersion(GameVersion().toString());
     QThread::currentThread()->setPriority(QThread::Priority::HighestPriority);
     Mainapp window;
     window.setTitle("Commander Wars");

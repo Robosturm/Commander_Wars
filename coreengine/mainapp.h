@@ -249,14 +249,6 @@ public slots:
     void changePosition(QPoint pos, bool invert);
     Settings::ScreenModes getScreenMode();
     /**
-     * @brief getGameVersion
-     * @return
-     */
-    static QString getGameVersion()
-    {
-        return QString::number(VERSION_MAJOR) + "." + QString::number(VERSION_MINOR) + "." + QString::number(VERSION_REVISION)+ "-" + QString(VERSION_SUFFIX);
-    }
-    /**
      * @brief showCrashReport
      * @param log
      */
