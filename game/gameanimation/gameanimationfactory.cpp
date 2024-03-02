@@ -74,6 +74,7 @@ void GameAnimationFactory::release()
 spGameAnimation GameAnimationFactory::createSpAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
 {
     CONSOLE_PRINT("Creating animation", GameConsole::eDEBUG);
+    Mainapp::getInstance()->pauseRendering();
     spGameAnimation animation = MemoryManagement::create<GameAnimation>(frameTime, pMap);
     if (mapPosition)
     {
@@ -89,6 +90,7 @@ spGameAnimation GameAnimationFactory::createSpAnimation(GameMap* pMap, qint32 x,
         pMap->addChild(animation);
     }
     m_Animations.append(animation);
+    Mainapp::getInstance()->continueRendering();
     return animation;
 }
 

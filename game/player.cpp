@@ -807,7 +807,7 @@ void Player::setTeam(const qint32 value)
 
 void Player::defeatPlayer(Player* pPlayer, bool units)
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     QVector<GameAnimation*> pAnimations;
     qint32 counter = 0;
     m_isDefeated = true;
@@ -870,6 +870,7 @@ void Player::defeatPlayer(Player* pPlayer, bool units)
     {
         m_pMenu->updatePlayerinfo();
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 bool Player::getIsDefeated() const

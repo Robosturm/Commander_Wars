@@ -128,7 +128,7 @@ void TCPServer::onConnect()
                 connect(nextSocket.get(), &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
                 // start TX-Task
-                spTxTask pTXTask = MemoryManagement::create<TxTask>(nextSocket.get(), m_idCounter, this, false);
+                spTxTask pTXTask = MemoryManagement::create<TxTask>(nextSocket.get(), m_idCounter, this, m_sendAll);
                 connect(this, &TCPServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
                 spTCPClient pClient = MemoryManagement::create<TCPClient>(this, pRXTask, pTXTask, nextSocket, m_idCounter);
                 connect(pClient.get(), &TCPClient::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);

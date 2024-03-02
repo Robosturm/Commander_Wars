@@ -273,7 +273,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                     GlobalUtils::seed(seed);
                     GlobalUtils::setUseSeed(true);
                     sendStream << seed;
-                    emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
                     emit sigGameStarted();
                 }
             }
@@ -543,7 +543,7 @@ void GameMenue::sendDrawVoteResult(bool result)
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_VOTERESULT, result);
     QJsonDocument doc(data);
-    emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, true);
 }
 
 void GameMenue::receivedDrawVoting(quint64 socketID, const QJsonObject & objData)
@@ -573,7 +573,7 @@ void GameMenue::receivedDrawVoting(quint64 socketID, const QJsonObject & objData
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_VOTERESULT, static_cast<qint32>(voteResult));
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, true);
         if (voteResult == GameEnums::DrawVoting_Yes)
         {
             if (Mainapp::getSlave())
@@ -728,7 +728,7 @@ void GameMenue::doResyncGame()
             stream.setVersion(QDataStream::Version::Qt_6_5);
             stream << command;
             Filesupport::writeByteArray(stream, m_pMap->getMapHash());
-            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, true);
         }
         else
         {
@@ -1327,15 +1327,18 @@ void GameMenue::disconnected(quint64 socketID)
 
 void GameMenue::startDespawnTimer()
 {
-    if (m_pNetworkInterface.get() != nullptr &&
-        m_pNetworkInterface->getConnectedSockets().size() == 0)
+    if (Mainapp::getSlave())
     {
-        CONSOLE_PRINT("GameMenue::startDespawnTimer", GameConsole::eDEBUG);
-        m_slaveDespawnElapseTimer.start();
-        m_slaveDespawnTimer.setSingleShot(false);
-        m_despawning = false;
-        constexpr qint32 MS_PER_SECOND = 1000;
-        m_slaveDespawnTimer.start(MS_PER_SECOND);
+        if (m_pNetworkInterface.get() != nullptr &&
+            m_pNetworkInterface->getConnectedSockets().size() == 0)
+        {
+            CONSOLE_PRINT("GameMenue::startDespawnTimer", GameConsole::eDEBUG);
+            m_slaveDespawnElapseTimer.start();
+            m_slaveDespawnTimer.setSingleShot(false);
+            m_despawning = false;
+            constexpr qint32 MS_PER_SECOND = 1000;
+            m_slaveDespawnTimer.start(MS_PER_SECOND);
+        }
     }
 }
 
@@ -2548,7 +2551,10 @@ void GameMenue::sendGameStartedToServer()
         data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
         QJsonDocument doc(data);
         emit Mainapp::getInstance()->getSlaveClient()->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-        startDespawnTimer();
+        if (Mainapp::getSlave())
+        {
+            startDespawnTimer();
+        }
     }
 }
 

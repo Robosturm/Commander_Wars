@@ -78,6 +78,9 @@ public:
      * @param shakePauseMs
      */
     Q_INVOKABLE void addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
+
+public slots:
+    virtual void start() override;
 private:
     /**
      * @brief getIsRight

@@ -96,7 +96,6 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     // battleTimer
     m_battleTimer.setSingleShot(false);
     connect(&m_battleTimer, &QTimer::timeout, this, &BattleAnimation::nextAnimatinStep, Qt::QueuedConnection);
-    nextAnimatinStep();
     CONSOLE_PRINT("BattleAnimation::BattleAnimation()", GameConsole::eDEBUG);
 }
 
@@ -642,16 +641,27 @@ void BattleAnimation::restart()
     if (m_pMap != nullptr)
     {
         auto* pMenu = m_pMap->getMenu();
+        GameAnimation::restart();
         if (pMenu != nullptr)
         {
             pMenu->addChild(getSharedPtr<Actor>());
-            m_battleTimer.start();
         }
+        m_battleTimer.start();
+    }
+}
+
+void BattleAnimation::start()
+{
+    if (!m_started)
+    {
+        GameAnimation::start();
+        nextAnimatinStep();
     }
 }
 
 void BattleAnimation::stop()
 {
+    GameAnimation::stop();
     m_battleTimer.stop();
 }
 
@@ -675,10 +685,12 @@ void BattleAnimation::stopSound(bool forceStop)
 
 void BattleAnimation::nextAnimatinStep()
 {
-    Mainapp::getInstance()->pauseRendering();
-    CONSOLE_PRINT("BattleAnimation::nextAnimatinStep " + QString::number(static_cast<qint32>(m_currentState)), GameConsole::eDEBUG);
-    switch (m_currentState)
+    if (m_started)
     {
+        Mainapp::getInstance()->pauseRendering();
+        CONSOLE_PRINT("BattleAnimation::nextAnimatinStep " + QString::number(static_cast<qint32>(m_currentState)), GameConsole::eDEBUG);
+        switch (m_currentState)
+        {
         case AnimationProgress::MoveIn:
         {
             loadMoveInAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
@@ -829,14 +841,15 @@ void BattleAnimation::nextAnimatinStep()
         {
             break;
         }
+        }
+        m_currentState = static_cast<AnimationProgress>(static_cast<qint32>(m_currentState) + 1);
+
+        if (m_currentState > AnimationProgress::Finished)
+        {
+            BattleAnimation::onFinished(false);
+        }
+        Mainapp::getInstance()->continueRendering();
     }
-    m_currentState = static_cast<AnimationProgress>(static_cast<qint32>(m_currentState) + 1);
-    
-    if (m_currentState > AnimationProgress::Finished)
-    {
-        BattleAnimation::onFinished(false);
-    }
-    Mainapp::getInstance()->continueRendering();
 }
 
 Unit *BattleAnimation::getDefUnit() const

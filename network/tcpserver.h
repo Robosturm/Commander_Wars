@@ -40,6 +40,7 @@ protected:
     spQSslServer m_pTCPServer[2];
     bool m_gameServer{false};
     bool m_useReceivedId{false};
+    bool m_sendAll{false};
 };
 
 #endif // TCPSERVER_H

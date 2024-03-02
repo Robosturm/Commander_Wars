@@ -468,6 +468,7 @@ void PlayerSelection::showPlayerSelection(bool relaunchedLobby)
     initializeMap(relaunchedLobby);
     UiFactory::getInstance().createUi("ui/game/playerSelection.xml", this);
     updateInitialState(relaunchedLobby);
+    sendOpenPlayerCount();
     pApp->continueRendering();
 }
 
@@ -1231,7 +1232,7 @@ void PlayerSelection::selectAI(qint32 player, bool forced)
             createPlayerChangedData(data, socket, name, ai, player, false);
             // update data for all clients
             CONSOLE_PRINT(name + " AI " + QString::number(type) + " selected for player " + QString::number(player) + " and socket " + QString::number(socket) + " sending data.", GameConsole::eDEBUG);
-            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, true);
             updatePlayerData(player);
         }
         else
@@ -2174,6 +2175,7 @@ void PlayerSelection::disconnected(quint64 socketID)
 
 void PlayerSelection::updatePlayerData(qint32 player)
 {
+    sendOpenPlayerCount();
     if (player < 0)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)

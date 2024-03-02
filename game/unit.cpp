@@ -2974,7 +2974,8 @@ void Unit::removeUnit(bool killed)
 }
 
 GameAnimation* Unit::killUnit()
-{    
+{
+    Mainapp::getInstance()->pauseRendering();
     GameAnimation* pRet = nullptr;
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "createExplosionAnimation";
@@ -3000,6 +3001,7 @@ GameAnimation* Unit::killUnit()
             m_pMap->getGameRecorder()->lostUnit(m_pOwner->getPlayerID(), m_UnitID, m_pMap->getCurrentPlayer()->getPlayerID());
         }
     }
+    Mainapp::getInstance()->continueRendering();
     return pRet;
 }
 

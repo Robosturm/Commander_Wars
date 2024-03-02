@@ -10,6 +10,7 @@ TcpGatewayServer::TcpGatewayServer(QObject* pParent)
     : TCPServer(pParent)
 {
     m_useReceivedId = true;
+    m_sendAll = true;
     setObjectName("TcpGatewayServer");
     connect(this, &TCPServer::recieveData, this, &TcpGatewayServer::receivedData, Qt::QueuedConnection);
     connect(this, &TCPServer::sigDisconnectClient, this, &TcpGatewayServer::disconnectClient, Qt::QueuedConnection);
@@ -83,15 +84,14 @@ void TcpGatewayServer::receivedData(quint64 socket, QByteArray data, NetworkInte
     auto client = m_pClients[socket];
     auto gatewayHost = m_pClients[m_gatewayHost];
     if (senderSocket == m_gatewayHost &&
-        senderSocket != 0 &&
         socket != m_gatewayHost &&
         client.get() != nullptr)
     {
-        emit client->sig_sendData(socket, data, service, false);
+        emit client->sig_sendData(senderSocket, data, service, false);
     }
     else if (senderSocket != m_gatewayHost &&
              gatewayHost.get() != nullptr)
-    {
-        emit gatewayHost->sig_sendData(socket, data, service, false);
+    {        
+        emit gatewayHost->sig_sendData(senderSocket, data, service, false);
     }
 }

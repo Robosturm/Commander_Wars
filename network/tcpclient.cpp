@@ -40,7 +40,7 @@ TCPClient::~TCPClient()
     }
 }
 
-void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdress, bool sendAll)
+void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdress, bool gatewayClient)
 {
     m_secondaryAdress = secondaryAdress;
     m_port = port;
@@ -57,11 +57,11 @@ void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdres
     m_pSocket->connectToHostEncrypted(address, port);
     
     // Start RX-Task
-    m_pRXTask = MemoryManagement::create<RxTask>(m_pSocket.get(), 0, this, false);
+    m_pRXTask = MemoryManagement::create<RxTask>(m_pSocket.get(), 0, this, gatewayClient);
     connect(m_pSocket.get(), &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task
-    m_pTXTask = MemoryManagement::create<TxTask>(m_pSocket.get(), 0, this, sendAll);
+    m_pTXTask = MemoryManagement::create<TxTask>(m_pSocket.get(), 0, this, gatewayClient);
     connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
     CONSOLE_PRINT("Client is running and connecting to \"" + address + "\" and port " + QString::number(port), GameConsole::eLogLevels::eDEBUG);
     m_connectedAdress = address;

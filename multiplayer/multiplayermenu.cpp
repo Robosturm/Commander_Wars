@@ -2294,7 +2294,7 @@ void Multiplayermenu::countdown()
             CONSOLE_PRINT("Suspending thread shortly before informing slaves to launch game.", GameConsole::eDEBUG);
             QThread::msleep(200);
             CONSOLE_PRINT("Sending init game to clients", GameConsole::eDEBUG);
-            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, true);
             oxygine::Actor::detach();
         }
     }
