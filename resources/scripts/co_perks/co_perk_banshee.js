@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.getFuelCostModifier = function(co, unit, costs, map)
+    this.getFuelCostModifier = function(co, unit, x, y, costs, map)
     {
 		if (CO_PERK.isActive(co))
 		{

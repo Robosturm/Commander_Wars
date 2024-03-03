@@ -145,7 +145,7 @@ var Constructor = function()
         return "GE";
     };
 
-    this.getFuelCostModifier = function(co, unit, costs, map)
+    this.getFuelCostModifier = function(co, unit, x, y, costs, map)
     {
         if (CO.isActive(co))
         {
