@@ -148,7 +148,7 @@ var Constructor = function()
     this.powerDefBaseBonus = 10;
 
     this.d2dOffBonus = 0;
-    this.d2dDefBonus = 0;
+    this.d2dDefBonus = 20;
 
     this.d2dCoZoneDefBonus = 40;
     this.d2dCoZoneDefBaseBonus = 10;
@@ -186,7 +186,11 @@ var Constructor = function()
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return CO_WAYLON.d2dOffBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_WAYLON.d2dOffBonus;
+                    }
                 }
                 break;
             }
@@ -225,7 +229,11 @@ var Constructor = function()
                 }
                 else if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return CO_WAYLON.d2dDefBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_WAYLON.d2dDefBonus;
+                    }
                 }
                 break;
             }
@@ -271,11 +279,17 @@ var Constructor = function()
     {
         return qsTr("Air units have higher firepower and defense.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_WAYLON.d2dOffBonus, CO_WAYLON.d2dDefBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nKirov\n\nGlobal Effect: \nWaylon's air units have +%0% firepower and +%1% defence.") +
                    qsTr("\n\nCO Zone Effect: \nWaylon's air units gain +%2% firepower and +%3% defence. His other units gain +%4% firepower and +%5% defence.");
-        text = replaceTextArgs(text, [CO_WAYLON.d2dOffBonus, CO_WAYLON.d2dDefBonus, CO_WAYLON.d2dCoZoneOffBonus, CO_WAYLON.d2dCoZoneDefBonus, CO_WAYLON.d2dCoZoneOffBaseBonus, CO_WAYLON.d2dCoZoneDefBaseBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_WAYLON.d2dCoZoneOffBonus, CO_WAYLON.d2dCoZoneDefBonus, CO_WAYLON.d2dCoZoneOffBaseBonus, CO_WAYLON.d2dCoZoneDefBaseBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

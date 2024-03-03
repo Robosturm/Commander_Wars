@@ -150,8 +150,8 @@ var Constructor = function()
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
 
-    this.d2dBonusLuck = 10;
-    this.d2dBonusMissfortune = 5;
+    this.d2dBonusLuck = 15;
+    this.d2dBonusMissfortune = 10;
 
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
@@ -171,7 +171,11 @@ var Constructor = function()
                 }
                 break;
             }
-            return CO_FLAK.d2dBonusLuck;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return CO_FLAK.d2dBonusLuck;
+            }
         }
         return 0;
     };
@@ -194,7 +198,11 @@ var Constructor = function()
                 }
                 break;
             }
-            return CO_FLAK.d2dBonusMissfortune;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return CO_FLAK.d2dBonusMissfortune;
+            }
         }
         return 0;
     };
@@ -268,12 +276,18 @@ var Constructor = function()
     {
         return qsTr("He relies solely on his strength at the cost of his shoddy technique. Has greater than average luck, but also has misfortune.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_FLAK.d2dBonusLuck, CO_FLAK.d2dBonusMissfortune];
+        }
         var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
                qsTr("\nGlobal Effect: \nFlak's units gain +%0 luck and +%1 misfortune.") +
                qsTr("\n\nCO Zone Effect: \nFlak's units gain +%2 luck, +%3 misfortune, +%4% firepower, and +%5% defence.");
-        text = replaceTextArgs(text, [CO_FLAK.d2dBonusLuck, CO_FLAK.d2dBonusMissfortune,
+        text = replaceTextArgs(text, [values[0], values[1],
                                       CO_FLAK.d2dCoZoneBonusLuck, CO_FLAK.d2dCoZoneBonusMissfortune, CO_FLAK.d2dCoZoneOffBonus, CO_FLAK.d2dCoZoneDefBonus]);
         return text;
     };

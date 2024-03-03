@@ -162,7 +162,7 @@ var Constructor = function()
     this.powerMultiplier = 5;
     this.powerMovementPoints = 1;
 
-    this.d2dOffBonus = 5;
+    this.d2dOffBonus = 25;
     this.d2dOffMalus = -10;
     this.d2dDefBonus = 0;
 
@@ -200,7 +200,8 @@ var Constructor = function()
                     }
                     return CO_RATTIGAN.d2dCoZoneOffMalus;
                 }
-                else
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
                     if (count > 0)
                     {
@@ -238,7 +239,11 @@ var Constructor = function()
                 {
                     return CO_RATTIGAN.d2dCoZoneDefBonus;
                 }
-                return CO_RATTIGAN.d2dDefBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_RATTIGAN.d2dDefBonus;
+                }
             }
         }
         return 0;
@@ -315,12 +320,18 @@ var Constructor = function()
     {
         return qsTr("Rattigan's troops are trained to be extremely capable at dealing with large regiments of units, but are taken off guard by lone units.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_RATTIGAN.d2dOffBonus, CO_RATTIGAN.d2dOffMalus];
+        }
         var text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
                qsTr("\nGlobal Effect: \nRattigan's units gain +%0% firepower when engaging enemies that have another enemy unit within a 2-space range. They have %1% firepower against enemy units that are otherwise alone.") +
                qsTr("\n\nCO Zone Effect: \nRattigan's units gain +%2% firepower when engaging enemies that have another enemy unit within a 2-space range. They have +%3% firepower against enemy units that are otherwise alone. All of his units gain +%4% defence.");
-		text = replaceTextArgs(text, [CO_RATTIGAN.d2dOffBonus, CO_RATTIGAN.d2dOffMalus, CO_RATTIGAN.d2dCoZoneOffBonus, CO_RATTIGAN.d2dCoZoneOffMalus, CO_RATTIGAN.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_RATTIGAN.d2dCoZoneOffBonus, CO_RATTIGAN.d2dCoZoneOffMalus, CO_RATTIGAN.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

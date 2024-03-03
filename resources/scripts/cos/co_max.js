@@ -143,12 +143,14 @@ var Constructor = function()
     this.powerIndirectOffBonus = 0;
     this.powerOtherBonus = 10;
     this.powerDefBonus = 10;
+
     this.d2dCoZoneDefBonus = 10;
     this.d2dCoZoneOffBonus = 45;
     this.d2dCoZoneIndirectOffBonus = 0;
     this.d2dCoZoneOtherOffBonus = 10;
+
     this.d2dIndirectFirerangeMalus = 1;
-    this.d2dOffBonus = 15;
+    this.d2dOffBonus = 20;
     this.d2dIndirectOffBonus = -10;
     this.d2dOtherOffBonus = 0;
 
@@ -204,7 +206,8 @@ var Constructor = function()
                             return CO_MAX.d2dCoZoneOtherOffBonus;
                         }
                     }
-                    else
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
                     {
                         if (isDirect)
                         {
@@ -244,9 +247,13 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (unit.getBaseMaxRange() > 1)
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
-                return -CO_MAX.d2dIndirectFirerangeMalus;
+                if (unit.getBaseMaxRange() > 1)
+                {
+                    return -CO_MAX.d2dIndirectFirerangeMalus;
+                }
             }
         }
         return 0;
@@ -330,12 +337,18 @@ var Constructor = function()
     {
         return qsTr("Non-footsoldier direct combat units are tops.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_MAX.d2dOffBonus, CO_MAX.d2dIndirectFirerangeMalus, CO_MAX.d2dIndirectOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
             qsTr("\nGlobal Effect: \nMax's non-footsoldier direct combat units gain +%0% firepower. His indirect combat units lose -%1 range and have %2% firepower.") +
             qsTr("\n\nCO Zone Effect: \nMax's non-footsoldier direct combat units gain +%3% firepower. His indirect combat units have -%5% firepower. His footsoldiers gain +%4% firepower. All of his units gain +%6% defence.");
-        text = replaceTextArgs(text, [CO_MAX.d2dOffBonus, CO_MAX.d2dIndirectFirerangeMalus, CO_MAX.d2dIndirectOffBonus,
+        text = replaceTextArgs(text, [values[0], values[1], values[2],
                                       CO_MAX.d2dCoZoneOffBonus, CO_MAX.d2dCoZoneOtherOffBonus, CO_MAX.d2dCoZoneIndirectOffBonus, CO_MAX.d2dCoZoneDefBonus]);
         return text;
     };

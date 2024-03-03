@@ -179,7 +179,8 @@ var Constructor = function()
                 {
                     return CO_CAULDER.d2dCoZoneDefBonus;
                 }
-                else
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
                     return CO_CAULDER.d2dDefBonus;
                 }
@@ -205,7 +206,8 @@ var Constructor = function()
                 {
                     return CO_CAULDER.d2dCoZoneOffBonus;
                 }
-                else
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
                     return CO_CAULDER.d2dOffBonus;
                 }
@@ -279,41 +281,45 @@ var Constructor = function()
                         }
                     }
                 }
-                if (CO_CAULDER.d2dHealing)
+                if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
-                    var units = co.getOwner().getUnits();
-                    units.randomize();
-                    size = units.size();
-                    for (var i = 0; i < size; i++)
+                    if (CO_CAULDER.d2dHealing)
                     {
-                        unit = units.at(i);
-                        UNIT.repairUnit(unit, CO_CAULDER.d2dHealing, map);
-                        delay = globals.randInt(135, 265);
-                        if (animations.length < 5)
+                        var units = co.getOwner().getUnits();
+                        units.randomize();
+                        size = units.size();
+                        for (var i = 0; i < size; i++)
                         {
-                            delay *= i;
-                        }
-                        animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                        animation.setSound("power0.wav", 1, delay);
-                        if (animations.length < 5)
-                        {
-                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                            animations.push(animation);
-                        }
-                        else
-                        {
-                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                            animations[counter].queueAnimation(animation);
-                            animations[counter] = animation;
-                            counter++;
-                            if (counter >= animations.length)
+                            unit = units.at(i);
+                            UNIT.repairUnit(unit, CO_CAULDER.d2dHealing, map);
+                            delay = globals.randInt(135, 265);
+                            if (animations.length < 5)
                             {
-                                counter = 0;
+                                delay *= i;
                             }
-                        }
-                        if (!viewplayer.getFieldVisible(unit.getX(), unit.getY()))
-                        {
-                            animation.setVisible(false);
+                            animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
+                            animation.setSound("power0.wav", 1, delay);
+                            if (animations.length < 5)
+                            {
+                                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                                animations.push(animation);
+                            }
+                            else
+                            {
+                                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                                animations[counter].queueAnimation(animation);
+                                animations[counter] = animation;
+                                counter++;
+                                if (counter >= animations.length)
+                                {
+                                    counter = 0;
+                                }
+                            }
+                            if (!viewplayer.getFieldVisible(unit.getX(), unit.getY()))
+                            {
+                                animation.setVisible(false);
+                            }
                         }
                     }
                 }
@@ -356,12 +362,18 @@ var Constructor = function()
     {
         return qsTr("Caulder can reinforce his army while he is on the field.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_CAULDER.d2dOffBonus, CO_CAULDER.d2dDefBonus, CO_CAULDER.d2dHealing];
+        }
         var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n") +
                    qsTr("\nGlobal Effect: \nCaulder's units gain +%0% firepower and +%1% defense. They also repair +%2 HP at the start of his turn.") +
                    qsTr("\n\nCO Zone Effect: \nCaulder's units gain +%3% firepower and +%4% defense. They also repair +%5 HP at the start of his turn.");
-        text = replaceTextArgs(text, [CO_CAULDER.d2dOffBonus, CO_CAULDER.d2dDefBonus, CO_CAULDER.d2dHealing,
+        text = replaceTextArgs(text, [values[0], values[1], values[2],
                                       CO_CAULDER.d2dCoZoneOffBonus, CO_CAULDER.d2dCoZoneDefBonus, CO_CAULDER.d2dCoZoneHealing]);
         return text;
     };

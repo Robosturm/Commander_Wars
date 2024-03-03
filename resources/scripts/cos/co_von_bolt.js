@@ -131,8 +131,8 @@ var Constructor = function()
     this.d2dCoZoneOffBonus = 40;
     this.d2dCoZoneDefBonus = 40;
 
-    this.d2dOffBonus = 0;
-    this.d2dDefBonus = 0;
+    this.d2dOffBonus = 10;
+    this.d2dDefBonus = 10;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -150,7 +150,11 @@ var Constructor = function()
                 {
                     return CO_VON_BOLT.d2dCoZoneOffBonus;
                 }
-                return CO_VON_BOLT.d2dOffBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_VON_BOLT.d2dOffBonus;
+                }
             }
         }
         return 0;
@@ -171,7 +175,11 @@ var Constructor = function()
                 {
                     return CO_VON_BOLT.d2dCoZoneDefBonus;
                 }
-                return CO_VON_BOLT.d2dDefBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_VON_BOLT.d2dDefBonus;
+                }
             }
         }
         return 0;
@@ -212,11 +220,17 @@ var Constructor = function()
     {
         return qsTr("His CO-Zone is more potent than most.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_VON_BOLT.d2dOffBonus, CO_VON_BOLT.d2dDefBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect:\nVon Bolt's units have +%0% firepower and +%1% defence.") +
                qsTr("\n\nCO Zone Effect: \nVon Bolt's units gain +%2% firepower and +%3% defence.");
-        text = replaceTextArgs(text, [CO_VON_BOLT.d2dOffBonus, CO_VON_BOLT.d2dDefBonus, CO_VON_BOLT.d2dCoZoneOffBonus, CO_VON_BOLT.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_VON_BOLT.d2dCoZoneOffBonus, CO_VON_BOLT.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

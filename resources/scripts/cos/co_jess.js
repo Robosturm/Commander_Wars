@@ -232,20 +232,24 @@ var Constructor = function()
                 break;
             }
             }
-            if ((attacker.getUnitType() !== GameEnums.UnitType_Air) &&
-                (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
-                (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
-                return CO_JESS.d2dGroundBonus;
-            }
-            else if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
-                     (attacker.getUnitType() === GameEnums.UnitType_Naval))
-            {
-                return CO_JESS.d2dNavalAirBonus;
-            }
-            else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
-            {
-                return CO_JESS.d2dInfBonus;
+                if ((attacker.getUnitType() !== GameEnums.UnitType_Air) &&
+                        (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
+                        (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
+                {
+                    return CO_JESS.d2dGroundBonus;
+                }
+                else if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
+                         (attacker.getUnitType() === GameEnums.UnitType_Naval))
+                {
+                    return CO_JESS.d2dNavalAirBonus;
+                }
+                else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                {
+                    return CO_JESS.d2dInfBonus;
+                }
             }
         }
         return 0;
@@ -338,12 +342,18 @@ var Constructor = function()
     {
         return qsTr("Ground vehicles have increased firepower. Air and naval units are comparatively weak.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_JESS.d2dInfBonus, CO_JESS.d2dNavalAirBonus, CO_JESS.d2dGroundBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
                qsTr("\nGlobal Effect: \nJess' ground vehicles gain +%2% firepower. Her footsoldier units gain +%0% firepower. Her air and naval units have %1% firepower.") +
                qsTr("\n\nCO Zone Effect: \nJess' ground vehicles gain +%5% firepower. Her footsoldier units gain +%3% firepower. Her air and naval units have -%4% firepower.");
-        text = replaceTextArgs(text, [CO_JESS.d2dInfBonus, CO_JESS.d2dNavalAirBonus, CO_JESS.d2dGroundBonus,
+        text = replaceTextArgs(text, [values[0], values[1], values[2],
                                       CO_JESS.d2dCoZoneInfBonus, CO_JESS.d2dCoZoneNavalAirBonus, CO_JESS.d2dCoZoneGroundBonus]);
         return text;
     };

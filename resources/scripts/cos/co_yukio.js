@@ -173,23 +173,23 @@ var Constructor = function()
 
     this.superPowerBombDamage = 4;
 
-    this.powerTrueDamageBonus = 30;
-    this.powerTrueDefenseBonus = 30;
+    this.powerTrueDamageBonus = 40;
+    this.powerTrueDefenseBonus = 40;
     this.powerMinTrueDamage = 10
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
 
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
-    this.d2dCoZoneTrueDamageBonus = 20;
-    this.d2dCoZoneTrueDefenseBonus = 20;
+    this.d2dCoZoneTrueDamageBonus = 30;
+    this.d2dCoZoneTrueDefenseBonus = 30;
     this.d2dCoZoneMinTrueDamage = 10;
 
     this.d2dOffBonus = 0;
     this.d2dDefBonus = 0;
-    this.d2dTrueDamageBonus = 0;
-    this.d2dTrueDefenseBonus = 0;
-    this.d2dMinTrueDamage = 0;
+    this.d2dTrueDamageBonus = 15;
+    this.d2dTrueDefenseBonus = 15;
+    this.d2dMinTrueDamage = 10;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -207,7 +207,11 @@ var Constructor = function()
                 {
                     return CO_YUKIO.d2dCoZoneOffBonus;
                 }
-                return CO_YUKIO.d2dOffBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_YUKIO.d2dOffBonus;
+                }
             }
         }
         return 0;
@@ -225,7 +229,8 @@ var Constructor = function()
             {
                 return CO_YUKIO.d2dCoZoneDefBonus;
             }
-            else
+            else if (map === null ||
+                     (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
                 return CO_YUKIO.d2dDefBonus
             }
@@ -257,7 +262,11 @@ var Constructor = function()
                 }
                 else if (damage >= CO_YUKIO.d2dMinTrueDamage)
                 {
-                    return CO_YUKIO.d2dTrueDamageBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_YUKIO.d2dTrueDamageBonus;
+                    }
                 }
                 break;
             }
@@ -281,7 +290,11 @@ var Constructor = function()
                 {
                     return CO_YUKIO.d2dCoZoneTrueDefenseBonus;
                 }
-                return CO_YUKIO.d2dTrueDefenseBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_YUKIO.d2dTrueDefenseBonus;
+                }
             }
         }
         return 0;
@@ -321,12 +334,18 @@ var Constructor = function()
     {
         return qsTr("As the leader of dark matter, his troops have special armor, as well as armor piercing weapons.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_YUKIO.d2dTrueDefenseBonus, CO_YUKIO.d2dTrueDamageBonus / 10, CO_YUKIO.d2dMinTrueDamage / 10];
+        }
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
                    qsTr("\nGlobal Effect: \nEnemy attacks deal -%0% damage to Yukio's units. If an attack from Yukio's units would deal at least %2 HP damage, they deal an additional defense-ignoring -%1 HP of damage.") +
                    qsTr("\n\nCO Zone Effect: \nEnemy attacks deal -%3% damage to Yukio's units. If an attack from Yukio's units would deal at least %5 HP damage, they deal an additional defense-ignoring -%4 HP of damage. Yukio's units also gain +%5% firepower and +%6% defence.");
-        text = replaceTextArgs(text, [CO_YUKIO.d2dTrueDefenseBonus, CO_YUKIO.d2dTrueDamageBonus/10, CO_YUKIO.d2dMinTrueDamage/10,
+        text = replaceTextArgs(text, [values[0], values[1], values[2],
                                       CO_YUKIO.d2dCoZoneTrueDefenseBonus, CO_YUKIO.d2dCoZoneTrueDamageBonus/10, CO_YUKIO.d2dCoZoneMinTrueDamage/10, CO_YUKIO.d2dCoZoneOffBonus, CO_YUKIO.d2dCoZoneDefBonus]);
         return text;
     };

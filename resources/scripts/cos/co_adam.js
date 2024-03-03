@@ -193,8 +193,14 @@ var Constructor = function()
                 }
                 break;
             }
-            // calc malus based on missing hp
-            ret -= (10 - attacker.getHpRounded()) * CO_ADAM.d2dPowerMalus;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()) ||
+                 co.getPowerMode() > GameEnums.PowerMode_Off ||
+                 co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                // calc malus based on missing hp
+                ret -= (10 - attacker.getHpRounded()) * CO_ADAM.d2dPowerMalus;
+            }
         }
         return ret;
     };
@@ -214,7 +220,13 @@ var Constructor = function()
             var index = bonusUnits.indexOf(unitId);
             if (index >= 0)
             {
-                ret += deffbonusArray[index];
+                if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()) ||
+                     co.getPowerMode() > GameEnums.PowerMode_Off ||
+                     co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    ret += deffbonusArray[index];
+                }
             }            
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
@@ -369,11 +381,18 @@ var Constructor = function()
     {
         return qsTr("Adam can take advantage of max luck rolls, but only if the enemy unit could be killed by one. However, his units lose even more firepower the less HP they have.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
-        var text = qsTr("\nGlobal Effect: \nAdam's units lose %0% more firepower per lost HP.") +
-                   qsTr("\n\nCO Zone Effect: \nAdam's attacking units instantly kill an enemy unit if a max luck roll would kill them. His units gain a one-turn %1% defence boost by killing an enemy unit. His units gain +%2% firepower and +%3% defence.");
-        text = replaceTextArgs(text, [CO_ADAM.d2dPowerMalus, CO_ADAM.d2dDefDestroyedBonus, CO_ADAM.d2dCoZoneOffBonus, CO_ADAM.d2dCoZoneDefBonus]);
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_ADAM.d2dPowerMalus, CO_ADAM.d2dDefDestroyedBonus];
+        }
+        var text = qsTr("\nGlobal Effect: \nAdam's units lose %0% more firepower per lost HP. His units gain a one-turn %1% defence boost by killing an enemy unit.") +
+                   qsTr("\n\nCO Zone Effect: \nAdam's attacking units instantly kill an enemy unit if a max luck roll would kill them. His units gain +%2% firepower and +%3% defence.");
+
+        text = replaceTextArgs(text, [values[0], values[1], CO_ADAM.d2dCoZoneOffBonus, CO_ADAM.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

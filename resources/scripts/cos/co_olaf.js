@@ -163,9 +163,13 @@ var Constructor = function()
                         }
                         return CO_OLAF.d2dCoZoneBaseOffBonus;
                     }
-                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
                     {
-                        return CO_OLAF.d2dOffBonus;
+                        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                        {
+                            return CO_OLAF.d2dOffBonus;
+                        }
                     }
                     break;
                 }
@@ -200,7 +204,15 @@ var Constructor = function()
         {
             if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
             {
-                return true;
+                if (co.getPowerMode() > GameEnums.PowerMode_Off)
+                {
+                    return true;
+                }
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -228,7 +240,15 @@ var Constructor = function()
                          id !== "TELEPORTTILE" &&
                         terrain.getBuilding() === null))
                     {
-                        return 1;
+                        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+                        {
+                            return 1;
+                        }
+                        else if (map === null ||
+                                 (map !== null && map.getGameRules().getCoGlobalD2D()))
+                        {
+                            return 1;
+                        }
                     }
                 }
             }
@@ -257,11 +277,17 @@ var Constructor = function()
     {
         return qsTr("Winter poses no problem for Olaf or his troops. Snow causes his firepower to rise, and his troops can move through it without any penalties. Rain, however, slows him down.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_OLAF.d2dOffBonus];
+        }
         var text = qsTr("\nGlobal Effect: \nOlaf's units have +%0% firepower if the weather is Snow. If the weather is Rain, his units' movement costs are increased by 1 in all terrain but roads and shoals.") +
                 qsTr("\n\nCO Zone Effect: \nOlaf's units gain +%2% firepower and +%3% defence. His units gain a total of +%1% firepower if the weather is Snow.");
-        text = replaceTextArgs(text, [CO_OLAF.d2dOffBonus, CO_OLAF.d2dCoZoneOffBonus, CO_OLAF.d2dCoZoneBaseOffBonus, CO_OLAF.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_OLAF.d2dCoZoneOffBonus, CO_OLAF.d2dCoZoneBaseOffBonus, CO_OLAF.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

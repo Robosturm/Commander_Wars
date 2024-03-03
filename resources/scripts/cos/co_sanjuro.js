@@ -142,11 +142,13 @@ var Constructor = function()
     this.powerRefund = 0.5;
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
+
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
     this.d2dCostModifier = 0.01;
     this.d2dOffModifier = 1;
-    this.d2dExceedBonus = 0.01;
+
+    this.d2dExceedBonus = 0.01;    
     this.d2dMaxBonus = 20;
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -220,7 +222,8 @@ var Constructor = function()
                     {
                         return modifier + CO_SANJURO.d2dCoZoneOffBonus;
                     }
-                    else
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
                     {
                         return modifier;
                     }
@@ -231,7 +234,8 @@ var Constructor = function()
                     {
                         return modifier + CO_SANJURO.d2dCoZoneOffBonus;
                     }
-                    else
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
                     {
                         return modifier;
                     }
@@ -318,7 +322,11 @@ var Constructor = function()
             default:
                 break;
             }
-            return (baseCost * costMod);
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return (baseCost * costMod);
+            }
         }
         return 0;
     };
@@ -415,13 +423,18 @@ var Constructor = function()
     {
         return qsTr("A keen mind for his finances, he spends more for better equipment when there's a surplus and focuses on getting the best deal when he's pressed for money.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
-		//HOW THE HELL DOES SANJURO WORK AAAAAAA
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_SANJURO.d2dMaxBonus];
+        }
         var text =  qsTr("\nSpecial Unit:\nSmuggler\n" +
                          "\nGlobal Effect: \nSanjuro calculates the difference between his pre-income funds and his income at the start of each day. \nIf his current funds are higher than the income, his units gain firepower and have an increased deployment cost proportional to the surplus, up to +%0%. \nIf his current funds are lower than the income, his units lose firepower and have a reduced deployment cost proportional to the difference, up to -%0%." +
                          "\n\nCO Zone Effect: \nSanjuro's units gain +%1% firepower and +%2% defence.");
-        text = replaceTextArgs(text, [CO_SANJURO.d2dMaxBonus, CO_SANJURO.d2dCoZoneOffBonus, CO_SANJURO.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_SANJURO.d2dCoZoneOffBonus, CO_SANJURO.d2dCoZoneDefBonus]);
         return text;
     };
 

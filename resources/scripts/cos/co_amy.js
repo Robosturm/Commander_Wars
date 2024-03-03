@@ -179,7 +179,11 @@ var Constructor = function()
                 }
                 else if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
                 {
-                    return CO_AMY.d2dHoverCraftBoost;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_AMY.d2dHoverCraftBoost;
+                    }
                 }
                 break;
             }
@@ -234,10 +238,10 @@ var Constructor = function()
             {
                 if (co.getPowerMode() === GameEnums.PowerMode_Power)
                 {
-
                     return CO_AMY.powerMovementBonus;
                 }
-                else
+                else if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
                     return CO_AMY.d2dMovementBonus;
                 }
@@ -265,9 +269,13 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (map.getTerrain(posX, posY).getTerrainID() === "REAF")
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
-                return -999;
+                if (map.getTerrain(posX, posY).getTerrainID() === "REAF")
+                {
+                    return -999;
+                }
             }
         }
         return 0;
@@ -284,14 +292,17 @@ var Constructor = function()
 
     this.getCOUnits = function(co, building, map)
     {
+        var d2dBuild = false;
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            d2dBuild = CO_AMY.d2dCanFactoryBuildHovercraft;
+        }
         if (CO.isActive(co) && (
-            (CO_AMY.powerCanFactoryBuildHovercraft && co.getPowerMode() === GameEnums.PowerMode_Power) ||
-            (CO_AMY.d2dCanFactoryBuildHovercraft)))
+            (CO_AMY.powerCanFactoryBuildHovercraft && co.getPowerMode() === GameEnums.PowerMode_Power) || d2dBuild))
         {
             var buildingId = building.getBuildingID();
-            if (buildingId === "FACTORY" ||
-                    buildingId === "TOWN" ||
-                    BUILDING.isHq(building))
+            if (buildingId === "FACTORY" || buildingId === "TOWN" || BUILDING.isHq(building))
             {
                 return ["HOVERCRAFT", "HOVERFLAK", "HEAVY_HOVERCRAFT", "ARTILLERYCRAFT"];
             }
@@ -316,14 +327,26 @@ var Constructor = function()
     {
         return qsTr("She can command hovercraft units at an optimal level. Reefs pose no problem for Amy's units.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
-        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units. Her hovercraft have +%0 movement and gain +%1% firepower.");
-        if (CO_AMY.d2dCanFactoryBuildHovercraft){
-            test += qsTr(" Can build hovercraft out of factories.");
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_AMY.d2dMovementBonus, CO_AMY.d2dHoverCraftBoost];
+        }
+        var text = qsTr("\nGlobal Effect: \nHer hovercraft have +%0 movement and gain +%1% firepower.");
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            if (CO_AMY.d2dCanFactoryBuildHovercraft)
+            {
+                text += qsTr(" Can build hovercraft out of factories.");
+            }
+            text += "Reef movement costs are equal to 1 for all of Amy's units. ";
         }
         text += qsTr("\n\nCO Zone Effect: \nAmy's hovercraft gain +%2% firepower. All of her other units gain +%3% firepower. All of her units gain +%4% defense.");
-        text = replaceTextArgs(text, [CO_AMY.d2dMovementBonus, CO_AMY.d2dHoverCraftBoost, CO_AMY.d2dCoZoneHoverCraftBoost, CO_AMY.d2dCoZoneOffBonus, CO_AMY.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_AMY.d2dCoZoneHoverCraftBoost, CO_AMY.d2dCoZoneOffBonus, CO_AMY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

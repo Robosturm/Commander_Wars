@@ -158,11 +158,11 @@ var Constructor = function()
     this.powerElite = 50;
 
     this.d2dSoldier = -5;
-    this.d2dExperienced = 3;
-    this.d2dVeteran = 5;
-    this.d2dElite = 10;
+    this.d2dExperienced = 10;
+    this.d2dVeteran = 15;
+    this.d2dElite = 20;
 
-    this.d2dCoZoneSoldier = 10;
+    this.d2dCoZoneSoldier = 5;
     this.d2dCoZoneExperienced = 20;
     this.d2dCoZoneVeteran = 30;
     this.d2dCoZoneElite = 50;
@@ -203,16 +203,20 @@ var Constructor = function()
                         return CO_MEIYO.d2dCoZoneElite;
                     }
                 }
-                switch (attacker.getUnitRank())
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
-                case 0:
-                    return CO_MEIYO.d2dSoldier;
-                case 1:
-                    return CO_MEIYO.d2dExperienced;
-                case 2:
-                    return CO_MEIYO.d2dVeteran;
-                default:
-                    return CO_MEIYO.d2dElite;
+                    switch (attacker.getUnitRank())
+                    {
+                    case 0:
+                        return CO_MEIYO.d2dSoldier;
+                    case 1:
+                        return CO_MEIYO.d2dExperienced;
+                    case 2:
+                        return CO_MEIYO.d2dVeteran;
+                    default:
+                        return CO_MEIYO.d2dElite;
+                    }
                 }
             }
         }
@@ -255,16 +259,20 @@ var Constructor = function()
                         return CO_MEIYO.d2dCoZoneElite;
                     }
                 }
-                switch (defender.getUnitRank())
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
-                case 0:
-                    return CO_MEIYO.d2dSoldier;
-                case 1:
-                    return CO_MEIYO.d2dExperienced;
-                case 2:
-                    return CO_MEIYO.d2dVeteran;
-                default:
-                    return CO_MEIYO.d2dElite;
+                    switch (defender.getUnitRank())
+                    {
+                    case 0:
+                        return CO_MEIYO.d2dSoldier;
+                    case 1:
+                        return CO_MEIYO.d2dExperienced;
+                    case 2:
+                        return CO_MEIYO.d2dVeteran;
+                    default:
+                        return CO_MEIYO.d2dElite;
+                    }
                 }
             }
         }
@@ -292,11 +300,17 @@ var Constructor = function()
     {
         return qsTr("Her units get even stronger as they rank up, however, unexperienced units are weaker.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_MEIYO.d2dSoldier, CO_MEIYO.d2dExperienced, CO_MEIYO.d2dVeteran, CO_MEIYO.d2dElite];
+        }
         var text = qsTr("\nGlobal Effect: \nMeiyo's Soldier-rank units have %0% firepower and defence. \nHer Experienced-rank units gain +%1% firepower and defence. \nHer Veteran-rank units gain +%2% firepower and defence. \nHer Elite-rank units gain +%3% firepower and defence." +
                     "\n\nCO Zone Effect: \nMeiyo's Soldier-rank units gain +%4% firepower and defence. \nHer Experienced-rank units gain +%5% firepower and defence. \nHer Veteran-rank units gain +%6% firepower and defence. \nHer Elite-rank units gain +%7% firepower and defence.");
-        text = replaceTextArgs(text, [CO_MEIYO.d2dSoldier, CO_MEIYO.d2dExperienced, CO_MEIYO.d2dVeteran, CO_MEIYO.d2dElite,
+        text = replaceTextArgs(text, [values[0], values[1], values[2], values[3],
                                       CO_MEIYO.d2dCoZoneSoldier, CO_MEIYO.d2dCoZoneExperienced, CO_MEIYO.d2dCoZoneVeteran, CO_MEIYO.d2dCoZoneElite]);
         return text;
     };

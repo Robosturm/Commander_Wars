@@ -128,17 +128,17 @@ var Constructor = function()
     this.powerSpawnHp = 9;
 
     this.d2dCoZoneGroundBonus = 10;
-    this.d2dCoZoneInfOffBonus = 40;
-    this.d2dCoZoneHeliOffBonus = 50;
+    this.d2dCoZoneInfOffBonus = 30;
+    this.d2dCoZoneHeliOffBonus = 60;
     this.d2dCoZoneNavalOffBonus = 0;
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
 
-    this.d2dInfOffBonus = 0;
-    this.d2dHeliOffBonus = 30;
+    this.d2dInfOffBonus = 10;
+    this.d2dHeliOffBonus = 40;
     this.d2dNavalOffBonus = -10;
-    this.d2dGroundBonus = 0;
-    this.d2dTransporterMovementBonus =1;
+    this.d2dGroundBonus = -10;
+    this.d2dTransporterMovementBonus = 1;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -219,7 +219,8 @@ var Constructor = function()
                     }
                     return CO_SENSEI.d2dCoZoneOffBonus;
                 }
-                else
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                     {
@@ -269,9 +270,13 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (unit.isTransporter())
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
-                return CO_SENSEI.d2dTransporterMovementBonus;
+                if (unit.isTransporter())
+                {
+                    return CO_SENSEI.d2dTransporterMovementBonus;
+                }
             }
         }
         return 0;
@@ -324,12 +329,18 @@ var Constructor = function()
     {
         return qsTr("His copters have incredibly high firepower, but his naval units are weaker.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_SENSEI.d2dHeliOffBonus, CO_SENSEI.d2dInfOffBonus, CO_SENSEI.d2dNavalOffBonus, CO_SENSEI.d2dGroundBonus, CO_SENSEI.d2dTransporterMovementBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nCommando\n") +
             qsTr("\nGlobal Effect: \nSensei's copters gain +%0% firepower and his footsoldiers gain +%1% firepower. His naval units have %2% firepower and ground units gain +%3% firepower. His non-comabt transport units gain +%4 movement.") +
             qsTr("\n\nCO Zone Effect: \nSensei's copters gain +%5% firepower and his footsoldiers gain +%6% firepower. His naval units have -%7% firepower and ground units gain +%8% firepower. All of his units gain +%9% defence.");
-        text = replaceTextArgs(text, [CO_SENSEI.d2dHeliOffBonus, CO_SENSEI.d2dInfOffBonus, CO_SENSEI.d2dNavalOffBonus, CO_SENSEI.d2dGroundBonus, CO_SENSEI.d2dTransporterMovementBonus, CO_SENSEI.d2dCoZoneHeliOffBonus, CO_SENSEI.d2dCoZoneInfOffBonus, CO_SENSEI.d2dCoZoneNavalOffBonus, CO_SENSEI.d2dCoZoneGroundBonus, CO_SENSEI.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], values[2], values[3], values[4], CO_SENSEI.d2dCoZoneHeliOffBonus, CO_SENSEI.d2dCoZoneInfOffBonus, CO_SENSEI.d2dCoZoneNavalOffBonus, CO_SENSEI.d2dCoZoneGroundBonus, CO_SENSEI.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

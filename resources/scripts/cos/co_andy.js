@@ -253,7 +253,7 @@ var Constructor = function()
     {
         return qsTr("No real weaknesses or strengths. Ready to fight wherever and whenever.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
         var text = qsTr("\nSpecial Unit:\nRepair Tanks\n") +
                    qsTr("\nGlobal Effect: \nNone.") +

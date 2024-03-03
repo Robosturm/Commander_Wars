@@ -165,7 +165,7 @@ var Constructor = function()
     this.d2dCoZoneBaseOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
 
-    this.d2dOffBonus = 7;
+    this.d2dOffBonus = 20;
     this.d2dTerrainMalus = 5;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -205,7 +205,8 @@ var Constructor = function()
                     }
                     bonus += CO_PETER.d2dCoZoneBaseOffBonus;
                 }
-                else
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
                     if (directEnemy)
                     {
@@ -273,12 +274,18 @@ var Constructor = function()
     {
         return qsTr("Peter's units hit enemy direct-combat units harder. However, enemies in thicker terrain resist his attacks.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_PETER.d2dOffBonus, CO_PETER.d2dTerrainMalus];
+        }
         var text = qsTr("\nSpecial Unit:\nRoyal Guard\n") +
                    qsTr("\nGlobal Effect: \nPeter's units gain +%0% firepower against enemy direct units. Peter's units lose -%1% firepower for each terrain star the enemy has.") +
                    qsTr("\n\nCO Zone Effect: \nPeter's units gain +%3% firepower and +%4% defence. They gain an additional +%2% firepower against enemy direct units.");
-		text = replaceTextArgs(text, [CO_PETER.d2dOffBonus, CO_PETER.d2dTerrainMalus, CO_PETER.d2dCoZoneOffBonus, CO_PETER.d2dCoZoneBaseOffBonus, CO_PETER.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_PETER.d2dCoZoneOffBonus, CO_PETER.d2dCoZoneBaseOffBonus, CO_PETER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

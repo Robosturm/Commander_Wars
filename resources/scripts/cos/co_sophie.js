@@ -134,14 +134,14 @@ var Constructor = function()
     };
 
     this.superPowerSecondAttackOffMalus = 30;
-    this.superPowerDefenderDamageReduction = 0.2;
+    this.superPowerDefenderDamageReduction = 0.3;
 
     this.powerOffBonus = 20;
     this.powerDefBonus = 20;
 
-    this.d2dDefenderDamageReduction = 0.0;
+    this.d2dDefenderDamageReduction = 0.2;
 
-    this.d2dCoZoneDefenderDamageReduction = 0.2;
+    this.d2dCoZoneDefenderDamageReduction = 0.3;
     this.d2dCoZoneDefBonus = 20;
     this.d2dCoZoneOffBonus = 20;
 
@@ -172,7 +172,8 @@ var Constructor = function()
                     {
                         return damage * CO_SOPHIE.d2dCoZoneDefenderDamageReduction;
                     }
-                    else
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
                     {
                         return damage * CO_SOPHIE.d2dDefenderDamageReduction;
                     }
@@ -317,12 +318,18 @@ var Constructor = function()
     {
         return qsTr("Enemy counterattacks deal less damage to Sophie's units.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_SOPHIE.d2dDefenderDamageReduction * 100];
+        }
         var text = qsTr("\nSpecial Unit:\nCommando\n") +
                 qsTr("\nGlobal Effect: \nEnemy counterattacks deal -%0% damage to Sophie's units.") +
                 qsTr("\n\nCO Zone Effect: \nSophie's units gain +%2% firepower and +%3% defence. Enemy counterattacks deal -%1% damage to her units.");
-        text = replaceTextArgs(text, [CO_SOPHIE.d2dDefenderDamageReduction * 100, CO_SOPHIE.d2dCoZoneDefenderDamageReduction * 100, CO_SOPHIE.d2dCoZoneOffBonus, CO_SOPHIE.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_SOPHIE.d2dCoZoneDefenderDamageReduction * 100, CO_SOPHIE.d2dCoZoneOffBonus, CO_SOPHIE.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

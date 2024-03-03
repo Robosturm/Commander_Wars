@@ -159,11 +159,11 @@ var Constructor = function()
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
 
-    this.d2dOffBonus = 0;
+    this.d2dOffBonus = 30;
 
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
-    this.d2dCoZoneBonus = 40;
+    this.d2dCoZoneBonus = 50;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -201,7 +201,11 @@ var Constructor = function()
                 }
                 else if (getsBonus)
                 {
-                    return CO_CASSIDY.d2dOffBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_CASSIDY.d2dOffBonus;
+                    }
                 }
                 break;
             }
@@ -248,11 +252,18 @@ var Constructor = function()
     {
         return qsTr("Cassidy's ruthlessness rubs off on her troops. Units show no mercy to enemy units equal to or below their own strength.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_CASSIDY.d2dOffBonus];
+        }
+
         var text = qsTr("\nGlobal Effect: \nCassidy's units gain +%0% firepower when attacking units with equal or less health.") +
                 qsTr("\n\nCO Zone Effect: \nCassidy's units gain +%1% firepower when attacking units with equal or less health and +%2% firepower otherwise. Her units gain +%3% defence.");
-        text = replaceTextArgs(text, [CO_CASSIDY.d2dOffBonus, CO_CASSIDY.d2dCoZoneBonus, CO_CASSIDY.d2dCoZoneOffBonus, CO_CASSIDY.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_CASSIDY.d2dCoZoneBonus, CO_CASSIDY.d2dCoZoneOffBonus, CO_CASSIDY.d2dCoZoneDefBonus]);
         return text;
 
     };

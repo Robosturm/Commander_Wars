@@ -151,11 +151,11 @@ var Constructor = function()
     this.d2dCoZoneDefBonus = 10;
     this.d2dCoZoneTowerOffBonus = 0;
     this.d2dCoZoneTowerDefBonus = 10;
-    this.d2dCoZoneIndirectDefBonus = 20;
+    this.d2dCoZoneIndirectDefBonus = 40;
 
     this.d2dTowerOffBonus = 0;
-    this.d2dTowerDefBonus = 0;
-    this.d2dIndirectDefBonus = 0;
+    this.d2dTowerDefBonus = 5;
+    this.d2dIndirectDefBonus = 20;
 
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -176,7 +176,11 @@ var Constructor = function()
                 {
                     return CO_JAVIER.d2dCoZoneOffBonus + towers * CO_JAVIER.d2dCoZoneTowerOffBonus;
                 }
-                return towers * CO_JAVIER.d2dTowerOffBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return towers * CO_JAVIER.d2dTowerOffBonus;
+                }
             }
         }
         return 0;
@@ -215,10 +219,14 @@ var Constructor = function()
                         ret += CO_JAVIER.d2dCoZoneIndirectDefBonus;
                     }
                 }
-                ret += towers * CO_JAVIER.d2dTowerDefBonus;
-                if (rangedAttacked)
+                else if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
-                    ret += CO_JAVIER.d2dIndirectDefBonus;
+                    ret += towers * CO_JAVIER.d2dTowerDefBonus;
+                    if (rangedAttacked)
+                    {
+                        ret += CO_JAVIER.d2dIndirectDefBonus;
+                    }
                 }
                 break;
             }
@@ -262,12 +270,18 @@ var Constructor = function()
     {
         return qsTr("His units possess superior defences against indirect attacks. Communications Towers also grant his units defence.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_JAVIER.d2dIndirectDefBonus, CO_JAVIER.d2dTowerOffBonus, CO_JAVIER.d2dTowerDefBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nChaperon\n") +
                 qsTr("\nGlobal Effect: \nJavier's units gain +%0% defence against indirect units. His units gain an additional +%1% firepower and +%2% defence per Communications Tower he owns.") +
                 qsTr("\n\nCO Zone Effect: \nJavier's units gain +%6% firepower and +%7% defence. His units gain +%3% defence against indirect units. They gain an additional +%4% firepower and +%5% defence per Communications Tower he owns.");
-        text = replaceTextArgs(text, [CO_JAVIER.d2dIndirectDefBonus, CO_JAVIER.d2dTowerOffBonus, CO_JAVIER.d2dTowerDefBonus,
+        text = replaceTextArgs(text, [values[0], values[1], values[2],
                                       CO_JAVIER.d2dCoZoneIndirectDefBonus, CO_JAVIER.d2dCoZoneTowerOffBonus, CO_JAVIER.d2dCoZoneTowerDefBonus, CO_JAVIER.d2dCoZoneOffBonus, CO_JAVIER.d2dCoZoneDefBonus]);
         return text;
     };

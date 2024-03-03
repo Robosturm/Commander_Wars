@@ -131,11 +131,11 @@ var Constructor = function()
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
 
-    this.d2dOffMissfortuneBonus = 1;
-    this.d2dOffBonus = 3;
+    this.d2dOffMissfortuneBonus = 2;
+    this.d2dOffBonus = 4;
 
-    this.d2dCoZoneMissfortuneBonus = 3;
-    this.d2dCoZoneOffBonus = 5;
+    this.d2dCoZoneMissfortuneBonus = 4;
+    this.d2dCoZoneOffBonus = 6;
     this.d2dCoZoneOffBaseBonus = 10;
     this.d2dCoZoneDefBonus = 10;
 
@@ -157,7 +157,11 @@ var Constructor = function()
                 }
                 break;
             }
-            return co.getPowerFilled() * CO_ROBOANDY.d2dOffBonus;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return co.getPowerFilled() * CO_ROBOANDY.d2dOffBonus;
+            }
         }
         return 0;
     };
@@ -192,7 +196,11 @@ var Constructor = function()
                 {
                     return co.getPowerFilled() * CO_ROBOANDY.d2dCoZoneMissfortuneBonus;
                 }
-                return co.getPowerFilled() * CO_ROBOANDY.d2dOffMissfortuneBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return co.getPowerFilled() * CO_ROBOANDY.d2dOffMissfortuneBonus;
+                }
             }
         }
         return 0;
@@ -287,12 +295,18 @@ var Constructor = function()
     {
         return qsTr("His units gain firepower for his power meter, but he also gains misfortune the more power charge he has.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_ROBOANDY.d2dOffBonus, CO_ROBOANDY.d2dOffMissfortuneBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
                qsTr("\nGlobal Effect: \nRobo-Andy's units gain +%0% firepower and +%1 misfortune per CO Power charge star.") +
                qsTr("\n\nCO Zone Effect: \nRobo-Andy's units gain +%2% firepower and +%3% defence. They gain an additional +%4% firepower and +%5 misfortune per CO Power charge star.");
-        text = replaceTextArgs(text, [CO_ROBOANDY.d2dOffBonus, CO_ROBOANDY.d2dOffMissfortuneBonus, CO_ROBOANDY.d2dCoZoneOffBaseBonus, CO_ROBOANDY.d2dCoZoneDefBonus, CO_ROBOANDY.d2dCoZoneOffBonus, CO_ROBOANDY.d2dCoZoneMissfortuneBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_ROBOANDY.d2dCoZoneOffBaseBonus, CO_ROBOANDY.d2dCoZoneDefBonus, CO_ROBOANDY.d2dCoZoneOffBonus, CO_ROBOANDY.d2dCoZoneMissfortuneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

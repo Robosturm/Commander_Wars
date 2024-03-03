@@ -205,7 +205,11 @@ var Constructor = function()
                 }
                 else if (boostUnit)
                 {
-                    return CO_GREYFIELD.d2dOffBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_GREYFIELD.d2dOffBonus;
+                    }
                 }
                 return 0;
             }
@@ -246,7 +250,11 @@ var Constructor = function()
                 }
                 else if (boostUnit)
                 {
-                    return CO_GREYFIELD.d2dDefBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_GREYFIELD.d2dDefBonus;
+                    }
                 }
                 return 0;
             }
@@ -317,12 +325,18 @@ var Constructor = function()
     {
         return qsTr("Copter, seaplanes and sea units are superior.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_GREYFIELD.d2dOffBonus, CO_GREYFIELD.d2dDefBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nMissile Submarine\n") +
                qsTr("\nGlobal Effect: \nGreyfield's copters and naval units gain +%0% firepower and +%1% defence.") +
                qsTr("\n\nCO Zone Effect: \nGreyfield's copters and naval units gain +%2% firepower and +%3% defence. His other units gain +%4% firepower and +%5% defence.");
-        text = replaceTextArgs(text, [CO_GREYFIELD.d2dOffBonus, CO_GREYFIELD.d2dDefBonus,
+        text = replaceTextArgs(text, [values[0], values[1],
                                       CO_GREYFIELD.d2dCoZoneOffBonus, CO_GREYFIELD.d2dCoZoneDefBonus, CO_GREYFIELD.d2dCoZoneBaseOffBonus, CO_GREYFIELD.d2dCoZoneBaseDefBonus]);
         return text;
     };

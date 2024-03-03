@@ -163,11 +163,11 @@ var Constructor = function()
     this.powerOffBonus = 20;
     this.powerDefBonus = 20;
 
-    this.d2dLuckBonus = 0;
+    this.d2dLuckBonus = 10;
     this.d2dOffBonus = 0;
     this.d2dDefBonus = 0;
 
-    this.d2dCoZoneLuckBonus = 10;
+    this.d2dCoZoneLuckBonus = 20;
     this.d2dCoZoneOffBonus = 20;
     this.d2dCoZoneDefBonus = 10;
 
@@ -187,7 +187,11 @@ var Constructor = function()
                 {
                     return CO_EPOCH.d2dCoZoneLuckBonus;
                 }
-                return CO_EPOCH.d2dLuckBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_EPOCH.d2dLuckBonus;
+                }
             }
         }
         return 0;
@@ -209,7 +213,11 @@ var Constructor = function()
                 {
                     return CO_EPOCH.d2dCoZoneOffBonus;
                 }
-                return CO_EPOCH.d2dOffBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_EPOCH.d2dOffBonus;
+                }
             }
         }
         return 0;
@@ -231,7 +239,11 @@ var Constructor = function()
                 {
                     return CO_EPOCH.d2dCoZoneDefBonus;
                 }
-                return CO_EPOCH.d2dDefBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_EPOCH.d2dDefBonus;
+                }
             }
         }
         return 0;
@@ -308,12 +320,18 @@ var Constructor = function()
     {
         return qsTr("Epoch is blessed with simple programming so it has only basic command abilities. Powers charge at an unmatched speed.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_EPOCH.d2dOffBonus, CO_EPOCH.d2dDefBonus, CO_EPOCH.d2dLuckBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
                qsTr("\nGlobal Effect: \nEpoch's units gain +%0% firepower, +%1% defence, and +%2 luck.") +
                qsTr("\n\nCO Zone Effect: \nEpoch's units gain +%3% firepower, +%4% defence, and +%5 luck.");
-        text = replaceTextArgs(text, [CO_EPOCH.d2dOffBonus, CO_EPOCH.d2dDefBonus, CO_EPOCH.d2dLuckBonus,
+        text = replaceTextArgs(text, [values[0], values[1], values[2],
                                       CO_EPOCH.d2dCoZoneOffBonus, CO_EPOCH.d2dCoZoneDefBonus, CO_EPOCH.d2dCoZoneLuckBonus]);
         return text;
     };

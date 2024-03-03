@@ -146,7 +146,7 @@ var Constructor = function()
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneHeal = 0.4;
 
-    this.d2dHeal = 0.0;
+    this.d2dHeal = 0.15;
     
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
@@ -169,7 +169,8 @@ var Constructor = function()
                     {
                         healPercent = CO_SABAKI.d2dCoZoneHeal;
                     }
-                    else
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
                     {
                         healPercent = CO_SABAKI.d2dHeal;
                     }
@@ -246,11 +247,17 @@ var Constructor = function()
     {
         return qsTr("Highly skilled at salvaging parts, Sabaki's units can drain HP from enemies.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_SABAKI.d2dHeal * 100];
+        }
         var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nSabaki's units restore %0% of the damage they deal to their own HP.") +
             qsTr("\n\nCO Zone Effect: \nSabaki's units gain +%1% firepower, +%2% defence, and restore %3% of the damage they deal to their own HP.");
-        text = replaceTextArgs(text, [CO_SABAKI.d2dHeal * 100, CO_SABAKI.d2dCoZoneOffBonus, CO_SABAKI.d2dCoZoneDefBonus, CO_SABAKI.d2dCoZoneHeal * 100]);
+        text = replaceTextArgs(text, [values[0], CO_SABAKI.d2dCoZoneOffBonus, CO_SABAKI.d2dCoZoneDefBonus, CO_SABAKI.d2dCoZoneHeal * 100]);
         return text;
     };
     this.getPowerDescription = function(co)

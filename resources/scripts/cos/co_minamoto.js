@@ -166,7 +166,7 @@ var Constructor = function()
     this.powerBaseOffBonus = 10;
     this.powerDefBonus = 10;
 
-    this.d2dOffBonus = 0;
+    this.d2dOffBonus = 20;
 
     this.d2dCoZoneOffBonus = 70;
     this.d2dCoZoneBaseOffBonus = 10;
@@ -208,9 +208,13 @@ var Constructor = function()
                     }
                     return CO_MINAMOTO.d2dCoZoneBaseOffBonus;
                 }
-                if (nearMountains === true)
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
-                    return CO_MINAMOTO.d2dOffBonus;
+                    if (nearMountains === true)
+                    {
+                        return CO_MINAMOTO.d2dOffBonus;
+                    }
                 }
                 break;
             }
@@ -336,12 +340,18 @@ var Constructor = function()
     {
         return qsTr("Units near mountains have increased firepower.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_MINAMOTO.d2dOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
                qsTr("\nGlobal Effect: \nMinamoto's units within two spaces of mountains gain +%0% firepower.") +
                qsTr("\n\nCO Zone Effect: \nMinamoto's units gain +%1% firepower and +%2% defence. His units within two spaces of mountains gain a total of +%3% firepower.");
-        text = replaceTextArgs(text, [CO_MINAMOTO.d2dOffBonus, CO_MINAMOTO.d2dCoZoneBaseOffBonus, CO_MINAMOTO.d2dCoZoneDefBonus, CO_MINAMOTO.d2dCoZoneOffBonus]);
+        text = replaceTextArgs(text, [values[0], CO_MINAMOTO.d2dCoZoneBaseOffBonus, CO_MINAMOTO.d2dCoZoneDefBonus, CO_MINAMOTO.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

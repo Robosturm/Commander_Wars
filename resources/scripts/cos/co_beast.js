@@ -147,8 +147,8 @@ var Constructor = function()
     this.d2dCoZoneDefBonus = 10;
     this.d2dCoZoneSelfDamage = 1;
 
-    this.d2dOffBonus = 0;
-    this.d2dSelfDamage = 0;
+    this.d2dOffBonus = 30;
+    this.d2dSelfDamage = 1;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -174,7 +174,11 @@ var Constructor = function()
                     }
                     return CO_BEAST.d2dCoZoneBaseOffBonus;
                 }
-                return CO_BEAST.d2dOffBonus;
+                if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_BEAST.d2dOffBonus;
+                }
             }
         }
         return 0;
@@ -211,7 +215,12 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            var selfDamage = CO_BEAST.d2dSelfDamage;
+            var selfDamage = 0;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                selfDamage = CO_BEAST.d2dSelfDamage;
+            }
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
                 selfDamage = CO_BEAST.powerSelfDamage;
@@ -273,12 +282,18 @@ var Constructor = function()
     {
         return qsTr("His units have high firepower, but their reckless tendencies often get them hurt.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_BEAST.d2dOffBonus, CO_BEAST.d2dSelfDamage];
+        }
         var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
                    qsTr("\nGlobal Effect: \nThe Beast's units gain +%0% firepower when attacking but also receive -%1 HP of extra damage in recoil.") +
                    qsTr("\n\nCO Zone Effect: \nThe Beast's units gain +%2% firepower when attacking and +%4% defence, but also receive -%3 HP of extra damage after attacking. His units gain +%5% firepower when not attacking.");
-        text = replaceTextArgs(text, [CO_BEAST.d2dOffBonus, CO_BEAST.d2dSelfDamage, CO_BEAST.d2dCoZoneOffBonus, CO_BEAST.d2dCoZoneSelfDamage, CO_BEAST.d2dCoZoneDefBonus, CO_BEAST.d2dCoZoneBaseOffBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_BEAST.d2dCoZoneOffBonus, CO_BEAST.d2dCoZoneSelfDamage, CO_BEAST.d2dCoZoneDefBonus, CO_BEAST.d2dCoZoneBaseOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

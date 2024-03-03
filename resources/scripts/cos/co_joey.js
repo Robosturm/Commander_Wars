@@ -202,7 +202,11 @@ var Constructor = function()
                     {
                         return CO_JOEY.d2dCoZoneOffMalus;
                     }
-                    return CO_JOEY.d2dOffMalus;
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_JOEY.d2dOffMalus;
+                    }
                 }
                 else if (attackerValue < defenderValue)
                 {
@@ -210,7 +214,11 @@ var Constructor = function()
                     {
                         return CO_JOEY.d2dCoZoneOffBonus;
                     }
-                    return CO_JOEY.d2dOffBonus;
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_JOEY.d2dOffBonus;
+                    }
                 }
                 else
                 {
@@ -218,7 +226,11 @@ var Constructor = function()
                     {
                         return CO_JOEY.d2dCoZoneBaseOffBonus;
                     }
-                    return CO_JOEY.d2dBaseOffBonus;
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_JOEY.d2dBaseOffBonus;
+                    }
                 }
             }
             }
@@ -320,11 +332,17 @@ var Constructor = function()
     {
         return qsTr("Joey likes to live on the edge. His units are stronger when engaging stronger units, but firepower is reduced when engaging a weaker unit.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_JOEY.d2dOffBonus, CO_JOEY.d2dOffMalus];
+        }
         var text = qsTr("\nGlobal Effect: \nJoey's units gain +%0% firepower when engaging stronger units, but have %1% firepower when engaging a weaker unit.") +
                qsTr("\n\nCO Zone Effect: \nJoey's units gain +%4% firepower. They gain a total of +%2% firepower when engaging a stronger unit, but have -%3% firepower when engaging a weaker unit.");
-        text = replaceTextArgs(text, [CO_JOEY.d2dOffBonus, CO_JOEY.d2dOffMalus,
+        text = replaceTextArgs(text, [values[0], values[1],
                                       CO_JOEY.d2dCoZoneOffBonus, CO_JOEY.d2dCoZoneOffMalus, CO_JOEY.d2dCoZoneBaseOffBonus, CO_JOEY]);
         return text;
     };

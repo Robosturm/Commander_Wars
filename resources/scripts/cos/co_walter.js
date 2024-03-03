@@ -303,7 +303,11 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            return true;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return true;
+            }
         }
         return false;
     };
@@ -352,11 +356,20 @@ var Constructor = function()
     {
         return qsTr("Using Teal Isles' intelligence division, Walter can view units' HP more accurately than other COs.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
-        var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
-            qsTr("\nGlobal Effect: \nWalter can see the exact, unrounded HP of all units.") +
-            qsTr("\n\nCO Zone Effect: \nWalter's units gain +%0% firepower and +%1% defence.");
+        var text = qsTr("\nSpecial Unit:\nIntel truck\n");
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            text += qsTr("\nGlobal Effect: \nWalter can see the exact, unrounded HP of all units.");
+        }
+        else
+        {
+            text += qsTr("\nGlobal Effect: \nNone.");
+        }
+
+        text += qsTr("\n\nCO Zone Effect: \nWalter's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_WALTER.d2dCoZoneOffBonus, CO_WALTER.d2dCoZoneDefBonus]);
         return text;
     };

@@ -244,7 +244,11 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            return CO_RACHEL.d2dRepairBonus;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return CO_RACHEL.d2dRepairBonus;
+            }
         }
         return 0;
     };
@@ -269,11 +273,17 @@ var Constructor = function()
     {
         return qsTr("Her troops are quite hardworking, and they increase repairs by one on properties.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_RACHEL.d2dRepairBonus];
+        }
         var text = qsTr("\nGlobal Effect: \nRachel's units repair an additional +%0 HP per day on properties.") +
                qsTr("\n\nCO Zone Effect: \nRachel's units gain +%1% firepower and +%2% defence.");
-        text = replaceTextArgs(text, [CO_RACHEL.d2dRepairBonus, CO_RACHEL.d2dCoZoneOffBonus, CO_RACHEL.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_RACHEL.d2dCoZoneOffBonus, CO_RACHEL.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

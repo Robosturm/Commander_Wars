@@ -216,7 +216,11 @@ var Constructor = function()
                     stunLevel = CO_GRAVES.powerStunLevel;
                     break;
                 default:
-                    stunLevel = CO_GRAVES.d2dStunLevel;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        stunLevel = CO_GRAVES.d2dStunLevel;
+                    }
                     break;
                 }
                 if (defender.getHpRounded() <= stunLevel)
@@ -251,11 +255,17 @@ var Constructor = function()
 		text = replaceTextArgs(text, [CO_GRAVES.d2dStunLevel]);
         return text;
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_GRAVES.d2dStunLevel];
+        }
         var text = qsTr("\nGlobal Effect: \nEnemy units reduced to %0 or less HP by Graves' units become paralyzed and cannot move on their next turn.") +
                qsTr("\n\nCO Zone Effect: \nGraves' units gain +%1% firepower and +%2% defence.");
-        text = replaceTextArgs(text, [CO_GRAVES.d2dStunLevel, CO_GRAVES.d2dCoZoneOffBonus, CO_GRAVES.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_GRAVES.d2dCoZoneOffBonus, CO_GRAVES.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

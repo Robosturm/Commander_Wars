@@ -168,7 +168,7 @@ var Constructor = function()
     this.superPowerDefenseReduction = 10;
     this.superPowerOffBonus = 10;
 
-    this.powerTerrainBonus = 2;
+    this.powerTerrainBonus = 4;
     this.powerFirerangeBonus = 1;
     this.powerMovementCostReduction = -1;
     this.powerVisionrangeModifier = 1;
@@ -176,9 +176,9 @@ var Constructor = function()
     this.powerOffBonus = 10;
 
     this.d2dBuildingMalus = -10;
-    this.d2dTerrainBonus = 0;
+    this.d2dTerrainBonus = 2;
 
-    this.d2dCoZoneTerrainBonus = 2;
+    this.d2dCoZoneTerrainBonus = 4;
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
 
@@ -201,7 +201,8 @@ var Constructor = function()
                         {
                             return CO_CAIRN.d2dCoZoneTerrainBonus;
                         }
-                        else
+                        else if (map === null ||
+                                 (map !== null && map.getGameRules().getCoGlobalD2D()))
                         {
                             return CO_CAIRN.d2dTerrainBonus;
                         }
@@ -222,9 +223,13 @@ var Constructor = function()
                 {
                     var terrain = map.getTerrain(atkPosX, atkPosY);
                     var startpower = 0;
-                    if (terrain.getBuilding() !== null)
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
                     {
-                        startpower = CO_CAIRN.d2dBuildingMalus;
+                        if (terrain.getBuilding() !== null)
+                        {
+                            startpower = CO_CAIRN.d2dBuildingMalus;
+                        }
                     }
                     switch (co.getPowerMode())
                     {
@@ -443,12 +448,18 @@ var Constructor = function()
         var text = qsTr("Wilderness grants her units additional terrain stars, however, urban terrain reduces her units' firepower.");
         return text;
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_CAIRN.d2dTerrainBonus, CO_CAIRN.d2dBuildingMalus];
+        }
         var text = qsTr("\nSpecial Unit:\nRanger\n") +
                    qsTr("\nGlobal Effect: \nWilderness grants her units an additional +%0 terrain stars. Urban terrain reduces her units' firepower by %1%.") +
                    qsTr("\n\nCO Zone Effect: \nWilderness grants her units an additional +%2 terrain stars. Urban terrain reduces her units' firepower by %1%. All of her units gain +%3% firepower and +%4% defence.");
-        text = replaceTextArgs(text, [CO_CAIRN.d2dTerrainBonus, CO_CAIRN.d2dBuildingMalus, CO_CAIRN.d2dCoZoneTerrainBonus, CO_CAIRN.d2dCoZoneOffBonus, CO_CAIRN.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_CAIRN.d2dCoZoneTerrainBonus, CO_CAIRN.d2dCoZoneOffBonus, CO_CAIRN.d2dCoZoneDefBonus]);
         return text;
     };
 

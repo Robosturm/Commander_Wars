@@ -240,7 +240,12 @@ var Constructor = function()
             default:
                 if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
-                    return hpRounded / 2;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()) ||
+                         co.inCORange(Qt.point(posX, posY), unit))
+                    {
+                        return hpRounded / 2;
+                    }
                 }
             }
         }
@@ -270,7 +275,12 @@ var Constructor = function()
             default:
                 if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
-                    return -hpRounded;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()) ||
+                         co.inCORange(Qt.point(posX, posY), unit))
+                    {
+                        return -hpRounded;
+                    }
                 }
                 break;
             }
@@ -300,11 +310,17 @@ var Constructor = function()
         text = replaceTextArgs(text, [CO_XAVIER.d2dMinLuckHp]);
         return text;
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_XAVIER.d2dMinLuckHp];
+        }
         var text = qsTr("\nGlobal Effect: \nXavier's units with %0 HP or less deal maximum luck damage.") +
-                   qsTr("\n\nCO Zone Effect: \nXavier's units gain +%1% firepower and +%2% defence.");
-        text = replaceTextArgs(text, [CO_XAVIER.d2dMinLuckHp, CO_XAVIER.d2dCoZoneFirepowerBonus, CO_XAVIER.d2dCoZoneDefBonus]);
+                   qsTr("\n\nCO Zone Effect: \nXavier's units with %1 HP or less deal maximum luck damage. Xavier's units gain +%2% firepower and +%3% defence.");
+        text = replaceTextArgs(text, [values[0], CO_XAVIER.d2dMinLuckHp, CO_XAVIER.d2dCoZoneFirepowerBonus, CO_XAVIER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

@@ -122,18 +122,18 @@ var Constructor = function()
     };
 
     this.superPowerDamage = 8;
-    this.superPowerOffBonus = 50;
-    this.superPowerDefBonus = 50;
+    this.superPowerOffBonus = 60;
+    this.superPowerDefBonus = 60;
 
     this.powerDamage = 4;
-    this.powerOffBonus = 30;
-    this.powerDefBonus = 30;
+    this.powerOffBonus = 40;
+    this.powerDefBonus = 40;
 
-    this.d2dCoZoneOffBonus = 30;
-    this.d2dCoZoneDefBonus = 30;
+    this.d2dCoZoneOffBonus = 40;
+    this.d2dCoZoneDefBonus = 40;
 
-    this.d2dOffBonus = 0;
-    this.d2dDefBonus = 0;
+    this.d2dOffBonus = 20;
+    this.d2dDefBonus = 20;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -152,7 +152,11 @@ var Constructor = function()
                 {
                     return CO_STURM.d2dCoZoneOffBonus;
                 }
-                return CO_STURM.d2dOffBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_STURM.d2dOffBonus;
+                }
             }
         }
         return 0;
@@ -174,7 +178,11 @@ var Constructor = function()
                 {
                     return CO_STURM.d2dCoZoneDefBonus;
                 }
-                return CO_STURM.d2dDefBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_STURM.d2dDefBonus;
+                }
             }
         }
         return 0;
@@ -185,13 +193,17 @@ var Constructor = function()
         {
             if (unit.getOwner() === co.getOwner())
             {
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
-                    return 0;
-                }
-                else
-                {
-                    return -999;
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return -999;
+                    }
                 }
             }
         }
@@ -219,11 +231,17 @@ var Constructor = function()
     {
         return qsTr("His superior troops are not affected by terrain. Only snow can stop him.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_STURM.d2dOffBonus, CO_STURM.d2dDefBonus];
+        }
         var text = qsTr("\nGlobal Effect: \nSturm's units are unhindered by terrain unless the weather is Snow. They gain +%0% firepower and +%1% defence.") +
                    qsTr("\n\nCO Zone Effect: \nSturm's units gain +%2% firepower and +%3% defence.");
-        text = replaceTextArgs(text, [CO_STURM.d2dOffBonus, CO_STURM.d2dDefBonus, CO_STURM.d2dCoZoneOffBonus, CO_STURM.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_STURM.d2dCoZoneOffBonus, CO_STURM.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

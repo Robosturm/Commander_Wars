@@ -189,7 +189,7 @@ var Constructor = function()
                 return false;
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-            default:
+            {
                 var variables = co.getVariables();
                 var repairVariable = variables.createVariable("UNITREPAIR");
                 var repairs = repairVariable.readDataListInt32();
@@ -198,6 +198,22 @@ var Constructor = function()
                 {
                     return false;
                 }
+                break;
+            }
+            default:
+                if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    var variables = co.getVariables();
+                    var repairVariable = variables.createVariable("UNITREPAIR");
+                    var repairs = repairVariable.readDataListInt32();
+                    var unitId = unit.getUniqueID();
+                    if (repairs.indexOf(unitId) >= 0)
+                    {
+                        return false;
+                    }
+                }
+                break;
             }
         }
         return true;
@@ -208,8 +224,10 @@ var Constructor = function()
     this.superPowerCaptureBonus = 15;
     this.powerOffBonus = 20;
     this.powerDefBonus = 10;
+
     this.d2dCoZoneOffBonus = 20;
     this.d2dCoZoneDefBonus = 10;
+
     this.d2dCaptureBonus = 5;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -314,15 +332,24 @@ var Constructor = function()
                     break;
                 }
             }
-            if ((co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                 co.getPowerMode() === GameEnums.PowerMode_Tagpower) &&
+            var powerMode = co.getPowerMode();
+            if ((powerMode === GameEnums.PowerMode_Superpower ||
+                 powerMode === GameEnums.PowerMode_Tagpower) &&
                     applyBonus === true)
             {
                 return CO_MARY.superPowerCaptureBonus;
             }
             else if (applyBonus === true)
             {
-                return CO_MARY.d2dCaptureBonus;
+                if (powerMode === GameEnums.PowerMode_Power)
+                {
+                    return CO_MARY.d2dCaptureBonus;
+                }
+                else if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_MARY.d2dCaptureBonus;
+                }
             }
         }
         return 0;
@@ -371,12 +398,18 @@ var Constructor = function()
     {
         return qsTr("Attacked enemy units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a one-time capture bonus for that property.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_MARY.d2dCaptureBonus * 10];
+        }
         var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
                qsTr("\nGlobal Effect: \nAttacked enemy units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a one-time capture bonus of +%0% for that property.") +
                qsTr("\n\nCO Zone Effect: \nMary's units gain +%1% firepower and +%2% defence.");
-        text = replaceTextArgs(text, [CO_MARY.d2dCaptureBonus*10, CO_MARY.d2dCoZoneOffBonus, CO_MARY.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_MARY.d2dCoZoneOffBonus, CO_MARY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

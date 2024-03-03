@@ -144,7 +144,7 @@ var Constructor = function()
     this.powerDefBonus = 10;
     this.powerOffBonus = 10;
 
-    this.d2dPlainsBonus = 0;
+    this.d2dPlainsBonus = 10;
 
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
@@ -186,7 +186,11 @@ var Constructor = function()
                         }
                         else if (terrainID === "PLAINS")
                         {
-                            return CO_JAKE.d2dPlainsBonus;
+                            if (map === null ||
+                                (map !== null && map.getGameRules().getCoGlobalD2D()))
+                            {
+                                return CO_JAKE.d2dPlainsBonus;
+                            }
                         }
                         break;
                     }
@@ -288,12 +292,18 @@ var Constructor = function()
     {
         return qsTr("Fights well in the open. Firepower of all units is increased on plains.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_JAKE.d2dPlainsBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
                qsTr("\nGlobal Effect: \nJake's units have +%0% firepower on plains.") +
                qsTr("\n\nCO Zone Effect: \nJake's units gain +%2% firepower and +%3% defence. Their firepower rises to +%1% on plains.");
-        text = replaceTextArgs(text, [CO_JAKE.d2dPlainsBonus, CO_JAKE.d2dCoZonePlainsBonus, CO_JAKE.d2dCoZoneOffBonus, CO_JAKE.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_JAKE.d2dCoZonePlainsBonus, CO_JAKE.d2dCoZoneOffBonus, CO_JAKE.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

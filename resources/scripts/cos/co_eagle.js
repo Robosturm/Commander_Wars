@@ -149,9 +149,13 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (unit.getUnitType() === GameEnums.UnitType_Air)
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
-                return CO_EAGLE.d2dFuelModifier;
+                if (unit.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return CO_EAGLE.d2dFuelModifier;
+                }
             }
         }
         return 0;
@@ -256,7 +260,8 @@ var Constructor = function()
                         return CO_EAGLE.d2dCoZoneOtherOffBonus;
                     }
                 }
-                else
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
@@ -315,7 +320,8 @@ var Constructor = function()
                     return CO_EAGLE.d2dCoZoneDefBonus;
                 }
             }
-            else
+            else if (map === null ||
+                     (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
                 if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
@@ -367,12 +373,18 @@ var Constructor = function()
     {
         return qsTr("He has superior air units that also use less fuel, however, his naval units are weaker.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_EAGLE.d2dAirOffBonus, CO_EAGLE.d2dAirDefBonus, CO_EAGLE.d2dFuelModifier, CO_EAGLE.d2dNavalOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nKirov\n") +
                 qsTr("\nGlobal Effect: \nEagle's air units gain +%0% firepower, +%1% defence, and use %2 less fuel per day, but his naval units have %3% firepower.") +
                 qsTr("\n\nCO Zone Effect: \nEagle's air units gain +%4% firepower and +%5% defence. His naval units have -%6% firepower and +%7% defence. All of his other units gain +%8% firepower and +%7% defence.");
-        text = replaceTextArgs(text, [CO_EAGLE.d2dAirOffBonus, CO_EAGLE.d2dAirDefBonus, CO_EAGLE.d2dFuelModifier, CO_EAGLE.d2dNavalOffBonus,
+        text = replaceTextArgs(text, [values[0], values[1], values[2], values[3],
                                       CO_EAGLE.d2dCoZoneAirOffBonus, CO_EAGLE.d2dCoZoneDefBonus, CO_EAGLE.d2dCoZoneNavalOffBonus, CO_EAGLE.d2dCoZoneDefBonus, CO_EAGLE.d2dCoZoneOtherOffBonus]);
         return text;
     };

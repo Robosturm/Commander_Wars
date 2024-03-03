@@ -78,9 +78,11 @@ var Constructor = function()
     this.superPowerMovementPointBonus = 2;
     this.superPowerRainVisionBonus = 3;
     this.superPowerMistVisionBonus = 5;
+
     this.powerDayChanges = 2;
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
+
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
 
@@ -154,7 +156,15 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            return true;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return true;
+            }
+            else if (map === null ||
+                     (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return true;
+            }
         }
         return false;
     };
@@ -240,7 +250,7 @@ var Constructor = function()
     {
         return qsTr("Her troops are immune to all weather effects.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
         var text = qsTr("\nGlobal Effect: \nPenny's units are immune to all weather effects." +
                         "\n\nCO Zone Effect: \nPenny's units gain +%0% firepower and +%1% defence.");

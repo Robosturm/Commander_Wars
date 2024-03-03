@@ -145,13 +145,13 @@ var Constructor = function()
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
 
-    this.d2dCoZoneBonusLuck = 30;
-    this.d2dCoZoneBonusMissfortune = 15;
+    this.d2dCoZoneBonusLuck = 55;
+    this.d2dCoZoneBonusMissfortune = 25;
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
 
-    this.d2dBonusLuck = 14;
-    this.d2dBonusMissfortune = 7;
+    this.d2dBonusLuck = 30;
+    this.d2dBonusMissfortune = 15;
 
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
@@ -171,7 +171,11 @@ var Constructor = function()
                 }
                 break;
             }
-            return CO_JUGGER.d2dBonusLuck;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return CO_JUGGER.d2dBonusLuck;
+            }
         }
         return 0;
     };
@@ -194,7 +198,11 @@ var Constructor = function()
                 }
                 break;
             }
-            return CO_JUGGER.d2dBonusMissfortune;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return CO_JUGGER.d2dBonusMissfortune;
+            }
         }
         return 0;
     };
@@ -268,12 +276,18 @@ var Constructor = function()
     {
         return qsTr("His units are wildly unpredictable. He has great luck, but also a lot of misfortune.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_JUGGER.d2dBonusLuck, CO_JUGGER.d2dBonusMissfortune]
+        }
         var text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
                qsTr("\nGlobal Effect: \nJugger's units gain +%0 luck and +%1 misfortune.") +
                qsTr("\n\nCO Zone Effect: \nJugger's units gain +%4% firepower, +%5% defence, +%2 luck, and +%3 misfortune.");
-        text = replaceTextArgs(text, [CO_JUGGER.d2dBonusLuck, CO_JUGGER.d2dBonusMissfortune,
+        text = replaceTextArgs(text, [values[0], values[1],
                                       CO_JUGGER.d2dCoZoneBonusLuck, CO_JUGGER.d2dCoZoneBonusMissfortune, CO_JUGGER.d2dCoZoneOffBonus, CO_JUGGER.d2dCoZoneDefBonus]);
         return text;
     };

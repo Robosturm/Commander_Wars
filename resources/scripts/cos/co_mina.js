@@ -253,7 +253,7 @@ var Constructor = function()
     {
         return qsTr("Mina's troops have no real strength or weakness.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
         var text = qsTr("\nGlobal Effect: \nNone.") +
                qsTr("\n\nCO Zone Effect: \nMina's units gain +%0% firepower and +%1% defence.");

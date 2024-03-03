@@ -126,7 +126,11 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            return baseCost * CO_COLIN.d2dCostModifier / 100;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return baseCost * CO_COLIN.d2dCostModifier / 100;
+            }
         }
         return 0;
     };
@@ -148,7 +152,11 @@ var Constructor = function()
                 {
                     return CO_COLIN.d2dCoZoneOffBonus;
                 }
-                return CO_COLIN.d2dOffBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_COLIN.d2dOffBonus;
+                }
             }
         }
         return 0;
@@ -205,12 +213,18 @@ var Constructor = function()
     {
         return qsTr("The heir to a vast fortune who can purchase units at bargain-basement prices. His troops' low firepower stems from his lack of confidence.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_COLIN.d2dCostModifier, CO_COLIN.d2dOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
                 qsTr("\nGlobal Effect: \nColin's units have a %0% reduction in deployment costs and have %1% firepower.") +
                 qsTr("\n\nCO Zone Effect: \nColin's units have %2% firepower and gain +%3% defence.");
-        text = replaceTextArgs(text, [CO_COLIN.d2dCostModifier, CO_COLIN.d2dOffBonus, CO_COLIN.d2dCoZoneOffBonus, CO_COLIN.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_COLIN.d2dCoZoneOffBonus, CO_COLIN.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

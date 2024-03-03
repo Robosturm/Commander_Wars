@@ -106,31 +106,35 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            var player = co.getOwner();
-            if (!player.getIsDefeated())
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
-                var buildings = player.getBuildings();
-                var size = buildings.size();
-                for (var i = 0; i < size; i++)
+                var player = co.getOwner();
+                if (!player.getIsDefeated())
                 {
-                    var building = buildings.at(i);
-                    var unit = map.getTerrain(building.getX(), building.getY()).getUnit();
-                    if (unit !== null)
+                    var buildings = player.getBuildings();
+                    var size = buildings.size();
+                    for (var i = 0; i < size; i++)
                     {
-                        var points = unit.getCapturePoints();
-                        // apply revolt bonus
-                        if (points > 0)
+                        var building = buildings.at(i);
+                        var unit = map.getTerrain(building.getX(), building.getY()).getUnit();
+                        if (unit !== null)
                         {
-                            for (var i2 = 0; i2 < CO_ALEXANDER.d2dRevoltPoints; ++i2)
+                            var points = unit.getCapturePoints();
+                            // apply revolt bonus
+                            if (points > 0)
                             {
-                                points--;
-                            }
-                            if (points < 0)
-                            {
-                                points = 0;
-                            }
+                                for (var i2 = 0; i2 < CO_ALEXANDER.d2dRevoltPoints; ++i2)
+                                {
+                                    points--;
+                                }
+                                if (points < 0)
+                                {
+                                    points = 0;
+                                }
 
-                            unit.setCapturePoints(points);
+                                unit.setCapturePoints(points);
+                            }
                         }
                     }
                 }
@@ -239,12 +243,18 @@ var Constructor = function()
     {
         return qsTr("Alexander is loved by his citizens so much that they have a tendency to resist being captured.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_ALEXANDER.d2dRevoltPoints];
+        }
         var text = qsTr("\nSpecial Unit:\nPartisan\n") +
                    qsTr("\nGlobal Effect: \nBuildings that Alexander owns put up a fight when being captured by enemy soldiers. Each building recovers %0 capture point each day while under siege.") +
                    qsTr("\n\nCO Zone Effect: \nAlexander's units gain +%1% firepower and +%1% defence.");
-        text = replaceTextArgs(text, [CO_ALEXANDER.d2dRevoltPoints, CO_ALEXANDER.d2dCoZoneBonus]);
+        text = replaceTextArgs(text, [values[0], CO_ALEXANDER.d2dCoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

@@ -137,13 +137,16 @@ var Constructor = function()
     };
 
     this.superPowerLuckBonus = 100;
+
     this.powerLuckBonus = 60;
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
-    this.d2dCoZoneLuckBonus = 10;
+
+    this.d2dCoZoneLuckBonus = 30;
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
-    this.d2dLuckBonus = 0;
+
+    this.d2dLuckBonus = 10;
 
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
@@ -161,7 +164,11 @@ var Constructor = function()
                 {
                     return CO_NELL.d2dCoZoneLuckBonus;
                 }
-                return CO_NELL.d2dLuckBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_NELL.d2dLuckBonus;
+                }
             }
         }
         return 0;
@@ -220,11 +227,17 @@ var Constructor = function()
     {
         return qsTr("Can strike with more force than expected. She's the first to tell you she was born lucky.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_NELL.d2dLuckBonus];
+        }
         var text = qsTr("\nGlobal Effect: \nNell's units have +%0 luck.") +
                qsTr("\n\nCO Zone Effect: \nNell's units have +%1 luck, +%2% firepower, and +%3% defence.");
-        text = replaceTextArgs(text, [CO_NELL.d2dLuckBonus, CO_NELL.d2dCoZoneLuckBonus, CO_NELL.d2dCoZoneOffBonus, CO_NELL.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_NELL.d2dCoZoneLuckBonus, CO_NELL.d2dCoZoneOffBonus, CO_NELL.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

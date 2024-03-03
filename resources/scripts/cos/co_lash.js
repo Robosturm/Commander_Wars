@@ -134,6 +134,7 @@ var Constructor = function()
     this.powerDefBonus = 10;
 
     this.d2dTerrainBonus = 10;
+
     this.d2dCoZoneTerrainBonus = 10;
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
@@ -163,7 +164,11 @@ var Constructor = function()
                         {
                             return terrainDefense * CO_LASH.d2dCoZoneTerrainBonus + CO_LASH.d2dCoZoneOffBonus;
                         }
-                        return terrainDefense * CO_LASH.d2dTerrainBonus;
+                        else if (map === null ||
+                                 (map !== null && map.getGameRules().getCoGlobalD2D()))
+                        {
+                            return terrainDefense * CO_LASH.d2dTerrainBonus;
+                        }
                     }
                 }
             }
@@ -262,11 +267,17 @@ var Constructor = function()
     {
         return qsTr("Skilled at taking advantage of terrain features. Can turn terrain effects into firepower bonuses.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_LASH.d2dTerrainBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n\nGlobal Effect: \nLash's units gain +%0% firepower per terrain star.") +
                qsTr("\n\nCO Zone Effect: \nLash's units gain +%1% firepower and +%2% defense.");
-        text = replaceTextArgs(text, [CO_LASH.d2dTerrainBonus, CO_LASH.d2dCoZoneOffBonus, CO_LASH.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_LASH.d2dCoZoneOffBonus, CO_LASH.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

@@ -138,8 +138,8 @@ var Constructor = function()
     this.powerIndirectDefBonus = 60;
     this.powerDefBonus = 40;
 
-    this.d2dIndirectDefBonus = 0;
-    this.d2dDefBonus = 0;
+    this.d2dIndirectDefBonus = 30;
+    this.d2dDefBonus = 20;
     this.d2dOffBonus = 0;
 
     this.d2dCoZoneOffBonus = 20;
@@ -168,7 +168,11 @@ var Constructor = function()
                 {
                     return CO_NAPOLEON.d2dCoZoneOffBonus;
                 }
-                return CO_NAPOLEON.d2dOffBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_NAPOLEON.d2dOffBonus;
+                }
             }
         }
         return 0;
@@ -254,13 +258,17 @@ var Constructor = function()
                         return CO_NAPOLEON.d2dCoZoneDefBonus;
                     }
                 }
-                if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
-                    return CO_NAPOLEON.d2dIndirectDefBonus;
-                }
-                else
-                {
-                    return CO_NAPOLEON.d2dDefBonus;
+                    if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+                    {
+                        return CO_NAPOLEON.d2dIndirectDefBonus;
+                    }
+                    else
+                    {
+                        return CO_NAPOLEON.d2dDefBonus;
+                    }
                 }
             }
         }
@@ -307,12 +315,18 @@ var Constructor = function()
     {
         return qsTr("Units have high defensive capabilities.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_NAPOLEON.d2dDefBonus, CO_NAPOLEON.d2dIndirectDefBonus, CO_NAPOLEON.d2dOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nIron Shield Generator\n\n" +
                     "Global Effect: \nNapoleon's units have +%2% firepower, +%0% defence against direct units, and +%1% defence against indirect units." +
                     "\n\nCO Zone Effect: \nNapoleon's units gain +%5% firepower, +%3% defence against direct units, and +%4% defence against indirect units.");
-        text = replaceTextArgs(text, [CO_NAPOLEON.d2dDefBonus, CO_NAPOLEON.d2dIndirectDefBonus, CO_NAPOLEON.d2dOffBonus,
+        text = replaceTextArgs(text, [values[0], values[1], values[2],
                                       CO_NAPOLEON.d2dCoZoneDefBonus, CO_NAPOLEON.d2dCoZoneIndirectDefBonus, CO_NAPOLEON.d2dCoZoneOffBonus]);
         return text;
     };

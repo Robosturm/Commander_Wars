@@ -147,7 +147,7 @@ var Constructor = function()
     this.powerDefBonus = 10;
     this.powerMovementBonus = 1;
 
-    this.d2dOffBonus = 0;
+    this.d2dOffBonus = 10;
 
     this.d2dCoZoneOffBonus = 30;
     this.d2dCoZoneBaseBonus = 10;
@@ -186,7 +186,11 @@ var Constructor = function()
                 }
                 else if (attacker.getBaseMaxRange() === 1 && !seaAirUnit)
                 {
-                    return CO_WILL.d2dOffBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_WILL.d2dOffBonus;
+                    }
                 }
                 break;
             }
@@ -279,12 +283,18 @@ var Constructor = function()
     {
         return qsTr("His direct ground units are stronger.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_WILL.d2dOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
                qsTr("\nGlobal Effect:\nWill's direct ground units have +%0% firepower.") +
                qsTr("\n\nCO Zone Effect: \nWill's direct ground units gain +%1% firepower. His other units gain +%2% firepower. All of his units gain +%3% defence.");
-        text = replaceTextArgs(text, [CO_WILL.d2dOffBonus, CO_WILL.d2dCoZoneOffBonus, CO_WILL.d2dCoZoneBaseBonus, CO_WILL.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_WILL.d2dCoZoneOffBonus, CO_WILL.d2dCoZoneBaseBonus, CO_WILL.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

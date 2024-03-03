@@ -205,13 +205,21 @@ var Constructor = function()
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                 {
-                    return CO_SAMI.d2dInfOffBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_SAMI.d2dInfOffBonus;
+                    }
                 }
                 break;
             }
             if (attacker.getBaseMaxRange() === 1)
             {
-                return CO_SAMI.d2dDirectOffBonus;
+                if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_SAMI.d2dDirectOffBonus;
+                }
             }
         }
         return 0;
@@ -235,7 +243,11 @@ var Constructor = function()
             }
             else if (defender.getUnitType() === GameEnums.UnitType_Infantry)
             {
-                return CO_SAMI.d2dInfDefBonus;
+                if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_SAMI.d2dInfDefBonus;
+                }
             }
         }
         return 0;
@@ -250,7 +262,8 @@ var Constructor = function()
             {
                 return hp * CO_SAMI.superpowerCaptureMultiplier;
             }
-            else
+            else if (map === null ||
+                     (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
                 return hp * CO_SAMI.d2dCaptureMultiplier;
             }
@@ -353,12 +366,18 @@ var Constructor = function()
     {
         return qsTr("As an infantry specialist, her footsoldiers do more damage and capture faster. Her other direct-combat units have weaker firepower.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_SAMI.d2dTransporterMovementPoints, CO_SAMI.d2dCaptureMultiplier * 100, CO_SAMI.d2dInfOffBonus, CO_SAMI.d2dInfDefBonus, CO_SAMI.d2dDirectOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nCommando\n") +
                qsTr("\nGlobal Effect: \nSami's footsoldiers gain +%2% firepower, +%3% defence, and a +%1% capture bonus. Her non-combat transporter units have +%0 movement. Her other direct-combat units have %4% firepower.") +
                qsTr("\n\nCO Zone Effect: \nSami's footsoldiers gain +%5% firepower. Her other direct units have -%6% firepower. Her indirect units gain +%7% firepower. All of her units gain +%8% defence.");
-        text = replaceTextArgs(text, [CO_SAMI.d2dTransporterMovementPoints, CO_SAMI.d2dCaptureMultiplier * 100, CO_SAMI.d2dInfOffBonus, CO_SAMI.d2dInfDefBonus, CO_SAMI.d2dDirectOffBonus, CO_SAMI.d2dCoZoneOffBonus, CO_SAMI.d2dCoZoneBaseOffBonus+CO_SAMI.d2dDirectOffBonus, CO_SAMI.d2dCoZoneBaseOffBonus, CO_SAMI.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], values[2], values[3], values[4], CO_SAMI.d2dCoZoneOffBonus, CO_SAMI.d2dCoZoneBaseOffBonus+CO_SAMI.d2dDirectOffBonus, CO_SAMI.d2dCoZoneBaseOffBonus, CO_SAMI.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

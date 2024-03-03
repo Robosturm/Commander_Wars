@@ -140,7 +140,15 @@ var Constructor = function()
     };
     this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
-        return baseCost * CO_KANBEI.d2dCostIncrease / 100;
+        if (CO.isActive(co))
+        {
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return baseCost * CO_KANBEI.d2dCostIncrease / 100;
+            }
+        }
+        return 0;
     };
 
     this.d2dcoZoneBonus = 50;
@@ -178,7 +186,11 @@ var Constructor = function()
                 }
                 break;
             }
-            return CO_KANBEI.d2dBonus;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return CO_KANBEI.d2dBonus;
+            }
         }
         return 0;
     };
@@ -201,7 +213,11 @@ var Constructor = function()
                 }
                 break;
             }
-            return CO_KANBEI.d2dBonus;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return CO_KANBEI.d2dBonus;
+            }
         }
         return 0;
     };
@@ -243,12 +259,18 @@ var Constructor = function()
     {
         return qsTr("All of his units have high offensive and defensive capabilities, but are expensive to deploy.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_KANBEI.d2dBonus, CO_KANBEI.d2dCostIncrease];
+        }
         var text = qsTr("\nSpecial Unit:\nRoyal Guard\n") +
                 qsTr("\nGlobal Effect: \nKanbei's units gain +%0% firepower, +%0% defence, and have a +%1% increase in deployment costs.") +
                 qsTr("\n\nCO Zone Effect: \nKanbei's units gain +%2% firepower and +%2% defence.");
-        text = replaceTextArgs(text, [CO_KANBEI.d2dBonus, CO_KANBEI.d2dCostIncrease , CO_KANBEI.d2dcoZoneBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_KANBEI.d2dcoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

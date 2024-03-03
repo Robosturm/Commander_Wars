@@ -164,7 +164,11 @@ var Constructor = function()
                 {
                     return CO_ISABELLA.d2dCoZoneOffBonus;
                 }
-                return CO_ISABELLA.d2dOffBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_ISABELLA.d2dOffBonus;
+                }
             }
         }
         return 0;
@@ -187,7 +191,11 @@ var Constructor = function()
                 {
                     return CO_ISABELLA.d2dCoZoneDefBonus;
                 }
-                return CO_ISABELLA.d2dDefBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_ISABELLA.d2dDefBonus;
+                }
             }
         }
         return 0;
@@ -258,11 +266,17 @@ var Constructor = function()
     {
         return qsTr("She has no real weaknesses or strengths.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_ISABELLA.d2dOffBonus, CO_ISABELLA.d2dDefBonus];
+        }
         var text = qsTr("\nGlobal Effect: \nIsabella's units have +%0% firepower and +%1% defence.") +
                qsTr("\n\nCO Zone Effect: \nIsabella's units gain +%2% firepower and +%3% defence.");
-        text = replaceTextArgs(text, [CO_ISABELLA.d2dOffBonus, CO_ISABELLA.d2dDefBonus,
+        text = replaceTextArgs(text, [values[0], values[1],
                                       CO_ISABELLA.d2dCoZoneOffBonus, CO_ISABELLA.d2dCoZoneDefBonus]);
         return text;
     };

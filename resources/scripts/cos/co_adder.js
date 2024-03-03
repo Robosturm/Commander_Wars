@@ -241,7 +241,7 @@ var Constructor = function()
     {
         return qsTr("Adept at making quick command decisions. He stores up energy for his CO Power more rapidly than other CO's.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
         var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
                    qsTr("\nGlobal Effect: \nAdder's power charge is increased by %1%.") +

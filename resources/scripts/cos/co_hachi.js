@@ -88,7 +88,11 @@ var Constructor = function()
             default:
                 break;
             }
-            return -baseCost * CO_HACHI.d2dCostReduction;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return -baseCost * CO_HACHI.d2dCostReduction;
+            }
         }
         return 0;
     };
@@ -190,12 +194,18 @@ var Constructor = function()
     {
         return qsTr("Uses secret trade routes to get slightly lower deployment costs for all units.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_HACHI.d2dCostReduction * 100];
+        }
         var text = qsTr("\nSpecial Unit:\nSmuggler\n") +
                qsTr("\nGlobal Effect: \nHachi's units have a -%0% reduction in deployment costs.") +
                qsTr("\n\nCO Zone Effect: \nHachi's units gain +%1% firepower and +%2% defence.");
-        text = replaceTextArgs(text, [CO_HACHI.d2dCostReduction * 100, CO_HACHI.d2dCoZoneOffBonus, CO_HACHI.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_HACHI.d2dCoZoneOffBonus, CO_HACHI.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

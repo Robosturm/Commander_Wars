@@ -184,10 +184,10 @@ var Constructor = function()
     this.powerDefBonus = 10;
     this.powerOffBonus = 10;
 
-    this.d2dMaxLuck = 0;
-    this.d2dLuckPerUnit = 0;
-    this.d2dMaxMissFortune = 0;
-    this.d2dMissFortunePerUnit = 0;
+    this.d2dMaxLuck = 30;
+    this.d2dLuckPerUnit = 1.2;
+    this.d2dMaxMissFortune = 20;
+    this.d2dMissFortunePerUnit = 1;
 
     this.d2dCoZoneMaxLuck = 50;
     this.d2dCoZoneLuckPerUnit = 2;
@@ -225,7 +225,8 @@ var Constructor = function()
                         maxLuck = CO_DAVIS.d2dCoZoneMaxLuck;
                         luckPerUnit = CO_DAVIS.d2dCoZoneLuckPerUnit;
                     }
-                    else
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
                     {
                         maxLuck = CO_DAVIS.d2dMaxLuck;
                         luckPerUnit = CO_DAVIS.d2dLuckPerUnit;
@@ -272,7 +273,8 @@ var Constructor = function()
                         maxMissFortune = CO_DAVIS.d2dCoZoneMaxMissFortune;
                         luckMissFortune = CO_DAVIS.d2dCoZoneMissFortunePerUnit;
                     }
-                    else
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
                     {
                         maxMissFortune = CO_DAVIS.d2dMaxMissFortune;
                         luckMissFortune = CO_DAVIS.d2dMissFortunePerUnit;
@@ -350,12 +352,18 @@ var Constructor = function()
     {
         return qsTr("Gains luck and misfortune based on the amount of troops on the field.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_DAVIS.d2dLuckPerUnit, CO_DAVIS.d2dMaxLuck, CO_DAVIS.d2dMissFortunePerUnit, CO_DAVIS.d2dMaxMissFortune];
+        }
         var text = qsTr("\nSpecial Unit:\nNone\n") +
                qsTr("\nGlobal Effect: \nIf Davis and his allies control more units than his enemies, his units gain +%0 luck per unit up to a maximum of +%1. Otherwise, his units gain +%2 misfortune per unit up to a maximum of +%3.") +
                qsTr("\n\nCO Zone Effect: \nDavis' units gain +%8% firepower and +%9% defence. If Davis and his allies control more units than his enemies, his units gain +%4 luck per unit up to a maximum of +%5. Otherwise, his units gain +%6 misfortune per unit up to a maximum of +%7.");
-        text = replaceTextArgs(text, [CO_DAVIS.d2dLuckPerUnit, CO_DAVIS.d2dMaxLuck, CO_DAVIS.d2dMissFortunePerUnit, CO_DAVIS.d2dMaxMissFortune,
+        text = replaceTextArgs(text, [values[0], values[1], values[2], values[3],
                                       CO_DAVIS.d2dCoZoneLuckPerUnit, CO_DAVIS.d2dCoZoneMaxLuck, CO_DAVIS.d2dCoZoneMissFortunePerUnit, CO_DAVIS.d2dCoZoneMaxMissFortune, CO_DAVIS.d2dCoZoneOffBonus, CO_DAVIS.d2dCoZoneDefBonus]);
         return text;
     };

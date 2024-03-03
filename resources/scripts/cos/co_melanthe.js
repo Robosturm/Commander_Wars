@@ -185,8 +185,8 @@ var Constructor = function()
     this.powerHeal = 3;
     this.powerDamage = 0;
 
-    this.d2dOffBonus = 0;
-    this.d2dTerrainBonus = 0;
+    this.d2dOffBonus = 20;
+    this.d2dTerrainBonus = 1;
     this.d2dRepairBonus = -1;
 
     this.d2dCoZoneOffBonus = 40;
@@ -211,7 +211,11 @@ var Constructor = function()
                     {
                         return CO_MELANTHE.d2dCoZoneTerrainBonus;
                     }
-                    return CO_MELANTHE.d2dTerrainBonus;
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_MELANTHE.d2dTerrainBonus;
+                    }
                 }
             }
         }
@@ -221,7 +225,11 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            return CO_MELANTHE.d2dRepairBonus;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return CO_MELANTHE.d2dRepairBonus;
+            }
         }
         return 0;
     };
@@ -262,9 +270,13 @@ var Constructor = function()
                             }
                             return CO_MELANTHE.d2dCoZoneBaseOffBonus;
                         }
-                        if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
+                        else if (map === null ||
+                                 (map !== null && map.getGameRules().getCoGlobalD2D()))
                         {
-                            return CO_MELANTHE.d2dOffBonus;
+                            if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
+                            {
+                                return CO_MELANTHE.d2dOffBonus;
+                            }
                         }
                     }
                     return 0;
@@ -329,12 +341,18 @@ var Constructor = function()
     {
         return qsTr("Her units get more terrain stars and firepower on natural, non-manmade terrain, however her units cannot be repaired as quickly on buildings.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_MELANTHE.d2dOffBonus, CO_MELANTHE.d2dTerrainBonus, 2 + CO_MELANTHE.d2dRepairBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
                qsTr("\nGlobal Effect: \nMelanthe's units gain +%0% firepower and +%1 extra terrain stars on natural terrain. Repairs to her units on buildings is reduced to +%2 HP per turn.") +
                qsTr("\n\nCO Zone Effect: \nMelanthe's units gain +%5% firepower and +%6% defence. Her units gain a total of +%3% firepower and gain +%4 extra terrain stars while on natural terrain.");
-        text = replaceTextArgs(text, [CO_MELANTHE.d2dOffBonus, CO_MELANTHE.d2dTerrainBonus, 2+CO_MELANTHE.d2dRepairBonus,
+        text = replaceTextArgs(text, [values[0], values[1], values[2],
                                       CO_MELANTHE.d2dCoZoneOffBonus, CO_MELANTHE.d2dCoZoneTerrainBonus, CO_MELANTHE.d2dCoZoneBaseOffBonus, CO_MELANTHE.d2dCoZoneDefBonus]);
         return text;
     };

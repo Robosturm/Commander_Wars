@@ -152,8 +152,8 @@ var Constructor = function()
     this.powerDefBonus = 10;
     this.powerDirectDefBonus = 30;
 
-    this.d2dFirerangeBonus = 0;
-    this.d2dOffMalus = 0;
+    this.d2dFirerangeBonus = 1;
+    this.d2dOffMalus = -20;
 
     this.d2dCoZoneFirerangeBonus = 1;
     this.d2dCoZoneOffMalus = -10;
@@ -199,7 +199,8 @@ var Constructor = function()
                     }
                     return CO_IK_486_B7.d2dCoZoneOffBonus;
                 }
-                else
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
                     if (indirectAttack)
                     {
@@ -231,7 +232,11 @@ var Constructor = function()
                     {
                         return CO_IK_486_B7.d2dCoZoneFirerangeBonus;
                     }
-                    return CO_IK_486_B7.d2dFirerangeBonus;
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_IK_486_B7.d2dFirerangeBonus;
+                    }
                 }
             }
         }
@@ -309,12 +314,18 @@ var Constructor = function()
     {
         return qsTr("His direct units can do indirect attacks when they don't move. However, they lose a fraction of firepower when doing so.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_IK_486_B7.d2dFirerangeBonus, CO_IK_486_B7.d2dOffMalus];
+        }
         var text = qsTr("\nSpecial Unit:\nChaperon\n") +
                qsTr("\nGlobal Effect: \nIK-486-B7's direct units gain +%0 range when they don't move. They have -%1% firepower when making an indirect attack.") +
                qsTr("\n\nCO Zone Effect: \nIK-486-B7's units gain +%4% firepower and +%5% defence. His direct units gain +%2 range when they don't move and have a total of %3% firepower when making an indirect attack.");
-        text = replaceTextArgs(text, [CO_IK_486_B7.d2dFirerangeBonus, CO_IK_486_B7.d2dOffMalus,
+        text = replaceTextArgs(text, [values[0], values[1],
                                       CO_IK_486_B7.d2dCoZoneFirerangeBonus, CO_IK_486_B7.d2dCoZoneOffMalus, CO_IK_486_B7.d2dCoZoneOffBonus, CO_IK_486_B7.d2dCoZoneDefBonus]);
         return text;
     };

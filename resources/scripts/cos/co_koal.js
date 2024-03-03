@@ -139,7 +139,7 @@ var Constructor = function()
     this.powerDefBonus = 10;
     this.powerBaseOffBonus = 10;
 
-    this.d2dOffBonus = 0;
+    this.d2dOffBonus = 10;
 
     this.d2dCoZoneOffBonus = 50;
     this.d2dCoZoneBaseOffBonus = 10;
@@ -190,7 +190,11 @@ var Constructor = function()
                         }
                         else if (isStreet)
                         {
-                            return CO_KOAL.d2dOffBonus;
+                            if (map === null ||
+                                (map !== null && map.getGameRules().getCoGlobalD2D()))
+                            {
+                                return CO_KOAL.d2dOffBonus;
+                            }
                         }
                         break;
                     }
@@ -274,12 +278,18 @@ var Constructor = function()
     {
         return qsTr("A master of road-based battles. Firepower of all his units are increased on roads.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_KOAL.d2dOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
                qsTr("\nGlobal Effect: \nKoal's units gain +%0% firepower on streets and bridges.") +
                qsTr("\n\nCO Zone Effect: \nKoal's units gain +%2% firepower and +%3% defence. They gain a total of +%1% firepower on streets and bridges.");
-        text = replaceTextArgs(text, [CO_KOAL.d2dOffBonus, CO_KOAL.d2dCoZoneOffBonus, CO_KOAL.d2dCoZoneBaseOffBonus, CO_KOAL.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_KOAL.d2dCoZoneOffBonus, CO_KOAL.d2dCoZoneBaseOffBonus, CO_KOAL.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

@@ -166,7 +166,11 @@ var Constructor = function()
                     }
                     else if (hasSandstorm)
                     {
-                        return CO_ZANDRA.d2dSandStormBonus;
+                        if (map === null ||
+                            (map !== null && map.getGameRules().getCoGlobalD2D()))
+                        {
+                            return CO_ZANDRA.d2dSandStormBonus;
+                        }
                     }
                     break;
                 }
@@ -227,7 +231,15 @@ var Constructor = function()
         {
             if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
             {
-                return true;
+                if (co.getPowerMode() > GameEnums.PowerMode_Off)
+                {
+                    return true;
+                }
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -253,11 +265,17 @@ var Constructor = function()
     {
         return qsTr("Zandra's units are unaffected by sandstorms and fight better during them.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_ZANDRA.d2dSandStormBonus];
+        }
         var text = qsTr("\nGlobal Effect: \nZandra's units are unaffected by sandstorms and gain +%0% firepower during a sandstorm.") +
                    qsTr("\n\nCO Zone Effect: \nZandra's units gain +%1% firepower during a sandstorm and +%2% firepower otherwise. All her units gain +%3% defence.");
-        text = replaceTextArgs(text, [CO_ZANDRA.d2dSandStormBonus, CO_ZANDRA.d2dCoZoneSandStormBonus, CO_ZANDRA.d2dCoZoneOffBonus, CO_ZANDRA.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_ZANDRA.d2dCoZoneSandStormBonus, CO_ZANDRA.d2dCoZoneOffBonus, CO_ZANDRA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

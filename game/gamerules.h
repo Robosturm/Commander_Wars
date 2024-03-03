@@ -687,6 +687,9 @@ public:
     Q_INVOKABLE bool getGatewayHosting() const;
     Q_INVOKABLE void setGatewayHosting(bool newGatewayHosting);
 
+    Q_INVOKABLE bool getCoGlobalD2D() const;
+    Q_INVOKABLE void setCoGlobalD2D(bool newCoGlobalD2D);
+
 private:
     /**
      * @brief resetArrays
@@ -725,6 +728,7 @@ private:
     bool m_COBannlistEdited{false};
     bool m_WeatherPrediction{true};
     bool m_coUnits{true};
+    bool m_coGlobalD2D{true};
     bool m_VisionBlock{false};
     qint32 m_buildingVision{0};
     bool m_BuildingVisionHide{false};

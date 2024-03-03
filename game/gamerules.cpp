@@ -38,6 +38,16 @@ void GameRules::resetArrays()
     m_FogSprites.clear();
 }
 
+bool GameRules::getCoGlobalD2D() const
+{
+    return m_coGlobalD2D;
+}
+
+void GameRules::setCoGlobalD2D(bool newCoGlobalD2D)
+{
+    m_coGlobalD2D = newCoGlobalD2D;
+}
+
 bool GameRules::getGatewayHosting() const
 {
     return m_gatewayHosting;
@@ -1697,6 +1707,7 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << m_specialDestruction;
     pStream << m_buildingVision;
     pStream << m_gatewayHosting;
+    pStream << m_coGlobalD2D;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -2060,6 +2071,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     {
         pStream >> m_buildingVision;
         pStream >> m_gatewayHosting;
+        pStream >> m_coGlobalD2D;
     }
     CONSOLE_PRINT("Weather prediction for days after restoring " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
 }

@@ -144,7 +144,9 @@ var Constructor = function()
     this.powerOffBonus = 10;
     this.powerAtkDefBonus = 50;
     this.powerDefBonus = 100;
-    this.d2dDefBonus = 0;
+
+    this.d2dDefBonus = 15;
+
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 50;
 
@@ -198,7 +200,11 @@ var Constructor = function()
                 {
                     return CO_OZZY.d2dCoZoneDefBonus;
                 }
-                return CO_OZZY.d2dDefBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_OZZY.d2dDefBonus;
+                }
             }
         }
         return 0;
@@ -239,12 +245,18 @@ var Constructor = function()
     {
         return qsTr("Ozzy's defensive tactics lowers the amount of damage his units take.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_OZZY.d2dDefBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nIron Shield Generator\n") +
             qsTr("\nGlobal Effect: \nOzzy's units have +%0% defence.") +
             qsTr("\n\nCO Zone Effect: \nOzzy's units gain +%1% firepower and +%2% defence.");
-        text = replaceTextArgs(text, [CO_OZZY.d2dDefBonus, CO_OZZY.d2dCoZoneOffBonus, CO_OZZY.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_OZZY.d2dCoZoneOffBonus, CO_OZZY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

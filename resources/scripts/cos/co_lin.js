@@ -177,11 +177,15 @@ var Constructor = function()
                     }
                     return CO_LIN.d2dCoZoneBaseOffBonus;
                 }
-                if (!seaAirUnit)
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
-                    return CO_LIN.d2dOffBonus;
+                    if (!seaAirUnit)
+                    {
+                        return CO_LIN.d2dOffBonus;
+                    }
+                    return CO_LIN.d2dBaseOffBonus;
                 }
-                return CO_LIN.d2dBaseOffBonus;
             }
         }
         return 0;
@@ -218,11 +222,15 @@ var Constructor = function()
                     }
                     return CO_LIN.d2dCoZoneBaseDefBonus;
                 }
-                if (!seaAirUnit)
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
-                    return CO_LIN.d2dDefBonus;
+                    if (!seaAirUnit)
+                    {
+                        return CO_LIN.d2dDefBonus;
+                    }
+                    return CO_LIN.d2dBaseDefBonus;
                 }
-                return CO_LIN.d2dBaseDefBonus;
             }
         }
         return 0;
@@ -306,12 +314,18 @@ var Constructor = function()
     {
         return qsTr("Her ground units are strong. Other units have normal power.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_LIN.d2dOffBonus, CO_LIN.d2dDefBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
                qsTr("\nGlobal Effect: \nLin's ground units gain +%0% firepower and +%1% defence.") +
                qsTr("\n\nCO Zone Effect: \nLin's ground units gain +%2% firepower and +%3% defence. Her other units gain +%4% firepower and +%5% defence.");
-        text = replaceTextArgs(text, [CO_LIN.d2dOffBonus, CO_LIN.d2dDefBonus,
+        text = replaceTextArgs(text, [values[0], values[1],
                                       CO_LIN.d2dCoZoneOffBonus, CO_LIN.d2dCoZoneDefBonus, CO_LIN.d2dCoZoneBaseOffBonus, CO_LIN.d2dCoZoneBaseDefBonus]);
         return text;
     };

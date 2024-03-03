@@ -163,8 +163,8 @@ var Constructor = function()
     this.powerOffBonus = 40;
     this.powerDefBonus = 20;
 
-    this.d2dOffBonus = 0;
-    this.d2dDefBonus = 0;
+    this.d2dOffBonus = 10;
+    this.d2dDefBonus = 10;
 
     this.d2dCoZoneOffBonus = 40;
     this.d2dCoZoneDefBonus = 20;
@@ -186,7 +186,11 @@ var Constructor = function()
                 {
                     return CO_HAWKE.d2dCoZoneOffBonus;
                 }
-                return CO_HAWKE.d2dOffBonus
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_HAWKE.d2dOffBonus
+                }
             }
         }
         return 0;
@@ -204,7 +208,8 @@ var Constructor = function()
             {
                 return CO_HAWKE.d2dCoZoneDefBonus;
             }
-            else
+            else if (map === null ||
+                     (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
                 return CO_HAWKE.d2dDefBonus;
             }
@@ -233,11 +238,17 @@ var Constructor = function()
     {
         return qsTr("His CO-Zone provides a more potent firepower bonus. However, his CO power gauge is longer than average.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_HAWKE.d2dOffBonus, CO_HAWKE.d2dDefBonus];
+        }
         var text = qsTr("\nGlobal Effect: \nHawke's units gain +%0% firepower and +%1% defence.") +
             qsTr("\n\nCO Zone Effect: \nHawke's units gain +%2% firepower and +%3% defence.");
-        text = replaceTextArgs(text, [CO_HAWKE.d2dOffBonus, CO_HAWKE.d2dDefBonus,
+        text = replaceTextArgs(text, [values[0], values[1],
                                       CO_HAWKE.d2dCoZoneOffBonus, CO_HAWKE.d2dCoZoneDefBonus]);
         return text;
     };

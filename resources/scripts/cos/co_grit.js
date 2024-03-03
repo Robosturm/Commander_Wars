@@ -226,7 +226,8 @@ var Constructor = function()
                     }
                     return CO_GRIT.d2dCoZoneOtherOffBonus;
                 }
-                else
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
                     if (attacker.getBaseMaxRange() > 1)
                     {
@@ -285,7 +286,11 @@ var Constructor = function()
             default:
                 if (unit.getBaseMaxRange() > 1)
                 {
-                    return CO_GRIT.d2dFirerangeBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_GRIT.d2dFirerangeBonus;
+                    }
                 }
                 break;
             }
@@ -347,12 +352,18 @@ var Constructor = function()
     {
         return qsTr("Indirect-combat units have more firepower and have increased range. Weak in non-footsoldier direct combat.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_GRIT.d2dFirerangeBonus, CO_GRIT.d2dOffBonus, CO_GRIT.d2dDirectMalus, CO_GRIT.d2dInfMalus];
+        }
         var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
                qsTr("\nGlobal Effect: \nGrit's indirect units gain +%0 range and +%1% firepower. His non-footsoldier direct units have %2% firepower. His footsoldier units have -%3% firepower.") +
                qsTr("\n\nCO Zone Effect: \nGrit's indirect units gain +%4% firepower. His non-footsoldier direct units have %5% firepower. His footsoldier units gain +%6% firepower. All of his units gain +%7% defence.");
-        text = replaceTextArgs(text, [CO_GRIT.d2dFirerangeBonus, CO_GRIT.d2dOffBonus, CO_GRIT.d2dDirectMalus, CO_GRIT.d2dInfMalus, CO_GRIT.d2dCoZoneOffBonus, CO_GRIT.d2dCoZoneDirectMalus, CO_GRIT.d2dCoZoneInfMalus, CO_GRIT.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], values[2], values[3], CO_GRIT.d2dCoZoneOffBonus, CO_GRIT.d2dCoZoneDirectMalus, CO_GRIT.d2dCoZoneInfMalus, CO_GRIT.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

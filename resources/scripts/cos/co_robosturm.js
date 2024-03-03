@@ -184,10 +184,10 @@ var Constructor = function()
     this.powerAmmoLoose = 0.5;
 
     this.d2dCoZoneOffBonus = -10;
-    this.d2dCoZoneDefBonus = 30;
+    this.d2dCoZoneDefBonus = 50;
 
     this.d2dOffBonus = -20;
-    this.d2dDefBonus = 0;
+    this.d2dDefBonus = 20;
     this.d2dMovementPoints = 1;
 
     this.getCOUnitRange = function(co, map)
@@ -211,7 +211,11 @@ var Constructor = function()
                 {
                     return CO_ROBOSTURM.d2dCoZoneOffBonus;
                 }
-                return CO_ROBOSTURM.d2dOffBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_ROBOSTURM.d2dOffBonus;
+                }
             }
         }
         return 0;
@@ -234,7 +238,11 @@ var Constructor = function()
                 {
                     return CO_ROBOSTURM.d2dCoZoneDefBonus;
                 }
-                return CO_ROBOSTURM.d2dDefBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_ROBOSTURM.d2dDefBonus;
+                }
             }
         }
         return 0;
@@ -253,7 +261,11 @@ var Constructor = function()
             {
                 return CO_ROBOSTURM.superPowerMovementPoints;
             }
-            return CO_ROBOSTURM.d2dMovementPoints;
+            else if (map === null ||
+                     (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return CO_ROBOSTURM.d2dMovementPoints;
+            }
         }
         return 0;
     };
@@ -299,12 +311,18 @@ var Constructor = function()
         text = replaceTextArgs(text, [CO_ROBOSTURM.d2dMovementPoints]);
         return text;
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_ROBOSTURM.d2dMovementPoints, CO_ROBOSTURM.d2dOffBonus, CO_ROBOSTURM.d2dDefBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
                qsTr("\nGlobal Effect: \nRobo-Sturm's units gain +%0 movement, +%2% defence, and have %1% firepower.") +
                qsTr("\n\nCO Zone Effect: \nRobo-Sturm's units gain +%3% defense and have %4% firepower.");
-        text = replaceTextArgs(text, [CO_ROBOSTURM.d2dMovementPoints, CO_ROBOSTURM.d2dOffBonus, CO_ROBOSTURM.d2dDefBonus,
+        text = replaceTextArgs(text, [values[0], values[1], values[2],
                                       CO_ROBOSTURM.d2dCoZoneDefBonus, CO_ROBOSTURM.d2dCoZoneOffBonus]);
         return text;
     };

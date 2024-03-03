@@ -160,7 +160,11 @@ var Constructor = function()
                 {
                     return CO_FORSYTHE.d2dCoZoneOffBonus;
                 }
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
                 return CO_FORSYTHE.d2dOffBonus;
+                }
             }
         }
         return 0;
@@ -183,7 +187,11 @@ var Constructor = function()
                 {
                     return CO_FORSYTHE.d2dCoZoneDefBonus;
                 }
-                return CO_FORSYTHE.d2dDefBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_FORSYTHE.d2dDefBonus;
+                }
             }
         }
         return 0;
@@ -225,12 +233,19 @@ var Constructor = function()
     {
         return qsTr("His CO-Zone is very large and boosts both offensive and defensive stats.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_FORSYTHE.d2dOffBonus, CO_FORSYTHE.d2dDefBonus];
+        }
+
         var text = qsTr("\nSpecial Unit:\nChaperon\n") +
                qsTr("\nGlobal Effect: \nForsythe's units have +%0% firepower and +%1% defence.") +
                qsTr("\n\nCO Zone Effect: \nForsythe's units gain +%2% firepower and +%3% defence.");
-        text = replaceTextArgs(text, [CO_FORSYTHE.d2dOffBonus, CO_FORSYTHE.d2dDefBonus,
+        text = replaceTextArgs(text, [values[0], values[1],
                                       CO_FORSYTHE.d2dCoZoneOffBonus, CO_FORSYTHE.d2dCoZoneDefBonus]);
         return text;
     };

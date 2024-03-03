@@ -208,7 +208,7 @@ var Constructor = function()
     this.powerDefBonus = 10;
     this.powerFirerangeModifier = 1;
 
-    this.d2dOffBonus = 0;
+    this.d2dOffBonus = 5;
 
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
@@ -272,7 +272,11 @@ var Constructor = function()
                 }
                 else if (attacker.getBaseMaxRange() === 1)
                 {
-                    return inRangeCount * CO_SMITAN.d2dOffBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return inRangeCount * CO_SMITAN.d2dOffBonus;
+                    }
                 }
                 break;
             }
@@ -368,12 +372,18 @@ var Constructor = function()
     {
         return qsTr("Direct units gain additional firepower against enemy units which are in range of indirect units.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_SMITAN.d2dOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
                qsTr("\nGlobal Effect: \nWhen attacking an enemy unit, Smitan's direct units gain +%0% firepower for each indirect unit in range of the target.") +
                qsTr("\n\nCO Zone Effect: \nSmitan's units gain +%1% firepower and +%2% defence. When attacking an enemy unit, Smitan's direct units gain an additional +%3% firepower for each indirect unit in range of the target.");
-		text = replaceTextArgs(text, [CO_SMITAN.d2dOffBonus, CO_SMITAN.d2dCoZoneBaseOffBonus, CO_SMITAN.d2dCoZoneDefBonus, CO_SMITAN.d2dCoZoneOffBonus]);
+        text = replaceTextArgs(text, [values[0], CO_SMITAN.d2dCoZoneBaseOffBonus, CO_SMITAN.d2dCoZoneDefBonus, CO_SMITAN.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

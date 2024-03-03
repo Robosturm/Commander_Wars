@@ -136,16 +136,22 @@ var Constructor = function()
     this.d2dCoZoneOffBonus = 80;
     this.d2dCoZoneDefBonus = 10;
 
-    this.d2dOffBonus = 0;
-    this.d2dFixedDamage = false;
+    this.d2dOffBonus = 70;
+    this.d2dFixedDamage = true;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
-            var baseDamage = CO_JULIA.d2dOffBonus;
-            var fixedDamage = CO_JULIA.d2dFixedDamage;
+            var baseDamage = 0;
+            var fixedDamage = false;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                baseDamage = CO_JULIA.d2dOffBonus;
+                fixedDamage = CO_JULIA.d2dFixedDamage;
+            }
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Tagpower:
@@ -160,9 +166,10 @@ var Constructor = function()
                     baseDamage = CO_JULIA.d2dCoZoneOffBonus;
                     fixedDamage = true;
                 }
-				else
-				{
-					return CO_JULIA.d2dOffBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_JULIA.d2dOffBonus;
 				}
                 break;
             }
@@ -227,16 +234,25 @@ var Constructor = function()
     {
         return qsTr("Units have reduced offensive power. However, firepower is unaffected by loss of HP.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
         var text = qsTr("\nSpecial Unit:\nPartisan\n");
-        if (CO_JULIA.d2dOffBonus >= 0)
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
         {
-            text +=  qsTr("\nGlobal Effect: \nNone.");
+            if (CO_JULIA.d2dFixedDamage)
+            {
+
+                text +=  qsTr("\nGlobal Effect: \nJulia's units have %1 firepower and their firepower is unaffected by loss of HP.");
+            }
+            else
+            {
+                text +=  qsTr("\nGlobal Effect: \nNone.");
+            }
         }
         else
         {
-            text +=  qsTr("\nGlobal Effect: \nJulia's units have %1 firepower.");
+            text +=  qsTr("\nGlobal Effect: \nNone.");
         }
         text += qsTr("\n\nCO Zone Effect: \nJulia's units have %0% firepower and +%2% defence. Their firepower is unaffected by loss of HP.");
         text = replaceTextArgs(text, [(CO_JULIA.d2dCoZoneOffBonus-100), CO_JULIA.d2dOffBonus, CO_JULIA.d2dCoZoneDefBonus]);

@@ -283,7 +283,7 @@ var Constructor = function()
     {
         return qsTr("Aira never felt a need to specialize, so all of her units are average.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
         var text = qsTr("\nGlobal Effect: \nNone.") +
                    qsTr("\n\nCO Zone Effect: \nAira's units gain +%0% firepower and +%0% defence.");

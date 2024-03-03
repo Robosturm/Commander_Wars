@@ -147,7 +147,7 @@ var Constructor = function()
     this.powerMovementBonus = 1;
     this.powerBaseDefBonus = 10;
 
-    this.d2dOffBonus = 0;
+    this.d2dOffBonus = 15;
     this.d2dDeffBonus = 0;
 
     this.d2dCoZoneOffBonus = 50;
@@ -192,7 +192,11 @@ var Constructor = function()
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return CO_TASHA.d2dOffBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_TASHA.d2dOffBonus;
+                    }
                 }
                 break;
             }
@@ -237,7 +241,11 @@ var Constructor = function()
                 }
                 else if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return CO_TASHA.d2dDeffBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_TASHA.d2dDeffBonus;
+                    }
                 }
                 break;
             }
@@ -300,12 +308,18 @@ var Constructor = function()
     {
         return qsTr("She possesses superior air units.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_TASHA.d2dOffBonus , CO_TASHA.d2dDeffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nKirov\n") +
                qsTr("\nGlobal Effect: \nTasha's air units have +%0% firepower and +%1% defence.") +
                qsTr("\n\nCO Zone Effect: \nTasha's air units gain +%2% firepower and +%3% defence. Her other units gain +%4% firepower and +%5% defence.");
-        text = replaceTextArgs(text, [CO_TASHA.d2dOffBonus , CO_TASHA.d2dDeffBonus, CO_TASHA.d2dCoZoneOffBonus, CO_TASHA.d2dCoZoneDeffBonus, CO_TASHA.d2dCoZoneBaseOffBonus, CO_TASHA.d2dCoZoneBaseDeffBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_TASHA.d2dCoZoneOffBonus, CO_TASHA.d2dCoZoneDeffBonus, CO_TASHA.d2dCoZoneBaseOffBonus, CO_TASHA.d2dCoZoneBaseDeffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

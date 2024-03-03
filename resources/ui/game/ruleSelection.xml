@@ -392,6 +392,24 @@
             <x>5</x>
             <y>lastY + lastHeight + 10</y>
             <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","CO Global D2D:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked the co's global day to day bonus are active.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getCoGlobalD2D()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setCoGlobalD2D(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+
+
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
             <text>QT_TRANSLATE_NOOP("GAME","CO powergain mode:")</text>
             <font>"main"</font>
             <fontSize>24</fontSize>

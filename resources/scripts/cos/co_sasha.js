@@ -128,10 +128,13 @@ var Constructor = function()
 
     this.superPowerIncomeBonus = 0.5;
     this.powerFundsPerReduction = 5000;
+
     this.d2dPercentIncomeBonus = 0.1;
     this.d2dFlatIncomeBonus = 0;
+
     this.powerOffBonus = 20;
     this.powerDefBonus = 10;
+
     this.d2dCoZoneOffBonus = 20;
     this.d2dCoZoneDefBonus = 10;
 
@@ -139,7 +142,11 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            return income * CO_SASHA.d2dPercentIncomeBonus + CO_SASHA.d2dFlatIncomeBonus;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return income * CO_SASHA.d2dPercentIncomeBonus + CO_SASHA.d2dFlatIncomeBonus;
+            }
         }
         return 0;
     };
@@ -235,12 +242,18 @@ var Constructor = function()
     {
         return qsTr("Being the heir to a vast fortune, she gets additional funds from allied properties.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_SASHA.d2dPercentIncomeBonus * 100, CO_SASHA.d2dFlatIncomeBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
                qsTr("\nGlobal Effect: \nSasha's properties produce an additional +%0% funding, as well as an additional flat +%1 funds.") +
                qsTr("\n\nCO Zone Effect: \nSasha's units gain +%2% firepower and +%3% defence.");
-        text = replaceTextArgs(text, [CO_SASHA.d2dPercentIncomeBonus * 100, CO_SASHA.d2dFlatIncomeBonus, CO_SASHA.d2dCoZoneOffBonus, CO_SASHA.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_SASHA.d2dCoZoneOffBonus, CO_SASHA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

@@ -169,7 +169,11 @@ var Constructor = function()
                 }
                 break;
             }
-            return CO_GRIMM.d2dOffBonus;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return CO_GRIMM.d2dOffBonus;
+            }
         }
         return 0;
     };
@@ -186,7 +190,11 @@ var Constructor = function()
             {
                 return CO_GRIMM.d2dCoZoneDefBonus;
             }
-            return CO_GRIMM.d2dDefBonus;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return CO_GRIMM.d2dDefBonus;
+            }
         }
         return 0;
     };
@@ -227,12 +235,18 @@ var Constructor = function()
     {
         return qsTr("Firepower of all units is increased, thanks to his daredevil nature, but their defences are reduced.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_GRIMM.d2dDefBonus, CO_GRIMM.d2dOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
                qsTr("\nGlobal Effect: \nGrimm's units gain +%1% firepower and have %0% defence.") +
                qsTr("\n\nCO Zone Effect: \nGrimm's units gain +%2% firepower and have -%3% defence.");
-        text = replaceTextArgs(text, [CO_GRIMM.d2dDefBonus, CO_GRIMM.d2dOffBonus, CO_GRIMM.d2dCoZoneOffBonus, CO_GRIMM.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_GRIMM.d2dCoZoneOffBonus, CO_GRIMM.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

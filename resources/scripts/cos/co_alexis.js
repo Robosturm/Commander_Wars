@@ -321,63 +321,67 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            var player = co.getOwner();
-            if (!player.getIsDefeated())
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
-                var animations = [];
-                var counter = 0;
-                var buildings = co.getOwner().getBuildings();
-                var fields = globals.getCircle(1, CO_ALEXIS.d2dHealRadius);
-                var viewplayer = map.getCurrentViewPlayer();
-                var size1 = buildings.size();
-                var size2 = fields.size();
-                for (var i2 = 0; i2 < size1; i2++)
+                var player = co.getOwner();
+                if (!player.getIsDefeated())
                 {
-                    var building = buildings.at(i2);
-                    var id = building.getBuildingID();
-                    if (!id.startsWith("TEMPORARY_"))
+                    var animations = [];
+                    var counter = 0;
+                    var buildings = co.getOwner().getBuildings();
+                    var fields = globals.getCircle(1, CO_ALEXIS.d2dHealRadius);
+                    var viewplayer = map.getCurrentViewPlayer();
+                    var size1 = buildings.size();
+                    var size2 = fields.size();
+                    for (var i2 = 0; i2 < size1; i2++)
                     {
-                        var x = building.getX();
-                        var y = building.getY();
-                        var animation = null;
-                        for (var i = 0; i < size2; i++)
+                        var building = buildings.at(i2);
+                        var id = building.getBuildingID();
+                        if (!id.startsWith("TEMPORARY_"))
                         {
-                            var point = fields.at(i);
-                            if (map.onMap(x + point.x, y + point.y))
+                            var x = building.getX();
+                            var y = building.getY();
+                            var animation = null;
+                            for (var i = 0; i < size2; i++)
                             {
-                                var unitX = x + point.x;
-                                var unitY = y + point.y;
-                                var unit = map.getTerrain(unitX, unitY).getUnit();
-                                if ((unit !== null) &&
-                                    (unit.getOwner() === co.getOwner()))
+                                var point = fields.at(i);
+                                if (map.onMap(x + point.x, y + point.y))
                                 {
-                                    UNIT.repairUnit(unit, CO_ALEXIS.d2dHealBonus, map);
-                                    animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
-                                    var delay = globals.randInt(135, 265);
-                                    if (animations.length < 5)
+                                    var unitX = x + point.x;
+                                    var unitY = y + point.y;
+                                    var unit = map.getTerrain(unitX, unitY).getUnit();
+                                    if ((unit !== null) &&
+                                            (unit.getOwner() === co.getOwner()))
                                     {
-                                        delay *= i;
-                                    }
-                                    animation.setSound("power0.wav", 1, delay);
-                                    if (animations.length < 5)
-                                    {
-                                        animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                        animations.push(animation);
-                                    }
-                                    else
-                                    {
-                                        animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                        animations[counter].queueAnimation(animation);
-                                        animations[counter] = animation;
-                                        counter++;
-                                        if (counter >= animations.length)
+                                        UNIT.repairUnit(unit, CO_ALEXIS.d2dHealBonus, map);
+                                        animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
+                                        var delay = globals.randInt(135, 265);
+                                        if (animations.length < 5)
                                         {
-                                            counter = 0;
+                                            delay *= i;
                                         }
-                                    }
-                                    if (!viewplayer.getFieldVisible(unitX, unitY))
-                                    {
-                                        animation.setVisible(false);
+                                        animation.setSound("power0.wav", 1, delay);
+                                        if (animations.length < 5)
+                                        {
+                                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                                            animations.push(animation);
+                                        }
+                                        else
+                                        {
+                                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                                            animations[counter].queueAnimation(animation);
+                                            animations[counter] = animation;
+                                            counter++;
+                                            if (counter >= animations.length)
+                                            {
+                                                counter = 0;
+                                            }
+                                        }
+                                        if (!viewplayer.getFieldVisible(unitX, unitY))
+                                        {
+                                            animation.setVisible(false);
+                                        }
                                     }
                                 }
                             }
@@ -392,7 +396,11 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            return -CO_ALEXIS.d2dHealMalus;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return -CO_ALEXIS.d2dHealMalus;
+            }
         }
         return 0;
     };
@@ -432,12 +440,18 @@ var Constructor = function()
     {
         return qsTr("Units heal at half the normal rate on owned properties, but will be able to heal while adjacent to them.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_ALEXIS.d2dHealMalus, CO_ALEXIS.d2dHealRadius,  CO_ALEXIS.d2dHealBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nRepair Tank\n") +
                    qsTr("\nGlobal Effect: \nAlexis' units heal only +%0 HP while on an owned property, however, her units will heal from any owned property for +%2 HP if they're with within %1 space. This effect stacks with each additional nearby property.") +
                    qsTr("\n\nCO Zone Effect: \nAlexis' units gain +%3% firepower and +%3% defence.");
-        text = replaceTextArgs(text, [CO_ALEXIS.d2dHealMalus, CO_ALEXIS.d2dHealRadius,  CO_ALEXIS.d2dHealBonus, CO_ALEXIS.d2dCoZoneBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], values[2], CO_ALEXIS.d2dCoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

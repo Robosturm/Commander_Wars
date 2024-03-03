@@ -186,7 +186,11 @@ var Constructor = function()
                 else if (attacker.getBaseMaxRange() > 1 ||
                          attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return CO_GAGE.d2dOffBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_GAGE.d2dOffBonus;
+                    }
                 }
                 break;
             }
@@ -228,7 +232,11 @@ var Constructor = function()
                 else if (defender.getBaseMaxRange() > 1 ||
                          defender.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return CO_GAGE.d2dDefBonus;
+                    if (map === null ||
+                        (map !== null && map.getGameRules().getCoGlobalD2D()))
+                    {
+                        return CO_GAGE.d2dDefBonus;
+                    }
                 }
                 break;
             }
@@ -313,12 +321,18 @@ var Constructor = function()
     {
         return qsTr("Indirect-combat units and naval units have increased firepower.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_GAGE.d2dOffBonus, CO_GAGE.d2dDefBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
                qsTr("\nGlobal Effect: \nGage's indirect and naval units have +%0% firepower and +%1% defence.") +
                qsTr("\n\nCO Zone Effect: \nGage's indirect and naval units have +%2% firepower and +%3% defence. His other units have +%4% firepower and +%5% defence.");
-        text = replaceTextArgs(text, [CO_GAGE.d2dOffBonus, CO_GAGE.d2dDefBonus,
+        text = replaceTextArgs(text, [values[0], values[1],
                                       CO_GAGE.d2dCoZoneOffBonus, CO_GAGE.d2dCoZoneDefBonus, CO_GAGE.d2dCoZoneBaseOffBonus, CO_GAGE.d2dCoZoneBaseDefBonus]);
         return text;
     };

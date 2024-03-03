@@ -135,10 +135,10 @@ var Constructor = function()
 
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
-    this.d2dCoZoneExplosionDamage = 1;
+    this.d2dCoZoneExplosionDamage = 2;
 
     this.d2dExplosionRange = 1;
-    this.d2dExplosionDamage = 0;
+    this.d2dExplosionDamage = 1;
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
@@ -220,7 +220,8 @@ var Constructor = function()
                     {
                         damage = CO_NANA.d2dCoZoneExplosionDamage;
                     }
-                    else
+                    else if (map === null ||
+                             (map !== null && map.getGameRules().getCoGlobalD2D()))
                     {
                         damage = CO_NANA.d2dExplosionDamage;
                     }
@@ -342,12 +343,18 @@ var Constructor = function()
     {
         return qsTr("Indirect attacks deal damage to all nearby units, no matter their allegiance.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_NANA.d2dExplosionDamage];
+        }
         var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
                qsTr("\nGlobal Effect: \nAttacks made by Nana's indirect units deal -%0 HP of damage to all adjacent units, no matter their allegiance.") +
                qsTr("\n\nCO Zone Effect: \nNana's units gain +%2% firepower and +%3% defence. Attacks made by her indirect units deal -%1 HP of damage to all adjacent units, no matter their allegiance.");
-        text = replaceTextArgs(text, [CO_NANA.d2dExplosionDamage, CO_NANA.d2dCoZoneExplosionDamage, CO_NANA.d2dCoZoneOffBonus, CO_NANA.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_NANA.d2dCoZoneExplosionDamage, CO_NANA.d2dCoZoneOffBonus, CO_NANA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

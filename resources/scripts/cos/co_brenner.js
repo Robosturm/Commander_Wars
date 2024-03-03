@@ -177,7 +177,11 @@ var Constructor = function()
                 {
                     return CO_BRENNER.d2dCoZoneDefBonus;
                 }
-                return CO_BRENNER.d2dDefBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_BRENNER.d2dDefBonus;
+                }
             }
         }
         return 0;
@@ -236,11 +240,17 @@ var Constructor = function()
     {
         return qsTr("He specializes in defensive bonuses for his units.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_BRENNER.d2dDefBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nBrenner's units gain +%0% defence.") +
                    qsTr("\n\nCO Zone Effect: \nBrenner's units gain +%1% firepower and +%2% defence.");
-        text = replaceTextArgs(text, [CO_BRENNER.d2dDefBonus, CO_BRENNER.d2dCoZoneOffBonus, CO_BRENNER.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_BRENNER.d2dCoZoneOffBonus, CO_BRENNER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

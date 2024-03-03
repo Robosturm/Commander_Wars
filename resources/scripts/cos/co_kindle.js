@@ -202,7 +202,7 @@ var Constructor = function()
     this.powerBaseOffBonus = 10;
     this.powerDefBonus = 10;
 
-    this.d2dOffBonus = 0;
+    this.d2dOffBonus = 40;
 
     this.d2dCoZoneOffBonus = 70;
     this.d2dCoZoneBaseOffBonus = 10;
@@ -246,7 +246,11 @@ var Constructor = function()
                         }
                         else if (building !== null)
                         {
-                            return CO_KINDLE.d2dOffBonus;
+                            if (map === null ||
+                                (map !== null && map.getGameRules().getCoGlobalD2D()))
+                            {
+                                return CO_KINDLE.d2dOffBonus;
+                            }
                         }
                         break;
                     }
@@ -313,12 +317,18 @@ var Constructor = function()
     {
         return qsTr("An upper-crust CO who excels at urban warfare. Firepower of all units is increased on buildings.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_KINDLE.d2dOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nPartisan\n") +
                qsTr("\nGlobal Effect: \nKindle's units on buildings gain +%0% firepower.") +
                qsTr("\n\nCO Zone Effect: \nKindle's units gain +%2% firepower and +%3% defence. Her units on buildings gain a total of +%1% firepower.");
-        text = replaceTextArgs(text, [CO_KINDLE.d2dOffBonus, CO_KINDLE.d2dCoZoneOffBonus, CO_KINDLE.d2dCoZoneBaseOffBonus, CO_KINDLE.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], CO_KINDLE.d2dCoZoneOffBonus, CO_KINDLE.d2dCoZoneBaseOffBonus, CO_KINDLE.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

@@ -207,7 +207,11 @@ var Constructor = function()
                 {
                     return CO_VARLOT.d2dCoZoneOffBonus;
                 }
-                return CO_VARLOT.d2dOffBonus;
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_VARLOT.d2dOffBonus;
+                }
             }
         }
         return 0;
@@ -225,7 +229,8 @@ var Constructor = function()
             {
                 return CO_VARLOT.d2dCoZoneDefBonus;
             }
-            else
+            else if (map === null ||
+                     (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
                 return CO_VARLOT.d2dDefBonus;
             }
@@ -304,12 +309,18 @@ var Constructor = function()
     {
         return qsTr("When Varlot begins to capture an enemy property, he reduces the funding the enemy receives from it.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_VARLOT.d2dOffBonus , CO_VARLOT.d2dDefBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nSmuggler\n") +
             qsTr("\nGlobal Effect: \nWhile Varlot captures an enemy property, the enemy's income for that property is reduced by how far the capture has completed. Varlot's units have +%0% firepower and +%1% defence.") +
             qsTr("\n\nCO Zone Effect: \nVarlot's units gain +%2% firepower and +%3% defence.");
-        text = replaceTextArgs(text, [CO_VARLOT.d2dOffBonus , CO_VARLOT.d2dDefBonus, CO_VARLOT.d2dCoZoneOffBonus, CO_VARLOT.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_VARLOT.d2dCoZoneOffBonus, CO_VARLOT.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

@@ -114,7 +114,11 @@ var Constructor = function()
             }
             else if (isDefender && CO_SONJA.counterAttackBonus !== 0)
             {
-                return CO_SONJA.d2dCounterAttackBonus;
+                if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_SONJA.d2dCounterAttackBonus;
+                }
             }
         }
         return 0;
@@ -147,7 +151,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return CO_SONJA.powerVisionBonus;
             default:
-                return CO_SONJA.d2dVisionBonus;
+                if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return CO_SONJA.d2dVisionBonus;
+                }
             }
         }
         return 0;
@@ -164,7 +172,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return -CO_SONJA.powerEnemyTerrainDefenseModifier;
             default:
-                return -CO_SONJA.d2dEnemyTerrainDefenseModifier;
+                if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()))
+                {
+                    return -CO_SONJA.d2dEnemyTerrainDefenseModifier;
+                }
             }
         }
         return 0;
@@ -218,7 +230,11 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            return true;
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            {
+                return true;
+            }
         }
     };
     this.getAiCoUnitBonus = function(co, unit, map)
@@ -257,12 +273,18 @@ var Constructor = function()
     {
         return qsTr("Keeps HP intel hidden from foes and reduces enemy terrain defensive cover. However, she suffers from chronic bad luck.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_SONJA.d2dEnemyTerrainDefenseModifier, CO_SONJA.d2dBonusMisfortune, CO_SONJA.d2dVisionBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nIntel Truck\n") +
             qsTr("\nGlobal Effect: \nSonja's units gain +%4 vision, +%1 misfortune, and their HP is hidden from enemies. Enemies lose -%0 terrain star from all terrain.") +
             qsTr("\n\nCO Zone Effect: \nSonja's units gain +%2% firepower and +%3% defence.");
-        text = replaceTextArgs(text, [CO_SONJA.d2dEnemyTerrainDefenseModifier, CO_SONJA.d2dBonusMisfortune, CO_SONJA.d2dCoZoneOffBonus, CO_SONJA.d2dCoZoneDefBonus, CO_SONJA.d2dVisionBonus]);
+        text = replaceTextArgs(text, [values[0], values[1], CO_SONJA.d2dCoZoneOffBonus, CO_SONJA.d2dCoZoneDefBonus, values[2]]);
         return text;
     };
     this.getPowerDescription = function(co)

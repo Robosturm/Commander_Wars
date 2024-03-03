@@ -167,17 +167,17 @@ var Constructor = function()
     this.powerAirOffBonus = 0;
     this.powerOtherOffBonus = 0;
 
-    this.d2dNavalDefBonus = 0;
+    this.d2dNavalDefBonus = 20;
     this.d2dDefBonus = 0;
     this.d2dNavalMovementPoints = 1;
     this.d2dNavalOffBonus = 10;
-    this.d2dAirOffBonus = -10;
+    this.d2dAirOffBonus = -30;
     this.d2dOtherOffBonus = 0;
 
-    this.d2dCoZoneNavalDefBonus = 10;
+    this.d2dCoZoneNavalDefBonus = 30;
     this.d2dCoZoneDefBonus = 10;
     this.d2dCoZoneNavalOffBonus = 40;
-    this.d2dCoZoneAirOffBonus = 0;
+    this.d2dCoZoneAirOffBonus = -20;
     this.d2dCoZoneOtherOffBonus = 0;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -235,7 +235,8 @@ var Constructor = function()
                         return CO_DRAKE.d2dCoZoneOtherOffBonus;
                     }
                 }
-                else
+                else if (map === null ||
+                         (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                     {
@@ -259,9 +260,13 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (unit.getUnitType() === GameEnums.UnitType_Naval)
+            if (map === null ||
+                (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
-                return CO_DRAKE.d2dNavalMovementPoints;
+                if (unit.getUnitType() === GameEnums.UnitType_Naval)
+                {
+                    return CO_DRAKE.d2dNavalMovementPoints;
+                }
             }
         }
         return 0;
@@ -294,7 +299,8 @@ var Constructor = function()
                     return CO_DRAKE.d2dCoZoneDefBonus;
                 }
             }
-            else
+            else if (map === null ||
+                     (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
                 if (defender.getUnitType() === GameEnums.UnitType_Naval)
                 {
@@ -353,12 +359,18 @@ var Constructor = function()
     {
         return qsTr("He has superior naval units, but his air units have reduced firepower.");
     };
-    this.getLongCODescription = function()
+    this.getLongCODescription = function(co, map)
     {
+        var values = [0, 0, 0, 0];
+        if (map === null ||
+            (map !== null && map.getGameRules().getCoGlobalD2D()))
+        {
+            values = [CO_DRAKE.d2dNavalMovementPoints, CO_DRAKE.d2dNavalOffBonus, CO_DRAKE.d2dNavalDefBonus, CO_DRAKE.d2dAirOffBonus];
+        }
         var text = qsTr("\nSpecial Unit:\nMissile Submarine\n\n" +
                     "Global Effect: \nDrake's naval units gain +%0 movement, +%1% firepower, and +%2% defence. His air units have %3% firepower." +
                     "\n\nCO Zone Effect: \nDrake's naval units gain +%4% firepower and +%5% defence. His air units have -%6% firepower and gain +%7% defence. All of his other units gain +%8% firepower and +%7% defence.");
-        text = replaceTextArgs(text, [CO_DRAKE.d2dNavalMovementPoints, CO_DRAKE.d2dNavalOffBonus, CO_DRAKE.d2dNavalDefBonus, CO_DRAKE.d2dAirOffBonus,
+        text = replaceTextArgs(text, [values[0], values[1], values[2], values[3],
                                       CO_DRAKE.d2dCoZoneNavalOffBonus, CO_DRAKE.d2dCoZoneNavalDefBonus, CO_DRAKE.d2dCoZoneAirOffBonus, CO_DRAKE.d2dCoZoneDefBonus, CO_DRAKE.d2dCoZoneOtherOffBonus]);
         return text;
     };
