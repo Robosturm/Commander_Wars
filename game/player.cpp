@@ -557,7 +557,12 @@ void Player::updatePlayerID()
         if (m_pMap->getPlayer(i) == this)
         {
             m_playerId = i;
+            break;
         }
+    }
+    if (m_playerId < 0)
+    {
+        m_playerId = 0;
     }
 }
 

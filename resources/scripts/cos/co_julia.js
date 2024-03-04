@@ -136,7 +136,7 @@ var Constructor = function()
     this.d2dCoZoneOffBonus = 80;
     this.d2dCoZoneDefBonus = 10;
 
-    this.d2dOffBonus = 70;
+    this.d2dOffBonus = 65;
     this.d2dFixedDamage = true;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -166,11 +166,6 @@ var Constructor = function()
                     baseDamage = CO_JULIA.d2dCoZoneOffBonus;
                     fixedDamage = true;
                 }
-                else if (map === null ||
-                         (map !== null && map.getGameRules().getCoGlobalD2D()))
-                {
-                    return CO_JULIA.d2dOffBonus;
-				}
                 break;
             }
             if (fixedDamage)

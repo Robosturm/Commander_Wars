@@ -4039,6 +4039,13 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             }
         }
     }
+    if (bufAmmo1 == getMaxAmmo2() && bufAmmo2 == getMaxAmmo1())
+    {
+        // fix for swapped ammo1 and ammo2
+        auto buffer = bufAmmo1;
+        bufAmmo1 = bufAmmo2;
+        bufAmmo2 = buffer;
+    }
     if (bufAmmo1 < 0 && !savegame)
     {
         setAmmo1(getMaxAmmo1());

@@ -303,7 +303,12 @@ var PLAYER =
     // return the default set for colors
     loadDefaultPlayerColor : function (player, map)
     {
-        var color = PLAYER.getDefaultColor(player.getPlayerID());
+        var playerId = player.getPlayerID();
+        if (playerId < 0)
+        {
+            playerId = 0;
+        }
+        var color = PLAYER.getDefaultColor(playerId);
         player.setColor(color);
     },
     armies : ["OS",

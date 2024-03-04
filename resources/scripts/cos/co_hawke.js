@@ -164,7 +164,7 @@ var Constructor = function()
     this.powerDefBonus = 20;
 
     this.d2dOffBonus = 10;
-    this.d2dDefBonus = 10;
+    this.d2dDefBonus = 0;
 
     this.d2dCoZoneOffBonus = 40;
     this.d2dCoZoneDefBonus = 20;
