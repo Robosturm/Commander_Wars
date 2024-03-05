@@ -1717,6 +1717,7 @@ void CO::loadCOMusic()
 
 GameAnimationDialog* CO::createPowerSentence()
 {
+    Mainapp::getInstance()->pauseRendering();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
                       JsThis::getJsThis(m_pMap)});
@@ -1733,6 +1734,7 @@ GameAnimationDialog* CO::createPowerSentence()
     }
     GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(m_pMap, sentence, m_coID, GameEnums::COMood_Normal, m_pOwner->getColor());
     pGameAnimationDialog->setFinishDelay(500);
+    Mainapp::getInstance()->continueRendering();
 
     return pGameAnimationDialog;
 }

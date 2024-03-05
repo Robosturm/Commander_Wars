@@ -19,6 +19,8 @@ public:
     explicit GameAnimationDialog(quint32 frameTime, GameMap* pMap);
     virtual ~GameAnimationDialog() = default;
     virtual void restart() override;
+    virtual void stop() override;
+
     void finishDialog();
     void updateShownText();
 signals:
@@ -92,6 +94,8 @@ public:
      * @param file path relative to the Commander Wars.exe
      */
     Q_INVOKABLE void loadBackground(const QString file);
+protected slots:
+    virtual void start() override;
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
     void startFinishTimer();

@@ -99,9 +99,11 @@ QString GameScript::getVictoryInfo()
 {
     if (m_loaded)
     {
+        Mainapp::getInstance()->pauseRendering();
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getVictoryInfo";
         QJSValue ret = pInterpreter->doFunction(m_scriptName, function1);
+        Mainapp::getInstance()->continueRendering();
         if (ret.isString())
         {
             return ret.toString();

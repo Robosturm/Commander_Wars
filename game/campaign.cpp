@@ -10,6 +10,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
+#include "coreengine/mainapp.h"
 
 const char* const Campaign::scriptName = "campaignScript";
 
@@ -153,11 +154,13 @@ bool Campaign::getCampaignFinished()
 
 void Campaign::mapFinished(GameMap* pMap, bool result)
 {
+    Mainapp::getInstance()->pauseRendering();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pMap),
                        result});
     pInterpreter->doFunction(Campaign::scriptName, "mapFinished", args);
+    Mainapp::getInstance()->continueRendering();
 }
 
 QString Campaign::getAuthor()
@@ -225,11 +228,13 @@ void Campaign::getCampaignMapData(CampaignMapData & pCampaignMapData)
 
 void Campaign::onCampaignMapSelected(GameMap* pMap, const QString & filePath)
 {
+    Mainapp::getInstance()->pauseRendering();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pMap),
                        filePath});
     pInterpreter->doFunction(Campaign::scriptName, "onCampaignMapSelected", args);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Campaign::serializeObject(QDataStream& pStream) const

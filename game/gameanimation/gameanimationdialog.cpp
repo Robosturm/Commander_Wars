@@ -79,7 +79,6 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     addChild(m_COSprite);
 
     setPositionTop(false);
-    m_textTimer.start();
     addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
@@ -163,7 +162,7 @@ void GameAnimationDialog::nextDialogStep()
 
 void GameAnimationDialog::startFinishTimer()
 {
-    if (!m_stopped)
+    if (!m_stopped && m_started)
     {
         m_finishTimer.setSingleShot(true);
         m_finishTimer.start(m_autoFinishMs);
@@ -172,42 +171,45 @@ void GameAnimationDialog::startFinishTimer()
 
 void GameAnimationDialog::update(const oxygine::UpdateState& us)
 {
-    if (m_textTimer.elapsed() > m_textSpeed && !m_paused && !m_stopped)
+    if (m_started)
     {
-        m_writePosition += 1;
-        // check for auto pause
-        float textHeight = m_TextField->getTextRect().height();
-        qint32 nextHeight = (static_cast<qint32>(textHeight) / dialogHeigth) * dialogHeigth;
-        if (static_cast<qint32>(textHeight) % dialogHeigth != 0)
+        if (m_textTimer.elapsed() > m_textSpeed && !m_paused && !m_stopped)
         {
-            nextHeight += dialogHeigth;
-        }
-        m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
-        textHeight = m_TextField->getTextRect().height();
-        if (textHeight > nextHeight && m_autoFinishMs < 0)
-        {
-            m_writePosition -= 1;
-            updateShownText();
-            m_paused = true;
-        }
-        else
-        {
-            if (m_writePosition > m_Text.size())
+            m_writePosition += 1;
+            // check for auto pause
+            float textHeight = m_TextField->getTextRect().height();
+            qint32 nextHeight = (static_cast<qint32>(textHeight) / dialogHeigth) * dialogHeigth;
+            if (static_cast<qint32>(textHeight) % dialogHeigth != 0)
             {
-                m_writePosition = m_Text.size();
-                if (m_autoFinishMs >= 0 && !m_finishTimer.isActive())
-                {
-                    emit sigStartFinishTimer();
-                }
+                nextHeight += dialogHeigth;
+            }
+            m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
+            textHeight = m_TextField->getTextRect().height();
+            if (textHeight > nextHeight && m_autoFinishMs < 0)
+            {
+                m_writePosition -= 1;
+                updateShownText();
+                m_paused = true;
             }
             else
             {
-                Mainapp* pApp = Mainapp::getInstance();
-                pApp->getAudioManager()->playSound("speaking.wav");
+                if (m_writePosition > m_Text.size())
+                {
+                    m_writePosition = m_Text.size();
+                    if (m_autoFinishMs >= 0 && !m_finishTimer.isActive())
+                    {
+                        emit sigStartFinishTimer();
+                    }
+                }
+                else
+                {
+                    Mainapp* pApp = Mainapp::getInstance();
+                    pApp->getAudioManager()->playSound("speaking.wav");
+                }
+                updateShownText();
             }
-            updateShownText();
+            m_textTimer.start();
         }
-        m_textTimer.start();
     }
     GameAnimation::update(us);
 }
@@ -314,17 +316,32 @@ void GameAnimationDialog::setTextSpeed(qint32 speed)
     m_textSpeed = speed / Settings::getInstance()->getAnimationSpeed();
 }
 
+void GameAnimationDialog::stop()
+{
+    GameAnimation::stop();
+}
+
 void GameAnimationDialog::restart()
 {
     if (m_pMap != nullptr)
     {
         auto* pMenu = m_pMap->getMenu();
+        m_writePosition = 0;
+        m_stopped = false;
+        GameAnimation::restart();
         if (pMenu != nullptr)
         {
-            m_writePosition = 0;
-            m_stopped = false;
             pMenu->addChild(getSharedPtr<oxygine::Actor>());
         }
+    }
+}
+
+void GameAnimationDialog::start()
+{
+    if (!m_started)
+    {
+        GameAnimation::start();
+        m_textTimer.start();
     }
 }
 
