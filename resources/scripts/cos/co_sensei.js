@@ -127,7 +127,7 @@ var Constructor = function()
     this.powerDefBonus = 10;
     this.powerSpawnHp = 9;
 
-    this.d2dCoZoneGroundBonus = 10;
+    this.d2dCoZoneGroundBonus = 0;
     this.d2dCoZoneInfOffBonus = 30;
     this.d2dCoZoneHeliOffBonus = 60;
     this.d2dCoZoneNavalOffBonus = 0;

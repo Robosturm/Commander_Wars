@@ -304,11 +304,11 @@ var Constructor = function()
             {
                 if (defender.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return CO_DRAKE.d2dDefBonus;
+                    return CO_DRAKE.d2dNavalDefBonus;
                 }
                 else
                 {
-                    return CO_DRAKE.d2dNavalDefBonus;
+                    return CO_DRAKE.d2dDefBonus;
                 }
             }
         }
