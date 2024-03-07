@@ -443,6 +443,7 @@ void GameAnimationFactory::skipAllAnimations()
     Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("skipAllAnimations()", GameConsole::eDEBUG);
     qint32 i = 0;
+    bool requiresSkipping = false;
     while (i < GameAnimationFactory::getAnimationCount())
     {
         GameAnimation* pAnimation = GameAnimationFactory::getAnimation(i);
@@ -453,8 +454,7 @@ void GameAnimationFactory::skipAllAnimations()
             GameAnimationCapture* pGameAnimationCapture = dynamic_cast<GameAnimationCapture*>(pAnimation);
             GameAnimationNextDay* pGameAnimationNextDay = dynamic_cast<GameAnimationNextDay*>(pAnimation);
             GameAnimationWalk* pGameAnimationWalk = dynamic_cast<GameAnimationWalk*>(pAnimation);
-            if (pAnimation->getStarted() &&
-                (shouldSkipDialog(pDialogAnimation) ||
+            if ((shouldSkipDialog(pDialogAnimation) ||
                 shouldSkipBattleAnimation(pBattleAnimation) ||
                 shouldSkipCapture(pGameAnimationCapture) ||
                 shouldSkipDay2Day(pGameAnimationNextDay) ||
@@ -466,8 +466,19 @@ void GameAnimationFactory::skipAllAnimations()
                  pGameAnimationNextDay == nullptr &&
                  shouldSkipOtherAnimation(pAnimation))))
             {
-
-                while (!pAnimation->onFinished(true));
+                if (!pAnimation->getStarted() && pAnimation->getParent() != nullptr)
+                {
+                    pAnimation->start();
+                }
+                if (pAnimation->getStarted())
+                {
+                    while (!pAnimation->onFinished(true));
+                }
+                else
+                {
+                    i++;
+                    requiresSkipping = true;
+                }
             }
             else
             {
@@ -477,6 +488,11 @@ void GameAnimationFactory::skipAllAnimations()
         else
         {
             i++;
+        }
+        if (requiresSkipping && i >= GameAnimationFactory::getAnimationCount())
+        {
+            requiresSkipping = false;
+            i = 0;
         }
     }
     CONSOLE_PRINT("skipAllAnimations remaining Animations=" + QString::number(GameAnimationFactory::getAnimationCount()), GameConsole::eDEBUG);
