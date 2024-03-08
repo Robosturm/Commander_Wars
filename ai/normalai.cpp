@@ -1735,15 +1735,15 @@ float NormalAi::calculateCounterDamage(MoveUnitData &curUnitData, QPoint newPosi
                                     }
                                 }
                             }
-                            if (damageData.x() < 0)
-                            {
-                                damageData.moveLeft(0);
-                            }
-                            if (damageData.x() > 0)
-                            {
-                                counterDamage += static_cast<qint32>(calcFundsDamage(damageData, pNextEnemy.get(), pUnit).fundsDamage);
-                            }
-                        }
+                        }                        
+                    }
+                    if (damageData.x() < 0)
+                    {
+                        damageData.moveLeft(0);
+                    }
+                    if (damageData.x() > 0)
+                    {
+                        counterDamage += static_cast<qint32>(calcFundsDamage(damageData, pNextEnemy.get(), pUnit).fundsDamage);
                     }
                 }
             }
@@ -2024,7 +2024,7 @@ void NormalAi::calcVirtualDamage()
                 if (enemyData.pUnit->Unit::getX() == attack.pos.x() &&
                     enemyData.pUnit->Unit::getY() == attack.pos.y())
                 {
-                    enemyData.virtualDamageData += (m_enemyUnitCountDamageReductionMultiplier * attack.damage / attacksSize);
+                    enemyData.virtualDamageData += (m_enemyUnitCountDamageReductionMultiplier * attack.damage  / attacksSize);
                     break;
                 }
             }
@@ -2041,11 +2041,11 @@ float NormalAi::getMapInfluenceModifier(Unit *pUnit, qint32 x, qint32 y) const
     float influenceDamage = 0.0f;
     if (enemyInfluence > ownInfluence && ownInfluence > 0)
     {
-        influence = enemyInfluence / ownInfluence - 1.0f;
+        influence = 1.0f - ownInfluence / enemyInfluence;
     }
     else if (enemyInfluence > 0)
     {
-        influence = -ownInfluence / enemyInfluence + 1.0f;
+        influence = - (1.0f - enemyInfluence / ownInfluence);
     }
     if (qAbs(influence) > m_influenceIgnoreValue)
     {
