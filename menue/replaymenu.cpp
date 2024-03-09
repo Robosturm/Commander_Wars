@@ -45,6 +45,7 @@ ReplayMenu::ReplayMenu(QString filename)
     connect(this, &ReplayMenu::sigRewindDay, this, &ReplayMenu::rewindDay, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigRewindOneStep, this, &ReplayMenu::rewindOneStep, Qt::QueuedConnection);
     changeBackground("replaymenu");
+    m_storedAnimationSettings.storeAnimationSettings();
     if (filename.endsWith(".zip"))
     {
         m_replayReader = MemoryManagement::create<AwbwReplayPlayer>(this, m_pMap.get());
