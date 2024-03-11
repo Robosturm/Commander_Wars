@@ -330,6 +330,7 @@ public:
      */
     Q_INVOKABLE quint32 getFrameTime() const;
     bool getStarted() const;
+    GameAnimation* getPreviousAnimation() const;
 
 protected:
     void emitFinished();

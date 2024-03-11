@@ -477,7 +477,10 @@ void GameAnimationFactory::skipAllAnimations()
                 else
                 {
                     i++;
-                    requiresSkipping = true;
+                    if (pAnimation->getPreviousAnimation() == nullptr)
+                    {
+                        requiresSkipping = true;
+                    }
                 }
             }
             else

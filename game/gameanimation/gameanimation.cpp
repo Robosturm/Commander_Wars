@@ -82,6 +82,11 @@ void GameAnimation::doPreAnimationCall()
     }
 }
 
+GameAnimation* GameAnimation::getPreviousAnimation() const
+{
+    return m_previousAnimation.get();
+}
+
 bool GameAnimation::getStarted() const
 {
     return m_started;
