@@ -51,7 +51,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getBaseMaxRange() === 1)
+            if (unit.getBaseMaxRange() === 1 && unit.hasWeapons())
             {
                 var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                 var delay = globals.randInt(135, 265);
@@ -94,7 +94,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getBaseMaxRange() === 1)
+            if (unit.getBaseMaxRange() === 1 && unit.hasWeapons())
             {
                 var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                 var delay = globals.randInt(135, 265);
@@ -159,7 +159,7 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            var isDirect = (attacker.getBaseMaxRange() === 1 && attacker.getUnitType() !== GameEnums.UnitType_Infantry);
+            var isDirect = (attacker.getBaseMaxRange() === 1 && attacker.getUnitType() !== GameEnums.UnitType_Infantry && attacker.hasWeapons());
             var isIndirect = (attacker.getBaseMaxRange() > 1);
             switch (co.getPowerMode())
             {
@@ -250,7 +250,7 @@ var Constructor = function()
             if (map === null ||
                 (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
-                if (unit.getBaseMaxRange() > 1)
+                if (unit.getBaseMaxRange() > 1 && unit.hasWeapons())
                 {
                     return -CO_MAX.d2dIndirectFirerangeMalus;
                 }
@@ -269,7 +269,8 @@ var Constructor = function()
             if (co.getPowerMode() === GameEnums.PowerMode_Power)
             {
                 if (unit.getBaseMaxRange() === 1 &&
-                        unit.getUnitType() !== GameEnums.UnitType_Infantry)
+                    unit.getUnitType() !== GameEnums.UnitType_Infantry &&
+                    unit.hasWeapons())
                 {
                     return CO_MAX.powerMovementBonus;
                 }
@@ -278,7 +279,8 @@ var Constructor = function()
                      co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 if (unit.getBaseMaxRange() === 1 &&
-                        unit.getUnitType() !== GameEnums.UnitType_Infantry)
+                    unit.getUnitType() !== GameEnums.UnitType_Infantry &&
+                    unit.hasWeapons())
                 {
                     return CO_MAX.superpowerMovementBonus;
                 }
