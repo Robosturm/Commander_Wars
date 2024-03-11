@@ -68,6 +68,7 @@ var Constructor = function()
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, MOTORBIKE.armyData);
         animation.loadSpriteV2("motorbike+" + armyName + "+walk+mask", GameEnums.Recoloring_Matrix, 2);
+        unit.loadSpriteV2("motorbike+" + armyName + "+walk", GameEnums.Recoloring_None);
         animation.setSound("movebike.wav", -2);
         return animation;
     };

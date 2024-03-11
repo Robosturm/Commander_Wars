@@ -57,6 +57,7 @@ var Constructor = function()
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, SNIPER.armyData);
         animation.loadSpriteV2("sniper+" + armyName + "+walk+mask", GameEnums.Recoloring_Matrix, 2);
+        unit.loadSpriteV2("sniper+" + armyName + "+walk", GameEnums.Recoloring_None);
         animation.setSound("movewalk.wav", -2);
         return animation;
     };

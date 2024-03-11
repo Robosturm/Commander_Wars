@@ -72,6 +72,7 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, INFANTRY.armyData);
         var data = Global.getDataFromTable(armyName, INFANTRY.animationData);
         animation.loadSpriteV2("infantry+" + armyName + "+walk+mask", GameEnums.Recoloring_Matrix, data[0]);
+        unit.loadSpriteV2("infantry+" + armyName + "+walk", GameEnums.Recoloring_None);
         animation.setSound("movewalk.wav", -2);
         return animation;
     };

@@ -76,6 +76,7 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, MECH.armyData);
         var data = Global.getDataFromTable(armyName, MECH.animationData);
         animation.loadSpriteV2("mech+" + armyName + "+walk+mask", GameEnums.Recoloring_Matrix, data[0]);
+        unit.loadSpriteV2("mech+" + armyName + "+walk", GameEnums.Recoloring_None);
         animation.setSound("moveboots.wav", -2);
         return animation;
     };
