@@ -516,6 +516,7 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit &pUnits, qint32 minfireRange, qint3
             Unit *pUnit = unitData.pUnit.get();
             ++unitData.nextAiStep;
             if (!pUnit->getHasMoved() &&
+                (!needsRefuel(pUnit) || pUnit->getFuel() == 0) &&
                 unitData.minFireRange >= minfireRange &&
                 unitData.maxFireRange >= minMaxfireRange &&
                 unitData.maxFireRange <= maxfireRange &&
