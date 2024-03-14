@@ -49,5 +49,6 @@ namespace oxygine
         qint32 m_pausedCounter{0};
         bool m_quit{false};
         bool m_noUi{false};
+        QMutex m_renderSync;
     };
 }
