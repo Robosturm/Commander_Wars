@@ -149,6 +149,7 @@ public:
     static const char* const ACTION_SUPPORTSINGLE_FREEREPAIR;
     static const char* const ACTION_SUPPORTSINGLE_SUPPLY;
     static const char* const ACTION_SUPPORTALL;
+    static const char* const ACTION_BUILD;
     static const char* const ACTION_SUPPORTALL_RATION;
     static const char* const ACTION_SUPPORTALL_RATION_MONEY;
     static const char* const ACTION_UNSTEALTH;

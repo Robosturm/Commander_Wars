@@ -86,22 +86,30 @@ namespace oxygine
             CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
             QCoreApplication::exit();
         }
-        if (!m_terminating && m_pausedCounter == 0)
+
+        if (m_pausedCounter == 0)
         {
-            updateData();
-            if (oxygine::Stage::getStage().get() != nullptr)
+            if (m_renderSync.tryLock())
             {
-                oxygine::Stage::getStage()->updateStage();
-                if (beginRendering())
+                if (!m_terminating && m_pausedCounter == 0)
                 {
-                    QColor clearColor(0, 0, 0, 255);
-                    QSize windowSize = size();
-                    QRect viewport(0, 0, windowSize.width(), windowSize.height());
-                    // Render all actors inside the stage. Actor::render will also be called for all its children
-                    oxygine::Stage::getStage()->renderStage(clearColor, viewport);
-                    swapDisplayBuffers();
-                    m_repeatedFramesDropped = 0;
+                    updateData();
+                    if (oxygine::Stage::getStage().get() != nullptr)
+                    {
+                        oxygine::Stage::getStage()->updateStage();
+                        if (beginRendering())
+                        {
+                            QColor clearColor(0, 0, 0, 255);
+                            QSize windowSize = size();
+                            QRect viewport(0, 0, windowSize.width(), windowSize.height());
+                            // Render all actors inside the stage. Actor::render will also be called for all its children
+                            oxygine::Stage::getStage()->renderStage(clearColor, viewport);
+                            swapDisplayBuffers();
+                            m_repeatedFramesDropped = 0;
+                        }
+                    }
                 }
+                m_renderSync.unlock();
             }
         }
     }

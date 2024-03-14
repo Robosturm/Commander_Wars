@@ -21,26 +21,23 @@ spGameAction CaptureBuildingSelector::getNextCaptureBuilding(std::vector<CoreAI:
 
     spGameAction pAction;
     QStringList highPrioBuildings;
-    Interpreter *pInterpreter = Interpreter::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({JsThis::getJsThis(&m_owner)});
     const QString func = "getHighPrioBuildings";
     auto erg = pInterpreter->doFunction(m_owner.getAiName(), func, args);
     highPrioBuildings = erg.toVariant().toStringList();
     TargetBuildings captureBuildings = getTargetBuildings(rOwnUnits, highPrioBuildings, pAction, targetUnitData);
-
-    if (captureBuildings.size() > 0)
+    for (qint32 i = 0; i < rOwnUnits.size(); ++i)
     {
-        Interpreter *pInterpreter = Interpreter::getInstance();
-        for (qint32 i = 0; i < rOwnUnits.size(); ++i)
+        auto &unitData = rOwnUnits[i];
+        if (unitData.nextAiStep <= m_owner.getAiFunctionStep())
         {
-            auto &unitData = rOwnUnits[i];
-            if (unitData.nextAiStep <= m_owner.getAiFunctionStep())
+            pInterpreter->threadProcessEvents();
+            Unit *pUnit = unitData.pUnit.get();
+            if (!pUnit->getHasMoved() &&
+                pUnit->getAiMode() == GameEnums::GameAi_Normal)
             {
-                pInterpreter->threadProcessEvents();
-                Unit *pUnit = unitData.pUnit.get();
-                if (!pUnit->getHasMoved() &&
-                    unitData.actions.contains(CoreAI::ACTION_CAPTURE) &&
-                    pUnit->getAiMode() == GameEnums::GameAi_Normal)
+                if (unitData.actions.contains(CoreAI::ACTION_CAPTURE))
                 {
                     TargetBuildings captures = filterCaptures(captureBuildings, i);
                     qint32 targetIndex = 0;
@@ -50,6 +47,34 @@ spGameAction CaptureBuildingSelector::getNextCaptureBuilding(std::vector<CoreAI:
                         pAction = getPerformingAction(captures, pUnit, unitData, targetIndex);
                         *targetUnitData = &unitData;
                         break;
+                    }
+                }
+                else if (pUnit->getCapturePoints() > 0)
+                {
+                    bool found = false;
+                    pAction = MemoryManagement::create<GameAction>(CoreAI::ACTION_CAPTURE, m_owner.getMap());
+                    pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+                    for (const auto &action : unitData.actions)
+                    {
+                        if (action.startsWith(CoreAI::ACTION_BUILD))
+                        {
+                            pAction->setActionID(action);
+                            if (pAction->canBePerformed() &&
+                                pAction->isFinalStep())
+                            {
+                                *targetUnitData = &unitData;
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (found)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        pAction = nullptr;
                     }
                 }
             }

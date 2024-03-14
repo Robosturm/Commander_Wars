@@ -29,6 +29,7 @@ const char* const CoreAI::ACTION_SUPPORTSINGLE_REPAIR = "ACTION_SUPPORTSINGLE_RE
 const char* const CoreAI::ACTION_SUPPORTSINGLE_FREEREPAIR = "ACTION_SUPPORTSINGLE_FREEREPAIR";
 const char* const CoreAI::ACTION_SUPPORTSINGLE_SUPPLY = "ACTION_SUPPORTSINGLE_SUPPLY";
 const char* const CoreAI::ACTION_SUPPORTALL = "ACTION_SUPPORTALL";
+const char* const CoreAI::ACTION_BUILD = "ACTION_BUILD";
 const char* const CoreAI::ACTION_SUPPORTALL_RATION = "ACTION_SUPPORTALL_RATION";
 const char* const CoreAI::ACTION_SUPPORTALL_RATION_MONEY = "ACTION_SUPPORTALL_RATION_MONEY";
 const char* const CoreAI::ACTION_UNSTEALTH = "ACTION_UNSTEALTH";
@@ -338,7 +339,10 @@ void CoreAI::prepareEnemieData(spQmlVectorUnit & pUnits, spQmlVectorBuilding &pB
     pEnemyBuildings = m_pPlayer->getSpEnemyBuildings();
     if (!m_usedTransportSystem)
     {
-        pEnemyUnits->pruneEnemies(pUnits.get(), pBuildings.get(), m_ownBuildingPruneRange, m_enemyPruneRange);
+        pEnemyUnits->pruneEnemies(pUnits.get(), pBuildings.get(), m_ownBuildingPruneRange, m_enemyPruneRange);        
+    }
+    else
+    {
         pEnemyBuildings->pruneEnemieBuildings(pUnits, m_enemyPruneRange);
     }
     pEnemyUnits->randomize();

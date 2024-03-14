@@ -1175,7 +1175,18 @@ bool NormalAi::moveUnit(spGameAction &pAction, MoveUnitData *pUnitData, spQmlVec
                     if (action.startsWith(ACTION_SUPPORTALL))
                     {
                         pAction->setActionID(action);
-                        if (pAction->canBePerformed())
+                        if (pAction->canBePerformed() &&
+                            pAction->isFinalStep())
+                        {
+                            emit sigPerformAction(pAction);
+                            return true;
+                        }
+                    }
+                    else if (action.startsWith(ACTION_BUILD))
+                    {
+                        pAction->setActionID(action);
+                        if (pAction->canBePerformed() &&
+                            pAction->isFinalStep())
                         {
                             emit sigPerformAction(pAction);
                             return true;

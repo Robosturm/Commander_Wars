@@ -174,7 +174,6 @@ void GameAnimationNextDay::rightClick()
     {
         if (!m_permanent)
         {
-            stop();
             onFinished(false);
         }
         else

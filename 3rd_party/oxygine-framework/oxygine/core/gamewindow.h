@@ -51,7 +51,15 @@ public:
         {
             if (m_pausedCounter == 0)
             {
-                emit sigChangeUpdateTimerState(true);
+                if (m_renderSync.tryLock())
+                {
+                    ++m_pausedCounter;
+                    m_renderSync.unlock();
+                }
+                else
+                {
+                    emit sigChangeUpdateTimerState(true);
+                }
             }
             else
             {
