@@ -46,6 +46,11 @@ var CO =
         return 0;
     },
 
+    getOtherMovementpointModifier : function(co, unit, posX, posY, map)
+    {
+        return 0;
+    },
+
     buildedUnit : function(co, unit, map)
     {
         // called when someone builded a unit -> ACTION_BUILD_UNITS was performed

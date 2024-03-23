@@ -2706,6 +2706,14 @@ qint32 Unit::getBonusMovementpoints(QPoint position)
     qint32 movementModifier = 0;
     movementModifier += getBonus(m_MovementBonus);
     movementModifier += m_pOwner->getBonusMovementpoints(this, position);
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    {
+        Player* pPlayer = m_pMap->getPlayer(i);
+        if (pPlayer != m_pOwner)
+        {
+            movementModifier += pPlayer->getCoBonus(position, this, "getOtherMovementpointModifier");
+        }
+    }
     return movementModifier;
 }
 
