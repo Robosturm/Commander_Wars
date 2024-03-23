@@ -3,12 +3,26 @@
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 #include <openssl/x509.h>
+#include <openssl/crypto.h>
 
 #include <QSslKey>
 
 #include "network/networkInterface.h"
 
 #include "coreengine/gameconsole.h"
+
+
+NetworkInterface::NetworkInterface(QObject* pParent)
+    : QObject(pParent),
+    m_isServer(false),
+    m_isConnected(false)
+
+{
+    Interpreter::setCppOwnerShip(this);
+    connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
+    connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);
+    CONSOLE_PRINT(QString("Running with openssl version: ") + OpenSSL_version(OPENSSL_FULL_VERSION_STRING), GameConsole::eDEBUG);
+}
 
 NetworkInterface::~NetworkInterface()
 {

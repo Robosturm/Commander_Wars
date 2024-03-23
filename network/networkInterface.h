@@ -43,16 +43,7 @@ public:
         Max,
     };
 
-    explicit NetworkInterface(QObject* pParent)
-        : QObject(pParent),
-          m_isServer(false),
-          m_isConnected(false)
-
-    {
-        Interpreter::setCppOwnerShip(this);
-        connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
-        connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);
-    }
+    explicit NetworkInterface(QObject* pParent);
     virtual ~NetworkInterface();
 
     static QString getIPAdresse()
