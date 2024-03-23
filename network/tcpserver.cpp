@@ -1,6 +1,6 @@
 #include <QSslServer>
-#include <QSslSocket>
 
+#include "network/sslserver.h"
 #include "network/tcpserver.h"
 
 TCPServer::TCPServer(QObject* pParent)
@@ -28,9 +28,9 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
         CONSOLE_PRINT("TCP Server launched ignored on primary adress \"" + primaryAdress + "\" and secondary adress \""+ secondaryAdress + "\" and port " + QString::number(port) + " cause the primary adress is equal to the secondary.", GameConsole::eLogLevels::eERROR);
     }
     else if (m_pTCPServer[0].get() == nullptr)
-    {    
+    {
 
-        m_pTCPServer[0] = MemoryManagement::createNamedQObject<QSslServer>("QSslServer", this);
+        m_pTCPServer[0] = MemoryManagement::createNamedQObject<SslServer>("SslServer", this);
             m_pTCPServer[0]->setSslConfiguration(getSslConfiguration());
         if (primaryAdress.isEmpty())
         {
@@ -43,7 +43,7 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
         connect(m_pTCPServer[0].get(), &QTcpServer::pendingConnectionAvailable, this, &TCPServer::onConnect, Qt::QueuedConnection);
         if (!secondaryAdress.isEmpty())
         {
-            m_pTCPServer[1] = MemoryManagement::createNamedQObject<QSslServer>("QSslServer", this);
+            m_pTCPServer[1] = MemoryManagement::createNamedQObject<SslServer>("SslServer", this);
             m_pTCPServer[1]->setSslConfiguration(getSslConfiguration());
             m_pTCPServer[1]->listen(QHostAddress(secondaryAdress), port);
             connect(m_pTCPServer[1].get(), &QTcpServer::pendingConnectionAvailable, this, &TCPServer::onConnect, Qt::QueuedConnection);

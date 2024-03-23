@@ -639,6 +639,7 @@ set(${PROJECT_NAME}_SRCS
     network/sqlmapfiltercreator.h network/sqlmapfiltercreator.cpp
     network/tcpgatewayserver.h network/tcpgatewayserver.cpp
     network/gatewayserver.h network/gatewayserver.cpp
+    network/sslserver.h network/sslserver.cpp
     network/JsonKeys.h
 
     # game

@@ -337,12 +337,9 @@ void CoreAI::prepareEnemieData(spQmlVectorUnit & pUnits, spQmlVectorBuilding &pB
 {
     pEnemyUnits = m_pPlayer->getSpEnemyUnits();
     pEnemyBuildings = m_pPlayer->getSpEnemyBuildings();
-    if (!m_usedTransportSystem)
+    if (m_usedTransportSystem)
     {
-        pEnemyUnits->pruneEnemies(pUnits.get(), pBuildings.get(), m_ownBuildingPruneRange, m_enemyPruneRange);        
-    }
-    else
-    {
+        pEnemyUnits->pruneEnemies(pUnits.get(), pBuildings.get(), m_ownBuildingPruneRange, m_enemyPruneRange);
         pEnemyBuildings->pruneEnemieBuildings(pUnits, m_enemyPruneRange);
     }
     pEnemyUnits->randomize();
