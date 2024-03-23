@@ -509,8 +509,7 @@ var COREAI =
                                      ai.getUnitCount(alliedUnits, COREAI.antiReconUnits, COREAI.ownCounterUnitMinHp);
 
         var enemyRecons = ai.getFilteredUnits(enemyUnits, COREAI.reconUnits, COREAI.enemyCounterUnitMinHp);
-        var enemyReconCount = enemySubmarines.size();
-
+        var enemyReconCount = enemyRecons.size();
         while (((enemyReconCount > 0) && (antiReconUnitCount === 0)) ||
             (antiReconUnitCount > 0 && (enemyReconCount / antiReconUnitCount > COREAI.reconCounterUnitBalance)))
         {

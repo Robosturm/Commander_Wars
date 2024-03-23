@@ -190,7 +190,7 @@ var Constructor = function()
         return 0;
     };
     this.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender, luckMode, map)
+                                  defender, defPosX, defPosY, isDefender, luckMode, action, map)
     {
         if (CO.isActive(co))
         {

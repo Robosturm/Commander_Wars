@@ -97,7 +97,7 @@ var CO =
     },
 
     getDamageReduction : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender, luckMode, map)
+                                  defender, defPosX, defPosY, isDefender, luckMode, action, map)
     {
         return 0;
     },
