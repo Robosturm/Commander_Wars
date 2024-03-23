@@ -246,7 +246,7 @@ var RuleSelectionScript =
     },
     getGatewayOptionEnabled : function()
     {
-        return currentMenu.getRuleChangeEabled() && !currentMenu.getIsMultiplayerOnlyGatewayMode();
+        return currentMenu.getRuleChangeEabled() && !currentMenu.getIsMultiplayerOnlyGatewayMode() && !currentMenu.getIsMultiplayeLocalMode();
     },
     getGatewayDefaultValue : function()
     {

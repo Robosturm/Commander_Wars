@@ -57,9 +57,11 @@ var COREAI =
     heavyAirUnits : ["BOMBER", "FIGHTER", "STEALTHBOMBER", "ZCOUNIT_KIROV"],
     lightAirUnits : ["K_HELI", "DUSTER", "WATERPLANE"],
     supplyUnits : ["APC", "ZCOUNIT_LOGIC_TRUCK", "ZCOUNIT_LOGIC_TRUCK", "ZCOUNIT_REPAIR_TANK", "ZCOUNIT_REPAIR_TANK"],
-    antiTankUnits : ["ANTITANKCANNON", "NEOTANK", "MEGATANK"],
+    antiTankUnits : ["ANTITANKCANNON", "NEOTANK", "MEGATANK"],    
     mediumTankUnits : ["HEAVY_TANK", "NEOTANK"],
     antiMediumTankBuildUnits : ["HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "NEOTANK", "BOMBER"],
+    reconUnits : ["ZCOUNIT_HOT_TANK", "RECON"],
+    antiReconUnits : ["LIGHT_TANK", "LIGHT_TANK", "LIGHT_TANK", "LIGHT_TANK", "LIGHT_TANK", "ZCOUNIT_AUTO_TANK", "HEAVY_TANK", "ZCOUNIT_CRYSTAL_TANK", "ZCOUNIT_NEOSPIDER_TANK", "ZCOUNIT_ROYAL_GUARD", "ZCOUNIT_TANK_HUNTER", "MEGATANK", "NEOTANK", "HOVERCRAFT", "HEAVY_HOVERCRAFT", "K_HELI", "BOMBER", "STEALTHBOMBER", "ZCOUNIT_KIROV"],
     heavyTankUnits : ["NEOTANK", "MEGATANK"],
     bomberUnits : ["BOMBER"],
     groundScoutUnits = ["RECON", "FLARE"],
@@ -84,6 +86,7 @@ var COREAI =
     heavyTankCounterUnitBalance : 2.5,
     navyCounterUnitBalance : 2.5,
     subCounterUnitBalance : 2.5,
+    reconCounterUnitBalance : 2.5,
     ownCounterUnitMinHp : 7,
     enemyCounterUnitMinHp : 5,
     // building variables
@@ -261,6 +264,8 @@ var COREAI =
         COREAI.forceAntiAirProduction(system, ai, units, enemyUnits, alliedUnits);
         COREAI.forcedAntiTankProduction(system, ai, units, enemyUnits, alliedUnits);
         COREAI.forceAntiSeaUnitsProduction(system, ai, units, enemyUnits, alliedUnits);
+        // mainly for indirect co's who tend to build few tanks
+        COREAI.forceAntiReconUnitsProduction(system, ai, units, enemyUnits, alliedUnits);
         // utility production
         COREAI.forceScoutProduction(system, ai, units);
         COREAI.forceTransporterProduction(system, ai, buildings, units, enemyUnits, enemyBuildings, groupDistribution);
@@ -495,6 +500,22 @@ var COREAI =
         {
             system.addForcedProductionCloseToTargets(COREAI.antiMediumTankBuildUnits, enemyMediumTanks);
             ++mediumTankUnitCount;
+        }
+    },
+
+    forceAntiReconUnitsProduction : function(system, ai, units, enemyUnits, alliedUnits)
+    {
+        var antiReconUnitCount = ai.getUnitCount(units, COREAI.antiReconUnits, COREAI.ownCounterUnitMinHp) +
+                                     ai.getUnitCount(alliedUnits, COREAI.antiReconUnits, COREAI.ownCounterUnitMinHp);
+
+        var enemyRecons = ai.getFilteredUnits(enemyUnits, COREAI.reconUnits, COREAI.enemyCounterUnitMinHp);
+        var enemyReconCount = enemySubmarines.size();
+
+        while (((enemyReconCount > 0) && (antiReconUnitCount === 0)) ||
+            (antiReconUnitCount > 0 && (enemyReconCount / antiReconUnitCount > COREAI.reconCounterUnitBalance)))
+        {
+            system.addForcedProductionCloseToTargets(COREAI.antiReconUnits, enemyRecons);
+            ++antiReconUnitCount;
         }
     },
 

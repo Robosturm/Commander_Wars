@@ -1780,7 +1780,11 @@ void Multiplayermenu::showRuleSelection()
     m_pRuleSelection->clearContent();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     RuleSelection::Mode ruleMode = RuleSelection::Mode::Multiplayer;
-    if (!m_sameVersionAsServer)
+    if (m_local)
+    {
+        ruleMode = RuleSelection::Mode::MultiplayerLocal;
+    }
+    else if (!m_sameVersionAsServer && !m_local)
     {
         ruleMode = RuleSelection::Mode::MultiplayerOnlyGateway;
     }
