@@ -60,6 +60,9 @@ public:
     static const char* const JSONKEY_HIDE;
     static const char* const JSONKEY_UNHIDE;
     static const char* const JSONKEY_EXPLODE;
+    static const char* const JSONKEY_GAMEOVER;
+    static const char* const JSONKEY_LOSERS;
+    static const char* const JSONKEY_WINNERS;
 
     AwbwActionParser(AwbwReplayPlayer & pParent, GameMap* pMap);
 

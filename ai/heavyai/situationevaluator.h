@@ -42,6 +42,9 @@ public:
      * @return
      */
     QString getInputVector() const;
+    Player * getOwner() const;
+    void setOwner(Player * newPOwner);
+
 private:
     void getUnitsInRange(GameMap* pMap, const QPoint & searchPoint);
     void createPathFindingSystems(GameMap* pMap);
@@ -49,6 +52,7 @@ private:
     void fillUnitInput(qint32 index);
     bool shouldFillInfo(const HeavyAiSharedData::spUnitInfo & unitInfo, qint32 enemyUnit);
     void updateHp(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);
+    void updateCoBonus(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);
     void updateHpDamage(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);
     void updateFundsDamage(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);
     void updateMovementPoints(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);

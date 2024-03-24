@@ -19,7 +19,7 @@ using spSituationEvaluator = std::shared_ptr<SituationEvaluator>;
  * 6. The unitselector makes a decision which unit should be moved next based on the current situation
  * 7. The buildsystem will make the decision which unit should be build next
  */
-class HeavyAi final : public CoreAI
+class HeavyAi : public CoreAI
 {
     Q_OBJECT
 public:
@@ -64,11 +64,12 @@ protected:
      * @param pUnits
      */
     void updateUnitCache(spQmlVectorUnit & pUnits);
+protected:
+    spSituationEvaluator m_evaluator;
 private:
     double m_minSiloDamage{7000};
     QTimer m_timer;
     bool m_pause{false};
-    spSituationEvaluator m_evaluator;
 };
 
 Q_DECLARE_INTERFACE(HeavyAi, "HeavyAi");

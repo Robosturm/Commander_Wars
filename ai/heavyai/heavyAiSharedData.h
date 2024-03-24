@@ -29,6 +29,7 @@ enum SituationFeatures
     SituationFeatures_Stealthed,
     SituationFeatures_MinFireRange,
     SituationFeatures_MaxFireRange,
+    SituationFeatures_CaBonus,
     SituationFeatures_MaxFeatures,
 };
 
@@ -92,6 +93,7 @@ enum AiCache
     CanMoveAndFire,
     CurrentRepair,
     BaseCost,
+    CoBonus,
     MaxAiCache,
 };
 
@@ -103,8 +105,17 @@ struct UnitInfo
     qint32 buildingImportance{0};
     std::array<bool, UNIT_COUNT> reachable{false};
     std::vector<bool> stealthed;
-
     spUnitTargetedPathFindingSystem pUnitTargetedPathFindingSystem;
+    void clear()
+    {
+        pUnit = nullptr;
+        multiplier = 0;
+        terrainDefense = 0;
+        buildingImportance = 0;
+        reachable.fill(false);
+        stealthed.clear();
+        pUnitTargetedPathFindingSystem.reset();
+    }
 };
 
 static constexpr qint32 INPUT_VECTOR_SIZE = HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::SituationFeatures::SituationFeatures_MaxFeatures;

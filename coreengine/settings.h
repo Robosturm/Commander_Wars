@@ -796,12 +796,21 @@ public:
     Q_INVOKABLE qint32 getMouseUpdateRate() const;
     Q_INVOKABLE void setMouseUpdateRate(qint32 newMouseUpdateRate);
 
-    bool getAllowMapUpload() const;
-    void setAllowMapUpload(bool newAllowMapUpload);
+    Q_INVOKABLE bool getAllowMapUpload() const;
+    Q_INVOKABLE void setAllowMapUpload(bool newAllowMapUpload);
 
     std::chrono::seconds getReplayDeleteTime() const;
     void setReplayDeleteTime(const std::chrono::seconds & newReplayDeleteTime);
 
+
+    Q_INVOKABLE QString getHeavyAiTrainingFile() const;
+    Q_INVOKABLE void setHeavyAiTrainingFile(const QString & newHeavyAiTrainingFile);
+
+    Q_INVOKABLE QString getHeavyAiTrainingType() const;
+    Q_INVOKABLE void setHeavyAiTrainingType(const QString & newHeavyAiTrainingType);
+
+    Q_INVOKABLE qint32 getHeavyAiTrainingStartDay() const;
+    Q_INVOKABLE void setHeavyAiTrainingStartDay(qint32 newHeavyAiTrainingStartDay);
 
 private:
     friend class MemoryManagement;
@@ -984,6 +993,10 @@ private:
     QString m_pipeUuid;
     bool m_spawnAiProcess{DEFAULTAIPIPE};
     bool m_aiSlave{false};
+
+    QString m_heavyAiTrainingFile{""};
+    QString m_heavyAiTrainingType{"heavy_ai"};
+    qint32 m_heavyAiTrainingStartDay{4};
 
     // logging
     bool m_LogActions{false};

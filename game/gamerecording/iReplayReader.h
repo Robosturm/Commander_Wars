@@ -23,6 +23,7 @@ public:
     virtual void onPostAction() = 0;
     virtual qint32 getRecordSize() = 0;
     virtual qint32 getProgess() = 0;
+    virtual qint32 getWinnerTeam() = 0;
     virtual DayInfo getDayFromPosition(qint32 count) = 0;
     virtual void seekToDay(DayInfo day) = 0;
     virtual void requestReplayStart() = 0;

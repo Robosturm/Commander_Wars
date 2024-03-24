@@ -76,6 +76,8 @@ void ReplayRecorder::startRecording(const QString & file)
         }
         QStringList mods = Settings::getInstance()->getMods();
         Filesupport::writeVectorList(m_stream, mods);
+        m_winnerTeamPos = m_recordFile.pos();
+        m_stream << m_winnerTeam;
         m_countPos = m_recordFile.pos();
         m_stream << m_count;
         m_pMap->serializeObject(m_stream);
@@ -157,6 +159,20 @@ void ReplayRecorder::writeAction(const spGameAction & action)
     m_count++;
 }
 
+void ReplayRecorder::writeWinnerTeam()
+{
+    if (m_recording && m_pMap != nullptr)
+    {
+        if (m_pMap->getWinnerTeam() > 0)
+        {
+            auto curPos = m_recordFile.pos();
+            m_recordFile.seek(m_winnerTeamPos);
+            m_stream << m_pMap->getWinnerTeam();
+            m_recordFile.seek(curPos);
+        }
+    }
+}
+
 void ReplayRecorder::writeMapState()
 {
     m_currentDay = m_pMap->getCurrentDay();
@@ -176,6 +192,11 @@ void ReplayRecorder::writeMapState()
     m_recordFile.seek(curPos);
     m_stream << nextSeekPos;
     m_recordFile.seek(nextSeekPos);
+}
+
+qint32 ReplayRecorder::getWinnerTeam()
+{
+    return m_winnerTeam;
 }
 
 bool ReplayRecorder::loadRecord(const QString & filename)
@@ -210,7 +231,7 @@ bool ReplayRecorder::loadRecord(const QString & filename)
 bool ReplayRecorder::validRecord(QByteArray & envData)
 {
     m_recordFile.open(QIODevice::ReadOnly);
-    bool success = readRecordInfo(m_stream, m_recordJson);
+    bool success = readRecordInfo(m_stream, m_recordJson, m_version);
     if (success)
     {
         m_stream >> m_streamStart;
@@ -223,6 +244,11 @@ bool ReplayRecorder::validRecord(QByteArray & envData)
             envData.append(value);
         }
         m_mods = Filesupport::readVectorList<QString, QList>(m_stream);
+        if (m_version > 2)
+        {
+            m_winnerTeamPos = m_recordFile.pos();
+            m_stream >> m_winnerTeam;
+        }
         m_countPos = m_recordFile.pos();
         m_stream >> m_count;
         envData = qUncompress(envData);
@@ -231,9 +257,8 @@ bool ReplayRecorder::validRecord(QByteArray & envData)
     return success;
 }
 
-bool ReplayRecorder::readRecordInfo(QDataStream & stream, QByteArray & jsonRecordInfo)
+bool ReplayRecorder::readRecordInfo(QDataStream & stream, QByteArray & jsonRecordInfo, qint32 & version)
 {
-    qint32 version = 0;
     stream >> version;
     QString marker;
     stream >> marker;
@@ -250,8 +275,9 @@ bool ReplayRecorder::readRecordInfo(QDataStream & stream, QByteArray & jsonRecor
 
 bool ReplayRecorder::readRecordInfo(QDataStream & stream, QJsonObject & jsonRecordInfo)
 {
+    qint32 version = 0;
     QByteArray data;
-    bool ret = readRecordInfo(stream, data);
+    bool ret = readRecordInfo(stream, data, version);
     jsonRecordInfo = QJsonDocument::fromJson(data).object();
     return ret;
 }

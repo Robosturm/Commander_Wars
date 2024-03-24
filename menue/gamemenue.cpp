@@ -1915,6 +1915,7 @@ void GameMenue::victory(qint32 team)
                 humanWin = true;
             }
         }
+        m_ReplayRecorder.writeWinnerTeam();
     }
     CONSOLE_PRINT("GameMenue::victory for team " + QString::number(team) +
                       " termination state=" + QString::number(m_terminated) +

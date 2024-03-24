@@ -63,6 +63,9 @@ const char* const AwbwActionParser::JSONKEY_UNIT_ID = "unitId";
 const char* const AwbwActionParser::JSONKEY_DELETE = "Delete";
 const char* const AwbwActionParser::JSONKEY_UNHIDE = "Unhide";
 const char* const AwbwActionParser::JSONKEY_EXPLODE = "Explode";
+const char* const AwbwActionParser::JSONKEY_GAMEOVER = "GameOver";
+const char* const AwbwActionParser::JSONKEY_LOSERS = "losers";
+const char* const AwbwActionParser::JSONKEY_WINNERS = "winners";
 
 AwbwActionParser::AwbwActionParser(AwbwReplayPlayer & pParent, GameMap* pMap)
     : m_pParent(pParent),

@@ -1133,7 +1133,7 @@ public:
     {
         return m_unitIdx;
     }
-
+    Q_INVOKABLE qreal getAiCoUnitBonus();
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons

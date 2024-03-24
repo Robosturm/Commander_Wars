@@ -25,6 +25,8 @@
 
 #include "awbwReplayReader/awbwreplayplayer.h"
 
+#include "ai/heavyai/heavyaitrainingdatagenerator.h"
+
 ReplayMenu::ReplayMenu(QString filename)
     : GameMenue(MemoryManagement::create<GameMap>(1, 1, 2), true)
 {
@@ -70,6 +72,13 @@ ReplayMenu::~ReplayMenu()
 void ReplayMenu::startReplay()
 {
     m_Viewplayer = MemoryManagement::create<Viewplayer>(this, m_pMap.get());
+    QString heavyAiTrainingFile = Settings::getInstance()->getHeavyAiTrainingFile();
+    if (!heavyAiTrainingFile.isEmpty())
+    {
+        m_heavyAiTrainingDataGenerator = MemoryManagement::create<HeavyAiTrainingDataGenerator>(m_pMap.get(), Settings::getInstance()->getHeavyAiTrainingType(), heavyAiTrainingFile);
+        m_heavyAiTrainingDataGenerator->init(this);
+        m_heavyAiTrainingDataGenerator->setWinnerTeam(m_replayReader->getWinnerTeam());
+    }
     fetchPlayerUiData();
     // store animation modes
     m_storedAnimationSettings.storeAnimationSettings();
@@ -132,6 +141,10 @@ void ReplayMenu::nextReplayAction()
     }
     if (!m_paused || m_replayCounter > 0)
     {
+        if (m_heavyAiTrainingDataGenerator.get() != nullptr)
+        {
+            m_heavyAiTrainingDataGenerator->addCurrentSituationTrainingData();
+        }
         spGameAction pAction = m_replayReader->nextAction();
         m_HumanInput->cleanUpInput();
         float progress = 0.0f;

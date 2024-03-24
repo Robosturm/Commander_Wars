@@ -288,6 +288,36 @@ void AwbwReplayPlayer::loadGameRules(const QVector<AwbwReplayerReader::GameState
     pRule->setSpecialDestruction(false);
 }
 
+qint32 AwbwReplayPlayer::getWinnerTeam()
+{
+    const auto & actions = m_replayReader.getActions();
+    if (actions.size() > 0)
+    {
+        const auto & actionData = actions[actions.size() - 1].actionData;
+        if (actionData.size() > 0)
+        {
+            const auto & action = actionData[actionData.size() - 1];
+            QJsonValue value = action[AwbwActionParser::JSONKEY_GAMEOVER];
+            if (value.isObject())
+            {
+                const auto & gameStates = m_replayReader.getGameStates();
+                auto winners = value[AwbwActionParser::JSONKEY_WINNERS].toArray();
+                if (winners.size() > 0 && gameStates.size() > 0)
+                {
+                    for (const auto & player : gameStates[gameStates.size() - 1].players)
+                    {
+                        if (player.playerId == winners[0])
+                        {
+                            return player.team.toInt();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return -1;
+}
+
 ReplayMenu * AwbwReplayPlayer::getReplayMenu() const
 {
     return m_pReplayMenu;
@@ -411,6 +441,7 @@ void AwbwReplayPlayer::loadPlayer(const AwbwReplayerReader::PlayerInfo & player)
     pPlayer->setFunds(player.funds);
     pPlayer->setMenu(m_pReplayMenu);
     pPlayer->setIsDefeated(player.eliminated);
+    pPlayer->setTeam(player.team.toInt());
     pPlayer->setPlayerNameId(QString(tr("Player ")) + QString::number(player.playerIdx + 1));
     loadCo(player.coData, pPlayer, 0);
     loadCo(player.tagCoData, pPlayer, 0);

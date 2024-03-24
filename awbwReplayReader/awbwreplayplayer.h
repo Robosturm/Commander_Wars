@@ -28,6 +28,7 @@ public:
     const AwbwReplayerReader & getReplayReader() const;
     qint32 getCurrentTurnIndex(qint32 & actionIndex) const;
     ReplayMenu * getReplayMenu() const;
+    virtual qint32 getWinnerTeam() override;
 
 private slots:
     void onDownloadResult(bool success);

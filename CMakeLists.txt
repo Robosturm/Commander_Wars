@@ -728,12 +728,13 @@ set(${PROJECT_NAME}_SRCS
     ai/proxyai.cpp ai/proxyai.h
     ai/normalai.cpp ai/normalai.h    
     ai/transporterselector.h ai/transporterselector.cpp
+    ai/influencefrontmap.cpp ai/influencefrontmap.h
     ai/heavyai/heavyai.cpp ai/heavyai/heavyai.h
     ai/heavyai/heavyAiSharedData.h
     ai/heavyai/situationevaluator.h ai/heavyai/situationevaluator.cpp    
     ai/heavyai/simulationmap.h ai/heavyai/simulationmap.cpp
-    ai/influencefrontmap.cpp ai/influencefrontmap.h
     ai/heavyai/unittargetedpathfindingsystem.h ai/heavyai/unittargetedpathfindingsystem.cpp
+    ai/heavyai/heavyaitrainingdatagenerator.h ai/heavyai/heavyaitrainingdatagenerator.cpp
     ai/dummyai.h ai/dummyai.cpp
     ai/capturebuildingselector.h ai/capturebuildingselector.cpp
     ai/aiprocesspipe.h ai/aiprocesspipe.cpp

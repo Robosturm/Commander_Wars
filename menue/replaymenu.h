@@ -13,6 +13,8 @@
 #include "game/gameanimation/animationskipper.h"
 #include "game/gamerecording/iReplayReader.h"
 
+class HeavyAiTrainingDataGenerator;
+using spHeavyAiTrainingDataGenerator = std::shared_ptr<HeavyAiTrainingDataGenerator>;
 class ReplayMenu;
 using spReplayMenu = std::shared_ptr<ReplayMenu>;
 
@@ -151,6 +153,7 @@ private:
     spLabel m_seekDayLabel;
     spIReplayReader m_replayReader;
     QVector<PlayerUiInfo> m_playerUiInfo;
+    spHeavyAiTrainingDataGenerator m_heavyAiTrainingDataGenerator;
 };
 
 #endif // REPLAYMENU_H

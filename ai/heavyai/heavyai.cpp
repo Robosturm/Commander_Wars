@@ -113,6 +113,7 @@ void HeavyAi::process()
             if (pUnits->size() > 0)
             {
                 m_evaluator->updateInputVector(m_pMap, pUnits->at(0)->getPosition(), true);
+
             }
 
             m_turnMode = GameEnums::AiTurnMode_StartOfDay;
@@ -133,9 +134,10 @@ void HeavyAi::updateUnitCache(spQmlVectorUnit & pUnits)
             cache.resize(HeavyAiSharedData::AiCache::MaxAiCache);
             cache[HeavyAiSharedData::AiCache::UnitMovementPoints] = pUnit->getMovementpoints(pos);
             cache[HeavyAiSharedData::AiCache::MinFirerange] = pUnit->getMinRange(pos);
-            cache[HeavyAiSharedData::AiCache::MaxFirerange] = pUnit->getMaxRange(pos);            
+            cache[HeavyAiSharedData::AiCache::MaxFirerange] = pUnit->getMaxRange(pos);
             cache[HeavyAiSharedData::AiCache::BaseCost] = pUnit->getBaseCosts();
             cache[HeavyAiSharedData::AiCache::CanMoveAndFire] = static_cast<qint32>(pUnit->canMoveAndFire(pos));
+            cache[HeavyAiSharedData::AiCache::CoBonus] = pUnit->getAiCoUnitBonus();
             if (pBuilding != nullptr &&
                 pBuilding->getOwner() == pUnit->getOwner() &&
                 pBuilding->canRepair(pUnit.get()))

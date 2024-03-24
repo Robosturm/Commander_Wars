@@ -46,7 +46,7 @@ class ReplayRecorder final : public IReplayReader
         Type m_type{Type::Action};
         qint64 m_nextSeekPos{0};
     };
-    static const qint32 VERSION = 2;
+    static const qint32 VERSION = 3;
 public:
     explicit ReplayRecorder(GameMap* pMap);
     virtual ~ReplayRecorder();
@@ -60,6 +60,10 @@ public:
      * @param pAction
      */
     void recordAction(const spGameAction & action);
+    /**
+     * @brief writeWinnerTeam
+     */
+    void writeWinnerTeam();
     /**
      * @brief continueRecording
      * @param file
@@ -82,10 +86,11 @@ public:
      * @brief getMods
      * @return
      */
-     virtual QStringList getMods() override
+    virtual QStringList getMods() override
     {
         return m_mods;
     }
+    virtual qint32 getWinnerTeam() override;
     /**
      * @brief seekToStart
      */
@@ -122,7 +127,7 @@ public:
 
     QString getRecordJson() const;
 
-    static bool readRecordInfo(QDataStream & stream, QByteArray & jsonRecordInfo);
+    static bool readRecordInfo(QDataStream & stream, QByteArray & jsonRecordInfo, qint32 & version);
     static bool readRecordInfo(QDataStream & stream, QJsonObject & jsonRecordInfo);
 
 private:
@@ -141,6 +146,9 @@ private:
     qint64 m_countPos = 0;
     qint64 m_mapPos = 0;
     qint64 m_streamStart = 0;
+    qint32 m_winnerTeamPos{-1};
+    qint32 m_winnerTeam{-1};
+    qint32 m_version{VERSION};
 
     bool m_recording {false};
     bool m_playing{false};

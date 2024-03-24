@@ -48,6 +48,36 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
+qint32 Settings::getHeavyAiTrainingStartDay() const
+{
+    return m_heavyAiTrainingStartDay;
+}
+
+void Settings::setHeavyAiTrainingStartDay(qint32 newHeavyAiTrainingStartDay)
+{
+    m_heavyAiTrainingStartDay = newHeavyAiTrainingStartDay;
+}
+
+QString Settings::getHeavyAiTrainingType() const
+{
+    return m_heavyAiTrainingType;
+}
+
+void Settings::setHeavyAiTrainingType(const QString & newHeavyAiTrainingType)
+{
+    m_heavyAiTrainingType = newHeavyAiTrainingType;
+}
+
+QString Settings::getHeavyAiTrainingFile() const
+{
+    return m_heavyAiTrainingFile;
+}
+
+void Settings::setHeavyAiTrainingFile(const QString & newHeavyAiTrainingFile)
+{
+    m_heavyAiTrainingFile = newHeavyAiTrainingFile;
+}
+
 qint32 Settings::getMouseUpdateRate() const
 {
     return m_mouseUpdateRate;
@@ -1347,6 +1377,11 @@ void Settings::setup()
         MemoryManagement::create<Value<GameConsole::eLogLevels>>("Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL),
         MemoryManagement::create<Value<quint64>>("Logging", "LogModules", &m_defaultLogModuls, GameConsole::eGeneral | GameConsole::eJavaScript, 0, std::numeric_limits<quint64>::max()),
         MemoryManagement::create<Value<bool>>("Logging", "CreateAiTrainingData", &m_createAiTrainingData, false, false, true),
+        // heavy ai training
+        MemoryManagement::create<Value<QString>>("AiTraining", "HeavyAiTrainingFile", &m_heavyAiTrainingFile, "", "", ""),
+        MemoryManagement::create<Value<QString>>("AiTraining", "HeavyAiTrainingType", &m_heavyAiTrainingType, "heavy_ai", "", ""),
+        MemoryManagement::create<Value<qint32>>("AiTraining", "HeavyAiTrainingStartDay", &m_heavyAiTrainingStartDay, 5, 1, 99),
+
     };
     QSettings settings(m_settingFile, QSettings::IniFormat);
     for (auto setting : m_SettingValues)

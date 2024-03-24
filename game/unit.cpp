@@ -514,6 +514,21 @@ QString Unit::getUnitRangName(qint32 rang)
     return tr("Unknown");
 }
 
+qreal Unit::getAiCoUnitBonus()
+{
+    qreal ret = 0;
+    for (qint32 i = 0; i < m_pOwner->getCoCount(); ++i)
+    {
+        CO* pCO = m_pOwner->getCO(i);
+        if (pCO != nullptr)
+        {
+            bool valid = false;
+            ret += pCO->getAiCoUnitBonus(this, valid);
+        }
+    }
+    return ret;
+}
+
 void Unit::setUnitRank(const qint32 UnitRank, bool force)
 {
     if (m_pMap != nullptr)

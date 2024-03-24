@@ -48,15 +48,14 @@ void SituationEvaluator::updateInputVector(GameMap* pMap, const QPoint & searchP
         getUnitsInRange(pMap, searchPoint);
         createPathFindingSystems(pMap);
     }
-
+    for (qint32 i = 0; i < HeavyAiSharedData::INPUT_VECTOR_SIZE; ++i)
+    {
+        m_inputVector(0, i) = 0;
+    }
     for (qint32 i = 0; i < HeavyAiSharedData::UNIT_COUNT; ++i)
     {
         Unit* pUnit = m_unitsInfo[i]->pUnit;
-        if (pUnit == nullptr)
-        {
-            clearUnitInput(i);
-        }
-        else
+        if (pUnit != nullptr)
         {
             fillUnitInput(i);
         }
@@ -112,12 +111,28 @@ void SituationEvaluator::fillUnitInput(qint32 index)
             &SituationEvaluator::updateStealthed,
             &SituationEvaluator::updateMinFirerange,
             &SituationEvaluator::updateMaxFirerange,
+            &SituationEvaluator::updateCoBonus,
         };
         (this->*featureCb[feature])(basePosition, m_unitsInfo[index]);
     }
 }
 
 void SituationEvaluator::updateHp(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
+{
+    for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
+    {
+        if (shouldFillInfo(unitInfo, enemyUnit))
+        {
+            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::CoBonus];
+        }
+        else
+        {
+            m_inputVector(0, basePosition + enemyUnit) = 0;
+        }
+    }
+}
+
+void SituationEvaluator::updateCoBonus(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
 {
     for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
     {
@@ -289,6 +304,16 @@ void SituationEvaluator::updateMaxFirerange(qint32 basePosition, const HeavyAiSh
     }
 }
 
+Player * SituationEvaluator::getOwner() const
+{
+    return m_pOwner;
+}
+
+void SituationEvaluator::setOwner(Player * newPOwner)
+{
+    m_pOwner = newPOwner;
+}
+
 void SituationEvaluator::updateCapturePoints(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo)
 {
     for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
@@ -339,7 +364,8 @@ void SituationEvaluator::updateStealthed(qint32 basePosition, const HeavyAiShare
 bool SituationEvaluator::shouldFillInfo(const HeavyAiSharedData::spUnitInfo & unitInfo, qint32 enemyUnit)
 {
     return unitInfo->multiplier != m_unitsInfo[enemyUnit]->multiplier &&
-           unitInfo->reachable[enemyUnit];
+           unitInfo->reachable[enemyUnit] &&
+           m_unitsInfo[enemyUnit]->pUnit != nullptr;
 }
 
 void SituationEvaluator::getUnitsInRange(GameMap* pMap, const QPoint & searchPoint)
@@ -359,6 +385,7 @@ void SituationEvaluator::getUnitsInRange(GameMap* pMap, const QPoint & searchPoi
                 {
                     m_unitsInfo[enemyPosition]->pUnit = pUnit;
                     m_unitsInfo[enemyPosition]->multiplier = -1;
+                    m_unitsInfo[enemyPosition]->reachable.fill(false);
                     updateStealthInfo(pMap, enemyPosition);
                     m_unitsInfo[enemyPosition]->terrainDefense = pUnit->getTerrainDefense();
                     --enemyPosition;
@@ -367,6 +394,7 @@ void SituationEvaluator::getUnitsInRange(GameMap* pMap, const QPoint & searchPoi
                 {
                     m_unitsInfo[alliedPosition]->pUnit = pUnit;
                     m_unitsInfo[alliedPosition]->multiplier = 1;
+                    m_unitsInfo[alliedPosition]->reachable.fill(false);
                     updateStealthInfo(pMap, alliedPosition);
                      m_unitsInfo[alliedPosition]->terrainDefense = pUnit->getTerrainDefense();
                     ++alliedPosition;
@@ -380,11 +408,11 @@ void SituationEvaluator::getUnitsInRange(GameMap* pMap, const QPoint & searchPoi
     }
     for (qint32 i = alliedPosition; i <= enemyPosition; ++i)
     {
-        m_unitsInfo[enemyPosition]->pUnit = nullptr;
-        m_unitsInfo[enemyPosition]->pUnitTargetedPathFindingSystem.reset();
-        m_unitsInfo[enemyPosition]->multiplier = 1;
-        m_unitsInfo[enemyPosition]->terrainDefense = 0;
-        m_unitsInfo[enemyPosition]->buildingImportance = 0;
+        m_unitsInfo[i]->pUnit = nullptr;
+        m_unitsInfo[i]->pUnitTargetedPathFindingSystem.reset();
+        m_unitsInfo[i]->multiplier = 1;
+        m_unitsInfo[i]->terrainDefense = 0;
+        m_unitsInfo[i]->buildingImportance = 0;
     }
 }
 
@@ -429,6 +457,10 @@ void SituationEvaluator::createPathFindingSystems(GameMap* pMap)
         {
             m_unitsInfo[i]->pUnitTargetedPathFindingSystem = MemoryManagement::create<UnitTargetedPathFindingSystem>(pMap, i, m_unitsInfo);
             m_unitsInfo[i]->pUnitTargetedPathFindingSystem->explore();
+        }
+        else
+        {
+            m_unitsInfo[i]->clear();
         }
     }
 }
