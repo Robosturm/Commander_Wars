@@ -60,6 +60,7 @@ private:
     oxygine::spBox9Sprite m_pSpriteBox;
     spDropDownmenu m_PredefinedLists;
     QVector<spCheckbox> m_Checkboxes;
+    QStringList m_actionList;
     bool m_toggle{true};
     QStringList m_CurrentActionList;
     GameMap* m_pMap{nullptr};

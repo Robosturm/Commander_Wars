@@ -47,9 +47,18 @@ void HeavyAiTrainingDataGenerator::addCurrentSituationTrainingData()
         spQmlVectorUnit pEnemyUnits = pCurrentPlayer->getSpEnemyUnits();
         updateUnitCache(pUnits);
         updateUnitCache(pEnemyUnits);
+        bool update = true;
         for (auto & pUnit : pUnits->getVector())
         {
-            m_evaluator->updateInputVector(m_pMap, pUnit->getPosition(), true);
+            if (pUnits->size() + pEnemyUnits->size() > HeavyAiSharedData::UNIT_COUNT)
+            {
+                m_evaluator->updateInputVector(m_pMap, pUnit->getPosition(), true);
+            }
+            else
+            {
+                m_evaluator->updateInputVector(m_pMap, pUnit->getPosition(), update);
+                update = false;
+            }
             QString line = m_evaluator->getInputVector() + QString::number(static_cast<qint32>(result));
             m_stream << line << "\n";
         }

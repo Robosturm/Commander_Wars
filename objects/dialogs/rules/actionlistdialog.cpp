@@ -58,16 +58,15 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
 
     GameManager* pGameManager = GameManager::getInstance();
 
-    QStringList actionList = pGameManager->getLoadedRessources();
-
+    m_actionList = pGameManager->getLoadedRessources();
     qint32 y = pLabel->getY() + pLabel->getTextRect().height() + 10;
     qint32 x = 10;
     
     m_CurrentActionList = m_pMap->getGameRules()->getAllowedActions();
 
-    for (qint32 i = 0; i < actionList.size(); i++)
+    for (qint32 i = 0; i < m_actionList.size(); i++)
     {
-        QString actionId = actionList[i];
+        QString actionId = m_actionList[i];
         QString icon = pGameManager->getActionIcon(actionId);
         if (!icon.isEmpty())
         {
@@ -212,6 +211,17 @@ void ActionListDialog::setBuildlist(qint32)
     QString file = m_PredefinedLists->getCurrentItemText();
     auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, FILEPATH);
     data = fileData.items;
+    for (qint32 i = 0; i < m_actionList.size(); i++)
+    {
+        if (data.contains(m_actionList[i]))
+        {
+            m_Checkboxes[i]->setChecked(true);
+        }
+        else
+        {
+            m_Checkboxes[i]->setChecked(false);
+        }
+    }
     m_CurrentActionList = data;
 }
 

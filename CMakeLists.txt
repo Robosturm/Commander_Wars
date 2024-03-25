@@ -865,6 +865,7 @@ set(${PROJECT_NAME}_SRCS
     awbwReplayReader/awbwdatatypes.h awbwReplayReader/awbwdatatypes.cpp
     awbwReplayReader/awbwactionparser.h awbwReplayReader/awbwactionparser.cpp
     awbwReplayReader/awbwrecordcreator.h awbwReplayReader/awbwrecordcreator.cpp
+    awbwReplayReader/awbwreplaydownloader.h awbwReplayReader/awbwreplaydownloader.cpp
     awbwReplayReader/iAwbwAction.h
 )
 
