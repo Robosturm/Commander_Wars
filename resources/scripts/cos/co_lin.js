@@ -240,13 +240,30 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
+            var seaAirUnit = (unit.getUnitType() === GameEnums.UnitType_Air) ||
+                    (unit.getUnitType() === GameEnums.UnitType_Naval);
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return CO_LIN.superPowerVisionRange;
-            case GameEnums.PowerMode_Power:
-                return CO_LIN.powerVisionRange;
+                if (!seaAirUnit)
+                {
+                    return CO_LIN.superPowerVisionRange;
+                }
+                else
+                {
+                    return 0;
+                }
+
+            case GameEnums.PowerMode_Power:                
+                if (!seaAirUnit)
+                {
+                    return CO_LIN.powerVisionRange;
+                }
+                else
+                {
+                    return 0;
+                }
             default:
                 return 0;
             }
