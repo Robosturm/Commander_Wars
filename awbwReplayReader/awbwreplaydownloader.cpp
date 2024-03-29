@@ -2,6 +2,8 @@
 
 #include "awbwReplayReader/awbwreplaydownloader.h"
 
+// https://awbw.amarriner.com/2030.php?games_id=
+
 AwbwReplayDownloader::AwbwReplayDownloader(QObject *parent)
     : QObject{parent}
 {
@@ -31,22 +33,40 @@ void AwbwReplayDownloader::downloadErrorOccurred(QNetworkReply::NetworkError cod
     emit sigDownloadResult(false);
 }
 
-void AwbwReplayDownloader::downLoadReplay(const QString & userName, const QString & password, const QString & replay)
+void AwbwReplayDownloader::downLoadReplay(const QString & userName, const QString & password, const QString replay)
 {
+    connect(this, &AwbwReplayDownloader::sigLogin, this, [this, replay](bool success)
+    {
+        if (success)
+        {
+            downLoadReplay(replay);
+        }
+        else
+        {
+            emit sigDownloadResult(false);
+        }
+    });
     login(userName, password);
-    downLoadReplay(replay);
 }
 
-void AwbwReplayDownloader::downLoadReplay(const QString & replay)
+bool AwbwReplayDownloader::downLoadReplay(const QString & replay)
 {
-    m_file.setFileName("data/records/" + replay + ".zip");
-    m_file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-    QString urlReuqest = "https://awbw.amarriner.com/replay_download.php?games_id={" + replay + "}";
-    QUrl requestUrl(urlReuqest);
-    QNetworkRequest request(requestUrl);
-    m_reply = m_webCtrl.get(request);
-    connect(m_reply, &QNetworkReply::downloadProgress, this, &AwbwReplayDownloader::downloadProgress);
-    connect(m_reply, &QNetworkReply::errorOccurred, this, &AwbwReplayDownloader::downloadErrorOccurred, Qt::QueuedConnection);
+    bool ret = false;
+    if (!m_cookies.isNull())
+    {
+        m_file.setFileName("data/records/" + replay + ".zip");
+        m_file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QString urlReuqest = "https://awbw.amarriner.com/replay_download.php?games_id=" + replay;
+        QUrl requestUrl(urlReuqest);
+        QNetworkRequest request(requestUrl);
+        request.setHeader(QNetworkRequest::CookieHeader, m_cookies);
+        m_downloading = true;
+        ret = true;
+        m_reply = m_webCtrl.get(request);
+        connect(m_reply, &QNetworkReply::downloadProgress, this, &AwbwReplayDownloader::downloadProgress);
+        connect(m_reply, &QNetworkReply::errorOccurred, this, &AwbwReplayDownloader::downloadErrorOccurred, Qt::QueuedConnection);
+    }
+    return ret;
 }
 
 void AwbwReplayDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
@@ -57,22 +77,37 @@ void AwbwReplayDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTo
         m_file.write(data);
         emit sigNewProgress(bytesReceived, bytesTotal);
     }
+    else
+    {
+        m_downloadFailed = true;
+    }
 }
 
 void AwbwReplayDownloader::onResponseFinished(QNetworkReply* pReply)
 {
     auto result = pReply->readAll();
-    if (result == "1")
+    if (!m_downloading && result == "1")
     {
+        m_cookies = pReply->header(QNetworkRequest::SetCookieHeader);
         emit sigLogin(true);
     }
-    else if (result == "0")
+    else if (!m_downloading && result == "0")
     {
         emit sigLogin(false);
     }
-    else
+    else if (m_downloading)
     {
-
+        if (!m_downloadFailed)
+        {
+            m_file.write(pReply->readAll());
+            m_file.close();
+            emit sigDownloadResult(true);
+        }
+        else
+        {
+            m_file.remove();
+            emit sigDownloadResult(false);
+        }
     }
     pReply->deleteLater();
 }

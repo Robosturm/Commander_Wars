@@ -36,6 +36,7 @@
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/dialogs/folderdialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
+#include "objects/dialogs/dialogawbwrecorddownloader.h"
 #include "objects/loadingscreen.h"
 
 #include "ui_reader/uifactory.h"
@@ -320,6 +321,14 @@ void Mainwindow::enterReplayGame()
     spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::replayGame, Qt::QueuedConnection);
+    Mainapp::getInstance()->continueRendering();
+}
+
+void Mainwindow::showDownloadAwbwReplay()
+{
+    Mainapp::getInstance()->pauseRendering();
+    spDialogAwbwRecordDownloader awbwDialog = MemoryManagement::create<DialogAwbwRecordDownloader>(this);
+    addChild(awbwDialog);
     Mainapp::getInstance()->continueRendering();
 }
 

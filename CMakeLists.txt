@@ -525,6 +525,7 @@ set(${PROJECT_NAME}_SRCS
     objects/dialogs/dialogvaluecounter.cpp objects/dialogs/dialogvaluecounter.h
     objects/dialogs/gamepadinfo.cpp objects/dialogs/gamepadinfo.h
     objects/dialogs/customdialog.h objects/dialogs/customdialog.cpp
+    objects/dialogs/dialogawbwrecorddownloader.h objects/dialogs/dialogawbwrecorddownloader.cpp
     # objects dialogs editor
     objects/dialogs/editor/dialogmodifyunit.cpp objects/dialogs/editor/dialogmodifyunit.h
     objects/dialogs/editor/dialogmodifybuilding.cpp objects/dialogs/editor/dialogmodifybuilding.h

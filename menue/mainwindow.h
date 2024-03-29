@@ -24,6 +24,7 @@ public slots:
     void enterWikimenue();
     void enterLoadGame();
     void enterReplayGame();
+    void showDownloadAwbwReplay();
     void enterCreditsmenue();
     void loadGame(QString filename);
     void replayGame(QString filename);

@@ -5126,5 +5126,6 @@
         <file>resources/ui/multiplayer/selectDownloadRecord.xml</file>
         <file>resources/ui/editor/importAwbwmapById.xml</file>
         <file>resources/objects/rewindTurn.png</file>
+        <file>resources/ui/menu/awbwRecordDownloader.xml</file>
     </qresource>
 </RCC>

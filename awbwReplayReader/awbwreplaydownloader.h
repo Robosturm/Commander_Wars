@@ -12,8 +12,8 @@ public:
     explicit AwbwReplayDownloader(QObject *parent = nullptr);
 
     void login(const QString & userName, const QString & password);
-    void downLoadReplay(const QString & userName, const QString & password, const QString & replay);
-    void downLoadReplay(const QString & replay);
+    void downLoadReplay(const QString & userName, const QString & password, const QString replay);
+    bool downLoadReplay(const QString & replay);
 
 signals:
     void sigDownloadResult(bool success);
@@ -29,4 +29,7 @@ private:
     QNetworkAccessManager m_webCtrl;
     QNetworkReply* m_reply{nullptr};
     QFile m_file;
+    QVariant m_cookies;
+    bool m_downloading{false};
+    bool m_downloadFailed{false};
 };
