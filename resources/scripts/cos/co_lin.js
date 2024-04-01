@@ -348,7 +348,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Lin's ground units gain +%2% firepower and +%2% defence. Her other units gain +%3% firepower and +%4% defence. All of her units gain +%0 vision and can see into hidden locations.");
+        var text = qsTr("Lin's ground units gain +%1% firepower, +%2% defence, and +%0 vision. Her other units gain +%3% firepower and +%4% defence. All of her units can see into hidden locations.");
         text = replaceTextArgs(text, [CO_LIN.powerVisionRange,
                                       CO_LIN.powerOffBonus, CO_LIN.powerDefBonus, CO_LIN.powerBaseOffBonus, CO_LIN.powerBaseDefBonus]);
         return text;
@@ -359,7 +359,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Lin's ground units gain +%2% firepower and +%2% defence. Her other units gain +%3% firepower and +%4% defence. All of her units gain +%0 vision and can see into hidden locations.");
+        var text = qsTr("Lin's ground units gain +%1% firepower, +%2% defence, and +%0 vision. Her other units gain +%3% firepower and +%4% defence. All of her units can see into hidden locations.");
         text = replaceTextArgs(text, [CO_LIN.superPowerVisionRange,
                                       CO_LIN.superPowerOffBonus, CO_LIN.superPowerDefBonus, CO_LIN.superPowerBaseOffBonus, CO_LIN.superPowerBaseDefBonus]);
         return text;
