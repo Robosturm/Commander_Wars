@@ -42,7 +42,7 @@ jobs:
             qtPath: ''
             qtTools: ''
             installerCommands1: 'sudo apt-get update'
-            installerCommands2: 'sudo apt-get install openssl=3.2.1 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            installerCommands2: 'sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
             cmakeOptions: ''
           - buildTarget: macos-desktop
             os: macos-latest
