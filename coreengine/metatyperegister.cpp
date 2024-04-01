@@ -118,6 +118,9 @@
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/gamerulemanager.h"
 
+#include "awbwReplayReader/awbwreplaydownloader.h"
+#include "objects/dialogs/dialogawbwrecorddownloader.h"
+
 void MetaTypeRegister::registerInterfaceData()
 {
     // qt metatypes we need this for js and signal slot stuff
@@ -280,4 +283,8 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<Tooltip>("Tooltip", 1);
     qmlRegisterInterface<V_Scrollbar>("V_Scrollbar", 1);
     qmlRegisterInterface<H_Scrollbar>("H_Scrollbar", 1);
+
+    // awbw
+    qmlRegisterInterface<AwbwReplayDownloader>("AwbwReplayDownloader", 1);
+    qmlRegisterInterface<DialogAwbwRecordDownloader>("DialogAwbwRecordDownloader", 1);
 }

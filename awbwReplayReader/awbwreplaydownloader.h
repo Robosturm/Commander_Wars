@@ -9,7 +9,7 @@ class AwbwReplayDownloader : public QObject
 {
     Q_OBJECT
 public:
-    explicit AwbwReplayDownloader(QObject *parent = nullptr);
+    explicit AwbwReplayDownloader(const QString & downloadPath = "data/records/", QObject *parent = nullptr);
 
     void login(const QString & userName, const QString & password);
     void downLoadReplay(const QString & userName, const QString & password, const QString replay);
@@ -30,6 +30,9 @@ private:
     QNetworkReply* m_reply{nullptr};
     QFile m_file;
     QVariant m_cookies;
+    QString m_downloadPath;
     bool m_downloading{false};
     bool m_downloadFailed{false};
 };
+
+Q_DECLARE_INTERFACE(AwbwReplayDownloader, "AwbwReplayDownloader");

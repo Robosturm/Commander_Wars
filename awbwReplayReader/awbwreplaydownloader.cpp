@@ -2,10 +2,9 @@
 
 #include "awbwReplayReader/awbwreplaydownloader.h"
 
-// https://awbw.amarriner.com/2030.php?games_id=
-
-AwbwReplayDownloader::AwbwReplayDownloader(QObject *parent)
-    : QObject{parent}
+AwbwReplayDownloader::AwbwReplayDownloader(const QString & downloadPath, QObject *parent)
+    : QObject{parent},
+    m_downloadPath(downloadPath)
 {
     connect(&m_webCtrl, &QNetworkAccessManager::finished, this, &AwbwReplayDownloader::onResponseFinished, Qt::QueuedConnection);
 }
@@ -54,10 +53,10 @@ bool AwbwReplayDownloader::downLoadReplay(const QString & replay)
     bool ret = false;
     if (!m_cookies.isNull())
     {
-        m_file.setFileName("data/records/" + replay + ".zip");
+        m_file.setFileName(m_downloadPath + replay + ".zip");
         m_file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        QString urlReuqest = "https://awbw.amarriner.com/replay_download.php?games_id=" + replay;
-        QUrl requestUrl(urlReuqest);
+        QString urlRequest = "https://awbw.amarriner.com/replay_download.php?games_id=" + replay;
+        QUrl requestUrl(urlRequest);
         QNetworkRequest request(requestUrl);
         request.setHeader(QNetworkRequest::CookieHeader, m_cookies);
         m_downloading = true;

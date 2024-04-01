@@ -29,8 +29,10 @@ private slots:
     void downloadResult(bool success);
     void onNewProgress(qint64 bytesReceived, qint64 bytesTotal);
 private:
-    AwbwReplayDownloader m_awbwreplaydownloader{this};
+    AwbwReplayDownloader m_awbwreplaydownloader{"data/records/", this};
     QString m_userName;
     QString m_password;
     QString m_replay;
 };
+
+Q_DECLARE_INTERFACE(DialogAwbwRecordDownloader, "DialogAwbwRecordDownloader");
