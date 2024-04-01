@@ -1,6 +1,7 @@
 #include "awbwReplayReader/awbwreplayscandownloader.h"
+#include "coreengine/gameconsole.h"
 
-#include <QFile>
+#include <QDomDocument>
 
 AwbwReplayScanDownloader::AwbwReplayScanDownloader(QObject *parent)
     : QObject{parent}
@@ -21,8 +22,33 @@ void AwbwReplayScanDownloader::scan(qint32 stdRankPoints, qint32 fogRankPoints)
 void AwbwReplayScanDownloader::onResponseFinished(QNetworkReply* pReply)
 {
     auto result = pReply->readAll();
-    QFile file("test.xml");
-    file.open(QIODevice::WriteOnly);
-    file.write(result);
+    QDomDocument document;
+    bool loaded = document.setContent(result);
+    if (loaded)
+    {
+        auto rootElement = document.documentElement();
+        auto node = rootElement.firstChild();
+        scanNode(node);
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to parse received scan content", GameConsole::eERROR);
+    }
     pReply->deleteLater();
+}
+
+void AwbwReplayScanDownloader::scanNode(QDomNode node)
+{
+    while (!node.isNull())
+    {
+        while (node.isComment())
+        {
+            node = node.nextSibling();
+        }
+        if (!node.isNull())
+        {
+            scanNode(node);
+        }
+        node = node.nextSibling();
+    }
 }
