@@ -50,7 +50,7 @@ class ReplayRecorder final : public IReplayReader
 public:
     explicit ReplayRecorder(GameMap* pMap);
     virtual ~ReplayRecorder();
-    void requestReplayStart();
+    virtual void requestReplayStart() override;
     /**
      * @brief startRecording
      */

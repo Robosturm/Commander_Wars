@@ -23,8 +23,8 @@ void AwbwReplayScanDownloader::onResponseFinished(QNetworkReply* pReply)
 {
     auto result = pReply->readAll();
     QDomDocument document;
-    bool loaded = document.setContent(result);
-    if (loaded)
+    QDomDocument::ParseResult loaded = document.setContent(result);
+    if (loaded.errorMessage.isEmpty())
     {
         auto rootElement = document.documentElement();
         auto node = rootElement.firstChild();
