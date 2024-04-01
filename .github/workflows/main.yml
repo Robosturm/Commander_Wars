@@ -8,7 +8,6 @@ env:
   JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/11.0.22-7/x64/'
   
   ANDROID_OPEN_SSL_TAG: '57056d6dd94c235a67b1bc0e4befdba8f9e11c8d'
-  OPENSSL_VERSION: '3.2.1'
   
 jobs:
   install:
@@ -24,7 +23,7 @@ jobs:
             target: 'desktop'
             qtPath: 'mingw_64'
             qtTools: 'tools_mingw90'
-            installerCommands1: '"choco install openssl --version=${{env.OPENSSL_VERSION}} --force -y --install-arguments="'/DIR=C:/openSsl/'"
+            installerCommands1: choco install openssl --version=3.2.1 --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" "-DCMAKE_C_COMPILER:FILEPATH=D:/a/Commander_Wars/Commander_Wars/qt/Qt/Tools/mingw1120_64/bin/gcc.exe" "-DCMAKE_CXX_COMPILER:FILEPATH=D:/a/Commander_Wars/Commander_Wars/qt/Qt/Tools/mingw1120_64/bin/g++.exe"'
           - buildTarget: windows-server # test build to check if the server configuration compiles as well
@@ -33,7 +32,7 @@ jobs:
             target: 'desktop'
             qtPath: 'mingw_64'
             qtTools: 'tools_mingw90'
-            installerCommands1: '"choco install openssl --version=${{env.OPENSSL_VERSION}} --force -y --install-arguments="'/DIR=C:/openSsl/'"
+            installerCommands1: choco install openssl --version=3.2.1 --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF "-DCMAKE_C_COMPILER:FILEPATH=D:/a/Commander_Wars/Commander_Wars/qt/Qt/Tools/mingw1120_64/bin/gcc.exe" "-DCMAKE_CXX_COMPILER:FILEPATH=D:/a/Commander_Wars/Commander_Wars/qt/Qt/Tools/mingw1120_64/bin/g++.exe"'
           - buildTarget: ubuntu-desktop
@@ -43,7 +42,7 @@ jobs:
             qtPath: ''
             qtTools: ''
             installerCommands1: 'sudo apt-get update'
-            installerCommands2: 'sudo apt-get install openssl=${{env.OPENSSL_VERSION}} gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            installerCommands2: 'sudo apt-get install openssl=3.2.1 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
             cmakeOptions: ''
           - buildTarget: macos-desktop
             os: macos-latest
@@ -51,7 +50,7 @@ jobs:
             qtPath: 'clang_64'
             qtTools: ''
             target: 'desktop'
-            installerCommands1: ''
+            installerCommands1: 'sudo port install openssl'
             installerCommands2: ''
             cmakeOptions: '-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
           - buildTarget: android-armv7

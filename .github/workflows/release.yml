@@ -11,7 +11,6 @@ env:
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
   JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/11.0.22-7/x64/'
   ANDROID_OPEN_SSL_TAG: '57056d6dd94c235a67b1bc0e4befdba8f9e11c8d'
-  OPENSSL_VERSION: '3.2.1'
   
 jobs:
   create_release:
@@ -47,7 +46,7 @@ jobs:
             target: 'desktop'
             qtPath: 'mingw_64'
             qtTools: 'tools_mingw90'
-            installerCommands1: '"choco install openssl --version=${{env.OPENSSL_VERSION}} --force -y --install-arguments="'/DIR=C:/openSsl/'"
+            installerCommands1: choco install openssl --version=3.2.1 --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Win10_x64.zip' 
@@ -58,7 +57,7 @@ jobs:
             target: 'desktop'
             qtPath: 'mingw_64'
             qtTools: 'tools_mingw90'
-            installerCommands1: '"choco install openssl --version=${{env.OPENSSL_VERSION}} --force -y --install-arguments="'/DIR=C:/openSsl/'"
+            installerCommands1: choco install openssl --version=3.2.1 --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Win10_x64_Server.zip' 
@@ -70,7 +69,7 @@ jobs:
             qtPath: ''
             qtTools: ''
             installerCommands1: 'sudo apt-get update'
-            installerCommands2: 'sudo apt-get install openssl=${{env.OPENSSL_VERSION}} gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            installerCommands2: 'sudo apt-get install openssl=3.2.1 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Ubuntu.zip'
             cmakeOptions: ''
@@ -81,7 +80,7 @@ jobs:
             qtPath: ''
             qtTools: ''
             installerCommands1: 'sudo apt-get update'
-            installerCommands2: 'sudo apt-get install openssl=${{env.OPENSSL_VERSION}} gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            installerCommands2: 'sudo apt-get install openssl=3.2.1 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Ubuntu_Server.zip'
             cmakeOptions: '-DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF'
