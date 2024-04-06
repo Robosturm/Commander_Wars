@@ -73,7 +73,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 19;
+        return 20;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -727,6 +727,16 @@ public:
      * @return
      */
     Q_INVOKABLE qreal getRepairCostModifier(Unit* pUnit);
+    /**
+     * @brief getAlwaysShowCoRange
+     * @return
+     */
+    Q_INVOKABLE bool getAlwaysShowCoRange() const;
+    /**
+     * @brief setAlwaysShowCoRange
+     * @param newAlwaysShowCoRange
+     */
+    Q_INVOKABLE void setAlwaysShowCoRange(bool newAlwaysShowCoRange);
 
 private:
     /**
@@ -831,6 +841,7 @@ private:
     QString m_uniqueIdentifier;
     QString m_playerNameId;
     bool m_isOnline{true};
+    bool m_alwaysShowCoRange{false};
     static oxygine::spResAnim m_neutralTableAnim;
     static QImage m_neutralTableImage;
 };

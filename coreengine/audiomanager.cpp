@@ -273,6 +273,11 @@ void AudioManager::playMusic(qint32 File)
     emit sigPlayMusic(File);
 }
 
+void AudioManager::continueMusic(QString file, qint32 position)
+{
+    emit sigContinueMusic(file, position);
+}
+
 void AudioManager::setVolume(qint32 value)
 {
     emit sigSetVolume(value);
@@ -360,6 +365,7 @@ void AudioManager::SlotPlayMusic(qint32 file)
         if (file >= 0 && file < m_PlayListdata.size())
         {
             CONSOLE_PRINT_MODULE("Starting music for player: " + m_PlayListdata[file].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
+            m_musicPlayPositionCache[m_player->m_currentMediaFile] = m_player->m_player.position();
             m_player->m_player.stop();
             m_player->m_currentMedia = -1;
             m_player->m_nextMedia = -1;
@@ -375,7 +381,35 @@ void AudioManager::SlotPlayMusic(qint32 file)
 #endif
 }
 
-void AudioManager::loadMediaForFile(QString filePath)
+void AudioManager::SlotContinueMusic(QString file, qint32 position)
+{
+#ifdef AUDIOSUPPORT
+    if (!m_noAudio && !Settings::getInstance()->getMuted())
+    {
+            for (qint32 i = 0; i < m_PlayListdata.size(); ++i)
+            {
+                if (m_PlayListdata[i].m_file.endsWith(file))
+                {
+                    CONSOLE_PRINT_MODULE("Continue music for player: " + file, GameConsole::eDEBUG, GameConsole::eAudio);
+                    m_musicPlayPositionCache[m_player->m_currentMediaFile] = m_player->m_player.position();
+                    m_player->m_player.stop();
+                    m_player->m_currentMedia = -1;
+                    m_player->m_nextMedia = -1;
+                    if (position <  0)
+                    {
+                        position = m_musicPlayPositionCache[m_PlayListdata[i].m_file];
+                    }
+                    m_player->m_currentMedia = i;
+                    loadMediaForFile(m_PlayListdata[i].m_file, position);
+                    m_player->m_player.play();
+                    break;
+                }
+            }
+    }
+#endif
+}
+
+void AudioManager::loadMediaForFile(QString filePath, qint32 position)
 {
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
@@ -383,10 +417,12 @@ void AudioManager::loadMediaForFile(QString filePath)
         m_player->m_player.setPosition(0);
         m_player->m_fileStream.close();
         QFile file(filePath);
+        m_player->m_currentMediaFile = filePath;
         file.open(QIODevice::ReadOnly);
         m_player->m_content = file.readAll();
         m_player->m_fileStream.open(QIODevice::ReadOnly);
         m_player->m_player.setSourceDevice(&(m_player->m_fileStream));
+        m_player->m_player.setPosition(position);
     }
 #endif
 }

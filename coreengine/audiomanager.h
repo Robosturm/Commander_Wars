@@ -56,6 +56,7 @@ private:
         qint32 m_nextMedia{-1};
         QByteArray m_content;
         QBuffer m_fileStream;
+        QString m_currentMediaFile;
     };
     using spPlayer = std::shared_ptr<Player>;
 #endif
@@ -89,7 +90,7 @@ signals:
     void sigLoadNextAudioFile();
     void sigStopAudio();
     void sigSetMuteInternal(bool value);
-
+    void sigContinueMusic(QString file, qint32 position = -1);
 public slots:
     /**
      * @brief createSoundCache
@@ -108,6 +109,12 @@ public slots:
      * @param File the music file to be played
      */
     void playMusic(qint32 File);
+    /**
+     * @brief continueMusic
+     * @param file
+     * @param position
+     */
+    void continueMusic(QString file, qint32 position = -1);
     /**
      * @brief addMusic
      * @param File adds a file to the playlist
@@ -161,6 +168,7 @@ public slots:
     void changeAudioDevice(const QVariant &value);
 protected slots:
     // stops current Music and launches another one.
+    void SlotContinueMusic(QString file, qint32 position = -1);
     void SlotPlayMusic(qint32 file);
     void SlotSetVolume(qint32 value);
     void SlotAddMusic(QString file, qint64 startPointMs = -1, qint64 endPointMs = -1);
@@ -274,7 +282,7 @@ protected:
      */
     void cleanUpSounds();
 #endif
-    void loadMediaForFile(QString filePath);
+    void loadMediaForFile(QString filePath, qint32 position = 0);
 
 private:
     // music playback data
@@ -309,6 +317,7 @@ private:
         spQSoundEffect sound;
         QTimer timer;
     };
+    QMap<QString, qint32> m_musicPlayPositionCache;
     SoundEffect m_soundEffectData[MAX_PARALLEL_SOUNDS]{SoundEffect(this),
                                                        SoundEffect(this),
                                                        SoundEffect(this),

@@ -2,6 +2,7 @@
 #include "coreengine/gameconsole.h"
 
 #include <QDomDocument>
+#include <QFile>
 
 AwbwReplayScanDownloader::AwbwReplayScanDownloader(QObject *parent)
     : QObject{parent}
@@ -21,18 +22,31 @@ void AwbwReplayScanDownloader::scan(qint32 stdRankPoints, qint32 fogRankPoints)
 
 void AwbwReplayScanDownloader::onResponseFinished(QNetworkReply* pReply)
 {
-    auto result = pReply->readAll();
-    QDomDocument document;
-    QDomDocument::ParseResult loaded = document.setContent(result);
-    if (loaded.errorMessage.isEmpty())
+    const char* const MAP_START = "<a class=\"anchor\" name=\"game_";
+    QString result(pReply->readAll());
+    auto items = result.split("\n");
+    for (qint32 i = 0; i < items.size(); ++i)
     {
-        auto rootElement = document.documentElement();
-        auto node = rootElement.firstChild();
-        scanNode(node);
-    }
-    else
-    {
-        CONSOLE_PRINT("Unable to parse received scan content", GameConsole::eERROR);
+        auto & item = items[i];
+        if (m_itemCount < 0)
+        {
+            if (item.contains("gamescompleted.php?start=") &&
+                item.startsWith("<span class=small_text style=\"float:right;\">"))
+            {
+                auto subItems = item.split("gamescompleted.php?start=");
+                m_itemCount = subItems[subItems.length() - 1].split("&league=Y\">")[0].toInt();
+            }
+        }
+        else if (item.startsWith(MAP_START))
+        {
+            qint32 recordId = item.split(MAP_START)[1].split("\">")[0].toInt();
+            qint32 player1Points = -1;
+            qint32 player2Points = -1;
+            for (; i < items.size() && (player1Points < 0 || player2Points < 0); ++i)
+            {
+
+            }
+        }
     }
     pReply->deleteLater();
 }

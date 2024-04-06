@@ -1,5 +1,4 @@
 #include <QFileInfo>
-#include <QDirIterator>
 
 #include "resource_management/weaponmanager.h"
 

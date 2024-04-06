@@ -184,7 +184,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                     if (loaded)
                     {
                         success = true;
-                        oxygine::spActor root = MemoryManagement::create<oxygine::Actor>();                        
+                        oxygine::spActor root = MemoryManagement::create<oxygine::Actor>();
                         auto rootElement = document.documentElement();
 
                         bool overwrite = false;

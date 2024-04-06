@@ -22,6 +22,7 @@ private:
 private:
     QNetworkAccessManager m_webCtrl;
     QNetworkReply* m_reply{nullptr};
+    qint32 m_itemCount{-1};
 };
 
 Q_DECLARE_INTERFACE(AwbwReplayScanDownloader, "AwbwReplayScanDownloader");
