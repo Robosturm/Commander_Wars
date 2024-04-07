@@ -277,7 +277,9 @@ void AudioManager::clearMusicPositions()
 
 void AudioManager::SlotClearMusicPositions()
 {
+#ifdef AUDIOSUPPORT
     m_musicPlayPositionCache.clear();
+#endif
 }
 
 void AudioManager::playMusic(qint32 File)
