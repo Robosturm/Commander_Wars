@@ -1775,7 +1775,7 @@ void Player::updateVisualCORange()
             if (pCoUnit != nullptr)
             {
                 if (pCO->getPowerMode() == GameEnums::PowerMode_Off ||
-                    m_alwaysShowCoRange)
+                    pCO->getAlwaysShowCoRange())
                 {
                     pCoUnit->createCORange(pCO->getCORange());
                 }
@@ -2153,16 +2153,6 @@ qint32 Player::calculatePlayerStrength(Unit* pUnit) const
     return ret;
 }
 
-bool Player::getAlwaysShowCoRange() const
-{
-    return m_alwaysShowCoRange;
-}
-
-void Player::setAlwaysShowCoRange(bool newAlwaysShowCoRange)
-{
-    m_alwaysShowCoRange = newAlwaysShowCoRange;
-}
-
 bool Player::getIsOnline() const
 {
     return m_isOnline;
@@ -2355,7 +2345,6 @@ void Player::serializeObject(QDataStream& pStream, bool forHash) const
         pStream << m_playerArmySelected;
         pStream << m_playerNameId;
         pStream << static_cast<qint32>(m_controlType);
-        pStream << m_alwaysShowCoRange;
     }
 }
 
@@ -2587,10 +2576,6 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         {
             m_controlType = GameEnums::AiTypes_Human;
         }
-    }
-    if (version > 19)
-    {
-        pStream >> m_alwaysShowCoRange;
     }
     CONSOLE_PRINT("Loaded player " + m_playerNameId + " with control type " + QString::number(m_controlType), GameConsole::eDEBUG);
 }

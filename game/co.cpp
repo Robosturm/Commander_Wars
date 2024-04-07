@@ -2024,6 +2024,16 @@ void CO::getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info)
     pInterpreter->doFunction(m_coID, "getCustomUnitZoneBoost", args);
 }
 
+bool CO::getAlwaysShowCoRange() const
+{
+    return m_alwaysShowCoRange;
+}
+
+void CO::setAlwaysShowCoRange(bool newAlwaysShowCoRange)
+{
+    m_alwaysShowCoRange = newAlwaysShowCoRange;
+}
+
 void CO::serializeObject(QDataStream& pStream) const
 {
     serializeObject(pStream, false);
@@ -2058,6 +2068,7 @@ void CO::serializeObject(QDataStream& pStream, bool forHash) const
     }
     pStream << m_coRangeEnabled;
     pStream << m_globalCoZone;
+    pStream << m_alwaysShowCoRange;
 }
 
 void CO::deserializeObject(QDataStream& pStream)
@@ -2128,6 +2139,10 @@ void CO::deserializer(QDataStream& pStream, bool fast)
     if (version > 6)
     {
         pStream >> m_globalCoZone;
+    }
+    if (version > 7)
+    {
+        pStream >> m_alwaysShowCoRange;
     }
     if (!fast)
     {

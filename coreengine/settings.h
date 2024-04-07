@@ -812,6 +812,9 @@ public:
     Q_INVOKABLE qint32 getHeavyAiTrainingStartDay() const;
     Q_INVOKABLE void setHeavyAiTrainingStartDay(qint32 newHeavyAiTrainingStartDay);
 
+    Q_INVOKABLE bool getContinueCoMusic() const;
+    Q_INVOKABLE void setContinueCoMusic(bool newContinueCoMusic);
+
 private:
     friend class MemoryManagement;
     explicit Settings();
@@ -903,6 +906,7 @@ private:
     QVariant m_audioOutput;
     bool m_muted{false};
     bool m_muteOnFcousedLost{true};
+    bool m_continueCoMusic{false};
     // Network
     quint16 m_GamePort{9001};
     QString m_Username;

@@ -48,6 +48,21 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Continue CO music:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: If you have one CO the CO music continues where it stopped the last time.")</tooltip>
+                <startValue>settings.getContinueCoMusic()</startValue>
+                <onEvent>settings.setContinueCoMusic(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Audio Device:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

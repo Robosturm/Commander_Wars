@@ -2701,7 +2701,14 @@ void GameMap::playMusic()
         Mainapp* pApp = Mainapp::getInstance();
         pApp->getAudioManager()->clearPlayList();
         m_CurrentPlayer->loadCOMusic();
-        pApp->getAudioManager()->playRandom();
+        if (Settings::getInstance()->getContinueCoMusic())
+        {
+            pApp->getAudioManager()->continueMusic("");
+        }
+        else
+        {
+            pApp->getAudioManager()->playRandom();
+        }
     }
     else if (m_loadedMapMusic != m_mapMusic)
     {

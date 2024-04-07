@@ -66,7 +66,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 7;
+        return 8;
     }
     /**
      * @brief writeCoStyleToStream
@@ -787,6 +787,17 @@ public:
      * @return
      */
     Q_INVOKABLE qreal getStarCost();
+    /**
+     * @brief getAlwaysShowCoRange
+     * @return
+     */
+    Q_INVOKABLE bool getAlwaysShowCoRange() const;
+    /**
+     * @brief setAlwaysShowCoRange
+     * @param newAlwaysShowCoRange
+     */
+    Q_INVOKABLE void setAlwaysShowCoRange(bool newAlwaysShowCoRange);
+
 protected:
     void limitPowerbar(qreal previousValue);
 
@@ -811,6 +822,7 @@ private:
     bool m_powerCharging{false};
     bool m_coRangeEnabled{true};
     bool m_globalCoZone{false};
+    bool m_alwaysShowCoRange{false};
     GameMap* m_pMap{nullptr};
 
     QStringList m_perkList;

@@ -48,6 +48,16 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
+bool Settings::getContinueCoMusic() const
+{
+    return m_continueCoMusic;
+}
+
+void Settings::setContinueCoMusic(bool newContinueCoMusic)
+{
+    m_continueCoMusic = newContinueCoMusic;
+}
+
 qint32 Settings::getHeavyAiTrainingStartDay() const
 {
     return m_heavyAiTrainingStartDay;
@@ -1300,6 +1310,7 @@ void Settings::setup()
         MemoryManagement::create<Value<qint32>>("Sound", "SoundVolume", &m_SoundVolume, 100, 0, 100),
         MemoryManagement::create<Value<bool>>("Sound", "Muted", &m_muted, false, false, true),
         MemoryManagement::create<Value<bool>>("Sound", "MuteOnFocusedLost", &m_muteOnFcousedLost, true, false, true),
+        MemoryManagement::create<Value<bool>>("Sound", "ContinueCoMusic", &m_continueCoMusic, false, false, true),
 
 #ifdef AUDIOSUPPORT
         MemoryManagement::create<AudioDeviceValue>("Sound", "AudioDevice", &m_audioOutput, DEFAULT_AUDIODEVICE),

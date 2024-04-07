@@ -91,6 +91,7 @@ signals:
     void sigStopAudio();
     void sigSetMuteInternal(bool value);
     void sigContinueMusic(QString file, qint32 position = -1);
+    void sigClearMusicPositions();
 public slots:
     /**
      * @brief createSoundCache
@@ -110,7 +111,9 @@ public slots:
      */
     void playMusic(qint32 File);
     /**
-     * @brief continueMusic
+     * @brief continueMusic if file is empty and exactly one music is in the playlist that music is continued else a random music is started from 0.
+     * If file isn't empty the game tries to continue the given music.
+     * Note: In all cases the music must be in the playlist else the function does nothing.
      * @param file
      * @param position
      */
@@ -166,6 +169,10 @@ public slots:
      * @param value
      */
     void changeAudioDevice(const QVariant &value);
+    /**
+     * @brief SlotClearMusicPositions
+     */
+    void clearMusicPositions();
 protected slots:
     // stops current Music and launches another one.
     void SlotContinueMusic(QString file, qint32 position = -1);
@@ -183,6 +190,10 @@ protected slots:
     void SlotStopAllSounds();
     void SlotChangeAudioDevice(const QVariant value);
     void slotSetMuteInternal(bool value);
+    /**
+     * @brief clearMusicPositions
+     */
+    void SlotClearMusicPositions();
     /**
      * @brief loadNextAudioFile
      * @param playerIndex

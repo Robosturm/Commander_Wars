@@ -2396,6 +2396,7 @@ void GameMenue::startGame()
         m_pMap->getGameScript()->onGameLoaded(this);
     }
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->getAudioManager()->clearMusicPositions();
     GameAnimationFactory::clearAllAnimations();
     qint32 count = m_pMap->getPlayerCount();
     registerAtInterpreter();

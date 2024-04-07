@@ -50,6 +50,8 @@ AudioManager::AudioManager(bool noAudio)
         connect(this, &AudioManager::sigChangeAudioDevice, this, &AudioManager::SlotChangeAudioDevice, Qt::QueuedConnection);
         connect(this, &AudioManager::sigLoadNextAudioFile, this, &AudioManager::loadNextAudioFile, Qt::QueuedConnection);
         connect(this, &AudioManager::sigSetMuteInternal,   this, &AudioManager::slotSetMuteInternal, Qt::QueuedConnection);
+        connect(this, &AudioManager::sigContinueMusic,   this, &AudioManager::SlotContinueMusic, Qt::QueuedConnection);
+        connect(this, &AudioManager::sigClearMusicPositions,   this, &AudioManager::SlotClearMusicPositions, Qt::QueuedConnection);
 
         // sync startup and stop signals and slots
         connect(this, &AudioManager::sigInitAudio,         this, &AudioManager::initAudio, Qt::BlockingQueuedConnection);
@@ -268,6 +270,16 @@ void AudioManager::SlotChangeAudioDevice(const QVariant value)
 #endif
 }
 
+void AudioManager::clearMusicPositions()
+{
+    emit sigClearMusicPositions();
+}
+
+void AudioManager::SlotClearMusicPositions()
+{
+    m_musicPlayPositionCache.clear();
+}
+
 void AudioManager::playMusic(qint32 File)
 {
     emit sigPlayMusic(File);
@@ -347,6 +359,11 @@ void AudioManager::SlotClearPlayList()
     if (!m_noAudio)
     {
         CONSOLE_PRINT_MODULE("AudioThread::SlotClearPlayList() start clearing", GameConsole::eDEBUG, GameConsole::eAudio);
+        if (!m_player->m_currentMediaFile.isEmpty())
+        {
+            m_musicPlayPositionCache[m_player->m_currentMediaFile] = m_player->m_player.position();
+            m_player->m_currentMediaFile = "";
+        }
         m_PlayListdata.clear();
         m_player->m_currentMedia = -1;
         m_player->m_nextMedia = -1;
@@ -365,7 +382,11 @@ void AudioManager::SlotPlayMusic(qint32 file)
         if (file >= 0 && file < m_PlayListdata.size())
         {
             CONSOLE_PRINT_MODULE("Starting music for player: " + m_PlayListdata[file].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
-            m_musicPlayPositionCache[m_player->m_currentMediaFile] = m_player->m_player.position();
+            if (!m_player->m_currentMediaFile.isEmpty())
+            {
+                m_musicPlayPositionCache[m_player->m_currentMediaFile] = m_player->m_player.position();
+                m_player->m_currentMediaFile = "";
+            }
             m_player->m_player.stop();
             m_player->m_currentMedia = -1;
             m_player->m_nextMedia = -1;
@@ -386,12 +407,22 @@ void AudioManager::SlotContinueMusic(QString file, qint32 position)
 #ifdef AUDIOSUPPORT
     if (!m_noAudio && !Settings::getInstance()->getMuted())
     {
+        if (file.isEmpty() && m_PlayListdata.size() == 1)
+        {
+            file = m_PlayListdata[0].m_file;
+        }
+        if (!file.isEmpty())
+        {
             for (qint32 i = 0; i < m_PlayListdata.size(); ++i)
             {
                 if (m_PlayListdata[i].m_file.endsWith(file))
                 {
                     CONSOLE_PRINT_MODULE("Continue music for player: " + file, GameConsole::eDEBUG, GameConsole::eAudio);
-                    m_musicPlayPositionCache[m_player->m_currentMediaFile] = m_player->m_player.position();
+                    if (!m_player->m_currentMediaFile.isEmpty())
+                    {
+                        m_musicPlayPositionCache[m_player->m_currentMediaFile] = m_player->m_player.position();
+                        m_player->m_currentMediaFile = "";
+                    }
                     m_player->m_player.stop();
                     m_player->m_currentMedia = -1;
                     m_player->m_nextMedia = -1;
@@ -402,9 +433,15 @@ void AudioManager::SlotContinueMusic(QString file, qint32 position)
                     m_player->m_currentMedia = i;
                     loadMediaForFile(m_PlayListdata[i].m_file, position);
                     m_player->m_player.play();
+                    auto newPosition = m_player->m_player.position();
                     break;
                 }
             }
+        }
+        else
+        {
+           SlotPlayRandom();
+        }
     }
 #endif
 }
