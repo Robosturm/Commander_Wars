@@ -1697,11 +1697,14 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
     }
     pStream << static_cast<qint32>(m_damageFormula);
     pStream << m_parallelCos;
-    pStream << m_drawVoting.votingInProgress;
-    pStream << static_cast<qint32>(m_drawVoting.votingResults.size());
-    for (qint32 i = 0; i < m_drawVoting.votingResults.size(); i++)
+    if (!forHash)
     {
-        pStream << static_cast<qint32>(m_drawVoting.votingResults[i]);
+        pStream << m_drawVoting.votingInProgress;
+        pStream << static_cast<qint32>(m_drawVoting.votingResults.size());
+        for (qint32 i = 0; i < m_drawVoting.votingResults.size(); i++)
+        {
+            pStream << static_cast<qint32>(m_drawVoting.votingResults[i]);
+        }
     }
     pStream << m_moveVision;
     pStream << m_specialDestruction;
