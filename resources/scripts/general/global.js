@@ -96,7 +96,7 @@ onZoomLevelChanged = function()
 
 Math.random = function()
 {
-    console.print("Unsupported call to Math.random. Please use globals.randInt(min, max) instead", 4)
+    GameConsole.print("Unsupported call to Math.random. Please use globals.randInt(min, max) instead", 4)
 }
 
 finalizeLoading = function()
