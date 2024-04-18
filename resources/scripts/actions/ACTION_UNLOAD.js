@@ -55,8 +55,7 @@ var Constructor = function()
         // can both units move over the current terrain?
         var moveType = Global[transportUnit.getMovementType()];
         if (ACTION_UNLOAD.isUnloadTerrain(unit, targetTerrain) &&
-            (moveType.getMovementpoints(targetTerrain, transportUnit, targetTerrain, false, map) > 0) &&
-            (Global[unit.getMovementType()].getMovementpoints(targetTerrain, unit, targetTerrain, false, map) > 0))
+            (moveType.getMovementpoints(targetTerrain, transportUnit, targetTerrain, false, map) > 0))
         {
             // check all neighbour terrains
             for (var i = 0; i < targetFields.length; i++)
