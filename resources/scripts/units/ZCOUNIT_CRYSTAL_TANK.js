@@ -54,7 +54,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Special heavy armored tank. The tank is healed by some fraction of the damage dealt.");
+        return qsTr("Special heavy-armored tank. The tank is healed by some fraction of the damage dealt.");
     };
     this.getUnitType = function()
     {
