@@ -105,7 +105,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Air unit. After </r><div c='#00ff00'>hiding </div><r>, it remains hidden unless enemy units adjacent. Can attack any unit.</r>");
+        return qsTr("<r>Air unit. After </r><div c='#00ff00'>hiding </div><r>, it remains hidden unless an enemy unit is adjacent. Can attack any unit.</r>");
     };
     this.getUnitType = function()
     {
