@@ -50,7 +50,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("High mobility. Gains firepower based on the distance moved this turn.");
+        return qsTr("High mobility. Gains firepower based on the amount of tiles traveled this turn.");
     };
     this.getUnitType = function()
     {
