@@ -54,7 +54,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Reinforced Tank his armor piercing cannon destroys fuel in addition to dealing damage.");
+        return qsTr("Reinforced Tank. Its armor-piercing cannon destroys fuel in addition to dealing damage.");
     };
     this.getUnitType = function()
     {
