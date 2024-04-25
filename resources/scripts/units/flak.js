@@ -50,7 +50,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Specialised anti-air and anti-infantry unit. Can also attack ground forces.");
+        return qsTr("Specialized anti-air and anti-infantry unit. Can also attack ground forces.");
     };
     this.getUnitType = function()
     {
