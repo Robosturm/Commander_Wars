@@ -1164,13 +1164,14 @@ float Building::getTerrainAnimationMoveSpeed()
     }
 }
 
-bool Building::canRepair(Unit* pUnit)
+bool Building::canRepair(Unit* pUnit, bool always = false)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "canRepair";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
-                       JsThis::getJsThis(m_pMap)});
+                       JsThis::getJsThis(m_pMap),
+                       always});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isBool())
     {
