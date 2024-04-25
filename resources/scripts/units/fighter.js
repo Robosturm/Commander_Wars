@@ -100,7 +100,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Air Unit. Can attack air units. Most mobile aircraft.");
+        return qsTr("Air unit. Can attack Air units. Most mobile aircraft.");
     };
     this.getUnitType = function()
     {
