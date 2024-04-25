@@ -102,7 +102,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Air Unit. Has unique ability to </r><div c='#00ff00'>explode</div><r> in a huge explosion damaging all units.</r>");
+        return qsTr("<r>Air unit. Has the unique ability to </r><div c='#00ff00'>explode</div><r> in a huge explosion damaging all nearby units.</r>");
     };
     this.getUnitType = function()
     {
