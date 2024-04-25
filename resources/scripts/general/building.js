@@ -221,7 +221,7 @@ var BUILDING =
             (unit.getOwner() === building.getOwner() || always) &&
             ((repairList.indexOf(unit.getUnitType()) >= 0) ||
              (constructionList.indexOf(unit.getUnitID()) >= 0));
-    }
+    },
 
     replenishUnit : function(building, map, health = 2, fuelAmount = 1, ammo1Amount = 1, ammo2Amount = 1, always = false)
     {
