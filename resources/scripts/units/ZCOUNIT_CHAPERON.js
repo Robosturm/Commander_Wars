@@ -57,7 +57,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Specialised anti-air unit. Can negate one indirect attack per turn on own units. Damage negation is based on current units alive.");
+        return qsTr("Specialized anti-air unit. Can negate one indirect attack per turn on own units. Damage negation is based on current units alive.");
     };
     this.getUnitType = function()
     {
