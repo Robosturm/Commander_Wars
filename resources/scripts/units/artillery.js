@@ -47,7 +47,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Indirect attack unit. Attack cannot be launched after unit has moved.");
+        return qsTr("Indirect-attack unit. Attack cannot be launched after unit has moved.");
     };
     this.getUnitType = function()
     {
