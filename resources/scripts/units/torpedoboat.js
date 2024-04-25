@@ -109,7 +109,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Short range Naval Unit intended for harrasing much larger Naval Units. Like all boats, can also traverse rivers.</r>");
+        return qsTr("<r>Short-range Naval Unit intended for harrassing much larger Naval Units. Like all boats, it can also traverse rivers.</r>");
     };
     this.getUnitType = function()
     {
