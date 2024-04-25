@@ -100,7 +100,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Air Unit. Can attack ground and naval units. Exceptional power.");
+        return qsTr("Air unit. Can attack ground and naval units. Exceptional power.");
     };
     this.getUnitType = function()
     {
