@@ -54,7 +54,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Attack power high. Can </r><div c='#00ff00'>capture </div><r> bases. </r><div c='#00ff00'>Vision +3 </div><r> when on mountains and gets cloaked in addition.</r> Moving out of a mountain removes any cloaks from the Commando Unit.");
+        return qsTr("<r>High attack power. Can </r><div c='#00ff00'>capture </div><r> bases. </r><div c='#00ff00'>Vision +3 </div><r> when on mountains and gets cloaked in addition.</r> Moving out of a mountain removes any cloaks from the Commando unit.");
     };
     this.getUnitType = function()
     {
