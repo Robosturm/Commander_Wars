@@ -49,7 +49,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Light Tank unit. Good mobility makes it useful on battlefield.");
+        return qsTr("Light Tank unit. Good mobility makes it useful on the battlefield.");
     };
     this.getUnitType = function()
     {
