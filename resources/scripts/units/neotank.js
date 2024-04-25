@@ -50,7 +50,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Reinforced Tank. Attack and defence capabilities superior to standard tank. Good mobility makes it useful on battlefield.");
+        return qsTr("Reinforced Tank. Attack and defence capabilities superior to standard tank. Good mobility makes it useful on the battlefield.");
     };
     this.getUnitType = function()
     {
