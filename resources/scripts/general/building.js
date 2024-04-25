@@ -228,7 +228,7 @@ var BUILDING =
         // default impl replenishes our units
         // gets called at the start of a turn
         var unit = building.getTerrain().getUnit();
-        if (building.canRepair(building, unit, map, always))
+        if (building.canRepair(unit, always))
         {
             var x = unit.getX();
             var y = unit.getY();
