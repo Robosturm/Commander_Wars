@@ -99,7 +99,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Air unit. Can attack any unit. Can only be produced at sea by Carries.");
+        return qsTr("Air unit. Can attack any unit. Can only be produced at sea by Carriers.");
     };
     this.getUnitType = function()
     {
