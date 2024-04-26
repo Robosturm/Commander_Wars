@@ -27,7 +27,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("You loose the game.");
+        return qsTr("You lose the game.");
     };
 }
 
