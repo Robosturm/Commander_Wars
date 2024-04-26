@@ -129,7 +129,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Commands the laser to shot four laser rays. The laser rays deal damage to all units that get hit by one of the rays.");
+        return qsTr("Commands the laser to shoot four laser rays. The laser rays deal damage to all units that get hit by one of the rays.");
     };
 }
 
