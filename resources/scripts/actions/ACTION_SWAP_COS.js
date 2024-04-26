@@ -55,7 +55,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Swaps the position of co 1 and 2 and ends your turn.");
+        return qsTr("Swaps the position of CO 1 and 2 and ends your turn.");
     };
 }
 
