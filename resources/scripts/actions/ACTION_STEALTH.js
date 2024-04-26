@@ -63,7 +63,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("<r>Stealths a unit and makes it invisible to all enemies. A stealthed unit is only visible when a unit is nearby it. In addition only direct units can attack an </r><div c='#00ff00'>air unit</div><r>. A </r><div c='#00ff00'>naval unit</div><r> can only be attacked by a direct </r><div c='#00ff00'>naval unit</div><r>. In most cases stealthed units have a higher fuel consumption per turn, while beeing stealthed.</r>");
+        return qsTr("<r>Stealths a unit and makes it invisible to all enemies. A stealthed unit is only visible when an enemy unit is adjacent. In addition, only direct-attack units can target a stealthed </r><div c='#00ff00'>air unit</div><r>. A </r><div c='#00ff00'>naval unit</div><r> can only be attacked by a direct-attack </r><div c='#00ff00'>naval unit</div><r>. In most cases stealthed units have a higher fuel consumption per turn, while beeing stealthed.</r>");
     };
 }
 
