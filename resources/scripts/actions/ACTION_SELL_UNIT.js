@@ -98,7 +98,7 @@ var Constructor = function()
     };
     this.getDescription = function()
 	{
-        return qsTr("Sells a unit for a fraction of it's current value.");
+        return qsTr("Sells a unit for a fraction of its current value.");
     };
     this.getBannedByDefault = function()
     {
