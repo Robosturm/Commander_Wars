@@ -101,11 +101,13 @@ var Constructor = function()
         var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
         var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY);
         var repairUnit = terrain.getUnit();
-        var animation = GameAnimationFactory.createAnimation(map, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY);
-        var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, -2, 1);
-        animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
-        animation.addSprite("repair", map.getImageSize() / 2 + 4, 4, 400, 2);
-
+        if (!repairUnit.isStealthed(map.getCurrentViewPlayer()))
+        {
+            var animation = GameAnimationFactory.createAnimation(map, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY);
+            var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, -2, 1);
+            animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
+            animation.addSprite("repair", map.getImageSize() / 2 + 4, 4, 400, 2);
+        }
         repairUnit.refill(refillMaterial);
         repairUnit.setHp(repairUnit.getHp() + 1);
         ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationUnit.setHasMoved(true);

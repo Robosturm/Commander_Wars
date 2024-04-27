@@ -103,11 +103,15 @@ var Constructor = function()
         var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
         var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetX, ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetY);
         var repairUnit = terrain.getUnit();
-        var animation = GameAnimationFactory.createAnimation(map, ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetX, ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetY);
-        var width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, -2, 1);
-        animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
-        animation.addSprite("RATION", map.getImageSize() / 2 + 4, 4, 400, 2);
-        animation.addSound("repair_1.wav");
+        var viewPlayer = map.getCurrentViewPlayer();
+        if (!repairUnit.isStealthed(map.getCurrentViewPlayer()))
+        {
+            var animation = GameAnimationFactory.createAnimation(map, ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetX, ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetY);
+            var width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, -2, 1);
+            animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
+            animation.addSprite("RATION", map.getImageSize() / 2 + 4, 4, 400, 2);
+            animation.addSound("repair_1.wav");
+        }
         repairUnit.refill(refillMaterial);
         ACTION_SUPPORTSINGLE_SUPPLY.postAnimationUnit.setHasMoved(true);
         ACTION_SUPPORTSINGLE_SUPPLY.postAnimationUnit = null;

@@ -41,17 +41,20 @@ var Constructor = function()
     this.performPostAnimation = function(action, map)
     {
         // disable unit commandments for this turn
-        var animation = GameAnimationFactory.createAnimation(map, ACTION_STEALTH.postAnimationUnit.getX(), ACTION_STEALTH.postAnimationUnit.getY());
-        if (ACTION_STEALTH.postAnimationUnit.getUnitID() === "SUBMARINE" ||
-            ACTION_STEALTH.postAnimationUnit.getUnitID() === "ZCOUNIT_MISSILE_SUB")
+        if (!ACTION_STEALTH.postAnimationUnit.isStealthed(map.getCurrentViewPlayer()))
         {
-            animation.addSprite("dive", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
-            animation.setSound("dive.wav", 1);
-        }
-        else
-        {
-            animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
-            animation.setSound("stealth.wav", 1);
+            var animation = GameAnimationFactory.createAnimation(map, ACTION_STEALTH.postAnimationUnit.getX(), ACTION_STEALTH.postAnimationUnit.getY());
+            if (ACTION_STEALTH.postAnimationUnit.getUnitID() === "SUBMARINE" ||
+                    ACTION_STEALTH.postAnimationUnit.getUnitID() === "ZCOUNIT_MISSILE_SUB")
+            {
+                animation.addSprite("dive", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
+                animation.setSound("dive.wav", 1);
+            }
+            else
+            {
+                animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
+                animation.setSound("stealth.wav", 1);
+            }
         }
         ACTION_STEALTH.postAnimationUnit.setHasMoved(true);
         ACTION_STEALTH.postAnimationUnit.setHidden(true);

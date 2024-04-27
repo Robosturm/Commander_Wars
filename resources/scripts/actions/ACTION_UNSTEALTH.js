@@ -41,18 +41,23 @@ var Constructor = function()
     this.performPostAnimation = function(action, map)
     {
         // disable unit commandments for this turn
-        var animation = GameAnimationFactory.createAnimation(map, ACTION_UNSTEALTH.postAnimationUnit.getX(), ACTION_UNSTEALTH.postAnimationUnit.getY());
-        if (ACTION_UNSTEALTH.postAnimationUnit.getUnitID() === "SUBMARINE" ||
-            ACTION_UNSTEALTH.postAnimationUnit.getUnitID() === "ZCOUNIT_MISSILE_SUB")
+        var viewPlayer = map.getCurrentViewPlayer();
+        if (viewPlayer === ACTION_UNSTEALTH.postAnimationUnit.getOwner() || viewPlayer.getFieldVisible(ACTION_UNSTEALTH.postAnimationUnit.getX(), ACTION_UNSTEALTH.postAnimationUnit.getY()))
         {
-            animation.addSprite("undive", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
-            animation.setSound("undive.wav", 1,);
+            var animation = GameAnimationFactory.createAnimation(map, ACTION_UNSTEALTH.postAnimationUnit.getX(), ACTION_UNSTEALTH.postAnimationUnit.getY());
+            if (ACTION_UNSTEALTH.postAnimationUnit.getUnitID() === "SUBMARINE" ||
+                    ACTION_UNSTEALTH.postAnimationUnit.getUnitID() === "ZCOUNIT_MISSILE_SUB")
+            {
+                animation.addSprite("undive", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
+                animation.setSound("undive.wav", 1,);
+            }
+            else
+            {
+                animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
+                animation.setSound("unstealth.wav", 1,);
+            }
         }
-        else
-        {
-            animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
-            animation.setSound("unstealth.wav", 1,);
-        }
+
         ACTION_UNSTEALTH.postAnimationUnit.setHasMoved(true);
         ACTION_UNSTEALTH.postAnimationUnit.setHidden(false);
         ACTION_UNSTEALTH.postAnimationUnit = null;

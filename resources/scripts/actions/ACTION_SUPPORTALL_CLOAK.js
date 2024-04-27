@@ -67,6 +67,7 @@ var Constructor = function()
         var y = ACTION_SUPPORTALL_CLOAK.postAnimationUnit.getY();
         var owner = ACTION_SUPPORTALL_CLOAK.postAnimationUnit.getOwner();
         var playerId  = owner.getPlayerID();
+        var viewPlayer = map.getCurrentViewPlayer();
         for (var i = 0; i < fields.size(); i++)
         {
             var point = fields.at(i);
@@ -78,9 +79,12 @@ var Constructor = function()
                     owner === unit.getOwner())
                 {
                     unit.setCloaked(1);
-                    var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                    animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
-                    animation.setSound("stealth.wav", 1);
+                    if (viewPlayer === unit.getOwner() || viewPlayer.getFieldVisible(unit.getX(), unit.getY()))
+                    {
+                        var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
+                        animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
+                        animation.setSound("stealth.wav", 1);
+                    }
                 }
             }
         }
