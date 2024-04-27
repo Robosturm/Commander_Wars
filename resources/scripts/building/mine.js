@@ -28,7 +28,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Ore mine. Once captured produces a lot of funds, but can't repair units.");
+        return qsTr("Ore mine. Once captured produces a lot of funds, but can't repair or resupply units.");
     };
 
     this.getVisionHide = function(building)
