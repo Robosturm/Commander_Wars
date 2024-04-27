@@ -43,9 +43,9 @@ public:
     void setSufix(const QString & newSufix);
     QString getSufix() const;
 
-    bool operator>=(const GameVersion& other);
-    bool operator==(const GameVersion& other);
-    bool operator!=(const GameVersion& other);
+    bool operator>=(const GameVersion& other) const;
+    bool operator==(const GameVersion& other) const;
+    bool operator!=(const GameVersion& other) const;
 private:
 
     qint32 m_major = VERSION_MAJOR;
