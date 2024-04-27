@@ -68,7 +68,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Fortified HQ harder to capture. </r><div c='#00ff00'>Battle ends </div><r>when an army's last HQ is captured. </r><div c='#00ff00'>Ground </div><r>units can </r><div c='#00ff00'>resupply.</div>");
+        return qsTr("<r>Fortified HQ that is harder to capture. </r><div c='#00ff00'>Battle ends </div><r>when an army's last HQ is captured. </r><div c='#00ff00'>Ground </div><r>units can </r><div c='#00ff00'>resupply and repair.</div>");
     };
 
     this.getVisionHide = function(building)

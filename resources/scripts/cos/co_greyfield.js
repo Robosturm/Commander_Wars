@@ -358,7 +358,7 @@ var Constructor = function()
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Naval War");
+        return qsTr("High Command");
     };
     this.getPowerSentences = function(co)
     {

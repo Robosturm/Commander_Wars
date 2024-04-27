@@ -49,7 +49,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Indirect attack unit. When under direct enemy attack it can </r><div c='#00ff00'>counter-attack</div><r>.</r>");
+        return qsTr("<r>Indirect-attack unit. When under direct enemy attack it can </r><div c='#00ff00'>counter-attack</div><r>.</r>" Can target helicopters, but not Naval units.);
     };
     this.getUnitType = function()
     {

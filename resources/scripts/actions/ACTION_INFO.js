@@ -15,10 +15,10 @@ var Constructor = function()
     this.getItemInfos = function()
     {
         return [[qsTr("Victory Info"), "ACTION_INFO_VICTORY", "help", qsTr("Shows the current victory info.")],
-                [qsTr("CO Info"), "ACTION_INFO_CO", "co_info", qsTr("Shows the infos about the co's of the current game.")],
+                [qsTr("CO Info"), "ACTION_INFO_CO", "co_info", qsTr("Shows information about the CO's of the current game.")],
                 [qsTr("Unit Info"), "ACTION_INFO_UNIT", "unit_info", qsTr("Shows information about your current units.")],
-                [qsTr("Unit Statistics"), "ACTION_INFO_STATISTICS", "statistics", qsTr("Shows which units have been build and destroyed by all players.")],
-                [qsTr("Game Info"), "ACTION_INFO_GAME", "intel", qsTr("Shows the information about the current game.")],
+                [qsTr("Unit Statistics"), "ACTION_INFO_STATISTICS", "statistics", qsTr("Shows which units have been built and destroyed by all players.")],
+                [qsTr("Game Info"), "ACTION_INFO_GAME", "intel", qsTr("Shows information about the current game.")],
                 [qsTr("Attack Log"), "ACTION_INFO_ATTACK", "icon_fire", qsTr("Shows which unit where attacked and has been attacked.")],
                 [qsTr("Rules"), "ACTION_INFO_RULES", "rules", qsTr("Shows the current active rules for this game.")],
                 [qsTr("Wiki"), "ACTION_INFO_WIKI", "wiki", qsTr("Allows you to search in the wiki of the game.")],

@@ -85,7 +85,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Kirov reporting. Special Air Unit with extrem high defense but low mobility and no fuel comsumtion at the start of a turn. Can attack ground and naval units. Exceptional power.");
+        return qsTr("Kirov reporting. Specialized Air unit with extremely high defense but low mobility that does not consume fuel at the start of a turn. Can attack ground and naval units. Exceptional power.");
     };
     this.getUnitType = function()
     {

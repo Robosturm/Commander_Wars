@@ -332,7 +332,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Unloads loaded units. Units that have been loaded this turn can't move. Units that were loaded in previous turns can immediately move after beeing unloaded.");
+        return qsTr("Unloads loaded units. Units that have been loaded this turn can't move after being unloaded. Units that were loaded on previous turns can immediately move after being unloaded.");
     };
 }
 

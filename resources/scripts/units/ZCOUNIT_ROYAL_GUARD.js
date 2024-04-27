@@ -55,7 +55,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Reinforced Tank that buffs allied units at the start of each turn. Attack and defence capabilities superior to standard tank.");
+        return qsTr("Reinforced Tank that buffs adjacent allied units at the start of each turn. Attack and defence capabilities superior to standard tank.");
     };
     this.getUnitType = function()
     {

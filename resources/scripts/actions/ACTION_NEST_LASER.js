@@ -103,7 +103,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Commands the laser to shot a ray. The laser rays deal damage to all units that get hit.");
+        return qsTr("Commands the Nest to shoot a laser ray. The laser ray deals damage to all units that get hit.");
     };
 }
 

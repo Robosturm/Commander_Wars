@@ -120,7 +120,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Refills the target unit ammo and fuel.");
+        return qsTr("Refills the target unit's ammo and fuel.");
     };
 }
 

@@ -53,7 +53,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Can move over all ground terrains and enemy units. Immediatly destroys units it moves over.");
+        return qsTr("Can move over all ground terrains and enemy units. Immediately destroys units it moves over.");
     };
     this.getUnitType = function()
     {

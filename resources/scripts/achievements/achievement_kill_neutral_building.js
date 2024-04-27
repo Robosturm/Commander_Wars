@@ -20,9 +20,9 @@ var Constructor = function()
             userdata.addAchievement("KILL_NEUTRAL_BUILDING_" + data[0],
                                     data[2],
                                     data[3],
-                                    qsTr("Kill the given amount of ") + Global[data[1]].getName(null) + qsTr(". Only battle kills count."),
+                                    qsTr("Destroy the given amount of ") + Global[data[1]].getName(null) + qsTr(". Only battle destructions count."),
                                     data[1],
-                                    false, qsTr("Kill building"));
+                                    false, qsTr("Destroy building"));
         }
     };
     this.killed = function(id)

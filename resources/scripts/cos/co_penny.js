@@ -280,7 +280,7 @@ var Constructor = function()
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Weatherchaos");
+        return qsTr("Enigma");
     };
     this.getPowerSentences = function(co)
     {

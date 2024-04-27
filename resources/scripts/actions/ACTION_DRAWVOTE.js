@@ -27,7 +27,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Starts a voting for a draw for the match if all human players agree for a draw the match will end in a draw.");
+        return qsTr("Starts a voting for a draw for the match. If all human players agree to a draw the match will end in a draw.");
     };
 }
 
