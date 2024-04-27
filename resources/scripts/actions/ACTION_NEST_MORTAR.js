@@ -95,7 +95,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Commands the mortar to fire at a 3x3 square and deals damage to all units.");
+        return qsTr("Commands the Nest to fire a mortar at a 3x3 square that deals damage to all units it hits.");
     };
 }
 

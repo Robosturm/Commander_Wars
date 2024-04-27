@@ -131,7 +131,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Places a stealthed Watermine at a given Position. The Mine automatically explodes at the start of a turn if an enemy is in explosion range.");
+        return qsTr("Places a stealthed Watermine at a given position. The Watermine automatically explodes if an enemy Naval unit moves into it, dealing damage and interrupting that unit's action.");
     };
 }
 

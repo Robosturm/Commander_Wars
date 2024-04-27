@@ -78,7 +78,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Commands the talon gun to attack all enemy units around the talon gun dealing 5 Hp of damage to them.");
+        return qsTr("Commands the talon gun to attack all enemy units within range, dealing 5 Hp of damage to them.");
     };
 }
 

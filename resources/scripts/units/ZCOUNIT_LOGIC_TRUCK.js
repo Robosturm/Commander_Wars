@@ -49,7 +49,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("The logistic truck is a defenseless unit that can </r><div c='#00ff00'> supplies </div><r> units and gains funds based on the amount of resupply.");
+        return qsTr("The logistic truck is a defenceless unit that </r><div c='#00ff00'> supplies </div><r> adjacent units, and earns funds based on the amount of fuel and ammo resupplied.");
     };
     this.getUnitType = function()
     {

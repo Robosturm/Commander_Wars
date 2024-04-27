@@ -107,7 +107,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. Hp exceeding the maximum will be added in form of funds to your war funds.");
+        return qsTr("Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp and the highest rank of both units. Hp exceeding the maximum will be added in the form of funds to your war funds.");
     };
 }
 

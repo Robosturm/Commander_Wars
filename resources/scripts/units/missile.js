@@ -45,7 +45,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Indirect attack unit. Only capable of striking air targets.");
+        return qsTr("Indirect-attack unit. Only capable of striking air targets.");
     };
     this.getUnitType = function()
     {

@@ -54,7 +54,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("An indirect support unit. Uses the attack of the best available indirect unit which is in range of the ranger to attack an enemy unit in range of the ranger. This either extends the range of the indirect unit or boost it's damage output.");
+        return qsTr("An indirect support unit. Uses the attack of the best available indirect unit within range of the ranger to attack an enemy unit also in range of the ranger. This either extends the range of the indirect unit or boosts its damage output.");
     };
     this.getUnitType = function()
     {

@@ -93,7 +93,7 @@ var Constructor = function()
                        "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     this.getDescription = function()
     {
-        return qsTr("<r>Naval Unit. Has unique ability to </r><div c='#00ff00'>repair other units.</div><r> Can </r><div c='#00ff00'>carry X 2</div><r> infantry units.</r>");
+        return qsTr("<r>Naval unit. Has the unique ability to </r><div c='#00ff00'>repair and resupply other units.</div><r> Can </r><div c='#00ff00'>carry X 2</div><r> infantry units.</r>");
     };
     this.getUnitType = function()
     {

@@ -74,7 +74,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Submarine that can fire at range at enemy forces without taking a lot of risks.");
+        return qsTr("Indirect-attack Submarine that can fire at enemy forces without taking a lot of risks.");
     };
 
     this.getTerrainAnimationBase = function(unit, terrain, defender, map)

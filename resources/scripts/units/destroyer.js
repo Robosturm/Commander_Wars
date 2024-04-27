@@ -93,7 +93,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Mine laying Naval Unit that has powerful though limited offensive capability and can place </r><div c='#00ff00'>Watermines</div><r> on sea tiles.</r>");
+        return qsTr("<r>Mine-laying Naval unit that has powerful though limited offensive capability and can place </r><div c='#00ff00'>Watermines</div><r> on sea tiles and Naval properties.</r>");
     };
     this.getUnitType = function()
     {

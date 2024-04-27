@@ -96,7 +96,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Mid sized Naval Unit for scouting and hunting down smaller Naval Units.</r>");
+        return qsTr("<r>Mid-sized Naval unit for scouting and hunting down smaller Naval units.</r>");
     };
     this.getUnitType = function()
     {

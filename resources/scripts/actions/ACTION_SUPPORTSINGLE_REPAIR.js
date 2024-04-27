@@ -122,7 +122,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Repairs and refills the target unit. The player has to pay for the repair.");
+        return qsTr("Repairs and resupplies the target unit. The player has to pay for the repair.");
     };
 }
 

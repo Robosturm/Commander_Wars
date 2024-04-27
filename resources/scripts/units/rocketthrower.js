@@ -50,7 +50,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Indirect attack unit. Powerful with a wide attack range.");
+        return qsTr("Indirect-attack unit. Powerful with a wide attack range.");
     };
     this.getUnitType = function()
     {

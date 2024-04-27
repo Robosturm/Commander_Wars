@@ -271,7 +271,7 @@ var Constructor = function()
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("First Aid");
+        return qsTr("Lifeline");
     };
     this.getPowerSentences = function(co)
     {

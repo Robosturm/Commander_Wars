@@ -131,7 +131,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Orders a minicannon or black cannon to attack a single unit to deal some damage to it.");
+        return qsTr("Orders a minicannon or black cannon to attack and deal damage to a single unit.");
     };
 }
 

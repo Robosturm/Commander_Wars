@@ -56,7 +56,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Light tank unit. Good mobility makes it useful on battlefield. Can attack a second time after performing an attack each turn.");
+        return qsTr("Light tank unit. Good mobility makes it useful on the battlefield. Can attack a second time after performing an attack each turn.");
     };
     this.getUnitType = function()
     {

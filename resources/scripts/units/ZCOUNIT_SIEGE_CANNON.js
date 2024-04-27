@@ -51,7 +51,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Long range indirect attack unit with low movement. Attack cannot be launched after unit has moved. The siege cannon gets a fire power boost for not moving more than one turn.");
+        return qsTr("Long-range indirect-attack unit with low movement. Attack cannot be launched after unit has moved. The siege cannon gets a firepower boost after not moving for more than one turn.");
     };
     this.getUnitType = function()
     {

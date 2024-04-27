@@ -53,7 +53,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Lash's signature spider tank. Her NeoSpider Tank uses revolutionary Black Hole design to allow the tank to mantain as much weight as possbile while still having the agility to navigate mountains.");
+        return qsTr("Lash's signature spider tank. Her NeoSpider Tank uses revolutionary Black Hole design to allow the tank to maintain as much weight as possible while still having the agility to navigate mountains.");
     };
     this.getUnitType = function()
     {

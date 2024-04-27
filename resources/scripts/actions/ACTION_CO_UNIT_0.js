@@ -51,7 +51,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Deploys your first co onto the given unit. All units inside the CO range of this unit will get the buff of your first CO.");
+        return qsTr("Deploys your first CO onto the given unit. All units inside the CO range of this unit will get the buff of your first CO.");
     };
 }
 

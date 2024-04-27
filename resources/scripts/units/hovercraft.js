@@ -49,7 +49,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Hovercraft unit. Good mobility makes it useful on battlefield. Can move over most terrains.");
+        return qsTr("Hovercraft unit. Good mobility makes it useful on the battlefield. Can move over most terrains.");
     };
     this.getUnitType = function()
     {

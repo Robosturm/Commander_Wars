@@ -81,7 +81,7 @@ var Constructor = function()
     this.actionList = [];
     this.getDescription = function()
     {
-        return qsTr("Naval Mine. Explodes when trapping a none air unit and dealing 5 damage to the trapped unit.");
+        return qsTr("Naval Mine. Explodes when trapping a non-air unit and dealing 5 damage to the trapped unit.");
     };
     this.getUnitType = function()
     {

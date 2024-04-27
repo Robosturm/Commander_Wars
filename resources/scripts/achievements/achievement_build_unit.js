@@ -22,13 +22,13 @@ var Constructor = function()
                         ["T_HELI",                  300,    qsTr("T-riffic!")],
                         ["BATTLESHIP",              150,    qsTr("Ahoy!")],
                         ["AIRCRAFTCARRIER",         150,    qsTr("Carry on!")],
-                        ["SUBMARINE",               150,    qsTr("Time for a snak!")],
+                        ["SUBMARINE",               150,    qsTr("Time for a snack!")],
                         ["LANDER",                  100,    qsTr("Punish everyone!")],
                         ["BLACK_BOAT",              150,    qsTr("Impressive!")],
                         ["ANTITANKCANNON",          250,    qsTr("Where's your tank now?")],
                         ["ARTILLERYCRAFT",          300,    qsTr("Floating cannon!")],
-                        ["CANNONBOAT",              250,    qsTr("Prepare for mines!")],
-                        ["DESTROYER",               300,    qsTr("I have a ship!")],
+                        ["CANNONBOAT",              250,    qsTr("I have a ship!")],
+                        ["DESTROYER",               300,    qsTr("Prepare for mines!")],
                         ["HOELLIUM",                150,    qsTr("Blobs of Blobs!")],
                         ["DUSTER",                  300,    qsTr("This is a plan!")],
                         ["HEAVY_HOVERCRAFT",        250,    qsTr("This can cross the sea?")],
@@ -47,7 +47,7 @@ var Constructor = function()
                         ["ZCOUNIT_TANK_HUNTER",     100,    qsTr("The hunt begins!")],
                         ["ZCOUNIT_COMMANDO",        100,    qsTr("Onto the mountains!")],
                         ["ZCOUNIT_PARTISAN",        100,    qsTr("For the rebellion!")],
-                        ["ZCOUNIT_LOGIC_TRUCK",     100,    qsTr("Money is all i need!")],
+                        ["ZCOUNIT_LOGIC_TRUCK",     100,    qsTr("Money is all I need!")],
                         ["ZCOUNIT_CHAPERON",        100,    qsTr("No missile zone!")],];
 
 
