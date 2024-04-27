@@ -306,7 +306,7 @@ qint32 AwbwReplayPlayer::getWinnerTeam()
                 {
                     for (const auto & player : gameStates[gameStates.size() - 1].players)
                     {
-                        if (player.playerId == winners[0])
+                        if (player.playerId == winners[0].toInt())
                         {
                             return player.team.toInt();
                         }

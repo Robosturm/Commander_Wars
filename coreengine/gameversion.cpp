@@ -77,7 +77,7 @@ void GameVersion::setSufix(const QString & newSufix)
     m_sufix = newSufix;
 }
 
-bool GameVersion::operator==(const GameVersion& other)
+bool GameVersion::operator==(const GameVersion& other) const
 {
     return m_major == other.m_major &&
            m_minor == other.m_minor &&
@@ -85,12 +85,12 @@ bool GameVersion::operator==(const GameVersion& other)
            m_sufix == other.m_sufix;
 }
 
-bool GameVersion::operator!=(const GameVersion& other)
+bool GameVersion::operator!=(const GameVersion& other) const
 {
     return !(*this == other);
 }
 
-bool GameVersion::operator>=(const GameVersion& other)
+bool GameVersion::operator>=(const GameVersion& other) const
 {
     if (m_major > other.m_major)
     {
