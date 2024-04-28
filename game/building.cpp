@@ -1164,13 +1164,20 @@ float Building::getTerrainAnimationMoveSpeed()
     }
 }
 
-bool Building::canRepair(Unit* pUnit)
+bool Building::canRepair(Unit* pUnit, bool always)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getConstructionList";
-    QJSValueList args({JsThis::getJsThis(m_pMap)});
-    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
-    return erg.toVariant().toStringList().contains(pUnit->getUnitID());
+    QString function1 = "canRepair";
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       JsThis::getJsThis(m_pMap),
+                       always});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    return false;
 }
 
 bool Building::isCaptureOrMissileBuilding(bool hasSiloTarget)
