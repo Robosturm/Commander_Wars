@@ -1164,11 +1164,6 @@ float Building::getTerrainAnimationMoveSpeed()
     }
 }
 
-bool Building::canRepair(Unit* pUnit)
-{
-    return this.canRepair(pUnit, false);
-}
-
 bool Building::canRepair(Unit* pUnit, bool always)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
