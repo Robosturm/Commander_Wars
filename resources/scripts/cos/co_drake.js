@@ -178,7 +178,7 @@ var Constructor = function()
     this.d2dCoZoneDefBonus = 10;
     this.d2dCoZoneNavalOffBonus = 40;
     this.d2dCoZoneAirOffBonus = -20;
-    this.d2dCoZoneOtherOffBonus = 0;
+    this.d2dCoZoneOtherOffBonus = 10;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
