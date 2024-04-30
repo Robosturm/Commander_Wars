@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Desert volcan");
+        return qsTr("Desert volcano");
     };
     this.getVision = function(building)
     {
