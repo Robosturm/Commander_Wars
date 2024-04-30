@@ -213,17 +213,22 @@ var BUILDING =
         return[];
     },
 
+    canRepair : function(building, unit, map, always = false)
+    {
+        var constructionList = building.getConstructionList();
+        var repairList = building.getRepairTypes();
+        return (unit !== null) && 
+            (unit.getOwner() === building.getOwner() || always) &&
+            ((repairList.indexOf(unit.getUnitType()) >= 0) ||
+             (constructionList.indexOf(unit.getUnitID()) >= 0));
+    },
+
     replenishUnit : function(building, map, health = 2, fuelAmount = 1, ammo1Amount = 1, ammo2Amount = 1, always = false)
     {
         // default impl replenishes our units
         // gets called at the start of a turn
-        var constructionList = building.getConstructionList();
-        var repairList = building.getRepairTypes();
         var unit = building.getTerrain().getUnit();
-        if ((unit !== null) &&
-            (unit.getOwner() === building.getOwner() || always) &&
-            ((repairList.indexOf(unit.getUnitType()) >= 0) ||
-             (constructionList.indexOf(unit.getUnitID()) >= 0)))
+        if (building.canRepair(unit, always))
         {
             var x = unit.getX();
             var y = unit.getY();

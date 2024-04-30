@@ -478,9 +478,10 @@ public:
     /**
      * @brief canRepair
      * @param pUnit
+     * @param always
      * @return
      */
-    Q_INVOKABLE bool canRepair(Unit* pUnit);
+    Q_INVOKABLE bool canRepair(Unit* pUnit, bool always = false);
     /**
      * @brief isCaptureOrMissileBuilding
      * @return
