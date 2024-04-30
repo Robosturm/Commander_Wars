@@ -45,7 +45,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Enflakenator -10%");
+        return qsTr("Enflakenator");
     };
     this.getGroup = function()
     {
