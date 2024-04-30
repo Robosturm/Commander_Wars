@@ -11,7 +11,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return qsTr("Increases the missfortune of units by 10%.");
+        return qsTr("Increases the misfortune of units by 10%.");
     };
     this.getIcon = function(map)
     {
