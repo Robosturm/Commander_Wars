@@ -17,7 +17,7 @@ var Constructor = function()
         }
         else if (type === 1)
         {
-            return qsTr("If checked the Team with the highest average score wins.");
+            return qsTr("If checked the team with the highest average score wins.");
         }
         else
         {
