@@ -17,7 +17,7 @@ var Constructor = function()
         }
         else if (type === 1)
         {
-            return qsTr("If checked the Team with the most captured buildings wins.");
+            return qsTr("If checked the team with the most captured buildings wins.");
         }
         else
         {
