@@ -196,6 +196,7 @@ bool CaptureBuildingSelector::findSingleCaptureBuilding(TargetBuildings & captur
 qint32 CaptureBuildingSelector::getPrio(CaptureInfo & info)
 {
     constexpr qint32 nearbyPrioBonus = 2048;
+    constexpr qint32 enemyOwnedBonus = 1;
     Building *pBuilding = m_owner.getMap()->getTerrain(info.m_x, info.m_y)->getBuilding();
     qint32 testPrio = std::numeric_limits<qint32>::min();
     if (pBuilding->isHq())
@@ -206,9 +207,16 @@ qint32 CaptureBuildingSelector::getPrio(CaptureInfo & info)
     {
         testPrio = pBuilding->getConstructionList().size();
     }
-    if (!info.m_farAway && testPrio > 0)
+    if (testPrio < std::numeric_limits<qint32>::max() / 2)
     {
-        testPrio += nearbyPrioBonus;
+        if (pBuilding->isEnemyBuilding(m_owner.getPlayer()))
+        {
+            testPrio += enemyOwnedBonus;
+        }
+        if (!info.m_farAway && testPrio > 0)
+        {
+            testPrio += nearbyPrioBonus;
+        }
     }
     return testPrio;
 }
