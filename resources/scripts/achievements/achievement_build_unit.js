@@ -58,13 +58,17 @@ var Constructor = function()
         {
             var data = ACHIEVEMENT_BUILD_UNIT.unitTable[i];
             var text = qsTr("Build a given amount of %0.");
-            text = replaceTextArgs(text, [Global[data[0]].getName()]);
-            userdata.addAchievement("BUILD_UNIT_" + data[0],
-                                    data[1],
-                                    data[2],
-                                    text,
-                                    data[0],
-                                    false, qsTr("Builded unit"));
+            var data0 = data[0];
+            if (Global[data0] !== null && typeof Global[data0] !== "undefined")
+            {
+                text = replaceTextArgs(text, [Global[data0].getName()]);
+                userdata.addAchievement("BUILD_UNIT_" + data0,
+                                        data[1],
+                                        data[2],
+                                        text,
+                                        data0,
+                                        false, qsTr("Builded unit"));
+            }
         }
     };
     this.unitProduced = function(unitID)

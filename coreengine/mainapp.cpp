@@ -232,7 +232,12 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     {
         case StartupPhase::General:
         {
-        CONSOLE_PRINT("Launching game with version: " + GameVersion().toString(), GameConsole::eDEBUG);
+            CONSOLE_PRINT("Launching game with version: " + GameVersion().toString(), GameConsole::eDEBUG);
+            QStringList mods = Settings::getInstance()->getMods();
+            for (const auto & mod : mods)
+            {
+                CONSOLE_PRINT("Launching game with mods: " + mod, GameConsole::eDEBUG);
+            }
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
