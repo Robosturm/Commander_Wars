@@ -26,7 +26,7 @@ var Constructor = function()
     };
     this.getCOTooltip = function()
     {
-        return qsTr("CO that should activate it's power.");
+        return qsTr("CO that should activate its power.");
     };
     this.getPowerLabel = function()
     {
@@ -42,7 +42,7 @@ var Constructor = function()
     };
     this.getApplyTooltip = function()
     {
-        return qsTr("Activates the co power.");
+        return qsTr("Activates the CO power.");
     };
     this.getCancelLabel = function()
     {
