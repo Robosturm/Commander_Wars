@@ -55,12 +55,16 @@ var Constructor = function()
         for (var i = 0; i < ACHIEVEMENT_KILL_UNIT.unitTable.length; ++i)
         {
             var data = ACHIEVEMENT_KILL_UNIT.unitTable[i];
-            userdata.addAchievement("KILLED_UNIT_" + data[0],
-                                    data[1],
-                                    data[2],
-                                    qsTr("Kill the given amount of ") + Global[data[0]].getName() + qsTr(". Only battle kills count."),
-                                    data[0],
-                                    false, qsTr("Kill unit"));
+            var data0 = data[0];
+            if (Global[data0] !== null && typeof Global[data0] !== "undefined")
+            {
+                userdata.addAchievement("KILLED_UNIT_" + data0,
+                                        data[1],
+                                        data[2],
+                                        qsTr("Kill the given amount of ") + Global[data0].getName() + qsTr(". Only battle kills count."),
+                                        data0,
+                                        false, qsTr("Kill unit"));
+            }
         }
     };
     this.unitKilled = function(unitID)

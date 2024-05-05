@@ -62,13 +62,6 @@ bool Mainapp::m_slave{false};
 bool Mainapp::m_trainingSession{false};
 const char* const Mainapp::GAME_CONTEXT = "GAME";
 
-#include "awbwReplayReader/awbwreplayscandownloader.h"
-void test()
-{
-    static AwbwReplayScanDownloader scanner;
-    scanner.scan(100, 100);
-}
-
 Mainapp::Mainapp()
     : m_aiProcessPipe(MemoryManagement::create<AiProcessPipe>())
 {
@@ -239,8 +232,12 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     {
         case StartupPhase::General:
         {
-            test();
             CONSOLE_PRINT("Launching game with version: " + GameVersion().toString(), GameConsole::eDEBUG);
+            QStringList mods = Settings::getInstance()->getMods();
+            for (const auto & mod : mods)
+            {
+                CONSOLE_PRINT("Launching game with mods: " + mod, GameConsole::eDEBUG);
+            }
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());

@@ -451,6 +451,10 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
                 {
                     m_pMap->getPlayer(i)->setPlayerNameId(Settings::getInstance()->getUsername());
                 }
+                else if (controType <= GameEnums::AiTypes::AiTypes_ProxyAi)
+                {
+                    // skip other ai types
+                }
                 else
                 {
                     m_pMap->getPlayer(i)->setPlayerNameId(getNameFromAiType(controType));
@@ -1847,17 +1851,35 @@ QString PlayerSelection::getNameFromAiType(GameEnums::AiTypes aiType) const
     QStringList aiList = getAiNames();
     if (aiType == GameEnums::AiTypes::AiTypes_Open)
     {
-        name = aiList[aiList.size() - 1];
+        if (aiList.size() > 0)
+        {
+            name = aiList[aiList.size() - 1];
+        }
+        else
+        {
+            name = tr("Open");
+        }
     }
     else if (aiType == GameEnums::AiTypes::AiTypes_Closed)
     {
-        name = aiList[aiList.size() - 2];
+        if (aiList.size() > 2)
+        {
+            name = aiList[aiList.size() - 2];
+        }
+        else
+        {
+            name = tr("Closed");
+        }
     }
     else
     {
         if (aiType < aiList.size() - 2)
         {
             name = aiList[aiType];
+        }
+        else
+        {
+            name = tr("Unknown");
         }
     }
     return name;
