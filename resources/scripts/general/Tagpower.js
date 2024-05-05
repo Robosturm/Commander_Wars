@@ -167,7 +167,7 @@ var TAGPOWER =
                          ["CO_TABITHA",  "CO_PENNY",    qsTr("Evil Sisters"),      10,     2],
                          ["CO_WAYLON",  "CO_GREYFIELD", qsTr("Free Sea and Air"),  10,     1],
                          ["CO_BRENNER",  "CO_LIN",      qsTr("Loyalty of Amber Corona"), 10, 1],
-                         ["CO_BRENNER",  "CO_WILL",    qsTr("The helpers"),        10,     1],
+                         ["CO_BRENNER",  "CO_WILL",    qsTr("The Helpers"),        10,     1],
                          ["CO_ISABELLA", "CO_WILL",    qsTr("Friendship"),         15,     2],
                          ["CO_LIN",      "CO_WILL",    qsTr("Tagpower"),           5,      0],
                          ["CO_TASHA",    "CO_WILL",    qsTr("Brother and Sister?"), 10,    2],
