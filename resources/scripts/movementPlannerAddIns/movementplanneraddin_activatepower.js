@@ -18,7 +18,7 @@ var Constructor = function()
     };
     this.getPlayerTooltip = function()
     {
-        return qsTr("Player of which the co power gets activated.");
+        return qsTr("Player of which the CO power gets activated.");
     };
     this.getCOLabel = function()
     {
