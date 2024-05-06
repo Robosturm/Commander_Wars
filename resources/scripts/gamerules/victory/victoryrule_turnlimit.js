@@ -13,18 +13,18 @@ var Constructor = function()
             }
             else
             {
-                return qsTr("All player lose when the time is up.");
+                return qsTr("All players lose when the time is up.");
             }
         }
         else
         {
             if (itemNumber === 0)
             {
-                return qsTr("All player lose when the time is up.");
+                return qsTr("All players lose when the time is up.");
             }
             else
             {
-                return qsTr("The team winning the game if the time is up. Infinite for all player losing the game.");
+                return qsTr("The team in the lead wins the game if the time is up. Infinite for all players losing the game.");
             }
         }
     };

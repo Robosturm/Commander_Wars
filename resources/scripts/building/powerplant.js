@@ -38,7 +38,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        var text = qsTr("A power plant that when captured increases how fast the powermeter charges by %0%.");
+        var text = qsTr("A power plant that when captured increases how fast the power meter charges by %0%.");
         text = replaceTextArgs(text, [POWERPLANT.powerChargeBonus]);
         return text;
     };

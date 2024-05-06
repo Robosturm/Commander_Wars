@@ -33,7 +33,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("<r>Once captured can be used for </r><div c='#00ff00'>production and resupplying </div><r>of </r><div c='#00ff00'>pipe </div><r>units. Produces also more funds.</r>");
+        return qsTr("<r>Once captured can be used for the </r><div c='#00ff00'>production, repairing, and resupplying </div><r>of </r><div c='#00ff00'>pipe </div><r>units. Also produces more funds.</r>");
     };
 
     this.getVisionHide = function(building)

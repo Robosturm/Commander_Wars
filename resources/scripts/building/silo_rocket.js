@@ -30,7 +30,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Missile can be launched once, by Infantry unit. Damage across </r><div c='#00ff00'>13 square </div><r>area.</r>");
+        return qsTr("<r>A single missile can be launched from here, by an Infantry unit. The missile's blast damages units across a </r><div c='#00ff00'>13 square </div><r>area, including your own.</r>");
     };
 
     this.getTerrainAnimationBackground = function(unit, terrain, defender, map)

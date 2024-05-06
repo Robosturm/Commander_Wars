@@ -54,7 +54,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Black Hole Omega Base meant to launch a giant Rocket on the Earth to destroy it.");
+        return qsTr("Black Hole Omega Base meant to launch a giant rocket to destroy the Earth. No effect in battle.");
     };
 
     this.getTerrainAnimationBackground = function(unit, terrain, defender, map)

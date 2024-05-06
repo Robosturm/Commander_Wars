@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getRuleDescription = function(itemNumber)
     {
-        return qsTr("If enabled material can be refilled.");
+        return qsTr("Allows material to be refilled if enabled.");
     };
     this.getRuleName = function(itemNumber)
     {

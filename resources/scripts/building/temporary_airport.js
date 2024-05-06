@@ -59,7 +59,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Airport made by APC. </r><div c='#00ff00'>Resupplying </div><r>of </r><div c='#00ff00'>air </div><r>units is possible.</r>");
+        return qsTr("<r>An airport made by an APC. </r><div c='#00ff00'>Repairing and resupplying </div><r>of </r><div c='#00ff00'>air </div><r>units is possible here. It does not produce any funds or units.</r>");
     };
 
     this.getVisionHide = function(building)

@@ -30,7 +30,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Empty missile silo which provides some defence.");
+        return qsTr("An empty missile silo which provides some defence.");
     };
 
     this.getTerrainAnimationBackground = function(unit, terrain, defender, map)

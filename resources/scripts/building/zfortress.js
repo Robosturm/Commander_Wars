@@ -54,7 +54,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Black Hole Fortress that defends a position has no other effects.");
+        return qsTr("Black Hole Fortress that occupies a position. Has no other effect in battle.");
     };
 }
 

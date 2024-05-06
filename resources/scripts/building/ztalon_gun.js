@@ -91,7 +91,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Talon Gun of Dark Matter fires at all enemie units each turn dealing 5HP of damage in a 3 square area.");
+        return qsTr("Talon Gun of Dark Matter fires at all enemy units each turn dealing 5HP of damage in a 3 square area.");
     };
 }
 

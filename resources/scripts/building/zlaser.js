@@ -73,7 +73,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Black Hole Laser that can deal 5 HP of damage to all units in 4 rays from the laser.");
+        return qsTr("Black Hole Laser that fires lasers in four directions. It can deal 5 HP of damage to all units it hits.");
     };
 }
 

@@ -11,7 +11,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return qsTr("Power meter fills up more quickly.");
+        return qsTr("Power meter fills up 20% faster.");
     };
     this.getIcon = function(map)
     {

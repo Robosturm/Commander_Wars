@@ -33,7 +33,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>" + "Populated city. Once captured </r><div c='#00ff00'>ground </div><r>units can </r><div c='#00ff00'>resupply</div><r>.</r>");
+        return qsTr("<r>" + "Populated city. Once captured, </r><div c='#00ff00'>ground </div><r>units can </r><div c='#00ff00'>repair and resupply</div><r> here.</r>");
     };
 
     this.getVisionHide = function(building)

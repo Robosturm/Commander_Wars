@@ -30,7 +30,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Nest factory door, which is able to produce a none naval unit each turn.");
+        return qsTr("Nest factory door, which is able to produce a non-naval unit each turn.");
     };
     this.getBuildingWidth = function()
     {
