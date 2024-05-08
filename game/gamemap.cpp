@@ -2031,15 +2031,9 @@ void GameMap::clearMap()
 
 QString GameMap::readMapName(QDataStream& pStream)
 {
-    QString name;
-    // restore map header
-    qint32 version = 0;
-    pStream >> version;
-    if (version > 1)
-    {
-        pStream >> name;
-    }
-    return name;
+    MapHeaderInfo headerInfo;
+    readMapHeader(pStream, headerInfo);
+    return headerInfo.m_mapName;
 }
 
 qint32 GameMap::getImageSize()
