@@ -121,6 +121,9 @@
 #include "awbwReplayReader/awbwreplaydownloader.h"
 #include "objects/dialogs/dialogawbwrecorddownloader.h"
 
+#include "coGenerator/cogeneratormenu.h"
+#include "coGenerator/coability.h"
+
 void MetaTypeRegister::registerInterfaceData()
 {
     // qt metatypes we need this for js and signal slot stuff
@@ -287,4 +290,8 @@ void MetaTypeRegister::registerInterfaceData()
     // awbw
     qmlRegisterInterface<AwbwReplayDownloader>("AwbwReplayDownloader", 1);
     qmlRegisterInterface<DialogAwbwRecordDownloader>("DialogAwbwRecordDownloader", 1);
+
+    // co generator
+    qmlRegisterInterface<CoAbility>("CoAbility", 1);
+    qmlRegisterInterface<CoGeneratorMenu>("CoGeneratorMenu", 1);
 }

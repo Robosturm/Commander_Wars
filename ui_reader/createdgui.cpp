@@ -60,6 +60,12 @@ void CreatedGui::loadXml(QString xmlFile)
     UiFactory::getInstance().createUi(xmlFile, this);
 }
 
+void CreatedGui::reloadUi(QString xmlFile)
+{
+    resetUi();
+    loadXml(xmlFile);
+}
+
 void CreatedGui::setObjectEnabled(const QString id, bool value)
 {
     for (auto & item : m_factoryUiItem)

@@ -182,7 +182,7 @@ private:
     /**
      * @brief mapData
      */
-    QVector<MapData> mapDatas;
+    QVector<MapData> m_mapDatas;
 
     spTextbox m_Description;
     spTextbox m_Author;

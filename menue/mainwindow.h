@@ -35,6 +35,7 @@ public slots:
     void quitGame();
     void restartGame();
     void enterCOStyleMenu();
+    void enterCOGeneratorMenu();
     void enterLoadCampaign();
     void enterShopMenu();
     void loadCampaign(QString filename);

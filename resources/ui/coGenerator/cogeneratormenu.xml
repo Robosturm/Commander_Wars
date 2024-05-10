@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ui overwrite="true">
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 90</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","CO name:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getStageWidth() - 90 - lastWidth - lastX - 170</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The name of the CO.")</tooltip>
+                <startValue>currentMenu.getCoName()</startValue>
+                <onEvent>currentMenu.setCoName(input)</onEvent>
+            </Textbox>
+
+        </childs>
+    </Panel>
+</ui>

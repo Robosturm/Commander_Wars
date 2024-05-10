@@ -5127,5 +5127,8 @@
         <file>resources/ui/editor/importAwbwmapById.xml</file>
         <file>resources/objects/rewindTurn.png</file>
         <file>resources/ui/menu/awbwRecordDownloader.xml</file>
+        <file>resources/ui/coGenerator/cogeneratormenu.js</file>
+        <file>resources/ui/coGenerator/cogeneratormenu.xml</file>
+        <file>resources/images/backgrounds/cogeneratormenu.png</file>
     </qresource>
 </RCC>

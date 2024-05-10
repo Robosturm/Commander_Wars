@@ -12,17 +12,21 @@
 
 #include "ui_reader/uifactory.h"
 
-GeneratorMenu::GeneratorMenu(const QString & generatorUi)
+GeneratorMenu::GeneratorMenu(const QString & generatorUi, bool load)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GeneratorMenu");
 #endif
     Mainapp* pApp = Mainapp::getInstance();
-    pApp->getAudioManager()->clearPlayList();
-    pApp->getAudioManager()->loadFolder("resources/music/generatorMenu");
-    pApp->getAudioManager()->playRandom();
-
-    UiFactory::getInstance().createUi(generatorUi, this);
+    pApp->pauseRendering();
+    if (load)
+    {
+        pApp->getAudioManager()->clearPlayList();
+        pApp->getAudioManager()->loadFolder("resources/music/generatorMenu");
+        pApp->getAudioManager()->playRandom();
+        UiFactory::getInstance().createUi(generatorUi, this);
+    }
+    pApp->continueRendering();
 }
 
 void GeneratorMenu::onEnter()

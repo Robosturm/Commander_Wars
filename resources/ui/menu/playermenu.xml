@@ -35,6 +35,14 @@
     </Button>
     <Button>
         <x>settings.getStageWidth() / 2.0 - 125</x>
+        <y>MainMenu.getButtonY(2)</y>
+        <width>250</width>
+        <text>QT_TRANSLATE_NOOP("GAME","CO Generator")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","CO Generator")</tooltip>
+        <onEvent>currentMenu.enterCOGeneratorMenu();</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getStageWidth() / 2.0 - 125</x>
         <y>MainMenu.getButtonY(3)</y>
         <width>250</width>
         <text>QT_TRANSLATE_NOOP("GAME","Achievements")</text>

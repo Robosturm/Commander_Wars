@@ -869,6 +869,10 @@ set(${PROJECT_NAME}_SRCS
     awbwReplayReader/awbwreplaydownloader.h awbwReplayReader/awbwreplaydownloader.cpp
     awbwReplayReader/awbwreplayscandownloader.h awbwReplayReader/awbwreplayscandownloader.cpp
     awbwReplayReader/iAwbwAction.h
+
+    # co generator
+    coGenerator/cogeneratormenu.h coGenerator/cogeneratormenu.cpp
+    coGenerator/coability.h coGenerator/coability.cpp
 )
 
 ##############################################################################

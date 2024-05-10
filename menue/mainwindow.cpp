@@ -15,6 +15,7 @@
 #include "menue/achievementmenu.h"
 #include "menue/shopmenu.h"
 #include "menue/generatormenu.h"
+#include "coGenerator/cogeneratormenu.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
@@ -403,6 +404,16 @@ void Mainwindow::enterCOStyleMenu()
 {
     Mainapp::getInstance()->pauseRendering();
     auto window = MemoryManagement::create<COStyleMenu>();
+    oxygine::Stage::getStage()->addChild(window);
+    leaveMenue();
+    Mainapp::getInstance()->continueRendering();
+}
+
+
+void Mainwindow::enterCOGeneratorMenu()
+{
+    Mainapp::getInstance()->pauseRendering();
+    auto window = MemoryManagement::create<CoGeneratorMenu>();
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();

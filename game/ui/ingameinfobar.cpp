@@ -34,6 +34,7 @@ IngameInfoBar::IngameInfoBar(GameMenue *pMenu, GameMap *pMap)
     CONSOLE_PRINT("Creating IngameInfoBar", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
+    const qint32 boxOffset = 130;
     const qint32 minMapHeight = 220;
     qint32 width = 300;
     qint32 cursorInfoHeigth = 330;
@@ -62,7 +63,7 @@ IngameInfoBar::IngameInfoBar(GameMenue *pMenu, GameMap *pMap)
         }
     }
     pMiniMapBox->setSize(width, oxygine::Stage::getStage()->getHeight() - cursorInfoHeigth - gameInfoHeigth);
-    pMiniMapBox->setPosition(0, 0);
+    pMiniMapBox->setPosition(boxOffset, 0);
     setSize(width, oxygine::Stage::getStage()->getHeight());
 
     pMiniMapBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -88,14 +89,14 @@ IngameInfoBar::IngameInfoBar(GameMenue *pMenu, GameMap *pMap)
 
     m_pGameInfoBox = MemoryManagement::create<oxygine::Box9Sprite>();
     m_pGameInfoBox->setResAnim(pAnim);
-    m_pGameInfoBox->setPosition(0, pMiniMapBox->getScaledHeight());
+    m_pGameInfoBox->setPosition(boxOffset, pMiniMapBox->getScaledHeight());
     m_pGameInfoBox->setSize(width, gameInfoHeigth);
     m_pGameInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(m_pGameInfoBox);
 
     m_pCursorInfoBox = MemoryManagement::create<oxygine::Box9Sprite>();
     m_pCursorInfoBox->setResAnim(pAnim);
-    m_pCursorInfoBox->setPosition(0, pMiniMapBox->getScaledHeight() + gameInfoHeigth);
+    m_pCursorInfoBox->setPosition(boxOffset, pMiniMapBox->getScaledHeight() + gameInfoHeigth);
     m_pCursorInfoBox->setSize(width, cursorInfoHeigth);
     m_pCursorInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
@@ -111,9 +112,9 @@ IngameInfoBar::IngameInfoBar(GameMenue *pMenu, GameMap *pMap)
         m_pDetailedViewBox->setScale(1.0f / getScaleX());
     }
     m_pDetailedViewBox->setSize(130, 199);
+    setWidth(getWidth() + m_pDetailedViewBox->getScaledWidth());
     m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(),
                                     m_pCursorInfoBox->getScaledHeight() - m_pDetailedViewBox->getScaledHeight());
-
     setX(oxygine::Stage::getStage()->getWidth() - getScaledWidth());
     addChild(m_pCursorInfoBox);
 }

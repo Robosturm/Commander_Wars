@@ -4,12 +4,13 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/jsthis.h"
 
 class UiFactory;
 class CreatedGui;
 using spCreatedGui = std::shared_ptr<CreatedGui>;
 
-class CreatedGui : public QObject, public oxygine::Actor
+class CreatedGui : public QObject, public oxygine::Actor, public JsThis
 {
     Q_OBJECT
 public:
@@ -35,6 +36,7 @@ public:
     Q_INVOKABLE virtual void setEnabled(bool value) override;
     Q_INVOKABLE void resetUi();
     Q_INVOKABLE void loadXml(QString xmlFile);
+    Q_INVOKABLE void reloadUi(QString xmlFile);
     Q_INVOKABLE void setObjectEnabled(const QString id, bool value);
     Q_INVOKABLE void showFileDialog(const QStringList & wildcards, const QString & startFolder, bool isSaveDialog, const QString & jsObject, const QString & jsCallback, const QString & startFile = "", bool preview = false, const QString & acceptButtonName = tr("Ok"));
     Q_INVOKABLE void showFolderDialog(const QString & startFolder, const QString & jsObject, const QString & jsCallback);

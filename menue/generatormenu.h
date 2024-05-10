@@ -6,43 +6,45 @@
 class GeneratorMenu;
 using spGeneratorMenu = std::shared_ptr<GeneratorMenu>;
 
-class GeneratorMenu final : public Basemenu
+class GeneratorMenu : public Basemenu
 {
+    Q_OBJECT
 public:
-    explicit GeneratorMenu(const QString & generatorUi);
+    explicit GeneratorMenu(const QString & generatorUi, bool load = true);
     virtual ~GeneratorMenu() = default;
 
-public slots:
-    void exitMenue(const QString & mainMenuXml = "ui/menu/playermenu.xml");
-    virtual void onEnter() override;
+    Q_INVOKABLE void exitMenue(const QString & mainMenuXml = "ui/menu/playermenu.xml");
     /**
      * @brief loadVariablesFromFile
      * @param file
      * @return
      */
-    bool loadVariablesFromFile(const QString & file);
+    Q_INVOKABLE bool loadVariablesFromFile(const QString & file);
     /**
      * @brief writeVariablesFromFile
      * @param file
      */
-    void writeVariablesToFile(const QString & file) const;
+    Q_INVOKABLE void writeVariablesToFile(const QString & file) const;
     /**
      * @brief writeDataToFile
      * @param file
      * @param data
      */
-    void writeDataToFile(const QString & file, const QString & data) const;
+    Q_INVOKABLE void writeDataToFile(const QString & file, const QString & data) const;
     /**
      * @brief createDir
      * @param dir
      */
-    void createDir(const QString & path) const;
+    Q_INVOKABLE void createDir(const QString & path) const;
     /**
      * @brief copySourceToTarget
      * @param source
      * @param target
      */
-    void copySourceToTarget(const QString & source, const QString & target);
+    Q_INVOKABLE void copySourceToTarget(const QString & source, const QString & target);
+
+public slots:
+    virtual void onEnter() override;
 private:
 };
 

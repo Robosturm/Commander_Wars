@@ -218,7 +218,7 @@ void CampaignEditor::addCampaign(QString filename)
         MapData data;
         data.map = map;
         data.mapName = getMapName(filename);
-        mapDatas.append(data);
+        m_mapDatas.append(data);
         updateCampaignData();
     }
 }
@@ -252,7 +252,7 @@ void CampaignEditor::selectFolder(QString folder)
 void CampaignEditor::clearCampaignData()
 {
     
-    mapDatas.clear();
+    m_mapDatas.clear();
     m_Panel->clearContent();
     
 }
@@ -261,14 +261,14 @@ void CampaignEditor::updateCampaignData()
 {    
     m_Panel->clearContent();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    for (qint32 i = 0; i < mapDatas.size(); i++)
+    for (qint32 i = 0; i < m_mapDatas.size(); i++)
     {
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
         spLabel pText =  MemoryManagement::create<Label>(180);
         pText->setStyle(style);
-        pText->setHtmlText(mapDatas[i].mapName);
+        pText->setHtmlText(m_mapDatas[i].mapName);
         pText->setPosition(10, 10 + i * 40);
         m_Panel->addItem(pText);
 
@@ -301,7 +301,7 @@ void CampaignEditor::updateCampaignData()
         m_Panel->addItem(pRemoveButton);
         pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
-            mapDatas.removeAt(i);
+            m_mapDatas.removeAt(i);
             emit sigUpdateCampaignData();
         });
 
@@ -312,16 +312,16 @@ void CampaignEditor::updateCampaignData()
         m_Panel->addItem(pText);
 
         spCheckbox pBox = MemoryManagement::create<Checkbox>();
-        pBox->setChecked(mapDatas[i].lastMap);
+        pBox->setChecked(m_mapDatas[i].lastMap);
         pBox->setTooltipText(tr("All maps marked as last map need to be won in order to finish the campaign."));
         pBox->setPosition(940, 10 + i * 40);
         m_Panel->addItem(pBox);
         connect(pBox.get(), &Checkbox::checkChanged, this, [this, i](bool value)
         {
-            mapDatas[i].lastMap = value;
+            m_mapDatas[i].lastMap = value;
         });
     }
-    m_Panel->setContentHeigth(mapDatas.size() * 40 + 40);
+    m_Panel->setContentHeigth(m_mapDatas.size() * 40 + 40);
     m_Panel->setContentWidth(1010);
     
 }
@@ -392,7 +392,7 @@ void CampaignEditor::loadCampaign(QString filename)
                                                         .split(",");
                                 if (items.size() >= 2)
                                 {
-                                    mapDatas[items[0].toInt()].lastMap = true;
+                                    m_mapDatas[items[0].toInt()].lastMap = true;
                                 }
                             }
                         }
@@ -407,7 +407,7 @@ void CampaignEditor::loadCampaign(QString filename)
 
 void CampaignEditor::loadCampaignMaps(QTextStream& stream)
 {
-    mapDatas.clear();
+    m_mapDatas.clear();
     while (!stream.atEnd())
     {
         QString line = stream.readLine().simplified();
@@ -422,14 +422,14 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
         }
         if (line.endsWith(campaignMapNames))
         {
-            mapDatas.append(MapData());
+            m_mapDatas.append(MapData());
             QStringList items = line.replace("var map", "")
                                     .replace("Won = variables.createVariable(\"", ",")
                                     .replace("\"); // " + QString(campaignMapNames), "")
                                     .split(",");
             if (items.size() >= 2)
             {
-                mapDatas[items[0].toInt()].mapName = items[1];
+                m_mapDatas[items[0].toInt()].mapName = items[1];
             }
         }
         if (line.endsWith(campaignMapEnabled))
@@ -447,7 +447,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
                     QString index = line.replace("if (map", "");
                     qint32 pos = index.indexOf("Won");
                     index = index.remove(pos, index.size());
-                    mapDatas[mapDataIndex].previousMaps.append(mapDatas[index.toInt()].mapName);
+                    m_mapDatas[mapDataIndex].previousMaps.append(m_mapDatas[index.toInt()].mapName);
                 }
             }
         }
@@ -466,7 +466,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
                     QString index = line.replace("if (map", "");
                     qint32 pos = index.indexOf("Won");
                     index = index.remove(pos, index.size());
-                    mapDatas[mapDataIndex].disableMaps.append(mapDatas[index.toInt()].mapName);
+                    m_mapDatas[mapDataIndex].disableMaps.append(m_mapDatas[index.toInt()].mapName);
                 }
             }
         }
@@ -483,8 +483,8 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
             if (items.size() >= 5)
             {
                 qint32 index = items[0].toInt();
-                mapDatas[index].disableCount = items[1].toInt();
-                mapDatas[index].previousCount = items[3].toInt();
+                m_mapDatas[index].disableCount = items[1].toInt();
+                m_mapDatas[index].previousCount = items[3].toInt();
                 for (qint32 i = 4; i < items.size() - 1; i++)
                 {
                     if (items[i].startsWith("!("))
@@ -495,10 +495,10 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
                         if (subList.size() >= 3)
                         {
                             subList[1] = subList[1].replace(">", "&gt;").replace("<", "&lt;");
-                            mapDatas[index].scriptVariableDisableActive = true;
-                            mapDatas[index].scriptVariableDisableName = subList[0];
-                            mapDatas[index].scriptVariableDisableCompare = subList[1];
-                            mapDatas[index].scriptVariableDisableValue = subList[2].toInt();
+                            m_mapDatas[index].scriptVariableDisableActive = true;
+                            m_mapDatas[index].scriptVariableDisableName = subList[0];
+                            m_mapDatas[index].scriptVariableDisableCompare = subList[1];
+                            m_mapDatas[index].scriptVariableDisableValue = subList[2].toInt();
                         }
 
                     }
@@ -510,14 +510,14 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
                         if (subList.size() >= 3)
                         {
                             subList[1] = subList[1].replace(">", "&gt;").replace("<", "&lt;");
-                            mapDatas[index].scriptVariableEnableActive = true;
-                            mapDatas[index].scriptVariableEnableName = subList[0];
-                            mapDatas[index].scriptVariableEnableCompare = subList[1];
-                            mapDatas[index].scriptVariableEnableValue = subList[2].toInt();
+                            m_mapDatas[index].scriptVariableEnableActive = true;
+                            m_mapDatas[index].scriptVariableEnableName = subList[0];
+                            m_mapDatas[index].scriptVariableEnableCompare = subList[1];
+                            m_mapDatas[index].scriptVariableEnableValue = subList[2].toInt();
                         }
                     }
                 }
-                mapDatas[index].map = items[items.size() - 1];
+                m_mapDatas[index].map = items[items.size() - 1];
             }
         }
     }   
@@ -527,29 +527,29 @@ void CampaignEditor::updateMapNames()
 {
     QStringList orgName;
     QStringList newName;
-    for (qint32 i = 0; i < mapDatas.size(); i++)
+    for (qint32 i = 0; i < m_mapDatas.size(); i++)
     {
-        QString name = getMapName(m_CampaignFolder->getCurrentText() + mapDatas[i].map);
-        if (name != mapDatas[i].mapName && !name.isEmpty())
+        QString name = getMapName(m_CampaignFolder->getCurrentText() + m_mapDatas[i].map);
+        if (name != m_mapDatas[i].mapName && !name.isEmpty())
         {
-            orgName.append(mapDatas[i].mapName);
+            orgName.append(m_mapDatas[i].mapName);
             newName.append(name);
-            mapDatas[i].mapName = name;
+            m_mapDatas[i].mapName = name;
         }
     }
-    for (qint32 i = 0; i < mapDatas.size(); i++)
+    for (qint32 i = 0; i < m_mapDatas.size(); i++)
     {
         for (qint32 i2 = 0; i2 < orgName.size(); i2++)
         {
-            if (mapDatas[i].previousMaps.contains(orgName[i2]))
+            if (m_mapDatas[i].previousMaps.contains(orgName[i2]))
             {
-                mapDatas[i].previousMaps.removeAll(orgName[i2]);
-                mapDatas[i].previousMaps.append(newName[i2]);
+                m_mapDatas[i].previousMaps.removeAll(orgName[i2]);
+                m_mapDatas[i].previousMaps.append(newName[i2]);
             }
-            if (mapDatas[i].disableMaps.contains(orgName[i2]))
+            if (m_mapDatas[i].disableMaps.contains(orgName[i2]))
             {
-                mapDatas[i].disableMaps.removeAll(orgName[i2]);
-                mapDatas[i].disableMaps.append(newName[i2]);
+                m_mapDatas[i].disableMaps.removeAll(orgName[i2]);
+                m_mapDatas[i].disableMaps.append(newName[i2]);
             }
         }
     }
@@ -584,18 +584,18 @@ void CampaignEditor::saveCampaign(QString filename)
             folder += "/";
         }
         stream << "        var ret = [\"" << folder << "\"]; // " << campaignMapsFolder << "\n";
-        for (qint32 i = 0; i < mapDatas.size(); i++)
+        for (qint32 i = 0; i < m_mapDatas.size(); i++)
         {
-            stream << "        var map" << QString::number(i) << "Won = variables.createVariable(\"" << mapDatas[i].mapName << "\"); // " << campaignMapNames << "\n";
+            stream << "        var map" << QString::number(i) << "Won = variables.createVariable(\"" << m_mapDatas[i].mapName << "\"); // " << campaignMapNames << "\n";
         }
-        for (qint32 i = 0; i < mapDatas.size(); i++)
+        for (qint32 i = 0; i < m_mapDatas.size(); i++)
         {
             stream << "        var map" << QString::number(i) << "EnableCount = 0; // " << campaignMapEnabled << "\n";
-            for (qint32 i2 = 0; i2 < mapDatas[i].previousMaps.size(); i2++)
+            for (qint32 i2 = 0; i2 < m_mapDatas[i].previousMaps.size(); i2++)
             {
-                for (qint32 i3 = 0; i3 < mapDatas.size(); i3++)
+                for (qint32 i3 = 0; i3 < m_mapDatas.size(); i3++)
                 {
-                    if (mapDatas[i3].mapName == mapDatas[i].previousMaps[i2])
+                    if (m_mapDatas[i3].mapName == m_mapDatas[i].previousMaps[i2])
                     {
                         stream << "        if (map" << QString::number(i3) << "Won.readDataBool() === true) { map" << QString::number(i) << "EnableCount++;} \n";
                         break;
@@ -605,35 +605,35 @@ void CampaignEditor::saveCampaign(QString filename)
             stream << "        // " << campaignMapEnabled << "\n";
 
             stream << "        var map" << QString::number(i) << "DisableCount = 0; // " << campaignMapDisabled << "\n";
-            for (qint32 i2 = 0; i2 < mapDatas[i].disableMaps.size(); i2++)
+            for (qint32 i2 = 0; i2 < m_mapDatas[i].disableMaps.size(); i2++)
             {
-                for (qint32 i3 = 0; i3 < mapDatas.size(); i3++)
+                for (qint32 i3 = 0; i3 < m_mapDatas.size(); i3++)
                 {
-                    if (mapDatas[i3].mapName == mapDatas[i].disableMaps[i2])
+                    if (m_mapDatas[i3].mapName == m_mapDatas[i].disableMaps[i2])
                     {
                         stream << "        if (map" << QString::number(i3) << "Won.readDataBool() === true) { map" << QString::number(i) << "DisableCount++;} \n";
                     }
                 }
             }
             stream << "        // " << campaignMapDisabled << "\n";
-            stream << "        if (map" << QString::number(i) << "DisableCount < " << mapDatas[i].disableCount <<
-                      " && map" << QString::number(i) << "EnableCount >= " << mapDatas[i].previousCount;
-            if (mapDatas[i].scriptVariableEnableActive)
+            stream << "        if (map" << QString::number(i) << "DisableCount < " << m_mapDatas[i].disableCount <<
+                      " && map" << QString::number(i) << "EnableCount >= " << m_mapDatas[i].previousCount;
+            if (m_mapDatas[i].scriptVariableEnableActive)
             {
-                QString compare = mapDatas[i].scriptVariableEnableCompare;
+                QString compare = m_mapDatas[i].scriptVariableEnableCompare;
                 compare = compare.replace("&gt;", ">").replace("&lt;", "<");
-                stream << " && variables.createVariable(\"" << mapDatas[i].scriptVariableEnableName << "\").readDataInt32() "
-                       << compare << " " << mapDatas[i].scriptVariableEnableValue;
+                stream << " && variables.createVariable(\"" << m_mapDatas[i].scriptVariableEnableName << "\").readDataInt32() "
+                       << compare << " " << m_mapDatas[i].scriptVariableEnableValue;
             }
-            if (mapDatas[i].scriptVariableDisableActive)
+            if (m_mapDatas[i].scriptVariableDisableActive)
             {
-                QString compare = mapDatas[i].scriptVariableDisableCompare;
+                QString compare = m_mapDatas[i].scriptVariableDisableCompare;
                 compare = compare.replace("&gt;", ">").replace("&lt;", "<");
-                stream << " && !(variables.createVariable(\"" << mapDatas[i].scriptVariableDisableName << "\").readDataInt32() "
-                       << compare << " " << mapDatas[i].scriptVariableDisableValue << ")";
+                stream << " && !(variables.createVariable(\"" << m_mapDatas[i].scriptVariableDisableName << "\").readDataInt32() "
+                       << compare << " " << m_mapDatas[i].scriptVariableDisableValue << ")";
             }
 
-            stream << ") {ret.push(\"" << mapDatas[i].map << "\");} // " << campaignMapAdd << "\n";
+            stream << ") {ret.push(\"" << m_mapDatas[i].map << "\");} // " << campaignMapAdd << "\n";
         }
 
         stream << "        return ret;\n";
@@ -649,12 +649,12 @@ void CampaignEditor::saveCampaign(QString filename)
         stream << "        var variables = campaign.getVariables();\n";
         stream << "        var wonCounter = 0;\n";
         qint32 count = 0;
-        for (qint32 i = 0; i < mapDatas.size(); i++)
+        for (qint32 i = 0; i < m_mapDatas.size(); i++)
         {
-            if (mapDatas[i].lastMap)
+            if (m_mapDatas[i].lastMap)
             {
                 count++;
-                stream << "        var map" << QString::number(i) << "Won = variables.createVariable(\"" << mapDatas[i].mapName << "\"); // " << campaignMapNames << "\n";
+                stream << "        var map" << QString::number(i) << "Won = variables.createVariable(\"" << m_mapDatas[i].mapName << "\"); // " << campaignMapNames << "\n";
                 stream << "        if (map" << QString::number(i) << "Won.readDataBool() === true) { wonCounter++;} \n";
             }
         }
@@ -687,32 +687,32 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     pText->setHtmlText(tr("Enable Map Count:"));
     pText->setPosition(10, 10);
     pPanel->addItem(pText);
-    spSpinBox spinBox = MemoryManagement::create<SpinBox>(150, 0, mapDatas.size() - 1);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(150, 0, m_mapDatas.size() - 1);
     spinBox->setTooltipText(tr("Number of maps that leads to this map and that need to be won in order to play this map. Can be smaller so multiple campaign paths lead to this map."));
     spinBox->setPosition(300, 10);
-    spinBox->setCurrentValue(mapDatas[index].previousCount);
+    spinBox->setCurrentValue(m_mapDatas[index].previousCount);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
-        mapDatas[index].previousCount = static_cast<qint32>(value);
+        m_mapDatas[index].previousCount = static_cast<qint32>(value);
     });
     pPanel->addItem(spinBox);
 
     qint32 counter = 0;
-    for (qint32 i = 0; i < mapDatas.size(); i++)
+    for (qint32 i = 0; i < m_mapDatas.size(); i++)
     {
         if (i != index)
         {
             pText =  MemoryManagement::create<Label>(280);
             pText->setStyle(style);
-            pText->setHtmlText(mapDatas[i].mapName);
+            pText->setHtmlText(m_mapDatas[i].mapName);
             pText->setPosition(10, 50 + counter * 40);
             pPanel->addItem(pText);
 
             spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();
             pCheckbox->setTooltipText(tr("If checked this map leads to the selected map. Also see \"Enable Map Count\""));
             pCheckbox->setPosition(300, 50 + counter * 40);
-            if (mapDatas[index].previousMaps.contains(mapDatas[i].mapName))
+            if (m_mapDatas[index].previousMaps.contains(m_mapDatas[i].mapName))
             {
                 pCheckbox->setChecked(true);
             }
@@ -724,18 +724,18 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
             {
                 if (value)
                 {
-                    mapDatas[index].previousMaps.append(mapDatas[i].mapName);
+                    m_mapDatas[index].previousMaps.append(m_mapDatas[i].mapName);
                 }
                 else
                 {
-                    mapDatas[index].previousMaps.removeAll(mapDatas[i].mapName);
+                    m_mapDatas[index].previousMaps.removeAll(m_mapDatas[i].mapName);
                 }
             });
             pPanel->addItem(pCheckbox);
             counter++;
         }
     }
-    pPanel->setContentHeigth(mapDatas.size() * 50 + 100);
+    pPanel->setContentHeigth(m_mapDatas.size() * 50 + 100);
     pPanel->setContentWidth(400);
     addChild(pBox);    
 }
@@ -757,30 +757,30 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     pText->setHtmlText(tr("Disable Map Count:"));
     pText->setPosition(10, 10);
     pPanel->addItem(pText);
-    spSpinBox spinBox = MemoryManagement::create<SpinBox>(150, 1, mapDatas.size() - 1);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(150, 1, m_mapDatas.size() - 1);
     spinBox->setTooltipText(tr("Number of maps that disable this map again. When they are one this map is made unplayable. Can be used to make a map no longer playable after a Victory."));
     spinBox->setPosition(300, 10);
-    spinBox->setCurrentValue(mapDatas[index].disableCount);
+    spinBox->setCurrentValue(m_mapDatas[index].disableCount);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
-        mapDatas[index].disableCount = static_cast<qint32>(value);
+        m_mapDatas[index].disableCount = static_cast<qint32>(value);
     });
     pPanel->addItem(spinBox);
 
     qint32 counter = 0;
-    for (qint32 i = 0; i < mapDatas.size(); i++)
+    for (qint32 i = 0; i < m_mapDatas.size(); i++)
     {
         pText = MemoryManagement::create<Label>(280);
         pText->setStyle(style);
-        pText->setHtmlText(mapDatas[i].mapName);
+        pText->setHtmlText(m_mapDatas[i].mapName);
         pText->setPosition(10, 50 + counter * 40);
         pPanel->addItem(pText);
 
         spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();
         pCheckbox->setTooltipText(tr("If checked this map disables the selected map. Also see \"Disable Map Count\""));
         pCheckbox->setPosition(300, 50 + counter * 40);
-        if (mapDatas[index].disableMaps.contains(mapDatas[i].mapName))
+        if (m_mapDatas[index].disableMaps.contains(m_mapDatas[i].mapName))
         {
             pCheckbox->setChecked(true);
         }
@@ -792,17 +792,17 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
         {
             if (value)
             {
-                mapDatas[index].disableMaps.append(mapDatas[i].mapName);
+                m_mapDatas[index].disableMaps.append(m_mapDatas[i].mapName);
             }
             else
             {
-                mapDatas[index].disableMaps.removeAll(mapDatas[i].mapName);
+                m_mapDatas[index].disableMaps.removeAll(m_mapDatas[i].mapName);
             }
         });
         pPanel->addItem(pCheckbox);
         counter++;
     }
-    pPanel->setContentHeigth(mapDatas.size() * 50 + 100);
+    pPanel->setContentHeigth(m_mapDatas.size() * 50 + 100);
     pPanel->setContentWidth(400);
     CampaignEditor::addChild(pBox);
     
@@ -841,11 +841,11 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spTextbox textBox = MemoryManagement::create<Textbox>(300);
     textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, y);
-    textBox->setCurrentText(mapDatas[index].scriptVariableEnableName);
+    textBox->setCurrentText(m_mapDatas[index].scriptVariableEnableName);
     connect(textBox.get(), &Textbox::sigTextChanged, this,
             [this, index](QString value)
     {
-        mapDatas[index].scriptVariableEnableName = value;
+        m_mapDatas[index].scriptVariableEnableName = value;
     });
     pPanel->addItem(textBox);
     y += pText->getHeight() + 10;
@@ -860,10 +860,10 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spDropDownmenu dropDown = MemoryManagement::create<DropDownmenu>(150, items);
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, y);
-    dropDown->setCurrentItemText(mapDatas[index].scriptVariableEnableCompare);
+    dropDown->setCurrentItemText(m_mapDatas[index].scriptVariableEnableCompare);
     connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [this, index, dropDown](qint32)
     {
-        mapDatas[index].scriptVariableEnableCompare = dropDown->getCurrentItemText();
+        m_mapDatas[index].scriptVariableEnableCompare = dropDown->getCurrentItemText();
     });
     pPanel->addItem(dropDown);
     y += pText->getHeight() + 10;
@@ -876,11 +876,11 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spSpinBox spinBox = MemoryManagement::create<SpinBox>(150, -999999, 999999);
     spinBox->setTooltipText(tr("The value that the variable gets checked against."));
     spinBox->setPosition(width, y);
-    spinBox->setCurrentValue(mapDatas[index].scriptVariableEnableValue);
+    spinBox->setCurrentValue(m_mapDatas[index].scriptVariableEnableValue);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
-        mapDatas[index].scriptVariableEnableValue = value;
+        m_mapDatas[index].scriptVariableEnableValue = value;
     });
     pPanel->addItem(spinBox);
     y += pText->getHeight() + 10;
@@ -893,11 +893,11 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spCheckbox checkBox = MemoryManagement::create<Checkbox>();
     checkBox->setTooltipText(tr("If checked the enable variable needs to fullfil the condition to allow this map to be playable."));
     checkBox->setPosition(width, y);
-    checkBox->setChecked(mapDatas[index].scriptVariableEnableActive);
+    checkBox->setChecked(m_mapDatas[index].scriptVariableEnableActive);
     connect(checkBox.get(), &Checkbox::checkChanged, this,
             [this, index](bool value)
     {
-        mapDatas[index].scriptVariableEnableActive = value;
+        m_mapDatas[index].scriptVariableEnableActive = value;
     });
     pPanel->addItem(checkBox);
     y += pText->getHeight() + 10;
@@ -917,11 +917,11 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     textBox = MemoryManagement::create<Textbox>(300);
     textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, y);
-    textBox->setCurrentText(mapDatas[index].scriptVariableDisableName);
+    textBox->setCurrentText(m_mapDatas[index].scriptVariableDisableName);
     connect(textBox.get(), &Textbox::sigTextChanged, this,
             [this, index](QString value)
     {
-        mapDatas[index].scriptVariableDisableName = value;
+        m_mapDatas[index].scriptVariableDisableName = value;
     });
     pPanel->addItem(textBox);
     y += pText->getHeight() + 10;
@@ -934,10 +934,10 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     dropDown = MemoryManagement::create<DropDownmenu>(150, items);
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, y);
-    dropDown->setCurrentItemText(mapDatas[index].scriptVariableDisableCompare);
+    dropDown->setCurrentItemText(m_mapDatas[index].scriptVariableDisableCompare);
     connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [this, index, dropDown](qint32)
     {
-        mapDatas[index].scriptVariableDisableCompare = dropDown->getCurrentItemText();
+        m_mapDatas[index].scriptVariableDisableCompare = dropDown->getCurrentItemText();
     });
     pPanel->addItem(dropDown);
     y += pText->getHeight() + 10;
@@ -950,11 +950,11 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spinBox = MemoryManagement::create<SpinBox>(150, -999999, 999999);
     spinBox->setTooltipText(tr("The value that the variable gets checked against."));
     spinBox->setPosition(width, y);
-    spinBox->setCurrentValue(mapDatas[index].scriptVariableDisableValue);
+    spinBox->setCurrentValue(m_mapDatas[index].scriptVariableDisableValue);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this, index](qreal value)
     {
-        mapDatas[index].scriptVariableDisableValue = value;
+        m_mapDatas[index].scriptVariableDisableValue = value;
     });
     pPanel->addItem(spinBox);
     y += pText->getHeight() + 10;
@@ -967,11 +967,11 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     checkBox = MemoryManagement::create<Checkbox>();
     checkBox->setTooltipText(tr("If checked and if the disable variable has been fullfiled this map can't be played."));
     checkBox->setPosition(width, y);
-    checkBox->setChecked(mapDatas[index].scriptVariableDisableActive);
+    checkBox->setChecked(m_mapDatas[index].scriptVariableDisableActive);
     connect(checkBox.get(), &Checkbox::checkChanged, this,
             [this, index](bool value)
     {
-        mapDatas[index].scriptVariableDisableActive = value;
+        m_mapDatas[index].scriptVariableDisableActive = value;
     });
     pPanel->addItem(checkBox);
     y += pText->getHeight() + 10;
