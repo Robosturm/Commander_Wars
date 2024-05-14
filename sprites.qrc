@@ -5130,5 +5130,7 @@
         <file>resources/ui/coGenerator/cogeneratormenu.js</file>
         <file>resources/ui/coGenerator/cogeneratormenu.xml</file>
         <file>resources/images/backgrounds/cogeneratormenu.png</file>
+        <file>resources/ui/coGenerator/offensivebonus.js</file>
+        <file>resources/ui/coGenerator/offensivebonus.xml</file>
     </qresource>
 </RCC>

@@ -38,12 +38,12 @@ public:
      * @brief getActiveCondition
      * @return
      */
-    GameEnums::PowerMode getActiveCondition() const;
+    Q_INVOKABLE GameEnums::PowerMode getActiveCondition() const;
     /**
      * @brief setActiveCondition
      * @param newActiveCondition
      */
-    void setActiveCondition(const GameEnums::PowerMode & newActiveCondition);
+    Q_INVOKABLE void setActiveCondition(const GameEnums::PowerMode & newActiveCondition);
     /**
      * @brief getVariables
      * @return
@@ -57,6 +57,7 @@ public:
      * @return
      */
     Q_INVOKABLE QString getFunctionNameContext() const;
+    Q_INVOKABLE QString getAbilityName() const;
     Q_INVOKABLE bool getIncoRange() const;
     Q_INVOKABLE void setIncoRange(bool newIncoRange);
     Q_INVOKABLE void showCoAbility();

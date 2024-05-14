@@ -3,6 +3,7 @@
     <Panel>
         <x>10</x>
         <y>10</y>
+        <Id>MAINPANEL</Id>
         <width>settings.getStageWidth() - 20</width>
         <height>settings.getStageHeight() - 90</height>
         <childs>
@@ -22,7 +23,430 @@
                 <startValue>currentMenu.getCoName()</startValue>
                 <onEvent>currentMenu.setCoName(input)</onEvent>
             </Textbox>
-
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","CO bio:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getStageWidth() - 90 - lastWidth - lastX - 170</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The bio of the CO.")</tooltip>
+                <startValue>currentMenu.getCoBio()</startValue>
+                <onEvent>currentMenu.setCoBio(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","CO army id:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getStageWidth() - 90 - lastWidth - lastX - 170</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The army id of the CO.")</tooltip>
+                <startValue>currentMenu.getCoArmy()</startValue>
+                <onEvent>currentMenu.setCoArmy(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","CO hits:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getStageWidth() - 90 - lastWidth - lastX - 170</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The hits of the CO.")</tooltip>
+                <startValue>currentMenu.getCoHits()</startValue>
+                <onEvent>currentMenu.setCoHits(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","CO miss:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getStageWidth() - 90 - lastWidth - lastX - 170</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The miss of the CO.")</tooltip>
+                <startValue>currentMenu.getCoMiss()</startValue>
+                <onEvent>currentMenu.setCoMiss(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","CO description:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getStageWidth() - 90 - lastWidth - lastX - 170</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The description of the CO.")</tooltip>
+                <startValue>currentMenu.getCoDescription()</startValue>
+                <onEvent>currentMenu.setCoDescription(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Long CO description:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getStageWidth() - 90 - lastWidth - lastX - 170</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The long description of the CO.")</tooltip>
+                <startValue>currentMenu.getCoLongDescription()</startValue>
+                <onEvent>currentMenu.setCoLongDescription(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","CO zone range:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the co zone range.")</tooltip>
+                <startValue>currentMenu.getCoUnitRange()</startValue>
+                <infinite>-1</infinite>
+                <min>0</min>
+                <max>65535</max>
+                <onEvent>currentMenu.setCoUnitRange(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Powerstars:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the co power costs.")</tooltip>
+                <startValue>currentMenu.getPowerStars()</startValue>
+                <infinite>-1</infinite>
+                <min>0</min>
+                <max>65535</max>
+                <onEvent>currentMenu.setPowerStars(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Superpowerstars:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the co superpower costs.")</tooltip>
+                <startValue>currentMenu.getSuperpowerStars()</startValue>
+                <infinite>-1</infinite>
+                <min>0</min>
+                <max>65535</max>
+                <onEvent>currentMenu.setSuperpowerStars(input)</onEvent>
+            </Spinbox>
+            <Button>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>280</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Add power sentence")</text>
+                <onEvent>
+                    var sentences = currentMenu.getCoPowerSentences();
+                    sentences.push("");
+                    currentMenu.setCoPowerSentences(sentences);
+                    currentMenu.reloadGeneratorUi()
+                </onEvent>
+            </Button>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>280</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Remove power sentence")</text>
+                <onEvent>
+                    var sentences = currentMenu.getCoPowerSentences();
+                    sentences.pop();
+                    currentMenu.setCoPowerSentences(sentences);
+                    currentMenu.reloadGeneratorUi()
+                </onEvent>
+            </Button>
+            <loop count="currentMenu.getCoPowerSentences().length">
+                <Textbox>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>settings.getStageWidth() - 90 - 170</width>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","One of the co power activation sentences.")</tooltip>
+                    <startValue>currentMenu.getCoPowerSentences()[loopIdx]</startValue>
+                    <onEvent>currentMenu.setCoPowerSentence(input, loopIdx)</onEvent>
+                </Textbox>
+            </loop>
+            <Button>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>280</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Add victory sentence")</text>
+                <onEvent>
+                    var sentences = currentMenu.getCoVictorySentences();
+                    sentences.push("");
+                    currentMenu.setCoVictorySentences(sentences);
+                    currentMenu.reloadGeneratorUi()
+                </onEvent>
+            </Button>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>280</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Remove victory sentence")</text>
+                <onEvent>
+                    var sentences = currentMenu.getCoVictorySentences();
+                    sentences.pop();
+                    currentMenu.setCoVictorySentences(sentences);
+                    currentMenu.reloadGeneratorUi()
+                </onEvent>
+            </Button>
+            <loop count="currentMenu.getCoVictorySentences().length">
+                <Textbox>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>settings.getStageWidth() - 90 - 170</width>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","One of the co victory sentences.")</tooltip>
+                    <startValue>currentMenu.getCoVictorySentences()[loopIdx]</startValue>
+                    <onEvent>currentMenu.setCoVictorySentence(input, loopIdx)</onEvent>
+                </Textbox>
+            </loop>
+            <Button>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>280</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Add defeat sentence")</text>
+                <onEvent>
+                    var sentences = currentMenu.getCoDefeatSentences();
+                    sentences.push("");
+                    currentMenu.setCoDefeatSentences(sentences);
+                    currentMenu.reloadGeneratorUi()
+                </onEvent>
+            </Button>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>280</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Remove defeat sentence")</text>
+                <onEvent>
+                    var sentences = currentMenu.getCoDefeatSentences();
+                    sentences.pop();
+                    currentMenu.setCoDefeatSentences(sentences);
+                    currentMenu.reloadGeneratorUi()
+                </onEvent>
+            </Button>
+            <loop count="currentMenu.getCoDefeatSentences().length">
+                <Textbox>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>settings.getStageWidth() - 90 - 170</width>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","One of the co defeat sentences.")</tooltip>
+                    <startValue>currentMenu.getCoDefeatSentences()[loopIdx]</startValue>
+                    <onEvent>currentMenu.setCoDefeatSentence(input, loopIdx)</onEvent>
+                </Textbox>
+            </loop>
+            <DropDownMenu>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <Id>ABILITYIDX</Id>
+                <width>300</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select which ability you want to add.")</tooltip>
+                <startValue>0</startValue>
+                <items>COGENERATORMENU.getCoAbilities()</items>
+                <onEvent></onEvent>
+            </DropDownMenu>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>POWERMODE</Id>
+                <width>300</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select which power mode should be used for the ability.")</tooltip>
+                <startValue>0</startValue>
+                <items>COGENERATORMENU.getPowermodes()</items>
+                <onEvent></onEvent>
+            </DropDownMenu>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Add ability")</text>
+                <onEvent>
+                    currentMenu.addCoAbility(COGENERATORMENU.getCoAbilitiyIDs()[currentMenu.getObject("ABILITYIDX").getCurrentItem()], currentMenu.getObject("POWERMODE").getCurrentItem());
+                    currentMenu.reloadGeneratorUi()
+                </onEvent>
+            </Button>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Day to day")</text>
+                <font>"main"</font>
+                <fontSize>48</fontSize>
+            </Label>
+            <loop count="currentMenu.getCoAbilityCount()">
+                <if condition="currentMenu.getCoAbility(loopIdx).getActiveCondition() === GameEnums.PowerMode_Off">
+                    <Label>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 10</y>
+                        <width>300</width>
+                        <text>currentMenu.getCoAbility(loopIdx).getAbilityName()</text>
+                        <font>"main"</font>
+                        <fontSize>24</fontSize>
+                    </Label>
+                    <Button>
+                        <x>lastX + lastWidth + 10</x>
+                        <y>lastY</y>
+                        <width>200</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Edit")</text>
+                        <onEvent>currentMenu.getCoAbility(loopIdx).showCoAbility()</onEvent>
+                    </Button>
+                    <Button>
+                        <x>lastX + lastWidth + 10</x>
+                        <y>lastY</y>
+                        <width>200</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Remove")</text>
+                        <onEvent>
+                            currentMenu.removeCoAbility(loopIdx);
+                            currentMenu.reloadGeneratorUi()
+                        </onEvent>
+                    </Button>
+                </if>
+            </loop>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Power")</text>
+                <font>"main"</font>
+                <fontSize>48</fontSize>
+            </Label>
+            <loop count="currentMenu.getCoAbilityCount()">
+                <if condition="currentMenu.getCoAbility(loopIdx).getActiveCondition() === GameEnums.PowerMode_Power">
+                    <Label>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 10</y>
+                        <width>300</width>
+                        <text>currentMenu.getCoAbility(loopIdx).getAbilityName()</text>
+                        <font>"main"</font>
+                        <fontSize>24</fontSize>
+                    </Label>
+                    <Button>
+                        <x>lastX + lastWidth + 10</x>
+                        <y>lastY</y>
+                        <width>200</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Edit")</text>
+                        <onEvent>currentMenu.getCoAbility(loopIdx).showCoAbility()</onEvent>
+                    </Button>
+                    <Button>
+                        <x>lastX + lastWidth + 10</x>
+                        <y>lastY</y>
+                        <width>200</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Remove")</text>
+                        <onEvent>
+                            currentMenu.removeCoAbility(loopIdx);
+                            currentMenu.reloadGeneratorUi()
+                        </onEvent>
+                    </Button>
+                </if>
+            </loop>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Superpower")</text>
+                <font>"main"</font>
+                <fontSize>48</fontSize>
+            </Label>
+            <loop count="currentMenu.getCoAbilityCount()">
+                <if condition="currentMenu.getCoAbility(loopIdx).getActiveCondition() === GameEnums.PowerMode_Superpower">
+                    <Label>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 10</y>
+                        <width>300</width>
+                        <text>currentMenu.getCoAbility(loopIdx).getAbilityName()</text>
+                        <font>"main"</font>
+                        <fontSize>24</fontSize>
+                    </Label>
+                    <Button>
+                        <x>lastX + lastWidth + 10</x>
+                        <y>lastY</y>
+                        <width>200</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Edit")</text>
+                        <onEvent>currentMenu.getCoAbility(loopIdx).showCoAbility()</onEvent>
+                    </Button>
+                    <Button>
+                        <x>lastX + lastWidth + 10</x>
+                        <y>lastY</y>
+                        <width>200</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Remove")</text>
+                        <onEvent>
+                            currentMenu.removeCoAbility(loopIdx);
+                            currentMenu.reloadGeneratorUi()
+                        </onEvent>
+                    </Button>
+                </if>
+            </loop>
         </childs>
     </Panel>
+    <Button>
+        <x>10</x>
+        <y>settings.getStageHeight() - 50</y>
+        <width>160</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Exit")</text>
+        <onEvent>currentMenu.exitMenue()</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getStageWidth() / 2 - 160 - 5</x>
+        <y>lastY</y>
+        <width>160</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Store CO")</text>
+        <onEvent>currentMenu.showFileDialog("*.codat", "mods", true, "COGENERATORMENU", "storeCoDataCallback")</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getStageWidth() / 2 + 5</x>
+        <y>lastY</y>
+        <width>160</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Load CO")</text>
+        <onEvent>currentMenu.showFileDialog("*.codat", "mods", false, "COGENERATORMENU", "loadCoDataCallback")</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getStageWidth() - 160 -10</x>
+        <y>lastY</y>
+        <width>160</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Generate CO")</text>
+        <onEvent>currentMenu.showFolderDialog("mods", "COGENERATORMENU", "generateCoCallback")</onEvent>
+    </Button>
 </ui>

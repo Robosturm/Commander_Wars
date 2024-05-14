@@ -11,6 +11,7 @@ class CoGeneratorMenu final : public GeneratorMenu
 public:
     static const char* const CO_GENERATOR_MENU_JSNAME;
     static const char* const CO_GENERATOR_MENU_BASEPATH;
+    static const char* const CO_GENERATOR_MENU_XML;
 
     CoGeneratorMenu();
 
@@ -33,14 +34,18 @@ public:
         return 1;
     }
 
-    Q_INVOKABLE void addCoAbility(const QString & coAbilityId);
+    Q_INVOKABLE void addCoAbility(const QString & coAbilityId, GameEnums::PowerMode powerMode);
     Q_INVOKABLE void removeCoAbility(qint32 index);
 
     Q_INVOKABLE void generateCo(const QString & modDir, const QString & coid);
 
-    Q_INVOKABLE void storeCoData(const QString & modDir, const QString & coid) const;
+    Q_INVOKABLE void storeCoData(const QString & filename) const;
 
-    Q_INVOKABLE void loadCoData(const QString & modDir, const QString & coid);
+    Q_INVOKABLE void loadCoData(const QString & filename);
+    Q_INVOKABLE void reloadGeneratorUi();
+
+    Q_INVOKABLE QString getCoId() const;
+    Q_INVOKABLE void setCoId(const QString & newCoId);
 
     Q_INVOKABLE QString getCoName() const;
     Q_INVOKABLE void setCoName(const QString & newCoName);
@@ -75,6 +80,9 @@ public:
     Q_INVOKABLE QString getCoDescription() const;
     Q_INVOKABLE void setCoDescription(const QString & newCoDescription);
 
+    Q_INVOKABLE QString getCoLongDescription() const;
+    Q_INVOKABLE void setCoLongDescription(const QString & newCoLongDescription);
+
     Q_INVOKABLE QString getCoArmy() const;
     Q_INVOKABLE void setCoArmy(const QString & newCoArmy);
 
@@ -83,15 +91,18 @@ public:
 
     Q_INVOKABLE QStringList getCoPowerSentences() const;
     Q_INVOKABLE void setCoPowerSentences(const QStringList & newCoPowerSentences);
+    Q_INVOKABLE void setCoPowerSentence(const QString & newCoPowerSentence, qint32 idx);
 
     Q_INVOKABLE QStringList getCoVictorySentences() const;
     Q_INVOKABLE void setCoVictorySentences(const QStringList & newCoVictorySentences);
+    Q_INVOKABLE void setCoVictorySentence(const QString & newCoVictorySentence, qint32 idx);
 
     Q_INVOKABLE QStringList getCoDefeatSentences() const;
     Q_INVOKABLE void setCoDefeatSentences(const QStringList & newCoDefeatSentences);
+    Q_INVOKABLE void setCoDefeatSentence(const QString & newCoDefeatSentence, qint32 idx);
 
-    Q_INVOKABLE QString getCoLongDescription() const;
-    Q_INVOKABLE void setCoLongDescription(const QString & newCoLongDescription);
+    Q_INVOKABLE qint32 getCoAbilityCount() const;
+    Q_INVOKABLE CoAbility* getCoAbility(qint32 index) const;
     /**
      * @brief writeFuncPrologue
      */
@@ -108,11 +119,12 @@ public:
 private:
     QVector<spCoAbility> m_coAbilities;
 
+    QString m_coId{"Unknown"};
     QString m_coName{"Unknown"};
-    qint32 m_powerStars{0};
+    qint32 m_powerStars{3};
     QString m_coPowerDescription{"Unknown"};
     QString m_coPowerName{"Unknown"};
-    qint32 m_superpowerStars{0};
+    qint32 m_superpowerStars{3};
     QString m_coSuperpowerDescription{"Unknown"};
     QString m_coSuperpowerName{"Unknown"};
     QString m_coBio{"Unknown"};
@@ -121,7 +133,7 @@ private:
     QString m_coDescription{"Unknown"};
     QString m_coLongDescription{"Unknown"};
     QString m_coArmy{"OS"};
-    qint32 m_coUnitRange{0};
+    qint32 m_coUnitRange{2};
     QStringList m_coPowerSentences;
     QStringList m_coVictorySentences;
     QStringList m_coDefeatSentences;

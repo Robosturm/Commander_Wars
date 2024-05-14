@@ -11,11 +11,13 @@
 
 #include "ui_reader/uifactory.h"
 
+#include "menue/mainwindow.h"
+
 const char* const CoGeneratorMenu::CO_GENERATOR_MENU_JSNAME = "COGENERATORMENU";
 const char* const CoGeneratorMenu::CO_GENERATOR_MENU_BASEPATH = "ui/coGenerator/";
-
+const char* const CoGeneratorMenu::CO_GENERATOR_MENU_XML = "cogeneratormenu.xml";
 CoGeneratorMenu::CoGeneratorMenu()
-    : GeneratorMenu("")
+    : GeneratorMenu("", false)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("CoGeneratorMenu");
@@ -45,7 +47,7 @@ CoGeneratorMenu::CoGeneratorMenu()
     pApp->getAudioManager()->playRandom();
 
     setupJsThis(this);
-    UiFactory::getInstance().createUi(QString(CO_GENERATOR_MENU_BASEPATH) + "cogeneratormenu.xml", this);
+    UiFactory::getInstance().createUi(QString(CO_GENERATOR_MENU_BASEPATH) + CO_GENERATOR_MENU_XML, this);
 
     pApp->continueRendering();
 }
@@ -85,11 +87,14 @@ void CoGeneratorMenu::writeCoContent(QTextStream & stream)
             ability->writeCoAbilityContent(stream);
             for (qint32 i2 = 0; i2 < m_coAbilities.size(); ++i2)
             {
-                auto & otherAbility = m_coAbilities[i2];
-                QString otherCoAbilityName = otherAbility->getFunctionNameContext();
-                if (otherCoAbilityName == coAbilityName)
+                if (i2 != i)
                 {
-                    otherAbility->writeCoAbilityContent(stream);
+                    auto & otherAbility = m_coAbilities[i2];
+                    QString otherCoAbilityName = otherAbility->getFunctionNameContext();
+                    if (otherCoAbilityName == coAbilityName)
+                    {
+                        otherAbility->writeCoAbilityContent(stream);
+                    }
                 }
             }
             ability->writeFuncEpilogue(stream);
@@ -106,14 +111,43 @@ void CoGeneratorMenu::writeCoEpilogue(QTextStream & stream)
     stream << erg.toString();
 }
 
-void CoGeneratorMenu::addCoAbility(const QString & coAbilityId)
+qint32 CoGeneratorMenu::getCoAbilityCount() const
 {
+    return m_coAbilities.size();
+}
 
+CoAbility* CoGeneratorMenu::getCoAbility(qint32 index) const
+{
+    if (index >= 0 && index < m_coAbilities.size())
+    {
+        return m_coAbilities[index].get();
+    }
+    return nullptr;
+}
+
+QString CoGeneratorMenu::getCoId() const
+{
+    return m_coId;
+}
+
+void CoGeneratorMenu::setCoId(const QString & newCoId)
+{
+    m_coId = newCoId;
+}
+
+void CoGeneratorMenu::addCoAbility(const QString & coAbilityId, GameEnums::PowerMode powerMode)
+{
+    spCoAbility ability = MemoryManagement::create<CoAbility>(this, coAbilityId);
+    ability->setActiveCondition(powerMode);
+    m_coAbilities.append(ability);
 }
 
 void CoGeneratorMenu::removeCoAbility(qint32 index)
 {
-
+    if (index >= 0 && index < m_coAbilities.size())
+    {
+        m_coAbilities.removeAt(index);
+    }
 }
 
 QString CoGeneratorMenu::getCoLongDescription() const
@@ -266,6 +300,14 @@ void CoGeneratorMenu::setCoPowerSentences(const QStringList & newCoPowerSentence
     m_coPowerSentences = newCoPowerSentences;
 }
 
+void CoGeneratorMenu::setCoPowerSentence(const QString & newCoPowerSentence, qint32 idx)
+{
+    if (idx >= 0 && idx < m_coPowerSentences.size())
+    {
+        m_coPowerSentences[idx] = newCoPowerSentence;
+    }
+}
+
 QStringList CoGeneratorMenu::getCoVictorySentences() const
 {
     return m_coVictorySentences;
@@ -274,6 +316,14 @@ QStringList CoGeneratorMenu::getCoVictorySentences() const
 void CoGeneratorMenu::setCoVictorySentences(const QStringList & newCoVictorySentences)
 {
     m_coVictorySentences = newCoVictorySentences;
+}
+
+void CoGeneratorMenu::setCoVictorySentence(const QString & newCoVictorySentence, qint32 idx)
+{
+    if (idx >= 0 && idx < m_coVictorySentences.size())
+    {
+        m_coVictorySentences[idx] = newCoVictorySentence;
+    }
 }
 
 QStringList CoGeneratorMenu::getCoDefeatSentences() const
@@ -286,9 +336,17 @@ void CoGeneratorMenu::setCoDefeatSentences(const QStringList & newCoDefeatSenten
     m_coDefeatSentences = newCoDefeatSentences;
 }
 
-void CoGeneratorMenu::storeCoData(const QString & modDir, const QString & coid) const
+void CoGeneratorMenu::setCoDefeatSentence(const QString & newCoDefeatSentence, qint32 idx)
 {
-    QFile file(modDir + "/" + coid + ".dat");
+    if (idx >= 0 && idx < m_coDefeatSentences.size())
+    {
+        m_coDefeatSentences[idx] = newCoDefeatSentence;
+    }
+}
+
+void CoGeneratorMenu::storeCoData(const QString & filename) const
+{
+    QFile file(filename);
     if (file.open(QIODevice::WriteOnly))
     {
         QDataStream stream(&file);
@@ -296,19 +354,26 @@ void CoGeneratorMenu::storeCoData(const QString & modDir, const QString & coid) 
     }
 }
 
-void CoGeneratorMenu::loadCoData(const QString & modDir, const QString & coid)
+void CoGeneratorMenu::loadCoData(const QString & filename)
 {
-    QFile file(modDir + "/" + coid + ".dat");
-    if (file.open(QIODevice::WriteOnly))
+    QFile file(filename);
+    if (file.open(QIODevice::ReadOnly))
     {
         QDataStream stream(&file);
         deserializeObject(stream);
+        reloadGeneratorUi();
     }
+}
+
+void CoGeneratorMenu::reloadGeneratorUi()
+{
+    reloadUi(QString(CO_GENERATOR_MENU_BASEPATH) + CO_GENERATOR_MENU_XML);
 }
 
 void CoGeneratorMenu::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();
+    stream << m_coId;
     m_Variables.serializeObject(stream);
     stream << static_cast<qint32>(m_coAbilities.size());
     for (const auto & ability : m_coAbilities)
@@ -354,6 +419,7 @@ void CoGeneratorMenu::deserializeObject(QDataStream& stream)
     m_coVictorySentences.clear();
     qint32 version;
     stream >> version;
+    stream >> m_coId;
     m_Variables.deserializeObject(stream);
     qint32 size = 0;
     stream >> size;

@@ -58,7 +58,7 @@ void CoAbility::deserializeObject(QDataStream& stream)
 
 void CoAbility::showCoAbility()
 {
-    loadXmlFile(QString(CoGeneratorMenu::CO_GENERATOR_MENU_BASEPATH) + "/" + m_coAbilityId + ".xml");
+    reloadUi(QString(CoGeneratorMenu::CO_GENERATOR_MENU_BASEPATH) + m_coAbilityId.toLower() + ".xml");
     m_pBaseMenu->addChild(oxygine::spActor(this));
 }
 
@@ -70,6 +70,15 @@ GameEnums::PowerMode CoAbility::getActiveCondition() const
 void CoAbility::setActiveCondition(const GameEnums::PowerMode & newActiveCondition)
 {
     m_activeCondition = newActiveCondition;
+}
+
+QString CoAbility::getAbilityName() const
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getAbilityName";
+    QJSValueList args({});
+    QJSValue erg = pInterpreter->doFunction(m_coAbilityId, function1, args);
+    return erg.toString();
 }
 
 QString CoAbility::getFunctionNameContext() const
@@ -85,7 +94,7 @@ QString CoAbility::getFunctionNameContext() const
 void CoAbility::writeFuncPrologue(QTextStream & stream)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = getFunctionNameContext() + "writeFuncPrologue";
+    QString function1 = getFunctionNameContext() + "WriteFuncPrologue";
     QJSValueList args({JsThis::getJsThis(m_pBaseMenu)});
     QJSValue erg = pInterpreter->doFunction(CoGeneratorMenu::CO_GENERATOR_MENU_JSNAME, function1, args);
     stream << erg.toString();
@@ -94,7 +103,7 @@ void CoAbility::writeFuncPrologue(QTextStream & stream)
 void CoAbility::writeCoAbilityContent(QTextStream & stream)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = getFunctionNameContext() + "writeCoAbilityContent";
+    QString function1 = "writeCoAbilityContent";
     QJSValueList args({m_jsThis, JsThis::getJsThis(m_pBaseMenu)});
     QJSValue erg = pInterpreter->doFunction(m_coAbilityId, function1, args);
     stream << erg.toString();
@@ -107,7 +116,7 @@ void CoAbility::writeCoAbilityContent(QTextStream & stream)
 void CoAbility::writeFuncEpilogue(QTextStream & stream)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = getFunctionNameContext() + "writeFuncEpilogue";
+    QString function1 = getFunctionNameContext() + "WriteFuncEpilogue";
     QJSValueList args({JsThis::getJsThis(m_pBaseMenu)});
     QJSValue erg = pInterpreter->doFunction(CoGeneratorMenu::CO_GENERATOR_MENU_JSNAME, function1, args);
     stream << erg.toString();
