@@ -5130,7 +5130,33 @@
         <file>resources/ui/coGenerator/cogeneratormenu.js</file>
         <file>resources/ui/coGenerator/cogeneratormenu.xml</file>
         <file>resources/images/backgrounds/cogeneratormenu.png</file>
-        <file>resources/ui/coGenerator/offensivebonus.js</file>
-        <file>resources/ui/coGenerator/offensivebonus.xml</file>
+        <file>resources/ui/coGenerator/coability_deffensivebonus.js</file>
+        <file>resources/ui/coGenerator/coability_deffensivebonus.xml</file>
+        <file>resources/ui/coGenerator/coability_deffensivebonusunit.js</file>
+        <file>resources/ui/coGenerator/coability_deffensivebonusunit.xml</file>
+        <file>resources/ui/coGenerator/coability_firerangemodifier.js</file>
+        <file>resources/ui/coGenerator/coability_firerangemodifier.xml</file>
+        <file>resources/ui/coGenerator/coability_firerangemodifierunit.js</file>
+        <file>resources/ui/coGenerator/coability_firerangemodifierunit.xml</file>
+        <file>resources/ui/coGenerator/coability_movementpointmodifier.js</file>
+        <file>resources/ui/coGenerator/coability_movementpointmodifier.xml</file>
+        <file>resources/ui/coGenerator/coability_movementpointmodifierunit.js</file>
+        <file>resources/ui/coGenerator/coability_movementpointmodifierunit.xml</file>
+        <file>resources/ui/coGenerator/coability_offensivebonus.js</file>
+        <file>resources/ui/coGenerator/coability_offensivebonus.xml</file>
+        <file>resources/ui/coGenerator/coability_offensivebonusunit.js</file>
+        <file>resources/ui/coGenerator/coability_offensivebonusunit.xml</file>
+        <file>resources/ui/coGenerator/coability_attackhpbonus.js</file>
+        <file>resources/ui/coGenerator/coability_attackhpbonus.xml</file>
+        <file>resources/ui/coGenerator/coability_attackhpbonusunit.js</file>
+        <file>resources/ui/coGenerator/coability_attackhpbonusunit.xml</file>
+        <file>resources/ui/coGenerator/coability_capturebonus.js</file>
+        <file>resources/ui/coGenerator/coability_capturebonus.xml</file>
+        <file>resources/ui/coGenerator/coability_capturebonusunit.js</file>
+        <file>resources/ui/coGenerator/coability_capturebonusunit.xml</file>
+        <file>resources/ui/coGenerator/coability_minfirerangemodifier.js</file>
+        <file>resources/ui/coGenerator/coability_minfirerangemodifier.xml</file>
+        <file>resources/ui/coGenerator/coability_minfirerangemodifierunit.js</file>
+        <file>resources/ui/coGenerator/coability_minfirerangemodifierunit.xml</file>
     </qresource>
 </RCC>

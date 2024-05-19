@@ -1,22 +1,22 @@
-var OFFENSIVEBONUS =
+var COABILITY_REPAIRBONUS =
 {
 
     getAbilityName : function()
     {
-        return qsTr("All offensive bonus");
+        return qsTr("All repair bonus");
     },
 
     getFunctionNameContext : function(coAbility, coGeneratorMenu)
     {
-        return "getOffensiveBonus";
+        return "getRepairBonus";
     },
 
     writeCoAbilityContent : function(coAbility, coGeneratorMenu)
     {
         var variables = coAbility.getVariables();
-        var offBonus = variables.createVariable("offBonus");
+        var bonus = variables.createVariable("bonus");
         return COGENERATORMENU.getActiveConditionPrologue(coAbility) +
-               "                result = result + " + offBonus.readDataInt32().toString() + ";\n" +
+               "                result = result + " + bonus.readDataInt32().toString() + ";\n" +
                "            }\n"
     }
 };

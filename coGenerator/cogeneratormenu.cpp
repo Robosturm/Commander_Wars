@@ -11,6 +11,9 @@
 
 #include "ui_reader/uifactory.h"
 
+#include "objects/base/panel.h"
+#include "objects/base/dropdownmenu.h"
+
 #include "menue/mainwindow.h"
 
 const char* const CoGeneratorMenu::CO_GENERATOR_MENU_JSNAME = "COGENERATORMENU";
@@ -367,7 +370,18 @@ void CoGeneratorMenu::loadCoData(const QString & filename)
 
 void CoGeneratorMenu::reloadGeneratorUi()
 {
+    static const char* const PANELNAME = "MAINPANEL";
+    static const char* const ABILITYIDX = "ABILITYIDX";
+    static const char* const POWERMODE = "POWERMODE";
+    auto hScrollValue = getCastedObject<Panel>(PANELNAME)->getH_Scrollbar()->getScrollvalue();
+    auto abilityIdx = getCastedObject<DropDownmenu>(ABILITYIDX)->getCurrentItem();
+    auto powerMode = getCastedObject<DropDownmenu>(POWERMODE)->getCurrentItem();
+
     reloadUi(QString(CO_GENERATOR_MENU_BASEPATH) + CO_GENERATOR_MENU_XML);
+
+    getCastedObject<Panel>(PANELNAME)->getH_Scrollbar()->changeScrollValue(hScrollValue);
+    getCastedObject<DropDownmenu>(ABILITYIDX)->setCurrentItem(abilityIdx);
+    getCastedObject<DropDownmenu>(POWERMODE)->setCurrentItem(powerMode);
 }
 
 void CoGeneratorMenu::serializeObject(QDataStream& stream) const

@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<ui overwrite="true">
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <Id>MAINPANEL</Id>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 90</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","In CO range:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: The ability is only active in the co range.")</tooltip>
+                <startValue>currentMenu.getIncoRange()</startValue>
+                <onEvent>currentMenu.setIncoRange(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>5</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Unit:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenuSprite>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>105</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Unit that should get the bonus")</tooltip>
+                <startValue>
+                    var variables = currentMenu.getVariables();
+                    var offBonus = variables.createVariable("unitID");
+                    offBonus.readDataString()
+                </startValue>
+                <spriteType>"unit"</spriteType>
+                <spriteSize>30</spriteSize>
+                <items>unitSpriteManager.getUnitsSorted()</items>
+                <onEvent>
+                    var variables = currentMenu.getVariables();
+                    var offBonus = variables.createVariable("unitID");
+                    offBonus.writeDataString(input2)
+                </onEvent>
+            </DropDownMenuSprite>
+            <Label>
+                <x>5</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Defensive bonus:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the deffensive bonus provided by this ability.")</tooltip>
+                <startValue>
+                    var variables = currentMenu.getVariables();
+                    var offBonus = variables.createVariable("defBonus");
+                    offBonus.readDataInt32()
+                </startValue>
+                <infinite>-1001</infinite>
+                <spinSpeed>1</spinSpeed>
+                <min>-1000</min>
+                <max>1000</max>
+                <onEvent>
+                    var variables = currentMenu.getVariables();
+                    var offBonus = variables.createVariable("defBonus");
+                    offBonus.writeDataInt32(input)
+                </onEvent>
+            </Spinbox>
+        </childs>
+    </Panel>
+    <Button>
+        <x>settings.getStageWidth() / 2 - 80</x>
+        <y>settings.getStageHeight() - 50</y>
+        <width>160</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Back")</text>
+        <onEvent>currentMenu.exit()</onEvent>
+    </Button>
+</ui>

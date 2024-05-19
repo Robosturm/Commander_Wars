@@ -181,6 +181,11 @@ void H_Scrollbar::scroll(oxygine::Event* pEvent)
     }
 }
 
+float H_Scrollbar::getScrollvalue() const
+{
+    return m_Scrollvalue;
+}
+
 qint32 H_Scrollbar::getContentHeigth() const
 {
     return m_ContentHeigth;

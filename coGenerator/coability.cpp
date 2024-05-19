@@ -59,7 +59,7 @@ void CoAbility::deserializeObject(QDataStream& stream)
 void CoAbility::showCoAbility()
 {
     reloadUi(QString(CoGeneratorMenu::CO_GENERATOR_MENU_BASEPATH) + m_coAbilityId.toLower() + ".xml");
-    m_pBaseMenu->addChild(oxygine::spActor(this));
+    m_pBaseMenu->addChild(this->getSharedPtrFromWeak<Actor>());
 }
 
 GameEnums::PowerMode CoAbility::getActiveCondition() const
