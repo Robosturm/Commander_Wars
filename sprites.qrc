@@ -5190,5 +5190,13 @@
         <file>resources/ui/coGenerator/coability_visionrangemodifier.xml</file>
         <file>resources/ui/coGenerator/coability_visionrangemodifierunit.js</file>
         <file>resources/ui/coGenerator/coability_visionrangemodifierunit.xml</file>
+        <file>resources/ui/coGenerator/coability_bonusmisfortune.js</file>
+        <file>resources/ui/coGenerator/coability_bonusmisfortune.xml</file>
+        <file>resources/ui/coGenerator/coability_bonusmisfortuneunit.js</file>
+        <file>resources/ui/coGenerator/coability_bonusmisfortuneunit.xml</file>
+        <file>resources/ui/coGenerator/coability_perfecthpview.js</file>
+        <file>resources/ui/coGenerator/coability_perfecthpview.xml</file>
+        <file>resources/ui/coGenerator/coability_perfecthpviewunit.js</file>
+        <file>resources/ui/coGenerator/coability_perfecthpviewunit.xml</file>
     </qresource>
 </RCC>

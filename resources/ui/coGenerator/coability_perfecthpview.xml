@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ui overwrite="true">
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <Id>MAINPANEL</Id>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 90</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","In CO range:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: The ability is only active in the co range.")</tooltip>
+                <startValue>currentMenu.getIncoRange()</startValue>
+                <onEvent>currentMenu.setIncoRange(input)</onEvent>
+            </Checkbox>
+        </childs>
+    </Panel>
+    <Button>
+        <x>settings.getStageWidth() / 2 - 80</x>
+        <y>settings.getStageHeight() - 50</y>
+        <width>160</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Back")</text>
+        <onEvent>currentMenu.exit()</onEvent>
+    </Button>
+</ui>
