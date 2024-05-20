@@ -1,20 +1,19 @@
-var COABILITY_BONUSLUCKUNIT =
+var COABILITY_HPHIDDENUNIT =
 {
 
     getAbilityName : function()
     {
-        return qsTr("Unit luck bonus");
+        return qsTr("Unit HP hidden");
     },
 
     getFunctionNameContext : function(coAbility, coGeneratorMenu)
     {
-        return "getBonusLuck";
+        return "getHpHidden";
     },
 
     writeCoAbilityContent : function(coAbility, coGeneratorMenu)
     {
         var variables = coAbility.getVariables();
-        var bonus = variables.createVariable("bonus");
         var unitId = variables.createVariable("unitID").readDataString();
         if (unitId === "")
         {
@@ -23,7 +22,7 @@ var COABILITY_BONUSLUCKUNIT =
         return COGENERATORMENU.getActiveConditionPrologue(coAbility) +
                "                if (unitId === \"" + unitId + "\")\n" +
                "                {\n" +
-               "                    result = result + " + bonus.readDataInt32().toString() + ";\n" +
+               "                    result = true;\n" +
                "                }\n" +
                "            }\n"
     }

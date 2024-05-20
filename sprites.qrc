@@ -5158,5 +5158,37 @@
         <file>resources/ui/coGenerator/coability_minfirerangemodifier.xml</file>
         <file>resources/ui/coGenerator/coability_minfirerangemodifierunit.js</file>
         <file>resources/ui/coGenerator/coability_minfirerangemodifierunit.xml</file>
+        <file>resources/ui/coGenerator/coability_bonusluck.js</file>
+        <file>resources/ui/coGenerator/coability_bonusluck.xml</file>
+        <file>resources/ui/coGenerator/coability_bonusluckunit.js</file>
+        <file>resources/ui/coGenerator/coability_bonusluckunit.xml</file>
+        <file>resources/ui/coGenerator/coability_damagereduction.js</file>
+        <file>resources/ui/coGenerator/coability_damagereduction.xml</file>
+        <file>resources/ui/coGenerator/coability_damagereductionunit.js</file>
+        <file>resources/ui/coGenerator/coability_damagereductionunit.xml</file>
+        <file>resources/ui/coGenerator/coability_firststrike.js</file>
+        <file>resources/ui/coGenerator/coability_firststrike.xml</file>
+        <file>resources/ui/coGenerator/coability_firststrikeunit.js</file>
+        <file>resources/ui/coGenerator/coability_firststrikeunit.xml</file>
+        <file>resources/ui/coGenerator/coability_hphidden.js</file>
+        <file>resources/ui/coGenerator/coability_hphidden.xml</file>
+        <file>resources/ui/coGenerator/coability_hphiddenunit.js</file>
+        <file>resources/ui/coGenerator/coability_hphiddenunit.xml</file>
+        <file>resources/ui/coGenerator/coability_repairbonus.js</file>
+        <file>resources/ui/coGenerator/coability_repairbonus.xml</file>
+        <file>resources/ui/coGenerator/coability_repairbonusunit.js</file>
+        <file>resources/ui/coGenerator/coability_repairbonusunit.xml</file>
+        <file>resources/ui/coGenerator/coability_terraindefensemodifier.js</file>
+        <file>resources/ui/coGenerator/coability_terraindefensemodifier.xml</file>
+        <file>resources/ui/coGenerator/coability_terraindefensemodifierunit.js</file>
+        <file>resources/ui/coGenerator/coability_terraindefensemodifierunit.xml</file>
+        <file>resources/ui/coGenerator/coability_truedamage.js</file>
+        <file>resources/ui/coGenerator/coability_truedamage.xml</file>
+        <file>resources/ui/coGenerator/coability_truedamageunit.js</file>
+        <file>resources/ui/coGenerator/coability_truedamageunit.xml</file>
+        <file>resources/ui/coGenerator/coability_visionrangemodifier.js</file>
+        <file>resources/ui/coGenerator/coability_visionrangemodifier.xml</file>
+        <file>resources/ui/coGenerator/coability_visionrangemodifierunit.js</file>
+        <file>resources/ui/coGenerator/coability_visionrangemodifierunit.xml</file>
     </qresource>
 </RCC>

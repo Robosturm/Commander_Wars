@@ -48,35 +48,7 @@
                     var bonus = variables.createVariable("unitID");
                     bonus.writeDataString(input2)
                 </onEvent>
-            </DropDownMenuSprite>
-            <Label>
-                <x>5</x>
-                <y>lastY + lastHeight + 10</y>
-                <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Luck bonus:")</text>
-                <font>"main"</font>
-                <fontSize>24</fontSize>
-            </Label>
-            <Spinbox>
-                <x>lastX + lastWidth + 10</x>
-                <y>lastY</y>
-                <width>400</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the luck bonus provided by this ability.")</tooltip>
-                <startValue>
-                    var variables = currentMenu.getVariables();
-                    var bonus = variables.createVariable("bonus");
-                    bonus.readDataInt32()
-                </startValue>
-                <infinite>-1001</infinite>
-                <spinSpeed>1</spinSpeed>
-                <min>-1000</min>
-                <max>1000</max>
-                <onEvent>
-                    var variables = currentMenu.getVariables();
-                    var offBonus = variables.createVariable("bonus");
-                    offBonus.writeDataInt32(input)
-                </onEvent>
-            </Spinbox>
+            </DropDownMenuSprite>            
         </childs>
     </Panel>
     <Button>

@@ -27,14 +27,15 @@ var COGENERATORMENU =
                     "COABILITY_REPAIRBONUSUNIT",
                     "COABILITY_BONUSLUCK",
                     "COABILITY_BONUSLUCKUNIT",
+                    "COABILITY_BONUSMISFORTUNE",
+                    "COABILITY_BONUSMISFORTUNEUNIT",
+                    "COABILITY_FIRSTSTRIKE",
+                    "COABILITY_FIRSTSTRIKEUNIT",
+                    "COABILITY_HPHIDDEN",
+                    "COABILITY_HPHIDDENUNIT",
+                    "COABILITY_PERFECTHPVIEW",
+                    "COABILITY_PERFECTHPVIEWNUNIT",
     ],
-
-    //getFirstStrike
-    //getHpHidden
-    //getPerfectHpView
-
-    //getBonusMisfortune
-
     //getCostModifier
 
     coPowermodes : [qsTr("Day to day"),

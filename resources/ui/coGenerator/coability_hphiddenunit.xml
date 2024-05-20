@@ -26,30 +26,29 @@
                 <x>5</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Luck bonus:")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","Unit:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
-            <Spinbox>
+            <DropDownMenuSprite>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>400</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the luck bonus provided by this ability.")</tooltip>
+                <width>105</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Unit that should get the bonus")</tooltip>
                 <startValue>
                     var variables = currentMenu.getVariables();
-                    var bonus = variables.createVariable("bonus");
-                    bonus.readDataInt32()
+                    var bonus = variables.createVariable("unitID");
+                    bonus.readDataString()
                 </startValue>
-                <infinite>-1001</infinite>
-                <spinSpeed>1</spinSpeed>
-                <min>-1000</min>
-                <max>1000</max>
+                <spriteType>"unit"</spriteType>
+                <spriteSize>30</spriteSize>
+                <items>unitSpriteManager.getUnitsSorted()</items>
                 <onEvent>
                     var variables = currentMenu.getVariables();
-                    var bonus = variables.createVariable("bonus");
-                    bonus.writeDataInt32(input)
+                    var bonus = variables.createVariable("unitID");
+                    bonus.writeDataString(input2)
                 </onEvent>
-            </Spinbox>
+            </DropDownMenuSprite>            
         </childs>
     </Panel>
     <Button>
