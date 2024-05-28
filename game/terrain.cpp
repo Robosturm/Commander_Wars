@@ -457,6 +457,16 @@ qint32 Terrain::getTerrainGroup(const QString & terrainId, GameMap* pMap)
     return 0;
 }
 
+bool Terrain::getSupportPalette() const
+{
+    return m_supportPalette;
+}
+
+void Terrain::setSupportPalette(bool newSupportPalette)
+{
+    m_supportPalette = newSupportPalette;
+}
+
 void Terrain::setMapForExtending(GameMap * newMap)
 {
     m_pMap = newMap;
@@ -642,7 +652,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
         pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         pSprite->setPriority(static_cast<qint32>(DrawPriority::Terrain));
-        if (!m_palette.isEmpty())
+        if (!m_palette.isEmpty() && m_supportPalette)
         {
             oxygine::spResAnim pPaletteAnim = pTerrainManager->getSpResAnim(m_palette, oxygine::error_policy::ep_ignore_error);
             if (pPaletteAnim.get() != nullptr)

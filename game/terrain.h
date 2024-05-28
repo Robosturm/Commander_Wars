@@ -636,6 +636,17 @@ public:
      * @return
      */
     Q_INVOKABLE QString getNeighbourDirectionsPalette(const QString & direction, const QString & baseTerrainId = "");
+    /**
+     * @brief getSupportPalette
+     * @return
+     */
+    Q_INVOKABLE bool getSupportPalette() const;
+    /**
+     * @brief setSupportPalette
+     * @param newSupportPalette
+     */
+    Q_INVOKABLE void setSupportPalette(bool newSupportPalette);
+
 protected:
     /**
      * @brief createBuildingDownStream
@@ -740,6 +751,7 @@ private:
     ScriptVariables m_AnimationVariables;
     bool m_hasStartOfTurn{false};
     bool m_hasFlowDirection{false};
+    bool m_supportPalette{false};
 
     std::shared_ptr<JsCallback<Terrain>> m_pStartDayCallback;
     QVector<TerrainOverlay> m_terrainOverlay;
