@@ -196,6 +196,11 @@ public slots:
      */
     void updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize, qint32 xOffset = 0, qint32 yOffset = 0);
     /**
+     * @brief loadScript
+     * @param filepath
+     */
+    void loadScript(QString & filepath);
+    /**
      * @brief help shows the helps messages between given indexes or all as default
      * @param start
      * @param end

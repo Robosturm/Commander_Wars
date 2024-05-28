@@ -63,6 +63,7 @@ const char* const GameConsole::functions[] =
     "printObjectDetails",
     "resetMapsGameRules",
     "updateTerrainPaletteMasks",
+    "loadScript"
     ""
 };
 const char* const GameConsole::compileTime = __TIME__;
@@ -211,6 +212,11 @@ void GameConsole::extendMaskImages(QString folder, QString filter)
 void GameConsole::updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize, qint32 xOffset, qint32 yOffset)
 {
     SpriteCreator::updateTerrainPaletteMasks(folder, filter, originalPaletteSize, newPaletteSize, xOffset, yOffset);
+}
+
+void GameConsole::loadScript(QString & filepath)
+{
+    Interpreter::getInstance()->openScript(filepath, false);
 }
 
 void GameConsole::dotask(QString message)
