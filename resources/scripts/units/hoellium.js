@@ -27,7 +27,7 @@ var Constructor = function()
     {
         return "MOVE_HOELLIUM";
     };
-    this.actionList = ["ACTION_HOELLIUM_WAIT"];
+    this.actionList = ["ACTION_JOIN", "ACTION_HOELLIUM_WAIT"];
     this.getBaseCost = function()
     {
         return 10000;

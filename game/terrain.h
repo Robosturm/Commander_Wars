@@ -751,7 +751,7 @@ private:
     ScriptVariables m_AnimationVariables;
     bool m_hasStartOfTurn{false};
     bool m_hasFlowDirection{false};
-    bool m_supportPalette{false};
+    bool m_supportPalette{true};
 
     std::shared_ptr<JsCallback<Terrain>> m_pStartDayCallback;
     QVector<TerrainOverlay> m_terrainOverlay;
