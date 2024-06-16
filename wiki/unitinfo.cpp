@@ -406,6 +406,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
         createWeaponTable(pUnit.get(), pUnit->getWeapon2ID(), y, width);
         y += 60;
     }
+    y += 60;
     setHeight(y);
     connect(this, &UnitInfo::sigShowLink, this, &UnitInfo::showLink, Qt::QueuedConnection);
 }

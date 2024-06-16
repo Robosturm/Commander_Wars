@@ -24,8 +24,7 @@ FieldInfo::FieldInfo(spTerrain pTerrain, spUnit pUnit)
         spUnitInfo pUnitInfo = MemoryManagement::create<UnitInfo>(pUnit, m_pPanel->getScaledWidth() - 80);
         pUnitInfo->setPosition(20, y);
         m_pPanel->addItem(pUnitInfo);
-        m_pPanel->setContentHeigth(pUnitInfo->getY() + pUnitInfo->getScaledHeight());
+        m_pPanel->setContentHeigth(pUnitInfo->getY() + pUnitInfo->getScaledHeight() + 60);
     }
-
 }
 
