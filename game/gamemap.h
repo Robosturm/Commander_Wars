@@ -32,7 +32,7 @@ class EditorMenue;
 class BaseGamemenu;
 using spBaseGamemenu = std::shared_ptr<BaseGamemenu>;
 
-class GameMap : public QObject, public FileSerializable, public oxygine::Actor, public JsThis
+class GameMap : public QObject, public FileSerializable, public oxygine::Actor, protected JsThis
 {
     Q_OBJECT
 public:
@@ -87,6 +87,7 @@ public:
      */
     explicit GameMap(QString map, bool onlyLoad, bool fast, bool savegame);
     virtual ~GameMap();
+    static QJSValue & getMapJsThis(GameMap * me);
     /**
      * @brief newMap
      * @param width

@@ -376,7 +376,7 @@ bool CoreAI::processPredefinedGenericScripted(Unit* pUnit, spQmlVectorUnit & pEn
                            JsThis::getJsThis(pUnit),
                            JsThis::getJsThis(pEnemyUnits.get()),
                            JsThis::getJsThis(pEnemyBuildings.get()),
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
         if (erg.isBool() && erg.toBool())
         {
@@ -396,7 +396,7 @@ bool CoreAI::processPredefinedGenericScripted(Unit* pUnit, spQmlVectorUnit & pEn
                            JsThis::getJsThis(pUnit),
                            JsThis::getJsThis(pEnemyUnits.get()),
                            JsThis::getJsThis(pEnemyBuildings.get()),
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction(m_aiName, function1, args);
         if (erg.isBool() && erg.toBool())
         {
@@ -425,7 +425,7 @@ bool CoreAI::processPredefinedMapScripted(Unit* pUnit, spQmlVectorUnit & pEnemyU
                            JsThis::getJsThis(pUnit),
                            JsThis::getJsThis(pEnemyUnits.get()),
                            JsThis::getJsThis(pEnemyBuildings.get()),
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
         if (erg.isBool() && erg.toBool())
         {

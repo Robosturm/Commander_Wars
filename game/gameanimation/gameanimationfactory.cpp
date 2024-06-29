@@ -325,7 +325,7 @@ GameAnimation* GameAnimationFactory::createOverworldBattleAnimation(GameMap* pMa
                        defEndHp,
                        defWeapon,
                        defenderDamage,
-                       JsThis::getJsThis(pMap)});
+                       GameMap::getMapJsThis(pMap)});
     QJSValue ret = pInterpreter->doFunction("ACTION_FIRE", "createOverworldBattleAnimation", args);
     return dynamic_cast<GameAnimation*>(ret.toQObject());
 }

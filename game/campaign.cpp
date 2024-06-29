@@ -115,7 +115,7 @@ QStringList Campaign::getSelectableCOs(GameMap* pMap, qint32 player, quint8 coId
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({m_jsThis,
-                           JsThis::getJsThis(pMap),
+                           GameMap::getMapJsThis(pMap),
                            player,
                            coIdx,});
         QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getSelectableCOs", args);
@@ -128,7 +128,7 @@ bool Campaign::getAllowArmyCustomization(GameMap* pMap)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(pMap)});
+                       GameMap::getMapJsThis(pMap)});
     QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getAllowArmyCustomization", args);
     if (value.isBool())
     {
@@ -157,7 +157,7 @@ void Campaign::mapFinished(GameMap* pMap, bool result)
     Mainapp::getInstance()->pauseRendering();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(pMap),
+                       GameMap::getMapJsThis(pMap),
                        result});
     pInterpreter->doFunction(Campaign::scriptName, "mapFinished", args);
     Mainapp::getInstance()->continueRendering();
@@ -197,7 +197,7 @@ bool Campaign::getAutoSelectPlayerColors(GameMap* pMap)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(pMap)});
+                       GameMap::getMapJsThis(pMap)});
     QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getAutoSelectPlayerColors", args);
     if (value.isBool())
     {
@@ -231,7 +231,7 @@ void Campaign::onCampaignMapSelected(GameMap* pMap, const QString & filePath)
     Mainapp::getInstance()->pauseRendering();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(pMap),
+                       GameMap::getMapJsThis(pMap),
                        filePath});
     pInterpreter->doFunction(Campaign::scriptName, "onCampaignMapSelected", args);
     Mainapp::getInstance()->continueRendering();

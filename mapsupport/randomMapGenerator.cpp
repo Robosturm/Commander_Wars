@@ -120,7 +120,7 @@ qint32 RandomMapGenerator::randomMap(spGameMap pMap, qint32 width, qint32 heigth
         {
             QJSValueList args =
             {
-                JsThis::getJsThis(pMap.get()),
+                GameMap::getMapJsThis(pMap.get()),
             };
 
             float terrainChance = std::get<1>(terrains[i]);
@@ -458,7 +458,7 @@ bool RandomMapGenerator::randomMapTerrainPlaceable(GameMap* pMap, qint32 x, qint
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({x,
                        y,
-                       JsThis::getJsThis(pMap)});
+                       GameMap::getMapJsThis(pMap)});
     QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "Placeable", args);
     if (erg.isBool())
     {
@@ -811,7 +811,7 @@ bool RandomMapGenerator::randomMapIsBuildingPlace(GameMap* pMap, QString buildin
     {
         QJSValueList args({x,
                            y,
-                           JsThis::getJsThis(pMap),});
+                           GameMap::getMapJsThis(pMap),});
         QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + buildingId + "Placeable", args);
         if (erg.isBool())
         {

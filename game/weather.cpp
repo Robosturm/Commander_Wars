@@ -64,7 +64,7 @@ QString Weather::getWeatherTerrainSprite()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getWeatherTerrainSprite";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isString())
     {
@@ -81,7 +81,7 @@ QString Weather::getWeatherSymbol()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getWeatherSymbol";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isString())
     {
@@ -98,7 +98,7 @@ qint32 Weather::getOffensiveModifier()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveModifier";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -115,7 +115,7 @@ qint32 Weather::getDefensiveModifier()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDefensiveModifier";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -134,7 +134,7 @@ qint32 Weather::getMovementCostModifier(Unit* pUnit, Terrain* pTerrain)
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pTerrain),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -153,7 +153,7 @@ qint32 Weather::getMovementpointModifier(Unit* pUnit, Terrain* pTerrain)
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pTerrain),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -172,7 +172,7 @@ qint32 Weather::getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost)
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
                        fuelCost,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
     if (erg.isNumber())
     {
@@ -189,7 +189,7 @@ qint32 Weather::getVisionrangeModifier(Unit* pUnit, Terrain* pTerrain)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionrangeModifier";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap),
+                       GameMap::getMapJsThis(m_pMap),
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pTerrain),});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
@@ -208,7 +208,7 @@ qint32 Weather::getFirerangeModifier(Unit* pUnit, Terrain* pTerrain)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFirerangeModifier";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap),
+                       GameMap::getMapJsThis(m_pMap),
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pTerrain),});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
@@ -227,7 +227,7 @@ qint32 Weather::getMinFirerangeModifier(Unit* pUnit, Terrain* pTerrain)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMinFirerangeModifier";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap),
+                       GameMap::getMapJsThis(m_pMap),
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pTerrain),});
     QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args);
@@ -246,7 +246,7 @@ void Weather::activate()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "activate";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_WeatherId, function1, args);
 }
 
@@ -255,7 +255,7 @@ void Weather::deactivate()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "deactivate";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_WeatherId, function1, args);
 }
 

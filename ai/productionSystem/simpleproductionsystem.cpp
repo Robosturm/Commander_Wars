@@ -23,7 +23,7 @@ void SimpleProductionSystem::initialize()
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({m_jsThis,
                            JsThis::getJsThis(m_owner),
-                           JsThis::getJsThis(m_owner->getMap())});
+                           GameMap::getMapJsThis(m_owner->getMap())});
         QString function1 = "initializeSimpleProductionSystem";
         QJSValue erg(false);
         if (pInterpreter->exists(GameScript::m_scriptName, function1))
@@ -70,7 +70,7 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
                            JsThis::getJsThis(pUnits),
                            JsThis::getJsThis(pEnemyUnits),
                            JsThis::getJsThis(pEnemyBuildings),
-                           JsThis::getJsThis(m_owner->getMap())});
+                           GameMap::getMapJsThis(m_owner->getMap())});
         QJSValue erg(false);
         if (pInterpreter->exists(GameScript::m_scriptName, function1))
         {
@@ -102,7 +102,7 @@ void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlV
                        JsThis::getJsThis(pUnits),
                        JsThis::getJsThis(pEnemyUnits.get()),
                        JsThis::getJsThis(pEnemyBuildings),
-                       JsThis::getJsThis(m_owner->getMap())});
+                       GameMap::getMapJsThis(m_owner->getMap())});
     QJSValue erg(false);
     if (pInterpreter->exists(GameScript::m_scriptName, function1))
     {

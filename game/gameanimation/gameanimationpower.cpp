@@ -32,7 +32,7 @@ spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameT
                            color.name(),
                            powerMode,
                            JsThis::getJsThis(pCO),
-                           JsThis::getJsThis(pMap)});
+                           GameMap::getMapJsThis(pMap)});
         pInterpreter->doFunction("GAMEANIMATIONPOWER", "loadAnimation", args);
         m_pGameAnimationPower = animation.get();
     }

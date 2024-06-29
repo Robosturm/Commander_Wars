@@ -1445,7 +1445,7 @@ bool GameMap::canBePlaced(const QString terrainID, qint32 x, qint32 y)
     QString function = "canBePlaced";
     QJSValueList args({x,
                        y,
-                       m_jsThis});
+                       getMapJsThis(this)});
     QJSValue placeable = pInterpreter->doFunction(terrainID, function, args);
     if (placeable.isBool())
     {
@@ -2988,5 +2988,18 @@ void GameMap::optimizePlayers()
             getPlayer(i)->setTeam(i);
         }
         getPlayer(i)->updatePlayerID();
+    }
+}
+
+QJSValue & GameMap::getMapJsThis(GameMap * me)
+{
+    if (me == nullptr)
+    {
+        return m_null;
+    }
+    else
+    {
+        Interpreter::getInstance()->globalObject().setProperty("map", me->m_jsThis);
+        return me->m_jsThis;
     }
 }

@@ -57,7 +57,7 @@ qint32 MovementTableManager::getBaseMovementPoints(const QString & movementID, T
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pCurrentTerrain),
                        trapChecking,
-                       JsThis::getJsThis(pCurrentTerrain->getMap())});
+                       GameMap::getMapJsThis(pCurrentTerrain->getMap())});
     QJSValue ret = pInterpreter->doFunction(movementID, function1, args);
     if (ret.isNumber())
     {

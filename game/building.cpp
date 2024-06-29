@@ -38,7 +38,7 @@ void Building::init()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "init";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_BuildingID, function, args);
 }
 
@@ -46,7 +46,7 @@ qint32 Building::getBuildingGroup()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBuildingGroup";
-    QJSValueList args({JsThis::getJsThis(m_pMap)});
+    QJSValueList args({GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -113,7 +113,7 @@ QStringList Building::getBaseTerrain()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "getBaseTerrain";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function, args);
     QStringList retList = ret.toVariant().toStringList();
     if (retList.size() == 0)
@@ -155,7 +155,7 @@ QString Building::getDescription()
     // load sprite of the base terrain
     QString function = "getDescription";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function, args);
     if (ret.isString())
     {
@@ -172,7 +172,7 @@ bool Building::getVisionHide()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionHide";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isBool())
     {
@@ -349,7 +349,7 @@ void Building::onWeatherChanged(Weather* pWeather)
     QString function1 = "onWeatherChanged";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pWeather),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_BuildingID, function1, args);
 }
 
@@ -419,7 +419,7 @@ bool Building::isHq()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "isHq";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isBool())
     {
@@ -496,7 +496,7 @@ qint32 Building::getVision()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVision";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -521,7 +521,7 @@ void Building::updateBuildingSprites(bool neutral)
     QString function1 = "loadSprites";
     QJSValueList args({m_jsThis,
                        neutral,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_BuildingID, function1, args);
     m_neutralLoaded = neutral;
     
@@ -541,7 +541,7 @@ bool Building::canBuildingBePlaced(Terrain* pTerrain)
     QString function1 = "canBuildingBePlaced";
     QJSValueList args({JsThis::getJsThis(pTerrain),
                        m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isBool())
     {
@@ -560,7 +560,7 @@ QString Building::getName()
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getName";
         QJSValueList args({m_jsThis,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
         if (ret.isString())
         {
@@ -578,7 +578,7 @@ quint32 Building::getBaseIncome() const
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBaseIncome";
-    QJSValueList args({JsThis::getJsThis(m_pMap)});
+    QJSValueList args({GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -635,7 +635,7 @@ QString Building::getMinimapIcon()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMiniMapIcon";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isString())
     {
@@ -652,7 +652,7 @@ QStringList Building::getActionList()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActions";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     QStringList retList;
     if (ret.isString())
@@ -743,7 +743,7 @@ QVector<qint32> Building::getRepairTypes()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRepairTypes";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     auto list = ret.toVariant().toList();
     QVector<qint32> retList;
@@ -759,7 +759,7 @@ QStringList Building::getConstructionList()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getConstructionList";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     QVariant var = ret.toVariant();
     QStringList buildList = var.toStringList();
@@ -816,7 +816,7 @@ void Building::endOfTurn()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "endOfTurn";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_BuildingID, function1, args);
 }
 
@@ -825,7 +825,7 @@ void Building::startOfTurn()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "startOfTurn";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_BuildingID, function1, args);
 }
 
@@ -834,7 +834,7 @@ qint32 Building::getOffensiveBonus()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveBonus";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -851,7 +851,7 @@ qint32 Building::getPowerChargeBonus()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getPowerChargeBonus";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -872,7 +872,7 @@ qint32 Building::getCostModifier(const QString & id, qint32 baseCost, QPoint pos
                        baseCost,
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -889,7 +889,7 @@ qint32 Building::getDefensiveBonus()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDefensiveBonus";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -906,7 +906,7 @@ qint32 Building::getVisionBonus()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionBonus";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -932,7 +932,7 @@ qint32 Building::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QP
                        isDefender,
                        JsThis::getJsThis(pAction),
                        luckMode,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isNumber())
@@ -956,7 +956,7 @@ qint32 Building::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, Q
                        isDefender,
                        JsThis::getJsThis(pAction),
                        luckMode,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isNumber())
@@ -969,7 +969,7 @@ qint32 Building::getBuildingWidth()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBuildingWidth";
-    QJSValueList args({JsThis::getJsThis(m_pMap)});
+    QJSValueList args({GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -985,7 +985,7 @@ qint32 Building::getBuildingHeigth()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBuildingHeigth";
-    QJSValueList args({JsThis::getJsThis(m_pMap)});
+    QJSValueList args({GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -1004,7 +1004,7 @@ bool Building::getIsAttackable(qint32 x, qint32 y)
     QJSValueList args({m_jsThis,
                        x,
                        y,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isBool())
     {
@@ -1020,7 +1020,7 @@ QmlVectorPoint* Building::getActionTargetFields()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActionTargetFields";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isQObject())
     {
@@ -1036,7 +1036,7 @@ QPoint Building::getActionTargetOffset()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActionTargetOffset";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     return ret.toVariant().toPoint();
 }
@@ -1047,7 +1047,7 @@ qreal Building::getDamage(Unit* pUnit)
     QString function1 = "getDamage";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -1061,7 +1061,7 @@ GameEnums::BuildingTarget Building::getBuildingTargets()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBuildingTargets";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
@@ -1117,7 +1117,7 @@ QString Building::getTerrainAnimationBase()
     QJSValueList args({JsThis::getJsThis(nullptr),
                        JsThis::getJsThis(m_pTerrain),
                        JsThis::getJsThis(nullptr),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isString())
     {
@@ -1136,7 +1136,7 @@ QString Building::getTerrainAnimationForeground()
     QJSValueList args({JsThis::getJsThis(nullptr),
                        JsThis::getJsThis(m_pTerrain),
                        JsThis::getJsThis(nullptr),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isString())
     {
@@ -1152,7 +1152,7 @@ float Building::getTerrainAnimationMoveSpeed()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationMoveSpeed";
-    QJSValueList args({JsThis::getJsThis(m_pMap)});
+    QJSValueList args({GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isNumber())
     {
@@ -1170,7 +1170,7 @@ bool Building::canRepair(Unit* pUnit, bool always)
     QString function1 = "canRepair";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
-                       JsThis::getJsThis(m_pMap),
+                       GameMap::getMapJsThis(m_pMap),
                        always});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isBool())
@@ -1194,7 +1194,7 @@ bool Building::isCaptureBuilding()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCapturableBuildings";
-    QJSValueList args({JsThis::getJsThis(m_pMap)});
+    QJSValueList args({GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(CoreAI::ACTION_CAPTURE, function1, args);
     bool capturable = erg.toVariant().toStringList().contains(m_BuildingID);
     return capturable;
@@ -1204,7 +1204,7 @@ bool Building::isMissile()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMissileBuildings";
-    QJSValueList args({JsThis::getJsThis(m_pMap)});
+    QJSValueList args({GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(CoreAI::ACTION_MISSILE, function1, args);
     bool capturable = erg.toVariant().toStringList().contains(m_BuildingID);
     return capturable;
@@ -1231,7 +1231,7 @@ QString Building::getTerrainAnimationBackground()
     QJSValueList args({JsThis::getJsThis(nullptr),
                       JsThis::getJsThis(m_pTerrain),
                       JsThis::getJsThis(nullptr),
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (erg.isString())
     {

@@ -150,7 +150,7 @@ void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Un
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (m_nextFrames.length() > 0 && !clearSprite)
     {
@@ -216,7 +216,7 @@ QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
                        JsThis::getJsThis(m_pUnit),
                        JsThis::getJsThis(m_pTerrain),
                        unitIdx,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args);
     return erg.toVariant().toPoint();
 }
@@ -253,7 +253,7 @@ qint32 BattleAnimationSprite::getImpactDurationMS(Unit* pUnit, Unit* pDefender, 
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
@@ -273,7 +273,7 @@ bool BattleAnimationSprite::hasMoveInAnimation(Unit* pUnit, Unit* pDefender, qin
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args);
     if (erg.isBool())
     {
@@ -293,7 +293,7 @@ qint32 BattleAnimationSprite::getDyingDurationMS(Unit* pUnit, Unit* pDefender, q
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
@@ -333,7 +333,7 @@ qint32 BattleAnimationSprite::getFireDurationMS(Unit* pUnit, Unit* pDefender, qi
                           JsThis::getJsThis(pUnit),
                           JsThis::getJsThis(pDefender),
                           attackerWeapon,
-                          JsThis::getJsThis(m_pMap)});
+                          GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
@@ -353,7 +353,7 @@ qint32 BattleAnimationSprite::getFiredDurationMS(Unit* pUnit, Unit* pDefender, q
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
@@ -373,7 +373,7 @@ qint32 BattleAnimationSprite::getMoveInDurationMS(Unit* pUnit, Unit* pDefender, 
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {
@@ -393,7 +393,7 @@ qint32 BattleAnimationSprite::getStopDurationMS(Unit* pUnit, Unit* pDefender, qi
                        JsThis::getJsThis(pUnit),
                        JsThis::getJsThis(pDefender),
                        attackerWeapon,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args);
     if (erg.isNumber())
     {

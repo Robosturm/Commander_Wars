@@ -787,7 +787,7 @@ QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target) con
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage";
-    QJSValueList args({JsThis::getJsThis(m_pMap),
+    QJSValueList args({GameMap::getMapJsThis(m_pMap),
                        JsThis::getJsThis(pAction.get()),
                        QJSValue(target.x()),
                        QJSValue(target.y()),
@@ -803,7 +803,7 @@ QRectF CoreAI::calcVirtuelUnitDamage(GameMap* pMap,
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage3";
-    QJSValueList args({JsThis::getJsThis(pMap),
+    QJSValueList args({GameMap::getMapJsThis(pMap),
                        JsThis::getJsThis(nullptr),
                        JsThis::getJsThis(pAttacker),
                        QJSValue(attackerTakenDamage),
@@ -2458,7 +2458,7 @@ bool CoreAI::getBuildingTargetPointFromScript(spGameAction & pAction, const spMa
                        pInterpreter->toScriptValue(points),
                        QJSValue(pData->getAllFields()),
                        JsThis::getJsThis(m_pPlayer),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     if (pInterpreter->exists(GameScript::m_scriptName, function1))
     {
         erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
@@ -2512,7 +2512,7 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
                        JsThis::getJsThis(pUnits.get()),
                        JsThis::getJsThis(pBuildings.get()),
                        JsThis::getJsThis(m_pPlayer),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     if (pInterpreter->exists(GameScript::m_scriptName, function1))
     {
         erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);

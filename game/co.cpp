@@ -43,7 +43,7 @@ void CO::init()
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "init";
         QJSValueList args1({m_jsThis,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         pInterpreter->doFunction(m_coID, function1, args1);
     }
 }
@@ -59,7 +59,7 @@ qreal CO::getUnitBuildValue(const QString & unitID)
     QString function1 = "getUnitBuildValue";
     QJSValueList args({m_jsThis,
                        unitID,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qreal ergValue = 0.0;
     QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
     if (erg.isNumber())
@@ -107,7 +107,7 @@ void CO::setCOUnit(Unit* pUnit)
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "onCOUnitLost";
         QJSValueList args({m_jsThis,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         for (const auto & perk : std::as_const(m_perkList))
         {
             if (isJsFunctionEnabled(perk))
@@ -133,7 +133,7 @@ qreal CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(system),
                        pInterpreter->arraytoJSValue(unitIds),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
     qreal ret = 1.0;
     if (erg.isNumber())
@@ -158,7 +158,7 @@ void CO::endOfTurn()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "endOfTurn";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -173,7 +173,7 @@ void CO::startOfTurn()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "startOfTurn";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -189,7 +189,7 @@ void CO::onUnitDeath(Unit* pUnit)
     QString function1 = "onUnitDeath";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -297,7 +297,7 @@ qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -323,7 +323,7 @@ bool CO::getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDe
                        position.y(),
                        JsThis::getJsThis(pAttacker),
                        isDefender,
-                       JsThis::getJsThis(m_pMap),
+                       GameMap::getMapJsThis(m_pMap),
                        attackerPosition.x(),
                        attackerPosition.y()});
     for (const auto & perk : std::as_const(m_perkList))
@@ -348,7 +348,7 @@ qint32 CO::getEnemyTerrainDefenseModifier(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -372,7 +372,7 @@ qint32 CO::getVisionrangeModifier(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -409,7 +409,7 @@ QStringList CO::getCOUnits(Building* pBuilding)
     QString function1 = "getCOUnits";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pBuilding),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QStringList ret;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -425,7 +425,7 @@ QStringList CO::getTransportUnits(Unit* pUnit)
     QString function1 = "getTransportUnits";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QStringList ret;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -443,7 +443,7 @@ qint32 CO::getMovementpointModifier(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -467,7 +467,7 @@ qint32 CO::getFirerangeModifier(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -491,7 +491,7 @@ qint32 CO::getMinFirerangeModifier(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -515,7 +515,7 @@ bool CO::getHpHidden(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -538,7 +538,7 @@ bool CO::getRankInfoHidden(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -561,7 +561,7 @@ bool CO::getPerfectHpView(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -584,7 +584,7 @@ qint32 CO::getAttackHpBonus(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -608,7 +608,7 @@ qint32 CO::getBonusLuck(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -632,7 +632,7 @@ qint32 CO::getEnemyBonusLuck(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -656,7 +656,7 @@ qint32 CO::getBonusMisfortune(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -680,7 +680,7 @@ qint32 CO::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -702,7 +702,7 @@ qreal CO::getEnemyRepairCostModifier(Unit* pUnit)
     QString function1 = "getEnemyRepairCostModifier";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qreal ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -724,7 +724,7 @@ qreal CO::getRepairCostModifier(Unit* pUnit)
     QString function1 = "getRepairCostModifier";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qreal ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -746,7 +746,7 @@ QStringList CO::getAdditionalBuildingActions(Building* pBuilding)
     QString function1 = "getAdditionalBuildingActions";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pBuilding),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QStringList ret;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -779,7 +779,7 @@ qint32 CO::getFuelCostModifier(Unit* pUnit, QPoint position, qint32 costs)
                        position.x(),
                        position.y(),
                        costs,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -803,7 +803,7 @@ qint32 CO::getMovementcostModifier(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -826,7 +826,7 @@ qint32 CO::getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost)
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
                        fuelCost,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -848,7 +848,7 @@ void CO::buildedUnit(Unit* pUnit)
     QString function1 = "buildedUnit";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -867,7 +867,7 @@ qint32 CO::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
                        baseCost,
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -892,7 +892,7 @@ qint32 CO::getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint posi
                        baseCost,
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -912,7 +912,7 @@ QString CO::getCOArmy()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCOArmy";
-    QJSValueList args({JsThis::getJsThis(m_pMap)});
+    QJSValueList args({GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
     if (erg.isString())
     {
@@ -932,7 +932,7 @@ bool CO::getCanMoveAndFire(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -955,7 +955,7 @@ qint32 CO::getRepairBonus(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -979,7 +979,7 @@ bool CO::canBeRepaired(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1002,7 +1002,7 @@ qint32 CO::getCaptureBonus(Unit* pUnit, QPoint position)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1027,7 +1027,7 @@ void CO::activatePower()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "activatePower";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         pInterpreter->doFunction(perk, function1, args);
@@ -1049,7 +1049,7 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
     QString function1 = "activateSuperpower";
     QJSValueList args({m_jsThis,
                        powerMode,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         pInterpreter->doFunction(perk, function1, args);
@@ -1097,7 +1097,7 @@ qint32 CO::getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPos
                        isDefender,
                        JsThis::getJsThis(pAction),
                        luckMode,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1127,7 +1127,7 @@ qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint at
                        isDefender,
                        JsThis::getJsThis(pAction),
                        luckMode,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1150,7 +1150,7 @@ qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
                        JsThis::getJsThis(pUnit),
                        position.x(),
                        position.y(),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1180,7 +1180,7 @@ qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPo
                        isDefender,
                        JsThis::getJsThis(pAction),
                        luckMode,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1210,7 +1210,7 @@ qint32 CO::getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint a
                        isAttacker,
                        JsThis::getJsThis(pAction),
                        luckMode,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1243,7 +1243,7 @@ qreal CO::getDamageReduction(GameAction* pAction, qreal damage, Unit* pAttacker,
                        isDefender,
                        luckMode,
                        JsThis::getJsThis(pAction),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qreal ergValue = 0.0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1276,7 +1276,7 @@ qreal CO::getTrueDamage(GameAction* pAction, qreal damage, Unit* pAttacker, QPoi
                           isDefender,
                           JsThis::getJsThis(pAction),
                           luckMode,
-                          JsThis::getJsThis(m_pMap)});
+                          GameMap::getMapJsThis(m_pMap)});
     qreal ergValue = 0.0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1305,7 +1305,7 @@ GameEnums::CounterAttackMode CO::canCounterAttack(GameAction* pAction, Unit* pAt
                        defPosition.y(),
                        JsThis::getJsThis(pAction),
                        luckMode,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     auto ergValue = GameEnums::CounterAttackMode_Undefined;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1353,7 +1353,7 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
                            hpDamage,
                            defender,
                            counterAttack,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         // call co bonus
         QString function1 = "gainPowerstar";
         for (const auto & perk : std::as_const(m_perkList))
@@ -1370,7 +1370,7 @@ qreal CO::getStarCost()
     qreal starCost = 1.0;
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QString function1 = "getStarCost";
     QJSValue ret = pInterpreter->doFunction(m_coID, function1, args);
     if (ret.isNumber())
@@ -1391,7 +1391,7 @@ QStringList CO::getActionModifierList(Unit* pUnit)
     QString function1 = "getActionModifierList";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pUnit),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QStringList ret;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1412,7 +1412,7 @@ qint32 CO::getCORange()
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getCOUnitRange";
         QJSValueList args({m_jsThis,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         for (const auto & perk : std::as_const(m_perkList))
         {
             if (isJsFunctionEnabled(perk))
@@ -1470,7 +1470,7 @@ qint32 CO::getIncomeReduction(Building* pBuilding, qint32 income)
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pBuilding),
                        income,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1491,7 +1491,7 @@ qint32 CO::getPowerChargeBonus()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getPowerChargeBonus";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1514,7 +1514,7 @@ qint32 CO::getBonusIncome(Building* pBuilding, qint32 income)
     QJSValueList args({m_jsThis,
                       JsThis::getJsThis(pBuilding),
                       income,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     qint32 ergValue = 0;
     for (const auto & perk : std::as_const(m_perkList))
     {
@@ -1535,7 +1535,7 @@ bool CO::getPerfectVision()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getPerfectVision";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1555,7 +1555,7 @@ bool CO::getWeatherImmune()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getWeatherImmune";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1576,7 +1576,7 @@ void CO::postAction(GameAction* pAction)
     QString function1 = "postAction";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pAction),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1600,7 +1600,7 @@ GameEnums::PowerMode CO::getAiUsePower(double powerSurplus, qint32 unitCount, qi
                        directUnits,
                        enemyUnits,
                        turnMode,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
     if (erg.isNumber())
     {
@@ -1623,7 +1623,7 @@ qreal CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
         valid = true;
         QJSValueList args({m_jsThis,
                            JsThis::getJsThis(pUnit),
-                           JsThis::getJsThis(m_pMap),});
+                           GameMap::getMapJsThis(m_pMap),});
         QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
         if (erg.isNumber())
         {
@@ -1649,7 +1649,7 @@ qreal CO::getAiCoBuildRatioModifier()
     if (pInterpreter->exists(m_coID, function1))
     {
         QJSValueList args({m_jsThis,
-                          JsThis::getJsThis(m_pMap)});
+                          GameMap::getMapJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
         if (erg.isNumber())
         {
@@ -1711,7 +1711,7 @@ void CO::loadCOMusic()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "loadCOMusic";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_coID, function1, args);
 }
 
@@ -1720,7 +1720,7 @@ GameAnimationDialog* CO::createPowerSentence()
     Mainapp::getInstance()->pauseRendering();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     const QString func = "getPowerSentences";
     QStringList sentences = pInterpreter->doFunction(m_coID, func, args).toVariant().toStringList();
     QString sentence = "No sentence found.";
@@ -1743,7 +1743,7 @@ QString CO::getDefeatSentence()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     const QString func = "getDefeatSentences";
     QStringList sentences = pInterpreter->doFunction(m_coID, func, args).toVariant().toStringList();
     QString sentence = "";
@@ -1758,7 +1758,7 @@ QString CO::getVictorySentence()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     const QString func = "getVictorySentences";
     QStringList sentences = pInterpreter->doFunction(m_coID, func, args).toVariant().toStringList();
     QString sentence = "";
@@ -1789,7 +1789,7 @@ QString CO::getBio()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString ret;
     QJSValueList args({m_jsThis,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getBio", args);
     if (value.isString())
     {
@@ -1803,7 +1803,7 @@ QString CO::getLongBio()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString ret;
     QJSValueList args({m_jsThis,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getLongBio", args);
     if (value.isString())
     {
@@ -1817,7 +1817,7 @@ QString CO::getHits()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString ret;
     QJSValueList args({m_jsThis,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getHits", args);
     if (value.isString())
     {
@@ -1831,7 +1831,7 @@ QString CO::getMiss()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString ret;
     QJSValueList args({m_jsThis,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getMiss", args);
     if (value.isString())
     {
@@ -1845,7 +1845,7 @@ QString CO::getCODescription()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString ret;
     QJSValueList args({m_jsThis,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getCODescription", args);
     if (value.isString())
     {
@@ -1859,7 +1859,7 @@ QString CO::getLongCODescription()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString ret;
     QJSValueList args({m_jsThis,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getLongCODescription", args);
     if (value.isString())
     {
@@ -1873,7 +1873,7 @@ QString CO::getPowerDescription()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString ret;
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getPowerDescription", args);
     if (value.isString())
     {
@@ -1887,7 +1887,7 @@ QString CO::getPowerName()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString ret;
     QJSValueList args({m_jsThis,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getPowerName", args);
     if (value.isString())
     {
@@ -1901,7 +1901,7 @@ QString CO::getSuperPowerDescription()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString ret;
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getSuperPowerDescription", args);
     if (value.isString())
     {
@@ -1915,7 +1915,7 @@ QString CO::getSuperPowerName()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString ret;
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getSuperPowerName", args);
     if (value.isString())
     {
@@ -1935,7 +1935,7 @@ void CO::postBattleActions(Unit* pAttacker, qreal atkDamage, Unit* pDefender, bo
                        gotAttacked,
                        weapon,
                        JsThis::getJsThis(pAction),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     for (const auto & perk : std::as_const(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1951,7 +1951,7 @@ bool CO::showDefaultUnitGlobalBoost()
     Interpreter* pInterpreter = Interpreter::getInstance();
     bool ret = true;
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "showDefaultUnitGlobalBoost", args);
     if (value.isBool())
     {
@@ -1965,7 +1965,7 @@ qint32 CO::getCustomUnitGlobalBoostCount()
     Interpreter* pInterpreter = Interpreter::getInstance();
     qint32 ret = 0;
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getCustomUnitGlobalBoostCount", args);
     if (value.isNumber())
     {
@@ -1981,7 +1981,7 @@ void CO::getCustomUnitGlobalBoost(qint32 index, CustomCoBoostInfo& info)
     QJSValueList args({m_jsThis,
                        index,
                        pInterpreter->newQObject(&info),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_coID, "getCustomUnitGlobalBoost", args);
 }
 
@@ -1990,7 +1990,7 @@ bool CO::showDefaultUnitZoneBoost()
     Interpreter* pInterpreter = Interpreter::getInstance();
     bool ret = true;
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "showDefaultUnitZoneBoost", args);
     if (value.isBool())
     {
@@ -2004,7 +2004,7 @@ qint32 CO::getCustomUnitZoneBoostCount()
     Interpreter* pInterpreter = Interpreter::getInstance();
     qint32 ret = 0;
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue value = pInterpreter->doFunction(m_coID, "getCustomUnitZoneBoostCount", args);
     if (value.isNumber())
     {
@@ -2020,7 +2020,7 @@ void CO::getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info)
     QJSValueList args({m_jsThis,
                        index,
                        pInterpreter->newQObject(&info),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_coID, "getCustomUnitZoneBoost", args);
 }
 

@@ -652,7 +652,7 @@ bool ActionPerformer::isTrap(const QString & function, spGameAction pAction, Uni
                        previousPoint.x(),
                        previousPoint.y(),
                        moveCost,
-                       JsThis::getJsThis(m_pMap),
+                       GameMap::getMapJsThis(m_pMap),
                       });
     const QString obj = "ACTION_TRAP";
     QJSValue erg = pInterpreter->doFunction(obj, function, args);

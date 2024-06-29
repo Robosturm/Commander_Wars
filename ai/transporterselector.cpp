@@ -51,7 +51,7 @@ std::vector<QList<QVariant>> TransporterSelector::getUnloadFields(spGameAction &
         QJSValueList args({
             JsThis::getJsThis(pAction.get()),
             unitIDx[i],
-            JsThis::getJsThis(m_owner.getMap()),
+            GameMap::getMapJsThis(m_owner.getMap()),
         });
         QJSValue ret = pInterpreter->doFunction(CoreAI::ACTION_UNLOAD, function1, args);
         unloadFields.push_back(ret.toVariant().toList());

@@ -90,7 +90,7 @@ QString Unit::getDescription()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     // load sprite of the base terrain
     QString function = "getDescription";
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function, args);
@@ -168,7 +168,7 @@ void Unit::postBattleActions(qreal damage, Unit* pUnit, bool gotAttacked, qint32
                        gotAttacked,
                        weapon,
                        JsThis::getJsThis(pAction),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_UnitID, function1, args);
 }
 
@@ -347,7 +347,7 @@ QString Unit::getName()
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getName";
         QJSValueList args({m_jsThis,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
         if (ret.isString())
         {
@@ -366,7 +366,7 @@ qint32 Unit::getUnitType()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitType";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     if (ret.isNumber())
     {
@@ -383,7 +383,7 @@ bool Unit::getCOSpecificUnit()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCOSpecificUnit";
     QJSValueList args({JsThis::getJsThis(nullptr),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     if (ret.isBool())
     {
@@ -432,7 +432,7 @@ void Unit::updateSprites(bool editor)
     resetSprites();
     QString function1 = "loadSprites";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_UnitID, function1, args);
 
     setHp(m_hp);
@@ -478,7 +478,7 @@ qint32 Unit::getMaxUnitRang()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMaxRang";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
     if (ret.isNumber())
     {
@@ -492,7 +492,7 @@ QString Unit::getUnitRangIcon()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getIcon";
     QJSValueList args({m_UnitRank,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
     if (ret.isString())
     {
@@ -545,7 +545,7 @@ void Unit::setUnitRank(const qint32 UnitRank, bool force)
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "unloadIcons";
         QJSValueList args({m_jsThis,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
         loadIcon(getUnitRangIcon(), GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
         updateRankInfoVisibility(m_pMap->getCurrentViewPlayer());
@@ -558,7 +558,7 @@ bool Unit::getWeatherImmune()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getWeatherImmune";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isBool())
     {
@@ -763,7 +763,7 @@ qint32 Unit::getCosts() const
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBaseCost";
-    QJSValueList args({JsThis::getJsThis(m_pMap)});
+    QJSValueList args({GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isNumber())
     {
@@ -781,7 +781,7 @@ qint32 Unit::getBaseCosts() const
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBaseCost";
-    QJSValueList args({JsThis::getJsThis(m_pMap)});
+    QJSValueList args({GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isNumber())
     {
@@ -800,7 +800,7 @@ QString Unit::getTerrainAnimationBase(Unit* pDefender)
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_pTerrain),
                        JsThis::getJsThis(pDefender),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isString())
     {
@@ -819,7 +819,7 @@ QString Unit::getTerrainAnimationForeground(Unit* pDefender)
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_pTerrain),
                        JsThis::getJsThis(pDefender),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isString())
     {
@@ -838,7 +838,7 @@ QString Unit::getTerrainAnimationBackground(Unit* pDefender)
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_pTerrain),
                        JsThis::getJsThis(pDefender),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isString())
     {
@@ -855,7 +855,7 @@ qreal Unit::getTerrainAnimationMoveSpeed()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationMoveSpeed";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isNumber())
     {
@@ -1064,7 +1064,7 @@ bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, q
                            targetX,
                            targetY,
                            rangeCheck,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction("ACTION_FIRE", "extendedCanAttackCheck", args);
         if (erg.isBool())
         {
@@ -1081,7 +1081,7 @@ bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, q
                            targetX,
                            targetY,
                            rangeCheck,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction(m_UnitID, "canUseWeapon", args);
         if (!erg.isBool() || erg.toBool())
         {
@@ -1118,7 +1118,7 @@ GameEnums::WeaponType Unit::getTypeOfWeapon1()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, "getTypeOfWeapon1", args);
     if (erg.isNumber())
     {
@@ -1131,7 +1131,7 @@ GameEnums::WeaponType Unit::getTypeOfWeapon2()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, "getTypeOfWeapon2", args);
     if (erg.isNumber())
     {
@@ -1146,7 +1146,7 @@ bool Unit::canAttackStealthedUnit(Unit* pDefender)
     QString function1 = "canAttackStealthedUnit";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pDefender),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isBool())
     {
@@ -1165,7 +1165,7 @@ bool Unit::canMoveAndFire(QPoint position)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "canMoveAndFire";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isBool() && erg.toBool())
     {
@@ -1315,7 +1315,7 @@ QStringList  Unit::getTransportUnits()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTransportUnits";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     QStringList transportUnits = erg.toVariant().toStringList();
     QStringList extraTransportUnits;
@@ -1371,7 +1371,7 @@ void Unit::postAction(GameAction * pAction)
     QString function1 = "postAction";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pAction),
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_UnitID, function1, args);
 }
 
@@ -1433,7 +1433,7 @@ qint32 Unit::getBonusOffensive(GameAction* pAction, QPoint position, Unit* pDefe
         QString function1 = "getTagpower";
         QJSValueList args({JsThis::getJsThis(pCO0),
                            JsThis::getJsThis(pCO1),
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction("TAGPOWER", function1, args);
         if (erg.isNumber())
         {
@@ -1463,7 +1463,7 @@ qint32 Unit::getBonusOffensive(GameAction* pAction, QPoint position, Unit* pDefe
     {
         QString function1 = "getOffensiveBonus";
         QJSValueList args({m_jsThis,
-                            JsThis::getJsThis(m_pMap)});
+                            GameMap::getMapJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
         if (erg.isNumber())
         {
@@ -1486,7 +1486,7 @@ qint32 Unit::getUnitBonusOffensive(GameAction* pAction, QPoint position, Unit* p
                        isDefender,
                        JsThis::getJsThis(pAction),
                        luckMode,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isNumber())
     {
@@ -1569,7 +1569,7 @@ bool Unit::canCounterAttack(GameAction* pAction, QPoint position, Unit* pDefende
                            defPosition.y(),
                            JsThis::getJsThis(pAction),
                            luckMode,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
         if (erg.isBool())
         {
@@ -1649,7 +1649,7 @@ qint32 Unit::getUnitBonusDefensive(GameAction* pAction, QPoint position, Unit* p
                        isAttacker,
                        JsThis::getJsThis(pAction),
                        luckMode,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isNumber())
     {
@@ -1739,7 +1739,7 @@ qint32 Unit::getBonusDefensive(GameAction* pAction, QPoint position, Unit* pAtta
     {
         QString function1 = "getDefensiveBonus";
         QJSValueList args({m_jsThis,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
         if (erg.isNumber())
         {
@@ -1754,7 +1754,7 @@ bool Unit::useTerrainDefense()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "useTerrainDefense";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isBool() && erg.toBool())
     {
@@ -1768,7 +1768,7 @@ bool Unit::useTerrainHide()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "useTerrainHide";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isBool() && erg.toBool())
     {
@@ -1957,7 +1957,7 @@ qint32 Unit::getBonusLuck(QPoint position)
         QString function1 = "getTagstars";
         QJSValueList args({JsThis::getJsThis(pCO0),
                            JsThis::getJsThis(pCO1),
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         QJSValue erg = pInterpreter->doFunction("TAGPOWER", function1, args);
         if (erg.isNumber())
         {
@@ -1972,7 +1972,7 @@ void Unit::endOfTurn()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "endOfTurn";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_UnitID, function1, args);
     for (qint32 i = 0; i < m_TransportUnits.size(); i++)
     {
@@ -1985,7 +1985,7 @@ void Unit::startOfTurn()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "startOfTurn";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_UnitID, function1, args);
     for (qint32 i = 0; i < m_TransportUnits.size(); i++)
     {
@@ -2151,7 +2151,7 @@ void Unit::initUnit()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QString function1 = "init";
     pInterpreter->doFunction(m_UnitID, function1, args);
     function1 = "initForMods";
@@ -2498,7 +2498,7 @@ void Unit::updateIcons(Player* pPlayer)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "unloadIcons";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
     if (!getHpHidden(pPlayer))
     {
@@ -2574,7 +2574,7 @@ qint32 Unit::getLoadingPlace()
 
     QString function1 = "getLoadingPlace";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     if (ret.isNumber())
     {
@@ -2596,7 +2596,7 @@ QString Unit::getUnitDamageID()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitDamageID";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     if (ret.isString())
     {
@@ -2616,7 +2616,7 @@ qreal Unit::getUnitDamage(const QString & weaponID)
     QString function1 = "getUnitDamage";
     QJSValueList args({weaponID,
                       m_jsThis,
-                      JsThis::getJsThis(m_pMap)});
+                      GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     if (ret.isNumber())
     {
@@ -2705,7 +2705,7 @@ bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender, QPo
                        position.y(),
                        JsThis::getJsThis(pAttacker),
                        isDefender,
-                       JsThis::getJsThis(m_pMap),
+                       GameMap::getMapJsThis(m_pMap),
                        attackerPosition.x(),
                        attackerPosition.y()});
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
@@ -2751,7 +2751,7 @@ QStringList Unit::getBaseActionList()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActions";
     QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     QStringList actionList;
     if (ret.isString())
@@ -2961,7 +2961,7 @@ void Unit::removeUnit(bool killed)
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "onDeath";
         QJSValueList args({m_jsThis,
-                           JsThis::getJsThis(m_pMap)});
+                           GameMap::getMapJsThis(m_pMap)});
         pInterpreter->doFunction(m_UnitID, function1, args);
         m_pOwner->onUnitDeath(this);
         if (m_UnitRank == GameEnums::UnitRank_CO0)
@@ -3005,7 +3005,7 @@ GameAnimation* Unit::killUnit()
     QJSValueList args({Unit::getX(),
                        Unit::getY(),
                        m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
+                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     if (ret.isQObject())
     {
