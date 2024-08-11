@@ -66,7 +66,7 @@ std::map<qint32, qint32> AwbwDataTypes::COUNTRYID_PLAYERID_MAP =
      };
 
 std::map<qint32, AwbwDataTypes::TileInfo> AwbwDataTypes::TERRAIN_BUILDING_DATA =
-    {{std::numeric_limits<quint32>::max(), {"TELEPORTTILE", AwbwDataTypes::TERRAIN_OWNER}},
+    {{std::numeric_limits<qint32>::max(), {"TELEPORTTILE", AwbwDataTypes::TERRAIN_OWNER}},
      {0, {"PLAINS", AwbwDataTypes::TERRAIN_OWNER}},
      {1, {"PLAINS", AwbwDataTypes::TERRAIN_OWNER}},
      {2, {"MOUNTAIN", AwbwDataTypes::TERRAIN_OWNER}},
