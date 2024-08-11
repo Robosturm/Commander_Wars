@@ -68,6 +68,7 @@ public slots:
     void refresh();
 private:
     void addNewSelectionItem(qint32 i, qint32 & y);
+    void addFiles(const QString & newFolder, const QStringList & searchPaths, QStringList filterList, QDir::Filter filter);
 private:
     QStringList m_filter;
     QString m_currentFolder;

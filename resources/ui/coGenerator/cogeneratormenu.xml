@@ -11,6 +11,22 @@
                 <x>10</x>
                 <y>10</y>
                 <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","CO ID:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getStageWidth() - 90 - lastWidth - lastX - 170</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The ID of the CO.")</tooltip>
+                <startValue>currentMenu.getCoId()</startValue>
+                <onEvent>currentMenu.setCoId(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
                 <text>QT_TRANSLATE_NOOP("GAME","CO name:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

@@ -97,7 +97,7 @@ void MapSelection::changeFolder(QString folder)
 {    
     CONSOLE_PRINT("MapSelection::changeFolder " + folder, GameConsole::eDEBUG);
     m_itemClicked = false;
-    QString newFolder = folder;
+    QString newFolder =  folder;
     if (newFolder == "")
     {
         newFolder = Settings::getInstance()->getUserPath() + "maps";
@@ -110,31 +110,64 @@ void MapSelection::changeFolder(QString folder)
     {
         newFolder = newFolder.replace("//", "/");
     }
-    QDir dir(newFolder);
-    QDir virtDir(oxygine::Resource::RCC_PREFIX_PATH + newFolder);
-    if (dir.exists() || virtDir.exists())
+    QFileInfo newFolderInfo(newFolder);
+    newFolder = GlobalUtils::makePathRelative(newFolderInfo.canonicalFilePath());
+    QStringList searchPaths;
+    searchPaths.append(newFolder);
+    searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + newFolder);
+    CONSOLE_PRINT("MapSelection::changeFolder. Relative Path: " + newFolder, GameConsole::eDEBUG);
+    m_Files.clear();
+    QStringList filterList;
+    filterList.reserve(m_filter.size());
+    for (const auto & ending : std::as_const(m_filter))
     {
-        QFileInfo newFolderInfo(newFolder);
-        newFolder = GlobalUtils::makePathRelative(newFolderInfo.canonicalFilePath());
-        CONSOLE_PRINT("MapSelection::changeFolder. Relative Path: " + newFolder, GameConsole::eDEBUG);
-        m_Files.clear();
-        if (newFolder != "maps")
+        filterList.append("*" + ending);
+    }
+    for(qint32 i = 0; i < 2 ; ++i)
+    {
+        QDir::Filter filter;
+        if (i == 1)
         {
-            m_Files.append("..");
+
+            filter = QDir::Files;
+            addFiles(newFolder, searchPaths, filterList, filter);
         }
-        QFileInfo upFolder(newFolder + "..");
-        QStringList list;
-        list.reserve(m_filter.size());
-        for (const auto & ending : std::as_const(m_filter))
+        else
         {
-            list.append("*" + ending);
+            filter = QDir::Dirs;
+            addFiles(newFolder, searchPaths, filterList, filter);
         }
-        QFileInfoList infoList = GlobalUtils::getInfoList(newFolder, list);
+    }
+    m_currentFolder = newFolder;
+    updateSelection();
+    if (m_currentIdx < m_Files.size() && m_currentIdx >= 0)
+    {
+        m_currentItem = m_Files[m_currentIdx];
+        emit sigStartItemChangeTimer();
+    }
+}
+
+void MapSelection::addFiles(const QString & newFolder, const QStringList & searchPaths, QStringList filterList, QDir::Filter filter)
+{
+    for (auto & path : searchPaths)
+    {
+        QFileInfo upFolder(path + "..");
         Userdata* pUserdata = Userdata::getInstance();
         auto hideList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Map, false);
-        for (qint32 i = 1; i < infoList.size(); i++)
+        QStringList dirIterFilterList;
+        if (filter == QDir::Dirs)
         {
-            auto & infoItem = infoList[i];
+             dirIterFilterList = QStringList();
+        }
+        else
+        {
+            dirIterFilterList = filterList;
+        }
+        QDirIterator dirIter(path, dirIterFilterList, filter, QDirIterator::NoIteratorFlags);
+        while (dirIter.hasNext())
+        {
+            dirIter.next();
+            auto infoItem = dirIter.fileInfo();
             QString myPath = infoItem.canonicalFilePath();
             QString item = GlobalUtils::makePathRelative(myPath);
             bool isDir = infoItem.isDir();
@@ -148,26 +181,33 @@ void MapSelection::changeFolder(QString folder)
             }
             if (isDir)
             {
-                QString path = infoItem.canonicalFilePath();
-                QDirIterator iter(path, list, QDir::Files, QDirIterator::Subdirectories);
-                QDirIterator iter2(oxygine::Resources::RCC_PREFIX_PATH + item, list, QDir::Files, QDirIterator::Subdirectories);
+                QString currentPath = infoItem.canonicalFilePath();
+                QDirIterator iter(path, filterList, QDir::Files, QDirIterator::Subdirectories);
+                QDirIterator iter2(oxygine::Resources::RCC_PREFIX_PATH + item, filterList, QDir::Files, QDirIterator::Subdirectories);
                 if (!iter.hasNext() && !iter2.hasNext())
                 {
                     continue;
                 }
-                m_Files.append(path);
+                QString baseName = infoItem.completeBaseName();
+                bool add = true;
+                for (const auto & item : m_Files)
+                {
+                    auto items = item.split("/");
+                    if (items[items.size() - 1].endsWith(baseName))
+                    {
+                        add = false;
+                        break;
+                    }
+                }
+                if (add)
+                {
+                    m_Files.append(currentPath);
+                }
             }
             else if (infoItem.isFile())
             {
                 m_Files.append(infoItem.canonicalFilePath());
             }
-        }
-        m_currentFolder = newFolder;
-        updateSelection();
-        if (m_currentIdx < m_Files.size() && m_currentIdx >= 0)
-        {
-            m_currentItem = m_Files[m_currentIdx];
-            emit sigStartItemChangeTimer();
         }
     }
 }

@@ -80,7 +80,7 @@ void ScriptConditionTerrainDestroyed::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + QString(ConditionBuildingDestroyed) + " End\n";
+    rStream << "        } // " + QString(ConditionTerrainDestroyed) + " End\n";
 }
 
 void ScriptConditionTerrainDestroyed::writePostCondition(QTextStream& rStream)
