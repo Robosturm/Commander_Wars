@@ -115,6 +115,7 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     connect(pTextbox.get(), &Textbox::sigTextChanged, m_pBuilding, &Building::setBuildingName, Qt::QueuedConnection);
     m_pPanel->addItem(pTextbox);
     m_pPanel->addItem(pLabel);
+    y += pLabel->getHeight() + 10;
 
     if (m_pBuilding->getHp() > 0)
     {
