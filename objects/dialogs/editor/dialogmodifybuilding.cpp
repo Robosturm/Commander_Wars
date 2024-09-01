@@ -10,6 +10,7 @@
 
 #include "objects/base/label.h"
 #include "objects/base/textbox.h"
+#include "objects/base/slider.h"
 #include "objects/base/dropdownmenu.h"
 
 #include "game/gamemap.h"
@@ -114,6 +115,26 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     connect(pTextbox.get(), &Textbox::sigTextChanged, m_pBuilding, &Building::setBuildingName, Qt::QueuedConnection);
     m_pPanel->addItem(pTextbox);
     m_pPanel->addItem(pLabel);
+
+    if (m_pBuilding->getHp() > 0)
+    {
+        pLabel = MemoryManagement::create<Label>(190);
+        pLabel->setStyle(style);
+        pLabel->setHtmlText(tr("HP:"));
+        pLabel->setPosition(10, y);
+        spSlider pSlider = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 100 - 200 - pLabel->getScaledWidth(), 1, 9999, tr("HP"), 200);
+        pSlider->setTooltipText(tr("Selects the HP of the current building. This is immediately applied."));
+        pSlider->setPosition(200 + 20 + pLabel->getX(), y);
+        pSlider->setCurrentValue(m_pBuilding->getHp());
+        connect(pSlider.get(), &Slider::sliderValueChanged, this, [this](qint32 value)
+                {
+                    m_pBuilding->setHp(value);
+                });
+        m_pPanel->addItem(pSlider);
+        m_pPanel->addItem(pLabel);
+        y += pLabel->getHeight() + 10;
+    }
+
     connect(this, &DialogModifyBuilding::sigFinished, this, &DialogModifyBuilding::remove, Qt::QueuedConnection);
 }
 

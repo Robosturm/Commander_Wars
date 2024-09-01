@@ -120,7 +120,7 @@ void DialogModifyTerrain::load()
         pLabel->setHtmlText(tr("HP:"));
         pLabel->setPosition(10, y);
         spSlider pSlider = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 100 - 200 - pLabel->getScaledWidth(), 1, 9999, tr("HP"), 200);
-        pSlider->setTooltipText(tr("Selects the HP of the current terraub. This is immediately applied."));
+        pSlider->setTooltipText(tr("Selects the HP of the current terrain. This is immediately applied."));
         pSlider->setPosition(200 + 20 + pLabel->getX(), y);
         pSlider->setCurrentValue(m_pTerrain->getHp());
         connect(pSlider.get(), &Slider::sliderValueChanged, this, [this](qint32 value)
