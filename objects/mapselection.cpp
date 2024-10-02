@@ -193,7 +193,7 @@ void MapSelection::addFiles(const QString & newFolder, const QStringList & searc
                 for (const auto & item : m_Files)
                 {
                     auto items = item.split("/");
-                    if (items[items.size() - 1].endsWith(baseName))
+                    if (items[items.size() - 1] == baseName)
                     {
                         add = false;
                         break;
