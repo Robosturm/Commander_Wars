@@ -329,8 +329,11 @@ public:
      * @return
      */
     Q_INVOKABLE quint32 getFrameTime() const;
-    bool getStarted() const;
-    GameAnimation* getPreviousAnimation() const;
+    Q_INVOKABLE bool getGlobal() const;
+    Q_INVOKABLE void setGlobal(bool newGlobal);
+    Q_INVOKABLE bool getStarted() const;
+    Q_INVOKABLE GameAnimation* getPreviousAnimation() const;
+
 
 protected:
     void emitFinished();
@@ -402,6 +405,7 @@ private:
     QString m_jsPreActionObject{""};
     QString m_jsPreActionFunction{""};
     bool m_stopSoundAtAnimationEnd{false};
+    bool m_global{false};
     bool m_finished{false};
 
     QVector<oxygine::spSingleResAnim> m_resAnims;

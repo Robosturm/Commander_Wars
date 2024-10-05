@@ -99,6 +99,36 @@ GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, qint32 x, qi
     return createSpAnimation(pMap, x, y, frameTime, mapPosition).get();
 }
 
+spGameAnimation GameAnimationFactory::createGlobalSpAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
+{
+    CONSOLE_PRINT("Creating animation", GameConsole::eDEBUG);
+    Mainapp::getInstance()->pauseRendering();
+    spGameAnimation animation = MemoryManagement::create<GameAnimation>(frameTime, pMap);
+    animation->setGlobal(true);
+    if (mapPosition)
+    {
+        animation->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
+    }
+    else
+    {
+        animation->setPosition(x, y);
+    }
+    animation->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
+    if (pMap != nullptr)
+    {
+        oxygine::Stage::getStage()->addChild(animation);
+    }
+    m_Animations.append(animation);
+    Mainapp::getInstance()->continueRendering();
+    return animation;
+}
+
+GameAnimation* GameAnimationFactory::createGlobalAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
+{
+    return createGlobalSpAnimation(pMap, x, y, frameTime, mapPosition).get();
+}
+
+
 GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(GameMap* pMap, Unit* pUnit, GameAction* pAction)
 {
     if (pUnit != nullptr)

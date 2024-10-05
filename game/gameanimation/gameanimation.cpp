@@ -46,7 +46,14 @@ void GameAnimation::restart()
         {
             oxygine::Stage::getStage()->addTween(tween);
         }
-        m_pMap->addChild(getSharedPtr<Actor>());
+        if (m_global)
+        {
+            oxygine::Stage::getStage()->addChild(getSharedPtr<Actor>());
+        }
+        else
+        {
+            m_pMap->addChild(getSharedPtr<Actor>());
+        }
         start();
         Mainapp::getInstance()->continueRendering();
     }
@@ -80,6 +87,16 @@ void GameAnimation::doPreAnimationCall()
                            GameMap::getMapJsThis(m_pMap)});
         pInterpreter->doFunction(m_jsPreActionObject, m_jsPreActionFunction, args);
     }
+}
+
+bool GameAnimation::getGlobal() const
+{
+    return m_global;
+}
+
+void GameAnimation::setGlobal(bool newGlobal)
+{
+    m_global = newGlobal;
 }
 
 GameAnimation* GameAnimation::getPreviousAnimation() const

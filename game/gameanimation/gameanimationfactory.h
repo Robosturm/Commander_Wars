@@ -57,6 +57,7 @@ public:
      */
     static void removeAnimation(spGameAnimation pAnimation, bool skipping, bool removeFromQueue);
     static spGameAnimation createSpAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
+    static spGameAnimation createGlobalSpAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
 signals:
     void animationsFinished();
 public slots:
@@ -73,6 +74,14 @@ public:
      * @return
      */
     Q_INVOKABLE static GameAnimation* createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
+    /**
+     * @brief createAnimation creates an animation and returns it
+     * @param x in map coordinates
+     * @param y in map coordinates
+     * @param frameTime in ms
+     * @return
+     */
+    Q_INVOKABLE static GameAnimation* createGlobalAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
     /**
      * @brief createBattleAnimation
      * @param pAtkTerrain
