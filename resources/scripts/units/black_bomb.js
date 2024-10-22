@@ -40,7 +40,7 @@ var Constructor = function()
         if (unit.getTerrain() !== null)
         {
             // pay unit upkeep
-            var fuelCosts = 1 + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), 1);
+            var fuelCosts = 5 + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), 1);
             if (fuelCosts < 0)
             {
                 fuelCosts = 0;
