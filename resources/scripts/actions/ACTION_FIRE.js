@@ -739,7 +739,7 @@ var Constructor = function()
                 }
             }
             // set counter damage
-            if (counterdamage > 0)
+            if (counterdamage >= 0)
             {
                 costs = attacker.getCosts();
                 // gain power based
