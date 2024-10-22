@@ -460,6 +460,8 @@ public:
     Q_INVOKABLE void setKey_ShowAttackFields2(const Qt::Key key_ShowAttackFields2);
     Q_INVOKABLE Qt::Key getKey_ShowIndirectAttackFields2();
     Q_INVOKABLE void setKey_ShowIndirectAttackFields2(const Qt::Key key_ShowIndirectAttackFields2);
+    Q_INVOKABLE Qt::Key getKey_toggleGridLayout();
+    Q_INVOKABLE void setKey_toggleGridLayout(const Qt::Key key_toggleGridLayout);
     Q_INVOKABLE Qt::Key getKey_up2();
     Q_INVOKABLE void setKey_up2(const Qt::Key key_up2);
     Q_INVOKABLE Qt::Key getKey_down2();
@@ -886,6 +888,7 @@ private:
     Qt::Key m_key_MapZoomIn2{Qt::Key(0)};
     Qt::Key m_key_ShowAttackFields2{Qt::Key(0)};
     Qt::Key m_key_ShowIndirectAttackFields2{Qt::Key(0)};
+    Qt::Key m_key_toggleGridLayout{Qt::Key_G};
 
     Qt::Key m_key_EditorPlaceTerrain{Qt::Key_1};
     Qt::Key m_key_EditorPlaceBuilding{Qt::Key_2};

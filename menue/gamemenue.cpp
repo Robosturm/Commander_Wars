@@ -2626,7 +2626,10 @@ void GameMenue::keyInputAll(Qt::Key cur)
             });
             setFocused(false);
         }
-        
+    }
+    else if (cur == Settings::getInstance()->getKey_toggleGridLayout())
+    {
+        toggleGridLayout();
     }
 }
 
@@ -2919,4 +2922,13 @@ void GameMenue::autosaveTimer()
 {
     autoSaveMap();
     m_autosaveTimer.start(Settings::getInstance()->getAutoSavingCylceTimeRaw());
+}
+
+void GameMenue::toggleGridLayout()
+{
+    if (m_pMap.get() != nullptr)
+    {
+        m_gridVisible = !m_gridVisible;
+        m_pMap->showGrid(m_gridVisible);
+    }
 }

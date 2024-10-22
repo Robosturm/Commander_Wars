@@ -799,6 +799,16 @@ void Settings::setKey_ShowIndirectAttackFields2(const Qt::Key key_ShowIndirectAt
     m_key_ShowIndirectAttackFields2 = key_ShowIndirectAttackFields2;
 }
 
+Qt::Key Settings::getKey_toggleGridLayout()
+{
+    return m_key_toggleGridLayout;
+}
+
+void Settings::setKey_toggleGridLayout(const Qt::Key key_toggleGridLayout)
+{
+    m_key_toggleGridLayout = key_toggleGridLayout;
+}
+
 Qt::Key Settings::getKey_ShowAttackFields2()
 {
     return m_key_ShowAttackFields2;
@@ -1304,6 +1314,7 @@ void Settings::setup()
         MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorPreviousTeam", &m_key_EditorPreviousTeam, Qt::Key_Asterisk, static_cast<Qt::Key>(0), Qt::Key_unknown),
         MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorSelectionRight", &m_key_EditorSelectionRight, Qt::Key_R, static_cast<Qt::Key>(0), Qt::Key_unknown),
         MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorSelectionLeft", &m_key_EditorSelectionLeft, Qt::Key_T, static_cast<Qt::Key>(0), Qt::Key_unknown),
+        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_toggleGridLayout", &m_key_toggleGridLayout, Qt::Key_G, static_cast<Qt::Key>(0), Qt::Key_unknown),
         // sound
         MemoryManagement::create<Value<qint32>>("Sound", "TotalVolume", &m_TotalVolume, 100, 0, 100),
         MemoryManagement::create<Value<qint32>>("Sound", "MusicVolume", &m_MusicVolume, 80, 0, 100),

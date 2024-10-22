@@ -115,7 +115,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Rotate map Y 180°"),  "ROTATEY",      1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
     m_Topbar->addItem(tr("Rotate map Y 90°"),   "ROTATEY90",    1, tr("Rotates the upper left quarter into the lower left quarter of the map and rotates the lower right quarter into the upper right quarter of the map "));
     m_Topbar->addItem(tr("Random map"),         "RANDOMMAP",    1, tr("Creates a new random map."));
-    m_Topbar->addItem(tr("Toggle grid Strg+G"), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
+    m_Topbar->addItem(tr("Toggle grid ") + SelectKey::getKeycodeText(Settings::getInstance()->getKey_toggleGridLayout()), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
     m_Topbar->addItem(tr("Toggle cross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
     m_Topbar->addItem(tr("Update sprites"),     "UPDATESPRITES", 1, tr("Reloads the map sprites in case something didn't load correctly."));
 
@@ -966,19 +966,13 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                         }
                         break;
                     }
-                    case Qt::Key_G:
-                    {
-                        toggleGridLayout();
-                        break;
-                    }
                     case Qt::Key_M:
                     {
                         toggleMiddleCrossGrid();
                         break;
                     }
                     default:
-                    {
-                        // do nothing
+                    {                        
                         break;
                     }
                 }
@@ -1015,6 +1009,10 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                      cur == Settings::getInstance()->getKey_confirm2())
             {
                 m_placingState.active = true;
+            }
+            else if (cur == Settings::getInstance()->getKey_toggleGridLayout())
+            {
+                toggleGridLayout();
             }
             else
             {

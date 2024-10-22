@@ -366,6 +366,10 @@ public slots:
      * @param ai
      */
     void changeAiForPlayer(qint32 player, GameEnums::AiTypes ai);
+    /**
+     * @brief toggleGridLayout
+     */
+    void toggleGridLayout();
 protected slots:
     /**
      * @brief keyInput
@@ -553,6 +557,8 @@ protected:
 
     ActionPerformer m_actionPerformer;
     spMovementPlanner m_pMovementPlanner;
+
+    bool m_gridVisible{false};
 private:
     ReplayRecorder m_ReplayRecorder;
 };

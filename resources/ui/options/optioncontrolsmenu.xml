@@ -694,6 +694,21 @@
                 <startValue>settings.getKey_EditorSelectionLeft()</startValue>
                 <onEvent>settings.setKey_EditorSelectionLeft(input)</onEvent>
             </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Grid Overlay:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to the grid overlay.")</tooltip>
+                <startValue>settings.getKey_toggleGridLayout()</startValue>
+                <onEvent>settings.setKey_toggleGridLayout(input)</onEvent>
+            </SelectKey>
         </childs>
     </Panel>
 </ui>
