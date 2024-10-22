@@ -138,6 +138,10 @@ void MapSelection::changeFolder(QString folder)
             addFiles(newFolder, searchPaths, filterList, filter);
         }
     }
+    std::sort(m_Files.begin(), m_Files.end(), [](const QString& lhs, const QString& rhs)
+    {
+        return lhs < rhs;
+    });
     m_currentFolder = newFolder;
     updateSelection();
     if (m_currentIdx < m_Files.size() && m_currentIdx >= 0)
