@@ -2111,7 +2111,7 @@ qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY, 
 qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY, bool trapChecking)
 {
     qint32 baseCosts = getBaseMovementCosts(x, y, curX, curY, trapChecking);
-    if (baseCosts == 0)
+    if (baseCosts <= 0)
     {
         return baseCosts;
     }
@@ -2136,10 +2136,6 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY, bool
     if ((costs <= 0) && (baseCosts > 0))
     {
         return 1;
-    }
-    else if (weatherCosts + costs >= 0 && costs + baseCosts < 0)
-    {
-        return -1;
     }
     else
     {
