@@ -219,7 +219,7 @@ var Constructor = function()
     };
     this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
-        if (CO.isActive(co) && CO_OLAF.d2dRainMalus === true)
+        if (CO.isActive(co) && CO_OLAF.d2dRainMalus === true && unit.getOwner() === co.getOwner())
         {
             if (map !== null)
             {
