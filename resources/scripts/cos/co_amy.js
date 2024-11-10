@@ -269,12 +269,15 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (map === null ||
-                (map !== null && map.getGameRules().getCoGlobalD2D()))
+            if (unit.getOwner() === co.getOwner())
             {
-                if (map.getTerrain(posX, posY).getTerrainID() === "REAF")
+                if (map === null ||
+                    (map !== null && map.getGameRules().getCoGlobalD2D()))
                 {
-                    return -999;
+                    if (map.getTerrain(posX, posY).getTerrainID() === "REAF")
+                    {
+                        return -999;
+                    }
                 }
             }
         }
