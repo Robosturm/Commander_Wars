@@ -223,7 +223,8 @@ var Constructor = function()
         {
             if (map !== null)
             {
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN" &&
+                    unit.getOwner() === co.getOwner())
                 {
                     var terrain = map.getTerrain(posX, posY);
                     var id = terrain.getID();

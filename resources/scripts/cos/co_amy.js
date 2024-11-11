@@ -272,7 +272,8 @@ var Constructor = function()
             if (map === null ||
                 (map !== null && map.getGameRules().getCoGlobalD2D()))
             {
-                if (map.getTerrain(posX, posY).getTerrainID() === "REAF")
+                if (map.getTerrain(posX, posY).getTerrainID() === "REAF" &&
+                    unit.getOwner() === co.getOwner())
                 {
                     return -999;
                 }
