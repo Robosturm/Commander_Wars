@@ -1816,7 +1816,7 @@ void GameMenue::doPlayerInfoFlipping()
     qint32 y = m_Cursor->getMapPointY();
     QPoint pos = getMousePos(x, y);
     bool flip = m_pPlayerinfo->getFlippedX();
-    qint32 screenWidth = m_IngameInfoBar->getX();
+    qint32 screenWidth = m_IngameInfoBar->getX() + m_IngameInfoBar->getDetailedViewBox()->getWidth();
     const qint32 diff = screenWidth / 8;
     if (Settings::getInstance()->getCoInfoPosition() == GameEnums::COInfoPosition_Left)
     {
