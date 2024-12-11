@@ -53,7 +53,7 @@ var COREAI =
     antiAirSeaUnits : ["CRUISER", "CRUISER", "CRUISER"],
     airUnits : ["K_HELI", "DUSTER", "BOMBER", "ZCOUNIT_KIROV", "FIGHTER", "WATERPLANE"],
     stealthAirUnits : ["STEALTHBOMBER"],
-    antiAirAirUnits : ["FIGHTER", "STEALTHBOMBER", "DUSTER"],
+    antiAirAirUnits : ["FIGHTER", "FIGHTER", "FIGHTER", "FIGHTER", "FIGHTER", "FIGHTER", "STEALTHBOMBER", "DUSTER", "FLAK"],
     heavyAirUnits : ["BOMBER", "FIGHTER", "STEALTHBOMBER", "ZCOUNIT_KIROV"],
     lightAirUnits : ["K_HELI", "DUSTER", "WATERPLANE"],
     supplyUnits : ["APC", "ZCOUNIT_LOGIC_TRUCK", "ZCOUNIT_LOGIC_TRUCK", "ZCOUNIT_REPAIR_TANK", "ZCOUNIT_REPAIR_TANK"],
@@ -81,7 +81,7 @@ var COREAI =
     minAverageIslandSize : 0.025,
     pruneRange : 3,
     copterCounterUnitBalance : 2.125,
-    airCounterUnitBalance : 2.5,
+    airCounterUnitBalance : 1,
     mediumTankCounterUnitBalance : 2.5,
     heavyTankCounterUnitBalance : 2.5,
     navyCounterUnitBalance : 2.5,
@@ -441,12 +441,14 @@ var COREAI =
     forceAntiAirProduction : function(system, ai, units, enemyUnits, alliedUnits)
     {
         var antiAirUnits = COREAI.antiAirUnits;
+         var antiAirAirUnits = COREAI.antiAirUnits;
         var variables = system.getVariables();
         var variableNavalBattle = variables.createVariable("NAVALBATTLE");
         var naval = variableNavalBattle.readDataInt32();
         if (naval > 1)
         {
            antiAirUnits = antiAirUnits.concat(COREAI.antiAirSeaUnits);            
+           antiAirAirUnits = antiAirAirUnits.concat(COREAI.antiAirSeaUnits);
         }
         // count own + allied units
         var antiAirUnitCount = ai.getUnitCount(units, antiAirUnits, COREAI.ownCounterUnitMinHp) +
@@ -460,13 +462,13 @@ var COREAI =
         var enemyCoptersCount = enemyCopters.size();
 
         while (((enemyJetsCount > 0) && (antiAirAirUnitCount === 0)) ||
-            ((antiAirUnitCount > 0) && ((enemyJetsCount / antiAirAirUnitCount) > COREAI.copterCounterUnitBalance)))
+            ((antiAirUnitCount > 0) && ((enemyJetsCount / antiAirAirUnitCount) > COREAI.airCounterUnitBalance)))
         {
-            system.addForcedProductionCloseToTargets(COREAI.antiAirAirUnits, enemyJets);
+            system.addForcedProductionCloseToTargets(antiAirAirUnits, enemyJets);
             ++antiAirAirUnitCount;
         }
         while (((enemyCoptersCount > 0) && (antiAirUnitCount === 0)) ||
-            ((antiAirUnitCount > 0) && ((enemyCoptersCount / antiAirUnitCount) > COREAI.airCounterUnitBalance)))
+            ((antiAirUnitCount > 0) && ((enemyCoptersCount / antiAirUnitCount) > COREAI.copterCounterUnitBalance)))
         {
             system.addForcedProductionCloseToTargets(antiAirUnits, enemyCopters);
             ++antiAirUnitCount
