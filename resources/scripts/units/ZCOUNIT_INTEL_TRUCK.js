@@ -50,7 +50,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("The intel truck is a defenseless unit that can create a cloak field that cloaks all owned units around it. Cloaked units are stealthed but can still be attack by other units.");
+        return qsTr("The intel truck is a defenseless unit that can create a cloak field that cloaks all owned units around it. Cloaked units are stealthed but can still be attacked by other units.");
     };
     this.getUnitType = function()
     {
