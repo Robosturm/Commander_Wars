@@ -69,7 +69,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("missile_sub+walk+mask", GameEnums.Recoloring_Matrix, 2);
-        animation.setSound("moveship.wav", -2);
+        animation.setSound("movesub.wav", -2);
         return animation;
     };
     this.getDescription = function()
@@ -117,7 +117,7 @@ var Constructor = function()
     };
     this.getEditorPlacementSound = function()
     {
-        return "moveship.wav";
+        return "movesub.wav";
     };
 }
 

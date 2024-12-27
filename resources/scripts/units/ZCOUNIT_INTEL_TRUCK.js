@@ -45,12 +45,12 @@ var Constructor = function()
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSpriteV2("intel_truck+walk+mask", GameEnums.Recoloring_Matrix, 2);
-        animation.setSound("movetank.wav", -2);
+        animation.setSound("movetire.wav", -2);
         return animation;
     };
     this.getDescription = function()
     {
-        return qsTr("The intel truck is a defenseless unit that can create a cloak field that cloaks all owned units around it. Cloaked units are stealthed but can still be attack by other units.");
+        return qsTr("The intel truck is a defenseless unit that can create a cloak field that cloaks all owned units around it. Cloaked units are stealthed but can still be attacked by other units.");
     };
     this.getUnitType = function()
     {
@@ -62,7 +62,7 @@ var Constructor = function()
     };
     this.getEditorPlacementSound = function()
     {
-        return "movetank.wav";
+        return "movetire.wav";
     };
 }
 

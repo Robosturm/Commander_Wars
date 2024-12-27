@@ -34,7 +34,7 @@ var Constructor = function()
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("auto_tank+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.loadSpriteV2("auto_tank+walk", GameEnums.Recoloring_None, 2);
-        animation.setSound("moveheavytank.wav", -2);
+        animation.setSound("movetank.wav", -2);
         return animation;
     };
     this.getMovementType = function()
@@ -113,7 +113,7 @@ var Constructor = function()
     
     this.getEditorPlacementSound = function()
     {
-        return "moveheavytank.wav";
+        return "movetank.wav";
     };
 }
 

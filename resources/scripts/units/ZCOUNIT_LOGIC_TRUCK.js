@@ -44,7 +44,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("logi_truck+walk+mask", GameEnums.Recoloring_Matrix, 2);
-        animation.setSound("movetank.wav", -2);
+        animation.setSound("movetire.wav", -2);
         return animation;
     };
     this.getDescription = function()
@@ -69,7 +69,7 @@ var Constructor = function()
     };
     this.getEditorPlacementSound = function()
     {
-        return "movetank.wav";
+        return "movetire.wav";
     };
 }
 
