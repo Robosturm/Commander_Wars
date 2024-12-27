@@ -45,7 +45,7 @@ var Constructor = function()
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSpriteV2("intel_truck+walk+mask", GameEnums.Recoloring_Matrix, 2);
-        animation.setSound("movetank.wav", -2);
+        animation.setSound("movetire.wav", -2);
         return animation;
     };
     this.getDescription = function()
@@ -62,7 +62,7 @@ var Constructor = function()
     };
     this.getEditorPlacementSound = function()
     {
-        return "movetank.wav";
+        return "movetire.wav";
     };
 }
 
