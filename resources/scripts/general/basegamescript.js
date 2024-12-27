@@ -5,6 +5,7 @@ var BASEGAMESCRIPT =
         // called to check if the game should start immediately
         return false;
     },
+    immediateStart : null,
 
     getVictoryInfo : function(map)
     {
@@ -15,22 +16,26 @@ var BASEGAMESCRIPT =
     {
         // called when a player wins
     },
+    victory : null,
     gameStart : function(map)
     {
         // called before a game starts
     },
+    gameStart : null,
     actionDone : function(action, map)
     {
         // function called after all animations are finished
     },
+    actionDone : null,
     turnStart : function(turn, player, map)
     {
         // called at the start of each players turn
     },
+    turnStart : null,
     onGameLoaded : function(menu, map)
     {
-
     },
+    onGameLoaded : null,
     // optional functions not defined in the base class
     //this.PredefinedUnitMapScriptBehaviour = function(ai, action, unit, enemies, enemyBuildings, map)
     //{

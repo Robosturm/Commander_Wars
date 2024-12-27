@@ -4,17 +4,21 @@ var VICTORYRULE =
     {
         return "";
     },
+    getRuleDescription : null,
 
     getRuleProgress : function(rule, player, map, item)
     {
         return 0;
     },
+    getRuleProgress : null,
 
     // shown name in the game
     getRuleName : function(itemNumber, map)
     {
         return "";
     },
+    getRuleName : null,
+
     // the type how the rule will be represented in the map selection ui
     getRuleType : function()
     {
@@ -26,11 +30,15 @@ var VICTORYRULE =
     {
         return 0;
     },
+    getDefaultRuleValue : null,
+
     getInfiniteValue : function(itemNumber, map)
     {
         // disable value of the rule for spinboxes. :)
         return 0;
     },
+    getInfiniteValue : null,
+
     getMaxValue : function(itemNumber)
     {
         return 99999;
@@ -55,6 +63,8 @@ var VICTORYRULE =
     init : function(rule, map)
     {
     },
+    init : null,
+
     // sets the rule value of the spinbox
     setRuleValue : function(rule, value, item = 0, map)
     {

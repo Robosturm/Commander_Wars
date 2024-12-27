@@ -25,7 +25,10 @@ spGameAction CaptureBuildingSelector::getNextCaptureBuilding(std::vector<CoreAI:
     QJSValueList args({JsThis::getJsThis(&m_owner)});
     const QString func = "getHighPrioBuildings";
     auto erg = pInterpreter->doFunction(m_owner.getAiName(), func, args);
-    highPrioBuildings = erg.toVariant().toStringList();
+    if (!erg.isNull())
+    {
+        highPrioBuildings = erg.toVariant().toStringList();
+    }
     TargetBuildings captureBuildings = getTargetBuildings(rOwnUnits, highPrioBuildings, pAction, targetUnitData);
     for (qint32 i = 0; i < rOwnUnits.size(); ++i)
     {

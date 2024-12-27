@@ -8,14 +8,15 @@ var BATTLEANIMATION =
 
     loadStandingAnimation : function(sprite, unit, defender, weapon)
     {
-
     },
+    loadStandingAnimation : null,
 
     hasMoveInAnimation : function(sprite, unit, defender, weapon)
     {
         // return true if the unit has an implementation for loadMoveInAnimation
         return false;
     },
+    hasMoveInAnimation : null,
 
     hasDyingAnimation : function()
     {

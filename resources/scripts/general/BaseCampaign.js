@@ -5,18 +5,21 @@ var BASECAMPAIGN =
         // description of this campaign
         return "";
     },
+    getDescription : null,
 
     getAuthor : function()
     {
         // author of this campaign
         return "";
     },
+    getAuthor : null,
 
     getCampaignName : function()
     {
         // name of this campaign
         return "";
     },
+    getCampaignName : null,
 
     getCurrentCampaignMaps : function(campaign)
     {
@@ -30,6 +33,7 @@ var BASECAMPAIGN =
         // should return true when the campaign is at it's end
         return false;
     },
+    getCampaignFinished : null,
 
     mapFinished : function(campaign, map, result)
     {
@@ -39,6 +43,7 @@ var BASECAMPAIGN =
         // result = true -> won, false -> lost
         // it's up to the campaign developer how to handle the map result
     },
+    mapFinished : null,
 
     getSelectableCOs : function(campaign, map, player, coIndex)
     {
@@ -56,21 +61,26 @@ var BASECAMPAIGN =
         // if true you can change the army style and color for each player
         return false;
     },
+    getAllowArmyCustomization : null,
 
     getAutoSelectPlayerColors : function(campaign, map)
     {
         // if true the player colors get adjusted whenever the first co gets changed
         return false;
     },
+    getAutoSelectPlayerColors : null,
 
     getUsesCampaignMap : function(campaign)
     {
         return false;
     },
+    getUsesCampaignMap : null,
     getCampaignMapData : function(campaign, data)
     {
     },
+    getCampaignMapData : null,
     onCampaignMapSelected : function(campaign, map, fileName)
     {
-    }
+    },
+    onCampaignMapSelected : null,
 };

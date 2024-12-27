@@ -5,6 +5,8 @@ var WEAPON =
     {
         return "";
     },
+    getName : null,
+
     getBaseDamage : function(unit)
     {
         return -1

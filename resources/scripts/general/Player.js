@@ -436,14 +436,17 @@ var PLAYER =
     {
         // do custom end of turn action for a player here.
     },
+    endOfTurn : null,
 
     startOfTurn : function(player, map)
     {
         // do custom start of turn action for a player here.
         // Note this function gets called after earning money but before refulling units
     },
+    startOfTurn : null,
 
     onUnitDeath : function(player, unit, map)
     {
     },
+    onUnitDeath : null,
 }

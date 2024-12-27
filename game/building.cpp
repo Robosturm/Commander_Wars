@@ -766,7 +766,19 @@ QStringList Building::getConstructionList()
     QStringList coUnits;
     if (m_pOwner != nullptr)
     {
-        coUnits = m_pOwner->getCOUnits(this);
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer == m_pOwner)
+            {
+                coUnits = m_pOwner->getCOUnits(this);
+            }
+            else if (pPlayer != nullptr &&
+                     m_pOwner->isEnemy(pPlayer))
+            {
+                coUnits = m_pOwner->getEnemyCOUnits(this);
+            }
+        }
     }
     if (coUnits.size() > 0)
     {

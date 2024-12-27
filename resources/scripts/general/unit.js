@@ -7,6 +7,7 @@ var UNIT =
         // return something like BOMBER to give your custom unit the same weakness as a normal bomber
         return "";
     },
+    getUnitDamageID : null,
 
     getUnitDamage : function(weaponID, defender, map)
     {
@@ -41,18 +42,25 @@ var UNIT =
         unit.setMaxRange(1);
         unit.setVision(1);
     },
+    init : null,
+
     initForMods : function(unit, map)
     {
         // you can use this init function to extend
     },
+    initForMods : null,
 
     loadSprites : function(unit, map)
     {
     },
+    loadSprites : null,
+
     getMovementType : function(unit, map)
     {
         return "";
     },
+    getMovementType : null,
+
     actionList : ["ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"],
     getActions : function(unit, map)
     {
@@ -64,6 +72,7 @@ var UNIT =
     {
         return "";
     },
+    getName : null,
 
     getBaseCost : function(map)
     {
@@ -73,6 +82,7 @@ var UNIT =
     buildedUnit : function(unit, player, map)
     {
     },
+    buildedUnit : null,
 
     createExplosionAnimation : function(x, y, unit, map)
     {
@@ -96,34 +106,43 @@ var UNIT =
     {
         // gets called at the end of a turn
     },
+    endOfTurn : null,
 
     startOfTurn : function(unit, map)
     {
         // gets called at the start of a turn
     },
+    startOfTurn : null,
 
     canMoveAndFire : function(unit, map)
     {
         return false;
     },
+    canMoveAndFire : null,
 
     canCounterOnRangeAttacks : function(unit, defX, defY, attacker, atkX, atkY, pAction, luckMode, map)
     {
         return false;
     },
+    canCounterOnRangeAttacks : null,
+
     // number of units that can be loaded by this unit
     getLoadingPlace : function(unit, map)
     {
         return 0;
     },
+    getLoadingPlace : null,
+
     useTerrainDefense : function(unit, map)
     {
         return true;
     },
+
     useTerrainHide : function(unit, map)
     {
         return true;
     },
+
     transportList : [],
     getTransportUnits : function(unit, map)
     {
@@ -185,28 +204,52 @@ var UNIT =
 
     getTerrainAnimationBase : function(unit, terrain, defender, map)
     {
-        return Global[terrain.getID()].getTerrainAnimationBase(unit, terrain, defender, map);
+        if (Global[terrain.getID()].getTerrainAnimationBase !== null)
+        {
+            return Global[terrain.getID()].getTerrainAnimationBase(unit, terrain, defender, map);
+
+        }
+        else
+        {
+            return "";
+        }
     },
 
     getTerrainAnimationForeground : function(unit, terrain, defender, map)
     {
-        return Global[terrain.getID()].getTerrainAnimationForeground(unit, terrain, defender, map);
+        if (Global[terrain.getID()].getTerrainAnimationForeground !== null)
+        {
+            return Global[terrain.getID()].getTerrainAnimationForeground(unit, terrain, defender, map);
+        }
+        else
+        {
+            return "";
+        }
     },
 
     getTerrainAnimationBackground : function(unit, terrain, defender, map)
     {
-        return Global[terrain.getID()].getTerrainAnimationBackground(unit, terrain, defender, map);
+        if (Global[terrain.getID()].getTerrainAnimationBackground !== null)
+        {
+            return Global[terrain.getID()].getTerrainAnimationBackground(unit, terrain, defender, map);
+        }
+        else
+        {
+            return "";
+        }
     },
 
     getTerrainAnimationMoveSpeed : function(unit, map)
     {
         return 0;
     },
+    getTerrainAnimationMoveSpeed : null,
 
     getDescription : function(unit, map)
     {
         return "";
     },
+    getDescription : null,
     getUnitType : function(unit, map)
     {
         return GameEnums.UnitType_Ground;
@@ -221,22 +264,30 @@ var UNIT =
         // gotAttacked if true we're defending else we're attacking
         // this function gets called twice for a unit for one attack.
     },
+    postBattleActions : null,
+
     postAction : function(unit, action, map)
     {
     },
+    postAction : null,
+
     getBonusOffensive : function(attacker, atkX, atkY, defender, defX, defY, isDefender, action, luckMode, map)
     {
         return 0;
     },
+    getBonusOffensive : null,
+
     getBonusDefensive : function(defender, defX, defY, attacker, atkX, atkY, isAttacker, action, luckMode, map)
     {
         return 0;
     },
+    getBonusDefensive : null,
 
     getWeatherImmune(unit, map)
     {
         return false;
     },
+    getWeatherImmune : null,
 
     canAttackStealthedUnit : function(attacker, defender, map)
     {
@@ -274,6 +325,7 @@ var UNIT =
     {
         return false;
     },
+    getCOSpecificUnit : null,
 
     getUnitTypeText : function(unitType, map)
     {
@@ -369,10 +421,12 @@ var UNIT =
     {
         return false;
     },
+    getFirstStrike : null,
 
     onDeath : function(unit, map)
     {
     },
+    onDeath : null,
 
     getShowInEditor : function()
     {
@@ -383,4 +437,5 @@ var UNIT =
     {
         return "";
     },
+    getEditorPlacementSound : null,
 };

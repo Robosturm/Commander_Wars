@@ -2769,17 +2769,39 @@ QStringList Unit::getBaseActionList()
 QStringList Unit::getActionList()
 {
     QStringList actionList = getBaseActionList();
-    CO* pCO = m_pOwner->getCO(0);
     QStringList actionModifierList;
-    if (pCO != nullptr)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        actionModifierList.append(pCO->getActionModifierList(this));
+        Player* pPlayer = m_pMap->getPlayer(i);
+
+        if (pPlayer == m_pOwner)
+        {
+            CO* pCO = m_pOwner->getCO(0);
+            if (pCO != nullptr)
+            {
+                actionModifierList.append(pCO->getActionModifierList(this));
+            }
+            pCO = m_pOwner->getCO(1);
+            if (pCO != nullptr)
+            {
+                actionModifierList.append(pCO->getActionModifierList(this));
+            }
+        }
+        else if (m_pOwner->isEnemy(pPlayer))
+        {
+            CO* pCO = m_pOwner->getCO(0);
+            if (pCO != nullptr)
+            {
+                actionModifierList.append(pCO->getEnemyActionModifierList(this));
+            }
+            pCO = m_pOwner->getCO(1);
+            if (pCO != nullptr)
+            {
+                actionModifierList.append(pCO->getEnemyActionModifierList(this));
+            }
+        }
     }
-    pCO = m_pOwner->getCO(1);
-    if (pCO != nullptr)
-    {
-        actionModifierList.append(pCO->getActionModifierList(this));
-    }
+
     for (qint32 i = 0; i < actionModifierList.size(); i++)
     {
         QString action = actionModifierList[i];

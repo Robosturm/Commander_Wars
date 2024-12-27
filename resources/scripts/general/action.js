@@ -5,13 +5,16 @@ var ACTION =
 	{
 		return false;
     },
+    canBePerformed : null,
     perform : function(action, map)
     {
     },
+    perform : null,
     //
     addItemSelection : function(itemVector, menue, step)
     {
     },
+    addItemSelection : null,
     getActionText : function()
     {
         return qsTr("Unknown");
@@ -24,11 +27,13 @@ var ACTION =
     {
         return "";
     },
+    getIcon : null,
     isFinalStep : function(action, map)
     {
         // make the action infinite
         return false;
     },
+    isFinalStep : null,
     emptyFieldActions : ["ACTION_TRANSFER_UNIT", "ACTION_SELL_UNIT", "ACTION_INFO",
                          "ACTION_NICKNAME_UNIT", "ACTION_DELETE_UNIT", "ACTION_SURRENDER", "ACTION_DRAWVOTE", "ACTION_FOCUSMAP",
                          "ACTION_OPTIONS", "ACTION_MOVEMENTPLANNER", "ACTION_EXITGAME", "ACTION_LOADGAME", "ACTION_SAVEGAME",
@@ -50,6 +55,7 @@ var ACTION =
         // supported types are MENU and FIELD
         return "";
     },
+    getStepInputType : null,
 
     getStepCursor : function(action, cursorData, map)
     {
@@ -60,11 +66,13 @@ var ACTION =
     {
         // type of the data object depends on the StepInputType
     },
+    getStepData : null,
 
     getDescription : function()
     {
         return "";
     },
+    getDescription : null,
 
     getRequiresEmptyField : function(action, map)
     {
@@ -74,26 +82,32 @@ var ACTION =
     {
         return false;
     },
+    getBannedByDefault : null,
     getSubWikiInfoCount : function()
     {
         return 0;
     },
+    getSubWikiInfoCount : null,
     getSubWikiInfoIcon : function(item)
     {
         return "";
     },
+    getSubWikiInfoIcon : null,
     getSubWikiInfoName : function(item)
     {
         return "";
     },
+    getSubWikiInfoName : null,
     getSubWikiInfoDescription = function(item)
     {
         return "";
     },
+    getSubWikiInfoDescription : null,
     getSubWikiInfoId : function(item)
     {
         return "";
     },
+    getSubWikiInfoId : null,
 
     isEmptyFieldAndHasNotMoved : function(action, unit, actionTargetField, targetField, map)
     {

@@ -186,6 +186,12 @@ public:
      */
     Q_INVOKABLE QStringList getCOUnits(Building* pBuilding);
     /**
+     * @brief getEnemyCOUnits
+     * @param pBuilding
+     * @return
+     */
+    Q_INVOKABLE QStringList getEnemyCOUnits(Building* pBuilding);
+    /**
      * @brief getTransportUnits
      * @param pUnit
      * @return
@@ -548,6 +554,12 @@ public:
      * @return
      */
     Q_INVOKABLE QStringList getActionModifierList(Unit* pUnit);
+    /**
+     * @brief getEnemyActionModifierList
+     * @param pUnit
+     * @return
+     */
+    Q_INVOKABLE QStringList getEnemyActionModifierList(Unit* pUnit);
     /**
      * @brief getCORange
      * @return

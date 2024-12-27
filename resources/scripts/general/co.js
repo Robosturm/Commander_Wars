@@ -5,6 +5,7 @@ var CO =
         co.setPowerStars(3);
         co.setSuperpowerStars(3);
     },
+    init : null,
 
     onCOUnitLost : function(co, map)
     {
@@ -15,6 +16,7 @@ var CO =
             co.setPowerFilled(co.getPowerFilled() * (1 - gamerules.getPowerLoose()));
         }
     },
+    onCOUnitLost : null,
 
     getCoGroupModifier : function (co, system, unitIds, map)
     {
@@ -35,214 +37,261 @@ var CO =
         }
         return value;
     },
+    getCoGroupModifier : null,
 
     loadCOMusic : function(co, map)
     {
         // put the co music in here.
     },
+    loadCOMusic : null,
 
     getMovementpointModifier : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getMovementpointModifier : null,
 
     getOtherMovementpointModifier : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getOtherMovementpointModifier : null,
 
     buildedUnit : function(co, unit, map)
     {
         // called when someone builded a unit -> ACTION_BUILD_UNITS was performed
     },
+    buildedUnit : null,
 
     getFirerangeModifier : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getFirerangeModifier : null,
 
     getMinFirerangeModifier : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getMinFirerangeModifier : null,
 
     getCaptureBonus : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getCaptureBonus : null,
 
     getAttackHpBonus : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getAttackHpBonus : null,
 
     getVisionrangeModifier: function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getVisionrangeModifier : null,
 
     getTerrainDefenseModifier : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getTerrainDefenseModifier : null,
 
     getFirstStrike : function(co, unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
     {
         return false;
     },
+    getFirstStrike : null,
 
     getEnemyTerrainDefenseModifier : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getEnemyTerrainDefenseModifier : null,
 
     getDamageReduction : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                                   defender, defPosX, defPosY, isDefender, luckMode, action, map)
     {
         return 0;
     },
+    getDamageReduction : null,
 
     canCounterAttack : function(co, attacker, atkPosX, atkPosY,
                                 defender, defPosX, defPosY, luckMode, map)
     {
         return GameEnums.CounterAttackMode_Undefined;
     },
+    canCounterAttack : null,
 
     getTrueDamage : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                              defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
+    getTrueDamage : null,
 
     getPowerChargeBonus : function(co, map)
     {
         return 0;
     },
+    getPowerChargeBonus : null,
 
     getPerfectVision : function(co, map)
     {
         return false;
     },
+    getPerfectVision : null,
 
     getWeatherImmune : function(co, map)
     {
         // return true if a weather has no effect for the co
         return false;
     },
+    getWeatherImmune : null,
 
     getHpHidden : function(co, unit, posX, posY, map)
     {
         // are the hp hidden of this unit?
         return false;
     },
+    getHpHidden : null,
 
     getRankInfoHidden : function(co, unit, posX, posY, map)
     {
         // are the hp hidden of this unit?
         return false;
     },
+    getRankInfoHidden : null,
 
     getPerfectHpView : function(co, unit, posX, posY, map)
     {
         // are the co zone and rank hidden?
         return false;
     },
+    getPerfectHpView: null,
 
     getRepairBonus : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getRepairBonus : null,
 
     getOtherRepairBonus : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getOtherRepairBonus : null,
 
     getBonusLuck : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getBonusLuck : null,
 
     getBonusMisfortune : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getBonusMisfortune : null,
 
     getEnemyBonusLuck : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getEnemyBonusLuck : null,
 
     getEnemyBonusMisfortune : function(co, unit, posX, posY, map)
     {
         return 0;
     },
+    getEnemyBonusMisfortune : null,
 
     getActionModifierList : function(co, unit, map)
     {
         // return empty list as default
         return [];
     },
+    getActionModifierList : null,
+
+    getEnemyActionModifierList  : function(co, unit, map)
+    {
+        // return empty list as default
+        return [];
+    },
+    getEnemyActionModifierList : null,
 
     activatePower : function(co, map)
     {
     },
+    activatePower : null,
 
     activateSuperpower : function(co, map)
     {
     },
+    activateSuperpower : null,
 
     getFuelCostModifier : function(co, unit, posX, posY, costs, map)
     {
         // modifies the fuel cost at the start of a turn
         return 0;
     },
+    getFuelCostModifier : null,
 
     getOffensiveBonus : function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
+    getOffensiveBonus : null,
 
     getOffensiveReduction : function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
+    getOffensiveReduction : null,
 
     getDeffensiveBonus : function(co, attacker, atkPosX, atkPosY,
                                   defender, defPosX, defPosY, isAttacker, action, luckMode, map)
     {
         return 0;
     },
+    getDeffensiveBonus : null,
 
     getDeffensiveReduction : function(co, attacker, atkPosX, atkPosY,
                                   defender, defPosX, defPosY, isAttacker, action, luckMode, map)
     {
         return 0;
     },
+    getDeffensiveReduction : null,
 
     canBeRepaired : function(co, unit, posX, posY, map)
     {
         // called from all co's for a unit -> so you can apply boni from own co and mali from enemy co's here
         return true;
     },
+    canBeRepaired : null,
 
     getCostModifier : function(co, id, baseCost, posX, posY, map)
     {
         return 0;
     },
+    getCostModifier : null,
 
     getEnemyCostModifier : function(co, id, baseCost, posX, posY, map)
     {
         return 0;
     },
+    getEnemyCostModifier : null,
 
     getMovementcostModifier : function(co, unit, posX, posY, map)
     {
         // called from all co's for a unit -> so you can apply boni from own co and mali from enemy co's here
         return 0;
     },
+    getMovementcostModifier : null,
 
     getMovementFuelCostModifier : function(co, unit, fuelCost, map)
     {
@@ -251,16 +300,19 @@ var CO =
         // fuelCost are the costs needed for the current movement
         return 0;
     },
+    getMovementFuelCostModifier : null,
 
     getCanMoveAndFire : function(co, unit, posX, posY, map)
     {
         return false;
     },
+    getCanMoveAndFire : null,
 
     getCOArmy : function(map)
     {
         return "OS";
     },
+
     starFundsCost = 10000,
     starHpCost = 10.0,
     getStarGain : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
@@ -364,31 +416,43 @@ var CO =
     {
         return 0;
     },
+    getCOUnitRange : null,
 
     getCOUnits : function(co, building, map)
     {
         return [];
     },
+    getCOUnits : null,
+
+    getEnemyCOUnits : function(co, building, map)
+    {
+        return [];
+    },
+    getEnemyCOUnits : null,
 
     getEnemyVisionBonus : function (co, unit, x, y, map)
     {
         return 0;
     },
+    getEnemyVisionBonus : null,
 
     getEnemyMinFirerangeModifier : function (co, unit, x, y, map)
     {
         return 0;
     },
+    getEnemyMinFirerangeModifier : null,
 
     getEnemyFirerangeModifier : function (co, unit, x, y, map)
     {
         return 0;
     },
+    getEnemyFirerangeModifier : null,
 
     getBonusLoadingPlace : function (co, unit, x, y, map)
     {
         return 0;
     },
+    getBonusLoadingPlace : null,
 
     getAdditionalBuildingActions : function(co, building, map)
     {
@@ -396,6 +460,7 @@ var CO =
         // - before an action id will disable the action -> see Mary
         return "";
     },
+    getAdditionalBuildingActions : null,
 
     getTransportUnits : function(co, unit, map)
     {
@@ -403,16 +468,19 @@ var CO =
         // - before an unit id will remove the unit from the loading list
         return [];
     },
+    getTransportUnits : null,
 
     getBonusIncome : function(co, building, income, map)
     {
         return 0;
     },
+    getBonusIncome : null,
 
     getIncomeReduction : function(co, building, income, map)
     {
         return 0;
     },
+    getIncomeReduction : null,
 
     postBattleActions : function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
@@ -420,93 +488,114 @@ var CO =
         // the damage given is the damage was dealt to the unit.
         // gotAttacked means we own the unit which got damage dealt.
     },
+    postBattleActions : null,
 
     endOfTurn : function(co, map)
     {
         // called at the end of the turn use it to do cool co stuff like caulder's healing :)
     },
+    endOfTurn : null,
 
     startOfTurn : function(co, map)
     {
         // called at the start of the turn use it to do cool co stuff like caulder's healing :)
     },
+    startOfTurn : null,
 
     postAction: function(co, action, map)
     {
         // called after the action was performed
     },
+    postAction : null,
 
     onUnitDeath : function(co, unit, map)
     {
     },
+    onUnitDeath : null,
 
     getEnemyRepairCostModifier : function(co, unit, map)
     {
         return 0.0;  // percentage modifier of the unit cost e.g. 0.2 means 20% more expensive
     },
+    getEnemyRepairCostModifier : null,
 
     getRepairCostModifier : function(co, unit, map)
     {
         return 0.0;  // percentage modifier of the unit cost e.g. 0.2 means 20% more expensive
     },
+    getRepairCostModifier : null,
 
     // CO - Intel
     getBio : function(co, map)
     {
         return "";
     },
+    getBio : null,
     getLongBio : function(co, map)
     {
         return "";
     },
+    getLongBio : null,
     getHits : function(co, map)
     {
         return "";
     },
+    getHits : null,
     getMiss : function(co, map)
     {
         return "";
     },
+    getMiss : null,
     getCODescription : function(co, map)
     {
         return "";
     },
+    getCODescription : null,
     getLongCODescription : function(co, map)
     {
         return "";
     },
+    getLongCODescription : null,
     getPowerDescription : function(co, map)
     {
         return "";
     },
+    getPowerDescription : null,
     getPowerName : function(co, map)
     {
         return "";
     },
+    getPowerName : null,
     getSuperPowerDescription : function(co, map)
     {
         return "";
     },
+    getSuperPowerDescription : null,
     getSuperPowerName : function(co, map)
     {
         return "";
     },
+    getSuperPowerName : null,
     getPowerSentences : function(co, map)
     {
         return [];
     },
+    getPowerSentences : null,
     getVictorySentences : function(co, map)
     {
         return [];
     },
+    getVictorySentences : null,
     getDefeatSentences : function(co, map)
     {
         return [];
     },
+    getDefeatSentences : null,
     getName : function(co, map)
     {
         return "";
     },
+    getName : null,
 
     showDefaultUnitGlobalBoost : function(co, map)
     {
@@ -516,9 +605,11 @@ var CO =
     {
         return 0;
     },
+    getCustomUnitGlobalBoostCount : null,
     getCustomUnitGlobalBoost : function(co, index, info, map)
     {
     },
+    getCustomUnitGlobalBoost : null,
     showDefaultUnitZoneBoost : function(co, map)
     {
         return true;
@@ -527,9 +618,11 @@ var CO =
     {
         return 0;
     },
+    getCustomUnitZoneBoostCount : null,
     getCustomUnitZoneBoost : function(co, index, info, map)
     {
     },
+    getCustomUnitZoneBoost : null,
 
     getCOStyles : function()
     {
@@ -537,6 +630,7 @@ var CO =
         
         return [];
     },
+    getCOStyles : null,
 
     // ai hints for using co powers
     /**
@@ -638,6 +732,7 @@ var CO =
     {
         return 0.0;
     },
+    getUnitBuildValue : null,
 
     getAddtionalCoFaces : function()
     {

@@ -12,6 +12,7 @@ var TERRAIN =
         // everthing else is open to use
         return 0;
     },
+    getTerrainGroup : null,
     getTerrainGroupSort : function()
     {
         return [1,
@@ -92,35 +93,43 @@ var TERRAIN =
     init : function (terrain, map)
     {
     },
+    init : null,
     // returns the defense of this terrain
     getDefense : function(terrain, map)
     {
         return 0;
     },
+    getDefense : null,
 
     getFirerangeModifier : function(terrain, unit, map)
     {
         return 0;
     },
+    getFirerangeModifier : null,
 
     getMinFirerangeModifier : function(terrain, unit, map)
     {
         return 0;
     },
+    getMinFirerangeModifier : null,
 
     // called for loading a sub image terrain
     // this has only a visual effect
     loadBaseTerrain : function(terrain, currentTerrainID, map, currentPalette)
     {
     },
+    loadBaseTerrain : null,
     
     loadBaseSprite : function(terrain, map)
     {
     },
+    loadBaseSprite : null,
+
     // called for loading an overlay sprite
     loadOverlaySprite : function(terrain, map)
     {
     },
+    loadOverlaySprite : null,
 
     getName : function()
     {
@@ -137,11 +146,13 @@ var TERRAIN =
     {
         return 0;
     },
+    getBonusVision : null,
 
     getVisionHide : function(terrain, player, map)
     {
         return false;
     },
+    getVisionHide : null,
 
     getMiniMapIcon : function(terrain, map)
     {
@@ -152,6 +163,7 @@ var TERRAIN =
     {
         // called when the terrain is destroyed and replacing of this terrain starts
     },
+    onDestroyed : null,
 
     getTerrainAnimationBase : function(unit, terrain, defender, map)
     {
@@ -418,16 +430,19 @@ var TERRAIN =
     {
         return 0;
     },
+    getTerrainAnimationMoveSpeed : null,
 
     getMovementcostModifier : function(terrain, x, y, curX, curY, map)
     {
         return 0;
     },
+    getMovementcostModifier : null,
 
     getDescription : function(terrain, map)
     {
         return "";
     },
+    getDescription : null,
     /***********************************************************************************/
     // this section deals with map editor hints
     // these functions have no influence in the game.
@@ -444,23 +459,27 @@ var TERRAIN =
     {
         return false;
     },
+    useTerrainAsBaseTerrain : null,
 
     getTerrainSprites : function(map)
     {
         // array of sprites that can be selected as fix sprites for this terrain
         return [];
     },
+    getTerrainSprites : null,
 
     getOverlayTerrainSprites : function(map)
     {
         // array of sprites that can be selected as fix overlay sprites for this terrain
         return [];
     },
+    getOverlayTerrainSprites : null,
 
     startOfTurn : function(terrain, map)
     {
         // needs to be enable by calling setHasStartOfTurn(true) in the js function init
     },
+    startOfTurn : null,
 
     // additional offensive bonus for a unit on this field
     getOffensiveFieldBonus : function(terrain, attacker, atkPosX, atkPosY,
@@ -468,27 +487,36 @@ var TERRAIN =
     {
         return 0;
     },
+    getOffensiveFieldBonus : null,
+
     //  additional deffensive bonus for a unit on this field
     getDeffensiveFieldBonus : function(terrain, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
+    getDeffensiveFieldBonus : null,
 
     // the tiles considered for flowing
     getFlowTiles : function(map)
     {
         return [];
     },
+    getFlowTiles : null,
+
     // gets called with a terrain pfs in order to create the flow sprites
     updateFlowSprites : function(terrain, pPfs, map, applyRulesPalette)
     {
     },
+    updateFlowSprites : null,
+
     isLoadingTile :  function(terrain, map)
     {
         // hint for the ai to try to move away if it can't do anything with a unit
         return false;
     },
+    isLoadingTile : null,
+
     getShowInEditor : function()
     {
         return true;
@@ -498,6 +526,8 @@ var TERRAIN =
     {
         return "";
     },
+    getEditorPlacementSound : null,
+
     // static information called via TERRAIN from c++
     getHighTerrains()
     {
@@ -531,7 +561,7 @@ var TERRAIN =
     {
         return "";
     },
-
+    getDefaultPalette : null,
 
     getPaletteNamesArray : function()
     {

@@ -96,18 +96,22 @@ public slots:
     }
     inline QJSValue doFunction(const QString & obj, const QString & func, const QJSValueList& args = QJSValueList())
     {
+        QJSValue ret;
         clearJsStack();
-        QJSValue objPointer = globalObject().property(obj);
-        QJSValue funcPointer = objPointer.property(func);
-        ++m_inJsCall;
-        QJSValue ret = funcPointer.call(args);
-        exitJsCall();
-        if (ret.isError())
+        if (exists(obj, func))
         {
-            QString error = ret.toString() + " in File: " +
-                            ret.property("fileName").toString() + " at Line: " +
-                            ret.property("lineNumber").toString();
-            printError(error);
+            QJSValue objPointer = globalObject().property(obj);
+            QJSValue funcPointer = objPointer.property(func);
+            ++m_inJsCall;
+            ret = funcPointer.call(args);
+            exitJsCall();
+            if (ret.isError())
+            {
+                QString error = ret.toString() + " in File: " +
+                                ret.property("fileName").toString() + " at Line: " +
+                                ret.property("lineNumber").toString();
+                printError(error);
+            }
         }
         return ret;
     }

@@ -6,6 +6,7 @@ var BUILDING =
     {
         return 0;
     },
+    getBuildingGroup : null,
     getBuildingGroupSort : function()
     {
         return [0,
@@ -55,6 +56,7 @@ var BUILDING =
     {
         return "";
     },
+    getName : null,
     // returns the defense of this terrain
     getDefense : function(building, map)
     {
@@ -66,18 +68,21 @@ var BUILDING =
     {
         return 0;
     },
+    getVisionBonus : null,
     // additional offensive bonus for a unit on this field
     getOffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
+    getOffensiveFieldBonus : null,
     //  additional deffensive bonus for a unit on this field
     getDeffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
+    getDeffensiveFieldBonus : null,
     getBuildingWidth : function(map)
     {
         // one field width default for most buildings
@@ -91,6 +96,7 @@ var BUILDING =
     loadSprites : function(building, neutral, map)
     {
     },
+    loadSprites : null,
     // the terrain on which a building can be placed
     // if the current terrain isn't in the list. it'll be replaced by the first :)
     baseTerrains : ["PLAINS", "STREET", "STREET1", "SNOW", "SNOW_STREET", "DESERT", "DESERT_PATH", "DESERT_PATH1", "WASTE", "WASTE_PATH1"],
@@ -151,11 +157,13 @@ var BUILDING =
     {
         return 0;
     },
+    getCostModifier : null,
 
     getConstructionList : function(building, map)
     {
         return [];
     },
+    getConstructionList : null,
     actionList : [],
     getActions : function(building, map)
     {
@@ -166,6 +174,7 @@ var BUILDING =
     {
         // gets called at the end of a turn
     },
+    endOfTurn : null,
 
     startOfTurn : function(building, map)
     {
@@ -183,21 +192,25 @@ var BUILDING =
     {
         return 0;
     },
+    getOffensiveBonus : null,
 
     getDefensiveBonus : function(building, map)
     {
         return 0;
     },
+    getDefensiveBonus : null,
     getPowerChargeBonus : function(building, map)
     {
         return 0;
     },
+    getPowerChargeBonus : null,
     getActionTargetFields : function(building, map)
     {
         // targets of a building. For most things this is a null pointer
         // return must be null or a QmlVectorPoint
         return null;
     },
+    getActionTargetFields : null,
     getActionTargetOffset : function(building, map)
     {
         // offset for large buildings since there reference point is bound to the lower right corner.
@@ -212,6 +225,7 @@ var BUILDING =
     {
         return[];
     },
+    getRepairTypes : null,
 
     canRepair : function(building, unit, map, always = false)
     {
@@ -289,11 +303,13 @@ var BUILDING =
     {
         // called when the building is destroyed and replacing of this building starts
     },
+    onDestroyed : null,
 
     getDamage : function(building, unit, map)
     {
         return 0;
     },
+    getDamage : null,
 
     getBuildingTargets : function(building, map)
     {
@@ -305,6 +321,7 @@ var BUILDING =
     {
         return 0;
     },
+    getTerrainAnimationMoveSpeed : null,
 
     getTerrainAnimationBase : function(unit, terrain, defender, map)
     {
@@ -316,6 +333,7 @@ var BUILDING =
     {
         return "";
     },
+    getTerrainAnimationForeground : null,
 
 
     armyData = [["ac", "yc"],
@@ -379,17 +397,20 @@ var BUILDING =
     {
         return "";
     },
+    getDescription : null,
 
     // vision created by this field
     getVision : function(building)
     {
         return 0;
     },
+    getVision : null,
 
     getVisionHide : function(building)
     {
         return false;
     },
+    getVisionHide : null,
 
     onCaptured : function(building)
     {
@@ -410,11 +431,13 @@ var BUILDING =
     {
         return false;
     },
+    usesMapLayer : null,
 
     getCostReduction : function(building, unitId, baseCost, x, y, map)
     {
         return 0;
     },
+    getCostReduction : null,
 
     getEditorPlacementSound : function()
     {
@@ -425,6 +448,7 @@ var BUILDING =
     {
 
     },
+    getBuildingsSorted : null,
 
     hqIds = ["HQ", "FORTHQ", "FIELD_BASE"],
     isHq : function(building)

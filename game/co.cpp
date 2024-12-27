@@ -419,6 +419,22 @@ QStringList CO::getCOUnits(Building* pBuilding)
     return ret;
 }
 
+QStringList CO::getEnemyCOUnits(Building* pBuilding)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getEnemyCOUnits";
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pBuilding),
+                       GameMap::getMapJsThis(m_pMap)});
+    QStringList ret;
+    for (const auto & perk : std::as_const(m_perkList))
+    {
+        QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+        ret.append(erg.toVariant().toStringList());
+    }
+    return ret;
+}
+
 QStringList CO::getTransportUnits(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1398,7 +1414,32 @@ QStringList CO::getActionModifierList(Unit* pUnit)
         if (isJsFunctionEnabled(perk))
         {
             QJSValue erg = pInterpreter->doFunction(perk, function1, args);
-            ret.append(erg.toVariant().toStringList());
+            if (!erg.isNull())
+            {
+                ret.append(erg.toVariant().toStringList());
+            }
+        }
+    }
+    return ret;
+}
+
+QStringList CO::getEnemyActionModifierList(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getEnemyActionModifierList";
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pUnit),
+                       GameMap::getMapJsThis(m_pMap)});
+    QStringList ret;
+    for (const auto & perk : std::as_const(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+            if (!erg.isNull())
+            {
+                ret.append(erg.toVariant().toStringList());
+            }
         }
     }
     return ret;

@@ -691,6 +691,12 @@ public:
      */
     Q_INVOKABLE QStringList getCOUnits(Building* pBuilding);
     /**
+     * @brief getEnemyCOUnits
+     * @param pBuilding
+     * @return
+     */
+    Q_INVOKABLE QStringList getEnemyCOUnits(Building* pBuilding);
+    /**
      * @brief getTransportUnits
      * @param pUnit
      * @return

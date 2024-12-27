@@ -140,8 +140,7 @@ QStringList GameManager::getDefaultActionbBannlist()
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue value = pInterpreter->doFunction(action, "getBannedByDefault");
-        if (value.isBool() &&
-            value.toBool() == false)
+        if (value.isNull() || !value.toBool())
         {
             ret.append(action);
         }

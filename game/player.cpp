@@ -1063,6 +1063,19 @@ QStringList Player::getCOUnits(Building* pBuilding)
     return ret;
 }
 
+QStringList Player::getEnemyCOUnits(Building* pBuilding)
+{
+    QStringList ret;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            ret.append(pCO->getEnemyCOUnits(pBuilding));
+        }
+    }
+    return ret;
+}
+
 QStringList Player::getTransportUnits(Unit* pUnit)
 {
     QStringList ret;
