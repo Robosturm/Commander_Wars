@@ -522,7 +522,7 @@ public:
      * @param pBuilding
      * @return
      */
-    Q_INVOKABLE bool isMoveableTile(Building* pBuilding) const;
+    Q_INVOKABLE bool isMoveableTile(Building* pBuilding, UnitPathFindingSystem &turnPfs) const;
     /**
      * @brief getAiCoUnitMultiplier
      * @param pCO

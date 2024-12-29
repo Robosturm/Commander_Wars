@@ -176,12 +176,9 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                 QFile file(uiFile);
                 if (file.open(QIODevice::ReadOnly))
                 {
-                    QString error;
-                    qint32 line;
-                    qint32 column;
                     bool success = false;
-                    bool loaded = document.setContent(&file, &error, &line, &column);
-                    if (loaded)
+                    auto result = document.setContent(&file);
+                    if (result)
                     {
                         success = true;
                         oxygine::spActor root = MemoryManagement::create<oxygine::Actor>();
@@ -233,7 +230,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                     else
                     {
                         CONSOLE_PRINT("Unable to load: " + uiFile, GameConsole::eERROR);
-                        CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR);
+                        CONSOLE_PRINT("Error: " + result.errorMessage + " at line " + QString::number(result.errorLine) + " at column " + QString::number(result.errorColumn), GameConsole::eERROR);
                     }
                     if (success)
                     {

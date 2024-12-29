@@ -214,6 +214,7 @@ public:
      */
     Q_INVOKABLE QVector<QPoint> getAllNodePoints(qint32 maxRange = infinite);
 
+    Q_INVOKABLE bool hasPoints(qint32 startX, qint32 startY) const;
 protected:
     inline qint32 getMoveDirection(const qint32& curX, const qint32& curY,
                                    const qint32& targetX, const qint32& targetY)

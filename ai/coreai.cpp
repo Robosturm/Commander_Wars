@@ -8,8 +8,9 @@
 #include "game/unitpathfindingsystem.h"
 #include "game/player.h"
 #include "game/co.h"
+#include "game/actionperformer.h"
 
-#include "menue/gamemenue.h"
+#include "menue/basegamemenu.h"
 
 #include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
@@ -2462,7 +2463,7 @@ bool CoreAI::getBuildingTargetPointFromScript(spGameAction & pAction, const spMa
     if (pInterpreter->exists(GameScript::m_scriptName, function1))
     {
         erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
-        if (erg.isVariant())
+        if (erg.toVariant().isValid())
         {
             target = erg.toVariant().toPoint();
         }
@@ -2472,7 +2473,7 @@ bool CoreAI::getBuildingTargetPointFromScript(spGameAction & pAction, const spMa
         if (pInterpreter->exists(m_aiName, function1))
         {
             erg = pInterpreter->doFunction(m_aiName, function1, args);
-            if (erg.isVariant())
+            if (erg.toVariant().isValid())
             {
                 target = erg.toVariant().toPoint();
             }
@@ -2841,11 +2842,13 @@ bool CoreAI::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit
     return false;
 }
 
-bool CoreAI::isMoveableTile(Building* pBuilding) const
+bool CoreAI::isMoveableTile(Building* pBuilding, UnitPathFindingSystem &turnPfs) const
 {
-    return pBuilding == nullptr || pBuilding->getOwner() == nullptr ||
-            pBuilding->getOwner()->isEnemy(m_pPlayer) ||
-            !pBuilding->isProductionBuilding();
+    return pBuilding == nullptr ||
+           pBuilding->getOwner() == nullptr ||
+           pBuilding->getOwner()->isEnemy(m_pPlayer) ||
+           !turnPfs.hasPoints(pBuilding->getX(), pBuilding->getY()) ||
+           (turnPfs.hasPoints(pBuilding->getX(), pBuilding->getY()) && !pBuilding->isProductionBuilding());
 }
 
 QString CoreAI::getAiName() const

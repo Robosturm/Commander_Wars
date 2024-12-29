@@ -120,11 +120,8 @@ namespace oxygine
         updateName(xmlFile);
         m_docs.push_back(QDomDocument());
         QDomDocument& doc = m_docs.last();
-        QString error;
-        qint32 line;
-        qint32 column;
-        bool loaded = doc.setContent(&file, &error, &line, &column);
-        if (loaded)
+        auto result = doc.setContent(&file);
+        if (result)
         {
             QDomElement resources = doc.documentElement();
             CONSOLE_PRINT_MODULE("loading xml resources", GameConsole::eDEBUG, GameConsole::eResources);
@@ -170,7 +167,7 @@ namespace oxygine
         }
         else
         {
-            CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR);
+            CONSOLE_PRINT("Error: " + result.errorMessage + " at line " + QString::number(result.errorLine) + " at column " + QString::number(result.errorColumn), GameConsole::eERROR);
         }
 #endif
         return true;

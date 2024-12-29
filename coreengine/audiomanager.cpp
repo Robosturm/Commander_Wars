@@ -189,11 +189,8 @@ void AudioManager::readSoundCacheFromXml(QString folder)
         QFile file(folder + "res.xml");
         if (file.open(QIODevice::ReadOnly))
         {
-            QString error;
-            qint32 line;
-            qint32 column;
-            bool loaded = document.setContent(&file, &error, &line, &column);
-            if (loaded)
+            auto result = document.setContent(&file);
+            if (result)
             {
                 auto rootElement = document.documentElement();
                 auto node = rootElement.firstChild();
@@ -219,7 +216,7 @@ void AudioManager::readSoundCacheFromXml(QString folder)
             else
             {
                 CONSOLE_PRINT_MODULE("Unable to load: " + folder + "res.xml", GameConsole::eERROR, GameConsole::eAudio);
-                CONSOLE_PRINT_MODULE("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR, GameConsole::eAudio);
+                CONSOLE_PRINT_MODULE("Error: " + result.errorMessage + " at line " + QString::number(result.errorLine) + " at column " + QString::number(result.errorColumn), GameConsole::eERROR, GameConsole::eAudio);
             }
         }
     }

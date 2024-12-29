@@ -355,6 +355,31 @@ QVector<QPoint> PathFindingSystem::getFields(qint32 startX, qint32 startY, qint3
     return path;
 }
 
+bool PathFindingSystem::hasPoints(qint32 startX, qint32 startY) const
+{
+    auto index = getIndex(startX + 1, startY);
+    if (index >= 0 && index < m_costs.size() && m_costs[index] != infinite && m_costs[index] > 0)
+    {
+        return true;
+    }
+    index = getIndex(startX - 1, startY);
+    if (index >= 0 && index < m_costs.size() && m_costs[index] != infinite && m_costs[index] > 0)
+    {
+        return true;
+    }
+    index = getIndex(startX, startY + 1);
+    if (index >= 0 && index < m_costs.size() && m_costs[index] != infinite && m_costs[index] > 0)
+    {
+        return true;
+    }
+    index = getIndex(startX, startY - 1);
+    if (index >= 0 && index < m_costs.size() && m_costs[index] != infinite && m_costs[index] > 0)
+    {
+        return true;
+    }
+    return false;
+}
+
 QVector<QPoint> PathFindingSystem::getAllNodePoints(qint32 maxRange)
 {
     auto points = getAllNodePointsFast(maxRange);

@@ -1382,7 +1382,7 @@ qint32 NormalAi::getMoveTargetField(MoveUnitData &unitData, UnitPathFindingSyste
             costs >= 0 &&
             costs <= movePoints)
         {
-            if (isMoveableTile(pBuilding))
+            if (isMoveableTile(pBuilding, turnPfs))
             {
                 float counterDamage = calculateCounterDamage(unitData, movePath[i], nullptr, 0.0f, pBuildings, pEnemyBuildings, true);
                 if (counterDamage <= bestMinDamge &&
@@ -1444,7 +1444,7 @@ qint32 NormalAi::getBestAttackTarget(MoveUnitData &unitData, std::vector<CoreAI:
             {
                 fundsDamage *= m_enemyIndirectBonus;
             }
-            if (!isMoveableTile(m_pMap->getTerrain(moveTarget.x(), moveTarget.y())->getBuilding()))
+            if (!isMoveableTile(m_pMap->getTerrain(moveTarget.x(), moveTarget.y())->getBuilding(), *unitData.pUnitPfs))
             {
                 fundsDamage -= m_ownProdctionMalus;
             }
@@ -1454,7 +1454,8 @@ qint32 NormalAi::getBestAttackTarget(MoveUnitData &unitData, std::vector<CoreAI:
             fundsDamage = static_cast<qint32>(ret[i].fundsDamage);
         }
         float counterDamage = calculateCounterDamage(unitData, moveTarget, pEnemy, ret[i].hpDamage + bonusDamage, pBuildings, pEnemyBuildings, true);
-        if (counterDamage < 0)
+        if (counterDamage < 0 ||
+            !unitData.pUnitPfs->hasPoints(pUnit->getX(), pUnit->getY()))
         {
             counterDamage = 0;
         }
