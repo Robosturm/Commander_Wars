@@ -1271,7 +1271,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                         {
                             Terrain* visionField = m_pMap->getTerrain(point.x() + x,point.y() + y);
                             Unit* pUnit = visionField->getUnit();
-                            bool visionHide = visionField->getVisionHide(this);
+                            bool visionHide = visionField->getVisionHide(pBuilding->getOwner());
                             if ((!visionHide) ||
                                 ((pUnit != nullptr) && visionHide &&
                                  !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
@@ -1310,7 +1310,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     {
                         Terrain* visionField = m_pMap->getTerrain(point.x() + x,point.y() + y);
                         Unit* pUnit = visionField->getUnit();
-                        bool visionHide = visionField->getVisionHide(this);
+                        bool visionHide = visionField->getVisionHide(pUnit->getOwner());
                         if ((!visionHide) ||
                             ((pUnit != nullptr) && visionHide &&
                              !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
