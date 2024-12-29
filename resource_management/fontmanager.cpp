@@ -29,11 +29,8 @@ FontManager::FontManager()
             QDomDocument document;
             QFile file(folder + "res.xml");
             file.open(QIODevice::ReadOnly);
-            QString error;
-            qint32 line;
-            qint32 column;
-            bool loaded = document.setContent(&file, &error, &line, &column);
-            if (loaded)
+            auto result = document.setContent(&file);
+            if (result)
             {
                 auto rootElement = document.documentElement();
                 auto node = rootElement.firstChild();
@@ -115,7 +112,7 @@ FontManager::FontManager()
             else
             {
                 CONSOLE_PRINT("Unable to load: " + folder + "res.xml", GameConsole::eERROR);
-                CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR);
+                CONSOLE_PRINT("Error: " + result.errorMessage + " at line " + QString::number(result.errorLine) + " at column " + QString::number(result.errorColumn), GameConsole::eERROR);
             }
         }
     }
