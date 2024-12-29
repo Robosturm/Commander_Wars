@@ -94,7 +94,11 @@ void MapSelection::refresh()
 }
 
 void MapSelection::changeFolder(QString folder)
-{    
+{
+    if (folder.endsWith(".map"))
+    {
+        return;
+    }
     CONSOLE_PRINT("MapSelection::changeFolder " + folder, GameConsole::eDEBUG);
     m_itemClicked = false;
     QString newFolder =  folder;
