@@ -1,1 +1,21 @@
+# IDE-related files
+/.idea
+
+# Temporary build files
+/*.cmake
+CMakeCache.txt
+/CMakeFiles
 CMakeLists.txt.user
+/commander_wars
+/Commander_Wars_autogen
+/*.depends
+/*.log
+/Makefile
+/qrc_*
+/.qt
+
+# Files the game puts in the current directory
+/Commander_Wars.ini
+/*.dat
+/logs
+/savegames
