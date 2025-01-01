@@ -1309,11 +1309,11 @@ void Player::updatePlayerVision(bool reduceTimer)
                     if (m_pMap->onMap(point.x() + x, point.y() + y))
                     {
                         Terrain* visionField = m_pMap->getTerrain(point.x() + x,point.y() + y);
-                        Unit* pUnit = visionField->getUnit();
+                        Unit* pOtherUnit = visionField->getUnit();
                         bool visionHide = visionField->getVisionHide(pUnit->getOwner());
                         if ((!visionHide) ||
-                            ((pUnit != nullptr) && visionHide &&
-                             !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
+                            ((pOtherUnit != nullptr) && visionHide &&
+                             !pOtherUnit->useTerrainHide() && !pOtherUnit->isStatusStealthed()))
                         {
                             m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
                         }
