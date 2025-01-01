@@ -379,7 +379,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Adam can take advantage of max luck rolls, but only if the enemy unit could be killed by one. However, his units lose even more firepower the less HP they have.");
+        return qsTr("Adam can take advantage of max luck rolls, but only if the enemy unit could be destroyed by one. However, his units lose even more firepower the less HP they have.");
     };
     this.getLongCODescription = function(co, map)
     {
