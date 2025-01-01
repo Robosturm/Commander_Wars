@@ -438,7 +438,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Units heal at half the normal rate on owned properties, but will be able to heal while adjacent to them.");
+        return qsTr("Units heal at half the normal rate on owned properties, but are able to heal while adjacent to them.");
     };
     this.getLongCODescription = function(co, map)
     {
