@@ -4167,11 +4167,19 @@ void Unit::showRanges()
 {    
     if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
-        createCORange(m_pOwner->getCO(0)->getCORange());
+        CO* pCO = m_pOwner->getCO(0);
+        if (pCO != nullptr)
+        {
+            createCORange(pCO->getCORange());
+        }
     }
     else if (m_UnitRank == GameEnums::UnitRank_CO1)
     {
-        createCORange(m_pOwner->getCO(1)->getCORange());
+        CO* pCO = m_pOwner->getCO(1);
+        if (pCO != nullptr)
+        {
+            createCORange(pCO->getCORange());
+        }
     }
     else
     {
