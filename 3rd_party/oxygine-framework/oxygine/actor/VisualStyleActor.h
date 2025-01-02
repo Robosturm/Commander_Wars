@@ -32,7 +32,7 @@ namespace oxygine
 
         void setColor(const QColor& color);
         void setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
-        void setBlendMode(VideoDriver::blend_mode mode);
+        void setBlendMode(VideoDriver::BLEND_MODE mode);
         void setAddColor(const QColor& color);
         void setAddColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 0);
         virtual void setEnabled(bool value) override;

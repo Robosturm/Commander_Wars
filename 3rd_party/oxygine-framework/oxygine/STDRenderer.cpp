@@ -1,5 +1,3 @@
-#include <memory>
-
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
@@ -44,10 +42,10 @@ namespace oxygine
     void RenderStateCache::reset()
     {
         resetTextures();
-        m_blend = VideoDriver::blend_disabled;
+        m_blend = VideoDriver::BLEND_MODE::NONE;
         if (m_driver)
         {
-            m_driver->setState(VideoDriver::STATE_BLEND, 0);
+            m_driver->setState(VideoDriver::STATE::BLEND, 0);
         }
         m_program = nullptr;
     }
@@ -75,7 +73,7 @@ namespace oxygine
         m_driver->setTexture(sampler, t);
     }
 
-    void RenderStateCache::setBlendMode(VideoDriver::blend_mode blend)
+    void RenderStateCache::setBlendMode(VideoDriver::BLEND_MODE blend)
     {
         if (m_blend == blend)
         {
@@ -87,17 +85,8 @@ namespace oxygine
 
     void RenderStateCache::setBlendModeInternal()
     {
-        if (m_blend == 0)
-        {
-            m_driver->setState(VideoDriver::STATE_BLEND, 0);
-        }
-        else
-        {
-            VideoDriver::BLEND_TYPE src = static_cast<VideoDriver::BLEND_TYPE>(m_blend >> 16);
-            VideoDriver::BLEND_TYPE dest = static_cast<VideoDriver::BLEND_TYPE>(m_blend & 0xFFFF);
-            m_driver->setBlendFunc(src, dest);
-            m_driver->setState(VideoDriver::STATE_BLEND, 1);
-        }
+        m_driver->setBlendFunc(m_blend);
+        m_driver->setState(VideoDriver::STATE::BLEND, m_blend != VideoDriver::BLEND_MODE::NONE);
     }
 
     bool RenderStateCache::setShader(ShaderProgram* prog)
@@ -329,7 +318,7 @@ namespace oxygine
         {
             return;
         }
-        m_driver->draw(VideoDriver::PT_TRIANGLES, m_vdecl,
+        m_driver->draw(VideoDriver::PRIMITIVE_TYPE::TRIANGLES, m_vdecl,
                       &m_verticesData.front(),
                       &STDRenderer::indices16.front(), count);
         m_verticesData.clear();

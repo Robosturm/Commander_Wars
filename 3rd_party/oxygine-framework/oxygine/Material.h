@@ -62,7 +62,7 @@ public:
     size_t m_hash{0};
     spTexture    m_base;
     spTexture    m_table;
-    VideoDriver::blend_mode m_blend;
+    VideoDriver::BLEND_MODE m_blend;
     QColor             m_addColor;
     UberShaderProgram::ColorMode m_fracShader;
 };

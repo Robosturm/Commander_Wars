@@ -44,12 +44,8 @@ namespace oxygine
     void Stage::renderStage(const QColor* clearColor, const QRect& viewport, const QMatrix4x4 & viewProjection)
     {
         spVideoDriver driver = VideoDriver::instance;
-        driver->setViewport(viewport);
+        driver->begin(viewport, clearColor);
 
-        if (clearColor != nullptr)
-        {
-            driver->clear(*clearColor);
-        }
         STDRenderer::instance->setViewProj(viewProjection);
         RenderState rs;        
         rs.clip = QRect(0, 0, viewport.width(), viewport.height());

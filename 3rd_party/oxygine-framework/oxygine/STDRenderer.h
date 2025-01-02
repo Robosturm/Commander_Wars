@@ -175,7 +175,7 @@ namespace oxygine
         }
 
         void setTexture(qint32 sampler, spTexture& t);
-        void setBlendMode(VideoDriver::blend_mode blend);
+        void setBlendMode(VideoDriver::BLEND_MODE blend);
         bool setShader(ShaderProgram* prog);
 
         void reset();
@@ -189,7 +189,7 @@ namespace oxygine
         spTexture m_textures[MAX_TEXTURES];
         ShaderProgram* m_program{nullptr};
         VideoDriver* m_driver{nullptr};
-        VideoDriver::blend_mode m_blend{VideoDriver::blend_disabled};
+        VideoDriver::BLEND_MODE m_blend{VideoDriver::BLEND_MODE::NONE};
     };
 
     RenderStateCache& rsCache();

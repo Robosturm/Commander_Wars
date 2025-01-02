@@ -19,54 +19,29 @@ namespace oxygine
         {
             return "VideoDriver";
         }
-        enum PRIMITIVE_TYPE
+        enum class PRIMITIVE_TYPE
         {
-            PT_POINTS,
-            PT_LINES,
-            PT_LINE_LOOP,
-            PT_LINE_STRIP,
-            PT_TRIANGLES,
-            PT_TRIANGLE_STRIP,
-            PT_TRIANGLE_FAN,
-            PT_COUNT,
+            POINTS,
+            LINES,
+            LINE_LOOP,
+            LINE_STRIP,
+            TRIANGLES,
+            TRIANGLE_STRIP,
+            TRIANGLE_FAN,
+            COUNT,
         };
 
-        enum BLEND_TYPE
+        enum class STATE
         {
-            BT_ZERO,
-            BT_ONE,
-            BT_SRC_COLOR,
-            BT_ONE_MINUS_SRC_COLOR,
-            BT_SRC_ALPHA,
-            BT_ONE_MINUS_SRC_ALPHA,
-            BT_DST_ALPHA,
-            BT_DST_COLOR,
-            BT_ONE_MINUS_DST_ALPHA,
-            BT_ONE_MINUS_DST_COLOR,
+            BLEND,
+            NUM
         };
 
-        enum CULL_FACE_TYPE
+        enum class BLEND_MODE
         {
-            CULL_FACE_FRONT_AND_BACK,
-            CULL_FACE_FRONT,
-            CULL_FACE_BACK,
-        };
-
-        enum STATE
-        {
-            STATE_BLEND,
-            STATE_NUM
-        };
-
-        enum blend_mode
-        {
-            blend_disabled              = 0,
-            blend_premultiplied_alpha   = ((BT_ONE                 << 16) | BT_ONE_MINUS_SRC_ALPHA),
-            blend_alpha                 = ((BT_SRC_ALPHA           << 16) | BT_ONE_MINUS_SRC_ALPHA),
-            blend_add                   = ((BT_ONE                 << 16) | BT_ONE),
-            blend_screen                = ((BT_ONE                 << 16) | BT_ONE_MINUS_SRC_COLOR),
-            blend_multiply              = ((BT_DST_COLOR           << 16) | BT_ONE_MINUS_SRC_ALPHA),
-            blend_inverse               = ((BT_ONE_MINUS_DST_COLOR << 16) | BT_ZERO),
+            NONE,
+            ALPHA,
+            COUNT,
         };
 
         struct Uniform3f
@@ -119,8 +94,8 @@ namespace oxygine
         void setRenderTarget(spTexture &);
         void setShaderProgram(ShaderProgram*);
         void setTexture(qint32 sampler, spTexture &);
-        void setState(STATE, quint32 value);
-        void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest);
+        void setState(STATE state, bool value);
+        void setBlendFunc(BLEND_MODE func);
         void setUniform(const char* id, const Uniform4f* v, qint32 num);
         void setUniform(const char* id, const Uniform3f* v, qint32 num);
         void setUniform(const char* id, float v);
@@ -130,7 +105,6 @@ namespace oxygine
         void setUniform(const char* id, const QMatrix4x4&  v);
     protected:
         quint32 getPT(VideoDriver::PRIMITIVE_TYPE pt);
-        quint32 getBT(VideoDriver::BLEND_TYPE pt);
         void _begin(const QRect& viewport, const QColor* clearColor);
     protected:
         spTexture m_rt;

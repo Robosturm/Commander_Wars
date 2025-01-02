@@ -5,7 +5,6 @@
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 
-#include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 #include "3rd_party/oxygine-framework/oxygine/Input.h"
@@ -16,10 +15,10 @@
 #include <QMutexLocker>
 #ifdef GRAPHICSUPPORT
 #include <QApplication>
+#include <QColorSpace>
 #else
 #include <QCoreApplication>
 #endif
-#include <limits>
 
 #include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
@@ -35,7 +34,25 @@ namespace oxygine
         setObjectName("GameWindow");
         QSurfaceFormat newFormat = format();
         newFormat.setProfile(QSurfaceFormat::CoreProfile);
+        // set OpenGL-related parameters
+        newFormat.setProfile(QSurfaceFormat::CoreProfile);
         newFormat.setSamples(2);    // Set the number of samples used for multisampling
+        newFormat.setRenderableType(QSurfaceFormat::OpenGL);
+        newFormat.setSamples(2);
+
+        // set color format
+        newFormat.setColorSpace(QColorSpace::NamedColorSpace::SRgb);
+        newFormat.setRedBufferSize(8);
+        newFormat.setBlueBufferSize(8);
+        newFormat.setGreenBufferSize(8);
+        newFormat.setAlphaBufferSize(0);
+
+        // set framebuffer parameters
+        newFormat.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
+        newFormat.setSwapInterval(1);
+        newFormat.setDepthBufferSize(0);
+        newFormat.setStencilBufferSize(0);
+
         setFormat(newFormat);
 #endif
         m_window = this;
