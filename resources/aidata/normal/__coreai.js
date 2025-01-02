@@ -64,12 +64,12 @@ var COREAI =
     antiReconUnits : ["LIGHT_TANK", "LIGHT_TANK", "LIGHT_TANK", "LIGHT_TANK", "LIGHT_TANK", "ZCOUNIT_AUTO_TANK", "HEAVY_TANK", "ZCOUNIT_CRYSTAL_TANK", "ZCOUNIT_NEOSPIDER_TANK", "ZCOUNIT_ROYAL_GUARD", "ZCOUNIT_TANK_HUNTER", "MEGATANK", "NEOTANK", "HOVERCRAFT", "HEAVY_HOVERCRAFT", "K_HELI", "BOMBER", "STEALTHBOMBER", "ZCOUNIT_KIROV"],
     heavyTankUnits : ["NEOTANK", "MEGATANK"],
     bomberUnits : ["BOMBER"],
-    groundScoutUnits = ["RECON", "FLARE"],
-    antiSubmarineUnits = ["CRUISER"],
-    submarineUnits = ["SUBMARINE", "ZCOUNIT_MISSILE_SUB"],
-    antiHeavyNavalUnits = ["SUBMARINE"],
-    productionBuildings = ["FACTORY", "AIRPORT", "AMPHIBIOUSFACTORY", "HARBOUR"],
-    groundScoutGroupSize = 7,
+    groundScoutUnits : ["RECON", "FLARE"],
+    antiSubmarineUnits : ["CRUISER"],
+    submarineUnits : ["SUBMARINE", "ZCOUNIT_MISSILE_SUB"],
+    antiHeavyNavalUnits : ["SUBMARINE"],
+    productionBuildings : ["FACTORY", "AIRPORT", "AMPHIBIOUSFACTORY", "HARBOUR"],
+    groundScoutGroupSize : 7,
     minGroundScoutDay : 4,
     groundScoutDayDifference : 4,
     minInfantryTransporterMapSize : 40 * 40,
@@ -90,14 +90,14 @@ var COREAI =
     ownCounterUnitMinHp : 7,
     enemyCounterUnitMinHp : 5,
     // building variables
-    minMaxFundsPerFactory = 10000,
-    minMaxFundsOvercharge = 7000,
-    targetProductionCount = 3,
+    minMaxFundsPerFactory : 10000,
+    minMaxFundsOvercharge : 7000,
+    targetProductionCount : 3,
     maxSpamingUnits : 2,
     reservedFundsPerFactory : 2000,
     // the following units are only build if nothing else is possible
-    specialUnits = ["PIPERUNNER", "HOELLIUM"],
-    specialProductionCount = 4,    
+    specialUnits : ["PIPERUNNER", "HOELLIUM"],
+    specialProductionCount : 4,
 
     getGroundModifier : function(system)
     {
