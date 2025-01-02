@@ -2770,7 +2770,9 @@ QStringList Unit::getActionList()
 {
     QStringList actionList = getBaseActionList();
     QStringList actionModifierList;
-    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    if (m_pMap != nullptr)
+    {
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = m_pMap->getPlayer(i);
 
@@ -2801,7 +2803,7 @@ QStringList Unit::getActionList()
             }
         }
     }
-
+    }
     for (qint32 i = 0; i < actionModifierList.size(); i++)
     {
         QString action = actionModifierList[i];
