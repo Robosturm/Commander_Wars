@@ -56,8 +56,11 @@ int main(qint32 argc, char* argv[])
         // force a resolution reset
         window.changeScreenMode(Settings::ScreenModes::FullScreen);
     }
-    // show as normal borderless
-    window.changeScreenMode(window.getScreenMode());
+    else
+    {
+        // show as normal borderless
+        window.changeScreenMode(window.getScreenMode());
+    }
     window.setBrightness(Settings::getInstance()->getBrightness());
     window.setGamma(Settings::getInstance()->getGamma());
     if (window.getScreenMode() != Settings::ScreenModes::Window)

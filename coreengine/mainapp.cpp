@@ -266,7 +266,6 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case UpdateManager:
         {
-            changeScreenMode(getScreenMode());
 #ifdef UPDATESUPPORT
             GameUpdater::cleanUpOldArtifacts();
             QString updateStep = Settings::getInstance()->getUpdateStep();
