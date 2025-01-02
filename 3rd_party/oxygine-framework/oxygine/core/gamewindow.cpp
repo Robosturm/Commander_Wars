@@ -33,11 +33,9 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         setObjectName("GameWindow");
         QSurfaceFormat newFormat = format();
-        newFormat.setProfile(QSurfaceFormat::CoreProfile);
+
         // set OpenGL-related parameters
         newFormat.setProfile(QSurfaceFormat::CoreProfile);
-        newFormat.setSamples(2);    // Set the number of samples used for multisampling
-
         newFormat.setRenderableType(getRenderableType());
         newFormat.setSamples(2);
 
