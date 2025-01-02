@@ -25,6 +25,7 @@ namespace oxygine
     protected:
         virtual void updateData() = 0;
         virtual void timerEvent(QTimerEvent *) override;
+        static QSurfaceFormat::RenderableType getRenderableType();
     private:
         void setup();
     protected:

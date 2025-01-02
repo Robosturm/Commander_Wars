@@ -37,7 +37,8 @@ namespace oxygine
         // set OpenGL-related parameters
         newFormat.setProfile(QSurfaceFormat::CoreProfile);
         newFormat.setSamples(2);    // Set the number of samples used for multisampling
-        newFormat.setRenderableType(QSurfaceFormat::OpenGL);
+
+        newFormat.setRenderableType(getRenderableType());
         newFormat.setSamples(2);
 
         // set color format

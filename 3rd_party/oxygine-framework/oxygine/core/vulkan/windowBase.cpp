@@ -11,6 +11,11 @@ namespace oxygine
 {
     QVulkanInstance WindowBase::m_vulkanInstance;
 
+    QSurfaceFormat::RenderableType WindowBase::getRenderableType()
+    {
+        return QSurfaceFormat::RenderableType::OpenVG;
+    }
+
     WindowBase::WindowBase()
     {
         setup();
