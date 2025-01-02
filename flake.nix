@@ -14,13 +14,17 @@
             ];
         in {
             packages = eachSystem (pkgs: rec {
-                CommanderWars = pkgs.kdePackages.callPackage ./CommanderWars.nix { };
+                commander_wars = pkgs.kdePackages.callPackage ./distribution/commander_wars.nix {
+                    pname = "commander_wars";
+                };
+
+                default = commander_wars;
             });
 
             devShells = eachSystem (pkgs: {
                 default = pkgs.mkShell (with pkgs; {
-                    buildInputs = [ qt6.qtbase qt6.qtdeclarative qt6.qttools qt6.qtmultimedia libressl ];
-                    nativeBuildInputs = [ cmake pkg-config ];
+                    buildInputs = [ qt6.qtbase qt6.qtdeclarative qt6.qtmultimedia libressl ];
+                    nativeBuildInputs = [ cmake pkg-config qt6.qttools ];
                 });
             });
         };

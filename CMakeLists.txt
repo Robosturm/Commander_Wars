@@ -32,6 +32,7 @@ option(USEAPPCONFIGPATH "use the system location for saving data, instead of the
 option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or deployed as folder" OFF)
 option(UPDATESUPPORT "Enables the automatic updater for the game which updates to the latest github version should be turned off for local builds not supported for android" OFF)
 option(DEFAULTAIPIPE "If the system should use a separate process for the ai as default variant. Disable it for system that can't launch the same exe twice e.g. android." ON)
+option(INSTALL_LIBS "Whether to install libraries to the target directory. This currently only works on Linux." ON)
 ###################################################################################
 # show configuration
 ###################################################################################
@@ -1245,14 +1246,14 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         BUNDLE          DESTINATION         "bin"
         LIBRARY         DESTINATION         "bin")
     # install libs
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-    install(DIRECTORY templates                                 DESTINATION "share/${PROJECT_NAME_LOWER}"                            OPTIONAL)
-    install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-    install(FILES "icon.png"                                    DESTINATION "share/pixmaps"       RENAME "${PROJECT_NAME_LOWER}.png" OPTIONAL)
-    install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
-    install(FILES ${OPENSSL_LIBS}                               DESTINATION "/"                                                      OPTIONAL)
+    if (INSTALL_LIBS)
+        install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
+        install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
+        install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
+        install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
+    endif()
+    install(DIRECTORY templates                                     DESTINATION "share/${PROJECT_NAME_LOWER}"                            OPTIONAL)
+    install(FILES ${OPENSSL_LIBS}                                   DESTINATION "/"                                                      OPTIONAL)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"

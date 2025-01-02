@@ -3,6 +3,6 @@ Name=Commander Wars
 Exec=commander_wars
 Comment="Advance Wars Clone with a lot of additions customizations and modding support"
 Terminal=false
-Icon=commander_wars.png
+Icon=commander_wars
 Type=Application
 Categories=Game;

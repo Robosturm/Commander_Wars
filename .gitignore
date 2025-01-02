@@ -9,13 +9,24 @@ CMakeLists.txt.user
 /commander_wars
 /Commander_Wars_autogen
 /*.depends
+/install_manifest.txt
 /*.log
 /Makefile
 /qrc_*
 /.qt
+
+# Temporary build files for AppImage
+*.AppImage*
+/distribution/AppDir
+/.qt_plugins
 
 # Files the game puts in the current directory
 /Commander_Wars.ini
 /*.dat
 /logs
 /savegames
+
+/distribution/Commander_Wars.ini
+/distribution/*.dat
+/distribution/logs
+/distribution/savegames
