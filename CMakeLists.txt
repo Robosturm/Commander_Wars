@@ -32,6 +32,7 @@ option(USEAPPCONFIGPATH "use the system location for saving data, instead of the
 option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or deployed as folder" OFF)
 option(UPDATESUPPORT "Enables the automatic updater for the game which updates to the latest github version should be turned off for local builds not supported for android" OFF)
 option(DEFAULTAIPIPE "If the system should use a separate process for the ai as default variant. Disable it for system that can't launch the same exe twice e.g. android." ON)
+option(PRECOMPILED_HEADERS "Whether to use precompiled headers to speed up compilation. This can make precompiled headers less effective." ON)
 ###################################################################################
 # show configuration
 ###################################################################################
@@ -347,9 +348,6 @@ else()
     )
 endif()
 
-set(${PROJECT_NAME}_OXYGINE_HEADERS ${${PROJECT_NAME}_OXYGINE_SRCS})
-list(FILTER ${PROJECT_NAME}_OXYGINE_HEADERS INCLUDE REGEX "^.*\.hh?$")
-
 ###################################################################################
 # end oxygine stuff -> qoxygine
 ###################################################################################
@@ -416,9 +414,6 @@ set(${PROJECT_NAME}_OpenNN_SRCS
     3rd_party/opennn/opennn/loss_index.cpp 3rd_party/opennn/opennn/loss_index.h    
 )
 
-set(${PROJECT_NAME}_OpenNN_HEADERS ${${PROJECT_NAME}_OpenNN_SRCS})
-list(FILTER ${PROJECT_NAME}_OpenNN_HEADERS INCLUDE REGEX "^.*\.hh?$")
-
 set(${PROJECT_NAME}_OpenNN_SRCS_ONLY ${${PROJECT_NAME}_OpenNN_SRCS})
 list(FILTER ${PROJECT_NAME}_OpenNN_SRCS_ONLY INCLUDE REGEX "^.*\.cpp?$")
 
@@ -451,8 +446,6 @@ set(${PROJECT_NAME}_SmtpClient_SRCS
     3rd_party/smtpClient/src/mimeattachment.h
 )
 
-set(${PROJECT_NAME}_SmtpClient_HEADERS ${${PROJECT_NAME}_SmtpClient_SRCS})
-list(FILTER ${PROJECT_NAME}_SmtpClient_HEADERS INCLUDE REGEX "^.*\.hh?$")
 ###################################################################################
 # end stmp client stuff
 ###################################################################################
@@ -890,10 +883,6 @@ set(${PROJECT_NAME}_SRCS
     coGenerator/coability.h coGenerator/coability.cpp
 )
 
-set(${PROJECT_NAME}_HEADERS ${${PROJECT_NAME}_SRCS})
-list(FILTER ${PROJECT_NAME}_HEADERS INCLUDE REGEX "^.*\.hh?$")
-list(FILTER ${PROJECT_NAME}_HEADERS EXCLUDE REGEX "zipSupport")
-
 ##############################################################################
 # OS Specific files #
 ######################################
@@ -1015,6 +1004,90 @@ add_custom_target(Test SOURCES
 # Precompiled header support
 ###################################################################################
 
+set(${PROJECT_NAME}_OXYGINE_HEADERS ${${PROJECT_NAME}_OXYGINE_SRCS})
+list(FILTER ${PROJECT_NAME}_OXYGINE_HEADERS INCLUDE REGEX "^.*\.hh?$")
+
+set(${PROJECT_NAME}_OpenNN_HEADERS ${${PROJECT_NAME}_OpenNN_SRCS})
+list(FILTER ${PROJECT_NAME}_OpenNN_HEADERS INCLUDE REGEX "^.*\.hh?$")
+
+set(${PROJECT_NAME}_SmtpClient_HEADERS ${${PROJECT_NAME}_SmtpClient_SRCS})
+list(FILTER ${PROJECT_NAME}_SmtpClient_HEADERS INCLUDE REGEX "^.*\.hh?$")
+
+set(${PROJECT_NAME}_ResourceManagement_HEADERS ${${PROJECT_NAME}_SRCS})
+list(FILTER ${PROJECT_NAME}_ResourceManagement_HEADERS INCLUDE REGEX "^.*\.hh?$")
+list(FILTER ${PROJECT_NAME}_ResourceManagement_HEADERS INCLUDE REGEX "^resource_management")
+
+set(${PROJECT_NAME}_ObjectsBase_HEADERS ${${PROJECT_NAME}_SRCS})
+list(FILTER ${PROJECT_NAME}_ObjectsBase_HEADERS INCLUDE REGEX "^.*\.hh?$")
+list(FILTER ${PROJECT_NAME}_ObjectsBase_HEADERS INCLUDE REGEX "^objects/base/")
+
+# Note: Editing any of these files will trigger a FULL rebuild. The list is rather conservative for that reason.
+#       Includes mostly dependencies and very common headers in Commander Wars.
+set(AppHeadersCxx
+    ${${PROJECT_NAME}_OXYGINE_HEADERS}
+    ${${PROJECT_NAME}_OpenNN_HEADERS}
+    ${${PROJECT_NAME}_SmtpClient_HEADERS}
+
+    ${${PROJECT_NAME}_ResourceManagement_HEADERS}
+    ${${PROJECT_NAME}_ObjectsBase_HEADERS}
+
+    ai/coreai.h
+    coreengine/audiomanager.h
+    coreengine/fileserializable.h
+    coreengine/filesupport.h
+    coreengine/gameconsole.h
+    coreengine/globalutils.h
+    coreengine/interpreter.h
+    coreengine/jsthis.h
+    coreengine/mainapp.h
+    coreengine/memorymanagement.h
+    coreengine/qmlvector.h
+    coreengine/scriptvariables.h
+    coreengine/settings.h
+    coreengine/userdata.h
+    game/building.h
+    game/co.h
+    game/gameaction.h
+    game/GameEnums.h
+    game/gamemap.h
+    game/player.h
+    game/terrain.h
+    game/unit.h
+    ingamescriptsupport/conditions/scriptcondition.h
+    ingamescriptsupport/events/scripteventgeneric.h
+    ingamescriptsupport/events/scriptevent.h
+    ingamescriptsupport/genericbox.h
+    ingamescriptsupport/scriptdata.h
+    ingamescriptsupport/scripteditor.h
+    menue/basegamemenu.h
+    menue/basemenu.h
+    menue/gamemenue.h
+    menue/mainwindow.h
+    multiplayer/networkcommands.h
+    network/JsonKeys.h
+    network/mainserver.h
+    network/networkInterface.h
+    objects/dialogs/customdialog.h
+    objects/dialogs/dialogmessagebox.h
+    objects/dialogs/filedialog.h
+    ui_reader/createdgui.h
+    ui_reader/uifactory.h
+    wiki/wikidatabase.h
+)
+
+set(AppHeadersC
+    zipSupport/crc32.h
+    zipSupport/deflate.h
+    zipSupport/gzguts.h
+    zipSupport/inflate.h
+    zipSupport/inftrees.h
+    zipSupport/inffast.h
+    zipSupport/inffixed.h
+    zipSupport/trees.h
+    zipSupport/zlib.h
+    zipSupport/zutil.h
+)
+
 set(SystemHeaderSources # Every header used 5 or more times.
     <algorithm$<ANGLE-R>
     <bench/BenchTimer.h$<ANGLE-R>
@@ -1085,6 +1158,18 @@ set(SystemHeaderSources # Every header used 5 or more times.
     <vector$<ANGLE-R>
 )
 
+set(AllPrecompiledHeadersCxx
+    ${AppHeaders}
+)
+
+set(AllPrecompiledHeaders
+    $<$<COMPILE_LANGUAGE:C>:${AppHeadersC}>
+    $<$<COMPILE_LANGUAGE:CXX>:${AppHeadersCxx}>
+    $<$<COMPILE_LANGUAGE:CXX>:${SystemHeaderSources}>
+)
+
+set_source_files_properties(Commander_Wars_autogen/mocs_compilation.cpp PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
+
 ##############################################################
 # Linking and executable section                             #
 ##############################################################
@@ -1106,17 +1191,19 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${WIN_ICON}
 )
 
-set(AllPrecompiledHeaders
-    ${${PROJECT_NAME}_OXYGINE_HEADERS}
-    ${${PROJECT_NAME}_OpenNN_HEADERS}
-    ${${PROJECT_NAME}_SmtpClient_HEADERS}
-    ${${PROJECT_NAME}_HEADERS}
-)
-target_precompile_headers(${PROJECT_NAME}
-    PRIVATE
-    $<$<COMPILE_LANGUAGE:CXX>:${AllPrecompiledHeaders}>
-    $<$<COMPILE_LANGUAGE:CXX>:${SystemHeaderSources}>
-)
+if (PRECOMPILED_HEADERS)
+    set(AllPrecompiledHeaders
+        ${${PROJECT_NAME}_OXYGINE_HEADERS}
+        ${${PROJECT_NAME}_OpenNN_HEADERS}
+        ${${PROJECT_NAME}_SmtpClient_HEADERS}
+        ${${PROJECT_NAME}_HEADERS}
+    )
+    target_precompile_headers(${PROJECT_NAME}
+        PRIVATE
+        $<$<COMPILE_LANGUAGE:CXX>:${AllPrecompiledHeaders}>
+        $<$<COMPILE_LANGUAGE:CXX>:${SystemHeaderSources}>
+    )
+endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     WIN32_EXECUTABLE TRUE
