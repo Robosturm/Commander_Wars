@@ -347,6 +347,9 @@ else()
     )
 endif()
 
+set(${PROJECT_NAME}_OXYGINE_HEADERS ${${PROJECT_NAME}_OXYGINE_SRCS})
+list(FILTER ${PROJECT_NAME}_OXYGINE_HEADERS INCLUDE REGEX "^.*\.hh?$")
+
 ###################################################################################
 # end oxygine stuff -> qoxygine
 ###################################################################################
@@ -412,7 +415,15 @@ set(${PROJECT_NAME}_OpenNN_SRCS
     3rd_party/opennn/opennn/weighted_squared_error.cpp 3rd_party/opennn/opennn/weighted_squared_error.h
     3rd_party/opennn/opennn/loss_index.cpp 3rd_party/opennn/opennn/loss_index.h    
 )
+
+set(${PROJECT_NAME}_OpenNN_HEADERS ${${PROJECT_NAME}_OpenNN_SRCS})
+list(FILTER ${PROJECT_NAME}_OpenNN_HEADERS INCLUDE REGEX "^.*\.hh?$")
+
+set(${PROJECT_NAME}_OpenNN_SRCS_ONLY ${${PROJECT_NAME}_OpenNN_SRCS})
+list(FILTER ${PROJECT_NAME}_OpenNN_SRCS_ONLY INCLUDE REGEX "^.*\.cpp?$")
+
 set_source_files_properties(${${PROJECT_NAME}_OpenNN_SRCS} PROPERTIES COMPILE_FLAGS -Os)
+set_source_files_properties(${${PROJECT_NAME}_OpenNN_SRCS_ONLY} PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
 
 ###################################################################################
 # start stmp client stuff
@@ -439,6 +450,9 @@ set(${PROJECT_NAME}_SmtpClient_SRCS
     3rd_party/smtpClient/src/SmtpMime
     3rd_party/smtpClient/src/mimeattachment.h
 )
+
+set(${PROJECT_NAME}_SmtpClient_HEADERS ${${PROJECT_NAME}_SmtpClient_SRCS})
+list(FILTER ${PROJECT_NAME}_SmtpClient_HEADERS INCLUDE REGEX "^.*\.hh?$")
 ###################################################################################
 # end stmp client stuff
 ###################################################################################
@@ -446,7 +460,7 @@ set(${PROJECT_NAME}_SmtpClient_SRCS
 ###################################################################################
 # source list of commander wars specific files
 ###################################################################################
-###############################################################################
+###################################################################################
 # start update support stuff
 ###################################################################################
 
@@ -876,6 +890,10 @@ set(${PROJECT_NAME}_SRCS
     coGenerator/coability.h coGenerator/coability.cpp
 )
 
+set(${PROJECT_NAME}_HEADERS ${${PROJECT_NAME}_SRCS})
+list(FILTER ${PROJECT_NAME}_HEADERS INCLUDE REGEX "^.*\.hh?$")
+list(FILTER ${PROJECT_NAME}_HEADERS EXCLUDE REGEX "zipSupport")
+
 ##############################################################################
 # OS Specific files #
 ######################################
@@ -992,6 +1010,81 @@ add_custom_target(Resources SOURCES
 add_custom_target(Test SOURCES
     ${TestScripts}
     )
+
+###################################################################################
+# Precompiled header support
+###################################################################################
+
+set(SystemHeaderSources # Every header used 5 or more times.
+    <algorithm$<ANGLE-R>
+    <bench/BenchTimer.h$<ANGLE-R>
+    <chrono$<ANGLE-R>
+    <cmath$<ANGLE-R>
+    <complex$<ANGLE-R>
+    <cstdlib$<ANGLE-R>
+    <cstring$<ANGLE-R>
+    <ctime$<ANGLE-R>
+    <exception$<ANGLE-R>
+    <fstream$<ANGLE-R>
+    <functional$<ANGLE-R>
+    <iomanip$<ANGLE-R>
+    <iostream$<ANGLE-R>
+    <limits$<ANGLE-R>
+    <limits.h$<ANGLE-R>
+    <list$<ANGLE-R>
+    <map$<ANGLE-R>
+    <math.h$<ANGLE-R>
+    <memory$<ANGLE-R>
+    <numeric$<ANGLE-R>
+    <QApplication$<ANGLE-R>
+    <QBuffer$<ANGLE-R>
+    <QByteArray$<ANGLE-R>
+    <QColor$<ANGLE-R>
+    <QCoreApplication$<ANGLE-R>
+    <QCryptographicHash$<ANGLE-R>
+    <QDataStream$<ANGLE-R>
+    <QDateTime$<ANGLE-R>
+    <QDir$<ANGLE-R>
+    <QDirIterator$<ANGLE-R>
+    <QDomDocument$<ANGLE-R>
+    <QElapsedTimer$<ANGLE-R>
+    <QFile$<ANGLE-R>
+    <QFileInfo$<ANGLE-R>
+    <QImage$<ANGLE-R>
+    <QIODevice$<ANGLE-R>
+    <QJsonArray$<ANGLE-R>
+    <QJsonDocument$<ANGLE-R>
+    <QJsonObject$<ANGLE-R>
+    <QKeyEvent$<ANGLE-R>
+    <QList$<ANGLE-R>
+    <QMutex$<ANGLE-R>
+    <QMutexLocker$<ANGLE-R>
+    <QObject$<ANGLE-R>
+    <QPoint$<ANGLE-R>
+    <QProcess$<ANGLE-R>
+    <QRect$<ANGLE-R>
+    <QString$<ANGLE-R>
+    <QStringList$<ANGLE-R>
+    <QTextStream$<ANGLE-R>
+    <QThread$<ANGLE-R>
+    <QTimer$<ANGLE-R>
+    <QtMath$<ANGLE-R>
+    <QVector$<ANGLE-R>
+    <random$<ANGLE-R>
+    <regex$<ANGLE-R>
+    <sstream$<ANGLE-R>
+    <stddef.h$<ANGLE-R>
+    <stdexcept$<ANGLE-R>
+    <stdint.h$<ANGLE-R>
+    <stdio.h$<ANGLE-R>
+    <stdlib.h$<ANGLE-R>
+    <string$<ANGLE-R>
+    <time.h$<ANGLE-R>
+    <typeinfo$<ANGLE-R>
+    <utility$<ANGLE-R>
+    <vector$<ANGLE-R>
+)
+
 ##############################################################
 # Linking and executable section                             #
 ##############################################################
@@ -1011,7 +1104,19 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_OpenNN_SRCS}
     ${${PROJECT_NAME}_UPDATE_SRCS}
     ${WIN_ICON}
-    )
+)
+
+set(AllPrecompiledHeaders
+    ${${PROJECT_NAME}_OXYGINE_HEADERS}
+    ${${PROJECT_NAME}_OpenNN_HEADERS}
+    ${${PROJECT_NAME}_SmtpClient_HEADERS}
+    ${${PROJECT_NAME}_HEADERS}
+)
+target_precompile_headers(${PROJECT_NAME}
+    PRIVATE
+    $<$<COMPILE_LANGUAGE:CXX>:${AllPrecompiledHeaders}>
+    $<$<COMPILE_LANGUAGE:CXX>:${SystemHeaderSources}>
+)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     WIN32_EXECUTABLE TRUE

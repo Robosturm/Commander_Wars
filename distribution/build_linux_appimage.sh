@@ -27,7 +27,7 @@ fi
 SIDE="client"
 SIDE_DESKTOP="Client"
 
-if [ "$1" = "-server" ]; then
+if [ "${1-}" = "-server" ]; then
     SIDE="server"
     SIDE_DESKTOP="Server"
     shift
