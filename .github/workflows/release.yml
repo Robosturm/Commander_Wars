@@ -74,6 +74,7 @@ jobs:
             asset_name: 'Commander_Wars-Linux.AppImage'
             cmakeOptions: ' -DOPENSSL_USE_STATIC_LIBS=FALSE'
             serverFlag: ''
+            linuxFlag: 'linux'
           - buildTarget: ubuntu-server
             os: ubuntu-latest
             COMPILER_VERSION: ''
@@ -86,6 +87,7 @@ jobs:
             asset_name: 'Commander_Wars-Linux-Server.AppImage'
             cmakeOptions: '-DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF -DOPENSSL_USE_STATIC_LIBS=FALSE'
             serverFlag: '-server'
+            linuxFlag: 'linux'
           - buildTarget: macos-desktop
             os: macos-latest
             COMPILER_VERSION: 'clang_64'
@@ -181,7 +183,7 @@ jobs:
       run: ${{matrix.installerCommands2}}
 
     - name: Configure other cmake
-      if: matrix.target != 'android' && matrix.os != 'ubuntu-latest'
+      if: matrix.target != 'android' && matrix.linuxFlag != 'linux'
       run: |
         cmake \
         -S "${{github.workspace}}/source" \
@@ -229,7 +231,7 @@ jobs:
         -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install"
 
     - name: Build other
-      if: matrix.target != 'android' && matrix.os != 'ubuntu-latest'
+      if: matrix.target != 'android' && matrix.linuxFlag != 'linux'
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --target install -j4
 
@@ -256,12 +258,12 @@ jobs:
         --sign
 
     - name: Build linux
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.linuxFlag == 'linux'
       run: |
         "${{github.workspace}}"/source/distribution/build_linux_appimage.sh \
         ${{matrix.serverFlag}} \
         -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/ \
-        -DUPDATESUPPORT=ON \
+        -DUPDATESUPPORT=OFF \
         -DCOW_BUILD_TAG="${{github.ref}}" \
         -DCOW_UPDATETARGET="${{matrix.asset_name}}" \
         -DCOW_INSTALL_DIR="Commander_Wars_Release" \
@@ -276,7 +278,7 @@ jobs:
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createPdb      
         
     - name: build artifacts
-      if: matrix.target != 'android'
+      if: matrix.target != 'android' && matrix.linuxFlag != 'linux'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createReleaseZip
       
     - name: upload artifact android
@@ -288,10 +290,21 @@ jobs:
         upload_url: '${{needs.create_release.outputs.upload_url}}'
         asset_path: '${{github.workspace}}/build/${{matrix.source_asset}}'
         asset_name: '${{matrix.asset_name}}'
-        asset_content_type: application/zip
+        asset_content_type: application/vnd.android.package-archive
+
+    - name: upload artifact linux
+      if: matrix.linuxFlag == 'linux'
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+        GITHUB_TOKEN: ${{github.token}}
+      with:
+        upload_url: '${{needs.create_release.outputs.upload_url}}'
+        asset_path: '${{github.workspace}}/source/${{matrix.source_asset}}'
+        asset_name: '${{matrix.asset_name}}'
+        asset_content_type: application/x-executable
         
     - name: upload other artifacts
-      if: matrix.target != 'android'
+      if: matrix.target != 'android' && matrix.linuxFlag != 'linux'
       uses: actions/upload-release-asset@v1.0.2
       env:
         GITHUB_TOKEN: ${{github.token}}
