@@ -1007,12 +1007,6 @@ add_custom_target(Test SOURCES
 set(${PROJECT_NAME}_OXYGINE_HEADERS ${${PROJECT_NAME}_OXYGINE_SRCS})
 list(FILTER ${PROJECT_NAME}_OXYGINE_HEADERS INCLUDE REGEX "^.*\.hh?$")
 
-set(${PROJECT_NAME}_OpenNN_HEADERS ${${PROJECT_NAME}_OpenNN_SRCS})
-list(FILTER ${PROJECT_NAME}_OpenNN_HEADERS INCLUDE REGEX "^.*\.hh?$")
-
-set(${PROJECT_NAME}_SmtpClient_HEADERS ${${PROJECT_NAME}_SmtpClient_SRCS})
-list(FILTER ${PROJECT_NAME}_SmtpClient_HEADERS INCLUDE REGEX "^.*\.hh?$")
-
 set(${PROJECT_NAME}_ResourceManagement_HEADERS ${${PROJECT_NAME}_SRCS})
 list(FILTER ${PROJECT_NAME}_ResourceManagement_HEADERS INCLUDE REGEX "^.*\.hh?$")
 list(FILTER ${PROJECT_NAME}_ResourceManagement_HEADERS INCLUDE REGEX "^resource_management")
@@ -1025,9 +1019,6 @@ list(FILTER ${PROJECT_NAME}_ObjectsBase_HEADERS INCLUDE REGEX "^objects/base/")
 #       Includes mostly dependencies and very common headers in Commander Wars.
 set(AppHeadersCxx
     ${${PROJECT_NAME}_OXYGINE_HEADERS}
-    ${${PROJECT_NAME}_OpenNN_HEADERS}
-    ${${PROJECT_NAME}_SmtpClient_HEADERS}
-
     ${${PROJECT_NAME}_ResourceManagement_HEADERS}
     ${${PROJECT_NAME}_ObjectsBase_HEADERS}
 
@@ -1192,12 +1183,6 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
 )
 
 if (PRECOMPILED_HEADERS)
-    set(AllPrecompiledHeaders
-        ${${PROJECT_NAME}_OXYGINE_HEADERS}
-        ${${PROJECT_NAME}_OpenNN_HEADERS}
-        ${${PROJECT_NAME}_SmtpClient_HEADERS}
-        ${${PROJECT_NAME}_HEADERS}
-    )
     target_precompile_headers(${PROJECT_NAME}
         PRIVATE
         $<$<COMPILE_LANGUAGE:CXX>:${AllPrecompiledHeaders}>
