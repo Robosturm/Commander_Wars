@@ -1106,6 +1106,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${WIN_ICON}
 )
 
+set_source_files_properties(Commander_Wars_autogen/mocs_compilation.cpp PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
 set(AllPrecompiledHeaders
     ${${PROJECT_NAME}_OXYGINE_HEADERS}
     ${${PROJECT_NAME}_OpenNN_HEADERS}
