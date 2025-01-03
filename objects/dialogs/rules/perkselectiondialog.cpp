@@ -14,8 +14,16 @@
 
 #include "coreengine/filesupport.h"
 
-const char* const PerkSelectionDialog::SELECT_FILEPATH = "data/perkselection/";
-const char* const PerkSelectionDialog::BANN_FILEPATH = "data/perkbannlist/";
+static const char* const SELECT_FILEPATH = "data/perkselection/";
+static const char* const BANN_FILEPATH = "data/perkbannlist/";
+
+
+static QString getFilePath() {
+    return Settings::getInstance()->getUserPath() + SELECT_FILEPATH;
+}
+static QString getBanFilePath() {
+    return Settings::getInstance()->getUserPath() + BANN_FILEPATH;
+}
 
 PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool banning, QStringList hiddenList)
     : m_pPlayer(pPlayer),
@@ -225,13 +233,13 @@ void PerkSelectionDialog::setPerkBannlist(qint32)
     if (m_banning)
     {
         QString file = m_PredefinedLists->getCurrentItemText();
-        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, BANN_FILEPATH);
+        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, getBanFilePath());
         m_pPerkSelection->setPerks(fileData.items);
     }
     else
     {
         QString file = m_PredefinedLists->getCurrentItemText();
-        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, SELECT_FILEPATH);
+        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, getFilePath());
         QStringList perks = fileData.items;
         qint32 i = 0;
         
@@ -280,11 +288,11 @@ QString PerkSelectionDialog::getFilepath() const
     QString path;
     if (m_banning)
     {
-        path = BANN_FILEPATH;
+        path = getBanFilePath();
     }
     else
     {
-        path = SELECT_FILEPATH;
+        path = getFilePath();
     }
     return path;
 }
