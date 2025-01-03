@@ -38,4 +38,7 @@ $LINUXDEPLOY --appdir=distribution/AppDir \
     -i distribution/res/commander_wars_256.png --icon-filename=commander_wars \
     -i distribution/res/commander_wars.svg --icon-filename=commander_wars \
     -d distribution/res/Commander_Wars.desktop \
-    --plugin qt --output appimage
+    --plugin qt
+rm -v distribution/AppDir/usr/lib/{libgallium*,libLLVM*} # Unneeded libraries that are excessively large.
+$LINUXDEPLOY --appdir=distribution/AppDir --output appimage \
+    --exclude-library "*libgallium*" --exclude-library "*libLLVM*"
