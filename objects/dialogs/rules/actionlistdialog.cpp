@@ -18,7 +18,11 @@
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/base/label.h"
 
-const char* const ActionListDialog::FILEPATH = "data/actionbannlist/";
+static const char* const FILEPATH = "data/actionbannlist/";
+
+static QString getFilePath() {
+    return Settings::getInstance()->getUserPath() + FILEPATH;
+}
 
 ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     : m_CurrentActionList(bannlist),
@@ -194,7 +198,7 @@ QStringList ActionListDialog::getNameList()
     QStringList items;
     QStringList filters;
     filters << QString("*") + Filesupport::LIST_FILENAME_ENDING;
-    QDirIterator dirIter(FILEPATH, filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
+    QDirIterator dirIter(getFilePath(), filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
     while (dirIter.hasNext())
     {
         dirIter.next();
@@ -209,7 +213,7 @@ void ActionListDialog::setBuildlist(qint32)
 {
     QStringList data;
     QString file = m_PredefinedLists->getCurrentItemText();
-    auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, FILEPATH);
+    auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, getFilePath());
     data = fileData.items;
     for (qint32 i = 0; i < m_actionList.size(); i++)
     {
@@ -234,9 +238,9 @@ void ActionListDialog::showSaveBannlist()
 
 void ActionListDialog::showDeleteBannlist()
 {
-    if (QFile::exists(FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
+    if (QFile::exists(getFilePath() + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
     {
-        QString file = FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
+        QString file = getFilePath() + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
         spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to delete the action bannlist: ") + file + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
         {
@@ -254,7 +258,7 @@ void ActionListDialog::deleteBannlist(const QString file)
 
 void ActionListDialog::saveBannlist(QString filename)
 {    
-    if (QFile::exists(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING))
+    if (QFile::exists(getFilePath() + filename + Filesupport::LIST_FILENAME_ENDING))
     {
         spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to overwrite the action bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, filename]
@@ -271,7 +275,7 @@ void ActionListDialog::saveBannlist(QString filename)
 
 void ActionListDialog::doSaveBannlist(QString filename)
 {
-    Filesupport::storeList(filename, m_CurrentActionList, FILEPATH);
+    Filesupport::storeList(filename, m_CurrentActionList, getFilePath());
     updatePredefinedList();
 }
 

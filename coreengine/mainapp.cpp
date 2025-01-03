@@ -833,11 +833,8 @@ void Mainapp::createBaseDirs()
         QDir newDir(userPath);
         newDir.mkpath(".");
     }
-    QDir dir(userPath + "temp/");
-    dir.removeRecursively();
     QStringList dirs =
     {
-        "temp",
         "savegames",
         "mods",
         "data/gamerules",

@@ -16,7 +16,6 @@ using spActionListDialog = std::shared_ptr<ActionListDialog>;
 class ActionListDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
-    static const char* const FILEPATH;
 public:
     explicit ActionListDialog(QStringList bannlist, GameMap* pMap);
     virtual ~ActionListDialog() = default;

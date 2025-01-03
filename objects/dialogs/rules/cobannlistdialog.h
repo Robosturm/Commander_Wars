@@ -15,7 +15,6 @@ using spCOBannListDialog = std::shared_ptr<COBannListDialog>;
 class COBannListDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
-    static const char* const FILEPATH;
 public:
     explicit COBannListDialog(QStringList cobannlist);
     virtual ~COBannListDialog() = default;

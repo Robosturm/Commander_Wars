@@ -169,7 +169,7 @@ void CoreAI::loadIni(QString file)
         if (!file.isEmpty())
         {
             searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/aidata/" + file);
-            searchFiles.append("resources/aidata/" + file);
+            searchFiles.append(Settings::getInstance()->getUserPath() + "resources/aidata/" + file);
             // make sure to overwrite existing js stuff
             for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
             {

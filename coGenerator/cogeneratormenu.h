@@ -5,6 +5,9 @@
 #include "coGenerator/coability.h"
 #include "coreengine/fileserializable.h"
 
+class CoGeneratorMenu;
+using spCoGeneratorMenu = std::shared_ptr<CoGeneratorMenu>;
+
 class CoGeneratorMenu final : public GeneratorMenu
 {
     Q_OBJECT

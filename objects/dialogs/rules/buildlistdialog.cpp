@@ -18,7 +18,11 @@
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/label.h"
 
-const char* const BuildListDialog::FILEPATH = "data/unitbannlist/";
+static const char* const FILEPATH = "data/unitbannlist/";
+
+static QString getFilePath() {
+    return Settings::getInstance()->getUserPath() + FILEPATH;
+}
 
 BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList)
     : m_CurrentBuildList(buildList),
@@ -275,7 +279,7 @@ void BuildListDialog::setBuildlist(qint32 item)
     else
     {
         QString file = m_PredefinedLists->getCurrentItemText();
-        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, FILEPATH);
+        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, getFilePath());
         data = fileData.items;
     }
     for (qint32 i = 0; i < m_UnitList.size(); i++)
@@ -301,9 +305,10 @@ void BuildListDialog::showSaveBannlist()
 
 void BuildListDialog::showDeleteBannlist()
 {
-    if (QFile::exists(FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
+    auto filePath = getFilePath();
+    if (QFile::exists(filePath + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
     {
-        QString file = FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
+        QString file = filePath + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
         spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to delete the build bannlist: ") + file + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
         {
@@ -328,7 +333,7 @@ QStringList BuildListDialog::getNameList()
                               tr("Advance Wars")};
     QStringList filters;
     filters << QString("*") + Filesupport::LIST_FILENAME_ENDING;
-    QDirIterator dirIter(FILEPATH, filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
+    QDirIterator dirIter(getFilePath(), filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
     while (dirIter.hasNext())
     {
         dirIter.next();
@@ -341,7 +346,7 @@ QStringList BuildListDialog::getNameList()
 
 void BuildListDialog::saveBannlist(QString filename)
 {
-    if (QFile::exists(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING))
+    if (QFile::exists(getFilePath() + filename + Filesupport::LIST_FILENAME_ENDING))
     {
         spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to overwrite the build bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, filename]
@@ -358,13 +363,13 @@ void BuildListDialog::saveBannlist(QString filename)
 
 void BuildListDialog::doSaveBannlist(QString filename)
 {
-    Filesupport::storeList(filename, m_CurrentBuildList, FILEPATH);
+    Filesupport::storeList(filename, m_CurrentBuildList, getFilePath());
     updatePredefinedList();
     spDialogMessageBox pMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Do you want to make the saved build list the default ruleset?"), true, tr("Yes"), tr("No"));
     addChild(pMessageBox);
     connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
     {
-        Settings::getInstance()->setDefaultBannlist(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING);
+        Settings::getInstance()->setDefaultBannlist(getFilePath() + filename + Filesupport::LIST_FILENAME_ENDING);
     }, Qt::QueuedConnection);
     updatePredefinedList();
 }

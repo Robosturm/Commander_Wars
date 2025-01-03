@@ -17,7 +17,11 @@
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/dialogs/rules/cobannlistdialog.h"
 
-const char* const COBannListDialog::FILEPATH = "data/cobannlist/";
+static const char* const FILEPATH = "data/cobannlist/";
+
+static QString getFilePath() {
+    return Settings::getInstance()->getUserPath() + FILEPATH;
+}
 
 COBannListDialog::COBannListDialog(QStringList cobannlist)
     : m_CurrentCOBannList(cobannlist)
@@ -244,7 +248,7 @@ void COBannListDialog::setCOBannlist(qint32 item)
     else
     {
         QString file = m_PredefinedLists->getCurrentItemText();
-        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, FILEPATH);
+        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, getFilePath());
         data = fileData.items;
     }
     for (qint32 i = 0; i < m_COIDs.size(); i++)
@@ -277,7 +281,7 @@ QStringList COBannListDialog::getNameList()
                               tr("Advance Wars")};
     QStringList filters;
     filters << QString("*") + Filesupport::LIST_FILENAME_ENDING;
-    QDirIterator dirIter(FILEPATH, filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
+    QDirIterator dirIter(getFilePath(), filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
     while (dirIter.hasNext())
     {
         dirIter.next();
@@ -290,9 +294,9 @@ QStringList COBannListDialog::getNameList()
 
 void COBannListDialog::showDeleteBannlist()
 {
-    if (QFile::exists(FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
+    if (QFile::exists(getFilePath() + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
     {
-        QString file = FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
+        QString file = getFilePath() + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
         spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to delete the co bannlist: ") + file + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
         {
@@ -310,7 +314,7 @@ void COBannListDialog::deleteBannlist(const QString file)
 
 void COBannListDialog::saveBannlist(QString filename)
 {
-    if (QFile::exists(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING))
+    if (QFile::exists(getFilePath() + filename + Filesupport::LIST_FILENAME_ENDING))
     {
         spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to overwrite the co bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, filename]
@@ -327,7 +331,7 @@ void COBannListDialog::saveBannlist(QString filename)
 
 void COBannListDialog::doSaveBannlist(QString filename)
 {
-    Filesupport::storeList(filename, m_CurrentCOBannList, FILEPATH);
+    Filesupport::storeList(filename, m_CurrentCOBannList, getFilePath());
     updatePredefinedList();
 }
 

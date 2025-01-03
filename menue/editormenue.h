@@ -1,8 +1,11 @@
 #pragma once
 
 #include <QObject>
+#include <QTemporaryDir>
 
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
+
+#include "coreengine/settings.h"
 
 #include "menue/basegamemenu.h"
 
@@ -451,6 +454,8 @@ private:
     QTimer m_autosaveTimer;
     spHumanPlayerInput m_HumanInput;
     AwbwMapDownloader m_awbwMapDownloader;
+
+    QTemporaryDir m_tempDir = Settings::getInstance()->newTempDir();
 };
 
 Q_DECLARE_INTERFACE(EditorMenue, "EditorMenue");
