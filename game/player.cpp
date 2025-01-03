@@ -105,32 +105,45 @@ void Player::loadVisionFields()
     {
         switch (mode)
         {
-            case GameEnums::Fog::Fog_Off:
-            {
-                m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(GameEnums::VisionType_Clear, 0, false)));
-                break;
-            }
-            case GameEnums::Fog::Fog_OfWar:
-            {
-                m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(GameEnums::VisionType_Fogged, 0, false)));
-                break;
-            }
             case GameEnums::Fog::Fog_OfShroud:
             {
                 m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(GameEnums::VisionType_Shrouded, 0, false)));
                 break;
             }
-            case GameEnums::Fog::Fog_OfMist:
-            {
-                m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(GameEnums::VisionType_Mist, 0, false)));
-                break;
-            }
             default:
             {
-                m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(GameEnums::VisionType_Clear, 0, false)));
+                m_FogVisionFields.push_back(std::vector<VisionFieldInfo>(heigth, VisionFieldInfo(getDefaultClearVisionType(mode), 0, false)));
                 break;
             }
         }
+    }
+}
+
+GameEnums::VisionType Player::getDefaultClearVisionType(GameEnums::Fog mode) const
+{
+    switch (mode)
+    {
+    case GameEnums::Fog::Fog_Off:
+    {
+        return GameEnums::VisionType_Clear;
+    }
+    case GameEnums::Fog::Fog_OfWar:
+    {
+        return GameEnums::VisionType_Fogged;
+        break;
+    }
+    case GameEnums::Fog::Fog_OfShroud:
+    {
+        return GameEnums::VisionType_Fogged;
+    }
+    case GameEnums::Fog::Fog_OfMist:
+    {
+        return GameEnums::VisionType_Mist;
+    }
+    default:
+    {
+        return GameEnums::VisionType_Clear;
+    }
     }
 }
 
@@ -1135,27 +1148,27 @@ void Player::setIsDefeated(bool value)
     m_isDefeated = value;
 }
 
-void Player::addVisionField(qint32 x, qint32 y, qint32 duration, bool directView)
+void Player::addVisionField(qint32 x, qint32 y, qint32 duration, bool directView, GameEnums::VisionType visionType)
 {
-    addVisionFieldInternal(x, y,duration, directView);
+    addVisionFieldInternal(x, y,duration, directView, visionType);
     
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = m_pMap->getPlayer(i);
         if (isAlly(pPlayer))
         {
-            pPlayer->addVisionFieldInternal(x, y, duration - 1, directView);
+            pPlayer->addVisionFieldInternal(x, y, duration - 1, directView, visionType);
         }
     }
 }
 
-void Player::addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool directView)
+void Player::addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool directView, GameEnums::VisionType visionType)
 {
     if (x >= 0 && y >= 0 &&
         x < m_FogVisionFields.size() &&
         y < m_FogVisionFields[x].size())
     {
-        m_FogVisionFields[x][y].m_visionType = GameEnums::VisionType_Clear;
+        m_FogVisionFields[x][y].m_visionType = visionType;
         if (duration > m_FogVisionFields[x][y].m_duration)
         {
             m_FogVisionFields[x][y].m_duration = duration;
@@ -1194,17 +1207,16 @@ void Player::updatePlayerVision(bool reduceTimer)
     {
         for (qint32 y = 0; y < heigth; y++)
         {
-            if (reduceTimer)
+            bool requiresReset = false;
+            if (reduceTimer && m_FogVisionFields[x][y].m_duration > 0)
             {
+                requiresReset = true;
                 m_FogVisionFields[x][y].m_duration -= 1;
             }
             qint32 duration = m_FogVisionFields[x][y].m_duration;
-            if (duration <= 0)
+            if (duration <= 0 && requiresReset)
             {
-                if (m_FogVisionFields[x][y].m_visionType == GameEnums::VisionType_Clear)
-                {
-                    m_FogVisionFields[x][y].m_visionType = GameEnums::VisionType_Fogged;
-                }
+                m_FogVisionFields[x][y].m_visionType = getDefaultClearVisionType(m_pMap->getGameRules()->getFogMode());
                 m_FogVisionFields[x][y].m_duration = 0;
                 m_FogVisionFields[x][y].m_directView = false;
             }

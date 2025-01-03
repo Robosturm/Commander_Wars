@@ -633,7 +633,7 @@ public:
      * @param y
      * @param duration
      */
-    Q_INVOKABLE void addVisionField(qint32 x, qint32 y, qint32 duration = 1, bool directView = false);
+    Q_INVOKABLE void addVisionField(qint32 x, qint32 y, qint32 duration = 1, bool directView = false, GameEnums::VisionType visionType = GameEnums::VisionType::VisionType_Clear);
     /**
      * @brief getFieldVisible
      * @param x
@@ -776,7 +776,13 @@ private:
      * @param duration
      * @param directView
      */
-    void addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool directView);
+    void addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool directView, GameEnums::VisionType visionType);
+    /**
+     * @brief getDefaultClearVisionType
+     * @param mode
+     * @return
+     */
+    GameEnums::VisionType getDefaultClearVisionType(GameEnums::Fog mode) const;
     /**
      * @brief calculatePlayerStrength
      * @param pUnit
