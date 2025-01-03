@@ -987,11 +987,7 @@ private:
 
     // internal members
     static spSettings m_pInstance;
-#ifdef USEAPPCONFIGPATH
-    QString m_settingFile = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + "/Commander_Wars.ini";
-#else
     QString m_settingFile = "Commander_Wars.ini";
-#endif
     QStringList m_activeMods;
     QStringList m_activeModVersions;
     QString m_userPath;
