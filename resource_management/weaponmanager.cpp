@@ -51,7 +51,7 @@ void WeaponManager::loadAll()
     // import csv tables
     // clean up temp folder
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QDir dir("temp/");
+    QDir dir(Settings::getInstance()->getUserPath() + "temp/");
     dir.removeRecursively();
     dir.mkpath(".");
     QStringList data;
@@ -70,7 +70,7 @@ void WeaponManager::loadAll()
         if (!jsData.isEmpty())
         {
             m_loadedRessources.append(data);
-            pInterpreter->loadScript(jsData, "temp/weaponttable.js");
+            pInterpreter->loadScript(jsData, Settings::getInstance()->getUserPath() + "temp/weaponttable.js");
         }
     }
 }
