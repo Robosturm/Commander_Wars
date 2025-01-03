@@ -118,7 +118,7 @@ void Terrain::setPalette(const QString & newPalette)
     {
         m_palette = getDefaultPalette();
     }
-    if (!m_palette.isEmpty())
+    if (!m_palette.isEmpty() && m_supportPalette)
     {
         TerrainManager* pTerrainManager = TerrainManager::getInstance();
         oxygine::spResAnim pPaletteAnim = pTerrainManager->getSpResAnim(m_palette, oxygine::error_policy::ep_ignore_error);
