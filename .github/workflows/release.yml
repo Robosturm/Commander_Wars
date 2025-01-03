@@ -69,10 +69,11 @@ jobs:
             qtPath: ''
             qtTools: ''
             installerCommands1: 'sudo apt-get update'
-            installerCommands2: 'sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            installerCommands2: 'sudo apt-get install libfuse2 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
             source_asset: 'Commander_Wars-x86_64.AppImage'
             asset_name: 'Commander_Wars-Linux.AppImage'
             cmakeOptions: ' -DOPENSSL_USE_STATIC_LIBS=FALSE'
+            serverFlag: ''
           - buildTarget: ubuntu-server
             os: ubuntu-latest
             COMPILER_VERSION: ''
@@ -80,10 +81,11 @@ jobs:
             qtPath: ''
             qtTools: ''
             installerCommands1: 'sudo apt-get update'
-            installerCommands2: 'sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
-            source_asset: 'Commander_Wars-x86_64.AppImage'
+            installerCommands2: 'sudo apt-get install libfuse2 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            source_asset: 'Commander_Wars_Dedicated_Server-x86_64.AppImage'
             asset_name: 'Commander_Wars-Linux-Server.AppImage'
             cmakeOptions: '-DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF -DOPENSSL_USE_STATIC_LIBS=FALSE'
+            serverFlag: '-server'
           - buildTarget: macos-desktop
             os: macos-latest
             COMPILER_VERSION: 'clang_64'
@@ -257,6 +259,7 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: |
         "${{github.workspace}}"/source/distribution/build_linux_appimage.sh \
+        ${{matrix.serverFlag}} \
         -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/ \
         -DUPDATESUPPORT=ON \
         -DCOW_BUILD_TAG="${{github.ref}}" \

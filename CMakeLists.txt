@@ -996,6 +996,12 @@ add_custom_target(Test SOURCES
 # Linking and executable section                             #
 ##############################################################
 
+if (GRAPHICSUPPORT)
+    SET(WIN_ICON distribution/res/ICON.rc)
+else()
+    SET(WIN_ICON distribution/res/ICON_SERVER.rc)
+endif()
+
 qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_OXYGINE_SRCS}
     ${${PROJECT_NAME}_SRCS}
@@ -1004,7 +1010,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_SmtpClient_SRCS}
     ${${PROJECT_NAME}_OpenNN_SRCS}
     ${${PROJECT_NAME}_UPDATE_SRCS}
-    ICON.rc
+    ${WIN_ICON}
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES

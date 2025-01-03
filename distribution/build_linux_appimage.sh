@@ -23,6 +23,16 @@ if [ ! -f $LINUXDEPLOY_QT ]; then
     chmod +x $LINUXDEPLOY_QT
 fi
 
+# Check for the server flag
+SIDE="client"
+SIDE_DESKTOP="Client"
+
+if [ "$1" = "-server" ]; then
+    SIDE="server"
+    SIDE_DESKTOP="Server"
+    shift
+fi
+
 # Build the appdir for the client
 rm -rfv distribution/AppDir ||:
 cmake . -DCMAKE_BUILD_TYPE=Release "$@" \
@@ -32,14 +42,14 @@ make -j"$(nproc)" install DESTDIR=distribution/AppDir
 export QMAKE
 QMAKE="$(which qmake6)"
 $LINUXDEPLOY --appdir=distribution/AppDir \
-    -i distribution/res/icons/icoclient_linux_16.png --icon-filename=commander_wars_ico \
-    -i distribution/res/icons/icoclient_linux_32.png --icon-filename=commander_wars_ico \
-    -i distribution/res/icons/icoclient_linux_64.png --icon-filename=commander_wars_ico \
-    -i distribution/res/icons/icoclient_linux_128.png --icon-filename=commander_wars_ico \
-    -i distribution/res/icons/icoclient_linux_256.png --icon-filename=commander_wars_ico \
-    -i distribution/res/icons/icoclient_linux_512.png --icon-filename=commander_wars_ico \
-    -i distribution/res/icons/icoclient_linux_scalable.svg --icon-filename=commander_wars_ico \
-    -d distribution/res/Commander_Wars.desktop \
+    -i distribution/res/icons/ico${SIDE}_linux_16.png --icon-filename=commander_wars_ico${SIDE} \
+    -i distribution/res/icons/ico${SIDE}_linux_32.png --icon-filename=commander_wars_ico${SIDE} \
+    -i distribution/res/icons/ico${SIDE}_linux_64.png --icon-filename=commander_wars_ico${SIDE} \
+    -i distribution/res/icons/ico${SIDE}_linux_128.png --icon-filename=commander_wars_ico${SIDE} \
+    -i distribution/res/icons/ico${SIDE}_linux_256.png --icon-filename=commander_wars_ico${SIDE} \
+    -i distribution/res/icons/ico${SIDE}_linux_512.png --icon-filename=commander_wars_ico${SIDE} \
+    -i distribution/res/icons/ico${SIDE}_linux_scalable.svg --icon-filename=commander_wars_ico${SIDE} \
+    -d distribution/res/Commander_Wars_${SIDE_DESKTOP}.desktop \
     --plugin qt
 rm -v distribution/AppDir/usr/lib/{libgallium*,libLLVM*} # Unneeded libraries that are excessively large.
 $LINUXDEPLOY --appdir=distribution/AppDir --output appimage \
