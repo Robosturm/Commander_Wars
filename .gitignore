@@ -19,3 +19,4 @@ CMakeLists.txt.user
 /*.dat
 /logs
 /savegames
+/build
