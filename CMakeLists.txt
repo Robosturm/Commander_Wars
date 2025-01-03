@@ -32,7 +32,6 @@ option(USEAPPCONFIGPATH "use the system location for saving data, instead of the
 option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or deployed as folder" OFF)
 option(UPDATESUPPORT "Enables the automatic updater for the game which updates to the latest github version should be turned off for local builds not supported for android" OFF)
 option(DEFAULTAIPIPE "If the system should use a separate process for the ai as default variant. Disable it for system that can't launch the same exe twice e.g. android." ON)
-option(INSTALL_LIBS "Whether to install libraries to the target directory. This currently only works on Linux." ON)
 ###################################################################################
 # show configuration
 ###################################################################################
@@ -922,26 +921,28 @@ if (NOT DEPLOY_RESOURCES_AS_FOLDER)
             "sprites.qrc"
             "music.qrc"
             "sound.qrc"
-            )
+        )
     elseif(AUDIOSUPPORT)
         qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
             "general.qrc"
             "music.qrc"
             "sound.qrc"
-            )
+        )
     elseif(GRAPHICSUPPORT)
         qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
             "general.qrc"
             "sprites.qrc"
-            )
+        )
     else()
         qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
             "general.qrc"
-            )
+        )
     endif()
 else()
     message("Deploying resources")
 endif()
+
+qt_add_resources(${PROJECT_NAME}_Resource_SRCS "core.qrc") # These files are always deployed using QRCs.
 
 ##############################################################################
 # Lib setup                                                                  #
@@ -1117,67 +1118,6 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     )
 
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-    set(LibNameStart "../lib/libQt6")
-    set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
-        ${QT_BIN_DIR}/../plugins/platforms/libqeglfs.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqoffscreen.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqwayland-xcomposite-egl.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqlinuxfb.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqvnc.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqwayland-xcomposite-glx.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqminimalegl.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqwayland-egl.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqxcb.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
-        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
-    )
-    set(${PROJECT_NAME}_INSTALL_QT_SQL_LIBS
-        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
-    )
-
-    set(LibNameEnd ".so.${QT_VERSION}")
-    set(LibNameEnd1 ".so.6")
-    set(LibNameEnd2 ".so")
-    set(${PROJECT_NAME}_INSTALL_OS_LIBS
-        ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Network${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Multimedia${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
-
-        ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Network${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Multimedia${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd1}
-
-        ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Network${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Multimedia${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd2}
-    )
-
-    if (GRAPHICSUPPORT)
-        if (USEVULKAN)
-        else()
-            set(${PROJECT_NAME}_INSTALL_OS_LIBS
-                ${${PROJECT_NAME}_INSTALL_OS_LIBS}
-                ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
-            )
-        endif()
-    endif()
-    set(LibNameEnd ".so")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
 else()
     message(FATAL_ERROR "Unsupported OS found")
@@ -1218,7 +1158,6 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(DIRECTORY templates DESTINATION "/")
     if (DEPLOY_RESOURCES_AS_FOLDER)
         message("Installing resources as folder")
-        install(DIRECTORY system DESTINATION                "/")
         install(DIRECTORY resources DESTINATION             "/")
         install(DIRECTORY maps DESTINATION                  "/")
         install(FILES ${QM_FILES} DESTINATION               "resources/translation/" OPTIONAL)
@@ -1245,15 +1184,6 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         RUNTIME         DESTINATION         "bin"
         BUNDLE          DESTINATION         "bin"
         LIBRARY         DESTINATION         "bin")
-    # install libs
-    if (INSTALL_LIBS)
-        install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-        install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-        install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-        install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-    endif()
-    install(DIRECTORY templates                                     DESTINATION "share/${PROJECT_NAME_LOWER}"                            OPTIONAL)
-    install(FILES ${OPENSSL_LIBS}                                   DESTINATION "/"                                                      OPTIONAL)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"

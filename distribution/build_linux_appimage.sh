@@ -27,12 +27,11 @@ fi
 rm -rfv distribution/AppDir ||:
 cmake . -DCMAKE_BUILD_TYPE=Release "$@" \
     -DOPENSSL_USE_STATIC_LIBS:BOOL=OFF -DUSEAPPCONFIGPATH:BOOL=ON
-make -j"$(nproc)"
+make -j"$(nproc)" install DESTDIR=distribution/AppDir
 
 export QMAKE
 QMAKE="$(which qmake6)"
 $LINUXDEPLOY --appdir=distribution/AppDir \
-    -e commander_wars \
     -i distribution/res/commander_wars_32.png --icon-filename=commander_wars \
     -i distribution/res/commander_wars_64.png --icon-filename=commander_wars \
     -i distribution/res/commander_wars_128.png --icon-filename=commander_wars \
