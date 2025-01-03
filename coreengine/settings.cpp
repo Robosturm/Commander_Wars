@@ -619,12 +619,16 @@ void Settings::clearTemp()
 
 void Settings::setUserPath(const QString newUserPath)
 {
-    QString folder = newUserPath + "/";
-    while (folder.contains("//"))
-    {
-        folder = folder.replace("//", "/");
+    if (newUserPath.isEmpty()) {
+        m_userPath = newUserPath;
+    } else {
+        QString folder = newUserPath + "/";
+        while (folder.contains("//"))
+        {
+            folder = folder.replace("//", "/");
+        }
+        m_userPath = folder;
     }
-    m_userPath = folder;
 }
 
 bool Settings::getSmallScreenDevice()
