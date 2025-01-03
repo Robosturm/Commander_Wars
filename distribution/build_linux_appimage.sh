@@ -10,8 +10,8 @@ cd "$dir/.."
 LINUXDEPLOY="distribution/linuxdeploy-x86_64-2.0.0-alpha-1-20241106.AppImage"
 LINUXDEPLOY_URL="https://github.com/linuxdeploy/linuxdeploy/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-x86_64.AppImage"
 
-LINUXDEPLOY_QT="distribution/linuxdeploy-plugin-qt-x86_64-2.0.0-alpha-1-20241106.AppImage"
-LINUXDEPLOY_QT_URL="https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-plugin-qt-x86_64.AppImage"
+LINUXDEPLOY_QT="distribution/linuxdeploy-plugin-qt-x86_64-2.0.0-patched.AppImage"
+LINUXDEPLOY_QT_URL="https://github.com/Lymia/linuxdeploy-plugin-qt/releases/download/patch-exclude-library/linuxdeploy-plugin-qt-static-x86_64.AppImage"
 
 if [ ! -f $LINUXDEPLOY ]; then
     wget -O $LINUXDEPLOY $LINUXDEPLOY_URL
@@ -34,6 +34,7 @@ if [ "${1-}" = "-server" ]; then
 fi
 
 # Build the appdir for the client
+export CC="clang" CXX="clang++"
 rm -rfv distribution/AppDir ||:
 cmake . -DCMAKE_BUILD_TYPE=Release "$@" \
     -DCMAKE_INSTALL_PREFIX:PATH=/usr \
@@ -51,8 +52,13 @@ $LINUXDEPLOY --appdir=distribution/AppDir \
     -i distribution/res/icons/ico${SIDE}_linux_256.png --icon-filename=commander_wars_ico${SIDE} \
     -i distribution/res/icons/ico${SIDE}_linux_512.png --icon-filename=commander_wars_ico${SIDE} \
     -i distribution/res/icons/ico${SIDE}_linux_scalable.svg --icon-filename=commander_wars_ico${SIDE} \
-    -d distribution/res/Commander_Wars_${SIDE_DESKTOP}.desktop \
-    --plugin qt
-rm -v distribution/AppDir/usr/lib/{libgallium*,libLLVM*} # Unneeded libraries that are excessively large.
-$LINUXDEPLOY --appdir=distribution/AppDir --output appimage \
-    --exclude-library "*libgallium*" --exclude-library "*libLLVM*"
+    -d distribution/res/Commander_Wars_${SIDE_DESKTOP}.desktop
+$LINUXDEPLOY_QT --appdir=distribution/AppDir \
+    --exclude-library "*libqcertonlybackend*" \
+    --exclude-library "*libqsqlmysql*" \
+    --exclude-library "*libqsqlodbc*" \
+    --exclude-library "*libqsqlmimer*" \
+    --exclude-library "*libqsqlpsql*" \
+    --exclude-library "*libgallium*" \
+    --exclude-library "*libLLVM*"
+$LINUXDEPLOY --appdir=distribution/AppDir --output appimage
