@@ -32,11 +32,13 @@ make -j"$(nproc)" install DESTDIR=distribution/AppDir
 export QMAKE
 QMAKE="$(which qmake6)"
 $LINUXDEPLOY --appdir=distribution/AppDir \
-    -i distribution/res/commander_wars_32.png --icon-filename=commander_wars \
-    -i distribution/res/commander_wars_64.png --icon-filename=commander_wars \
-    -i distribution/res/commander_wars_128.png --icon-filename=commander_wars \
-    -i distribution/res/commander_wars_256.png --icon-filename=commander_wars \
-    -i distribution/res/commander_wars.svg --icon-filename=commander_wars \
+    -i distribution/res/icons/icoclient_linux_16.png --icon-filename=commander_wars_ico \
+    -i distribution/res/icons/icoclient_linux_32.png --icon-filename=commander_wars_ico \
+    -i distribution/res/icons/icoclient_linux_64.png --icon-filename=commander_wars_ico \
+    -i distribution/res/icons/icoclient_linux_128.png --icon-filename=commander_wars_ico \
+    -i distribution/res/icons/icoclient_linux_256.png --icon-filename=commander_wars_ico \
+    -i distribution/res/icons/icoclient_linux_512.png --icon-filename=commander_wars_ico \
+    -i distribution/res/icons/icoclient_linux_scalable.svg --icon-filename=commander_wars_ico \
     -d distribution/res/Commander_Wars.desktop \
     --plugin qt
 rm -v distribution/AppDir/usr/lib/{libgallium*,libLLVM*} # Unneeded libraries that are excessively large.
