@@ -70,8 +70,8 @@ jobs:
             qtTools: ''
             installerCommands1: 'sudo apt-get update'
             installerCommands2: 'sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
-            source_asset: 'Commander_Wars.zip'
-            asset_name: 'Commander_Wars_Ubuntu.zip'
+            source_asset: 'Commander_Wars-x86_64.AppImage'
+            asset_name: 'Commander_Wars-Linux.AppImage'
             cmakeOptions: ' -DOPENSSL_USE_STATIC_LIBS=FALSE'
           - buildTarget: ubuntu-server
             os: ubuntu-latest
@@ -81,8 +81,8 @@ jobs:
             qtTools: ''
             installerCommands1: 'sudo apt-get update'
             installerCommands2: 'sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
-            source_asset: 'Commander_Wars.zip'
-            asset_name: 'Commander_Wars_Ubuntu_Server.zip'
+            source_asset: 'Commander_Wars-x86_64.AppImage'
+            asset_name: 'Commander_Wars-Linux-Server.AppImage'
             cmakeOptions: '-DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF -DOPENSSL_USE_STATIC_LIBS=FALSE'
           - buildTarget: macos-desktop
             os: macos-latest
@@ -179,7 +179,7 @@ jobs:
       run: ${{matrix.installerCommands2}}
 
     - name: Configure other cmake
-      if: matrix.target != 'android'
+      if: matrix.target != 'android' && matrix.os != 'ubuntu-latest'
       run: |
         cmake \
         -S "${{github.workspace}}/source" \
@@ -227,7 +227,7 @@ jobs:
         -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install"
 
     - name: Build other
-      if: matrix.target != 'android'
+      if: matrix.target != 'android' && matrix.os != 'ubuntu-latest'
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --target install -j4
 
@@ -252,7 +252,18 @@ jobs:
         --gradle \
         --release \
         --sign
-      
+
+    - name: Build linux
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        "${{github.workspace}}"/source/distribution/build_linux_appimage.sh \
+        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/ \
+        -DUPDATESUPPORT=ON \
+        -DCOW_BUILD_TAG="${{github.ref}}" \
+        -DCOW_UPDATETARGET="${{matrix.asset_name}}" \
+        -DCOW_INSTALL_DIR="Commander_Wars_Release" \
+        ${{matrix.cmakeOptions}}
+
 #----------------------------------------------------------------------------------------------------------------------------------------------
 # release creation and upload part
 #----------------------------------------------------------------------------------------------------------------------------------------------
