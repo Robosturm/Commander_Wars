@@ -34,7 +34,9 @@ if [ "${1-}" = "-server" ]; then
 fi
 
 # Build the appdir for the client
-export CC="clang" CXX="clang++"
+export CC="clang" CXX="clang++" QMAKE
+QMAKE="$(which qmake6)"
+
 rm -rfv distribution/AppDir ||:
 cmake . -DCMAKE_BUILD_TYPE=Release "$@" \
     -DCMAKE_INSTALL_PREFIX:PATH=/usr \
@@ -42,8 +44,21 @@ cmake . -DCMAKE_BUILD_TYPE=Release "$@" \
     -DUSEAPPCONFIGPATH:BOOL=ON
 make -j"$(nproc)" install DESTDIR=distribution/AppDir
 
-export QMAKE
-QMAKE="$(which qmake6)"
+EXCLUDES_LIST="
+    --exclude-library *libqcertonlybackend*
+    --exclude-library *libqsqlmysql*
+    --exclude-library *libqsqlodbc*
+    --exclude-library *libqsqlmimer*
+    --exclude-library *libqsqlpsql*
+    --exclude-library *libgallium*
+    --exclude-library *libLLVM*
+    --exclude-library *libqicns*
+    --exclude-library *libqmng*
+    --exclude-library *libqtga*
+    --exclude-library *libqtiff*
+    --exclude-library *libqwbmp*
+    --exclude-library *libqwebp*
+"
 $LINUXDEPLOY --appdir=distribution/AppDir \
     -i distribution/res/icons/ico${SIDE}_linux_16.png --icon-filename=commander_wars_ico${SIDE} \
     -i distribution/res/icons/ico${SIDE}_linux_32.png --icon-filename=commander_wars_ico${SIDE} \
@@ -53,18 +68,5 @@ $LINUXDEPLOY --appdir=distribution/AppDir \
     -i distribution/res/icons/ico${SIDE}_linux_512.png --icon-filename=commander_wars_ico${SIDE} \
     -i distribution/res/icons/ico${SIDE}_linux_scalable.svg --icon-filename=commander_wars_ico${SIDE} \
     -d distribution/res/Commander_Wars_${SIDE_DESKTOP}.desktop
-$LINUXDEPLOY_QT --appdir=distribution/AppDir \
-    --exclude-library "*libqcertonlybackend*" \
-    --exclude-library "*libqsqlmysql*" \
-    --exclude-library "*libqsqlodbc*" \
-    --exclude-library "*libqsqlmimer*" \
-    --exclude-library "*libqsqlpsql*" \
-    --exclude-library "*libgallium*" \
-    --exclude-library "*libLLVM*" \
-    --exclude-library "*libqicns*" \
-    --exclude-library "*libqmng*" \
-    --exclude-library "*libqtga*" \
-    --exclude-library "*libqtiff*" \
-    --exclude-library "*libqwbmp*" \
-    --exclude-library "*libqwebp*"
-$LINUXDEPLOY --appdir=distribution/AppDir --output appimage
+$LINUXDEPLOY_QT --appdir=distribution/AppDir $EXCLUDES_LIST
+$LINUXDEPLOY --appdir=distribution/AppDir $EXCLUDES_LIST --output appimage
