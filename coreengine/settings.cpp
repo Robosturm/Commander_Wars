@@ -602,6 +602,21 @@ QString Settings::getUserPath()
     return m_userPath;
 }
 
+QString Settings::getTempPath()
+{
+    return m_tempDirPath;
+}
+
+QTemporaryDir Settings::newTempDir()
+{
+    return std::move(QTemporaryDir(getTempPath() + "subdir"));
+}
+
+void Settings::clearTemp()
+{
+    m_tempDirObj.remove();
+}
+
 void Settings::setUserPath(const QString newUserPath)
 {
     QString folder = newUserPath + "/";

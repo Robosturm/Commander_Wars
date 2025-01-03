@@ -11,6 +11,7 @@
 #include <QMediaDevices>
 #include <QAudioDevice>
 #endif
+#include <QTemporaryDir>
 
 #include "coreengine/gameconsole.h"
 
@@ -411,6 +412,9 @@ public:
     Q_INVOKABLE bool getShowDetailedBattleForcast();
     Q_INVOKABLE void setShowDetailedBattleForcast(bool newShowDetailedBattleForcast);
     Q_INVOKABLE QString getUserPath();
+    Q_INVOKABLE QString getTempPath();
+    Q_INVOKABLE QTemporaryDir newTempDir();
+    Q_INVOKABLE void clearTemp();
     Q_INVOKABLE void setUserPath(const QString newUserPath);
     Q_INVOKABLE bool getTouchScreen();
     Q_INVOKABLE void setTouchScreen(bool newTouchScreen);
@@ -991,6 +995,8 @@ private:
     QStringList m_activeMods;
     QStringList m_activeModVersions;
     QString m_userPath;
+    QTemporaryDir m_tempDirObj;
+    QString m_tempDirPath = m_tempDirObj.path() + "/";
     QVector<spQTranslator> m_translators;
     QString m_updateStep;
     QString m_pipeUuid;

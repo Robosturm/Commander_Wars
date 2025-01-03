@@ -25,9 +25,7 @@ void MovementTableManager::loadAll()
     // import csv tables
     // clean up temp folder
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QDir dir(Settings::getInstance()->getUserPath() + "temp/");
-    dir.removeRecursively();
-    dir.mkpath(".");
+    QTemporaryDir tempDir = Settings::getInstance()->newTempDir();
     QStringList data;
     QFile file("resources/scripts/movementtables/movement_csv_import.txt");
     if (!file.exists())
@@ -44,7 +42,7 @@ void MovementTableManager::loadAll()
         if (!jsData.isEmpty())
         {
             m_loadedRessources.append(data);
-            pInterpreter->loadScript(jsData, Settings::getInstance()->getUserPath() + "temp/movementtable.js");
+            pInterpreter->loadScript(jsData, tempDir.path() + "/movementtable.js");
         }
     }
     m_loadedRessources.sort();

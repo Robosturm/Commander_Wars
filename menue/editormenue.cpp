@@ -45,11 +45,6 @@
 
 #include "ui_reader/uifactory.h"
 
-static QString getTempPath()
-{
-    return Settings::getInstance()->getUserPath() + "temp/";
-}
-
 EditorMenue::EditorMenue()
     : BaseGamemenu (20, 20, "", false),
       m_autosaveTimer(this)
@@ -215,7 +210,7 @@ EditorMenue::EditorMenue()
     m_HumanInput->setLeftClickEnabled(false);
 
     // clean up temp folder
-    QDir dir(getTempPath());
+    QDir dir = m_tempDir.path();
     dir.removeRecursively();
     dir.mkpath(".");
 
@@ -247,7 +242,7 @@ EditorMenue::~EditorMenue()
 
 void EditorMenue::cleanTemp(qint32 step)
 {
-    QDir dir(getTempPath());
+    QDir dir = m_tempDir.path();
     if (step < 0)
     {
         m_tempCounter = 0;
@@ -258,7 +253,7 @@ void EditorMenue::cleanTemp(qint32 step)
     {
         for (qint32 i = step; i < std::numeric_limits<qint32>::max(); i++)
         {
-            QFile file(getTempPath() + "temp" + QString::number(i) + ".tmp");
+            QFile file(m_tempDir.path() + "/temp" + QString::number(i) + ".tmp");
             if (file.exists())
             {
                 file.remove();
@@ -278,7 +273,7 @@ void EditorMenue::createTempFile(bool cleanUp)
     {
         cleanTemp(m_tempCounter);
     }
-    QFile file(getTempPath() + "temp" + QString::number(m_tempCounter) + ".tmp");
+    QFile file(m_tempDir.path() + "/temp" + QString::number(m_tempCounter) + ".tmp");
     file.open(QIODevice::WriteOnly);
     QDataStream stream(&file);
     stream.setVersion(QDataStream::Version::Qt_6_5);
@@ -286,7 +281,7 @@ void EditorMenue::createTempFile(bool cleanUp)
     m_pMap->serializeObject(stream);
     file.close();
 
-    QFile previous(getTempPath() + "temp" + QString::number(m_tempCounter - 1) + ".tmp");
+    QFile previous(m_tempDir.path() + "/temp" + QString::number(m_tempCounter - 1) + ".tmp");
     if (previous.exists())
     {
         file.open(QIODevice::ReadOnly);
@@ -322,7 +317,7 @@ void EditorMenue::editorUndo()
     m_tempCounter--;
     if (m_tempCounter >= 0)
     {
-        QFile file(getTempPath() + "temp" + QString::number(m_tempCounter) + ".tmp");
+        QFile file(m_tempDir.path() + "/temp" + QString::number(m_tempCounter) + ".tmp");
         if (file.exists())
         {
             m_tempCounter++;
@@ -350,7 +345,7 @@ void EditorMenue::editorRedo()
 {
     CONSOLE_PRINT("EditorMenue::editorRedo", GameConsole::eDEBUG);
     m_tempCounter++;
-    QFile file(getTempPath() + "temp" + QString::number(m_tempCounter) + ".tmp");
+    QFile file(m_tempDir.path() + "/temp" + QString::number(m_tempCounter) + ".tmp");
     if (file.exists())
     {
         file.open(QIODevice::ReadOnly);
