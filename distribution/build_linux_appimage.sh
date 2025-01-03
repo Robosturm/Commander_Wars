@@ -60,5 +60,11 @@ $LINUXDEPLOY_QT --appdir=distribution/AppDir \
     --exclude-library "*libqsqlmimer*" \
     --exclude-library "*libqsqlpsql*" \
     --exclude-library "*libgallium*" \
-    --exclude-library "*libLLVM*"
+    --exclude-library "*libLLVM*" \
+    --exclude-library "*libqicns*" \
+    --exclude-library "*libqmng*" \
+    --exclude-library "*libqtga*" \
+    --exclude-library "*libqtiff*" \
+    --exclude-library "*libqwbmp*" \
+    --exclude-library "*libqwebp*"
 $LINUXDEPLOY --appdir=distribution/AppDir --output appimage
