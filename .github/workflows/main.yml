@@ -43,7 +43,7 @@ jobs:
             qtTools: ''
             installerCommands1: 'sudo apt-get update'
             installerCommands2: 'sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
-            cmakeOptions: ''
+            cmakeOptions: '-DUSEAPPCONFIGPATH:BOOL=ON -DOPENSSL_USE_STATIC_LIBS:BOOL=OFF -DUPDATESUPPORT=OFF'
           - buildTarget: macos-desktop
             os: macos-latest
             COMPILER_VERSION: 'clang_64'
