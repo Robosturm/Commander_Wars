@@ -609,7 +609,7 @@ QString Settings::getTempPath()
 
 QTemporaryDir Settings::newTempDir()
 {
-    return std::move(QTemporaryDir(getTempPath() + "subdir"));
+    return std::move(QTemporaryDir(getTempPath() + "CoW"));
 }
 
 void Settings::clearTemp()
