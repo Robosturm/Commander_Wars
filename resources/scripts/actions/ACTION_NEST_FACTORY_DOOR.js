@@ -17,14 +17,17 @@ var Constructor = function()
             return false;
         }
     };
+
     this.getActionText = function(map)
     {
         return qsTr("Build Unit");
     };
+
     this.getIcon = function(map)
     {
         return "build";
     };
+
     this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 0)
@@ -63,11 +66,21 @@ var Constructor = function()
                 // check all units if they can move over this terrain
                 if (buildlist.includes(units[i]) &&
                     Global[units[i]].getUnitType() !== GameEnums.UnitType_Naval &&
-                    Global[units[i]].getCOSpecificUnit() === false)
+                    ACTION_NEST_FACTORY_DOOR.isCOSpecificUnit(units[i]) === false)
                 {
                     return true;
                 }
             }
+        }
+        return false;
+    };
+
+    this.isCOSpecificUnit = function(unitId)
+    {
+        if (Global[unitId].getCOSpecificUnit !== null &&
+            Global[unitId].getCOSpecificUnit())
+        {
+            return true;
         }
         return false;
     };
@@ -82,7 +95,7 @@ var Constructor = function()
             // check all units if they can move over this terrain
             if (buildlist.includes(units[i]) &&
                 Global[units[i]].getUnitType() !== GameEnums.UnitType_Naval &&
-                Global[units[i]].getCOSpecificUnit() === false)
+                ACTION_NEST_FACTORY_DOOR.isCOSpecificUnit(units[i]) === false)
             {
                 var name = Global[units[i]].getName();
                 data.addData(name, units[i], units[i], 0, true);
