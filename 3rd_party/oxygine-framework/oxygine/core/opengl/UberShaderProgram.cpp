@@ -25,7 +25,7 @@ namespace oxygine
         }
         else
         {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, GameConsole::eFATAL);
+            CONSOLE_PRINT("Unable to find shader: " + filepath, GameConsole::eERROR);
             return "";
         }
     }
