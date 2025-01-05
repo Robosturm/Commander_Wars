@@ -671,7 +671,11 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
         addChild(pSprite);
         m_terrainSpriteName = spriteID;
         QImage img;
-        if (QFile::exists(Settings::getInstance()->getUserPath() + m_terrainSpriteName))
+        if (QFile::exists(m_terrainSpriteName))
+        {
+            img = QImage(m_terrainSpriteName);
+        }
+        else if (QFile::exists(Settings::getInstance()->getUserPath() + m_terrainSpriteName))
         {
             img = QImage(Settings::getInstance()->getUserPath() + m_terrainSpriteName);
         }

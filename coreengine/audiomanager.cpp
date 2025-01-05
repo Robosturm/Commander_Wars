@@ -568,18 +568,17 @@ void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoi
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        QString currentPath;
-
-        // check for the file in the data directory
-        currentPath = Settings::getInstance()->getUserPath() + file;
-
-        // check for the file in the QT Resources system
+        QString currentPath = file;
+        currentPath = file;
         if (!QFile::exists(currentPath))
         {
-            currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
+            currentPath = Settings::getInstance()->getUserPath() + file;
+            if (!QFile::exists(currentPath))
+            {
+                CONSOLE_PRINT_MODULE("Unable to locate music file: " + currentPath + " using compiled path.", GameConsole::eDEBUG, GameConsole::eAudio);
+                currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
+            }
         }
-
-        // load the music file
         if (QFile::exists(currentPath))
         {
             m_player->m_player.stop();
@@ -590,7 +589,7 @@ void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoi
             CONSOLE_PRINT("Unable to locate music file: " + currentPath, GameConsole::eERROR);
         }
     }
-#endif
+    #endif
 }
 
 #ifdef AUDIOSUPPORT
