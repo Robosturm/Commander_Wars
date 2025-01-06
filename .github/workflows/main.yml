@@ -114,7 +114,7 @@ jobs:
           - buildTarget: android-arm64_v8a
             os: windows-latest
             COMPILER_VERSION: 'android_arm64_v8a'
-            qtPath: 'android_arm64_v8a'c
+            qtPath: 'android_arm64_v8a'
             qtTools: ''
             target: 'android'
             target-api-level: '23'
