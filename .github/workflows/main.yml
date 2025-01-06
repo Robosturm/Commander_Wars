@@ -42,8 +42,10 @@ jobs:
             qtPath: ''
             qtTools: ''
             installerCommands1: 'sudo apt-get update'
-            installerCommands2: 'sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            installerCommands2: 'sudo apt-get install libxcb-cursor0 libfuse2 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
             cmakeOptions: '-DUSEAPPCONFIGPATH:BOOL=ON -DOPENSSL_USE_STATIC_LIBS:BOOL=OFF -DUPDATESUPPORT=OFF'
+            serverFlag: ''
+            linuxFlag: 'linux'
           - buildTarget: macos-desktop
             os: macos-latest
             COMPILER_VERSION: 'clang_64'
@@ -133,7 +135,7 @@ jobs:
       run: ${{matrix.installerCommands2}}
 
     - name: Configure other cmake
-      if: matrix.target != 'android'
+      if: matrix.target != 'android' && matrix.linuxFlag != 'linux'
       run: |
         cmake \
         -S "${{github.workspace}}/source" \
@@ -180,7 +182,7 @@ jobs:
         -DCOW_INSTALL_DIR="Commander_Wars_Release" \
         -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install"
 
-    - name: Build other
+    - name: Build other && matrix.linuxFlag != 'linux'
       if: matrix.target != 'android'
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --target install -j4
@@ -190,6 +192,18 @@ jobs:
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --target all -j4
         
+    - name: Build linux
+      if: matrix.linuxFlag == 'linux'
+      run: |
+        "${{github.workspace}}"/source/distribution/build_linux_appimage.sh \
+        ${{matrix.serverFlag}} \
+        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/ \
+        -DUPDATESUPPORT=OFF \
+        -DCOW_BUILD_TAG="${{github.ref}}" \
+        -DCOW_UPDATETARGET="${{matrix.asset_name}}" \
+        -DCOW_INSTALL_DIR="Commander_Wars_Release" \
+        ${{matrix.cmakeOptions}}
+
     - name: create pdb
       if: matrix.COMPILER_VERSION == 'win64_mingw'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createPdb     
