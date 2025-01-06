@@ -32,6 +32,7 @@ option(USEAPPCONFIGPATH "use the system location for saving data, instead of the
 option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or deployed as folder" OFF)
 option(UPDATESUPPORT "Enables the automatic updater for the game which updates to the latest github version should be turned off for local builds not supported for android" OFF)
 option(DEFAULTAIPIPE "If the system should use a separate process for the ai as default variant. Disable it for system that can't launch the same exe twice e.g. android." ON)
+option(PRECOMPILED_HEADERS "Whether to use precompiled headers to speed up compilation. This can make precompiled headers less effective." ON)
 ###################################################################################
 # show configuration
 ###################################################################################
@@ -412,7 +413,12 @@ set(${PROJECT_NAME}_OpenNN_SRCS
     3rd_party/opennn/opennn/weighted_squared_error.cpp 3rd_party/opennn/opennn/weighted_squared_error.h
     3rd_party/opennn/opennn/loss_index.cpp 3rd_party/opennn/opennn/loss_index.h    
 )
+
+set(${PROJECT_NAME}_OpenNN_SRCS_ONLY ${${PROJECT_NAME}_OpenNN_SRCS})
+list(FILTER ${PROJECT_NAME}_OpenNN_SRCS_ONLY INCLUDE REGEX "^.*\.cpp?$")
+
 set_source_files_properties(${${PROJECT_NAME}_OpenNN_SRCS} PROPERTIES COMPILE_FLAGS -Os)
+set_source_files_properties(${${PROJECT_NAME}_OpenNN_SRCS_ONLY} PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
 
 ###################################################################################
 # start stmp client stuff
@@ -439,6 +445,7 @@ set(${PROJECT_NAME}_SmtpClient_SRCS
     3rd_party/smtpClient/src/SmtpMime
     3rd_party/smtpClient/src/mimeattachment.h
 )
+
 ###################################################################################
 # end stmp client stuff
 ###################################################################################
@@ -446,7 +453,7 @@ set(${PROJECT_NAME}_SmtpClient_SRCS
 ###################################################################################
 # source list of commander wars specific files
 ###################################################################################
-###############################################################################
+###################################################################################
 # start update support stuff
 ###################################################################################
 
@@ -921,26 +928,28 @@ if (NOT DEPLOY_RESOURCES_AS_FOLDER)
             "sprites.qrc"
             "music.qrc"
             "sound.qrc"
-            )
+        )
     elseif(AUDIOSUPPORT)
         qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
             "general.qrc"
             "music.qrc"
             "sound.qrc"
-            )
+        )
     elseif(GRAPHICSUPPORT)
         qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
             "general.qrc"
             "sprites.qrc"
-            )
+        )
     else()
         qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
             "general.qrc"
-            )
+        )
     endif()
 else()
     message("Deploying resources")
 endif()
+
+qt_add_resources(${PROJECT_NAME}_Resource_SRCS "core.qrc") # These files are always deployed using QRCs.
 
 ##############################################################################
 # Lib setup                                                                  #
@@ -990,9 +999,177 @@ add_custom_target(Resources SOURCES
 add_custom_target(Test SOURCES
     ${TestScripts}
     )
+
+###################################################################################
+# Precompiled header support
+###################################################################################
+
+set(${PROJECT_NAME}_OXYGINE_HEADERS ${${PROJECT_NAME}_OXYGINE_SRCS})
+list(FILTER ${PROJECT_NAME}_OXYGINE_HEADERS INCLUDE REGEX "^.*\.hh?$")
+
+set(${PROJECT_NAME}_ResourceManagement_HEADERS ${${PROJECT_NAME}_SRCS})
+list(FILTER ${PROJECT_NAME}_ResourceManagement_HEADERS INCLUDE REGEX "^.*\.hh?$")
+list(FILTER ${PROJECT_NAME}_ResourceManagement_HEADERS INCLUDE REGEX "^resource_management")
+
+set(${PROJECT_NAME}_ObjectsBase_HEADERS ${${PROJECT_NAME}_SRCS})
+list(FILTER ${PROJECT_NAME}_ObjectsBase_HEADERS INCLUDE REGEX "^.*\.hh?$")
+list(FILTER ${PROJECT_NAME}_ObjectsBase_HEADERS INCLUDE REGEX "^objects/base/")
+
+# Note: Editing any of these files will trigger a FULL rebuild. The list is rather conservative for that reason.
+#       Includes mostly dependencies and very common headers in Commander Wars.
+set(AppHeadersCxx
+    ${${PROJECT_NAME}_OXYGINE_HEADERS}
+    ${${PROJECT_NAME}_ResourceManagement_HEADERS}
+    ${${PROJECT_NAME}_ObjectsBase_HEADERS}
+
+    ai/coreai.h
+    coreengine/audiomanager.h
+    coreengine/fileserializable.h
+    coreengine/filesupport.h
+    coreengine/gameconsole.h
+    coreengine/globalutils.h
+    coreengine/interpreter.h
+    coreengine/jsthis.h
+    coreengine/mainapp.h
+    coreengine/memorymanagement.h
+    coreengine/qmlvector.h
+    coreengine/scriptvariables.h
+    coreengine/settings.h
+    coreengine/userdata.h
+    game/building.h
+    game/co.h
+    game/gameaction.h
+    game/GameEnums.h
+    game/gamemap.h
+    game/player.h
+    game/terrain.h
+    game/unit.h
+    ingamescriptsupport/conditions/scriptcondition.h
+    ingamescriptsupport/events/scripteventgeneric.h
+    ingamescriptsupport/events/scriptevent.h
+    ingamescriptsupport/genericbox.h
+    ingamescriptsupport/scriptdata.h
+    ingamescriptsupport/scripteditor.h
+    menue/basegamemenu.h
+    menue/basemenu.h
+    menue/gamemenue.h
+    menue/mainwindow.h
+    multiplayer/networkcommands.h
+    network/JsonKeys.h
+    network/mainserver.h
+    network/networkInterface.h
+    objects/dialogs/customdialog.h
+    objects/dialogs/dialogmessagebox.h
+    objects/dialogs/filedialog.h
+    ui_reader/createdgui.h
+    ui_reader/uifactory.h
+    wiki/wikidatabase.h
+)
+
+set(AppHeadersC
+    zipSupport/crc32.h
+    zipSupport/deflate.h
+    zipSupport/gzguts.h
+    zipSupport/inflate.h
+    zipSupport/inftrees.h
+    zipSupport/inffast.h
+    zipSupport/inffixed.h
+    zipSupport/trees.h
+    zipSupport/zlib.h
+    zipSupport/zutil.h
+)
+
+set(SystemHeaderSources # Every header used 5 or more times.
+    <algorithm$<ANGLE-R>
+    <bench/BenchTimer.h$<ANGLE-R>
+    <chrono$<ANGLE-R>
+    <cmath$<ANGLE-R>
+    <complex$<ANGLE-R>
+    <cstdlib$<ANGLE-R>
+    <cstring$<ANGLE-R>
+    <ctime$<ANGLE-R>
+    <exception$<ANGLE-R>
+    <fstream$<ANGLE-R>
+    <functional$<ANGLE-R>
+    <iomanip$<ANGLE-R>
+    <iostream$<ANGLE-R>
+    <limits$<ANGLE-R>
+    <limits.h$<ANGLE-R>
+    <list$<ANGLE-R>
+    <map$<ANGLE-R>
+    <math.h$<ANGLE-R>
+    <memory$<ANGLE-R>
+    <numeric$<ANGLE-R>
+    <QApplication$<ANGLE-R>
+    <QBuffer$<ANGLE-R>
+    <QByteArray$<ANGLE-R>
+    <QColor$<ANGLE-R>
+    <QCoreApplication$<ANGLE-R>
+    <QCryptographicHash$<ANGLE-R>
+    <QDataStream$<ANGLE-R>
+    <QDateTime$<ANGLE-R>
+    <QDir$<ANGLE-R>
+    <QDirIterator$<ANGLE-R>
+    <QDomDocument$<ANGLE-R>
+    <QElapsedTimer$<ANGLE-R>
+    <QFile$<ANGLE-R>
+    <QFileInfo$<ANGLE-R>
+    <QImage$<ANGLE-R>
+    <QIODevice$<ANGLE-R>
+    <QJsonArray$<ANGLE-R>
+    <QJsonDocument$<ANGLE-R>
+    <QJsonObject$<ANGLE-R>
+    <QKeyEvent$<ANGLE-R>
+    <QList$<ANGLE-R>
+    <QMutex$<ANGLE-R>
+    <QMutexLocker$<ANGLE-R>
+    <QObject$<ANGLE-R>
+    <QPoint$<ANGLE-R>
+    <QProcess$<ANGLE-R>
+    <QRect$<ANGLE-R>
+    <QString$<ANGLE-R>
+    <QStringList$<ANGLE-R>
+    <QTextStream$<ANGLE-R>
+    <QThread$<ANGLE-R>
+    <QTimer$<ANGLE-R>
+    <QtMath$<ANGLE-R>
+    <QVector$<ANGLE-R>
+    <random$<ANGLE-R>
+    <regex$<ANGLE-R>
+    <sstream$<ANGLE-R>
+    <stddef.h$<ANGLE-R>
+    <stdexcept$<ANGLE-R>
+    <stdint.h$<ANGLE-R>
+    <stdio.h$<ANGLE-R>
+    <stdlib.h$<ANGLE-R>
+    <string$<ANGLE-R>
+    <time.h$<ANGLE-R>
+    <typeinfo$<ANGLE-R>
+    <utility$<ANGLE-R>
+    <vector$<ANGLE-R>
+)
+
+set(AllPrecompiledHeadersCxx
+    ${AppHeaders}
+)
+
+set(AllPrecompiledHeaders
+    $<$<COMPILE_LANGUAGE:C>:${AppHeadersC}>
+    $<$<COMPILE_LANGUAGE:CXX>:${AppHeadersCxx}>
+    $<$<COMPILE_LANGUAGE:CXX>:${SystemHeaderSources}>
+)
+
+set_source_files_properties(Commander_Wars_autogen/mocs_compilation.cpp PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
+
 ##############################################################
 # Linking and executable section                             #
 ##############################################################
+
+if (GRAPHICSUPPORT)
+    SET(WIN_ICON distribution/res/ICON.rc)
+else()
+    SET(WIN_ICON distribution/res/ICON_SERVER.rc)
+endif()
 
 qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_OXYGINE_SRCS}
@@ -1002,8 +1179,16 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_SmtpClient_SRCS}
     ${${PROJECT_NAME}_OpenNN_SRCS}
     ${${PROJECT_NAME}_UPDATE_SRCS}
-    ICON.rc
+    ${WIN_ICON}
+)
+
+if (PRECOMPILED_HEADERS)
+    target_precompile_headers(${PROJECT_NAME}
+        PRIVATE
+        $<$<COMPILE_LANGUAGE:CXX>:${AllPrecompiledHeaders}>
+        $<$<COMPILE_LANGUAGE:CXX>:${SystemHeaderSources}>
     )
+endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     WIN32_EXECUTABLE TRUE
@@ -1116,67 +1301,6 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     )
 
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-    set(LibNameStart "../lib/libQt6")
-    set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
-        ${QT_BIN_DIR}/../plugins/platforms/libqeglfs.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqoffscreen.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqwayland-xcomposite-egl.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqlinuxfb.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqvnc.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqwayland-xcomposite-glx.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqminimalegl.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqwayland-egl.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqxcb.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
-        ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
-        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
-    )
-    set(${PROJECT_NAME}_INSTALL_QT_SQL_LIBS
-        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
-    )
-
-    set(LibNameEnd ".so.${QT_VERSION}")
-    set(LibNameEnd1 ".so.6")
-    set(LibNameEnd2 ".so")
-    set(${PROJECT_NAME}_INSTALL_OS_LIBS
-        ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Network${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Multimedia${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
-        ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
-
-        ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Network${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Multimedia${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd1}
-        ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd1}
-
-        ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Network${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Multimedia${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd2}
-        ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd2}
-    )
-
-    if (GRAPHICSUPPORT)
-        if (USEVULKAN)
-        else()
-            set(${PROJECT_NAME}_INSTALL_OS_LIBS
-                ${${PROJECT_NAME}_INSTALL_OS_LIBS}
-                ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
-            )
-        endif()
-    endif()
-    set(LibNameEnd ".so")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
 else()
     message(FATAL_ERROR "Unsupported OS found")
@@ -1217,7 +1341,6 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(DIRECTORY templates DESTINATION "/")
     if (DEPLOY_RESOURCES_AS_FOLDER)
         message("Installing resources as folder")
-        install(DIRECTORY system DESTINATION                "/")
         install(DIRECTORY resources DESTINATION             "/")
         install(DIRECTORY maps DESTINATION                  "/")
         install(FILES ${QM_FILES} DESTINATION               "resources/translation/" OPTIONAL)
@@ -1244,15 +1367,6 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         RUNTIME         DESTINATION         "bin"
         BUNDLE          DESTINATION         "bin"
         LIBRARY         DESTINATION         "bin")
-    # install libs
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-    install(DIRECTORY templates                                 DESTINATION "share/${PROJECT_NAME_LOWER}"                            OPTIONAL)
-    install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
-    install(FILES "icon.png"                                    DESTINATION "share/pixmaps"       RENAME "${PROJECT_NAME_LOWER}.png" OPTIONAL)
-    install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
-    install(FILES ${OPENSSL_LIBS}                               DESTINATION "/"                                                      OPTIONAL)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"

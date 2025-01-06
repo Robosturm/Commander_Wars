@@ -234,7 +234,7 @@ bool Player::loadTableFromFile(const QString tablename)
         searchPaths.append(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + "/images/colortables/");
         searchPaths.append(oxygine::Resource::RCC_PREFIX_PATH + Settings::getInstance()->getMods().at(i) + "/images/colortables/");
     }
-    searchPaths.append("resources/images/colortables/");
+    searchPaths.append(Settings::getInstance()->getUserPath() + "resources/images/colortables/");
     searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/images/colortables/");
     for (auto & path : searchPaths)
     {

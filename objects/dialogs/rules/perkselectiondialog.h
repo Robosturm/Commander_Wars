@@ -19,8 +19,6 @@ using spPerkSelectionDialog = std::shared_ptr<PerkSelectionDialog>;
 class PerkSelectionDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
-    static const char* const SELECT_FILEPATH;
-    static const char* const BANN_FILEPATH;
 public:
     explicit PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool banning, QStringList hiddenList);
 signals:

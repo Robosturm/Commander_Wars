@@ -206,13 +206,13 @@ void WorkerThread::start()
             {
                 CONSOLE_PRINT("Remote script is present and will be loaded", GameConsole::eDEBUG);
                 CONSOLE_PRINT("Remote Script=" + script, GameConsole::eDEBUG);
-                pInterpreter->evaluate(script, "remoteInit.js");
+                pInterpreter->evaluate(script, Settings::getInstance()->getUserPath() + "remoteInit.js");
             }
         }
-        else if (QFile::exists("init.js"))
+        else if (QFile::exists(Settings::getInstance()->getUserPath() + "init.js"))
         {
             CONSOLE_PRINT("Init script is present and will be loaded", GameConsole::eDEBUG);
-            pInterpreter->openScript("init.js", true);
+            pInterpreter->openScript(Settings::getInstance()->getUserPath() + "init.js", true);
         }
     }
     // only launch the server if the rest is ready for it ;)
