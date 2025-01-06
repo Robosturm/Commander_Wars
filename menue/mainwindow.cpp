@@ -96,7 +96,12 @@ Mainwindow::Mainwindow(const QString & initialView)
     style.color = Qt::black;
     spLabel pTextfield = MemoryManagement::create<Label>(300);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText("Version: " + GameVersion().toString());
+    QString versionString = "Version: " + GameVersion().toString();
+    QString buildTag = COW_BUILD_TAG;
+    if (!buildTag.isEmpty()) {
+        versionString += " (" + buildTag + ")";
+    }
+    pTextfield->setHtmlText(versionString);
     pTextfield->setPosition(oxygine::Stage::getStage()->getWidth() - 10 - pTextfield->getTextRect().width(), oxygine::Stage::getStage()->getHeight() - 10 - pTextfield->getTextRect().height());
     pTextfield->addClickListener([this](oxygine::Event*)
     {
