@@ -187,6 +187,12 @@ public slots:
     virtual void forwardData(quint64, QByteArray, NetworkInterface::NetworkSerives){}
     virtual QVector<quint64> getConnectedSockets() = 0;
     virtual void changeThread(quint64 socketID, QThread* pThread) = 0;
+    void displaySocketError(QSslSocket *socket, QAbstractSocket::SocketError socketError)
+    {
+        displayTCPError(socketError);
+        CONSOLE_PRINT("Socket error: " + socket->errorString(), GameConsole::eDEBUG);
+    }
+
     void displayTCPError(QAbstractSocket::SocketError socketError)
     {
         CONSOLE_PRINT("Error catched for " + QString::number(m_socketID), GameConsole::eDEBUG);
