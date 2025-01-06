@@ -45,7 +45,7 @@ jobs:
             installerCommands1: choco install openssl --version=3.3.2 --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
-            asset_name: 'Commander_Wars-Win10_x64-${{github.ref}}.zip'
+            asset_name: 'Commander_Wars-Win10_x64-${{github.ref_name}}.zip'
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" "-DCMAKE_C_COMPILER:FILEPATH=D:/a/Commander_Wars/Commander_Wars/qt/Qt/Tools/mingw1310_64/bin/gcc.exe" "-DCMAKE_CXX_COMPILER:FILEPATH=D:/a/Commander_Wars/Commander_Wars/qt/Qt/Tools/mingw1310_64/bin/g++.exe"'
           - buildTarget: windows-server
             os: windows-latest
@@ -56,7 +56,7 @@ jobs:
             installerCommands1: choco install openssl --version=3.3.2 --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
-            asset_name: 'Commander_Wars_Dedicated_Server-Win10_x64-${{github.ref}}.zip'
+            asset_name: 'Commander_Wars_Dedicated_Server-Win10_x64-${{github.ref_name}}.zip'
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF "-DCMAKE_C_COMPILER:FILEPATH=D:/a/Commander_Wars/Commander_Wars/qt/Qt/Tools/mingw1310_64/bin/gcc.exe" "-DCMAKE_CXX_COMPILER:FILEPATH=D:/a/Commander_Wars/Commander_Wars/qt/Qt/Tools/mingw1310_64/bin/g++.exe"'
           - buildTarget: ubuntu-desktop
             os: ubuntu-latest
@@ -67,7 +67,7 @@ jobs:
             installerCommands1: 'sudo apt-get update'
             installerCommands2: 'sudo apt-get install libxcb-cursor0 libfuse2 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
             source_asset: 'Commander_Wars-x86_64.AppImage'
-            asset_name: 'Commander_Wars-Linux_x64-${{github.ref}}.AppImage'
+            asset_name: 'Commander_Wars-Linux_x64-${{github.ref_name}}.AppImage'
             cmakeOptions: ' -DOPENSSL_USE_STATIC_LIBS=FALSE'
             serverFlag: ''
             linuxFlag: 'linux'
@@ -80,7 +80,7 @@ jobs:
             installerCommands1: 'sudo apt-get update'
             installerCommands2: 'sudo apt-get install libxcb-cursor0 libfuse2 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
             source_asset: 'Commander_Wars_Dedicated_Server-x86_64.AppImage'
-            asset_name: 'Commander_Wars_Dedicated_Server-Linux_x64-${{github.ref}}.AppImage'
+            asset_name: 'Commander_Wars_Dedicated_Server-Linux_x64-${{github.ref_name}}.AppImage'
             cmakeOptions: '-DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF -DOPENSSL_USE_STATIC_LIBS=FALSE'
             serverFlag: '-server'
             linuxFlag: 'linux'
@@ -93,7 +93,7 @@ jobs:
             installerCommands1: ''
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
-            asset_name: 'Commander_Wars-macOS-${{github.ref}}.zip'
+            asset_name: 'Commander_Wars-macOS-${{github.ref_name}}.zip'
             cmakeOptions: '-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
           - buildTarget: android-armv7
             os: windows-latest
@@ -108,7 +108,7 @@ jobs:
             installerCommands1: 'choco install ninja'
             installerCommands2: ''
             source_asset: 'android-build/build/outputs/apk/release/android-build-release-signed.apk'
-            asset_name: 'Commander_Wars-Android_armeabi_v7a-${{github.ref}}.apk'
+            asset_name: 'Commander_Wars-Android_armeabi_v7a-${{github.ref_name}}.apk'
             cmakeOptions: ''
             openSslabiPath: 'android_openssl/ssl_3/armeabi-v7a'            
           - buildTarget: android-arm64_v8a
@@ -124,7 +124,7 @@ jobs:
             installerCommands1: 'choco install ninja'
             installerCommands2: ''
             source_asset: 'android-build/build/outputs/apk/release/android-build-release-signed.apk'
-            asset_name: 'Commander_Wars-Android_arm64_v8a-${{github.ref}}.apk'
+            asset_name: 'Commander_Wars-Android_arm64_v8a-${{github.ref_name}}.apk'
             cmakeOptions: ''
             openSslabiPath: 'android_openssl/ssl_3/arm64-v8a'
 
@@ -191,6 +191,7 @@ jobs:
         -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/ \
         -DUPDATESUPPORT=ON \
         -DCOW_BUILD_TAG="${{github.ref}}" \
+        -DCOW_BUILD_NAME="${{github.ref_name}}" \
         -DCOW_UPDATETARGET="${{matrix.asset_name}}" \
         -DCOW_INSTALL_DIR="Commander_Wars_Release" \
         ${{matrix.cmakeOptions}}
@@ -262,6 +263,7 @@ jobs:
         -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/lib/cmake/Qt6/ \
         -DUPDATESUPPORT=OFF \
         -DCOW_BUILD_TAG="${{github.ref}}" \
+        -DCOW_BUILD_NAME="${{github.ref_name}}" \
         -DCOW_UPDATETARGET="${{matrix.asset_name}}" \
         -DCOW_INSTALL_DIR="Commander_Wars_Release" \
         ${{matrix.cmakeOptions}}

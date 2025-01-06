@@ -97,7 +97,7 @@ Mainwindow::Mainwindow(const QString & initialView)
     spLabel pTextfield = MemoryManagement::create<Label>(1000);
     pTextfield->setStyle(style);
     QString versionString = "Version: " + GameVersion().toString();
-    QString buildTag = COW_BUILD_TAG;
+    QString buildTag = COW_BUILD_NAME;
     if (!buildTag.isEmpty()) {
         versionString += " (" + buildTag + ")";
     }
