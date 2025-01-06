@@ -94,7 +94,7 @@ Mainwindow::Mainwindow(const QString & initialView)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     style.color = Qt::black;
-    spLabel pTextfield = MemoryManagement::create<Label>(300);
+    spLabel pTextfield = MemoryManagement::create<Label>(1000);
     pTextfield->setStyle(style);
     QString versionString = "Version: " + GameVersion().toString();
     QString buildTag = COW_BUILD_TAG;
