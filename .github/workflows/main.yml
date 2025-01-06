@@ -128,7 +128,6 @@ jobs:
             cmakeOptions: ''
             openSslabiPath: 'android_openssl/ssl_3/arm64-v8a'
 
-    needs: create_release
     runs-on: ${{matrix.os}}
     defaults:
       run:
