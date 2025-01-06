@@ -467,6 +467,17 @@ void Terrain::setSupportPalette(bool newSupportPalette)
     m_supportPalette = newSupportPalette;
 }
 
+void Terrain::onWeatherChanged(Weather* pWeather)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "onWeatherChanged";
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(pWeather),
+                       GameMap::getMapJsThis(m_pMap)});
+    pInterpreter->doFunction(m_terrainID, function1, args);
+}
+
+
 void Terrain::setMapForExtending(GameMap * newMap)
 {
     m_pMap = newMap;

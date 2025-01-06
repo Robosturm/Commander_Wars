@@ -133,27 +133,30 @@ void COSelectionDialog::showCOInfo()
     {
         coid = m_coids[0];
     }
-    spPlayer pPlayer = m_pMap->getSpPlayer(m_player);
-    spCO co = MemoryManagement::create<CO>(coid, pPlayer.get(), m_pMap);
-    addChild(MemoryManagement::create<COInfoDialog>(co, pPlayer, [this, pPlayer](spCO& pCurrentCO, spPlayer&, qint32 direction)
-    {        
-        qint32 index = m_coids.indexOf(pCurrentCO->getCoID());
-        index += direction;
-        QString coid;
-        if (index < 0)
-        {
-            coid = m_coids[m_coids.size() - 1];
-        }
-        else if (index >= m_coids.size())
-        {
-            coid = m_coids[0];
-        }
-        else
-        {
-            coid = m_coids[index];
-        }
-        pCurrentCO = MemoryManagement::create<CO>(coid, pPlayer.get(), m_pMap);
-    }, false));
+    if (m_pMap != nullptr)
+    {
+        spPlayer pPlayer = m_pMap->getSpPlayer(m_player);
+        spCO co = MemoryManagement::create<CO>(coid, pPlayer.get(), m_pMap);
+        addChild(MemoryManagement::create<COInfoDialog>(co, pPlayer, [this, pPlayer](spCO& pCurrentCO, spPlayer&, qint32 direction)
+                                                        {
+                                                            qint32 index = m_coids.indexOf(pCurrentCO->getCoID());
+                                                            index += direction;
+                                                            QString coid;
+                                                            if (index < 0)
+                                                            {
+                                                                coid = m_coids[m_coids.size() - 1];
+                                                            }
+                                                            else if (index >= m_coids.size())
+                                                            {
+                                                                coid = m_coids[0];
+                                                            }
+                                                            else
+                                                            {
+                                                                coid = m_coids[index];
+                                                            }
+                                                            pCurrentCO = MemoryManagement::create<CO>(coid, pPlayer.get(), m_pMap);
+                                                        }, false));
+    }
 }
 
 void COSelectionDialog::selectedCOIDChanged(QString coid)

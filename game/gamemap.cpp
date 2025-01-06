@@ -593,6 +593,7 @@ void GameMap::onWeatherChanged(Weather* pWeather)
     {
         for (qint32 x = 0; x < width; x++)
         {
+            m_fields[y][x]->onWeatherChanged(pWeather);
             if (m_fields[y][x]->getBuilding() != nullptr)
             {
                 m_fields[y][x]->getBuilding()->onWeatherChanged(pWeather);
