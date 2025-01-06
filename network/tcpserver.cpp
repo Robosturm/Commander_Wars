@@ -242,3 +242,14 @@ void TCPServer::setIsActive(quint64 socketID, bool active)
         client->setIsActive(active);
     }
 }
+
+void TCPServer::displayDetailedError()
+{
+    for (qint32 i = 0; i < SERVER_SOCKETS; ++i)
+    {
+        if (m_pTCPServer[i].get() != nullptr)
+        {
+            CONSOLE_PRINT("Socket server " + QString::number(i) + " error: " + m_pTCPServer[i]->errorString(), GameConsole::eDEBUG);
+        }
+    }
+}

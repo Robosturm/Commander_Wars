@@ -146,3 +146,8 @@ void LocalServer::removeSocket(quint64 socket)
     CONSOLE_PRINT("Local Server removed socket " + QString::number(socket), GameConsole::eLogLevels::eDEBUG);
     m_SocketIDs.removeAll(socket);
 }
+
+void LocalServer::displayDetailedError()
+{
+    CONSOLE_PRINT("Socket error: " + m_pTCPServer->errorString(), GameConsole::eDEBUG);
+}

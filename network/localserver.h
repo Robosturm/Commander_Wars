@@ -41,6 +41,8 @@ public slots:
      * @param socket
      */
     void removeSocket(quint64 socket);
+protected:
+    void displayDetailedError() override;
 private:
     QVector<spRxTask> m_pRXTasks;
     QVector<spTxTask> m_pTXTasks;

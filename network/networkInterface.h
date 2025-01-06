@@ -11,7 +11,6 @@
 #include <QSslConfiguration>
 
 #include "coreengine/gameconsole.h"
-#include "coreengine/interpreter.h"
 
 class Serializable;
 class NetworkInterface;
@@ -88,7 +87,7 @@ public:
     {
         QSslConfiguration sslConfiguration;
         sslConfiguration.setPeerVerifyMode(QSslSocket::VerifyNone);
-        sslConfiguration.setProtocol(QSsl::SslProtocol::TlsV1_3);
+        sslConfiguration.setProtocol(QSsl::SslProtocol::SecureProtocols);
         attachKeys(sslConfiguration);
         return sslConfiguration;
     }
@@ -241,6 +240,7 @@ public slots:
             default:
                 CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), GameConsole::eERROR);
         }
+        displayDetailedError();
     }
     void displayLocalError(QLocalSocket::LocalSocketError socketError)
     {
@@ -309,6 +309,7 @@ public slots:
                 break;
         }
     }
+    virtual void displayDetailedError() = 0;
 protected:
     quint64 m_socketID{0};
     bool m_isServer{false};

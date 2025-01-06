@@ -24,6 +24,8 @@ public slots:
     virtual void changeThread(quint64 socketID, QThread* pThread) override;
 protected slots:
     void connected();
+protected:
+    void displayDetailedError() override;
 private:
     spRxTask m_pRXTask;
     spTxTask m_pTXTask;
