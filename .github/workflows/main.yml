@@ -33,6 +33,7 @@ jobs:
   install:
     name: All
     strategy:
+      fail-fast: false
       matrix:
         buildTarget: [windows-desktop, windows-server, ubuntu-desktop, ubuntu-server, macos-desktop, android-armv7, android-arm64_v8a]
         include:
