@@ -358,7 +358,7 @@ endif()
 include_directories("3rd_party/opennn/eigen")
 set(${PROJECT_NAME}_OpenNN_SRCS
     3rd_party/opennn/opennn/adaptive_moment_estimation.cpp 3rd_party/opennn/opennn/adaptive_moment_estimation.h
-    3rd_party/opennn/opennn/batch_normalization_layer.cpp 3rd_party/opennn/opennn/batch_normalization_layer.h
+    3rd_party/opennn/opennn/addition_layer.cpp 3rd_party/opennn/opennn/addition_layer.h
     3rd_party/opennn/opennn/bounding_box_regressor_layer.cpp 3rd_party/opennn/opennn/bounding_box_regressor_layer.h
     3rd_party/opennn/opennn/bounding_layer.cpp 3rd_party/opennn/opennn/bounding_layer.h
     3rd_party/opennn/opennn/codification.cpp 3rd_party/opennn/opennn/codification.h
@@ -411,7 +411,13 @@ set(${PROJECT_NAME}_OpenNN_SRCS
     3rd_party/opennn/opennn/unit_testing.cpp 3rd_party/opennn/opennn/unit_testing.h
     3rd_party/opennn/opennn/unscaling_layer.cpp 3rd_party/opennn/opennn/unscaling_layer.h
     3rd_party/opennn/opennn/weighted_squared_error.cpp 3rd_party/opennn/opennn/weighted_squared_error.h
-    3rd_party/opennn/opennn/loss_index.cpp 3rd_party/opennn/opennn/loss_index.h    
+    3rd_party/opennn/opennn/loss_index.cpp 3rd_party/opennn/opennn/loss_index.h
+    3rd_party/opennn/opennn/concatenation_layer.cpp 3rd_party/opennn/opennn/concatenation_layer.h
+    3rd_party/opennn/opennn/embedding_layer.cpp 3rd_party/opennn/opennn/embedding_layer.h
+    3rd_party/opennn/opennn/kmeans.cpp 3rd_party/opennn/opennn/kmeans.h
+    #3rd_party/opennn/opennn/multihead_attention_layer.cpp 3rd_party/opennn/opennn/multihead_attention_layer.h
+    3rd_party/opennn/opennn/resnet50.cpp 3rd_party/opennn/opennn/resnet50.h
+    3rd_party/opennn/opennn/vgg16.cpp 3rd_party/opennn/opennn/vgg16.h
 )
 
 set(${PROJECT_NAME}_OpenNN_SRCS_ONLY ${${PROJECT_NAME}_OpenNN_SRCS})
