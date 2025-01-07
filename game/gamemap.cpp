@@ -8,6 +8,7 @@
 #include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/userdata.h"
+#include "coreengine/settings.h"
 
 #include "ai/coreai.h"
 
@@ -1999,9 +2000,9 @@ void GameMap::startGame()
     Interpreter* pInterpreter = Interpreter::getInstance();
     for (const auto& mod : mods)
     {
-        if (QFile::exists(mod + "/scripts/mapstart.js"))
+        if (QFile::exists(Settings::getInstance()->getUserPath() + mod + "/scripts/mapstart.js"))
         {
-            pInterpreter->openScript(mod + "/scripts/mapstart.js", true);
+            pInterpreter->openScript(Settings::getInstance()->getUserPath() + mod + "/scripts/mapstart.js", true);
             pInterpreter->doFunction("MapStart", "gameStart");
         }
     }
