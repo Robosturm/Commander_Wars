@@ -974,29 +974,7 @@ void GameRules::createFogVision()
         {
             for (qint32 y = 0; y < heigth; y++)
             {
-                switch (m_FogMode)
-                {
-                    case GameEnums::Fog_Off:
-                    {
-                        createFieldFogClear(x, y, pPlayer);
-                        break;
-                    }
-                    case GameEnums::Fog_OfWar:
-                    {
-                        createFieldFogWar(x, y, pPlayer, fogOfWarColor);
-                        break;
-                    }
-                    case GameEnums::Fog_OfShroud:
-                    {
-                        createFieldFogShrouded(x, y, pPlayer, fogOfMistColor, fogOfWarColor);
-                        break;
-                    }
-                    case GameEnums::Fog_OfMist:
-                    {
-                        createFieldFogMist(x, y, pPlayer, fogOfMistColor);
-                        break;
-                    }
-                }
+                createFieldFog(x, y, pPlayer, fogOfMistColor, fogOfWarColor);
             }
         }
     }
@@ -1004,106 +982,7 @@ void GameRules::createFogVision()
     Mainapp::getInstance()->continueRendering();
 }
 
-void GameRules::createFieldFogClear(qint32 x, qint32 y, Player* pPlayer)
-{
-    
-    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-    Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
-    if (m_FogSprites[x][y].get() != nullptr)
-    {
-        m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y].reset();
-    }
-    if (pUnit != nullptr)
-    {
-        showHideStealthUnit(pPlayer, pUnit);
-    }
-    if (pBuilding != nullptr)
-    {
-        pBuilding->updatePlayerColor(true);
-    }
-}
-
-void GameRules::createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor fogOfMistColor)
-{
-    
-    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-    Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
-    if (m_FogSprites[x][y].get() != nullptr)
-    {
-        m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y].reset();
-    }
-    if (pUnit != nullptr)
-    {
-        showHideStealthUnit(pPlayer, pUnit);
-    }
-    if (pBuilding != nullptr)
-    {
-        pBuilding->updatePlayerColor(true);
-    }
-    GameEnums::VisionType visible = pPlayer->getFieldVisibleType(x, y);
-    if (visible != GameEnums::VisionType_Clear)
-    {
-        if (m_FogSprites[x][y].get() == nullptr)
-        {
-            // create fog of war sprite
-            oxygine::spColorRectSprite sprite = MemoryManagement::create<oxygine::ColorRectSprite>();
-            sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
-            sprite->setColor(fogOfMistColor);
-            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
-            sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
-            m_fogMaster->addChild(sprite);
-            m_FogSprites[x][y] = sprite;
-        }
-    }
-    else if (m_FogSprites[x][y].get() != nullptr)
-    {
-        m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y].reset();
-    }
-}
-
-void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fogOfWarColor)
-{
-    
-    GameEnums::VisionType visible = pPlayer->getFieldVisibleType(x, y);
-    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-    Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
-    if (pUnit != nullptr)
-    {
-        showHideStealthUnit(pPlayer, pUnit);
-        if (visible != GameEnums::VisionType_Clear)
-        {
-            pUnit->setUnitVisible(false, pPlayer);
-        }
-    }
-    if (pBuilding != nullptr)
-    {
-        pBuilding->updatePlayerColor((visible == GameEnums::VisionType_Clear));
-    }
-    if (visible != GameEnums::VisionType_Clear)
-    {
-        if (m_FogSprites[x][y].get() == nullptr)
-        {
-            // create fog of war sprite
-            oxygine::spColorRectSprite sprite = MemoryManagement::create<oxygine::ColorRectSprite>();
-            sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
-            sprite->setColor(fogOfWarColor);
-            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::FogFields));
-            sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
-            m_fogMaster->addChild(sprite);
-            m_FogSprites[x][y] = sprite;
-        }
-    }
-    else if (m_FogSprites[x][y].get() != nullptr)
-    {
-        m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y].reset();
-    }
-}
-
-void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QColor fogOfMistColor, QColor fogOfWarColor)
+void GameRules::createFieldFog(qint32 x, qint32 y, Player* pPlayer, QColor fogOfMistColor, QColor fogOfWarColor)
 {
     
     GameEnums::VisionType visible = pPlayer->getFieldVisibleType(x, y);
@@ -1113,7 +992,8 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
     if (pUnit != nullptr)
     {
         showHideStealthUnit(pPlayer, pUnit);
-        if (visible != GameEnums::VisionType_Clear)
+        if (visible != GameEnums::VisionType_Clear &&
+            visible != GameEnums::VisionType_Mist)
         {
             pUnit->setUnitVisible(false, pPlayer);
         }
@@ -1208,8 +1088,7 @@ void GameRules::showHideStealthUnit(Player* pPlayer, Unit* pUnit)
             pUnit->setUnitVisible(true, pPlayer);
             break;
         }
-    }
-    
+    }    
 }
 
 qint32 GameRules::getStartWeather() const

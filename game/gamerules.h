@@ -598,34 +598,12 @@ public:
      */
     Q_INVOKABLE void createFogVision();
     /**
-     * @brief createFieldFogClear
-     * @param x
-     * @param y
-     * @param pPlayer
-     */
-    Q_INVOKABLE void createFieldFogClear(qint32 x, qint32 y, Player* pPlayer);
-    /**
-     * @brief createFieldFogWar
-     * @param x
-     * @param y
-     * @param pPlayer
-     */
-    Q_INVOKABLE void createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fogOfWarColor = QColor(70, 70, 70, 100));
-    /**
      * @brief createFieldFogShrouded
      * @param x
      * @param y
      * @param pPlayer
      */
-    Q_INVOKABLE void createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QColor fogOfMistColor = QColor(180, 180, 180, 100), QColor fogOfWarColor = QColor(70, 70, 70, 100));
-    /**
-     * @brief createFieldFogMist
-     * @param x
-     * @param y
-     * @param pPlayer
-     * @param fogOfMistColor
-     */
-    Q_INVOKABLE void createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor fogOfMistColor = QColor(180, 180, 180, 100));
+    Q_INVOKABLE void createFieldFog(qint32 x, qint32 y, Player* pPlayer, QColor fogOfMistColor = QColor(180, 180, 180, 100), QColor fogOfWarColor = QColor(70, 70, 70, 100));
     /**
      * @brief showHideStealthUnit
      * @param pPlayer
