@@ -626,7 +626,7 @@ public:
      * @brief updatePlayerVision updates the current vision of this player.
      * @brief reduces the timer for vision created for several turns
      */
-    Q_INVOKABLE void updatePlayerVision(bool reduceTimer = false);
+    Q_INVOKABLE void updatePlayerVision(bool reduceTimer = false, bool forceVisionReset = false);
     /**
      * @brief addVisionField
      * @param x

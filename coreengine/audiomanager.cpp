@@ -27,7 +27,6 @@ AudioManager::AudioManager(bool noAudio)
 #ifdef AUDIOSUPPORT
       m_audioOutput(this),
 #endif
-      m_positionChangedTimer(this),
       m_noAudio(noAudio)
 
 {
@@ -85,8 +84,6 @@ void AudioManager::stopAudio()
             m_player->m_player.stop();
         }
         m_soundCaches.clear();
-        m_positionChangedTimer.disconnect();
-        m_positionChangedTimer.stop();
         disconnect();
     }
     else
@@ -118,13 +115,7 @@ void AudioManager::initAudio()
             m_audioOutput.setDevice(m_audioDevice);
             createPlayer();
             SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getInstance()->getMusicVolume())));
-            m_positionChangedTimer.setInterval(1);
-            m_positionChangedTimer.setSingleShot(false);
-            connect(&m_positionChangedTimer, &QTimer::timeout, this, [this]()
-            {
-                SlotCheckMusicEnded(m_player->m_player.position());
-            });
-            m_positionChangedTimer.start();
+            connect(&m_player->m_player, &QMediaPlayer::positionChanged, this, &AudioManager::SlotCheckMusicEnded);
         }
         else
         {

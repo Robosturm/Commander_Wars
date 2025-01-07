@@ -130,7 +130,6 @@ GameEnums::VisionType Player::getDefaultClearVisionType(GameEnums::Fog mode) con
     case GameEnums::Fog::Fog_OfWar:
     {
         return GameEnums::VisionType_Fogged;
-        break;
     }
     case GameEnums::Fog::Fog_OfShroud:
     {
@@ -1192,7 +1191,7 @@ const QImage &Player::getColorTable() const
 }
 #endif
 
-void Player::updatePlayerVision(bool reduceTimer)
+void Player::updatePlayerVision(bool reduceTimer, bool forceVisionReset)
 {
     // only update visual stuff if needed
     qint32 width = m_pMap->getMapWidth();
@@ -1207,7 +1206,7 @@ void Player::updatePlayerVision(bool reduceTimer)
     {
         for (qint32 y = 0; y < heigth; y++)
         {
-            bool requiresReset = false;
+            bool requiresReset = forceVisionReset;
             if (reduceTimer && m_FogVisionFields[x][y].m_duration > 0)
             {
                 requiresReset = true;
@@ -1216,7 +1215,11 @@ void Player::updatePlayerVision(bool reduceTimer)
             qint32 duration = m_FogVisionFields[x][y].m_duration;
             if (duration <= 0 && requiresReset)
             {
-                m_FogVisionFields[x][y].m_visionType = getDefaultClearVisionType(m_pMap->getGameRules()->getFogMode());
+                if (m_FogVisionFields[x][y].m_visionType != GameEnums::VisionType::VisionType_Shrouded)
+                {
+                    auto fog = getDefaultClearVisionType(m_pMap->getGameRules()->getFogMode());
+                    m_FogVisionFields[x][y].m_visionType = fog;
+                }
                 m_FogVisionFields[x][y].m_duration = 0;
                 m_FogVisionFields[x][y].m_directView = false;
             }

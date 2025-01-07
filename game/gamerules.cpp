@@ -930,6 +930,10 @@ void GameRules::setFogMode(const GameEnums::Fog FogMode)
         FogMode <= GameEnums::Fog::Fog_OfMist)
     {
         m_FogMode = FogMode;
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            m_pMap->getPlayer(i)->updatePlayerVision(false, true);
+        }
     }
 }
 
