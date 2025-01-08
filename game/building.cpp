@@ -771,12 +771,12 @@ QStringList Building::getConstructionList()
             Player* pPlayer = m_pMap->getPlayer(i);
             if (pPlayer == m_pOwner)
             {
-                coUnits = m_pOwner->getCOUnits(this);
+                coUnits += m_pOwner->getCOUnits(this);
             }
             else if (pPlayer != nullptr &&
                      m_pOwner->isEnemy(pPlayer))
             {
-                coUnits = m_pOwner->getEnemyCOUnits(this);
+                coUnits += m_pOwner->getEnemyCOUnits(this);
             }
         }
     }
@@ -784,13 +784,16 @@ QStringList Building::getConstructionList()
     {
         for (auto unitId : coUnits)
         {
+            if (!unitId.startsWith("-"))
+            {
+                buildList.append(unitId);
+            }
+        }
+        for (auto unitId : coUnits)
+        {
             if (unitId.startsWith("-"))
             {
                 buildList.removeAll(unitId.replace("-", ""));
-            }
-            else
-            {
-                buildList.append(unitId);
             }
         }
     }
