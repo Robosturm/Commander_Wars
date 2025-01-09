@@ -1206,14 +1206,12 @@ void Player::updatePlayerVision(bool reduceTimer, bool forceVisionReset)
     {
         for (qint32 y = 0; y < heigth; y++)
         {
-            bool requiresReset = forceVisionReset;
             if (reduceTimer && m_FogVisionFields[x][y].m_duration > 0)
             {
-                requiresReset = true;
                 m_FogVisionFields[x][y].m_duration -= 1;
             }
             qint32 duration = m_FogVisionFields[x][y].m_duration;
-            if (duration <= 0 || requiresReset)
+            if (duration <= 0 || forceVisionReset)
             {
                 if (m_FogVisionFields[x][y].m_visionType != GameEnums::VisionType::VisionType_Shrouded)
                 {
