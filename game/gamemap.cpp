@@ -2003,7 +2003,8 @@ void GameMap::startGame()
         if (QFile::exists(Settings::getInstance()->getUserPath() + mod + "/scripts/mapstart.js"))
         {
             pInterpreter->openScript(Settings::getInstance()->getUserPath() + mod + "/scripts/mapstart.js", true);
-            pInterpreter->doFunction("MapStart", "gameStart");
+
+            pInterpreter->doFunction("MapStart", "gameStart", QJSValueList({m_jsThis}));
         }
     }
     if (Settings::getInstance()->getSyncAnimations())

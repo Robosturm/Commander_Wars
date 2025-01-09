@@ -1213,7 +1213,7 @@ void Player::updatePlayerVision(bool reduceTimer, bool forceVisionReset)
                 m_FogVisionFields[x][y].m_duration -= 1;
             }
             qint32 duration = m_FogVisionFields[x][y].m_duration;
-            if (duration <= 0 && requiresReset)
+            if (duration <= 0 || requiresReset)
             {
                 if (m_FogVisionFields[x][y].m_visionType != GameEnums::VisionType::VisionType_Shrouded)
                 {
