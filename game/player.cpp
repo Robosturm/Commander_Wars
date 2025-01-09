@@ -1944,7 +1944,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, qreal ownUnitValue,
         }
     }
 
-    if (targets.size() >= 0)
+    if (targets.size() > 0)
     {
         return targets[GlobalUtils::randInt(0, targets.size() - 1)];
     }
@@ -1999,7 +1999,7 @@ QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highes
             }
         }
     }
-    if (targets.size() >= 0)
+    if (targets.size() > 0)
     {
         return targets[GlobalUtils::randInt(0, targets.size() - 1)];
     }
