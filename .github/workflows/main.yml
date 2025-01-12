@@ -239,6 +239,14 @@ jobs:
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --target all -j4
 
+    - name: Setup (Sign APK)
+      if: matrix.target == 'android' && github.repository == 'Robosturm/Commander_Wars'
+      run: echo "SIGN_FLAG=--sign" >> $GITHUB_ENV
+
+    - name: Setup (Do not sign APK)
+      if: matrix.target == 'android' && github.repository != 'Robosturm/Commander_Wars'
+      run: echo "SIGN_FLAG=" >> $GITHUB_ENV
+
     - name: Bundle APK
       if: matrix.target == 'android'
       env:
@@ -247,14 +255,20 @@ jobs:
         QT_ANDROID_KEYSTORE_STORE_PASS: ${{secrets.ANDROIDSTOREPASS}}
         QT_ANDROID_KEYSTORE_KEY_PASS: ${{secrets.ANDROIDSTOREPASS}}
         JAVA_HOME: ${{env.JAVA_PATH}}
-      run:  |
+      run: |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
         --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
         --output ${{env.workspace}}/build/android-build \
         --android-platform android-34 \
         --gradle \
         --release \
-        --sign
+        $SIGN_FLAG
+
+    - name: Minor hack for Android APK
+      if: matrix.target == 'android' && github.repository != 'Robosturm/Commander_Wars'
+      run: |
+        mv "${{github.workspace}}/build/android-build/build/outputs/apk/release/android-build-release-unsigned.apk" \
+           "${{github.workspace}}/build/android-build/build/outputs/apk/release/android-build-release-signed.apk"
 
     - name: Build linux
       if: matrix.linuxFlag == 'linux'
