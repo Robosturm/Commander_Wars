@@ -41,7 +41,8 @@ rm -rfv distribution/AppDir ||:
 cmake . -DCMAKE_BUILD_TYPE=Release "$@" \
     -DCMAKE_INSTALL_PREFIX:PATH=/usr \
     -DOPENSSL_USE_STATIC_LIBS:BOOL=OFF \
-    -DUSEAPPCONFIGPATH:BOOL=ON
+    -DUSEAPPCONFIGPATH:BOOL=ON \
+    -DDEPLOY_RESOURCES_AS_FOLDER:BOOL=ONf
 make -j"$(nproc)" install DESTDIR=distribution/AppDir
 
 EXCLUDES_LIST="

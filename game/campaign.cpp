@@ -11,6 +11,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/vfs.h"
 
 const char* const Campaign::scriptName = "campaignScript";
 
@@ -71,38 +72,38 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
         files.removeAt(0);
         for (qint32 i = 0; i < files.size(); ++i)
         {
-            if (QFile::exists(Settings::getInstance()->getUserPath() + folder + files[i]))
+            QString path = Vfs::find(folder + files[i]);
+            if (QFile::exists(path))
             {
-                files[i] = Settings::getInstance()->getUserPath() + folder + files[i];
-                CONSOLE_PRINT("adding campaign map: " + Settings::getInstance()->getUserPath() + folder + files[i], GameConsole::eDEBUG);
-            }
-            else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + folder + files[i]))
-            {
-                CONSOLE_PRINT("adding campaign map: " + QString(oxygine::Resource::RCC_PREFIX_PATH) + folder + files[i], GameConsole::eDEBUG);
-                files[i] = oxygine::Resource::RCC_PREFIX_PATH + folder + files[i];
+                files[i] = path;
+                CONSOLE_PRINT("adding campaign map: " + path, GameConsole::eDEBUG);
             }
         }
-        addDeveloperMaps(Settings::getInstance()->getUserPath(), folder, files);
-        addDeveloperMaps(oxygine::Resource::RCC_PREFIX_PATH, folder, files);
+
+        QStringList searchPath = Vfs::createSearchPath(folder, false);
+        for (qint32 i = 0; i < searchPath.size(); i++)
+        {
+            addDeveloperMaps(searchPath[i], files);
+        }
     }
     return CampaignMapInfo(folder, files);
 }
 
-void Campaign::addDeveloperMaps(const QString & prefix, const QString & folder, QStringList & files)
+void Campaign::addDeveloperMaps(const QString & prefix, QStringList & files)
 {
     if (GameConsole::getDeveloperMode())
     {
         QStringList filter;
         filter << "*.map";
-        QDirIterator dirIter(prefix + folder, filter, QDir::Files, QDirIterator::Subdirectories);
+        QDirIterator dirIter(prefix, filter, QDir::Files, QDirIterator::Subdirectories);
         while (dirIter.hasNext())
         {
             dirIter.next();
             QString file = dirIter.fileName();
             if (!files.contains(file))
             {
-                CONSOLE_PRINT("adding campaign folder map: " + prefix + folder + file, GameConsole::eDEBUG);
-                files.append(prefix + folder + file);
+                CONSOLE_PRINT("adding campaign folder map: " + prefix + file, GameConsole::eDEBUG);
+                files.append(prefix + file);
             }
         }
     }

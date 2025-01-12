@@ -636,6 +636,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/gameversion.h coreengine/gameversion.cpp
     coreengine/refobject.h
     coreengine/jsthis.h coreengine/jsthis.cpp
+    coreengine/vfs.h coreengine/vfs.cpp
 
     # network engine
     network/smtpmailsender.h network/smtpmailsender.cpp
@@ -955,7 +956,8 @@ if (NOT DEPLOY_RESOURCES_AS_FOLDER)
         )
     endif()
 else()
-    message("Deploying resources")
+    message("Deploying resources as folder")
+    add_definitions(-DDEPLOY_RESOURCES_AS_FOLDER)
 endif()
 
 qt_add_resources(${PROJECT_NAME}_Resource_SRCS "core.qrc") # These files are always deployed using QRCs.
@@ -1045,6 +1047,7 @@ set(AppHeadersCxx
     coreengine/scriptvariables.h
     coreengine/settings.h
     coreengine/userdata.h
+    coreengine/vfs.h
     game/building.h
     game/co.h
     game/gameaction.h
@@ -1345,7 +1348,8 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(TARGETS ${PROJECT_NAME}
         RUNTIME         DESTINATION         "."
         BUNDLE          DESTINATION         "."
-        LIBRARY         DESTINATION         ".")
+        LIBRARY         DESTINATION         "."
+    )
 
     install(DIRECTORY templates DESTINATION "/")
     if (DEPLOY_RESOURCES_AS_FOLDER)
@@ -1375,7 +1379,18 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     install(TARGETS ${PROJECT_NAME}
         RUNTIME         DESTINATION         "bin"
         BUNDLE          DESTINATION         "bin"
-        LIBRARY         DESTINATION         "bin")
+        LIBRARY         DESTINATION         "bin"
+    )
+
+    if (DEPLOY_RESOURCES_AS_FOLDER)
+        message("Installing resources as folder")
+        install(DIRECTORY resources DESTINATION             "share/commander_wars")
+        install(DIRECTORY maps DESTINATION                  "share/commander_wars")
+        install(DIRECTORY customTerrainImages DESTINATION   "share/commander_wars")
+        install(DIRECTORY mods DESTINATION                  "share/commander_wars")
+        install(DIRECTORY savegames DESTINATION             "share/commander_wars")
+        install(DIRECTORY data DESTINATION                  "share/commander_wars")
+    endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"

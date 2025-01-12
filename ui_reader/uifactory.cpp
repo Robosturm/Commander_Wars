@@ -10,6 +10,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/vfs.h"
 
 #include "objects/base/label.h"
 #include "objects/base/checkbox.h"
@@ -159,14 +160,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
             m_dropDownPlayer->init();
         }
         m_creationCount = 0;
-        QStringList uiFiles;
-        // make sure to overwrite existing js stuff
-        for (qint32 i = Settings::getInstance()->getMods().size() - 1; i >= 0; --i)
-        {
-            uiFiles.append(Settings::getInstance()->getMods().at(i) + "/" + uiXml);
-        }
-        uiFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/" + uiXml);
-        uiFiles.append("resources/" + uiXml);
+        QStringList uiFiles = Vfs::createSearchPath("resources/" + uiXml);
         m_lastCoordinates.setRect(0, 0, 0, 0);
         for (const auto & uiFile : std::as_const(uiFiles))
         {

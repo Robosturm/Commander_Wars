@@ -6,6 +6,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/audiomanager.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/vfs.h"
 
 #include "spritingsupport/spritecreator.h"
 
@@ -47,11 +48,7 @@ void GameAnimationCapture::addBuildingSprite(const QString spriteID, Player* sta
             m_buildingResAnim = MemoryManagement::create<oxygine::SingleResAnim>();
             m_captureBuildingResAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         }
-        QString path = Settings::getInstance()->getUserPath() + pAnim->getResPath();
-        if (!QFile::exists(path))
-        {
-            path = oxygine::Resource::RCC_PREFIX_PATH + pAnim->getResPath();
-        }
+        QString path = Vfs::find(pAnim->getResPath());
         if (QFile::exists(path))
         {
             QImage preCaptureImage(path);
@@ -64,7 +61,7 @@ void GameAnimationCapture::addBuildingSprite(const QString spriteID, Player* sta
         }
         else
         {
-            CONSOLE_PRINT("Unable to locate file: " + path, GameConsole::eDEBUG);
+            CONSOLE_PRINT("Unable to locate file: " + pAnim->getResPath(), GameConsole::eDEBUG);
         }
     }
     else

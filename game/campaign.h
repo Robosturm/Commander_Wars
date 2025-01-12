@@ -73,7 +73,7 @@ public:
      * @param folder
      * @param files
      */
-    void addDeveloperMaps(const QString & prefix, const QString & folder, QStringList & files);
+    void addDeveloperMaps(const QString & prefix, QStringList & files);
     /**
      * @brief getCampaignMapData
      * @param pCampaignMapData

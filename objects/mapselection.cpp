@@ -4,6 +4,7 @@
 #include "coreengine/userdata.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/gameconsole.h"
+#include "coreengine/vfs.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -113,9 +114,7 @@ void MapSelection::changeFolder(QString folder)
     }
     newFolder = QDir(newFolder).absolutePath();
     newFolder = GlobalUtils::makePathRelative(newFolder);
-    QStringList searchPaths;
-    searchPaths.append(Settings::getInstance()->getUserPath() + newFolder);
-    searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + newFolder);
+    QStringList searchPaths = Vfs::createSearchPathRev(newFolder);
     CONSOLE_PRINT("MapSelection::changeFolder. Relative Path: " + newFolder, GameConsole::eDEBUG);
     m_Files.clear();
     QStringList filterList;
@@ -188,8 +187,7 @@ void MapSelection::addFiles(const QString & newFolder, const QStringList & searc
             {
                 QString currentPath = infoItem.canonicalFilePath();
                 QDirIterator iter(path, filterList, QDir::Files, QDirIterator::Subdirectories);
-                QDirIterator iter2(oxygine::Resources::RCC_PREFIX_PATH + item, filterList, QDir::Files, QDirIterator::Subdirectories);
-                if (!iter.hasNext() && !iter2.hasNext())
+                if (!iter.hasNext())
                 {
                     continue;
                 }

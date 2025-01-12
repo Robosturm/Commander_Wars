@@ -493,7 +493,7 @@ void EditorMenue::showSaveMap()
     QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
+    connect(fileDialog.get(), &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     setFocused(false);
 }

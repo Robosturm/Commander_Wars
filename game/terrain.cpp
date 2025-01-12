@@ -5,6 +5,7 @@
 
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/vfs.h"
 
 #include "resource_management/terrainmanager.h"
 #include "resource_management/gameanimationmanager.h"
@@ -682,17 +683,10 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
         addChild(pSprite);
         m_terrainSpriteName = spriteID;
         QImage img;
-        if (QFile::exists(m_terrainSpriteName))
+        QString imgPath = Vfs::find(m_terrainSpriteName);
+        if (QFile::exists(imgPath))
         {
-            img = QImage(m_terrainSpriteName);
-        }
-        else if (QFile::exists(Settings::getInstance()->getUserPath() + m_terrainSpriteName))
-        {
-            img = QImage(Settings::getInstance()->getUserPath() + m_terrainSpriteName);
-        }
-        else
-        {
-            img = QImage(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
+            img = QImage(imgPath);
         }
         oxygine::spSingleResAnim pAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1);
@@ -717,9 +711,7 @@ bool Terrain::customSpriteExists() const
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(m_terrainSpriteName, oxygine::error_policy::ep_ignore_error);
     return pAnim != nullptr ||
-                    QFile::exists(m_terrainSpriteName) ||
-                    QFile::exists(Settings::getInstance()->getUserPath() + m_terrainSpriteName) ||
-                    QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
+                    QFile::exists(Vfs::find(m_terrainSpriteName));
 }
 
 void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs, bool applyRulesPalette)

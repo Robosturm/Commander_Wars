@@ -8,6 +8,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/vfs.h"
 
 #include "menue/basegamemenu.h"
 
@@ -62,19 +63,7 @@ void GameScript::init()
     Interpreter* pInterpreter = Interpreter::getInstance();
     if (!m_scriptFile.isEmpty())
     {
-        QFile file;
-        if (QFile::exists(m_scriptFile))
-        {
-            file.setFileName(m_scriptFile);
-        }
-        else if (QFile::exists(Settings::getInstance()->getUserPath() + m_scriptFile))
-        {
-            file.setFileName(Settings::getInstance()->getUserPath() + m_scriptFile);
-        }
-        else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_scriptFile))
-        {
-            file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + m_scriptFile);
-        }
+        QFile file = Vfs::find(m_scriptFile);
         if (file.exists())
         {
             CONSOLE_PRINT("Loading map script " + file.fileName(), GameConsole::eDEBUG);

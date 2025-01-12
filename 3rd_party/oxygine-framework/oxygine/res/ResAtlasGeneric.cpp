@@ -7,6 +7,7 @@
 
 #include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
+#include "coreengine/vfs.h"
 
 namespace oxygine
 {
@@ -65,13 +66,10 @@ namespace oxygine
             qint32 columns = 0;
             qint32 rows = 0;
             QImage img;
-            if (QFile::exists(Settings::getInstance()->getUserPath() + walker.getPath("file")))
+            QString imgFilePath = Vfs::find(walker.getPath("file"));
+            if (QFile::exists(imgFilePath))
             {
-                img = QImage(Settings::getInstance()->getUserPath() + walker.getPath("file"));
-            }
-            else if (QFile::exists(RCC_PREFIX_PATH + walker.getPath("file")))
-            {
-                img = QImage(RCC_PREFIX_PATH + walker.getPath("file"));
+                img = QImage(imgFilePath);
             }
             else
             {

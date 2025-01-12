@@ -2,6 +2,7 @@
 #include <QFileInfo>
 #include <QDirIterator>
 #include <QDateTime>
+#include <QSet>
 
 #include <cmath>
 
@@ -10,6 +11,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
+#include "coreengine/vfs.h"
 
 #include "game/gamemap.h"
 
@@ -333,7 +335,7 @@ QStringList GlobalUtils::getFiles(const QString folder, const QStringList filter
 {
     QStringList ret;
 
-    QStringList paths = {oxygine::Resource::RCC_PREFIX_PATH, Settings::getInstance()->getUserPath()};
+    QStringList paths = Vfs::createSearchPath("", false);
     for (const auto & path : std::as_const(paths))
     {
         QDirIterator dirIter(path + folder, filter, QDir::Files, QDirIterator::Subdirectories);
@@ -483,35 +485,7 @@ QString GlobalUtils::makePathRelative(QString file, bool full)
 
 QFileInfoList GlobalUtils::getInfoList(const QString & folder, const QStringList & list)
 {
-    QFileInfoList infoList;
-    infoList.append(QDir(Settings::getInstance()->getUserPath() + folder).entryInfoList(QDir::Dirs));
-    auto virtList = QDir(oxygine::Resource::RCC_PREFIX_PATH + folder).entryInfoList(QDir::Dirs);
-    for (const auto & item : std::as_const(virtList))
-    {
-        bool found = false;
-        for (const auto & item2 : std::as_const(infoList))
-        {
-            if (item2.baseName() == item.baseName())
-            {
-                found = true;
-                break;
-            }
-        }
-        if (!found)
-        {
-            infoList.append(item);
-        }
-    }
-    if (list.length() > 0)
-    {
-        QString path = Settings::getInstance()->getUserPath() + folder;
-        path.replace("//", "/");
-        infoList.append(QDir(path).entryInfoList(list, QDir::Files));
-        path = oxygine::Resource::RCC_PREFIX_PATH + folder;
-        path.replace("//", "/");
-        infoList.append(QDir(path).entryInfoList(list, QDir::Files));
-    }
-    return infoList;
+    return Vfs::list(folder, list);
 }
 
 QUrl GlobalUtils::getUrlForFile(const QString & file)
