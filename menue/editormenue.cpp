@@ -2198,7 +2198,7 @@ void EditorMenue::exitEditor()
 void EditorMenue::autosave()
 {
     CONSOLE_PRINT("EditorMenue::autosave", GameConsole::eDEBUG);
-    QString filename = "maps/autosave.map";
+    QString filename = Settings::getInstance()->getUserPath() + "maps/autosave.map";
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
