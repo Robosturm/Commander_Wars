@@ -598,7 +598,7 @@ void Settings::setTouchScreen(bool newTouchScreen)
     m_touchScreen = newTouchScreen;
 }
 
-QString Settings::getUserPath()
+QString& Settings::getUserPath()
 {
     return m_userPath;
 }

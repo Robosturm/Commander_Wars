@@ -17,7 +17,7 @@ const char* const ROOT = "::::";
 
 FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile, bool preview, QString acceptButtonName)
     : m_preview(preview),
-      m_pathPrefix(Settings::getInstance()->getUserPath()),
+      m_pathPrefix(Settings::userPath()),
       m_isSaveDialog(isSaveDialog)
 {
 #ifdef GRAPHICSUPPORT
@@ -80,7 +80,7 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
     {
         if (m_isSaveDialog &&
             (QFile::exists(m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText()) ||
-             QFile::exists(Settings::getInstance()->getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText())))
+             QFile::exists(Settings::userPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText())))
         {
             emit sigShowOverwriteWarning();
         }
@@ -281,7 +281,7 @@ void FileDialog::showFolder(QString folder)
                 }
                 else
                 {
-                    m_pathPrefix = Settings::getInstance()->getUserPath();
+                    m_pathPrefix = Settings::userPath();
                 }
                 pCurrentFile->setCurrentText(file);
             });
@@ -349,9 +349,9 @@ void FileDialog::deleteItem()
     {
         QFile::remove(m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText());
     }
-    else if (QFile::exists(Settings::getInstance()->getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText()))
+    else if (QFile::exists(Settings::userPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText()))
     {
-        QFile::remove(Settings::getInstance()->getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText());
+        QFile::remove(Settings::userPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText());
     }
     showFolder(m_CurrentFolder->getCurrentText());
     m_focused = true;

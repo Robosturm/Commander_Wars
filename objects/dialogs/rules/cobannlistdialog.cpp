@@ -20,7 +20,7 @@
 static const char* const FILEPATH = "data/cobannlist/";
 
 static QString getFilePath() {
-    return Settings::getInstance()->getUserPath() + FILEPATH;
+    return Settings::userPath() + FILEPATH;
 }
 
 COBannListDialog::COBannListDialog(QStringList cobannlist)

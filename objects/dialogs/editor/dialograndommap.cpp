@@ -398,7 +398,7 @@ void DialogRandomMap::showGeneratorSelection()
 {    
     QStringList wildcards;
     wildcards.append("*.js");
-    QString path = Settings::getInstance()->getUserPath() + "data/randomMaps";
+    QString path = Settings::userPath() + "data/randomMaps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);    
@@ -411,7 +411,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
     QFile file(filename);
     if (!file.exists())
     {
-        file.setFileName(Settings::getInstance()->getUserPath() + filename);
+        file.setFileName(Settings::userPath() + filename);
         if (!file.exists())
         {
             file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + filename);

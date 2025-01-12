@@ -303,6 +303,9 @@ public:
 
     virtual ~Settings() = default;
     static Settings* getInstance();
+    static QString& userPath() {
+        return getInstance()->getUserPath();
+    }
 
     void setup();
     QString getActiveUserPath();
@@ -411,7 +414,7 @@ public:
     Q_INVOKABLE void setAutoMoveCursor(bool newAutoMoveCursor);
     Q_INVOKABLE bool getShowDetailedBattleForcast();
     Q_INVOKABLE void setShowDetailedBattleForcast(bool newShowDetailedBattleForcast);
-    Q_INVOKABLE QString getUserPath();
+    Q_INVOKABLE QString& getUserPath();
     Q_INVOKABLE QString getTempPath();
     Q_INVOKABLE QTemporaryDir newTempDir();
     Q_INVOKABLE void clearTemp();

@@ -182,7 +182,7 @@ void CampaignEditor::showAddCampaign()
 {    
     QStringList wildcards;
     wildcards.append("*.map");
-    QString path = Settings::getInstance()->getUserPath() + m_CampaignFolder->getCurrentText();
+    QString path = Settings::userPath() + m_CampaignFolder->getCurrentText();
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Add"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);    
@@ -192,7 +192,7 @@ void CampaignEditor::showSaveCampaign()
 {    
     QStringList wildcards;
     wildcards.append("*.jsm");
-    QString path = Settings::getInstance()->getUserPath() + "maps/";
+    QString path = Settings::userPath() + "maps/";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, m_Name->getCurrentText(), false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);    
@@ -202,7 +202,7 @@ void CampaignEditor::showLoadCampaign()
 {    
     QStringList wildcards;
     wildcards.append("*.jsm");
-    QString path = Settings::getInstance()->getUserPath() + "maps/";
+    QString path = Settings::userPath() + "maps/";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);    
@@ -236,7 +236,7 @@ QString CampaignEditor::getMapName(QString filename)
 
 void CampaignEditor::showSelectFolder()
 {    
-    QString path = Settings::getInstance()->getUserPath() + "maps";
+    QString path = Settings::userPath() + "maps";
     spFolderDialog folderDialog = MemoryManagement::create<FolderDialog>(path);
     addChild(folderDialog);
     connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, &CampaignEditor::selectFolder, Qt::QueuedConnection);    

@@ -19,10 +19,10 @@ static const char* const BANN_FILEPATH = "data/perkbannlist/";
 
 
 static QString getFilePath() {
-    return Settings::getInstance()->getUserPath() + SELECT_FILEPATH;
+    return Settings::userPath() + SELECT_FILEPATH;
 }
 static QString getBanFilePath() {
-    return Settings::getInstance()->getUserPath() + BANN_FILEPATH;
+    return Settings::userPath() + BANN_FILEPATH;
 }
 
 PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool banning, QStringList hiddenList)

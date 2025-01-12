@@ -78,7 +78,7 @@ void Userdata::storeUser()
         if (!Settings::getInstance()->getUsername().isEmpty())
         {
             CONSOLE_PRINT("Userdata::storeUser", GameConsole::eDEBUG);
-            QFile user(Settings::getInstance()->getUserPath() + Settings::getInstance()->getUsername() + ".dat");
+            QFile user(Settings::userPath() + Settings::getInstance()->getUsername() + ".dat");
             user.open(QIODevice::WriteOnly | QIODevice::Truncate);
             QDataStream pStream(&user);
             pStream.setVersion(QDataStream::Version::Qt_6_5);
@@ -91,7 +91,7 @@ void Userdata::storeUser()
 void Userdata::changeUser()
 {
     reset();
-    QFile user(Settings::getInstance()->getUserPath() + Settings::getInstance()->getUsername() + ".dat");
+    QFile user(Settings::userPath() + Settings::getInstance()->getUsername() + ".dat");
     if (user.exists())
     {
         CONSOLE_PRINT("Userdata::changeUser", GameConsole::eDEBUG);
@@ -453,7 +453,7 @@ ScriptVariableFile* Userdata::getScriptVariableFile(const QString & filename)
         }
     }
     spScriptVariableFile pScriptVariableFile = MemoryManagement::create<ScriptVariableFile>(filename);
-    QFile file(Settings::getInstance()->getUserPath() + filename);
+    QFile file(Settings::userPath() + filename);
     if (file.exists())
     {
         file.open(QIODevice::ReadOnly);

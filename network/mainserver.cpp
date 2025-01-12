@@ -88,8 +88,8 @@ void MainServer::initDatabase()
     {
         static QSqlDatabase database = QSqlDatabase::addDatabase(DRIVER);
         m_serverData = &database;
-        QString path = Settings::getInstance()->getUserPath() + "/commanderWars.db";
-        if (Settings::getInstance()->getUserPath().isEmpty())
+        QString path = Settings::userPath() + "/commanderWars.db";
+        if (Settings::userPath().isEmpty())
         {
             path = QCoreApplication::applicationDirPath() + "/commanderWars.db";
         }
@@ -1247,7 +1247,7 @@ bool MainServer::validHostRequest(QStringList mods)
     for (auto &mod : mods)
     {
         if (!QFile::exists(mod + "/mod.txt") &&
-            !QFile::exists(Settings::getInstance()->getUserPath() + mod + "/mod.txt") &&
+            !QFile::exists(Settings::userPath() + mod + "/mod.txt") &&
             !QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + mod + "/mod.txt"))
         {
             return false;

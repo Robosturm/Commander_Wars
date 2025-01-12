@@ -629,22 +629,22 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
         QString date = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
         if (Settings::getInstance()->getServer())
         {
-            file.setFileName((Settings::getInstance()->getUserPath() + "console-" + date + ".log"));
+            file.setFileName((Settings::userPath() + "console-" + date + ".log"));
         }
         else
         {
-            file.setFileName((Settings::getInstance()->getUserPath() + "console" + Settings::getInstance()->getUpdateStep()+ ".log"));
+            file.setFileName((Settings::userPath() + "console" + Settings::getInstance()->getUpdateStep()+ ".log"));
         }
         if (Settings::getInstance()->getAiSlave())
         {
-            file.setFileName(Settings::getInstance()->getUserPath() + "consoleAiSlave.log");
+            file.setFileName(Settings::userPath() + "consoleAiSlave.log");
             file.open(QIODevice::WriteOnly);
         }
         Mainapp* pApp = Mainapp::getInstance();
         if (pApp->getSlave() && pApp->getCreateSlaveLogs())
         {
             QString slaveName = Settings::getInstance()->getSlaveServerName();
-            file.setFileName(Settings::getInstance()->getUserPath() + slaveName + "-" + date + ".log");
+            file.setFileName(Settings::userPath() + slaveName + "-" + date + ".log");
             file.open(QIODevice::WriteOnly);
         }
         else if (!pApp->getSlave())

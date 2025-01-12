@@ -2220,7 +2220,7 @@ void GameMenue::saveGame()
 {    
     QStringList wildcards;
     wildcards.append("*" + getSaveFileEnding());
-    QString path = Settings::getInstance()->getUserPath() + "savegames";
+    QString path = Settings::userPath() + "savegames";
     spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, [this](QString filename)
@@ -2257,7 +2257,7 @@ void GameMenue::showSaveAndExitGame()
     {
         wildcards.append("*.sav");
     }
-    QString path = Settings::getInstance()->getUserPath() + "savegames";
+    QString path = Settings::userPath() + "savegames";
     spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);
@@ -2279,7 +2279,7 @@ void GameMenue::autoSaveMap()
     if (Settings::getInstance()->getAutoSavingCycle() > 0)
     {
         CONSOLE_PRINT("GameMenue::autoSaveMap()", GameConsole::eDEBUG);
-        QString path = GlobalUtils::getNextAutosavePath(Settings::getInstance()->getUserPath() + "savegames/" + m_pMap->getMapName() + "_autosave_", getSaveFileEnding(), Settings::getInstance()->getAutoSavingCycle());
+        QString path = GlobalUtils::getNextAutosavePath(Settings::userPath() + "savegames/" + m_pMap->getMapName() + "_autosave_", getSaveFileEnding(), Settings::getInstance()->getAutoSavingCycle());
         saveMap(path, false);
     }
 }
@@ -2571,19 +2571,19 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
         {
             if (cur == Settings::getInstance()->getKey_quicksave1())
             {
-                saveMap(Settings::getInstance()->getUserPath() + "savegames/quicksave1.sav");
+                saveMap(Settings::userPath() + "savegames/quicksave1.sav");
             }
             else if (cur == Settings::getInstance()->getKey_quicksave2())
             {
-                saveMap(Settings::getInstance()->getUserPath() + "savegames/quicksave2.sav");
+                saveMap(Settings::userPath() + "savegames/quicksave2.sav");
             }
             else if (cur == Settings::getInstance()->getKey_quickload1())
             {
-                emit sigLoadSaveGame(Settings::getInstance()->getUserPath() + "savegames/quicksave1.sav");
+                emit sigLoadSaveGame(Settings::userPath() + "savegames/quicksave1.sav");
             }
             else if (cur == Settings::getInstance()->getKey_quickload2())
             {
-                emit sigLoadSaveGame(Settings::getInstance()->getUserPath() + "savegames/quicksave2.sav");
+                emit sigLoadSaveGame(Settings::userPath() + "savegames/quicksave2.sav");
             }
             else
             {
@@ -2881,7 +2881,7 @@ void GameMenue::showLoadSaveGame()
 {
     QStringList wildcards;
     wildcards.append("*.sav");
-    QString path = Settings::getInstance()->getUserPath() + "savegames";
+    QString path = Settings::userPath() + "savegames";
     spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::loadSaveGame, Qt::QueuedConnection);
