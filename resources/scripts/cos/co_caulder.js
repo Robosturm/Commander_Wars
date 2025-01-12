@@ -124,16 +124,16 @@ var Constructor = function()
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
+                audio.addMusic("resources/music/cos/power_ids_dc.ogg", 0, 0);
                 break;
             case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
+                audio.addMusic("resources/music/cos/power_ids_dc.ogg", 0, 0);
                 break;
             case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 14611, 65538);
+                audio.addMusic("resources/music/cos/bh_tagpower.ogg", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/caulder.mp3", 6755, 60471)
+                audio.addMusic("resources/music/cos/caulder.ogg", 6755, 60471)
                 break;
             }
         }
