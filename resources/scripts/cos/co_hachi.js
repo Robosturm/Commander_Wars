@@ -51,7 +51,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.ogg", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/hachi.ogg", 12402, 68059);
+                audio.addMusic("resources/music/shop/hachi.ogg", 12402, 68059);
                 break;
             }
         }
