@@ -1059,7 +1059,7 @@ void Settings::setActiveMods(const QStringList activeMods)
     {
         CONSOLE_PRINT("Loaded mod: " + mod, GameConsole::eDEBUG);
         bool found = false;
-        QFile file(mod + "/mod.txt");
+        QFile file(getUserPath() + mod + "/mod.txt");
         if (file.exists())
         {
             file.open(QFile::ReadOnly);
