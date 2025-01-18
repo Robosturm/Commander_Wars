@@ -1,7 +1,6 @@
 #ifndef UNITSPRITEMANAGER_H
 #define UNITSPRITEMANAGER_H
 
-#include "game/GameEnums.h"
 #include "game/unit.h"
 
 #include "resource_management/ressourcemanagement.h"

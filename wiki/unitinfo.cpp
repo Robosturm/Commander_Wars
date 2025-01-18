@@ -20,13 +20,18 @@
 
 #include "objects/base/label.h"
 #include "objects/base/dropdownmenusprite.h"
+#include "objects/base/checkbox.h"
 
 UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     : m_pUnit(pUnit)
+    , m_pOwner(MemoryManagement::create<Player>(pUnit->getMap()))
+    , m_width(width)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("UnitInfo");
 #endif
+    m_pOwner->setColor(pUnit->getOwner()->getColor());
+    m_pOwner->init();
     Interpreter::setCppOwnerShip(this);
 
     setWidth(width);
@@ -66,7 +71,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     m_pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setPosition(width - 210, y);
-    m_pSpriteBox->setColorTable(pUnit->getOwner()->getColorTableAnim(), true);
+    m_pSpriteBox->setColorTable(m_pOwner->getColorTableAnim(), true);
     addChild(m_pSpriteBox);
 
     // load battle sprite data
@@ -384,31 +389,64 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     }
     y += 60;
 
-    if (pUnit->getWeapon1ID() != "" && pWeaponManager->exists(pUnit->getWeapon1ID()))
-    {
-        pLabel = MemoryManagement::create<oxygine::TextField>();
-        pLabel->setStyle(headerStyle);
-        pLabel->setHtmlText((tr("Weapon 1 ") + pWeaponManager->getName(pUnit->getWeapon1ID())));
-        pLabel->setPosition(width / 2 - pLabel->getTextRect().width() / 2, y);
-        addChild(pLabel);
-        y += pLabel->getTextRect().height() + 10;
-        createWeaponTable(pUnit.get(), pUnit->getWeapon1ID(), y, width);
-        y += 60;
-    }
-    if (pUnit->getWeapon2ID() != "" && pWeaponManager->exists(pUnit->getWeapon2ID()))
-    {
-        pLabel = MemoryManagement::create<oxygine::TextField>();
-        pLabel->setStyle(headerStyle);
-        pLabel->setHtmlText((tr("Weapon 2 ") + pWeaponManager->getName(pUnit->getWeapon2ID())));
-        pLabel->setPosition(width / 2 - pLabel->getTextRect().width() / 2, y);
-        addChild(pLabel);
-        y += pLabel->getTextRect().height() + 10;
-        createWeaponTable(pUnit.get(), pUnit->getWeapon2ID(), y, width);
-        y += 60;
-    }
+    pLabel = MemoryManagement::create<oxygine::TextField>();
+    pLabel->setHtmlText(tr("Show all attacks:"));
+    pLabel->setPosition(0, y);
+    addChild(pLabel);
+    auto showAllWeaponInfo = MemoryManagement::create<Checkbox>();
+    showAllWeaponInfo->setPosition(pLabel->getX() + 10 + pLabel->getTextRect().width(), y);
+    showAllWeaponInfo->setChecked(true);
+    connect(showAllWeaponInfo.get(), &Checkbox::checkChanged, this, &UnitInfo::showWeaponInfo, Qt::QueuedConnection);
+    addChild(showAllWeaponInfo);
+
+    y += 50;
+    m_weaponStartY = y;
+    y += showWeaponInfo(true);
     y += 60;
     setHeight(y);
     connect(this, &UnitInfo::sigShowLink, this, &UnitInfo::showLink, Qt::QueuedConnection);
+}
+
+qint32 UnitInfo::showWeaponInfo(bool showAll)
+{
+    Mainapp::getInstance()->pauseRendering();
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = true;
+
+    if (m_weaponInfopActor.get() != nullptr)
+    {
+        m_weaponInfopActor->detach();
+    }
+    m_weaponInfopActor = MemoryManagement::create<oxygine::Actor>();
+    m_weaponInfopActor->setY(m_weaponStartY);
+    addChild(m_weaponInfopActor);
+    qint32 y = 0;
+    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+    if (m_pUnit->getWeapon1ID() != "" && pWeaponManager->exists(m_pUnit->getWeapon1ID()))
+    {
+        auto pLabel = MemoryManagement::create<oxygine::TextField>();
+        pLabel->setStyle(headerStyle);
+        pLabel->setHtmlText((tr("Weapon 1 ") + pWeaponManager->getName(m_pUnit->getWeapon1ID())));
+        pLabel->setPosition(m_width / 2 - pLabel->getTextRect().width() / 2, y);
+        m_weaponInfopActor->addChild(pLabel);
+        y += pLabel->getTextRect().height() + 10;
+        createWeaponTable(m_pUnit.get(), m_pUnit->getWeapon1ID(), y, m_width, showAll);
+        y += 60;
+    }
+    if (m_pUnit->getWeapon2ID() != "" && pWeaponManager->exists(m_pUnit->getWeapon2ID()))
+    {
+        auto pLabel = MemoryManagement::create<oxygine::TextField>();
+        pLabel->setStyle(headerStyle);
+        pLabel->setHtmlText((tr("Weapon 2 ") + pWeaponManager->getName(m_pUnit->getWeapon2ID())));
+        pLabel->setPosition(m_width / 2 - pLabel->getTextRect().width() / 2, y);
+        m_weaponInfopActor->addChild(pLabel);
+        y += pLabel->getTextRect().height() + 10;
+        createWeaponTable(m_pUnit.get(), m_pUnit->getWeapon2ID(), y, m_width, showAll);
+        y += 60;
+    }
+    Mainapp::getInstance()->continueRendering();
+    return y;
 }
 
 void UnitInfo::loadBattleSprite(Unit* pUnit)
@@ -438,7 +476,7 @@ void UnitInfo::loadArmySelector(qint32 x, qint32 y)
     };
     spDropDownmenuSprite pDropDown = MemoryManagement::create<DropDownmenuSprite>(105, army, creator);
     pDropDown->setPosition(x, y);
-    pDropDown->setCurrentItem(m_pUnit->getOwner()->getArmy());
+    pDropDown->setCurrentItem(m_pOwner->getArmy());
     connect(pDropDown.get(), &DropDownmenuSprite::sigItemString, this, &UnitInfo::showNewBattlesprite, Qt::QueuedConnection);
     addChild(pDropDown);
 }
@@ -452,7 +490,7 @@ void UnitInfo::showNewBattlesprite(QString newArmy)
     loadBattleSprite(pUnit.get());
 }
 
-void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& y, qint32 width)
+void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& y, qint32 width, bool showAll)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -463,15 +501,45 @@ void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& 
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     for (qint32 i = 0; i < sortedUnits.size(); i++)
     {
-        spUnit pDummy = MemoryManagement::create<Unit>(sortedUnits[i], pUnit->getOwner(), false, pUnit->getMap());
-        QString unitId = sortedUnits[i];
-        pDummy->addClickListener([this, unitId](oxygine::Event*)
-        {
-            emit sigShowLink(unitId);
-        });
+        spUnit pDummy = MemoryManagement::create<Unit>(sortedUnits[i], m_pOwner.get(), false, pUnit->getMap());
         float damage = pWeaponManager->getBaseDamage(weaponID, pDummy.get());
-        pDummy->setPosition(x, y);
-        addChild(pDummy);
+        if (damage > 0 || showAll)
+        {
+            QString unitId = sortedUnits[i];
+            pDummy->addClickListener([this, unitId](oxygine::Event*)
+                                     {
+                                         emit sigShowLink(unitId);
+                                     });
+
+            pDummy->setPosition(x, y);
+            m_weaponInfopActor->addChild(pDummy);
+            spLabel pLabel = MemoryManagement::create<Label>(width);
+            pLabel->setStyle(style);
+            if (damage > 0)
+            {
+                pLabel->setHtmlText((QString::number(static_cast<qint32>(damage))  + " %"));
+            }
+            else
+            {
+                pLabel->setHtmlText("-");
+            }
+            pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
+            m_weaponInfopActor->addChild(pLabel);
+            x += 150;
+            if (x + 160 > width)
+            {
+                x = 0;
+                y += 40;
+            }
+        }
+    }
+    const QString terrainId = "WELD";
+    float damage = pWeaponManager->getEnviromentDamage(weaponID, terrainId);
+    if (damage > 0 || showAll)
+    {    spTerrain pTerrain = Terrain::createTerrain(terrainId, -10, -10, "", pUnit->getMap());
+        pTerrain->loadSprites();
+        pTerrain->setPosition(x, y);
+        m_weaponInfopActor->addChild(pTerrain);
         spLabel pLabel = MemoryManagement::create<Label>(width);
         pLabel->setStyle(style);
         if (damage > 0)
@@ -483,33 +551,9 @@ void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& 
             pLabel->setHtmlText("-");
         }
         pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
-        addChild(pLabel);
+        m_weaponInfopActor->addChild(pLabel);
         x += 150;
-        if (x + 160 > width)
-        {
-            x = 0;
-            y += 40;
-        }
     }
-    const QString terrainId = "WELD";
-    spTerrain pTerrain = Terrain::createTerrain(terrainId, -10, -10, "", pUnit->getMap());
-    pTerrain->loadSprites();
-    pTerrain->setPosition(x, y);
-    addChild(pTerrain);
-    float damage = pWeaponManager->getEnviromentDamage(weaponID, terrainId);
-    spLabel pLabel = MemoryManagement::create<Label>(width);
-    pLabel->setStyle(style);
-    if (damage > 0)
-    {
-        pLabel->setHtmlText((QString::number(static_cast<qint32>(damage))  + " %"));
-    }
-    else
-    {
-        pLabel->setHtmlText("-");
-    }
-    pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
-    addChild(pLabel);
-    x += 150;
 }
 
 void UnitInfo::createLoadingTable(Unit* pUnit, const QStringList & loadables, qint32& y, qint32 width)
@@ -517,7 +561,7 @@ void UnitInfo::createLoadingTable(Unit* pUnit, const QStringList & loadables, qi
     qint32 x = 0;
     for (const auto& unitID : loadables)
     {
-        spUnit pDummy = MemoryManagement::create<Unit>(unitID, pUnit->getOwner(), false, pUnit->getMap());
+        spUnit pDummy = MemoryManagement::create<Unit>(unitID, m_pOwner.get(), false, pUnit->getMap());
         pDummy->setPosition(x, y);
         pDummy->addClickListener([this, unitID](oxygine::Event*)
         {
@@ -538,7 +582,7 @@ void UnitInfo::createLoadedUnits(Unit* pUnit, qint32& y, qint32 width)
     qint32 x = 0;
     for (auto & loadedUnit : pUnit->getLoadedUnits())
     {
-        spUnit pDummy = MemoryManagement::create<Unit>(loadedUnit->getUnitID(), pUnit->getOwner(), false, pUnit->getMap());
+        spUnit pDummy = MemoryManagement::create<Unit>(loadedUnit->getUnitID(), m_pOwner.get(), false, pUnit->getMap());
         pDummy->setPosition(x, y);
         pDummy->setHasMoved(loadedUnit->getHasMoved());
         pDummy->setHp(loadedUnit->getHp());
@@ -568,7 +612,7 @@ void UnitInfo::createTransportTable(Unit* pUnit, qint32& y, qint32 width)
     qint32 x = 0;
     for (const auto& unitID : sortedUnits)
     {
-        spUnit pDummy = MemoryManagement::create<Unit>(unitID, pUnit->getOwner(), false, pUnit->getMap());
+        spUnit pDummy = MemoryManagement::create<Unit>(unitID, m_pOwner.get(), false, pUnit->getMap());
         if (pDummy->canTransportUnit(pUnit, true))
         {
             pDummy->setPosition(x, y);
