@@ -15,11 +15,11 @@ FontManager::FontManager()
     setObjectName("FontManager");
     QStringList searchFolders;
     searchFolders.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/fonts/");
-    searchFolders.append("resources/fonts/");
+    searchFolders.append(Settings::getInstance()->getUserPath() + "resources/fonts/");
     QStringList mods = Settings::getInstance()->getMods();
     for (const auto & mod : std::as_const(mods))
     {
-        searchFolders.append(mod + "/fonts/");
+        searchFolders.append(Settings::getInstance()->getUserPath() + mod + "/fonts/");
     }
     for (qint32 i = 0; i < searchFolders.size(); ++i)
     {
