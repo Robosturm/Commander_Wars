@@ -448,7 +448,7 @@ void AudioManager::loadMediaForFile(QString filePath, qint32 position)
         file.open(QIODevice::ReadOnly);
         m_player->m_content = file.readAll();
         m_player->m_fileStream.open(QIODevice::ReadOnly);
-        m_player->m_player.setSourceDevice(&(m_player->m_fileStream));
+        m_player->m_player.setSourceDevice(&(m_player->m_fileStream), GlobalUtils::getUrlForFile(filePath));
         m_player->m_player.setPosition(position);
     }
 #endif
@@ -554,7 +554,7 @@ void AudioManager::slotSetMuteInternal(bool value)
     }
 }
 
-void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
+bool AudioManager::tryAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
 {
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
@@ -580,7 +580,18 @@ void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoi
             CONSOLE_PRINT("Unable to locate music file: " + currentPath, GameConsole::eERROR);
         }
     }
-    #endif
+#endif
+}
+
+void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
+{
+#ifdef AUDIOSUPPORT
+    bool success = tryAddMusic(file, startPointMs, endPointMs);
+    if (!success && file.endsWith(".wav") || file.endsWith(".mp3"))
+    {
+        tryAddMusic(file.first(file.length() - 4) + ".ogg", startPointMs, endPointMs);
+    }
+#endif
 }
 
 #ifdef AUDIOSUPPORT
@@ -656,7 +667,8 @@ void AudioManager::loadMusicFolder(const QString & folder, QStringList& loadedSo
         QDir directory(folder);
         if (directory.exists())
         {
-            QStringList filter("*.mp3");
+            QStringList filter;
+            filter << "*.mp3" << "*.wav" << "*.ogg";
             QStringList files = directory.entryList(filter);
             for (const auto& file : files)
             {
