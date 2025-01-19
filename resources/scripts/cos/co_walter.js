@@ -191,16 +191,16 @@ var Constructor = function()
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/bh_power.mp3");
+                audio.addMusic("resources/music/cos/bh_power.ogg");
                 break;
             case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/bh_superpower.mp3");
+                audio.addMusic("resources/music/cos/bh_superpower.ogg");
                 break;
             case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/bh_tagpower.mp3");
+                audio.addMusic("resources/music/cos/bh_tagpower.ogg");
                 break;
             default:
-                audio.addMusic("resources/music/cos/walter.mp3");
+                audio.addMusic("resources/music/cos/walter.ogg");
                 break;
             }
         }

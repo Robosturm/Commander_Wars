@@ -49,16 +49,16 @@ var Constructor = function()
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
+                audio.addMusic("resources/music/cos/power_ids_dc.ogg", 0 , 0);
                 break;
             case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
+                audio.addMusic("resources/music/cos/power_ids_dc.ogg", 0 , 0);
                 break;
             case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+                audio.addMusic("resources/music/cos/bh_tagpower.ogg", 779 , 51141);
                 break;
             default:
-                audio.addMusic("resources/music/cos/penny.mp3", 56308, 108812);
+                audio.addMusic("resources/music/cos/penny.ogg", 56308, 108812);
                 break;
             }
         }

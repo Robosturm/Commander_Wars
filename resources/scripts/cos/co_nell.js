@@ -18,16 +18,16 @@ var Constructor = function()
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                audio.addMusic("resources/music/cos/power.ogg", 992, 45321);
                 break;
             case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                audio.addMusic("resources/music/cos/superpower.ogg", 1505, 49515);
                 break;
             case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                audio.addMusic("resources/music/cos/tagpower.ogg", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/nell.mp3", 59, 61394);
+                audio.addMusic("resources/music/cos/nell.ogg", 59, 61394);
                 break;
             }
         }

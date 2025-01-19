@@ -26,17 +26,17 @@ var Constructor = function()
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                audio.addMusic("resources/music/cos/power.ogg", 992, 45321);
                 break;
             case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                audio.addMusic("resources/music/cos/superpower.ogg", 1505, 49515);
                 break;
             case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                audio.addMusic("resources/music/cos/tagpower.ogg", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/blue_moon+0.mp3", 0, 60283)
-                audio.addMusic("resources/music/cos/blue_moon+1.mp3", 0, 24065);
+                audio.addMusic("resources/music/cos/blue_moon+0.ogg", 0, 60283)
+                audio.addMusic("resources/music/cos/blue_moon+1.ogg", 0, 24065);
                 break;
             }
         }
