@@ -58,6 +58,7 @@ EXCLUDES_LIST="
     --exclude-library *libqtiff*
     --exclude-library *libqwbmp*
     --exclude-library *libqwebp*
+    --exclude-library *libgstreamermediaplugin*
 "
 $LINUXDEPLOY --appdir=distribution/AppDir \
     -i distribution/res/icons/ico${SIDE}_linux_16.png --icon-filename=commander_wars_ico${SIDE} \
