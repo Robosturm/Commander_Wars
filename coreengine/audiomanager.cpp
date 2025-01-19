@@ -556,6 +556,7 @@ void AudioManager::slotSetMuteInternal(bool value)
 
 bool AudioManager::tryAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
 {
+    bool success = false;
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
@@ -574,6 +575,7 @@ bool AudioManager::tryAddMusic(QString file, qint64 startPointMs, qint64 endPoin
         {
             m_player->m_player.stop();
             addMusicToPlaylist(currentPath, startPointMs, endPointMs);
+            success = true;
         }
         else
         {
@@ -581,6 +583,7 @@ bool AudioManager::tryAddMusic(QString file, qint64 startPointMs, qint64 endPoin
         }
     }
 #endif
+    return success;
 }
 
 void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
