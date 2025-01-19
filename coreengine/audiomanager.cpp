@@ -577,10 +577,6 @@ bool AudioManager::tryAddMusic(QString file, qint64 startPointMs, qint64 endPoin
             addMusicToPlaylist(currentPath, startPointMs, endPointMs);
             success = true;
         }
-        else
-        {
-            CONSOLE_PRINT("Unable to locate music file: " + currentPath, GameConsole::eERROR);
-        }
     }
 #endif
     return success;
@@ -592,7 +588,11 @@ void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoi
     bool success = tryAddMusic(file, startPointMs, endPointMs);
     if (!success && file.endsWith(".wav") || file.endsWith(".mp3"))
     {
-        tryAddMusic(file.first(file.length() - 4) + ".ogg", startPointMs, endPointMs);
+        success = tryAddMusic(file.first(file.length() - 4) + ".ogg", startPointMs, endPointMs);
+        if (!success)
+        {
+            CONSOLE_PRINT("Unable to locate music file: " + file, GameConsole::eERROR);
+        }
     }
 #endif
 }
