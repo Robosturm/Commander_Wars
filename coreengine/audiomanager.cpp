@@ -585,14 +585,16 @@ bool AudioManager::tryAddMusic(QString file, qint64 startPointMs, qint64 endPoin
 void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
 {
 #ifdef AUDIOSUPPORT
+    const QStringList supportedFormats = {".mp3", ".wav", ".ogg"};
     bool success = tryAddMusic(file, startPointMs, endPointMs);
-    if (!success && file.endsWith(".wav") || file.endsWith(".mp3"))
+    for (qint32 i = 0; i < supportedFormats.length() && !success; ++i)
     {
-        success = tryAddMusic(file.first(file.length() - 4) + ".ogg", startPointMs, endPointMs);
-        if (!success)
-        {
-            CONSOLE_PRINT("Unable to locate music file: " + file, GameConsole::eERROR);
-        }
+        QString filePath = file.first(file.lastIndexOf('.')) + supportedFormats[i];
+        success = tryAddMusic(filePath, startPointMs, endPointMs);
+    }
+    if (!success)
+    {
+        CONSOLE_PRINT("Unable to locate music file: " + file, GameConsole::eERROR);
     }
 #endif
 }
