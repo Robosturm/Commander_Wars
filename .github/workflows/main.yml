@@ -264,7 +264,7 @@ jobs:
         --release \
         $SIGN_FLAG
 
-    - name: Minor hack for Android APK
+    - name: Rename unsigned APK for packaging
       if: matrix.target == 'android' && github.repository != 'Robosturm/Commander_Wars'
       run: |
         mv "${{github.workspace}}/build/android-build/build/outputs/apk/release/android-build-release-unsigned.apk" \
