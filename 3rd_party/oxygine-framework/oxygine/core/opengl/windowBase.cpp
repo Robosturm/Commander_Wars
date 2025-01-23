@@ -10,6 +10,11 @@
 
 namespace oxygine
 {
+    QSurfaceFormat::RenderableType WindowBase::getRenderableType()
+    {
+        return QSurfaceFormat::RenderableType::DefaultRenderableType;
+    }
+
     void WindowBase::initializeGL()
     {
         initializeOpenGLFunctions();

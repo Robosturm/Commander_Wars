@@ -1756,7 +1756,8 @@ float NormalAi::calculateCounterDamage(MoveUnitData &curUnitData, QPoint newPosi
                     }
                     if (damageData.x() > 0)
                     {
-                        counterDamage += static_cast<qint32>(calcFundsDamage(damageData, pNextEnemy.get(), pUnit).fundsDamage);
+                        auto fundsDamageData = calcFundsDamage(damageData, pNextEnemy.get(), pUnit);
+                        counterDamage += static_cast<qint32>(fundsDamageData.fundsDamage);
                     }
                 }
             }

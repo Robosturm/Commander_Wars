@@ -2770,7 +2770,9 @@ QStringList Unit::getActionList()
 {
     QStringList actionList = getBaseActionList();
     QStringList actionModifierList;
-    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    if (m_pMap != nullptr)
+    {
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = m_pMap->getPlayer(i);
 
@@ -2801,7 +2803,7 @@ QStringList Unit::getActionList()
             }
         }
     }
-
+    }
     for (qint32 i = 0; i < actionModifierList.size(); i++)
     {
         QString action = actionModifierList[i];
@@ -4167,11 +4169,19 @@ void Unit::showRanges()
 {    
     if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
-        createCORange(m_pOwner->getCO(0)->getCORange());
+        CO* pCO = m_pOwner->getCO(0);
+        if (pCO != nullptr)
+        {
+            createCORange(pCO->getCORange());
+        }
     }
     else if (m_UnitRank == GameEnums::UnitRank_CO1)
     {
-        createCORange(m_pOwner->getCO(1)->getCORange());
+        CO* pCO = m_pOwner->getCO(1);
+        if (pCO != nullptr)
+        {
+            createCORange(pCO->getCORange());
+        }
     }
     else
     {

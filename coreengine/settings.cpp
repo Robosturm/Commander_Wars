@@ -599,24 +599,36 @@ void Settings::setTouchScreen(bool newTouchScreen)
 
 QString Settings::getUserPath()
 {
-    if (m_userPath.isEmpty())
-    {
-        return m_userPath;
-    }
-    else
-    {
-        QString folder = m_userPath + "/";
-        while (folder.contains("//"))
-        {
-            folder = folder.replace("//", "/");
-        }
-        return folder;
-    }
+    return m_userPath;
+}
+
+QString Settings::getTempPath()
+{
+    return m_tempDirPath;
+}
+
+QTemporaryDir Settings::newTempDir()
+{
+    return std::move(QTemporaryDir(getTempPath() + "CoW"));
+}
+
+void Settings::clearTemp()
+{
+    m_tempDirObj.remove();
 }
 
 void Settings::setUserPath(const QString newUserPath)
 {
-    m_userPath = newUserPath;
+    if (newUserPath.isEmpty()) {
+        m_userPath = newUserPath;
+    } else {
+        QString folder = newUserPath + "/";
+        while (folder.contains("//"))
+        {
+            folder = folder.replace("//", "/");
+        }
+        m_userPath = folder;
+    }
 }
 
 bool Settings::getSmallScreenDevice()
@@ -1047,7 +1059,7 @@ void Settings::setActiveMods(const QStringList activeMods)
     {
         CONSOLE_PRINT("Loaded mod: " + mod, GameConsole::eDEBUG);
         bool found = false;
-        QFile file(mod + "/mod.txt");
+        QFile file(getUserPath() + mod + "/mod.txt");
         if (file.exists())
         {
             file.open(QFile::ReadOnly);
@@ -1393,7 +1405,7 @@ void Settings::setup()
         MemoryManagement::create<Value<std::chrono::seconds>>("Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)),
         MemoryManagement::create<Value<qint32>>("Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 0, 100),
         // mods
-    MemoryManagement::create<Value<QStringList>>("Mods", "Mods", &m_activeMods, QStringList(), QStringList(), QStringList()),
+        MemoryManagement::create<Value<QStringList>>("Mods", "Mods", &m_activeMods, QStringList(), QStringList(), QStringList()),
         // logging
         MemoryManagement::create<Value<bool>>("Logging", "LogActions", &m_LogActions, false, false, true),
         MemoryManagement::create<Value<GameConsole::eLogLevels>>("Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL),
@@ -1426,6 +1438,7 @@ void Settings::loadSettings()
     {
         setting->readValue(settings);
     }
+    setUserPath(m_userPath);
     setFramesPerSecond(m_framesPerSecond);
     setActiveMods(m_activeMods);
     GameConsole::setLogLevel(m_defaultLogLevel);

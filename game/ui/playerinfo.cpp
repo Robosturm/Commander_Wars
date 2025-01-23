@@ -51,7 +51,8 @@ void PlayerInfo::updateData()
         }
         qint32 playerShown = 0;
         bool hasShownTurnStartInfo = false;
-        for (qint32 i = 0; i < count; i++)
+        qint32 height = Settings::getInstance()->getHeight();
+        for (qint32 i = 0; i < count && yPos < height; i++)
         {
             currentPlayer = playerIdx + i;
             if (currentPlayer >= m_pMap->getPlayerCount())

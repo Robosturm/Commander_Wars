@@ -31,7 +31,8 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
     {
 
         m_pTCPServer[0] = MemoryManagement::createNamedQObject<SslServer>("SslServer", this);
-            m_pTCPServer[0]->setSslConfiguration(getSslConfiguration());
+        m_pTCPServer[0]->setSslConfiguration(getSslConfiguration());
+        connect(m_pTCPServer[0].get(), &QSslServer::errorOccurred, this, &TCPServer::displaySocketError);
         if (primaryAdress.isEmpty())
         {
             m_pTCPServer[0]->listen(QHostAddress::Any, port);
@@ -47,6 +48,7 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
             m_pTCPServer[1]->setSslConfiguration(getSslConfiguration());
             m_pTCPServer[1]->listen(QHostAddress(secondaryAdress), port);
             connect(m_pTCPServer[1].get(), &QTcpServer::pendingConnectionAvailable, this, &TCPServer::onConnect, Qt::QueuedConnection);
+            connect(m_pTCPServer[1].get(), &QSslServer::errorOccurred, this, &TCPServer::displaySocketError);
         }
         connect(this, &TCPServer::sigDisconnectClient, this, &TCPServer::disconnectClient, Qt::QueuedConnection);
         connect(this, &TCPServer::sigDisconnectTCP, this, &TCPServer::disconnectTCP, Qt::QueuedConnection);
@@ -240,5 +242,16 @@ void TCPServer::setIsActive(quint64 socketID, bool active)
     if (client.get())
     {
         client->setIsActive(active);
+    }
+}
+
+void TCPServer::displayDetailedError()
+{
+    for (qint32 i = 0; i < SERVER_SOCKETS; ++i)
+    {
+        if (m_pTCPServer[i].get() != nullptr)
+        {
+            CONSOLE_PRINT("Socket server " + QString::number(i) + " error: " + m_pTCPServer[i]->errorString(), GameConsole::eDEBUG);
+        }
     }
 }

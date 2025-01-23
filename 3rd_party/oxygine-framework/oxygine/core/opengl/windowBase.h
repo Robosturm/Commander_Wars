@@ -20,6 +20,7 @@ namespace oxygine
         virtual void paintGL() override;
         virtual void updateData() = 0;
         bool beginRendering();
+        static QSurfaceFormat::RenderableType getRenderableType();
     private:
         void swapDisplayBuffers();
     protected:

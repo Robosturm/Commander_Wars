@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Commander Wars Dedicated Server
+Name[zh_CN]=指挥官战争（专用服务器）
+Name[zh_TW]=指揮官戰爭（專用伺服器）
+Exec=commander_wars
+Comment=A dedicated server for Commander Wars
+Comment[de]=Ein dedizierter Server für Commander Wars
+Comment[zh_CN]=指挥官战争的专用服务器
+Comment[zh_TW]=指揮官戰爭的專用伺服器
+Terminal=false
+Icon=commander_wars_icoserver
+Type=Application
+Categories=Game;

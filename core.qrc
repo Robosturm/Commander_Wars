@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>system/frac_shader.glsl</file>
+        <file>system/frac_table_shader.glsl</file>
+        <file>system/frac_matrix_shader.glsl</file>
+        <file>system/vertex_shader.glsl</file>
+    </qresource>
+</RCC>

@@ -86,3 +86,8 @@ void LocalClient::connected()
     m_isConnected = true;
     emit sigConnected(0);
 }
+
+void LocalClient::displayDetailedError()
+{
+    CONSOLE_PRINT("Socket error: " + m_pSocket->errorString(), GameConsole::eDEBUG);
+}

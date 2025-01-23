@@ -23,7 +23,7 @@ public:
      * @brief createWeaponTable
      * @param weaponID
      */
-    void createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& y, qint32 width);
+    void createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& y, qint32 width, bool showAll);
     /**
      * @brief createLoadingTable
      * @param pUnit
@@ -60,6 +60,7 @@ signals:
      * @param pageID
      */
     void sigShowLink(QString pageID);
+    void sigShowWeaponInfo(bool showAll);
 
 public slots:
     /**
@@ -68,7 +69,7 @@ public slots:
      */
     void showLink(QString pageID);
     void showNewBattlesprite(QString newArmy);
-
+    qint32 showWeaponInfo(bool showAll);
 private:
     void loadBattleSprite(Unit* pUnit);
     void loadArmySelector(qint32 x, qint32 y);
@@ -77,6 +78,10 @@ private:
     spBattleAnimationSprite m_pBattleAnimationSprite;
     oxygine::spBox9Sprite m_pSpriteBox;
     spUnit m_pUnit;
+    spPlayer m_pOwner;
+    qint32 m_width;
+    qint32 m_weaponStartY;
+    oxygine::spActor m_weaponInfopActor;
 };
 
 #endif // UNITINFO_H

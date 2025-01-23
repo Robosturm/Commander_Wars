@@ -17,14 +17,17 @@ var Constructor = function()
             return false;
         }
     };
+
     this.getActionText = function(map)
     {
         return qsTr("Build Door 1");
     };
+
     this.getIcon = function(map)
     {
         return "build";
     };
+
     this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 0)
@@ -65,11 +68,21 @@ var Constructor = function()
                 // check all units if they can move over this terrain
                 if (buildlist.includes(units[i]) &&
                     Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y), true, map) > 0 &&
-                    Global[units[i]].getCOSpecificUnit() === false)
+                    ACTION_BLACKHOLEFACTORY_DOOR1.isCOSpecificUnit(units[i]) === false)
                 {
                     return true;
                 }
             }
+        }
+        return false;
+    };
+
+    this.isCOSpecificUnit = function(unitId)
+    {
+        if (Global[unitId].getCOSpecificUnit !== null &&
+            Global[unitId].getCOSpecificUnit())
+        {
+            return true;
         }
         return false;
     };
@@ -87,7 +100,7 @@ var Constructor = function()
             // check all units if they can move over this terrain
             if (buildlist.includes(units[i]) &&
                 Global[Global[units[i]].getMovementType()].getMovementpoints(terrain, null, terrain, true, map) > 0 &&
-                Global[units[i]].getCOSpecificUnit() === false)
+                ACTION_BLACKHOLEFACTORY_DOOR1.isCOSpecificUnit(units[i]) === false)
             {
                 var name = Global[units[i]].getName();
                 data.addData(name, units[i], units[i], 0, true);
@@ -116,10 +129,12 @@ var Constructor = function()
             ACHIEVEMENT_BUILD_UNIT.unitProduced(unitID);
         }
     };
+
     this.getName = function()
     {
         return qsTr("Black Hole Factory Door 1");
     };
+
     this.getDescription = function()
     {
         return qsTr("Orders a Black Hole Factory to produce a unit at the first door. The unit is able to move immediately.");

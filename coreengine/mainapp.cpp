@@ -266,7 +266,6 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case UpdateManager:
         {
-            changeScreenMode(getScreenMode());
 #ifdef UPDATESUPPORT
             GameUpdater::cleanUpOldArtifacts();
             QString updateStep = Settings::getInstance()->getUpdateStep();
@@ -834,11 +833,8 @@ void Mainapp::createBaseDirs()
         QDir newDir(userPath);
         newDir.mkpath(".");
     }
-    QDir dir(userPath + "temp/");
-    dir.removeRecursively();
     QStringList dirs =
     {
-        "temp",
         "savegames",
         "mods",
         "data/gamerules",

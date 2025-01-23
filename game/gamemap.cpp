@@ -8,6 +8,7 @@
 #include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/userdata.h"
+#include "coreengine/settings.h"
 
 #include "ai/coreai.h"
 
@@ -593,6 +594,7 @@ void GameMap::onWeatherChanged(Weather* pWeather)
     {
         for (qint32 x = 0; x < width; x++)
         {
+            m_fields[y][x]->onWeatherChanged(pWeather);
             if (m_fields[y][x]->getBuilding() != nullptr)
             {
                 m_fields[y][x]->getBuilding()->onWeatherChanged(pWeather);
@@ -1998,10 +2000,11 @@ void GameMap::startGame()
     Interpreter* pInterpreter = Interpreter::getInstance();
     for (const auto& mod : mods)
     {
-        if (QFile::exists(mod + "/scripts/mapstart.js"))
+        if (QFile::exists(Settings::getInstance()->getUserPath() + mod + "/scripts/mapstart.js"))
         {
-            pInterpreter->openScript(mod + "/scripts/mapstart.js", true);
-            pInterpreter->doFunction("MapStart", "gameStart");
+            pInterpreter->openScript(Settings::getInstance()->getUserPath() + mod + "/scripts/mapstart.js", true);
+
+            pInterpreter->doFunction("MapStart", "gameStart", QJSValueList({m_jsThis}));
         }
     }
     if (Settings::getInstance()->getSyncAnimations())

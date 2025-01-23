@@ -1,6 +1,3 @@
-#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
-
 #include "objects/mapselection.h"
 
 #include "coreengine/mainapp.h"
@@ -114,10 +111,10 @@ void MapSelection::changeFolder(QString folder)
     {
         newFolder = newFolder.replace("//", "/");
     }
-    QFileInfo newFolderInfo(newFolder);
-    newFolder = GlobalUtils::makePathRelative(newFolderInfo.canonicalFilePath());
+    newFolder = QDir(newFolder).absolutePath();
+    newFolder = GlobalUtils::makePathRelative(newFolder);
     QStringList searchPaths;
-    searchPaths.append(newFolder);
+    searchPaths.append(Settings::getInstance()->getUserPath() + newFolder);
     searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + newFolder);
     CONSOLE_PRINT("MapSelection::changeFolder. Relative Path: " + newFolder, GameConsole::eDEBUG);
     m_Files.clear();

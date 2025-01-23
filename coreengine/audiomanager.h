@@ -309,7 +309,7 @@ private:
         qint32 m_endpointMs{-1};
         QString m_file;
     };
-    QTimer m_positionChangedTimer;
+    bool tryAddMusic(QString file, qint64 startPointMs, qint64 endPointMs);
 #ifdef AUDIOSUPPORT
     spPlayer m_player;
     QVector<PlaylistData> m_PlayListdata;

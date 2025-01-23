@@ -33,11 +33,6 @@ namespace oxygine
         return 0;
     }
 
-    quint32 VideoDriver::getBT(VideoDriver::BLEND_TYPE pt)
-    {
-        return 0;
-    }
-
     spTexture VideoDriver::getRenderTarget() const
     {
         return m_rt;
@@ -71,11 +66,11 @@ namespace oxygine
     {
     }
 
-    void VideoDriver::setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest)
+    void VideoDriver::setBlendFunc(BLEND_MODE func)
     {
     }
 
-    void VideoDriver::setState(STATE state, quint32 value)
+    void VideoDriver::setState(STATE state, bool value)
     {
     }
 

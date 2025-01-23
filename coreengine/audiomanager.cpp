@@ -27,7 +27,6 @@ AudioManager::AudioManager(bool noAudio)
 #ifdef AUDIOSUPPORT
       m_audioOutput(this),
 #endif
-      m_positionChangedTimer(this),
       m_noAudio(noAudio)
 
 {
@@ -85,8 +84,6 @@ void AudioManager::stopAudio()
             m_player->m_player.stop();
         }
         m_soundCaches.clear();
-        m_positionChangedTimer.disconnect();
-        m_positionChangedTimer.stop();
         disconnect();
     }
     else
@@ -118,13 +115,7 @@ void AudioManager::initAudio()
             m_audioOutput.setDevice(m_audioDevice);
             createPlayer();
             SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getInstance()->getMusicVolume())));
-            m_positionChangedTimer.setInterval(1);
-            m_positionChangedTimer.setSingleShot(false);
-            connect(&m_positionChangedTimer, &QTimer::timeout, this, [this]()
-            {
-                SlotCheckMusicEnded(m_player->m_player.position());
-            });
-            m_positionChangedTimer.start();
+            connect(&m_player->m_player, &QMediaPlayer::positionChanged, this, &AudioManager::SlotCheckMusicEnded);
         }
         else
         {
@@ -143,7 +134,7 @@ void AudioManager::createSoundCache()
         if (Mainapp::getInstance()->isAudioThread())
         {
             QStringList searchFolders;
-            searchFolders.append("resources/sounds/");
+            searchFolders.append(Settings::getInstance()->getUserPath() + "resources/sounds/");
             searchFolders.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/sounds/");
             QStringList mods = Settings::getInstance()->getMods();
             for (const auto & mod : std::as_const(mods))
@@ -457,7 +448,7 @@ void AudioManager::loadMediaForFile(QString filePath, qint32 position)
         file.open(QIODevice::ReadOnly);
         m_player->m_content = file.readAll();
         m_player->m_fileStream.open(QIODevice::ReadOnly);
-        m_player->m_player.setSourceDevice(&(m_player->m_fileStream));
+        m_player->m_player.setSourceDevice(&(m_player->m_fileStream), GlobalUtils::getUrlForFile(filePath));
         m_player->m_player.setPosition(position);
     }
 #endif
@@ -563,8 +554,9 @@ void AudioManager::slotSetMuteInternal(bool value)
     }
 }
 
-void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
+bool AudioManager::tryAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
 {
+    bool success = false;
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
@@ -583,11 +575,26 @@ void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoi
         {
             m_player->m_player.stop();
             addMusicToPlaylist(currentPath, startPointMs, endPointMs);
+            success = true;
         }
-        else
-        {
-            CONSOLE_PRINT("Unable to locate music file: " + currentPath, GameConsole::eERROR);
-        }
+    }
+#endif
+    return success;
+}
+
+void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
+{
+#ifdef AUDIOSUPPORT
+    const QStringList supportedFormats = {".mp3", ".wav", ".ogg"};
+    bool success = tryAddMusic(file, startPointMs, endPointMs);
+    for (qint32 i = 0; i < supportedFormats.length() && !success; ++i)
+    {
+        QString filePath = file.first(file.lastIndexOf('.')) + supportedFormats[i];
+        success = tryAddMusic(filePath, startPointMs, endPointMs);
+    }
+    if (!success)
+    {
+        CONSOLE_PRINT("Unable to locate music file: " + file, GameConsole::eERROR);
     }
 #endif
 }
@@ -651,7 +658,7 @@ void AudioManager::SlotLoadFolder(QString folder)
     }
     if (m_loadBaseGameFolders)
     {
-        loadMusicFolder(folder, loadedSounds);
+        loadMusicFolder(Settings::getInstance()->getUserPath() + folder, loadedSounds);
         loadMusicFolder(oxygine::Resource::RCC_PREFIX_PATH + folder, loadedSounds);
     }
 #endif
@@ -665,7 +672,8 @@ void AudioManager::loadMusicFolder(const QString & folder, QStringList& loadedSo
         QDir directory(folder);
         if (directory.exists())
         {
-            QStringList filter("*.mp3");
+            QStringList filter;
+            filter << "*.mp3" << "*.wav" << "*.ogg";
             QStringList files = directory.entryList(filter);
             for (const auto& file : files)
             {

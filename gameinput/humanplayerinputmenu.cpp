@@ -294,8 +294,11 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         pItemBox->setResAnim(pAnim);
         pItemBox->setSize(pAnim->getSize());
         pItemBox->setColorTable(pPlayer->getColorTableAnim(), true);
-        pItemBox->addChild(icon);
-        icon->setPosition(3, 0);
+        if (icon.get() != nullptr)
+        {
+            pItemBox->addChild(icon);
+            icon->setPosition(3, 0);
+        }
         pItemBox->setHeight(GameMap::getImageSize());
         pItemBox->setY(y);
         pItemBox->setX(x);

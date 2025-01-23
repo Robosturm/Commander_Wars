@@ -14,80 +14,28 @@ namespace oxygine
         releaseShaders();
     }
 
+    static QString loadShader(QString name) {
+        QString filepath = oxygine::Resource::RCC_PREFIX_PATH + name;
+        if (QFile::exists(filepath))
+        {
+            QFile file(filepath);
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            return stream.readAll();
+        }
+        else
+        {
+            CONSOLE_PRINT("Unable to find shader: " + filepath, GameConsole::eERROR);
+            return "";
+        }
+    }
+
     void UberShaderProgram::init()
     {
-        QString fracShaderBody;
-        QString fracTableShaderBody;
-        QString fracMatrixShaderBody;
-        QString vertexShaderBody;
-        QString filepath = "system/frac_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            fracShaderBody = stream.readAll();
-        }
-        else
-        {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, GameConsole::eERROR);
-        }
-        filepath = "system/vertex_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            vertexShaderBody = stream.readAll();
-        }
-        else
-        {
-            CONSOLE_PRINT("Unable to find vertex shader: " + filepath, GameConsole::eERROR);
-        }
-        filepath = "system/frac_table_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            fracTableShaderBody = stream.readAll();
-        }
-        else
-        {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, GameConsole::eERROR);
-        }
-        filepath = "system/frac_matrix_shader.glsl";
-        if (!QFile::exists(filepath))
-        {
-            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
-        }
-        if (QFile::exists(filepath))
-        {
-            QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            fracMatrixShaderBody = stream.readAll();
-        }
-        else
-        {
-            CONSOLE_PRINT("Unable to find frac shader: " + filepath, GameConsole::eERROR);
-        }
-        m_fracShader = fracShaderBody;
-        m_vertexShader = vertexShaderBody;
-        m_fracTableShader = fracTableShaderBody;
-        m_fracMatrixShader = fracMatrixShaderBody;
+        m_fracShader = loadShader("system/frac_shader.glsl");
+        m_vertexShader = loadShader("system/vertex_shader.glsl");
+        m_fracTableShader = loadShader("system/frac_table_shader.glsl");
+        m_fracMatrixShader = loadShader("system/frac_matrix_shader.glsl");
     }
 
     void UberShaderProgram::release()

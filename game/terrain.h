@@ -11,6 +11,7 @@
 #include "objects/base/tooltip.h"
 #include "game/GameEnums.h"
 
+class Weather;
 class GameAction;
 class Building;
 using spBuilding = std::shared_ptr<Building>;
@@ -646,7 +647,11 @@ public:
      * @param newSupportPalette
      */
     Q_INVOKABLE void setSupportPalette(bool newSupportPalette);
-
+    /**
+     * @brief onWeatherChanged
+     * @param pWeather
+     */
+    Q_INVOKABLE void onWeatherChanged(Weather* pWeather);
 protected:
     /**
      * @brief createBuildingDownStream

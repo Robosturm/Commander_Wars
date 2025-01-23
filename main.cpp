@@ -56,8 +56,11 @@ int main(qint32 argc, char* argv[])
         // force a resolution reset
         window.changeScreenMode(Settings::ScreenModes::FullScreen);
     }
-    // show as normal borderless
-    window.changeScreenMode(window.getScreenMode());
+    else
+    {
+        // show as normal borderless
+        window.changeScreenMode(window.getScreenMode());
+    }
     window.setBrightness(Settings::getInstance()->getBrightness());
     window.setGamma(Settings::getInstance()->getGamma());
     if (window.getScreenMode() != Settings::ScreenModes::Window)
@@ -90,6 +93,7 @@ int main(qint32 argc, char* argv[])
     }
     CONSOLE_PRINT("Shutting down main window", GameConsole::eDEBUG);
     window.shutdown();
+    Settings::getInstance()->clearTemp();
     // give os time to save the settings
     for (qint32 i = 0; i < 150; ++i)
     {

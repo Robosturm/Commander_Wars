@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Commander Wars
+Name[zh_CN]=指挥官战争
+Name[zh_TW]=指揮官戰爭
+Exec=commander_wars
+Comment=Advance Wars Clone with lots of additions, and support for customization and modding
+Comment[de]=Advance Wars Clone mit vielen Ergänzungen und Unterstützung für Anpassungen und Modding
+Comment[zh_CN]=《高级战争》克隆版，添加了大量内容，并允许自订和修改
+Comment[zh_TW]=《高級戰爭》克隆版，添加了大量內容，並允許自訂和修改
+Terminal=false
+Icon=commander_wars_icoclient
+Type=Application
+Categories=Game;

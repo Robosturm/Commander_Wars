@@ -2427,6 +2427,7 @@ void GameMenue::startGame()
     if (!m_SaveGame)
     {
         m_pMap->getGameRules()->onGameStart();
+        m_pMap->startGame();
         CONSOLE_PRINT("Launching game from start", GameConsole::eDEBUG);
         m_pMap->getGameScript()->gameStart();
         m_pMap->setCurrentPlayer(m_pMap->getPlayerCount() - 1);

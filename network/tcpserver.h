@@ -14,6 +14,7 @@ using spTCPServer = std::shared_ptr<TCPServer>;
 class TCPServer : public NetworkInterface
 {
     Q_OBJECT
+    static constexpr qint32 SERVER_SOCKETS = 2;
 public:
     TCPServer(QObject* pParent);
     virtual ~TCPServer();
@@ -35,9 +36,11 @@ public slots:
     void continueListening();
     virtual void changeThread(quint64 socketID, QThread* pThread) override;
 protected:
+    void displayDetailedError() override;
+protected:
     QMap<quint64, spTCPClient> m_pClients;
     quint64 m_idCounter = 0;
-    spQSslServer m_pTCPServer[2];
+    spQSslServer m_pTCPServer[SERVER_SOCKETS];
     bool m_gameServer{false};
     bool m_useReceivedId{false};
     bool m_sendAll{false};

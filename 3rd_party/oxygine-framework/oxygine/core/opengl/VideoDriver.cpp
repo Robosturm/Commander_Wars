@@ -2,6 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.h"
 
+
 #include "coreengine/memorymanagement.h"
 
 namespace oxygine
@@ -44,54 +45,25 @@ namespace oxygine
     {
         switch (pt)
         {
-            case PT_POINTS:
+        case PRIMITIVE_TYPE::POINTS:
                 return GL_POINTS;
-            case PT_LINES:
+            case PRIMITIVE_TYPE::LINES:
                 return GL_LINES;
-            case PT_LINE_LOOP:
+            case PRIMITIVE_TYPE::LINE_LOOP:
                 return GL_LINE_LOOP;
-            case PT_LINE_STRIP:
-                return PT_LINE_STRIP;
-            case PT_TRIANGLES:
+            case PRIMITIVE_TYPE::LINE_STRIP:
+                return GL_LINE_STRIP;
+            case PRIMITIVE_TYPE::TRIANGLES:
                 return GL_TRIANGLES;
-            case PT_TRIANGLE_STRIP:
+            case PRIMITIVE_TYPE::TRIANGLE_STRIP:
                 return GL_TRIANGLE_STRIP;
-            case PT_TRIANGLE_FAN:
+            case PRIMITIVE_TYPE::TRIANGLE_FAN:
                 return GL_TRIANGLE_FAN;
             default:
                 break;
         }
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "VideoDriver::getPT unknown primitive type");
-        return PT_POINTS;
-    }
-
-    quint32 VideoDriver::getBT(VideoDriver::BLEND_TYPE pt)
-    {
-        switch (pt)
-        {
-            case BT_ZERO:
-                return GL_ZERO;
-            case BT_ONE:
-                return GL_ONE;
-            case BT_SRC_COLOR:
-                return GL_SRC_COLOR;
-            case BT_ONE_MINUS_SRC_COLOR:
-                return GL_ONE_MINUS_SRC_COLOR;
-            case BT_SRC_ALPHA:
-                return GL_SRC_ALPHA;
-            case BT_ONE_MINUS_SRC_ALPHA:
-                return GL_ONE_MINUS_SRC_ALPHA;
-            case BT_DST_COLOR:
-                return GL_DST_COLOR;
-            case BT_DST_ALPHA:
-                return GL_DST_ALPHA;
-            case BT_ONE_MINUS_DST_ALPHA:
-                return GL_ONE_MINUS_DST_ALPHA;
-            case BT_ONE_MINUS_DST_COLOR:
-                return GL_ONE_MINUS_DST_COLOR;
-        }
-        oxygine::handleErrorPolicy(oxygine::ep_show_error, "VideoDriver::getBT unknown blend");
-        return GL_ONE;
+        return GL_POINTS;
     }
 
     spTexture VideoDriver::getRenderTarget() const
@@ -182,18 +154,29 @@ namespace oxygine
         }
     }
 
-    void VideoDriver::setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest)
+    void VideoDriver::setBlendFunc(BLEND_MODE func)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        window->glBlendFunc(getBT(src), getBT(dest));
+        switch (func)
+        {
+        case BLEND_MODE::NONE:
+            // do nothing, this is used as a sentinel more than anything else
+            break;
+        case BLEND_MODE::ALPHA:
+            window->glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,
+                                        GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+            break;
+        default:
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "unknown blend mode");
+        }
     }
 
-    void VideoDriver::setState(STATE state, quint32 value)
+    void VideoDriver::setState(STATE state, bool value)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         switch (state)
         {
-            case STATE_BLEND:
+        case STATE::BLEND:
             {
                 if (value)
                 {

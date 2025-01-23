@@ -1,5 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
+#include "coreengine/memorymanagement.h"
+
 namespace oxygine
 {
     spVideoDriver VideoDriver::instance;
@@ -20,7 +22,7 @@ namespace oxygine
 
     VideoDriver::VideoDriver()
     {
-        m_rt = spTexture::create();
+        m_rt = MemoryManagement::create<Texture>();
     }
 
     VideoDriver::~VideoDriver()
@@ -28,11 +30,6 @@ namespace oxygine
     }
 
     quint32 VideoDriver::getPT(VideoDriver::PRIMITIVE_TYPE pt)
-    {
-        return 0;
-    }
-
-    quint32 VideoDriver::getBT(VideoDriver::BLEND_TYPE pt)
     {
         return 0;
     }
@@ -75,11 +72,11 @@ namespace oxygine
         }
     }
 
-    void VideoDriver::setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest)
+    void VideoDriver::setBlendFunc(BLEND_MODE func)
     {
     }
 
-    void VideoDriver::setState(STATE state, quint32 value)
+    void VideoDriver::setState(STATE state, bool value)
     {
     }
 

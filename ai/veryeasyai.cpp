@@ -254,7 +254,7 @@ bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit & pUnits)
         pInterpreter->threadProcessEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() > 1 &&
-            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0) &&
+            (pUnit->hasAmmo1() || pUnit->hasAmmo2()) &&
             pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             if (attack(pUnit.get()))
@@ -275,7 +275,7 @@ bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit & pUnits)
         pInterpreter->threadProcessEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() == 1 &&
-            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0) &&
+            (pUnit->hasAmmo1() || pUnit->hasAmmo2()) &&
             pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
             if (attack(pUnit.get()))

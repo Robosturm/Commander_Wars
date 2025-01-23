@@ -59,6 +59,7 @@ oxygine::spSprite GameManager::getIcon(GameMap* pMap, const QString & icon)
     {
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+        COPerkManager* pCOPerkManager = COPerkManager::getInstance();
         if (pUnitSpriteManager->exists(icon))
         {
             
@@ -90,6 +91,26 @@ oxygine::spSprite GameManager::getIcon(GameMap* pMap, const QString & icon)
             pBuilding->setOwner(pPlayer.get());
             pBuilding->scaleAndShowOnSingleTile();
             return pBuilding;
+        }
+        else if (pCOPerkManager->exists(icon))
+        {
+            oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+            oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon);
+            if (pAnim != nullptr)
+            {
+                if (pAnim->getTotalFrames() > 1)
+                {
+                    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                    pSprite->addTween(tween);
+                }
+                else
+                {
+                    pSprite->setResAnim(pAnim);
+                }
+                pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
+            }
+            pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
+            return pSprite;
         }
     }
     return oxygine::spSprite();

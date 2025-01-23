@@ -21,7 +21,6 @@ class BuildListDialog final : public QObject, public oxygine::Actor
         QString name;
         QStringList units;
     };
-    static const char* const FILEPATH;
 public:
     explicit BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList);
     virtual ~BuildListDialog() = default;

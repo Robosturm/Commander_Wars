@@ -1,7 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/VisualStyleActor.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
 namespace oxygine
@@ -14,7 +13,7 @@ namespace oxygine
     {
 #ifdef GRAPHICSUPPORT
         Material mat;
-        mat.m_blend = VideoDriver::blend_alpha;
+        mat.m_blend = VideoDriver::BLEND_MODE::ALPHA;
         mat.m_base = STDRenderer::white;
         m_flags |= flag_actorHasBounds;
         m_mat = MaterialCache::mc().cache(mat);
