@@ -139,7 +139,7 @@ void AudioManager::createSoundCache()
             QStringList mods = Settings::getInstance()->getMods();
             for (const auto & mod : std::as_const(mods))
             {
-                searchFolders.append(mod + "/sounds/");
+                searchFolders.append(Settings::getInstance()->getUserPath() + mod + "/sounds/");
             }
             for (qint32 i = searchFolders.size() - 1; i >= 0; --i)
             {
