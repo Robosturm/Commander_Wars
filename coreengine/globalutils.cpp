@@ -523,7 +523,7 @@ QUrl GlobalUtils::getUrlForFile(const QString & file)
     }
     else
     {
-        url = QUrl::fromLocalFile(Settings::getInstance()->getUserPath() + file);
+        url = QUrl::fromLocalFile(file);
     }
     return url;
 }
