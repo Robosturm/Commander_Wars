@@ -92,7 +92,7 @@ oxygine::spSprite GameManager::getIcon(GameMap* pMap, const QString & icon)
             pBuilding->scaleAndShowOnSingleTile();
             return pBuilding;
         }
-        else if (pCOPerkManager->exists(icon))
+        else
         {
             oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
             oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon);
