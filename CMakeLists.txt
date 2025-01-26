@@ -33,6 +33,7 @@ option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or d
 option(UPDATESUPPORT "Enables the automatic updater for the game which updates to the latest github version should be turned off for local builds not supported for android" OFF)
 option(DEFAULTAIPIPE "If the system should use a separate process for the ai as default variant. Disable it for system that can't launch the same exe twice e.g. android." ON)
 option(PRECOMPILED_HEADERS "Whether to use precompiled headers to speed up compilation. This can make precompiled headers less effective." ON)
+set(UPDATE_FILE "Commander_Wars-Win10_x64"  CACHE STRING "UPDATE File")
 ###################################################################################
 # show configuration
 ###################################################################################
@@ -213,11 +214,12 @@ endif()
 ###################################################################################
 add_definitions(
     -DVERSION_MAJOR=0
-    -DVERSION_MINOR=38
+    -DVERSION_MINOR=37
     -DVERSION_REVISION=0
     -DVERSION_SUFFIX="main"
     -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     -DCOW_BUILD_NAME="${COW_BUILD_NAME}"
+    -DUPDATE_FILE="${UPDATE_FILE}"
 )
 
 set(COW_ANDROID_VERSION_NAME "0.38.0-main")
