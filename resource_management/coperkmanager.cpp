@@ -28,7 +28,7 @@ bool COPerkManager::isSelectable(qint32 position)
 {
     if ((position >= 0) && (position < m_loadedRessources.size()))
     {
-        isSelectable(m_loadedRessources[position]);
+        return isSelectable(m_loadedRessources[position]);
     }
     return true;
 }

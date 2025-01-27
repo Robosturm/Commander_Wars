@@ -59,7 +59,7 @@ void FileDownloader::onResponseFinished(QNetworkReply* pReply)
 
 void FileDownloader::startDownloading()
 {
-    QString targetFile = m_baseUrl + "download/" + m_latestTag + "/" + m_targetFile;
+    QString targetFile = m_baseUrl + "download/" + m_latestTag + "/" + m_targetFile + "-" + m_latestTag + ".zip";
     GameConsole::print("Starting download of " + targetFile, GameConsole::eINFO);
     QUrl targetUrl(targetFile);
     downloadFile(targetUrl);
