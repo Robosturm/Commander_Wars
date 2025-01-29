@@ -22,14 +22,14 @@ void Vfs::init()
 
     searchPath.clear();
 
+    searchPath.append({ Settings::userPath() });
+
 #ifndef USEAPPCONFIGPATH
     // USEAPPCONFIGPATH is primarily set on Linux, where the "current directory" of programs launched from the start
     // menu is normally the user's home directory. This is very unexpected behavior, and this should not be checked.
     if (QFileInfo(".") != QFileInfo(Settings::userPath()))
         searchPath.append({ "." });
 #endif
-
-    searchPath.append({ Settings::userPath() });
 
     QStringList mods = Settings::getInstance()->getMods();
     for (const auto & mod : std::as_const(mods))
