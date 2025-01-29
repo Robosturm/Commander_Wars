@@ -274,7 +274,7 @@ void DialogCOStyle::loadAltsForStyle()
     QFile file(m_ResFilePath + "+table.png");
     if (!file.exists())
     {
-        file.setFileName(Settings::userPath() + m_ResFilePath + "+table.png");
+        file.setFileName(Settings::getInstance()->getUserPath() + m_ResFilePath + "+table.png");
         if (!file.exists())
         {
             file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + m_ResFilePath + "+table.png");
@@ -296,9 +296,9 @@ void DialogCOStyle::loadAltsForStyle()
     {
         m_useColorBox = true;
         QImage src;
-        if (QFile::exists(Settings::userPath() + m_ResFilePath + "+nrm.png"))
+        if (QFile::exists(Settings::getInstance()->getUserPath() + m_ResFilePath + "+nrm.png"))
         {
-            src = QImage(Settings::userPath() + m_ResFilePath + "+nrm.png");
+            src = QImage(Settings::getInstance()->getUserPath() + m_ResFilePath + "+nrm.png");
         }
         else
         {

@@ -55,7 +55,7 @@ void ReplayRecorder::startRecording(const QString & file)
         if (fileName.isEmpty())
         {
             QString currentDate = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
-            fileName = Settings::userPath() + "data/records/" + m_pMap->getMapName() + "-" + currentDate + ".rec";
+            fileName = Settings::getInstance()->getUserPath() + "data/records/" + m_pMap->getMapName() + "-" + currentDate + ".rec";
         }
 
         CONSOLE_PRINT("Starting recording", GameConsole::eDEBUG);

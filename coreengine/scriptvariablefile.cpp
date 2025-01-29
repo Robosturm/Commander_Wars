@@ -15,7 +15,7 @@ ScriptVariableFile::ScriptVariableFile(const QString & filename)
 
 void ScriptVariableFile::writeFile()
 {
-    QFile file(Settings::userPath() + m_filename);
+    QFile file(Settings::getInstance()->getUserPath() + m_filename);
     file.open(QIODevice::WriteOnly | QIODevice::Truncate);
     QDataStream pStream(&file);
     pStream.setVersion(QDataStream::Version::Qt_6_5);

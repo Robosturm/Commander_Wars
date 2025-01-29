@@ -21,7 +21,7 @@
 static const char* const FILEPATH = "data/actionbannlist/";
 
 static QString getFilePath() {
-    return Settings::userPath() + FILEPATH;
+    return Settings::getInstance()->getUserPath() + FILEPATH;
 }
 
 ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)

@@ -131,7 +131,7 @@ Mainwindow::Mainwindow(const QString & initialView)
 
 void Mainwindow::import()
 {
-    QString path = Settings::userPath();
+    QString path = Settings::getInstance()->getUserPath();
     spFolderDialog folderDialog = MemoryManagement::create<FolderDialog>(path);
     addChild(folderDialog);
     connect(folderDialog.get(), &FolderDialog::sigFolderSelected, this, &Mainwindow::importFromDirectory, Qt::QueuedConnection);
@@ -273,7 +273,7 @@ void Mainwindow::enterLoadGame()
 {    
     QStringList wildcards;
     wildcards.append("*.sav");
-    QString path = Settings::userPath() + "savegames";
+    QString path = Settings::getInstance()->getUserPath() + "savegames";
     spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
@@ -283,7 +283,7 @@ void Mainwindow::enterLoadCampaign()
 {    
     QStringList wildcards;
     wildcards.append("*.camp");
-    QString path = Settings::userPath() + "savegames";
+    QString path = Settings::getInstance()->getUserPath() + "savegames";
     spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);
@@ -323,7 +323,7 @@ void Mainwindow::enterReplayGame()
     wildcards.append("*.rec;*.zip");
     wildcards.append("*.rec");
     wildcards.append("*.zip");
-    QString path = Settings::userPath() + "data/records";
+    QString path = Settings::getInstance()->getUserPath() + "data/records";
     spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::replayGame, Qt::QueuedConnection);

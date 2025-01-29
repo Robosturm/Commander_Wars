@@ -257,7 +257,7 @@ void ScriptDialogDialog::showChangeBackground()
     
     spDialogEntry pDialog = m_Event->getDialog(dialogIndex);
     QFileInfo file(pDialog->background);
-    QString folder = Settings::userPath() + "maps/";
+    QString folder = Settings::getInstance()->getUserPath() + "maps/";
     QString fileName = "";
     if (file.exists() && file.isFile())
     {

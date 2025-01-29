@@ -1046,7 +1046,7 @@ void LobbyMenu::receivedShowAutoMatches(const QJsonObject & objData)
 void LobbyMenu::uploadMap(const  QString & selectedFilePath)
 {
     QString filePath = selectedFilePath;
-    QString userPath = Settings::userPath();
+    QString userPath = Settings::getInstance()->getUserPath();
     if (!userPath.isEmpty())
     {
         filePath = filePath.replace(userPath, "");

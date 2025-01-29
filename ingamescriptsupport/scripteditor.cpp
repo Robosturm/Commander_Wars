@@ -197,7 +197,7 @@ void ScriptEditor::showSaveScript()
 {    
     QStringList wildcards;
     wildcards.append("*.js");
-    QString path = Settings::userPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::saveScript, Qt::QueuedConnection);
@@ -207,7 +207,7 @@ void ScriptEditor::showLoadScript()
 {    
     QStringList wildcards;
     wildcards.append("*.js");
-    QString path = Settings::userPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::loadScript, Qt::QueuedConnection);

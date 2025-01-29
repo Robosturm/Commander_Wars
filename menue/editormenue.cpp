@@ -490,7 +490,7 @@ void EditorMenue::showSaveMap()
 {
     QStringList wildcards;
     wildcards.append("*.map");
-    QString path = Settings::userPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(), &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
@@ -502,7 +502,7 @@ void EditorMenue::showLoadMap()
 {
     QStringList wildcards;
     wildcards.append("*.map");
-    QString path = Settings::userPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
@@ -609,7 +609,7 @@ void EditorMenue::showImportCoWTxTMap()
 {
     QStringList wildcards;
     wildcards.append("*.txt");
-    QString path = Settings::userPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importCoWTxTMap, Qt::QueuedConnection);
@@ -621,7 +621,7 @@ void EditorMenue::showImportAwdsAws()
 {
     QStringList wildcards;
     wildcards.append("*.aws");
-    QString path = Settings::userPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
@@ -633,7 +633,7 @@ void EditorMenue::showExportAwdsAws()
 {
     QStringList wildcards;
     wildcards.append("*.aws");
-    QString path = Settings::userPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, "", false, tr("Export"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::exportAWDSAwsMap, Qt::QueuedConnection);
@@ -645,7 +645,7 @@ void EditorMenue::showImportAwdsAw4()
 {
     QStringList wildcards;
     wildcards.append("*.aw4");
-    QString path = Settings::userPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAW4Aw4Map, Qt::QueuedConnection);
@@ -657,7 +657,7 @@ void EditorMenue::showImportAwByWeb()
 {
     QStringList wildcards;
     wildcards.append("*.txt");
-    QString path = Settings::userPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWByWeb, Qt::QueuedConnection);
@@ -1714,7 +1714,7 @@ void EditorMenue::saveMap(QString filename)
     CONSOLE_PRINT("EditorMenue::saveMap " + filename, GameConsole::eDEBUG);
     if (filename.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
     {
-        filename.replace(oxygine::Resource::RCC_PREFIX_PATH, Settings::userPath());
+        filename.replace(oxygine::Resource::RCC_PREFIX_PATH, Settings::getInstance()->getUserPath());
     }
     if (filename.endsWith(".map"))
     {
@@ -2198,7 +2198,7 @@ void EditorMenue::exitEditor()
 void EditorMenue::autosave()
 {
     CONSOLE_PRINT("EditorMenue::autosave", GameConsole::eDEBUG);
-    QString filename = Settings::userPath() + "maps/autosave.map";
+    QString filename = Settings::getInstance()->getUserPath() + "maps/autosave.map";
     if (filename.endsWith(".map"))
     {
         QFile file(filename);

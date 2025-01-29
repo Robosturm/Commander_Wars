@@ -195,7 +195,7 @@ void RuleSelection::showSelectScript()
 {
     QStringList wildcards;
     wildcards.append("*.js");
-    QString path = Settings::userPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     oxygine::Stage::getStage()->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelection::scriptFileChanged, Qt::QueuedConnection);

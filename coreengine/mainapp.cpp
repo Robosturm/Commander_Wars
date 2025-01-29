@@ -826,7 +826,7 @@ QString Mainapp::qsTr(const char* const text)
 
 void Mainapp::createBaseDirs()
 {
-    QString userPath = Settings::userPath();
+    QString userPath = Settings::getInstance()->getUserPath();
     CONSOLE_PRINT("Creating base dirs in " + userPath, GameConsole::eDEBUG);
     if (!userPath.isEmpty())
     {

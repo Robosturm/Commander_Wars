@@ -29,7 +29,7 @@ private slots:
     void downloadResult(bool success);
     void onNewProgress(qint64 bytesReceived, qint64 bytesTotal);
 private:
-    AwbwReplayDownloader m_awbwreplaydownloader{Settings::userPath() + "data/records/", this};
+    AwbwReplayDownloader m_awbwreplaydownloader{Settings::getInstance()->getUserPath() + "data/records/", this};
     QString m_userName;
     QString m_password;
     QString m_replay;

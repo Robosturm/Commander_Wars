@@ -470,7 +470,7 @@ QString GlobalUtils::makePathRelative(QString file, bool full)
     QString path = dir.absolutePath();
     file = file.replace(path + "/", "");
     file = file.replace(path, "");
-    QString userPath = Settings::userPath();
+    QString userPath = Settings::getInstance()->getUserPath();
     if (!userPath.isEmpty())
     {
         file = file.replace(userPath + "/", "");

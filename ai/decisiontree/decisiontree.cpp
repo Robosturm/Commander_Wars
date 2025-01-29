@@ -306,7 +306,7 @@ void DecisionTree::getTrainingData(QString file, std::vector<std::vector<float>>
     for(const QString & mod : std::as_const(mods))
     {
         fullMods.append(oxygine::Resource::RCC_PREFIX_PATH + mod);
-        fullMods.append(Settings::userPath() + mod);
+        fullMods.append(Settings::getInstance()->getUserPath() + mod);
     }
     for (qint32 i = 0; i < fullMods.size(); i++)
     {

@@ -21,7 +21,7 @@
 static const char* const FILEPATH = "data/unitbannlist/";
 
 static QString getFilePath() {
-    return Settings::userPath() + FILEPATH;
+    return Settings::getInstance()->getUserPath() + FILEPATH;
 }
 
 BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList)

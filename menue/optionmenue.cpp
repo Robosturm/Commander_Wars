@@ -401,9 +401,9 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
     if (!thumbnail.isEmpty())
     {
         QImage img;
-        if (QFile::exists(Settings::userPath() + thumbnail))
+        if (QFile::exists(Settings::getInstance()->getUserPath() + thumbnail))
         {
-            img = QImage(Settings::userPath() + thumbnail);
+            img = QImage(Settings::getInstance()->getUserPath() + thumbnail);
         }
         else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + thumbnail))
         {

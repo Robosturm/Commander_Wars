@@ -11,7 +11,7 @@ ScriptEventExtendMap::ScriptEventExtendMap(GameMap* pMap)
     m_Items.append(ScriptEventGeneric::Data());
 
     m_Items[0].filter = "*.map";
-    m_Items[0].startFolder = Settings::userPath() + "maps";
+    m_Items[0].startFolder = Settings::getInstance()->getUserPath() + "maps";
     m_Items[0].tooltip = tr("Map file with which the current map will be extended");
     m_Items[0].types = ScriptEventGeneric::EditTypes::File;
     m_Items[0].beforeCode = "map.extendMap(\"";

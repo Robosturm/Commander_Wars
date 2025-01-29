@@ -24,7 +24,7 @@ SituationEvaluator::SituationEvaluator(Player* pOwner)
 
 void SituationEvaluator::loadNetwork(const QString & filePath)
 {
-    QString finalPath = Settings::userPath() + "/" + filePath;
+    QString finalPath = Settings::getInstance()->getUserPath() + "/" + filePath;
     if (QFile::exists(finalPath))
     {
         finalPath = QString(oxygine::Resource::RCC_PREFIX_PATH) + "/" + filePath;
