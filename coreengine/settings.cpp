@@ -630,7 +630,7 @@ void Settings::setUserPath(const QString newUserPath)
         }
         m_userPath = folder;
     }
-    Vfs::init();
+    Vfs::setSearchPath(m_userPath, m_activeMods);
 }
 
 bool Settings::getSmallScreenDevice()
@@ -1081,7 +1081,7 @@ void Settings::setActiveMods(const QStringList activeMods)
             m_activeModVersions.append("1.0.0");
         }
     }
-    Vfs::init();
+    Vfs::setSearchPath(m_userPath, m_activeMods);
 }
 
 bool Settings::getShowIngameCoordinates()

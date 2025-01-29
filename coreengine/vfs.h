@@ -9,7 +9,7 @@ class Vfs final
 {
     public:
 
-    static void init();
+    static void setSearchPath(const QString& userPath, const QStringList& mods = emptyList);
 
     /**
      * Locates the real path for a resource, or a file path guaranteed not to exist if it is not found.

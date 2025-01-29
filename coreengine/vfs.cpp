@@ -4,7 +4,6 @@
 #include <QList>
 #include <QSet>
 
-#include "coreengine/settings.h"
 #include "coreengine/vfs.h"
 
 const QStringList Vfs::emptyList;
@@ -16,27 +15,26 @@ struct SearchPath final
 };
 static QList<SearchPath> searchPath;
 
-void Vfs::init()
+void Vfs::setSearchPath(const QString& userPath, const QStringList& mods)
 {
     CONSOLE_PRINT("Initializing VFS...", GameConsole::eINFO);
 
     searchPath.clear();
 
-    searchPath.append({ Settings::userPath() });
+    searchPath.append({ userPath });
 
 #ifndef USEAPPCONFIGPATH
     // USEAPPCONFIGPATH is primarily set on Linux, where the "current directory" of programs launched from the start
     // menu is normally the user's home directory. This is very unexpected behavior, and this should not be checked.
-    if (QFileInfo(".") != QFileInfo(Settings::userPath()))
+    if (QFileInfo(".") != QFileInfo(userPath))
     {
         searchPath.append({ "." });
     }
 #endif
 
-    QStringList mods = Settings::getInstance()->getMods();
     for (const auto & mod : std::as_const(mods))
     {
-        searchPath.append({ Settings::userPath() + mod, true });
+        searchPath.append({ userPath + mod, true });
         searchPath.append({ oxygine::Resource::RCC_PREFIX_PATH + mod, true });
     }
 
@@ -177,7 +175,7 @@ QStringList Vfs::findAllInternal(const QString& pName, bool checkMods, bool firs
             {
                 list.append(newPath);
             }
-        }s
+        }
     }
 
     if (!firstPriority)
