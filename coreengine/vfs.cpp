@@ -28,7 +28,9 @@ void Vfs::init()
     // USEAPPCONFIGPATH is primarily set on Linux, where the "current directory" of programs launched from the start
     // menu is normally the user's home directory. This is very unexpected behavior, and this should not be checked.
     if (QFileInfo(".") != QFileInfo(Settings::userPath()))
+    {
         searchPath.append({ "." });
+    }
 #endif
 
     QStringList mods = Settings::getInstance()->getMods();
@@ -95,15 +97,24 @@ QString Vfs::find(const QString& pName, bool checkMods) {
     QString newPath;
     for (auto & path : searchPath)
     {
-        if (!checkMods && path.isModPath) continue;
+        if (!checkMods && path.isModPath)
+        {
+            continue;
+        }
 
         newPath = path.root + name.path;
-        if (QFileInfo(newPath).exists()) return newPath;
+        if (QFileInfo(newPath).exists())
+        {
+            return newPath;
+        }
 
         if (name.isResources && path.isModPath)
         {
             newPath = path.root + name.resourcesPath;
-            if (QFileInfo(newPath).exists()) return newPath;
+            if (QFileInfo(newPath).exists())
+            {
+                return newPath;
+            }
         }
     }
 
@@ -118,7 +129,10 @@ QStringList Vfs::createSearchPathInternal(const QString& pName, bool checkMods, 
     QString newPath;
     for (auto & path : searchPath)
     {
-        if (!checkMods && path.isModPath) continue;
+        if (!checkMods && path.isModPath)
+        {
+            continue;
+        }
 
         newPath = path.root + name.path;
         list.append(newPath);
@@ -130,7 +144,10 @@ QStringList Vfs::createSearchPathInternal(const QString& pName, bool checkMods, 
         }
     }
 
-    if (!firstPriority) std::reverse(list.begin(), list.end());
+    if (!firstPriority)
+    {
+        std::reverse(list.begin(), list.end());
+    }
     return list;
 }
 
@@ -142,19 +159,31 @@ QStringList Vfs::findAllInternal(const QString& pName, bool checkMods, bool firs
     QString newPath;
     for (auto & path : searchPath)
     {
-        if (!checkMods && path.isModPath) continue;
+        if (!checkMods && path.isModPath)
+        {
+            continue;
+        }
 
         newPath = path.root + name.path;
-        if (QFileInfo(newPath).exists()) list.append(newPath);
+        if (QFileInfo(newPath).exists())
+        {
+            list.append(newPath);
+        }
 
         if (name.isResources && path.isModPath)
         {
             newPath = path.root + name.resourcesPath;
-            if (QFileInfo(newPath).exists()) list.append(newPath);
-        }
+            if (QFileInfo(newPath).exists())
+            {
+                list.append(newPath);
+            }
+        }s
     }
 
-    if (!firstPriority) std::reverse(list.begin(), list.end());
+    if (!firstPriority)
+    {
+        std::reverse(list.begin(), list.end());
+    }
     return list;
 }
 

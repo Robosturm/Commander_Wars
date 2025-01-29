@@ -2060,7 +2060,8 @@ void Settings::getModInfos(QString mod, QString & name, QString & description, Q
 QStringList Settings::getAvailableMods()
 {
     QFileInfoList infoList;
-    for (const auto & entry : Vfs::findAllRev("mods", false))
+    auto searchPath = Vfs::findAllRev("mods", false);
+    for (const auto & entry : searchPath)
     {
         if (QFile::exists(entry))
         {

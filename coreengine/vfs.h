@@ -7,14 +7,6 @@
 
 class Vfs final
 {
-    Vfs() = delete;
-    ~Vfs() = delete;
-
-    static QStringList createSearchPathInternal(const QString& name, bool checkMods = true, bool firstPriority = false);
-    static QStringList findAllInternal(const QString& name, bool checkMods = true, bool firstPriority = false);
-
-    static const QStringList emptyList;
-
     public:
 
     static void init();
@@ -56,6 +48,16 @@ class Vfs final
      * Lists all files in a particular directory.
      */
     static QFileInfoList list(const QString& name, const QStringList& filters = emptyList, bool checkMods = true);
+
+    private:
+
+    Vfs() = delete;
+    ~Vfs() = delete;
+
+    static QStringList createSearchPathInternal(const QString& name, bool checkMods = true, bool firstPriority = false);
+    static QStringList findAllInternal(const QString& name, bool checkMods = true, bool firstPriority = false);
+
+    static const QStringList emptyList;
 };
 
 #endif // COREENGINE_VFS_H

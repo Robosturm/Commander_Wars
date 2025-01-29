@@ -134,7 +134,8 @@ void AudioManager::createSoundCache()
     {
         if (Mainapp::getInstance()->isAudioThread())
         {
-            for (auto & folder : Vfs::createSearchPathRev("resources/sounds/"))
+            auto searchPath = Vfs::createSearchPathRev("resources/sounds/");
+            for (auto & folder : searchPath)
             {
                 if (QFile::exists(folder + "res.xml"))
                 {
@@ -633,7 +634,10 @@ void AudioManager::SlotLoadFolder(QString folder)
 #ifdef AUDIOSUPPORT
     QStringList loadedSounds;
     QStringList searchPath = Vfs::createSearchPathRev(folder);
-    for (QString folder : searchPath) loadMusicFolder(folder, loadedSounds);
+    for (QString folder : searchPath)
+    {
+        loadMusicFolder(folder, loadedSounds);
+    }
 #endif
 }
 

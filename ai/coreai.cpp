@@ -166,9 +166,12 @@ void CoreAI::loadIni(QString file)
 {
     AI_CONSOLE_PRINT("CoreAI::loadIni " + file, GameConsole::eDEBUG);
     m_iniFiles.append(file);
-    QStringList searchFiles;
-    if (file.isEmpty()) return;
-    for (auto & file : Vfs::findAll("resources/aidata/" + file))
+    if (file.isEmpty())
+    {
+        return;
+    }
+    QStringList searchFiles = Vfs::findAll("resources/aidata/" + file);
+    for (auto & file : searchFiles)
     {
         if (QFile::exists(file))
         {
