@@ -483,11 +483,6 @@ QString GlobalUtils::makePathRelative(QString file, bool full)
     return file;
 }
 
-QFileInfoList GlobalUtils::getInfoList(const QString & folder, const QStringList & list)
-{
-    return Vfs::list(folder, list);
-}
-
 QUrl GlobalUtils::getUrlForFile(const QString & file)
 {
     QUrl url;

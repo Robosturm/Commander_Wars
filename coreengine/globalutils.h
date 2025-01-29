@@ -32,7 +32,6 @@ public:
     static qint32 randIntBase(qint32 low, qint32 high);
     static float randFloatBase(float low, float high);
     static qreal randDoubleBase(qreal low, qreal high);
-    static QFileInfoList getInfoList(const QString & folder, const QStringList & list = QStringList());
     static QUrl getUrlForFile(const QString & file);
     static QString getByteArrayString(const QByteArray & bytes);
     static QByteArray getStringByteArray(const QString & bytes);
