@@ -5,11 +5,13 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
+#include "coreengine/settings.h"
+
 class AwbwReplayDownloader : public QObject
 {
     Q_OBJECT
 public:
-    explicit AwbwReplayDownloader(const QString & downloadPath = "data/records/", QObject *parent = nullptr);
+    explicit AwbwReplayDownloader(const QString & downloadPath = Settings::getInstance()->getUserPath() + "data/records/", QObject *parent = nullptr);
 
     void login(const QString & userName, const QString & password);
     void downLoadReplay(const QString & userName, const QString & password, const QString replay);

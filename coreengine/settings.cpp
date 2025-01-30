@@ -25,6 +25,7 @@
 #include "coreengine/audiomanager.h"
 #include "coreengine/Gamepad.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/virtualpaths.h"
 
 const char* const Settings::DEFAULT_AUDIODEVICE = "@@default@@";
 
@@ -629,6 +630,7 @@ void Settings::setUserPath(const QString newUserPath)
         }
         m_userPath = folder;
     }
+    VirtualPaths::setSearchPath(m_userPath, m_activeMods);
 }
 
 bool Settings::getSmallScreenDevice()
@@ -1042,11 +1044,10 @@ void Settings::setActiveMods(const QStringList activeMods)
     qint32 i = 0;
     while (i < m_activeMods.size())
     {
-        QDir dir(getUserPath() + m_activeMods[i]);
-        QDir dir2( oxygine::Resource::RCC_PREFIX_PATH + m_activeMods[i]);
-        if (!dir.exists() && !dir2.exists())
+        QDir dir(VirtualPaths::find(m_activeMods[i], false));
+        if (!dir.exists())
         {
-            CONSOLE_PRINT("Removing mod from active list: " + m_activeMods[i] + " cause it wasn't found.", GameConsole::eWARNING);
+            CONSOLE_PRINT("Removing mod from active list: " + m_activeMods[i] + " because it wasn't found.", GameConsole::eWARNING);
             m_activeMods.removeAt(i);
         }
         else
@@ -1059,7 +1060,7 @@ void Settings::setActiveMods(const QStringList activeMods)
     {
         CONSOLE_PRINT("Loaded mod: " + mod, GameConsole::eDEBUG);
         bool found = false;
-        QFile file(getUserPath() + mod + "/mod.txt");
+        QFile file(VirtualPaths::find(mod + "/mod.txt", false));
         if (file.exists())
         {
             file.open(QFile::ReadOnly);
@@ -1080,6 +1081,7 @@ void Settings::setActiveMods(const QStringList activeMods)
             m_activeModVersions.append("1.0.0");
         }
     }
+    VirtualPaths::setSearchPath(m_userPath, m_activeMods);
 }
 
 bool Settings::getShowIngameCoordinates()
@@ -2002,11 +2004,7 @@ void Settings::getModInfos(QString mod, QString & name, QString & description, Q
                            QStringList & tags, QString & thumbnail)
 {
     name = mod;
-    QFile file(Settings::getUserPath() + mod + "/mod.txt");
-    if (!file.exists())
-    {
-        file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + mod + "/mod.txt");
-    }
+    QFile file(VirtualPaths::find(mod + "/mod.txt", false));
     isCosmetic = false;
     if (file.exists())
     {
@@ -2061,10 +2059,16 @@ void Settings::getModInfos(QString mod, QString & name, QString & description, Q
 
 QStringList Settings::getAvailableMods()
 {
+    QFileInfoList infoList;
+    auto searchPath = VirtualPaths::findAllRev("mods", false);
+    for (const auto & entry : searchPath)
+    {
+        if (QFile::exists(entry))
+        {
+            infoList.append(QDir(entry).entryInfoList(QDir::Dirs));
+        }
+    }
     QStringList mods;
-    QFileInfoList rccinfoList = QDir(QString(oxygine::Resource::RCC_PREFIX_PATH) + "mods").entryInfoList(QDir::Dirs);
-    QFileInfoList infoList = QDir(Settings::getUserPath() + "mods").entryInfoList(QDir::Dirs);
-    infoList.append(rccinfoList);
     for (const auto & info : infoList)
     {
         QString folder = GlobalUtils::makePathRelative(info.filePath());
@@ -2218,31 +2222,19 @@ void Settings::setLanguage(const QString language)
     m_translators.clear();
     m_language = language;
 
-    QStringList searchPaths;
-    const QString filename = "translation/lang_" + m_language + ".qm";
-    searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/" + filename);
-    searchPaths.append(Settings::getUserPath() + "resources/" + filename);
-    // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
-    {
-        searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/" + filename);
-        searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/" + filename);
-    }
+    QStringList searchPaths = VirtualPaths::findAll("resources/translation/lang_" + m_language + ".qm");
     for (const auto & file : searchPaths)
     {
-        if (QFile::exists(file))
+        auto translator = MemoryManagement::createNamedQObject<QTranslator>("QTranslator");
+        m_translators.append(translator);
+        if (translator->load(QLocale(m_language), file))
         {
-            auto translator = MemoryManagement::createNamedQObject<QTranslator>("QTranslator");
-            m_translators.append(translator);
-            if (translator->load(QLocale(m_language), file))
-            {
-                CONSOLE_PRINT("Loaded language file " + file + " for language " + m_language, GameConsole::eDEBUG);
-                QCoreApplication::installTranslator(translator.get());
-            }
-            else
-            {
-                m_translators.removeLast();
-            }
+            CONSOLE_PRINT("Loaded language file " + file + " for language " + m_language, GameConsole::eDEBUG);
+            QCoreApplication::installTranslator(translator.get());
+        }
+        else
+        {
+            m_translators.removeLast();
         }
     }
 }
@@ -2251,12 +2243,7 @@ QStringList Settings::getLanguageNames()
 {
      QLocale english("en");
      QStringList items = {english.nativeLanguageName()};
-     QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
-     for (qint32 i = 0; i < Settings::getMods().size(); i++)
-     {
-         paths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/translation");
-         paths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/translation");
-     }
+     QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
      QStringList filter;
      filter << "*.qm";
      for (const QString & path : std::as_const(paths))
@@ -2279,7 +2266,7 @@ QStringList Settings::getLanguageNames()
 QStringList Settings::getLanguageIds()
 {
      QStringList languages = {"en"};
-     QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
+     QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
      QStringList filter;
      filter << "*.qm";
      for (const QString & path : std::as_const(paths))
@@ -2301,7 +2288,7 @@ QStringList Settings::getLanguageIds()
 qint32 Settings::getCurrentLanguageIndex()
 {
      qint32 current = 0;
-     QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
+     QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
      QStringList filter;
      filter << "*.qm";
      qint32 i = 0;

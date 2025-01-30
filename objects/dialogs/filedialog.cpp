@@ -8,6 +8,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -184,9 +185,8 @@ void FileDialog::showFolder(QString folder)
     m_Items.clear();
     m_ResAnims.clear();
 
-    QDir dir(Settings::getInstance()->getUserPath() + folder);
-    QDir virtDir(oxygine::Resource::RCC_PREFIX_PATH + folder);
-    if (!dir.exists() && !virtDir.exists())
+    QDir dir(VirtualPaths::find(folder));
+    if (!dir.exists())
     {
         if (!folder.isEmpty())
         {
@@ -203,7 +203,7 @@ void FileDialog::showFolder(QString folder)
     else
     {
         QStringList list = m_DropDownmenu->getCurrentItemText().split(";");
-        infoList = GlobalUtils::getInfoList(folder, list);
+        infoList = VirtualPaths::list(folder, list);
     }
     qint32 itemCount = 0;
     for (qint32 i = 0; i < infoList.size(); i++)

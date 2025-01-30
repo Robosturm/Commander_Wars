@@ -4,5 +4,6 @@
         <file>system/frac_table_shader.glsl</file>
         <file>system/frac_matrix_shader.glsl</file>
         <file>system/vertex_shader.glsl</file>
+        <file>system/startup_messages.txt</file>
     </qresource>
 </RCC>

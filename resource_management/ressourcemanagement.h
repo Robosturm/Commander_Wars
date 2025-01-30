@@ -12,6 +12,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/virtualpaths.h"
 
 
 template<class TClass>
@@ -140,24 +141,10 @@ void RessourceManagement<TClass>::loadRessources(QString resPath)
 {
     if (!resPath.isEmpty() && !Mainapp::getInstance()->getNoUi())
     {
-        if (QFile::exists(QString(RCC_PREFIX_PATH) + "resources/" + resPath))
+        QStringList searchPath = VirtualPaths::createSearchPath("resources/" + resPath);
+        for (qint32 i = 0; i < searchPath.size(); i++)
         {
-            oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + "resources/" + resPath);
-        }
-        if (QFile::exists(Settings::getInstance()->getUserPath() + "resources/" + resPath))
-        {
-            oxygine::Resources::loadXML(Settings::getInstance()->getUserPath() + "resources/" + resPath);
-        }
-        for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
-        {
-            if (QFile::exists(QString(RCC_PREFIX_PATH) + Settings::getInstance()->getMods().at(i) + resPath))
-            {
-                oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + Settings::getInstance()->getMods().at(i) + resPath);
-            }
-            if (QFile::exists(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + resPath))
-            {
-                oxygine::Resources::loadXML(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + resPath);
-            }
+            oxygine::Resources::loadXML(searchPath[i]);
         }
     }
 }
@@ -224,14 +211,7 @@ QStringList RessourceManagement<TClass>::getSearchPaths()
     QStringList searchPaths;
     if (!m_scriptPath.isEmpty())
     {
-        searchPaths.append(QString(RCC_PREFIX_PATH) + "resources/" + m_scriptPath);
-        searchPaths.append(Settings::getInstance()->getUserPath() + "resources/" + m_scriptPath);
-        // make sure to overwrite existing js stuff
-        for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
-        {
-            searchPaths.append(QString(RCC_PREFIX_PATH) + Settings::getInstance()->getMods().at(i) + "/" + m_scriptPath);
-            searchPaths.append(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + "/" + m_scriptPath);
-        }
+        searchPaths = VirtualPaths::createSearchPath("resources/" + m_scriptPath);
     }
     return searchPaths;
 }

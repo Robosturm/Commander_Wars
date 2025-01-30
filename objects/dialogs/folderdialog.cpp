@@ -8,6 +8,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -50,9 +51,8 @@ FolderDialog::FolderDialog(QString startFolder)
     auto* pCurrentFolder = m_CurrentFolder.get();
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentFolder](oxygine::Event*)
     {
-        QDir folder(pCurrentFolder->getCurrentText());
-        QDir virtFolder(oxygine::Resources::RCC_PREFIX_PATH + pCurrentFolder->getCurrentText());
-        if (folder.exists() || virtFolder.exists())
+        QDir folder(VirtualPaths::find(pCurrentFolder->getCurrentText()));
+        if (folder.exists())
         {
             emit sigFolderSelected(pCurrentFolder->getCurrentText());
         }
@@ -98,9 +98,8 @@ void FolderDialog::showFolder(QString folder)
     folder = QDir(folder).absolutePath();
     folder = GlobalUtils::makePathRelative(folder);
     m_Items.clear();
-    QDir dir(Settings::getInstance()->getUserPath() + folder);
-    QDir virtDir(oxygine::Resource::RCC_PREFIX_PATH + folder);
-    if (!dir.exists() && !virtDir.exists())
+    QDir dir(VirtualPaths::find(folder));
+    if (!dir.exists())
     {
         if (!folder.isEmpty())
         {
@@ -118,7 +117,7 @@ void FolderDialog::showFolder(QString folder)
     }
     else
     {
-        infoList = GlobalUtils::getInfoList(folder);
+        infoList = VirtualPaths::list(folder);
     }
 
     qint32 itemCount = 0;

@@ -1,5 +1,7 @@
 #include <QFontDatabase>
 
+#include "coreengine/virtualpaths.h"
+
 #include "resource_management/fontmanager.h"
 
 const char* const FontManager::MAINFONT = "main";
@@ -13,14 +15,7 @@ FontManager::FontManager()
 #ifdef GRAPHICSUPPORT
     Interpreter::setCppOwnerShip(this);
     setObjectName("FontManager");
-    QStringList searchFolders;
-    searchFolders.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/fonts/");
-    searchFolders.append(Settings::getInstance()->getUserPath() + "resources/fonts/");
-    QStringList mods = Settings::getInstance()->getMods();
-    for (const auto & mod : std::as_const(mods))
-    {
-        searchFolders.append(Settings::getInstance()->getUserPath() + mod + "/fonts/");
-    }
+    QStringList searchFolders = VirtualPaths::createSearchPath("resources/fonts/");
     for (qint32 i = 0; i < searchFolders.size(); ++i)
     {
         QString folder = searchFolders[i];

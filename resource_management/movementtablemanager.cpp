@@ -1,6 +1,8 @@
 #include <QFileInfo>
 #include <QDirIterator>
 
+#include "coreengine/virtualpaths.h"
+
 #include "resource_management/movementtablemanager.h"
 
 #include "modding/csvtableimporter.h"
@@ -27,11 +29,7 @@ void MovementTableManager::loadAll()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QTemporaryDir tempDir = Settings::getInstance()->newTempDir();
     QStringList data;
-    QFile file("resources/scripts/movementtables/movement_csv_import.txt");
-    if (!file.exists())
-    {
-        file.setFileName(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/scripts/movementtables/movement_csv_import.txt");
-    }
+    QFile file(VirtualPaths::find("resources/scripts/movementtables/movement_csv_import.txt"));
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     QString jsHeader = stream.readAll();

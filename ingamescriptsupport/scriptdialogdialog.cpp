@@ -11,6 +11,7 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/virtualpaths.h"
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/base/dropdownmenusprite.h"
@@ -292,17 +293,10 @@ void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
     if (!filename.isEmpty())
     {
         QImage image;
-        if (QFile::exists(filename))
+        QString imgPath = VirtualPaths::find(filename);
+        if (QFile::exists(imgPath))
         {
-            image = QImage(filename);
-        }
-        else if (QFile::exists(Settings::getInstance()->getUserPath() + filename))
-        {
-            image = QImage(Settings::getInstance()->getUserPath() + filename);
-        }
-        else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + filename))
-        {
-            image = QImage(oxygine::Resource::RCC_PREFIX_PATH + filename);
+            image = QImage(imgPath);
         }
         oxygine::spResAnim pAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         m_backgroundAnims[index] = pAnim;

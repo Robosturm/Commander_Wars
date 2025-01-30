@@ -1,6 +1,7 @@
 #ifndef FILESUPPORT_H
 #define FILESUPPORT_H
 
+#include <QFile>
 #include <QObject>
 #include <QDataStream>
 #include <QCryptographicHash>
@@ -134,4 +135,4 @@ public:
     }
 };
 
-#endif // HASHING_H
+#endif // FILESUPPORT_H

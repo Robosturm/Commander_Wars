@@ -10,6 +10,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/audiomanager.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
@@ -56,16 +57,8 @@ CreditsMenue::CreditsMenue()
     connect(this, &CreditsMenue::sigExitMenue, this, &CreditsMenue::exitMenue, Qt::QueuedConnection);
 
     QFile file;
-    QString basePath = "resources/credits/credits.cred";
-    if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + basePath))
-    {
-        file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + basePath);
-    }
-    else
-    {
-        file.setFileName(basePath);
-    }
-    file.open(QIODevice::ReadOnly | QIODevice::Truncate);
+    file.setFileName(VirtualPaths::find("resources/credits/credits.cred"));
+    file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     while (!stream.atEnd())
     {

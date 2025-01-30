@@ -14,6 +14,7 @@
 
 #include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/weaponmanager.h"
@@ -163,27 +164,20 @@ TargetedUnitPathFindingSystem* CoreAI::createTargetedPfs(Unit* pUnit, const QVec
 
 void CoreAI::loadIni(QString file)
 {
-        AI_CONSOLE_PRINT("CoreAI::loadIni " + file, GameConsole::eDEBUG);
-        m_iniFiles.append(file);
-        QStringList searchFiles;
-        if (!file.isEmpty())
+    AI_CONSOLE_PRINT("CoreAI::loadIni " + file, GameConsole::eDEBUG);
+    m_iniFiles.append(file);
+    if (file.isEmpty())
+    {
+        return;
+    }
+    QStringList searchFiles = VirtualPaths::findAll("resources/aidata/" + file);
+    for (auto & file : searchFiles)
+    {
+        if (QFile::exists(file))
         {
-            searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/aidata/" + file);
-            searchFiles.append(Settings::getInstance()->getUserPath() + "resources/aidata/" + file);
-            // make sure to overwrite existing js stuff
-            for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
-            {
-                searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getInstance()->getMods().at(i) + "/aidata/" + file);
-                searchFiles.append(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + "/aidata/" + file);
-            }
+            readIni(file);
         }
-        for (auto & file : searchFiles)
-        {
-            if (QFile::exists(file))
-            {
-                readIni(file);
-            }
-        }
+    }
 }
 
 void CoreAI::readIni(QString name)
