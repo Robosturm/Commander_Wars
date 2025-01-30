@@ -114,7 +114,11 @@ void GameUpdater::onNewState(FileDownloader::State state)
     case FileDownloader::State::DownloadingFailed:
     {
         GameConsole::print("Downloading new version failed.", GameConsole::eINFO);
-        continueBooting();
+        spDialogMessageBox pMessageBox = MemoryManagement::create<DialogMessageBox>(QString(tr("Failed to download update. Continue with current version.")).arg(m_filedownloader.getLatestTag()));
+        spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+        pLoadingScreen->addChild(pMessageBox);
+        connect(pMessageBox.get(), &DialogMessageBox::sigOk, this, &GameUpdater::continueBooting, Qt::QueuedConnection);
+        m_updateTimer.start(33);
         break;
     }
     case FileDownloader::State::SameVersion:
