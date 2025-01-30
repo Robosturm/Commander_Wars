@@ -5,7 +5,7 @@
 
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/terrainmanager.h"
 #include "resource_management/gameanimationmanager.h"
@@ -683,7 +683,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
         addChild(pSprite);
         m_terrainSpriteName = spriteID;
         QImage img;
-        QString imgPath = Vfs::find(m_terrainSpriteName);
+        QString imgPath = VirtualPaths::find(m_terrainSpriteName);
         if (QFile::exists(imgPath))
         {
             img = QImage(imgPath);
@@ -711,7 +711,7 @@ bool Terrain::customSpriteExists() const
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(m_terrainSpriteName, oxygine::error_policy::ep_ignore_error);
     return pAnim != nullptr ||
-                    QFile::exists(Vfs::find(m_terrainSpriteName));
+                    QFile::exists(VirtualPaths::find(m_terrainSpriteName));
 }
 
 void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs, bool applyRulesPalette)

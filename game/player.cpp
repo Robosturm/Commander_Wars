@@ -1,7 +1,7 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/audiomanager.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "gameinput/basegameinputif.h"
 #include "gameinput/humanplayerinput.h"
@@ -228,7 +228,7 @@ bool Player::loadTableFromFile(const QString tablename)
 {
     CONSOLE_PRINT("Player::loadTableFromFile " + tablename, GameConsole::eDEBUG);
     bool found = false;
-    QStringList searchPaths = Vfs::createSearchPathRev("resources/images/colortables/");
+    QStringList searchPaths = VirtualPaths::createSearchPathRev("resources/images/colortables/");
     for (auto & path : searchPaths)
     {
         if (QFile::exists(path + tablename + ".png"))
@@ -392,7 +392,7 @@ bool Player::colorToTableInTable(QColor baseColor)
 {
     CONSOLE_PRINT("Player::colorToTableInTable", GameConsole::eDEBUG);
     bool found = false;
-    QStringList searchPaths = Vfs::createSearchPathRev("resources/images/colortables/");
+    QStringList searchPaths = VirtualPaths::createSearchPathRev("resources/images/colortables/");
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString path = searchPaths[i];
@@ -527,7 +527,7 @@ oxygine::spResAnim Player::getNeutralTableAnim()
     if (m_neutralTableAnim.get() == nullptr)
     {
         m_neutralTableAnim = MemoryManagement::create<oxygine::SingleResAnim>();
-        QStringList searchPaths = Vfs::createSearchPathRev("resources/images/colortables/");
+        QStringList searchPaths = VirtualPaths::createSearchPathRev("resources/images/colortables/");
         for (auto & path : searchPaths)
         {
             if (QFile::exists(path + "neutral.png"))

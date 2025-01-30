@@ -13,7 +13,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
 #include "coreengine/audiomanager.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 GameAnimation::GameAnimation(quint32 frameTime, GameMap* pMap)
     : m_frameTime(frameTime / Settings::getInstance()->getAnimationSpeed()),
@@ -252,7 +252,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
     else
     {
         QImage img;
-        QString imgPath = Vfs::find(spriteID);
+        QString imgPath = VirtualPaths::find(spriteID);
         if (QFile::exists(imgPath))
         {
             img = QImage(imgPath);

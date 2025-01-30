@@ -1,6 +1,6 @@
 #include <QFileInfo>
 
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/weaponmanager.h"
 
@@ -55,7 +55,7 @@ void WeaponManager::loadAll()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QTemporaryDir tempDir = Settings::getInstance()->newTempDir();
     QStringList data;
-    QFile file(Vfs::find("resources/scripts/weapons/weapon_csv_import.txt"));
+    QFile file(VirtualPaths::find("resources/scripts/weapons/weapon_csv_import.txt"));
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     QString jsHeader = stream.readAll();

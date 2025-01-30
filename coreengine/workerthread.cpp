@@ -12,7 +12,7 @@
 #include "coreengine/workerthread.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/userdata.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "menue/mainwindow.h"
 
@@ -127,7 +127,7 @@ void WorkerThread::start()
     pConsole->init();
     UiFactory::getInstance();
     // load General-Base Scripts
-    QStringList searchPaths = Vfs::createSearchPath("resources/scripts/general");
+    QStringList searchPaths = VirtualPaths::createSearchPath("resources/scripts/general");
     for (auto & path : searchPaths)
     {
         QStringList filter;

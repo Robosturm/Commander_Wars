@@ -4,7 +4,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include <QFile>
 #include <QFileInfo>
@@ -134,7 +134,7 @@ void AudioManager::createSoundCache()
     {
         if (Mainapp::getInstance()->isAudioThread())
         {
-            auto searchPath = Vfs::createSearchPathRev("resources/sounds/");
+            auto searchPath = VirtualPaths::createSearchPathRev("resources/sounds/");
             for (auto & folder : searchPath)
             {
                 if (QFile::exists(folder + "res.xml"))
@@ -552,7 +552,7 @@ bool AudioManager::tryAddMusic(QString file, qint64 startPointMs, qint64 endPoin
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        QString currentPath = Vfs::find(file);
+        QString currentPath = VirtualPaths::find(file);
         if (QFile::exists(currentPath))
         {
             m_player->m_player.stop();
@@ -633,7 +633,7 @@ void AudioManager::SlotLoadFolder(QString folder)
 {
 #ifdef AUDIOSUPPORT
     QStringList loadedSounds;
-    QStringList searchPath = Vfs::createSearchPathRev(folder);
+    QStringList searchPath = VirtualPaths::createSearchPathRev(folder);
     for (QString folder : searchPath)
     {
         loadMusicFolder(folder, loadedSounds);

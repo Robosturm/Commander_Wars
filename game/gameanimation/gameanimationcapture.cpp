@@ -6,7 +6,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/audiomanager.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "spritingsupport/spritecreator.h"
 
@@ -48,7 +48,7 @@ void GameAnimationCapture::addBuildingSprite(const QString spriteID, Player* sta
             m_buildingResAnim = MemoryManagement::create<oxygine::SingleResAnim>();
             m_captureBuildingResAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         }
-        QString path = Vfs::find(pAnim->getResPath());
+        QString path = VirtualPaths::find(pAnim->getResPath());
         if (QFile::exists(path))
         {
             QImage preCaptureImage(path);

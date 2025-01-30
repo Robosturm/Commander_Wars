@@ -11,7 +11,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
 #include "coreengine/gameconsole.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "coreengine/metatyperegister.h"
 #include "coreengine/globalutils.h"

@@ -11,7 +11,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 const char* const Campaign::scriptName = "campaignScript";
 
@@ -72,7 +72,7 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
         files.removeAt(0);
         for (qint32 i = 0; i < files.size(); ++i)
         {
-            QString path = Vfs::find(folder + files[i]);
+            QString path = VirtualPaths::find(folder + files[i]);
             if (QFile::exists(path))
             {
                 files[i] = path;
@@ -80,7 +80,7 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
             }
         }
 
-        QStringList searchPath = Vfs::createSearchPath(folder, false);
+        QStringList searchPath = VirtualPaths::createSearchPath(folder, false);
         for (qint32 i = 0; i < searchPath.size(); i++)
         {
             addDeveloperMaps(searchPath[i], files);

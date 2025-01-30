@@ -8,7 +8,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "menue/basegamemenu.h"
 
@@ -63,7 +63,7 @@ void GameScript::init()
     Interpreter* pInterpreter = Interpreter::getInstance();
     if (!m_scriptFile.isEmpty())
     {
-        QFile file = Vfs::find(m_scriptFile);
+        QFile file = VirtualPaths::find(m_scriptFile);
         if (file.exists())
         {
             CONSOLE_PRINT("Loading map script " + file.fileName(), GameConsole::eDEBUG);

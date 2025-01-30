@@ -10,7 +10,7 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/audiomanager.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
@@ -351,7 +351,7 @@ void GameAnimationDialog::loadBackground(const QString file)
     if (!file.isEmpty())
     {
         QImage img;
-        QString imgPath = Vfs::find(file);
+        QString imgPath = VirtualPaths::find(file);
         if (QFile::exists(imgPath))
         {
             img = QImage(imgPath);

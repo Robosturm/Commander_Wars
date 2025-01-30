@@ -11,7 +11,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "game/gamemap.h"
 
@@ -335,7 +335,7 @@ QStringList GlobalUtils::getFiles(const QString folder, const QStringList filter
 {
     QStringList ret;
 
-    QStringList paths = Vfs::createSearchPath("", false);
+    QStringList paths = VirtualPaths::createSearchPath("", false);
     for (const auto & path : std::as_const(paths))
     {
         QDirIterator dirIter(path + folder, filter, QDir::Files, QDirIterator::Subdirectories);

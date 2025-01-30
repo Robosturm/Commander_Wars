@@ -5,7 +5,7 @@
 #include <QStringList>
 #include <QFileInfoList>
 
-class Vfs final
+class VirtualPaths final
 {
     public:
 
@@ -51,8 +51,8 @@ class Vfs final
 
     private:
 
-    Vfs() = delete;
-    ~Vfs() = delete;
+    VirtualPaths() = delete;
+    ~VirtualPaths() = delete;
 
     static QStringList createSearchPathInternal(const QString& name, bool checkMods = true, bool firstPriority = false);
     static QStringList findAllInternal(const QString& name, bool checkMods = true, bool firstPriority = false);

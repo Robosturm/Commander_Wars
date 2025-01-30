@@ -11,7 +11,7 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/base/dropdownmenusprite.h"
@@ -293,7 +293,7 @@ void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
     if (!filename.isEmpty())
     {
         QImage image;
-        QString imgPath = Vfs::find(filename);
+        QString imgPath = VirtualPaths::find(filename);
         if (QFile::exists(imgPath))
         {
             image = QImage(imgPath);

@@ -14,7 +14,7 @@
 
 #include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/weaponmanager.h"
@@ -170,7 +170,7 @@ void CoreAI::loadIni(QString file)
     {
         return;
     }
-    QStringList searchFiles = Vfs::findAll("resources/aidata/" + file);
+    QStringList searchFiles = VirtualPaths::findAll("resources/aidata/" + file);
     for (auto & file : searchFiles)
     {
         if (QFile::exists(file))

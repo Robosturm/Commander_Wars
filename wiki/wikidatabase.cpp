@@ -1,6 +1,6 @@
 #include <QDirIterator>
 
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "wiki/wikidatabase.h"
 #include "wiki/fieldinfo.h"
@@ -108,7 +108,7 @@ void WikiDatabase::load()
     m_Entries.append(MemoryManagement::create<PageData>(tr("Damage Table"), DAMAGE_TABLE_NAME, QStringList({tr("Others")})));
 
     // load general wiki page
-    QStringList searchPaths = Vfs::createSearchPath("resources/scripts/wiki");
+    QStringList searchPaths = VirtualPaths::createSearchPath("resources/scripts/wiki");
     for (auto & path : searchPaths)
     {
         QStringList filter;

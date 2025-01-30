@@ -1,7 +1,7 @@
 #include <QFileInfo>
 #include <QDirIterator>
 
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/movementtablemanager.h"
 
@@ -29,7 +29,7 @@ void MovementTableManager::loadAll()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QTemporaryDir tempDir = Settings::getInstance()->newTempDir();
     QStringList data;
-    QFile file(Vfs::find("resources/scripts/movementtables/movement_csv_import.txt"));
+    QFile file(VirtualPaths::find("resources/scripts/movementtables/movement_csv_import.txt"));
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     QString jsHeader = stream.readAll();

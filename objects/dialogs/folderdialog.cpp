@@ -8,7 +8,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -51,7 +51,7 @@ FolderDialog::FolderDialog(QString startFolder)
     auto* pCurrentFolder = m_CurrentFolder.get();
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentFolder](oxygine::Event*)
     {
-        QDir folder(Vfs::find(pCurrentFolder->getCurrentText()));
+        QDir folder(VirtualPaths::find(pCurrentFolder->getCurrentText()));
         if (folder.exists())
         {
             emit sigFolderSelected(pCurrentFolder->getCurrentText());
@@ -98,7 +98,7 @@ void FolderDialog::showFolder(QString folder)
     folder = QDir(folder).absolutePath();
     folder = GlobalUtils::makePathRelative(folder);
     m_Items.clear();
-    QDir dir(Vfs::find(folder));
+    QDir dir(VirtualPaths::find(folder));
     if (!dir.exists())
     {
         if (!folder.isEmpty())
@@ -117,7 +117,7 @@ void FolderDialog::showFolder(QString folder)
     }
     else
     {
-        infoList = Vfs::list(folder);
+        infoList = VirtualPaths::list(folder);
     }
 
     qint32 itemCount = 0;

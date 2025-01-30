@@ -10,7 +10,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "objects/base/label.h"
 #include "objects/base/checkbox.h"
@@ -160,7 +160,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
             m_dropDownPlayer->init();
         }
         m_creationCount = 0;
-        QStringList uiFiles = Vfs::createSearchPath("resources/" + uiXml);
+        QStringList uiFiles = VirtualPaths::createSearchPath("resources/" + uiXml);
         m_lastCoordinates.setRect(0, 0, 0, 0);
         for (const auto & uiFile : std::as_const(uiFiles))
         {

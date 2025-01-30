@@ -4,9 +4,9 @@
 #include <QList>
 #include <QSet>
 
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
-const QStringList Vfs::emptyList;
+const QStringList VirtualPaths::emptyList;
 
 struct SearchPath final
 {
@@ -15,7 +15,7 @@ struct SearchPath final
 };
 static QList<SearchPath> searchPath;
 
-void Vfs::setSearchPath(const QString& userPath, const QStringList& mods)
+void VirtualPaths::setSearchPath(const QString& userPath, const QStringList& mods)
 {
     CONSOLE_PRINT("Initializing VFS...", GameConsole::eINFO);
 
@@ -89,7 +89,7 @@ static ProcessedName processName(const QString& pName)
     }
 }
 
-QString Vfs::find(const QString& pName, bool checkMods) {
+QString VirtualPaths::find(const QString& pName, bool checkMods) {
     auto name = processName(pName);
 
     QString newPath;
@@ -119,7 +119,7 @@ QString Vfs::find(const QString& pName, bool checkMods) {
     return ":/this_should_not_exist" + name.path;
 }
 
-QStringList Vfs::createSearchPathInternal(const QString& pName, bool checkMods, bool firstPriority)
+QStringList VirtualPaths::createSearchPathInternal(const QString& pName, bool checkMods, bool firstPriority)
 {
     auto name = processName(pName);
 
@@ -149,7 +149,7 @@ QStringList Vfs::createSearchPathInternal(const QString& pName, bool checkMods, 
     return list;
 }
 
-QStringList Vfs::findAllInternal(const QString& pName, bool checkMods, bool firstPriority)
+QStringList VirtualPaths::findAllInternal(const QString& pName, bool checkMods, bool firstPriority)
 {
     auto name = processName(pName);
 
@@ -185,12 +185,12 @@ QStringList Vfs::findAllInternal(const QString& pName, bool checkMods, bool firs
     return list;
 }
 
-QFileInfoList Vfs::list(const QString& name, const QStringList& filters, bool checkMods)
+QFileInfoList VirtualPaths::list(const QString& name, const QStringList& filters, bool checkMods)
 {
     QSet<QString> foundBaseNames;
     QFileInfoList infoList;
 
-    for (auto & path : Vfs::createSearchPathRev(name, checkMods))
+    for (auto & path : VirtualPaths::createSearchPathRev(name, checkMods))
     {
         QFileInfo pathInfo(path);
         if (pathInfo.exists() && pathInfo.isDir())

@@ -4,7 +4,7 @@
 #include "coreengine/userdata.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/gameconsole.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -114,7 +114,7 @@ void MapSelection::changeFolder(QString folder)
     }
     newFolder = QDir(newFolder).absolutePath();
     newFolder = GlobalUtils::makePathRelative(newFolder);
-    QStringList searchPaths = Vfs::createSearchPathRev(newFolder);
+    QStringList searchPaths = VirtualPaths::createSearchPathRev(newFolder);
     CONSOLE_PRINT("MapSelection::changeFolder. Relative Path: " + newFolder, GameConsole::eDEBUG);
     m_Files.clear();
     QStringList filterList;

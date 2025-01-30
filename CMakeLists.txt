@@ -636,7 +636,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/gameversion.h coreengine/gameversion.cpp
     coreengine/refobject.h
     coreengine/jsthis.h coreengine/jsthis.cpp
-    coreengine/vfs.h coreengine/vfs.cpp
+    coreengine/virtualpaths.h coreengine/virtualpaths.cpp
 
     # network engine
     network/smtpmailsender.h network/smtpmailsender.cpp
@@ -1047,7 +1047,7 @@ set(AppHeadersCxx
     coreengine/scriptvariables.h
     coreengine/settings.h
     coreengine/userdata.h
-    coreengine/vfs.h
+    coreengine/virtualpaths.h
     game/building.h
     game/co.h
     game/gameaction.h

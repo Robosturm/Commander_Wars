@@ -12,7 +12,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 
 template<class TClass>
@@ -141,7 +141,7 @@ void RessourceManagement<TClass>::loadRessources(QString resPath)
 {
     if (!resPath.isEmpty() && !Mainapp::getInstance()->getNoUi())
     {
-        QStringList searchPath = Vfs::createSearchPath("resources/" + resPath);
+        QStringList searchPath = VirtualPaths::createSearchPath("resources/" + resPath);
         for (qint32 i = 0; i < searchPath.size(); i++)
         {
             oxygine::Resources::loadXML(searchPath[i]);
@@ -211,7 +211,7 @@ QStringList RessourceManagement<TClass>::getSearchPaths()
     QStringList searchPaths;
     if (!m_scriptPath.isEmpty())
     {
-        searchPaths = Vfs::createSearchPath("resources/" + m_scriptPath);
+        searchPaths = VirtualPaths::createSearchPath("resources/" + m_scriptPath);
     }
     return searchPaths;
 }

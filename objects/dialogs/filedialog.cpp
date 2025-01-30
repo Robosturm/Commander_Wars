@@ -8,7 +8,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -185,7 +185,7 @@ void FileDialog::showFolder(QString folder)
     m_Items.clear();
     m_ResAnims.clear();
 
-    QDir dir(Vfs::find(folder));
+    QDir dir(VirtualPaths::find(folder));
     if (!dir.exists())
     {
         if (!folder.isEmpty())
@@ -203,7 +203,7 @@ void FileDialog::showFolder(QString folder)
     else
     {
         QStringList list = m_DropDownmenu->getCurrentItemText().split(";");
-        infoList = Vfs::list(folder, list);
+        infoList = VirtualPaths::list(folder, list);
     }
     qint32 itemCount = 0;
     for (qint32 i = 0; i < infoList.size(); i++)

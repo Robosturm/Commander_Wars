@@ -10,7 +10,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/audiomanager.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
@@ -57,7 +57,7 @@ CreditsMenue::CreditsMenue()
     connect(this, &CreditsMenue::sigExitMenue, this, &CreditsMenue::exitMenue, Qt::QueuedConnection);
 
     QFile file;
-    file.setFileName(Vfs::find("resources/credits/credits.cred"));
+    file.setFileName(VirtualPaths::find("resources/credits/credits.cred"));
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     while (!stream.atEnd())

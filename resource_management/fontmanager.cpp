@@ -1,6 +1,6 @@
 #include <QFontDatabase>
 
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 #include "resource_management/fontmanager.h"
 
@@ -15,7 +15,7 @@ FontManager::FontManager()
 #ifdef GRAPHICSUPPORT
     Interpreter::setCppOwnerShip(this);
     setObjectName("FontManager");
-    QStringList searchFolders = Vfs::createSearchPath("resources/fonts/");
+    QStringList searchFolders = VirtualPaths::createSearchPath("resources/fonts/");
     for (qint32 i = 0; i < searchFolders.size(); ++i)
     {
         QString folder = searchFolders[i];

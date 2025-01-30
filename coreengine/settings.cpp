@@ -25,7 +25,7 @@
 #include "coreengine/audiomanager.h"
 #include "coreengine/Gamepad.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/vfs.h"
+#include "coreengine/virtualpaths.h"
 
 const char* const Settings::DEFAULT_AUDIODEVICE = "@@default@@";
 
@@ -630,7 +630,7 @@ void Settings::setUserPath(const QString newUserPath)
         }
         m_userPath = folder;
     }
-    Vfs::setSearchPath(m_userPath, m_activeMods);
+    VirtualPaths::setSearchPath(m_userPath, m_activeMods);
 }
 
 bool Settings::getSmallScreenDevice()
@@ -1044,7 +1044,7 @@ void Settings::setActiveMods(const QStringList activeMods)
     qint32 i = 0;
     while (i < m_activeMods.size())
     {
-        QDir dir(Vfs::find(m_activeMods[i], false));
+        QDir dir(VirtualPaths::find(m_activeMods[i], false));
         if (!dir.exists())
         {
             CONSOLE_PRINT("Removing mod from active list: " + m_activeMods[i] + " because it wasn't found.", GameConsole::eWARNING);
@@ -1060,7 +1060,7 @@ void Settings::setActiveMods(const QStringList activeMods)
     {
         CONSOLE_PRINT("Loaded mod: " + mod, GameConsole::eDEBUG);
         bool found = false;
-        QFile file(Vfs::find(mod + "/mod.txt", false));
+        QFile file(VirtualPaths::find(mod + "/mod.txt", false));
         if (file.exists())
         {
             file.open(QFile::ReadOnly);
@@ -1081,7 +1081,7 @@ void Settings::setActiveMods(const QStringList activeMods)
             m_activeModVersions.append("1.0.0");
         }
     }
-    Vfs::setSearchPath(m_userPath, m_activeMods);
+    VirtualPaths::setSearchPath(m_userPath, m_activeMods);
 }
 
 bool Settings::getShowIngameCoordinates()
@@ -2004,7 +2004,7 @@ void Settings::getModInfos(QString mod, QString & name, QString & description, Q
                            QStringList & tags, QString & thumbnail)
 {
     name = mod;
-    QFile file(Vfs::find(mod + "/mod.txt", false));
+    QFile file(VirtualPaths::find(mod + "/mod.txt", false));
     isCosmetic = false;
     if (file.exists())
     {
@@ -2060,7 +2060,7 @@ void Settings::getModInfos(QString mod, QString & name, QString & description, Q
 QStringList Settings::getAvailableMods()
 {
     QFileInfoList infoList;
-    auto searchPath = Vfs::findAllRev("mods", false);
+    auto searchPath = VirtualPaths::findAllRev("mods", false);
     for (const auto & entry : searchPath)
     {
         if (QFile::exists(entry))
@@ -2222,7 +2222,7 @@ void Settings::setLanguage(const QString language)
     m_translators.clear();
     m_language = language;
 
-    QStringList searchPaths = Vfs::findAll("resources/translation/lang_" + m_language + ".qm");
+    QStringList searchPaths = VirtualPaths::findAll("resources/translation/lang_" + m_language + ".qm");
     for (const auto & file : searchPaths)
     {
         auto translator = MemoryManagement::createNamedQObject<QTranslator>("QTranslator");
@@ -2243,7 +2243,7 @@ QStringList Settings::getLanguageNames()
 {
      QLocale english("en");
      QStringList items = {english.nativeLanguageName()};
-     QStringList paths = Vfs::createSearchPath("resources/translation/");
+     QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
      QStringList filter;
      filter << "*.qm";
      for (const QString & path : std::as_const(paths))
@@ -2266,7 +2266,7 @@ QStringList Settings::getLanguageNames()
 QStringList Settings::getLanguageIds()
 {
      QStringList languages = {"en"};
-     QStringList paths = Vfs::createSearchPath("resources/translation/");
+     QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
      QStringList filter;
      filter << "*.qm";
      for (const QString & path : std::as_const(paths))
@@ -2288,7 +2288,7 @@ QStringList Settings::getLanguageIds()
 qint32 Settings::getCurrentLanguageIndex()
 {
      qint32 current = 0;
-     QStringList paths = Vfs::createSearchPath("resources/translation/");
+     QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
      QStringList filter;
      filter << "*.qm";
      qint32 i = 0;
