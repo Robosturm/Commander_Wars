@@ -6,36 +6,29 @@
 
 #include "coreengine/virtualpaths.h"
 
-const QStringList VirtualPaths::emptyList;
-
-struct SearchPath final
-{
-    QString root;
-    bool isModPath = false;
-};
-static QList<SearchPath> searchPath;
+QList<VirtualPaths::SearchPathInfo> VirtualPaths::m_searchPath;
 
 void VirtualPaths::setSearchPath(const QString& userPath, const QStringList& mods)
 {
     CONSOLE_PRINT("Initializing VFS...", GameConsole::eINFO);
 
-    searchPath.clear();
+    m_searchPath.clear();
 
-    searchPath.append({ userPath });
+    m_searchPath.append({ userPath });
 
 #ifndef USEAPPCONFIGPATH
     // USEAPPCONFIGPATH is primarily set on Linux, where the "current directory" of programs launched from the start
     // menu is normally the user's home directory. This is very unexpected behavior, and this should not be checked.
     if (QFileInfo(".") != QFileInfo(userPath))
     {
-        searchPath.append({ "." });
+        m_searchPath.append({ "." });
     }
 #endif
 
     for (const auto & mod : std::as_const(mods))
     {
-        searchPath.append({ userPath + mod, true });
-        searchPath.append({ oxygine::Resource::RCC_PREFIX_PATH + mod, true });
+        m_searchPath.append({ userPath + mod, true });
+        m_searchPath.append({ oxygine::Resource::RCC_PREFIX_PATH + mod, true });
     }
 
 #ifdef DEPLOY_RESOURCES_AS_FOLDER
@@ -46,54 +39,48 @@ void VirtualPaths::setSearchPath(const QString& userPath, const QStringList& mod
 #endif
 #endif
 
-    searchPath.append({ oxygine::Resource::RCC_PREFIX_PATH });
+    m_searchPath.append({ oxygine::Resource::RCC_PREFIX_PATH });
 
-    for (auto & path : searchPath)
+    for (auto & path : m_searchPath)
     {
         CONSOLE_PRINT("- Path: " + path.root + (path.isModPath ? " (mod data)" : ""), GameConsole::eINFO);
     }
 }
 
-struct ProcessedName final
-{
-    QString path;
-    bool isResources = false;
-    QString resourcesPath = "";
-};
-static ProcessedName processName(const QString& pName)
+VirtualPaths::ProcessedName VirtualPaths::processName(const QString& pName)
 {
     // Strip leading slashes
     QString name = pName;
     while (name.startsWith("/"))
+    {
         name = name.last(name.length() - 1);
-
-    // Search for the root directory itself.
-    if (name.isEmpty())
-    {
-        return { "" };
     }
+    // Search for the root directory itself.
+    ProcessedName result{""};
     // Search for the resources directory itself.
-    else if (name == "resources" || name == "resources/")
+    if (name == "resources" || name == "resources/")
     {
-        return { "/" + name, true, name.last(name.length() - 9) };
+        result = ProcessedName { "/" + name, name.last(name.length() - 9), true };
     }
     // Search for a file in the resources directory
     else if (name.startsWith("resources/"))
     {
-        return { "/" + name, true, name.last(name.length() - 9) };
+        result = ProcessedName { "/" + name, name.last(name.length() - 9), true };
     }
     // Search for a file anywhere else
     else
     {
-        return { "/" + name };
+        result = ProcessedName { "/" + name };
     }
+    return result;
 }
 
-QString VirtualPaths::find(const QString& pName, bool checkMods) {
+QString VirtualPaths::find(const QString& pName, bool checkMods)
+{
     auto name = processName(pName);
 
     QString newPath;
-    for (auto & path : searchPath)
+    for (auto & path : m_searchPath)
     {
         if (!checkMods && path.isModPath)
         {
@@ -105,8 +92,7 @@ QString VirtualPaths::find(const QString& pName, bool checkMods) {
         {
             return newPath;
         }
-
-        if (name.isResources && path.isModPath)
+        else if (name.isResources && path.isModPath)
         {
             newPath = path.root + name.resourcesPath;
             if (QFileInfo(newPath).exists())
@@ -115,8 +101,7 @@ QString VirtualPaths::find(const QString& pName, bool checkMods) {
             }
         }
     }
-
-    return ":/this_should_not_exist" + name.path;
+    return "";
 }
 
 QStringList VirtualPaths::createSearchPathInternal(const QString& pName, bool checkMods, bool firstPriority)
@@ -125,7 +110,7 @@ QStringList VirtualPaths::createSearchPathInternal(const QString& pName, bool ch
 
     QStringList list;
     QString newPath;
-    for (auto & path : searchPath)
+    for (auto & path : m_searchPath)
     {
         if (!checkMods && path.isModPath)
         {
@@ -155,7 +140,7 @@ QStringList VirtualPaths::findAllInternal(const QString& pName, bool checkMods, 
 
     QStringList list;
     QString newPath;
-    for (auto & path : searchPath)
+    for (auto & path : m_searchPath)
     {
         if (!checkMods && path.isModPath)
         {

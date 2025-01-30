@@ -7,9 +7,22 @@
 
 class VirtualPaths final
 {
-    public:
+    struct SearchPathInfo final
+    {
+        QString root;
+        bool isModPath = false;
+    };
 
-    static void setSearchPath(const QString& userPath, const QStringList& mods = emptyList);
+    struct ProcessedName final
+    {
+        QString path;
+        QString resourcesPath;
+        bool isResources = false;
+    };
+
+public:
+
+    static void setSearchPath(const QString& userPath, const QStringList& mods = QStringList());
 
     /**
      * Locates the real path for a resource, or a file path guaranteed not to exist if it is not found.
@@ -47,17 +60,19 @@ class VirtualPaths final
     /**
      * Lists all files in a particular directory.
      */
-    static QFileInfoList list(const QString& name, const QStringList& filters = emptyList, bool checkMods = true);
+    static QFileInfoList list(const QString& name, const QStringList& filters = QStringList(), bool checkMods = true);
 
-    private:
+private:
 
     VirtualPaths() = delete;
     ~VirtualPaths() = delete;
 
     static QStringList createSearchPathInternal(const QString& name, bool checkMods = true, bool firstPriority = false);
     static QStringList findAllInternal(const QString& name, bool checkMods = true, bool firstPriority = false);
+    static VirtualPaths::ProcessedName processName(const QString& pName);
 
-    static const QStringList emptyList;
+private:
+    static QList<SearchPathInfo> m_searchPath;
 };
 
 #endif // COREENGINE_VFS_H
