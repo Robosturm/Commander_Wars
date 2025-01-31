@@ -174,7 +174,11 @@ QFileInfoList VirtualPaths::list(const QString& name, const QStringList& filters
 {
     QSet<QString> foundBaseNames;
     QFileInfoList infoList;
-
+    QDir upDir(name + "/..");
+    if (upDir.exists())
+    {
+        infoList.append(QFileInfo(upDir.dirName()));
+    }
     for (auto & path : VirtualPaths::createSearchPathRev(name, checkMods))
     {
         QFileInfo pathInfo(path);

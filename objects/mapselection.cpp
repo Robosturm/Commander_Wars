@@ -138,10 +138,6 @@ void MapSelection::changeFolder(QString folder)
             addFiles(newFolder, searchPaths, filterList, filter);
         }
     }
-    std::sort(m_Files.begin(), m_Files.end(), [](const QString& lhs, const QString& rhs)
-    {
-        return lhs < rhs;
-    });
     m_currentFolder = newFolder;
     updateSelection();
     if (m_currentIdx < m_Files.size() && m_currentIdx >= 0)
@@ -153,6 +149,7 @@ void MapSelection::changeFolder(QString folder)
 
 void MapSelection::addFiles(const QString & newFolder, const QStringList & searchPaths, QStringList filterList, QDir::Filter filter)
 {
+    QStringList files;
     for (auto & path : searchPaths)
     {
         QFileInfo upFolder(path + "..");
@@ -193,7 +190,7 @@ void MapSelection::addFiles(const QString & newFolder, const QStringList & searc
                 }
                 QString baseName = infoItem.completeBaseName();
                 bool add = true;
-                for (const auto & item : m_Files)
+                for (const auto & item : files)
                 {
                     auto items = item.split("/");
                     if (items[items.size() - 1] == baseName)
@@ -204,15 +201,20 @@ void MapSelection::addFiles(const QString & newFolder, const QStringList & searc
                 }
                 if (add)
                 {
-                    m_Files.append(currentPath);
+                    files.append(currentPath);
                 }
             }
             else if (infoItem.isFile())
             {
-                m_Files.append(infoItem.canonicalFilePath());
+                files.append(infoItem.canonicalFilePath());
             }
         }
     }
+    std::sort(files.begin(), files.end(), [](const QString& lhs, const QString& rhs)
+              {
+                  return lhs < rhs;
+              });
+    m_Files.append(files);
 }
 
 void MapSelection::addNewSelectionItem(qint32 i, qint32 & y)
