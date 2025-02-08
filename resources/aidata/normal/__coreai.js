@@ -57,6 +57,7 @@ var COREAI =
     heavyAirUnits : ["BOMBER", "FIGHTER", "STEALTHBOMBER", "ZCOUNIT_KIROV"],
     lightAirUnits : ["K_HELI", "DUSTER", "WATERPLANE"],
     supplyUnits : ["APC", "ZCOUNIT_LOGIC_TRUCK", "ZCOUNIT_LOGIC_TRUCK", "ZCOUNIT_REPAIR_TANK", "ZCOUNIT_REPAIR_TANK"],
+    navalSupplyUnits : ["BLACK_BOAT"],
     antiTankUnits : ["ANTITANKCANNON", "NEOTANK", "MEGATANK"],    
     mediumTankUnits : ["HEAVY_TANK", "NEOTANK"],
     antiMediumTankBuildUnits : ["HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "NEOTANK", "BOMBER"],
@@ -435,6 +436,18 @@ var COREAI =
              COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight()))
         {
             system.addForcedProduction(COREAI.supplyUnits);
+        }
+        var variables = system.getVariables();
+        var variableNavalBattle = variables.createVariable("NAVALBATTLE");
+        var naval = variableNavalBattle.readDataInt32();
+        
+        var blackboatCount = ai.getUnitCount(units, COREAI.navalSupplyUnits);
+        var hasNavalFlag = map.hasMapFlags(GameEnums.MapFilterFlags_Naval);
+        if (blackboatCount === 0 &&
+            turn >= COREAI.minApcResupplyDay &&
+            (lowFuelUnitCount > 2 && naval > 0))
+        {
+            system.addForcedProduction(COREAI.navalSupplyUnits);
         }
     },
 
