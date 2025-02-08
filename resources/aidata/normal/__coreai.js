@@ -90,6 +90,7 @@ var COREAI =
     reconCounterUnitBalance : 2.5,
     ownCounterUnitMinHp : 7,
     enemyCounterUnitMinHp : 5,
+    lowLevelFuelUnitCount : 2,
     // building variables
     minMaxFundsPerFactory : 10000,
     minMaxFundsOvercharge : 7000,
@@ -432,20 +433,19 @@ var COREAI =
         var apcCount = ai.getUnitCount(units, COREAI.supplyUnits);
         if (apcCount === 0 &&
             turn >= COREAI.minApcResupplyDay &&
-            (lowFuelUnitCount > 2 ||
+            (lowFuelUnitCount > COREAI.lowLevelFuelUnitCount ||
              COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight()))
         {
             system.addForcedProduction(COREAI.supplyUnits);
         }
+
         var variables = system.getVariables();
         var variableNavalBattle = variables.createVariable("NAVALBATTLE");
-        var naval = variableNavalBattle.readDataInt32();
-        
-        var blackboatCount = ai.getUnitCount(units, COREAI.navalSupplyUnits);
-        var hasNavalFlag = map.hasMapFlags(GameEnums.MapFilterFlags_Naval);
-        if (blackboatCount === 0 &&
+        var naval = variableNavalBattle.readDataInt32();        
+        var navalSupplyUnits = ai.getUnitCount(units, COREAI.navalSupplyUnits);
+        if (navalSupplyUnits === 0 &&
             turn >= COREAI.minApcResupplyDay &&
-            (lowFuelUnitCount > 2 && naval > 0))
+            (lowFuelUnitCount > COREAI.lowLevelFuelUnitCount && naval > 0))
         {
             system.addForcedProduction(COREAI.navalSupplyUnits);
         }
