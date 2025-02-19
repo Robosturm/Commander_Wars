@@ -32,7 +32,7 @@ void VirtualPaths::setSearchPath(const QString& userPath, const QStringList& mod
     }
 
 #ifdef DEPLOY_RESOURCES_AS_FOLDER
-    searchPath.append({ QCoreApplication::applicationDirPath() });
+    m_searchPath.append({ QCoreApplication::applicationDirPath() });
 
 #ifdef __linux__
     searchPath.append({ QCoreApplication::applicationDirPath() + "/../share/commander_wars" });
