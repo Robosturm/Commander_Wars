@@ -43,7 +43,7 @@ jobs:
             target: 'desktop'
             qtPath: 'mingw_64'
             qtTools: 'tools_mingw1310'
-            installerCommands1: choco install openssl --version=3.3.2 --force -y --install-arguments="'/DIR=C:/openSsl/'"
+            installerCommands1: choco install openssl --version=3.4.1 --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
             asset_file: 'Commander_Wars-Win10_x64'
@@ -55,7 +55,7 @@ jobs:
             target: 'desktop'
             qtPath: 'mingw_64'
             qtTools: 'tools_mingw1310'
-            installerCommands1: choco install openssl --version=3.3.2 --force -y --install-arguments="'/DIR=C:/openSsl/'"
+            installerCommands1: choco install openssl --version=3.4.1 --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
             asset_file: 'Commander_Wars_Dedicated_Server-Win10_x64'
