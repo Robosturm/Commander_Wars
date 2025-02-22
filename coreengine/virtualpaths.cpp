@@ -35,7 +35,7 @@ void VirtualPaths::setSearchPath(const QString& userPath, const QStringList& mod
     m_searchPath.append({ QCoreApplication::applicationDirPath() });
 
 #ifdef __linux__
-    searchPath.append({ QCoreApplication::applicationDirPath() + "/../share/commander_wars" });
+    m_searchPath.append({ QCoreApplication::applicationDirPath() + "/../share/commander_wars" });
 #endif
 #endif
 
