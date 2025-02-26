@@ -78,7 +78,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>400</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","E-Mail-Address of your account.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","E-Mail address of your account.")</tooltip>
                 <startValue>""</startValue>
                 <onEvent>DeleteAccountDialog.emailAdress(input);</onEvent>
             </Textbox>
