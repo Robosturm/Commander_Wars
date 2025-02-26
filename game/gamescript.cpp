@@ -6,7 +6,6 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
-#include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/virtualpaths.h"
 
@@ -81,6 +80,11 @@ void GameScript::init()
             m_script = "";
             m_loaded = false;
         }
+    }
+    else
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->deleteObject(m_scriptName);
     }
 }
 
@@ -210,4 +214,8 @@ QString GameScript::getScriptFile() const
 void GameScript::setScriptFile(const QString & value)
 {
     m_scriptFile = value;
+    if (m_scriptFile.isEmpty())
+    {
+        m_script = "";
+    }
 }

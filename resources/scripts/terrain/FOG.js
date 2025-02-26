@@ -132,10 +132,6 @@ var Constructor = function()
     {
         return "placeReaf.wav";
     };
-    this.useTerrainAsBaseTerrain = function()
-    {
-        return true;
-    };
 };
 Constructor.prototype = TERRAIN;
 var FOG = new Constructor();

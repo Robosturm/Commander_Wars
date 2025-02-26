@@ -8,7 +8,7 @@ cd "$dir/.."
 
 # Download linuxdeploy
 LINUXDEPLOY="distribution/linuxdeploy-x86_64-2.0.0-alpha-1-20241106.AppImage"
-LINUXDEPLOY_URL="https://github.com/linuxdeploy/linuxdeploy/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-x86_64.AppImage"
+LINUXDEPLOY_URL="https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20250213-2/linuxdeploy-x86_64.AppImage"                 
 
 LINUXDEPLOY_QT="distribution/linuxdeploy-plugin-qt-x86_64-2.0.0-patched.AppImage"
 LINUXDEPLOY_QT_URL="https://github.com/Lymia/linuxdeploy-plugin-qt/releases/download/patch-exclude-library/linuxdeploy-plugin-qt-static-x86_64.AppImage"
