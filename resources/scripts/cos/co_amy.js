@@ -336,7 +336,7 @@ var Constructor = function()
         {
             values = [CO_AMY.d2dMovementBonus, CO_AMY.d2dHoverCraftBoost];
         }
-        var text = qsTr("\nGlobal Effect: \nHer hovercraft have +%0 movement and gain +%1% firepower. ");
+        var text = qsTr("\nGlobal Effect: \nHer hovercraft have +%0 movement and +%1% firepower. ");
         if (map === null ||
             (map !== null && map.getGameRules().getCoGlobalD2D()))
         {
