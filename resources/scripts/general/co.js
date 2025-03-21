@@ -16,7 +16,6 @@ var CO =
             co.setPowerFilled(co.getPowerFilled() * (1 - gamerules.getPowerLoose()));
         }
     },
-    onCOUnitLost : null,
 
     getCoGroupModifier : function (co, system, unitIds, map)
     {

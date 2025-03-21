@@ -1,4 +1,4 @@
-CO_HACHI.powerCostReduction = -0.5;
+CO_HACHI.powerCostReduction = 0.5;
 CO_HACHI.powerOffBonus = 0;
 CO_HACHI.powerDefBonus = 10;
 
