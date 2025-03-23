@@ -113,7 +113,7 @@ namespace oxygine
         if (!file.exists() || file.size() == 0)
         {
             CONSOLE_PRINT_MODULE("can't load xml file: '" + xmlFile + "'", GameConsole::eDEBUG, GameConsole::eResources);
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::loadXML can't find xml file: " + xmlFile);
+            oxygine::handleErrorPolicy(oxygine::ep_ignore_error, "Resources::loadXML can't find xml file: " + xmlFile);
             return false;
         }
         file.open(QIODevice::ReadOnly);

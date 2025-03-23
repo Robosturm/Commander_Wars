@@ -253,7 +253,7 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
             }
         }
     }
-    for (qint32 i = 0; i < searchPaths.size(); i++)
+    for (qint32 i = searchPaths.size() - 1; i >= 0; i--)
     {
         QString path = searchPaths[i];
         QStringList filter;
@@ -281,7 +281,7 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
             }
         }
     }
-    for (qint32 i = 0; i < searchPaths.size(); i++)
+    for (qint32 i = searchPaths.size() - 1; i >= 0; i--)
     {
         QString path = searchPaths[i];
         QStringList filter;
