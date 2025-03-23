@@ -138,7 +138,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>250</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","The heigth of the map.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The height of the map.")</tooltip>
                 <startValue>mapEdit.getMapHeight()</startValue>
                 <infinite>1</infinite>
                 <min>1</min>
@@ -210,7 +210,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is predeoployed.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is predeployed.")</tooltip>
                 <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Predeployed)</startValue>
                 <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Predeployed, input);</onEvent>
             </Checkbox>
@@ -241,14 +241,14 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>250</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Symetric:")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","Symmetric:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is symetric.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is symmetric.")</tooltip>
                 <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Symetric)</startValue>
                 <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Symetric, input);</onEvent>
             </Checkbox>
@@ -323,7 +323,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as historical map.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as a historical map.")</tooltip>
                 <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Historical)</startValue>
                 <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Historical, input);</onEvent>
             </Checkbox>
@@ -346,7 +346,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as low funds map.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as a low funds map.")</tooltip>
                 <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_LowFunds)</startValue>
                 <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_LowFunds, input);</onEvent>
             </Checkbox>
@@ -361,7 +361,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as high funds map.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as a high funds map.")</tooltip>
                 <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_HighFunds)</startValue>
                 <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_HighFunds, input);</onEvent>
             </Checkbox>
@@ -384,7 +384,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as naval map.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as a naval map.")</tooltip>
                 <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Naval)</startValue>
                 <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Naval, input);</onEvent>
             </Checkbox>
@@ -399,7 +399,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as amphibious map.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as an amphibious map.")</tooltip>
                 <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Amphibious)</startValue>
                 <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Amphibious, input);</onEvent>
             </Checkbox>
@@ -414,7 +414,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as ground map.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as a ground map.")</tooltip>
                 <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Ground)</startValue>
                 <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Ground, input);</onEvent>
             </Checkbox>
@@ -429,7 +429,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as air map.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as an air map.")</tooltip>
                 <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Air)</startValue>
                 <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Air, input);</onEvent>
             </Checkbox>
@@ -459,7 +459,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as scripted map.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as a scripted map.")</tooltip>
                 <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Scripted)</startValue>
                 <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Scripted, input);</onEvent>
             </Checkbox>

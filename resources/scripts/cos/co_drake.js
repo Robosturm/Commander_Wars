@@ -369,7 +369,7 @@ var Constructor = function()
         }
         var text = qsTr("\nSpecial Unit:\nMissile Submarine\n\n" +
                     "Global Effect: \nDrake's naval units gain +%0 movement, +%1% firepower, and +%2% defence. His air units have %3% firepower." +
-                    "\n\nCO Zone Effect: \nDrake's naval units gain +%4% firepower and +%5% defence. His air units have -%6% firepower and gain +%7% defence. All of his other units gain +%8% firepower and +%7% defence.");
+                    "\n\nCO Zone Effect: \nDrake's naval units gain +%4% firepower and +%5% defence. His air units have %6% firepower and gain +%7% defence. All of his other units gain +%8% firepower and +%7% defence.");
         text = replaceTextArgs(text, [values[0], values[1], values[2], values[3],
                                       CO_DRAKE.d2dCoZoneNavalOffBonus, CO_DRAKE.d2dCoZoneNavalDefBonus, CO_DRAKE.d2dCoZoneAirOffBonus, CO_DRAKE.d2dCoZoneDefBonus, CO_DRAKE.d2dCoZoneOtherOffBonus]);
         return text;

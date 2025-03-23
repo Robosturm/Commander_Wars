@@ -248,7 +248,7 @@ var Constructor = function()
         {
             values = [CO_BRENNER.d2dDefBonus];
         }
-        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nBrenner's units gain +%0% defence.") +
+        var text = qsTr("\nSpecial Unit:\nRepair Tank\n\nGlobal Effect: \nBrenner's units gain +%0% defence.") +
                    qsTr("\n\nCO Zone Effect: \nBrenner's units gain +%1% firepower and +%2% defence.");
         text = replaceTextArgs(text, [values[0], CO_BRENNER.d2dCoZoneOffBonus, CO_BRENNER.d2dCoZoneDefBonus]);
         return text;

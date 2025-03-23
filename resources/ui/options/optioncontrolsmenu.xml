@@ -577,7 +577,7 @@
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Key for quiting a running match.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key for quitting a running match.")</tooltip>
                 <startValue>settings.getKey_Escape()</startValue>
                 <onEvent>settings.setKey_Escape(input)</onEvent>
             </SelectKey>
