@@ -114,6 +114,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Rotate map X 90°"),   "ROTATEX90",    1, tr("Rotates the upper left quarter into the upper right quarter of the map and rotates the lower right quarter into the lower left quarter of the map "));
     m_Topbar->addItem(tr("Rotate map Y 180°"),  "ROTATEY",      1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
     m_Topbar->addItem(tr("Rotate map Y 90°"),   "ROTATEY90",    1, tr("Rotates the upper left quarter into the lower left quarter of the map and rotates the lower right quarter into the upper right quarter of the map "));
+    m_Topbar->addItem(tr("Rotate map 90°"),     "ROTATE90",    1, tr("Rotates the upper left quarter into all other quarters."));
     m_Topbar->addItem(tr("Random map"),         "RANDOMMAP",    1, tr("Creates a new random map."));
     m_Topbar->addItem(tr("Toggle grid ") + SelectKey::getKeycodeText(Settings::getInstance()->getKey_toggleGridLayout()), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
     m_Topbar->addItem(tr("Toggle cross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
@@ -398,6 +399,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         MenuItem("ROTATEY",             &EditorMenue::rotateY),        
         MenuItem("ROTATEX90",           &EditorMenue::rotateX90),
         MenuItem("ROTATEY90",           &EditorMenue::rotateY90),
+        MenuItem("ROTATE90",            &EditorMenue::rotate90),
         MenuItem("RANDOMMAP",           &EditorMenue::showRandomMap),
         MenuItem("PLACESELECTION",      &EditorMenue::changePlaceSelection),
         MenuItem("DELETEUNITS",         &EditorMenue::deleteUnits),
@@ -784,6 +786,13 @@ void EditorMenue::rotateY90()
     createTempFile();
     spGameMap  pGameMap = m_pMap;
     pGameMap->rotateY90();
+}
+
+void EditorMenue::rotate90()
+{
+    createTempFile();
+    spGameMap  pGameMap = m_pMap;
+    pGameMap->rotate90();
 }
 
 void EditorMenue::showRandomMap()

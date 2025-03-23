@@ -325,6 +325,10 @@ public slots:
      */
     void rotateY90();
     /**
+     * @brief rotate90
+     */
+    void rotate90();
+    /**
      * @brief showRandomMap
      */
     void showRandomMap();

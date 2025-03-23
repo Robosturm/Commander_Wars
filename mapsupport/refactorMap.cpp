@@ -724,3 +724,122 @@ void GameMap::rotateY()
     centerMap(getMapWidth() / 2, getMapHeight() / 2);
     Mainapp::getInstance()->continueRendering();
 }
+
+void GameMap::rotate90()
+{
+    Mainapp::getInstance()->pauseRendering();
+    qint32 currentHeigth = getMapHeight();
+    qint32 currentWidth = getMapWidth();
+    // upper left quarter gets rotated to upper right
+    for (qint32 y = 0; y < currentHeigth / 2; y++)
+    {
+        for (qint32 x = 0; x < currentWidth / 2; x++)
+        {
+            spTerrain sourceTerrain = m_fields[y][x];
+            qint32 targetX = currentWidth - y - 1;
+            qint32 targetY = x;
+            if (onMap(x, y))
+            {
+                spTerrain targetTerrain = m_fields[targetY][targetX];
+                targetTerrain->detach();
+                targetTerrain = Terrain::createTerrain(sourceTerrain->getTerrainID(), targetX, targetY, sourceTerrain->getBaseTerrainID(), this);
+                m_rowSprites[targetY]->addChild(targetTerrain);
+                m_fields[targetY][targetX] = targetTerrain;
+                targetTerrain->setPosition(targetX * m_imagesize, targetY * m_imagesize);
+
+                spBuilding pCurrentBuilding = sourceTerrain->getSpBuilding();
+                if (sourceTerrain->getBuilding() != nullptr)
+                {
+                    spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), this);
+                    pBuilding->setOwner(pCurrentBuilding->getOwner());
+                    targetTerrain->setBuilding(pBuilding);
+                }
+
+                spUnit pCurrentUnit = sourceTerrain->getSpUnit();
+                if (pCurrentUnit.get() != nullptr)
+                {
+                    spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
+                    targetTerrain->setUnit(pUnit);
+                    pUnit->setAiMode(pCurrentUnit->getAiMode());
+                }
+            }
+        }
+    }
+
+    // upper left quarter gets rotated to lower left
+    for (qint32 y = 0; y < currentHeigth / 2; y++)
+    {
+        for (qint32 x = 0; x < currentWidth / 2; x++)
+        {
+            spTerrain sourceTerrain = m_fields[y][x];
+            qint32 targetX = y;
+            qint32 targetY = currentHeigth - x - 1;
+            if (onMap(x, y))
+            {
+                spTerrain targetTerrain = m_fields[targetY][targetX];
+                targetTerrain->detach();
+                targetTerrain = Terrain::createTerrain(sourceTerrain->getTerrainID(), targetX, targetY, sourceTerrain->getBaseTerrainID(), this);
+                m_rowSprites[targetY]->addChild(targetTerrain);
+                m_fields[targetY][targetX] = targetTerrain;
+                targetTerrain->setPosition(targetX * m_imagesize, targetY * m_imagesize);
+
+                spBuilding pCurrentBuilding = sourceTerrain->getSpBuilding();
+                if (sourceTerrain->getBuilding() != nullptr)
+                {
+                    spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), this);
+                    pBuilding->setOwner(pCurrentBuilding->getOwner());
+                    targetTerrain->setBuilding(pBuilding);
+                }
+
+                spUnit pCurrentUnit = sourceTerrain->getSpUnit();
+                if (pCurrentUnit.get() != nullptr)
+                {
+                    spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
+                    targetTerrain->setUnit(pUnit);
+                    pUnit->setAiMode(pCurrentUnit->getAiMode());
+                }
+            }
+        }
+    }
+
+    // upper left quarter gets rotated to lower right
+    for (qint32 y = 0; y < currentHeigth / 2; y++)
+    {
+        for (qint32 x = 0; x < currentWidth / 2; x++)
+        {
+            spTerrain sourceTerrain = m_fields[y][x];
+            qint32 targetX = currentWidth - x - 1;
+            qint32 targetY = currentHeigth - y - 1;
+            if (onMap(x, y))
+            {
+                spTerrain targetTerrain = m_fields[targetY][targetX];
+                targetTerrain->detach();
+                targetTerrain = Terrain::createTerrain(sourceTerrain->getTerrainID(), targetX, targetY, sourceTerrain->getBaseTerrainID(), this);
+                m_rowSprites[targetY]->addChild(targetTerrain);
+                m_fields[targetY][targetX] = targetTerrain;
+                targetTerrain->setPosition(targetX * m_imagesize, targetY * m_imagesize);
+
+                spBuilding pCurrentBuilding = sourceTerrain->getSpBuilding();
+                if (sourceTerrain->getBuilding() != nullptr)
+                {
+                    spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), this);
+                    pBuilding->setOwner(pCurrentBuilding->getOwner());
+                    targetTerrain->setBuilding(pBuilding);
+                }
+
+                spUnit pCurrentUnit = sourceTerrain->getSpUnit();
+                if (pCurrentUnit.get() != nullptr)
+                {
+                    spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
+                    targetTerrain->setUnit(pUnit);
+                    pUnit->setAiMode(pCurrentUnit->getAiMode());
+                }
+            }
+        }
+    }
+
+
+    updateSprites(-1, -1, true);
+    centerMap(getMapWidth() / 2, getMapHeight() / 2);
+    Mainapp::getInstance()->continueRendering();
+}
