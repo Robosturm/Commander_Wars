@@ -19,6 +19,7 @@
 #include "objects/base/label.h"
 #include "objects/base/textbox.h"
 #include "objects/base/spinbox.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
     : m_pUnit(pUnit),
@@ -60,6 +61,7 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
     connect(this, &DialogModifyUnit::sigLoadUnit, this, &DialogModifyUnit::loadUnit, Qt::QueuedConnection);
     updateData();
     connect(this, &DialogModifyUnit::sigFinished, this, &DialogModifyUnit::remove, Qt::QueuedConnection);
+    connect(this, &DialogModifyUnit::sigShowEditLoadedUnit, this, &DialogModifyUnit::showEditLoadedUnit, Qt::QueuedConnection);
 }
 
 void DialogModifyUnit::remove()
@@ -361,6 +363,14 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
     if (pLoadedUnit != nullptr)
     {
         pDropdownmenu->setCurrentItem(pLoadedUnit->getUnitID());
+        oxygine::spButton pButton = ObjectManager::createButton(tr("Edit unit"), 200, "Edit this loaded unit", "button");
+        pButton->addClickListener([this, pLoadedUnit](oxygine::Event*)
+        {
+            emit sigShowEditLoadedUnit(m_pMap, pLoadedUnit);
+        });
+        pButton->setY(pDropdownmenu->getY());
+        pButton->setX(pDropdownmenu->getX() + pDropdownmenu->getWidth() + 10);
+        m_pPanel->addItem(pButton);
     }
     else
     {
@@ -455,4 +465,10 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
     {
         m_pUnit->setAiMovePath(QVector<QPoint>());
     }
+}
+
+void DialogModifyUnit::showEditLoadedUnit(GameMap* pMap, Unit* pUnit)
+{
+    spDialogModifyUnit pDialog = MemoryManagement::create<DialogModifyUnit>(pMap, pUnit);
+    addChild(pDialog);
 }
