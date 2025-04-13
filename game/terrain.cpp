@@ -468,6 +468,20 @@ void Terrain::setSupportPalette(bool newSupportPalette)
     m_supportPalette = newSupportPalette;
 }
 
+bool Terrain::getShowInWiki()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getShowInWiki";
+    QJSValueList args({m_jsThis,
+                       GameMap::getMapJsThis(m_pMap)});
+    auto result = pInterpreter->doFunction(m_terrainID, function1, args);
+    if (result.isBool())
+    {
+        return result.toBool();
+    }
+    return true;
+}
+
 void Terrain::onWeatherChanged(Weather* pWeather)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

@@ -26,6 +26,10 @@ var Constructor = function()
     {
         return __BASEFOREST.getBaseOverlayTerrainSprites("forest_style0");
     };
+    this.getShowInWiki = function()
+    {
+        return false;
+    };
 };
 Constructor.prototype = __BASEFOREST;
 var FOREST2 = new Constructor();

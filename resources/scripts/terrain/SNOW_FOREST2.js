@@ -26,6 +26,10 @@ var Constructor = function()
     {
         return __BASEFOREST.getBaseOverlayTerrainSprites("snow_forest+style2");
     };
+    this.getShowInWiki = function()
+    {
+        return false;
+    };
 };
 Constructor.prototype = __BASEFOREST;
 var SNOW_FOREST2 = new Constructor();

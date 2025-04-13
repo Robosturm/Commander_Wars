@@ -291,35 +291,38 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
     qint32 x = 0;
     for (const auto& terrainId : sortedTerrains)
-    {
+    {        
         spTerrain pTerrain = Terrain::createTerrain(terrainId, -1, -1, "", pUnit->getMap());
-        pTerrain->loadSprites();
-        qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit.get());
-        pTerrain->setPosition(x, y);
-        pTerrain->addClickListener([this, terrainId](oxygine::Event*)
+        if (pTerrain->getShowInWiki())
         {
-            emit sigShowLink(terrainId);
-        });
-        addChild(pTerrain);
+            pTerrain->loadSprites();
+            qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit.get());
+            pTerrain->setPosition(x, y);
+            pTerrain->addClickListener([this, terrainId](oxygine::Event*)
+                                       {
+                                           emit sigShowLink(terrainId);
+                                       });
+            addChild(pTerrain);
 
-        pLabel = MemoryManagement::create<oxygine::TextField>();
-        pLabel->setWidth(width);
-        pLabel->setStyle(style);
-        if (costs >= 0)
-        {
-            pLabel->setHtmlText(QString::number(static_cast<qint32>(costs)));
-        }
-        else
-        {
-            pLabel->setHtmlText("-");
-        }
-        pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
-        addChild(pLabel);
-        x += 90;
-        if (x + 100 > width)
-        {
-            x = 0;
-            y += GameMap::getImageSize() * 2 + 6;
+            pLabel = MemoryManagement::create<oxygine::TextField>();
+            pLabel->setWidth(width);
+            pLabel->setStyle(style);
+            if (costs >= 0)
+            {
+                pLabel->setHtmlText(QString::number(static_cast<qint32>(costs)));
+            }
+            else
+            {
+                pLabel->setHtmlText("-");
+            }
+            pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
+            addChild(pLabel);
+            x += 90;
+            if (x + 100 > width)
+            {
+                x = 0;
+                y += GameMap::getImageSize() * 2 + 6;
+            }
         }
     }
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)

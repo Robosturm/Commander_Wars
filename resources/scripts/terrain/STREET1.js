@@ -26,6 +26,10 @@ var Constructor = function()
     {
         return __BASESTREET.getBaseOverlayTerrainSprites("street+style0");
     };
+    this.getShowInWiki = function()
+    {
+        return false;
+    };
 };
 Constructor.prototype = __BASESTREET;
 var STREET1 = new Constructor();

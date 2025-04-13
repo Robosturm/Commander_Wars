@@ -652,6 +652,8 @@ public:
      * @param pWeather
      */
     Q_INVOKABLE void onWeatherChanged(Weather* pWeather);
+
+    Q_INVOKABLE bool getShowInWiki();
 protected:
     /**
      * @brief createBuildingDownStream

@@ -26,6 +26,10 @@ var Constructor = function()
     {
         return __BASESTREET.getBaseOverlayTerrainSprites("desert_path+style0");
     };
+    this.getShowInWiki = function()
+    {
+        return false;
+    };
 };
 Constructor.prototype = __BASESTREET;
 var DESERT_PATH1 = new Constructor();

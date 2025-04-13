@@ -57,8 +57,7 @@ void GameMap::importAWByWebMap(const QVector<QVector<quint32>> & mapIDs, QVector
     clearMap();
 
     pLoadingScreen->setProgress(tr("Creating Player"), 10);
-    // load 16 players :)
-    for (qint32 i = 0; i < 16; i++)
+    for (qint32 i = 0; i < 24; i++)
     {
         m_players.append(MemoryManagement::create<Player>(this));
         m_players[i]->init();

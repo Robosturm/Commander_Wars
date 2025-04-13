@@ -2968,7 +2968,7 @@ void GameMap::optimizePlayers()
             {
                 foundPlayers[pBuilding->getOwner()->getPlayerID()] = true;
             }
-            if (pUnit != nullptr)
+            if (pUnit != nullptr && pUnit->getOwner())
             {
                 foundPlayers[pUnit->getOwner()->getPlayerID()] = true;
             }

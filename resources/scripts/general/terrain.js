@@ -623,4 +623,9 @@ var TERRAIN =
             return TERRAIN.paletteTable[0][0];
         }
     },
+    getShowInWiki : function()
+    {
+        return true;
+    },
+    getShowInWiki : null,
 };

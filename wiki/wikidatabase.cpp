@@ -53,9 +53,14 @@ void WikiDatabase::load()
     }
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (const auto& terrainId : sortedTerrains)
     {
-        m_Entries.append(MemoryManagement::create<PageData>(pTerrainManager->getName(terrainId), terrainId, QStringList({tr("Terrain")})));
+        auto value = pInterpreter->doFunction(terrainId, "getShowInWiki");
+        if (value.isNull() || value.toBool())
+        {
+            m_Entries.append(MemoryManagement::create<PageData>(pTerrainManager->getName(terrainId), terrainId, QStringList({tr("Terrain")})));
+        }
     }
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
@@ -69,7 +74,6 @@ void WikiDatabase::load()
         m_Entries.append(MemoryManagement::create<PageData>(pUnitSpriteManager->getName(unitId), unitId, QStringList({tr("Unit")})));
     }
 
-    Interpreter* pInterpreter = Interpreter::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
     QStringList  actions = pGameManager->getLoadedRessources();
     for (const auto& action : actions)

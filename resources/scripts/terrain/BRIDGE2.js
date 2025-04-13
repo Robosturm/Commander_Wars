@@ -32,6 +32,10 @@ var Constructor = function()
     {
         return qsTr("Bridge over river and seas which allows ground units to cross.");
     };
+    this.getShowInWiki = function()
+    {
+        return false;
+    };
 };
 Constructor.prototype = __BASEBRIDGE;
 var BRIDGE2 = new Constructor();
