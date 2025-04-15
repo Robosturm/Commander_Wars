@@ -409,20 +409,25 @@ QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, const Q
 
 QImage SpriteCreator::recolorImageWithTable(QImage & image, QImage & colorTable)
 {
+    QImage targetImage(image.size(), QImage::Format_RGBA8888);
     for (qint32 x = 0; x < image.width(); x++)
     {
         for (qint32 y = 0; y < image.height(); y++)
         {
             QColor pixel = image.pixelColor(x, y);
-            if (pixel.alpha() == 255)
+            if (pixel.alpha() > 0)
             {
                 qint32 red = pixel.red();
                 qint32 green = pixel.green();
-                image.setPixel(x, y, colorTable.pixel(red, green));
+                targetImage.setPixel(x, y, colorTable.pixel(red, green));
+            }
+            else
+            {
+                targetImage.setPixelColor(x, y, Qt::transparent);
             }
         }
     }
-    return image;
+    return targetImage;
 }
 
 QImage SpriteCreator::mergeImages(QImage & image, QImage & mask)
@@ -810,8 +815,6 @@ void SpriteCreator::preProcessMask(QImage & mask, const QImage & overlay, qint32
             if (org.alpha() == alpha &&
                 overlayColor.alpha() != alpha)
             {
-
-
                 if (y + 1 < mask.height() &&
                     (y + 1) % frameHeigth != 0 &&
                     mask.pixelColor(x, y + 1).alpha() != alpha)
