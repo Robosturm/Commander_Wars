@@ -20,18 +20,19 @@ void AudioManager::fillSoundCache(qint32 count, QString folder, QString file)
         {
             count = SoundData::MAX_SAME_SOUNDS;
         }
-        QUrl cacheUrl = GlobalUtils::getUrlForFile(folder + file);
-        if (QFile::exists(folder + file))
+        QString filePath = folder + file;
+        QUrl cacheUrl = GlobalUtils::getUrlForFile(filePath);
+        if (QFile::exists(filePath))
         {
             spSoundData cache = MemoryManagement::create<SoundData>();
             cache->cacheUrl = cacheUrl;
             cache->m_maxUseCount = count;
-            CONSOLE_PRINT_MODULE("Caching sound " + folder + file + " with amount " + QString::number(count), GameConsole::eDEBUG, GameConsole::eAudio);
+            CONSOLE_PRINT_MODULE("Caching sound " + filePath + " with amount " + QString::number(count), GameConsole::eDEBUG, GameConsole::eAudio);
             m_soundCaches.insert(file, cache);
         }
         else
         {
-            CONSOLE_PRINT_MODULE("Unable to find sound " + folder + file + " with amount " + QString::number(count), GameConsole::eERROR, GameConsole::eResources);
+            CONSOLE_PRINT_MODULE("Unable to find sound " + filePath + " with amount " + QString::number(count), GameConsole::eERROR, GameConsole::eResources);
         }
     }
 #endif

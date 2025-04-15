@@ -483,8 +483,9 @@ QString GlobalUtils::makePathRelative(QString file, bool full)
     return file;
 }
 
-QUrl GlobalUtils::getUrlForFile(const QString & file)
+QUrl GlobalUtils::getUrlForFile(QString file)
 {
+    file = file.replace("//", "/");
     QUrl url;
     if (file.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
     {

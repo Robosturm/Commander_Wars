@@ -232,6 +232,7 @@ void GameAnimationPower::start()
     if (!m_started)
     {
         GameAnimation::start();
+        m_started = true;
         AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         pAudioThread->clearPlayList();
         m_pCO->loadCOMusic();

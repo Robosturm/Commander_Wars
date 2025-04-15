@@ -118,7 +118,6 @@ GameMap *GameAnimation::getMap() const
 void GameAnimation::stop()
 {
     Mainapp::getInstance()->pauseRendering();
-    Q_ASSERT(!m_started);
     m_stopped = true;
     setVisible(false);
     Mainapp::getInstance()->continueRendering();
