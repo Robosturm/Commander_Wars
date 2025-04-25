@@ -14,8 +14,6 @@ void VirtualPaths::setSearchPath(const QString& userPath, const QStringList& mod
 
     m_searchPath.clear();
 
-    m_searchPath.append({ oxygine::Resource::RCC_PREFIX_PATH });
-
     m_searchPath.append({ userPath });
 
 #ifndef USEAPPCONFIGPATH
@@ -27,6 +25,12 @@ void VirtualPaths::setSearchPath(const QString& userPath, const QStringList& mod
     }
 #endif
 
+    for (const auto & mod : std::as_const(mods))
+    {
+        m_searchPath.append({ userPath + mod, true });
+        m_searchPath.append({ oxygine::Resource::RCC_PREFIX_PATH + mod, true });
+    }
+
 #ifdef DEPLOY_RESOURCES_AS_FOLDER
     m_searchPath.append({ QCoreApplication::applicationDirPath() });
 
@@ -35,12 +39,7 @@ void VirtualPaths::setSearchPath(const QString& userPath, const QStringList& mod
 #endif
 #endif
 
-
-    for (const auto & mod : std::as_const(mods))
-    {
-        m_searchPath.append({ oxygine::Resource::RCC_PREFIX_PATH + mod, true });
-        m_searchPath.append({ userPath + mod, true });
-    }
+    m_searchPath.append({ oxygine::Resource::RCC_PREFIX_PATH });
 
     for (auto & path : m_searchPath)
     {

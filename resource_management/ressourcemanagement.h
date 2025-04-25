@@ -10,7 +10,6 @@
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 
 #include "coreengine/interpreter.h"
-#include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/virtualpaths.h"
 
@@ -253,7 +252,7 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
             }
         }
     }
-    for (qint32 i = searchPaths.size() - 1; i >= 0; i--)
+    for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString path = searchPaths[i];
         QStringList filter;
@@ -281,7 +280,7 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
             }
         }
     }
-    for (qint32 i = searchPaths.size() - 1; i >= 0; i--)
+    for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString path = searchPaths[i];
         QStringList filter;

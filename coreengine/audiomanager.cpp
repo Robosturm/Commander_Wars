@@ -135,7 +135,7 @@ void AudioManager::createSoundCache()
         if (Mainapp::getInstance()->isAudioThread())
         {
             auto searchPath = VirtualPaths::createSearchPathRev("resources/sounds/");
-            for (qint32 i = searchPath.length() - 1; i >= 0; --i)
+            for (qint32 i = 0; i < searchPath.length(); ++i)
             {
                 QString folder = searchPath[i];
                 if (QFile::exists(folder + "res.xml"))
