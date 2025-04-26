@@ -215,15 +215,15 @@ endif()
 add_definitions(
     -DVERSION_MAJOR=0
     -DVERSION_MINOR=38
-    -DVERSION_REVISION=2
+    -DVERSION_REVISION=3
     -DVERSION_SUFFIX="main"
     -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     -DCOW_BUILD_NAME="${COW_BUILD_NAME}"
     -DUPDATE_FILE="${UPDATE_FILE}"
 )
 
-set(COW_ANDROID_VERSION_NAME "0.38.2-main")
-set(COW_ANDROID_VERSION_CODE "63")
+set(COW_ANDROID_VERSION_NAME "0.38.3-main")
+set(COW_ANDROID_VERSION_CODE "64")
 
 ###################################################################################
 # Set up some compiler and linking options
