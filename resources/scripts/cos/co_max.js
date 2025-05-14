@@ -180,7 +180,7 @@ var Constructor = function()
                 {
                     if (isDirect)
                     {
-                        return CO.powerOffBonus;
+                        return CO_MAX.powerOffBonus;
                     }
                     else if (isIndirect)
                     {
