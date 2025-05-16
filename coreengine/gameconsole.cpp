@@ -63,7 +63,7 @@ const char* const GameConsole::functions[] =
     "printObjectDetails",
     "resetMapsGameRules",
     "updateTerrainPaletteMasks",
-    "loadScript"
+    "loadScript",
     ""
 };
 const char* const GameConsole::compileTime = __TIME__;
