@@ -1055,6 +1055,17 @@ void Settings::setActiveMods(const QStringList activeMods)
             ++i;
         }
     }
+    const QStringList REMOVE_STARTS = {"./", "." };
+    for (const auto & start : REMOVE_STARTS)
+    {
+        if (m_activeMods.startsWith(start))
+        {
+            for (auto i = 0; i < start.length(); ++i)
+            {
+                m_activeMods.removeFirst();
+            }
+        }
+    }
     m_activeMods.sort();
     for (const auto & mod : std::as_const(m_activeMods))
     {
@@ -1249,176 +1260,176 @@ void Settings::setup()
         }
     }
     m_SettingValues =
-    {
-        // resolution
-        MemoryManagement::create<Value<qint32>>("Resolution", "x", &m_x, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max(), true),
-        MemoryManagement::create<Value<qint32>>("Resolution", "y", &m_y, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max(), true),
-        MemoryManagement::create<Value<qint32>>("Resolution", "width", &m_width, size.width(), 1, size.width(), true),
-        MemoryManagement::create<Value<qint32>>("Resolution", "height", &m_height, size.height(), 1, size.height(), true),
-        MemoryManagement::create<Value<float>>("Resolution", "brightness", &m_brightness, 0, -50, 50),
-        MemoryManagement::create<Value<float>>("Resolution", "gamma", &m_gamma, 1, 0, 50),
-        MemoryManagement::create<Value<bool>>("Resolution", "borderless", &m_borderless, true, false, true, true),
-        MemoryManagement::create<Value<bool>>("Resolution", "fullscreen", &m_fullscreen, false, false, true, true),
-        MemoryManagement::create<Value<quint8>>("Resolution", "screen", &m_screen, 0, 0, 255, true),
-        MemoryManagement::create<Value<bool>>("Resolution", "recordgames", &m_record, false, false, true),
-        MemoryManagement::create<Value<bool>>("Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true),
-        MemoryManagement::create<Value<float>>("Resolution", "IngameMenuScaling", &m_ingameMenuScaling, 1.0f, 0.5f, 10.0f),
-        MemoryManagement::create<Value<float>>("Resolution", "GameScale", &m_gameScale, 1.0f, 0.125f, 16.0f),
-        MemoryManagement::create<Value<float>>("Resolution", "ZoomModifier", &m_zoomModifier, 2.0f, 1.1f, 2.0f),
+        {
+            // resolution
+            MemoryManagement::create<Value<qint32>>("Resolution", "x", &m_x, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max(), true),
+            MemoryManagement::create<Value<qint32>>("Resolution", "y", &m_y, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max(), true),
+            MemoryManagement::create<Value<qint32>>("Resolution", "width", &m_width, size.width(), 1, size.width(), true),
+            MemoryManagement::create<Value<qint32>>("Resolution", "height", &m_height, size.height(), 1, size.height(), true),
+            MemoryManagement::create<Value<float>>("Resolution", "brightness", &m_brightness, 0, -50, 50),
+            MemoryManagement::create<Value<float>>("Resolution", "gamma", &m_gamma, 1, 0, 50),
+            MemoryManagement::create<Value<bool>>("Resolution", "borderless", &m_borderless, true, false, true, true),
+            MemoryManagement::create<Value<bool>>("Resolution", "fullscreen", &m_fullscreen, false, false, true, true),
+            MemoryManagement::create<Value<quint8>>("Resolution", "screen", &m_screen, 0, 0, 255, true),
+            MemoryManagement::create<Value<bool>>("Resolution", "recordgames", &m_record, false, false, true),
+            MemoryManagement::create<Value<bool>>("Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true),
+            MemoryManagement::create<Value<float>>("Resolution", "IngameMenuScaling", &m_ingameMenuScaling, 1.0f, 0.5f, 10.0f),
+            MemoryManagement::create<Value<float>>("Resolution", "GameScale", &m_gameScale, 1.0f, 0.125f, 16.0f),
+            MemoryManagement::create<Value<float>>("Resolution", "ZoomModifier", &m_zoomModifier, 2.0f, 1.1f, 2.0f),
 
-        // general
-        MemoryManagement::create<Value<QString>>("General", "language", &m_language, "en", "", ""),
-        MemoryManagement::create<Value<float>>("General", "MouseSensitivity", &m_mouseSensitivity, -0.75f, -100, 100),
-        MemoryManagement::create<Value<QString>>("General", "UserPath", &m_userPath, defaultPath, "", ""),
-        MemoryManagement::create<Value<bool>>("General", "TouchScreen", &m_touchScreen, hasTouch, false, true),
-        MemoryManagement::create<Value<qint32>>("General", "TouchPointSensitivity", &m_touchPointSensitivity, 15, 0, size.width()),
-        MemoryManagement::create<Value<bool>>("General", "GamepadEnabled", &m_gamepadEnabled, false, false, true),
-        MemoryManagement::create<Value<bool>>("General", "AutomaticUpdates", &m_automaticUpdates, true, false, true),
-        MemoryManagement::create<Value<float>>("General", "GamepadSensitivity", &m_gamepadSensitivity, 1.0f, 0.1f, 100),
-        MemoryManagement::create<Value<qint32>>("General", "MaxFPS", &m_framesPerSecond, 60, 30, 60),
-        MemoryManagement::create<Value<qint32>>("General", "MouseUpdateRate", &m_mouseUpdateRate, 33, 1, 200),
+            // general
+            MemoryManagement::create<Value<QString>>("General", "language", &m_language, "en", "", ""),
+            MemoryManagement::create<Value<float>>("General", "MouseSensitivity", &m_mouseSensitivity, -0.75f, -100, 100),
+            MemoryManagement::create<Value<QString>>("General", "UserPath", &m_userPath, defaultPath, "", ""),
+            MemoryManagement::create<Value<bool>>("General", "TouchScreen", &m_touchScreen, hasTouch, false, true),
+            MemoryManagement::create<Value<qint32>>("General", "TouchPointSensitivity", &m_touchPointSensitivity, 15, 0, size.width()),
+            MemoryManagement::create<Value<bool>>("General", "GamepadEnabled", &m_gamepadEnabled, false, false, true),
+            MemoryManagement::create<Value<bool>>("General", "AutomaticUpdates", &m_automaticUpdates, true, false, true),
+            MemoryManagement::create<Value<float>>("General", "GamepadSensitivity", &m_gamepadSensitivity, 1.0f, 0.1f, 100),
+            MemoryManagement::create<Value<qint32>>("General", "MaxFPS", &m_framesPerSecond, 60, 30, 60),
+            MemoryManagement::create<Value<qint32>>("General", "MouseUpdateRate", &m_mouseUpdateRate, 33, 1, 200),
 
-        // keys
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_escape", &m_key_escape, Qt::Key_Escape, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_console", &m_key_console, Qt::Key_F1, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_screenshot", &m_key_screenshot, Qt::Key_F5, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_mapshot", &m_key_mapshot, Qt::Key_F6, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_up", &m_key_up, Qt::Key_W, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_down", &m_key_down, Qt::Key_S, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_right", &m_key_right, Qt::Key_D, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_left", &m_key_left, Qt::Key_A, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_confirm", &m_key_confirm, Qt::Key_Space, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_cancel", &m_key_cancel, Qt::Key_B, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_next", &m_key_next, Qt::Key_E, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_previous", &m_key_previous, Qt::Key_Q, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_quicksave1", &m_key_quicksave1, Qt::Key_F9, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_quicksave2", &m_key_quicksave2, Qt::Key_F11, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_quickload1", &m_key_quickload1, Qt::Key_F10, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_quickload2", &m_key_quickload2, Qt::Key_F12, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_information", &m_key_information, Qt::Key_I, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapUp", &m_key_moveMapUp, Qt::Key_Down, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapDown", &m_key_moveMapDown, Qt::Key_Up, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapRight", &m_key_moveMapRight, Qt::Key_Left, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapLeft", &m_key_moveMapLeft, Qt::Key_Right, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_MapZoomOut", &m_key_MapZoomOut, Qt::Key_Minus, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_MapZoomIn", &m_key_MapZoomIn, Qt::Key_Plus, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_ShowAttackFields", &m_key_ShowAttackFields, Qt::Key_2, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_ShowIndirectAttackFields", &m_key_ShowIndirectAttackFields, Qt::Key_1, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_up2", &m_key_up2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_down2", &m_key_down2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_right2", &m_key_right2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_left2", &m_key_left2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_confirm2", &m_key_confirm2, Qt::Key_Return, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_cancel2", &m_key_cancel2, Qt::Key_Backspace, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_next2", &m_key_next2, Qt::Key_Tab, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_previous2", &m_key_previous2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_information2", &m_key_information2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapUp2", &m_key_moveMapUp2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapDown2", &m_key_moveMapDown2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapRight2", &m_key_moveMapRight2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapLeft2", &m_key_moveMapLeft2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_MapZoomOut2", &m_key_MapZoomOut2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_MapZoomIn2", &m_key_MapZoomIn2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_ShowAttackFields2", &m_key_ShowAttackFields2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_ShowIndirectAttackFields2", &m_key_ShowIndirectAttackFields2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorPlaceTerrain", &m_key_EditorPlaceTerrain, Qt::Key_1, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorPlaceBuilding", &m_key_EditorPlaceBuilding, Qt::Key_2, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorPlaceUnit", &m_key_EditorPlaceUnit, Qt::Key_3, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorNextTeam", &m_key_EditorNextTeam, Qt::Key_Tab, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorPreviousTeam", &m_key_EditorPreviousTeam, Qt::Key_Asterisk, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorSelectionRight", &m_key_EditorSelectionRight, Qt::Key_R, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorSelectionLeft", &m_key_EditorSelectionLeft, Qt::Key_T, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        MemoryManagement::create<Value<Qt::Key>>("Keys", "key_toggleGridLayout", &m_key_toggleGridLayout, Qt::Key_G, static_cast<Qt::Key>(0), Qt::Key_unknown),
-        // sound
-        MemoryManagement::create<Value<qint32>>("Sound", "TotalVolume", &m_TotalVolume, 100, 0, 100),
-        MemoryManagement::create<Value<qint32>>("Sound", "MusicVolume", &m_MusicVolume, 80, 0, 100),
-        MemoryManagement::create<Value<qint32>>("Sound", "SoundVolume", &m_SoundVolume, 100, 0, 100),
-        MemoryManagement::create<Value<bool>>("Sound", "Muted", &m_muted, false, false, true),
-        MemoryManagement::create<Value<bool>>("Sound", "MuteOnFocusedLost", &m_muteOnFcousedLost, true, false, true),
-        MemoryManagement::create<Value<bool>>("Sound", "ContinueCoMusic", &m_continueCoMusic, false, false, true),
+            // keys
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_escape", &m_key_escape, Qt::Key_Escape, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_console", &m_key_console, Qt::Key_F1, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_screenshot", &m_key_screenshot, Qt::Key_F5, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_mapshot", &m_key_mapshot, Qt::Key_F6, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_up", &m_key_up, Qt::Key_W, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_down", &m_key_down, Qt::Key_S, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_right", &m_key_right, Qt::Key_D, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_left", &m_key_left, Qt::Key_A, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_confirm", &m_key_confirm, Qt::Key_Space, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_cancel", &m_key_cancel, Qt::Key_B, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_next", &m_key_next, Qt::Key_E, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_previous", &m_key_previous, Qt::Key_Q, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_quicksave1", &m_key_quicksave1, Qt::Key_F9, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_quicksave2", &m_key_quicksave2, Qt::Key_F11, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_quickload1", &m_key_quickload1, Qt::Key_F10, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_quickload2", &m_key_quickload2, Qt::Key_F12, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_information", &m_key_information, Qt::Key_I, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapUp", &m_key_moveMapUp, Qt::Key_Down, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapDown", &m_key_moveMapDown, Qt::Key_Up, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapRight", &m_key_moveMapRight, Qt::Key_Left, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapLeft", &m_key_moveMapLeft, Qt::Key_Right, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_MapZoomOut", &m_key_MapZoomOut, Qt::Key_Minus, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_MapZoomIn", &m_key_MapZoomIn, Qt::Key_Plus, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_ShowAttackFields", &m_key_ShowAttackFields, Qt::Key_2, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_ShowIndirectAttackFields", &m_key_ShowIndirectAttackFields, Qt::Key_1, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_up2", &m_key_up2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_down2", &m_key_down2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_right2", &m_key_right2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_left2", &m_key_left2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_confirm2", &m_key_confirm2, Qt::Key_Return, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_cancel2", &m_key_cancel2, Qt::Key_Backspace, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_next2", &m_key_next2, Qt::Key_Tab, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_previous2", &m_key_previous2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_information2", &m_key_information2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapUp2", &m_key_moveMapUp2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapDown2", &m_key_moveMapDown2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapRight2", &m_key_moveMapRight2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_moveMapLeft2", &m_key_moveMapLeft2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_MapZoomOut2", &m_key_MapZoomOut2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_MapZoomIn2", &m_key_MapZoomIn2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_ShowAttackFields2", &m_key_ShowAttackFields2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_ShowIndirectAttackFields2", &m_key_ShowIndirectAttackFields2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorPlaceTerrain", &m_key_EditorPlaceTerrain, Qt::Key_1, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorPlaceBuilding", &m_key_EditorPlaceBuilding, Qt::Key_2, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorPlaceUnit", &m_key_EditorPlaceUnit, Qt::Key_3, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorNextTeam", &m_key_EditorNextTeam, Qt::Key_Tab, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorPreviousTeam", &m_key_EditorPreviousTeam, Qt::Key_Asterisk, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorSelectionRight", &m_key_EditorSelectionRight, Qt::Key_R, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorSelectionLeft", &m_key_EditorSelectionLeft, Qt::Key_T, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_toggleGridLayout", &m_key_toggleGridLayout, Qt::Key_G, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            // sound
+            MemoryManagement::create<Value<qint32>>("Sound", "TotalVolume", &m_TotalVolume, 100, 0, 100),
+            MemoryManagement::create<Value<qint32>>("Sound", "MusicVolume", &m_MusicVolume, 80, 0, 100),
+            MemoryManagement::create<Value<qint32>>("Sound", "SoundVolume", &m_SoundVolume, 100, 0, 100),
+            MemoryManagement::create<Value<bool>>("Sound", "Muted", &m_muted, false, false, true),
+            MemoryManagement::create<Value<bool>>("Sound", "MuteOnFocusedLost", &m_muteOnFcousedLost, true, false, true),
+            MemoryManagement::create<Value<bool>>("Sound", "ContinueCoMusic", &m_continueCoMusic, false, false, true),
 
 #ifdef AUDIOSUPPORT
-        MemoryManagement::create<AudioDeviceValue>("Sound", "AudioDevice", &m_audioOutput, DEFAULT_AUDIODEVICE),
-#endif
-        // game
-        MemoryManagement::create<Value<QString>>("Game", "Username", &m_Username, "", "", "", true),
-        MemoryManagement::create<Value<bool>>("Game", "OverworldAnimations", &m_overworldAnimations, true, false, true),
-        MemoryManagement::create<Value<GameEnums::BattleAnimationMode>>("Game", "BattleAnimationMode", &m_battleAnimationsMode, GameEnums::BattleAnimationMode_All, GameEnums::BattleAnimationMode_None, GameEnums::BattleAnimationMode_Enemy),
-        MemoryManagement::create<Value<GameEnums::BattleAnimationType>>("Game", "BattleAnimationType", &m_battleAnimationType, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_FullscreenTransparent),
-        MemoryManagement::create<Value<quint32>>("Game", "AnimationSpeed", &m_animationSpeed, 1, 1, 100),
-        MemoryManagement::create<Value<quint32>>("Game", "BattleAnimationSpeed", &m_battleAnimationSpeed, 1, 1, 100),
-        MemoryManagement::create<Value<quint32>>("Game", "WalkAnimationSpeed", &m_walkAnimationSpeed, 20, 1, 100),
-        MemoryManagement::create<Value<quint32>>("Game", "DialogAnimationSpeed", &m_dialogAnimationSpeed, 1, 1, 100),
-        MemoryManagement::create<Value<quint32>>("Game", "CaptureAnimationSpeed", &m_captureAnimationSpeed, 1, 1, 100),
-        MemoryManagement::create<Value<quint32>>("Game", "MultiTurnCounter", &multiTurnCounter, 1, 1, 10),
-        MemoryManagement::create<Value<qint32>>("Game", "MenuItemCount", &m_MenuItemCount, 13, 5, std::numeric_limits<qint32>::max()),
-        MemoryManagement::create<Value<qint32>>("Game", "MenuItemRowCount", &m_MenuItemRowCount, 2, 1, std::numeric_limits<qint32>::max()),
-        MemoryManagement::create<Value<float>>("Game", "SupplyWarning", &m_supplyWarning, 0.33f, 0.0f, 1.0f),
-        MemoryManagement::create<Value<bool>>("Game", "StaticMarkedFields", &m_StaticMarkedFields, false, false, true),
-        MemoryManagement::create<Value<qint32>>("Game", "ShowCoCount", &m_showCoCount, defaultCoCount, 0, std::numeric_limits<qint32>::max()),
-        MemoryManagement::create<Value<bool>>("Game", "DialogAnimation", &m_dialogAnimation, true, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "CaptureAnimation", &m_captureAnimation, true, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "Day2DayScreen", &m_day2dayScreen, true, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "MovementAnimations", &m_movementAnimations, true, false, true),
-        MemoryManagement::create<Value<QString>>("Game", "LastSaveGame", &m_LastSaveGame, "", "", ""),
-        MemoryManagement::create<Value<QString>>("Game", "DefaultRuleset", &m_defaultRuleset, "", "", ""),
-        MemoryManagement::create<Value<QString>>("Game", "DefaultBannlist", &m_defaultBannlist, "", "", ""),
-        MemoryManagement::create<Value<bool>>("Game", "ShowCursor", &m_ShowCursor, true, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "AutoEndTurn", &m_AutoEndTurn, false, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "AutoCamera", &m_autoCamera, true, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "ShowIngameCoordinates", &m_showIngameCoordinates, true, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "CenterOnSelection", &m_centerOnMarkedField, true, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "SyncAnimations", &m_syncAnimations, false, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "AutoMoveCursor", &m_autoMoveCursor, true, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "UseCoMinis", &m_useCoMinis, true, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "AutoScrolling", &m_autoScrolling, true, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "ShowDetailedBattleForcast", &m_showDetailedBattleForcast, true, false, true),
-        MemoryManagement::create<Value<bool>>("Game", "SimpleDeselect", &m_simpleDeselect, false, false, true),
-        MemoryManagement::create<Value<GameEnums::COInfoPosition>>("Game", "COInfoPosition", &m_coInfoPosition, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Right),
-        MemoryManagement::create<Value<GameEnums::AutoFocusing>>("Game", "AutoFocusing", &m_autoFocusing, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_Owned),
-        MemoryManagement::create<Value<qint32>>("Game", "PauseAfterAction", &m_pauseAfterAction, 0, 0, 100),
-        MemoryManagement::create<Value<QString>>("Game", "AiPipeUuid", &m_pipeUuid, "", "", ""),
-        MemoryManagement::create<Value<bool>>("Game", "UseAiProcess", &m_spawnAiProcess, false, false, true),
+            MemoryManagement::create<AudioDeviceValue>("Sound", "AudioDevice", &m_audioOutput, DEFAULT_AUDIODEVICE),
+#endif \
+    // game
+            MemoryManagement::create<Value<QString>>("Game", "Username", &m_Username, "", "", "", true),
+            MemoryManagement::create<Value<bool>>("Game", "OverworldAnimations", &m_overworldAnimations, true, false, true),
+            MemoryManagement::create<Value<GameEnums::BattleAnimationMode>>("Game", "BattleAnimationMode", &m_battleAnimationsMode, GameEnums::BattleAnimationMode_All, GameEnums::BattleAnimationMode_None, GameEnums::BattleAnimationMode_Enemy),
+            MemoryManagement::create<Value<GameEnums::BattleAnimationType>>("Game", "BattleAnimationType", &m_battleAnimationType, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_FullscreenTransparent),
+            MemoryManagement::create<Value<quint32>>("Game", "AnimationSpeed", &m_animationSpeed, 1, 1, 100),
+            MemoryManagement::create<Value<quint32>>("Game", "BattleAnimationSpeed", &m_battleAnimationSpeed, 1, 1, 100),
+            MemoryManagement::create<Value<quint32>>("Game", "WalkAnimationSpeed", &m_walkAnimationSpeed, 20, 1, 100),
+            MemoryManagement::create<Value<quint32>>("Game", "DialogAnimationSpeed", &m_dialogAnimationSpeed, 1, 1, 100),
+            MemoryManagement::create<Value<quint32>>("Game", "CaptureAnimationSpeed", &m_captureAnimationSpeed, 1, 1, 100),
+            MemoryManagement::create<Value<quint32>>("Game", "MultiTurnCounter", &multiTurnCounter, 1, 1, 10),
+            MemoryManagement::create<Value<qint32>>("Game", "MenuItemCount", &m_MenuItemCount, 13, 5, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<qint32>>("Game", "MenuItemRowCount", &m_MenuItemRowCount, 2, 1, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<float>>("Game", "SupplyWarning", &m_supplyWarning, 0.33f, 0.0f, 1.0f),
+            MemoryManagement::create<Value<bool>>("Game", "StaticMarkedFields", &m_StaticMarkedFields, false, false, true),
+            MemoryManagement::create<Value<qint32>>("Game", "ShowCoCount", &m_showCoCount, defaultCoCount, 0, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<bool>>("Game", "DialogAnimation", &m_dialogAnimation, true, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "CaptureAnimation", &m_captureAnimation, true, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "Day2DayScreen", &m_day2dayScreen, true, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "MovementAnimations", &m_movementAnimations, true, false, true),
+            MemoryManagement::create<Value<QString>>("Game", "LastSaveGame", &m_LastSaveGame, "", "", ""),
+            MemoryManagement::create<Value<QString>>("Game", "DefaultRuleset", &m_defaultRuleset, "", "", ""),
+            MemoryManagement::create<Value<QString>>("Game", "DefaultBannlist", &m_defaultBannlist, "", "", ""),
+            MemoryManagement::create<Value<bool>>("Game", "ShowCursor", &m_ShowCursor, true, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "AutoEndTurn", &m_AutoEndTurn, false, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "AutoCamera", &m_autoCamera, true, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "ShowIngameCoordinates", &m_showIngameCoordinates, true, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "CenterOnSelection", &m_centerOnMarkedField, true, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "SyncAnimations", &m_syncAnimations, false, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "AutoMoveCursor", &m_autoMoveCursor, true, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "UseCoMinis", &m_useCoMinis, true, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "AutoScrolling", &m_autoScrolling, true, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "ShowDetailedBattleForcast", &m_showDetailedBattleForcast, true, false, true),
+            MemoryManagement::create<Value<bool>>("Game", "SimpleDeselect", &m_simpleDeselect, false, false, true),
+            MemoryManagement::create<Value<GameEnums::COInfoPosition>>("Game", "COInfoPosition", &m_coInfoPosition, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Right),
+            MemoryManagement::create<Value<GameEnums::AutoFocusing>>("Game", "AutoFocusing", &m_autoFocusing, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_Owned),
+            MemoryManagement::create<Value<qint32>>("Game", "PauseAfterAction", &m_pauseAfterAction, 0, 0, 100),
+            MemoryManagement::create<Value<QString>>("Game", "AiPipeUuid", &m_pipeUuid, "", "", ""),
+            MemoryManagement::create<Value<bool>>("Game", "UseAiProcess", &m_spawnAiProcess, false, false, true),
 
-        // network
-        MemoryManagement::create<Value<quint16>>("Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()),
-        MemoryManagement::create<Value<QString>>("Network", "ServerAdress", &m_ServerAdress, "192.46.216.113", "", ""),
-        MemoryManagement::create<Value<QString>>("Network", "SecondaryServerAdress", &m_secondaryServerAdress, "2600:3c00::f03c:93ff:fe86:009e", "", ""),
-        MemoryManagement::create<Value<quint16>>("Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()),
-        MemoryManagement::create<Value<quint16>>("Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()),
-        MemoryManagement::create<Value<bool>>("Network", "Server", &m_Server, false, false, true),
-        MemoryManagement::create<Value<bool>>("Network", "AllowMapUpload", &m_allowMapUpload, true, false, true),
-        MemoryManagement::create<Value<QString>>("Network", "ServerListenAdress", &m_serverListenAdress, "", "", ""),
-        MemoryManagement::create<Value<QString>>("Network", "ServerSecondaryListenAdress", &m_serverSecondaryListenAdress, "", "", ""),
-        MemoryManagement::create<Value<QString>>("Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""),
-        MemoryManagement::create<Value<QString>>("Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&&10000&20000;::1&&50000&65535", "", ""),
-        MemoryManagement::create<Value<std::chrono::seconds>>("Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
-        MemoryManagement::create<Value<std::chrono::seconds>>("Network", "SuspendedDespawnTime", &m_suspendedDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
-        MemoryManagement::create<Value<std::chrono::seconds>>("Network", "ReplayDeleteTime", &m_replayDeleteTime, std::chrono::seconds(60 * 60 * 24 * 7), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
-        // mailing
-        MemoryManagement::create<Value<QString>>("Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""),
-        MemoryManagement::create<Value<quint16>>("Mailing", "MailServerPort", &m_mailServerPort, 0, 0, std::numeric_limits<quint16>::max()),
-        MemoryManagement::create<Value<qint32>>("Mailing", "MailServerConnectionType", &m_mailServerConnectionType, 2, 0, 2),
-        MemoryManagement::create<Value<QString>>("Mailing", "MailServerUsername", &m_mailServerUsername, "", "", ""),
-        MemoryManagement::create<Value<qint32>>("Mailing", "MailServerAuthMethod", &m_mailServerAuthMethod, 1, 0, 1),
-        MemoryManagement::create<Value<QString>>("Mailing", "MailServerSendAddress", &m_mailServerSendAddress, "", "", ""),
+            // network
+            MemoryManagement::create<Value<quint16>>("Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()),
+            MemoryManagement::create<Value<QString>>("Network", "ServerAdress", &m_ServerAdress, "192.46.216.113", "", ""),
+            MemoryManagement::create<Value<QString>>("Network", "SecondaryServerAdress", &m_secondaryServerAdress, "2600:3c00::f03c:93ff:fe86:009e", "", ""),
+            MemoryManagement::create<Value<quint16>>("Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()),
+            MemoryManagement::create<Value<quint16>>("Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()),
+            MemoryManagement::create<Value<bool>>("Network", "Server", &m_Server, false, false, true),
+            MemoryManagement::create<Value<bool>>("Network", "AllowMapUpload", &m_allowMapUpload, true, false, true),
+            MemoryManagement::create<Value<QString>>("Network", "ServerListenAdress", &m_serverListenAdress, "", "", ""),
+            MemoryManagement::create<Value<QString>>("Network", "ServerSecondaryListenAdress", &m_serverSecondaryListenAdress, "", "", ""),
+            MemoryManagement::create<Value<QString>>("Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""),
+            MemoryManagement::create<Value<QString>>("Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&&10000&20000;::1&&50000&65535", "", ""),
+            MemoryManagement::create<Value<std::chrono::seconds>>("Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
+            MemoryManagement::create<Value<std::chrono::seconds>>("Network", "SuspendedDespawnTime", &m_suspendedDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
+            MemoryManagement::create<Value<std::chrono::seconds>>("Network", "ReplayDeleteTime", &m_replayDeleteTime, std::chrono::seconds(60 * 60 * 24 * 7), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
+            // mailing
+            MemoryManagement::create<Value<QString>>("Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""),
+            MemoryManagement::create<Value<quint16>>("Mailing", "MailServerPort", &m_mailServerPort, 0, 0, std::numeric_limits<quint16>::max()),
+            MemoryManagement::create<Value<qint32>>("Mailing", "MailServerConnectionType", &m_mailServerConnectionType, 2, 0, 2),
+            MemoryManagement::create<Value<QString>>("Mailing", "MailServerUsername", &m_mailServerUsername, "", "", ""),
+            MemoryManagement::create<Value<qint32>>("Mailing", "MailServerAuthMethod", &m_mailServerAuthMethod, 1, 0, 1),
+            MemoryManagement::create<Value<QString>>("Mailing", "MailServerSendAddress", &m_mailServerSendAddress, "", "", ""),
 
-        // auto saving
-        MemoryManagement::create<Value<std::chrono::seconds>>("Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)),
-        MemoryManagement::create<Value<qint32>>("Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 0, 100),
-        // mods
-        MemoryManagement::create<Value<QStringList>>("Mods", "Mods", &m_activeMods, QStringList(), QStringList(), QStringList()),
-        // logging
-        MemoryManagement::create<Value<bool>>("Logging", "LogActions", &m_LogActions, false, false, true),
-        MemoryManagement::create<Value<GameConsole::eLogLevels>>("Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL),
-        MemoryManagement::create<Value<quint64>>("Logging", "LogModules", &m_defaultLogModuls, GameConsole::eGeneral | GameConsole::eJavaScript, 0, std::numeric_limits<quint64>::max()),
-        MemoryManagement::create<Value<bool>>("Logging", "CreateAiTrainingData", &m_createAiTrainingData, false, false, true),
-        // heavy ai training
-        MemoryManagement::create<Value<QString>>("AiTraining", "HeavyAiTrainingFile", &m_heavyAiTrainingFile, "", "", ""),
-        MemoryManagement::create<Value<QString>>("AiTraining", "HeavyAiTrainingType", &m_heavyAiTrainingType, "heavy_ai", "", ""),
-        MemoryManagement::create<Value<qint32>>("AiTraining", "HeavyAiTrainingStartDay", &m_heavyAiTrainingStartDay, 5, 1, 99),
+            // auto saving
+            MemoryManagement::create<Value<std::chrono::seconds>>("Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)),
+            MemoryManagement::create<Value<qint32>>("Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 0, 100),
+            // mods
+            MemoryManagement::create<Value<QStringList>>("Mods", "Mods", &m_activeMods, QStringList(), QStringList(), QStringList()),
+            // logging
+            MemoryManagement::create<Value<bool>>("Logging", "LogActions", &m_LogActions, false, false, true),
+            MemoryManagement::create<Value<GameConsole::eLogLevels>>("Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL),
+            MemoryManagement::create<Value<quint64>>("Logging", "LogModules", &m_defaultLogModuls, GameConsole::eGeneral | GameConsole::eJavaScript, 0, std::numeric_limits<quint64>::max()),
+            MemoryManagement::create<Value<bool>>("Logging", "CreateAiTrainingData", &m_createAiTrainingData, false, false, true),
+            // heavy ai training
+            MemoryManagement::create<Value<QString>>("AiTraining", "HeavyAiTrainingFile", &m_heavyAiTrainingFile, "", "", ""),
+            MemoryManagement::create<Value<QString>>("AiTraining", "HeavyAiTrainingType", &m_heavyAiTrainingType, "heavy_ai", "", ""),
+            MemoryManagement::create<Value<qint32>>("AiTraining", "HeavyAiTrainingStartDay", &m_heavyAiTrainingStartDay, 5, 1, 99),
 
-    };
+        };
     QSettings settings(m_settingFile, QSettings::IniFormat);
     for (auto setting : m_SettingValues)
     {
@@ -2241,74 +2252,74 @@ void Settings::setLanguage(const QString language)
 
 QStringList Settings::getLanguageNames()
 {
-     QLocale english("en");
-     QStringList items = {english.nativeLanguageName()};
-     QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
-     QStringList filter;
-     filter << "*.qm";
-     for (const QString & path : std::as_const(paths))
-     {
-         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
-         while (dirIter.hasNext())
-         {
-             dirIter.next();
-             QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
-             if (lang != "en")
-             {
-                 QLocale langLoc(lang);
-                 items.append(langLoc.nativeLanguageName());
-             }
-         }
-     }
-     return items;
+    QLocale english("en");
+    QStringList items = {english.nativeLanguageName()};
+    QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
+    QStringList filter;
+    filter << "*.qm";
+    for (const QString & path : std::as_const(paths))
+    {
+        QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter.hasNext())
+        {
+            dirIter.next();
+            QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
+            if (lang != "en")
+            {
+                QLocale langLoc(lang);
+                items.append(langLoc.nativeLanguageName());
+            }
+        }
+    }
+    return items;
 }
 
 QStringList Settings::getLanguageIds()
 {
-     QStringList languages = {"en"};
-     QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
-     QStringList filter;
-     filter << "*.qm";
-     for (const QString & path : std::as_const(paths))
-     {
-         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
-         while (dirIter.hasNext())
-         {
-             dirIter.next();
-             QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
-             if (lang != "en")
-             {
-                 languages.append(lang);
-             }
-         }
-     }
-     return languages;
+    QStringList languages = {"en"};
+    QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
+    QStringList filter;
+    filter << "*.qm";
+    for (const QString & path : std::as_const(paths))
+    {
+        QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter.hasNext())
+        {
+            dirIter.next();
+            QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
+            if (lang != "en")
+            {
+                languages.append(lang);
+            }
+        }
+    }
+    return languages;
 }
 
 qint32 Settings::getCurrentLanguageIndex()
 {
-     qint32 current = 0;
-     QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
-     QStringList filter;
-     filter << "*.qm";
-     qint32 i = 0;
-     for (const QString & path : std::as_const(paths))
-     {
-         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
-         while (dirIter.hasNext())
-         {
-             dirIter.next();
-             QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
-             if (lang != "en")
-             {
-                 ++i;
-                 if (lang == Settings::getLanguage())
-                 {
-                     current = i;
-                     break;
-                 }
-             }
-         }
-     }
-     return current;
+    qint32 current = 0;
+    QStringList paths = VirtualPaths::createSearchPath("resources/translation/");
+    QStringList filter;
+    filter << "*.qm";
+    qint32 i = 0;
+    for (const QString & path : std::as_const(paths))
+    {
+        QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter.hasNext())
+        {
+            dirIter.next();
+            QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
+            if (lang != "en")
+            {
+                ++i;
+                if (lang == Settings::getLanguage())
+                {
+                    current = i;
+                    break;
+                }
+            }
+        }
+    }
+    return current;
 }
