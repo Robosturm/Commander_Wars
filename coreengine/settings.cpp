@@ -1350,7 +1350,7 @@ void Settings::setup()
 
 #ifdef AUDIOSUPPORT
             MemoryManagement::create<AudioDeviceValue>("Sound", "AudioDevice", &m_audioOutput, DEFAULT_AUDIODEVICE),
-#endif \
+#endif
     // game
             MemoryManagement::create<Value<QString>>("Game", "Username", &m_Username, "", "", "", true),
             MemoryManagement::create<Value<bool>>("Game", "OverworldAnimations", &m_overworldAnimations, true, false, true),
