@@ -1058,11 +1058,14 @@ void Settings::setActiveMods(const QStringList activeMods)
     const QStringList REMOVE_STARTS = {"./", "." };
     for (const auto & start : REMOVE_STARTS)
     {
-        if (m_activeMods.startsWith(start))
+        for (auto & mod : m_activeMods)
         {
-            for (auto i = 0; i < start.length(); ++i)
+            if (mod.startsWith(start))
             {
-                m_activeMods.removeFirst();
+                for (auto i = 0; i < start.length(); ++i)
+                {
+                    mod = mod.removeFirst();
+                }
             }
         }
     }
@@ -1351,7 +1354,7 @@ void Settings::setup()
 #ifdef AUDIOSUPPORT
             MemoryManagement::create<AudioDeviceValue>("Sound", "AudioDevice", &m_audioOutput, DEFAULT_AUDIODEVICE),
 #endif
-    // game
+            // game
             MemoryManagement::create<Value<QString>>("Game", "Username", &m_Username, "", "", "", true),
             MemoryManagement::create<Value<bool>>("Game", "OverworldAnimations", &m_overworldAnimations, true, false, true),
             MemoryManagement::create<Value<GameEnums::BattleAnimationMode>>("Game", "BattleAnimationMode", &m_battleAnimationsMode, GameEnums::BattleAnimationMode_All, GameEnums::BattleAnimationMode_None, GameEnums::BattleAnimationMode_Enemy),
