@@ -57,7 +57,7 @@ CoGeneratorMenu::CoGeneratorMenu()
 
 void CoGeneratorMenu::generateCo(const QString & modDir, const QString & coid)
 {
-    QFile file(modDir + "/" + coid + ".js");
+    QFile file(Settings::getInstance()->getUserPath() + "/" + modDir + "/" + coid + ".js");
     if (file.open(QIODevice::WriteOnly))
     {
         QTextStream stream(&file);
