@@ -620,9 +620,11 @@ void Settings::clearTemp()
 
 void Settings::setUserPath(const QString newUserPath)
 {
-    if (newUserPath.isEmpty()) {
+    if (newUserPath.isEmpty())
+    {
         m_userPath = newUserPath;
-    } else {
+    } else
+    {
         QString folder = newUserPath + "/";
         while (folder.contains("//"))
         {

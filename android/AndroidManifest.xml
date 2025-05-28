@@ -3,9 +3,9 @@
     <!-- The comment below will be replaced with dependencies permissions upon deployment.
              Remove the comment if you do not require these default permissions. -->
     <!-- %%INSERT_PERMISSIONS -->
-    <--uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/-->
-    <--uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/-->
-    <--uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
     <!-- The comment below will be replaced with dependencies permissions upon deployment.
              Remove the comment if you do not require these default features. -->
     <!-- %%INSERT_FEATURES -->

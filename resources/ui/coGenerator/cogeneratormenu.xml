@@ -449,14 +449,14 @@
         <y>lastY</y>
         <width>160</width>
         <text>QT_TRANSLATE_NOOP("GAME","Store CO")</text>
-        <onEvent>currentMenu.showFileDialog("*.codat", "mods", true, "COGENERATORMENU", "storeCoDataCallback")</onEvent>
+        <onEvent>currentMenu.showFileDialog("*.codat", settings.getUserPath() + "mods", true, "COGENERATORMENU", "storeCoDataCallback")</onEvent>
     </Button>
     <Button>
         <x>settings.getStageWidth() / 2 + 5</x>
         <y>lastY</y>
         <width>160</width>
         <text>QT_TRANSLATE_NOOP("GAME","Load CO")</text>
-        <onEvent>currentMenu.showFileDialog("*.codat", "mods", false, "COGENERATORMENU", "loadCoDataCallback")</onEvent>
+        <onEvent>currentMenu.showFileDialog("*.codat", settings.getUserPath() + "mods", false, "COGENERATORMENU", "loadCoDataCallback")</onEvent>
     </Button>
     <Button>
         <x>settings.getStageWidth() - 160 -10</x>

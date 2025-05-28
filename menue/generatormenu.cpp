@@ -66,8 +66,8 @@ bool GeneratorMenu::loadVariablesFromFile(const QString & file)
 
 void GeneratorMenu::writeVariablesToFile(const QString & file) const
 {
-    createDir(Settings::getInstance()->getUserPath() + "/" + file);
-    QFile fileObj(Settings::getInstance()->getUserPath() + "/" + file);
+    createDir(file);
+    QFile fileObj(file);
     QDataStream stream(&fileObj);
     stream.setVersion(QDataStream::Version::Qt_6_5);
     fileObj.open(QIODevice::WriteOnly);
@@ -77,8 +77,8 @@ void GeneratorMenu::writeVariablesToFile(const QString & file) const
 
 void GeneratorMenu::writeDataToFile(const QString & file, const QString & data) const
 {
-    createDir(Settings::getInstance()->getUserPath() + "/" + file);
-    QFile fileObj(Settings::getInstance()->getUserPath() + "/" + file);
+    createDir(file);
+    QFile fileObj(file);
     QDataStream stream(&fileObj);
     stream.setVersion(QDataStream::Version::Qt_6_5);
     fileObj.open(QIODevice::WriteOnly);
@@ -88,12 +88,12 @@ void GeneratorMenu::writeDataToFile(const QString & file, const QString & data) 
 
 void GeneratorMenu::createDir(const QString & path) const
 {
-    QFileInfo info(Settings::getInstance()->getUserPath() + "/" + path);
+    QFileInfo info(path);
     info.absoluteDir().mkpath(".");
 }
 
 void GeneratorMenu::copySourceToTarget(const QString & source, const QString & target)
 {
-    createDir(Settings::getInstance()->getUserPath() + "/" + target);
-    QFile::copy(source, Settings::getInstance()->getUserPath() + "/" + target);
+    createDir(target);
+    QFile::copy(source, target);
 }
