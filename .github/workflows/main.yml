@@ -1,4 +1,4 @@
-aaaaname: Commnader_Wars
+name: Commnader_Wars
 on: [push]
 env:
   BUILD_TYPE: Release
