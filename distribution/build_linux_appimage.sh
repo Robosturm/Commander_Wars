@@ -40,8 +40,8 @@ QMAKE="$(which qmake6)"
 rm -rfv distribution/AppDir ||:
 cmake . -DCMAKE_BUILD_TYPE=Release "$@" \
     -DCMAKE_INSTALL_PREFIX:PATH=/usr \
-    -DOPENSSL_USE_STATIC_LIBS:BOOL=OFF \
-    -DUSEAPPCONFIGPATH:BOOL=ON
+    -DOPENSSL_USE_STATIC_LIBS:BOOL=OFF
+    
 make -j"$(nproc)" install DESTDIR=distribution/AppDir
 
 EXCLUDES_LIST="

@@ -1,4 +1,4 @@
-name: Commnader_Wars
+aaaaname: Commnader_Wars
 on: [push]
 env:
   BUILD_TYPE: Release
@@ -72,7 +72,21 @@ jobs:
             source_asset: 'Commander_Wars-x86_64.AppImage'
             asset_file: 'Commander_Wars-Linux_x64'
             asset_name: 'Commander_Wars-Linux_x64-${{github.ref_name}}.AppImage'
-            cmakeOptions: ' -DOPENSSL_USE_STATIC_LIBS=FALSE'
+            cmakeOptions: ' -DOPENSSL_USE_STATIC_LIBS=FALSE -DUSEAPPCONFIGPATH:BOOL=ON'
+            serverFlag: ''
+            linuxFlag: 'linux'
+          - buildTarget: ubuntu-desktop_no_userpath
+            os: ubuntu-latest
+            COMPILER_VERSION: ''
+            target: 'desktop'
+            qtPath: ''
+            qtTools: ''
+            installerCommands1: 'sudo apt-get update'
+            installerCommands2: 'sudo apt-get install libxcb-cursor0 libfuse2 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            source_asset: 'Commander_Wars-x86_64.AppImage'
+            asset_file: 'Commander_Wars-Linux_x64'
+            asset_name: 'Commander_Wars-Linux_no_userpath_x64-${{github.ref_name}}.AppImage'
+            cmakeOptions: ' -DOPENSSL_USE_STATIC_LIBS=FALSE -DUSEAPPCONFIGPATH:BOOL=ON'
             serverFlag: ''
             linuxFlag: 'linux'
           - buildTarget: ubuntu-server
@@ -86,6 +100,20 @@ jobs:
             source_asset: 'Commander_Wars_Dedicated_Server-x86_64.AppImage'
             asset_file: 'Commander_Wars_Dedicated_Server-Linux_x64'
             asset_name: 'Commander_Wars_Dedicated_Server-Linux_x64-${{github.ref_name}}.AppImage'
+            cmakeOptions: '-DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF -DOPENSSL_USE_STATIC_LIBS=FALSE -DUSEAPPCONFIGPATH:BOOL=ON'
+            serverFlag: '-server'
+            linuxFlag: 'linux'
+          - buildTarget: ubuntu-server_no_userpath
+            os: ubuntu-latest
+            COMPILER_VERSION: ''
+            target: 'desktop'
+            qtPath: ''
+            qtTools: ''
+            installerCommands1: 'sudo apt-get update'
+            installerCommands2: 'sudo apt-get install libxcb-cursor0 libfuse2 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            source_asset: 'Commander_Wars_Dedicated_Server-x86_64.AppImage'
+            asset_file: 'Commander_Wars_Dedicated_Server-Linux_x64'
+            asset_name: 'Commander_Wars_Dedicated_Server-Linux_no_userpath_x64-${{github.ref_name}}.AppImage'
             cmakeOptions: '-DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF -DOPENSSL_USE_STATIC_LIBS=FALSE'
             serverFlag: '-server'
             linuxFlag: 'linux'
