@@ -165,7 +165,7 @@ void FileDialog::setPreview(bool preview)
     m_preview = preview;
 }
 
-void FileDialog::showFolder(QString folder)
+void FileDialog::showFolder(QString inputFolder)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
@@ -174,13 +174,13 @@ void FileDialog::showFolder(QString folder)
     {
         m_MainPanel->removeItem(m_Items[i]);
     }
-    CONSOLE_PRINT("Showing folder: " + folder, GameConsole::eDEBUG);
-    folder = folder.replace("\\", "/");
-    while (folder.contains("//"))
+    CONSOLE_PRINT("Showing folder: " + inputFolder, GameConsole::eDEBUG);
+    inputFolder = inputFolder.replace("\\", "/");
+    while (inputFolder.contains("//"))
     {
-        folder = folder.replace("//", "/");
+        inputFolder = inputFolder.replace("//", "/");
     }
-    folder = QDir(folder).absolutePath();
+    QString folder = QDir(inputFolder).absolutePath();
     folder = GlobalUtils::makePathRelative(folder);
     m_Items.clear();
     m_ResAnims.clear();
@@ -253,18 +253,19 @@ void FileDialog::showFolder(QString folder)
         // loop through all entries :)
         if (infoList[i].isDir())
         {
+            auto folderPath = infoList[i].filePath();
             if (folder == ROOT)
             {
                 textField->setHtmlText(infoList[i].canonicalFilePath());
             }
             else
             {
-                QString path = GlobalUtils::makePathRelative(infoList[i].filePath()).replace(folder, "");
+                QString path = GlobalUtils::makePathRelative(folderPath).replace(folder, "");
                 textField->setHtmlText(path);
             }
-            pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, myPath](oxygine::Event*)
+            pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, folderPath](oxygine::Event*)
             {
-                emit sigShowFolder(myPath);
+                emit sigShowFolder(folderPath);
             });
         }
         else if (infoList[i].isFile())
@@ -321,7 +322,7 @@ void FileDialog::showFolder(QString folder)
     }
     else
     {
-        m_CurrentFolder->setCurrentText(folder);
+        m_CurrentFolder->setCurrentText(inputFolder);
     }
     pApp->continueRendering();
 }

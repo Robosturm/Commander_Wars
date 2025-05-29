@@ -33,6 +33,7 @@ public:
     static float randFloatBase(float low, float high);
     static qreal randDoubleBase(qreal low, qreal high);
     static QUrl getUrlForFile(QString file);
+    static QString stripStartPath(QString path);
     static QString getByteArrayString(const QByteArray & bytes);
     static QByteArray getStringByteArray(const QString & bytes);
     static QVector<qint32> calcWidths(const QVector<qint32> & maxWidths, const QVector<float> & distribution, qint32 totalWidth);

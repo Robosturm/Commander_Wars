@@ -623,7 +623,8 @@ void Settings::setUserPath(const QString newUserPath)
     if (newUserPath.isEmpty())
     {
         m_userPath = newUserPath;
-    } else
+    }
+    else
     {
         QString folder = newUserPath + "/";
         while (folder.contains("//"))
@@ -1057,19 +1058,9 @@ void Settings::setActiveMods(const QStringList activeMods)
             ++i;
         }
     }
-    const QStringList REMOVE_STARTS = {"./", "." };
-    for (const auto & start : REMOVE_STARTS)
+    for (auto & mod : m_activeMods)
     {
-        for (auto & mod : m_activeMods)
-        {
-            if (mod.startsWith(start))
-            {
-                for (auto i = 0; i < start.length(); ++i)
-                {
-                    mod = mod.removeFirst();
-                }
-            }
-        }
+        mod = GlobalUtils::stripStartPath(mod);
     }
     m_activeMods.sort();
     for (const auto & mod : std::as_const(m_activeMods))
@@ -2091,6 +2082,7 @@ QStringList Settings::getAvailableMods()
         if (!folder.endsWith("."))
         {
             QString mod = GlobalUtils::makePathRelative(info.filePath());
+            mod = GlobalUtils::stripStartPath(mod);
             if (!mods.contains(mod))
             {
                 mods.append(mod);

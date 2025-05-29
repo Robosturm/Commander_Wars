@@ -45,6 +45,22 @@ void GlobalUtils::setup()
     m_pInstace->m_seed = 0;
 }
 
+QString GlobalUtils::stripStartPath(QString path)
+{
+    const QStringList REMOVE_STARTS = {"./", "." };
+    for (const auto & start : REMOVE_STARTS)
+    {
+            if (path.startsWith(start))
+            {
+                for (auto i = 0; i < start.length(); ++i)
+                {
+                    path = path.removeFirst();
+                }
+            }
+    }
+    return path;
+}
+
 QString GlobalUtils::getByteArrayString(const QByteArray & bytes)
 {
     QString data;

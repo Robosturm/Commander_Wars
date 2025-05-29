@@ -80,7 +80,7 @@ void FolderDialog::remove()
     detach();
 }
 
-void FolderDialog::showFolder(QString folder)
+void FolderDialog::showFolder(QString inputFolder)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
@@ -89,13 +89,13 @@ void FolderDialog::showFolder(QString folder)
     {
         m_MainPanel->removeItem(m_Items[i]);
     }    
-    CONSOLE_PRINT("Showing folder: " + folder, GameConsole::eDEBUG);
-    folder = folder.replace("\\", "/");
-    while (folder.contains("//"))
+    CONSOLE_PRINT("Showing folder: " + inputFolder, GameConsole::eDEBUG);
+    inputFolder = inputFolder.replace("\\", "/");
+    while (inputFolder.contains("//"))
     {
-        folder = folder.replace("//", "/");
+        inputFolder = inputFolder.replace("//", "/");
     }
-    folder = QDir(folder).absolutePath();
+    QString folder = QDir(inputFolder).absolutePath();
     folder = GlobalUtils::makePathRelative(folder);
     m_Items.clear();
     QDir dir(VirtualPaths::find(folder));
@@ -169,18 +169,19 @@ void FolderDialog::showFolder(QString folder)
         // loop through all entries :)
         if (infoList[i].isDir())
         {
+            auto folderPath = infoList[i].filePath();
             if (folder == ROOT)
             {
                 textField->setHtmlText(infoList[i].canonicalFilePath());
             }
             else
             {
-                QString path = GlobalUtils::makePathRelative(infoList[i].filePath()).replace(folder, "");
+                QString path = GlobalUtils::makePathRelative(folderPath).replace(folder, "");
                 textField->setHtmlText(path);
             }
-            pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, myPath](oxygine::Event*)
+            pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, folderPath](oxygine::Event*)
             {
-                emit sigShowFolder(myPath);
+                emit sigShowFolder(folderPath);
             });
         }
         else
@@ -197,7 +198,7 @@ void FolderDialog::showFolder(QString folder)
     }
     else
     {
-        m_CurrentFolder->setCurrentText(folder);
+        m_CurrentFolder->setCurrentText(inputFolder);
     }
     pApp->continueRendering();
 }

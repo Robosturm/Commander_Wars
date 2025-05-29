@@ -67,6 +67,10 @@ VirtualPaths::ProcessedName VirtualPaths::processName(const QString& pName)
     {
         result = ProcessedName { "/" + name, name.last(name.length() - 9), true };
     }
+    else if (name.contains(":/"))
+    {
+        result = ProcessedName { "" };
+    }
     // Search for a file anywhere else
     else
     {
@@ -177,9 +181,10 @@ QFileInfoList VirtualPaths::list(const QString& name, const QStringList& filters
     QDir upDir(name + "/..");
     if (upDir.exists())
     {
-        infoList.append(QFileInfo(upDir.dirName()));
+        infoList.append(QFileInfo(upDir.filesystemAbsolutePath()));
     }
-    for (auto & path : VirtualPaths::createSearchPathRev(name, checkMods))
+    auto paths = VirtualPaths::createSearchPathRev(name, checkMods);
+    for (auto & path : paths)
     {
         QFileInfo pathInfo(path);
         if (pathInfo.exists() && pathInfo.isDir())
