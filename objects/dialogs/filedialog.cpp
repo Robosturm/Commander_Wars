@@ -117,11 +117,17 @@ void FileDialog::onFileSelected()
     auto* pCurrentFolder = m_CurrentFolder.get();
     auto* pPtrCurrentFile = m_CurrentFile.get();
     auto* pPtrDropDownmenu = m_DropDownmenu.get();
-    QString fileStart = m_pathPrefix + pCurrentFolder->getCurrentText();
+    QString folder = pCurrentFolder->getCurrentText();
+    QString fileStart = m_pathPrefix;
+    if (folder.startsWith(fileStart))
+    {
+        fileStart = folder;
+    }
     if (!fileStart.isEmpty())
     {
         fileStart += "/";
     }
+
     QString file = fileStart + pPtrCurrentFile->getCurrentText();
     QStringList items = pPtrDropDownmenu->getCurrentItemText().split((";"));
     for (qint32 i = 0; i < items.size(); i++)
@@ -270,7 +276,7 @@ void FileDialog::showFolder(QString inputFolder)
         }
         else if (infoList[i].isFile())
         {
-            QString fullPath = infoList[i].canonicalFilePath();
+            QString fullPath = infoList[i].filePath();
             QString file = infoList[i].fileName();
             textField->setHtmlText(file);
             auto* pCurrentFile = m_CurrentFile.get();
