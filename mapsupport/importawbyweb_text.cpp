@@ -65,6 +65,7 @@ void GameMap::importAWByWebMap(const QVector<QVector<quint32>> & mapIDs, QVector
         {
             m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
             m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Human);
+
         }
         else
         {
@@ -151,6 +152,10 @@ void GameMap::importAWByWebMap(const QVector<QVector<quint32>> & mapIDs, QVector
         optimizePlayers();
         m_players[0]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
         m_players[0]->setControlType(GameEnums::AiTypes::AiTypes_Human);
+        for (qint32 i = 0; i < m_players.length(); ++i)
+        {
+            m_players[i]->setTeam(i);
+        }
         // update the whole fucking map
         pLoadingScreen->setProgress(tr("Loading Sprites"), 90);
         updateSprites();
