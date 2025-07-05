@@ -6,12 +6,16 @@ var Constructor = function()
         unit.setMaxAmmo1(3);
         unit.setWeapon1ID("WEAPON_GUNBOAT_NAVAL_GUN");
 
+    	unit.setAmmo2(0);
+        unit.setMaxAmmo2(0);
+        unit.setWeapon2ID("");
+
         unit.setFuel(60);
         unit.setMaxFuel(60);
         unit.setBaseMovementPoints(7);
         unit.setMinRange(1);
         unit.setMaxRange(1);
-		unit.setVision(2);
+	unit.setVision(2);
     };
     
     this.loadSprites = function(unit)
