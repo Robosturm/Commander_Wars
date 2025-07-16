@@ -20,7 +20,7 @@ var Constructor = function()
                         ["BLACK_BOMB",              150,    qsTr("Sassy!")],
                         ["K_HELI",                  300,    qsTr("Great!")],
                         ["T_HELI",                  300,    qsTr("Zing!")],
-                        ["BATTLESHIP",              150,    qsTr("Hoo-ha!")],
+                        ["BATTLESHIP",              150,    qsTr("You sunk my battleship!")],
                         ["AIRCRAFTCARRIER",         150,    qsTr("No mercy!")],
                         ["SUBMARINE",               150,    qsTr("Pwn3d!")],
                         ["LANDER",                  100,    qsTr("Sink those stinkers!")],
