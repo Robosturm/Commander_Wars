@@ -55,7 +55,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: If you have one CO the CO music continues where it stopped the last time.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: If you have one CO, the CO music continues where it stopped the last time.")</tooltip>
                 <startValue>settings.getContinueCoMusic()</startValue>
                 <onEvent>settings.setContinueCoMusic(input)</onEvent>
             </Checkbox>
