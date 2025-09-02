@@ -190,7 +190,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>settings.getStageWidth() - 90 - lastWidth - lastX</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Sets the zoom steps, smaller values means more intermediate steps. Note selecting a value different from 20 may lead to inconsistent rendering. Change on your own risk.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Sets the zoom steps, smaller values means more intermediate steps. Note selecting a value different from 20 may lead to inconsistent rendering. Change at your own risk.")</tooltip>
                 <startValue>settings.getZoomModifier() * 10</startValue>
                 <min>11</min>
                 <max>20</max>
@@ -209,7 +209,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>settings.getStageWidth() - 90 - lastWidth - lastX</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Sets update rate for the mouse lower values may slow down the ai if you move the cursor during it's turns.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Sets update rate for the mouse. Lower values may slow down the AI if you move the cursor during its turns.")</tooltip>
                 <startValue>settings.getMouseUpdateRate();</startValue>
                 <min>1</min>
                 <max>200</max>
@@ -227,7 +227,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: The game tries to keep the game at the up to date by. Updating to the latest release if required.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: The game tries to stay up to date by updating to the latest release if required.")</tooltip>
                 <startValue>settings.getAutomaticUpdates()</startValue>
                 <onEvent>settings.setAutomaticUpdates(input)</onEvent>
             </Checkbox>
