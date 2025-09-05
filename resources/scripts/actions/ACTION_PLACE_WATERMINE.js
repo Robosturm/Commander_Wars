@@ -10,7 +10,12 @@ var Constructor = function()
         {
             if (ACTION_PLACE_WATERMINE.getMineFields(action, map).length > 0)
             {
-                return true;
+                var unitLimit = map.getGameRules().getUnitLimit();
+                var unitCount = unit.getOwner().getUnitCount();
+                if (unitLimit <= 0 || unitCount < unitLimit)
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -118,9 +123,9 @@ var Constructor = function()
         {
             map.getGameRecorder().buildUnit(player.getPlayerID(), unit.getUnitID(), player.getPlayerID());
             unit.setHasMoved(true);
+            player.buildedUnit(unit);
+            audio.playSound("unload.wav");
         }
-        player.buildedUnit(unit);
-        audio.playSound("unload.wav");
         ACTION_PLACE_WATERMINE.postAnimationMinePosX = -1;
         ACTION_PLACE_WATERMINE.postAnimationMinePosY = -1;
         ACTION_PLACE_WATERMINE.postAnimationMineOwner = null;

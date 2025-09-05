@@ -62,7 +62,7 @@ void GameScript::init()
     Interpreter* pInterpreter = Interpreter::getInstance();
     if (!m_scriptFile.isEmpty())
     {
-        QFile file = VirtualPaths::find(m_scriptFile);
+        QFile file = QFile(VirtualPaths::find(m_scriptFile));
         if (file.exists())
         {
             CONSOLE_PRINT("Loading map script " + file.fileName(), GameConsole::eDEBUG);
