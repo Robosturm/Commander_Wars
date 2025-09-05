@@ -58,7 +58,7 @@ var Constructor = function()
                         ["CO_SABAKI",               5,    qsTr("Field repairs!")],
                         ["CO_SAMI",                 5,    qsTr("Infantry specalist!")],
                         ["CO_SANJURO",              5,    qsTr("Noble trader!")],
-                        ["CO_SASHA",                5,    qsTr("Dominatrix!")],
+                        ["CO_SASHA",                5,    qsTr("Bank breaker!")],
                         ["CO_MINAMOTO",             5,    qsTr("Rice Cakes!")],
                         ["CO_SENSEI",               5,    qsTr("Cranky paratrooper!")],
                         ["CO_SMITAN",               5,    qsTr("Yelled dominant!")],

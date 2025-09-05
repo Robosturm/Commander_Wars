@@ -338,7 +338,7 @@ var Constructor = function()
             values = [CO_SENSEI.d2dHeliOffBonus, CO_SENSEI.d2dInfOffBonus, CO_SENSEI.d2dNavalOffBonus, CO_SENSEI.d2dGroundBonus, CO_SENSEI.d2dTransporterMovementBonus];
         }
         var text = qsTr("\nSpecial Unit:\nCommando\n") +
-            qsTr("\nGlobal Effect: \nSensei's copters gain +%0% firepower and his footsoldiers gain +%1% firepower. His naval units have %2% firepower and ground units gain +%3% firepower. His non-comabt transport units gain +%4 movement.") +
+            qsTr("\nGlobal Effect: \nSensei's copters gain +%0% firepower and his footsoldiers gain +%1% firepower. His naval units have %2% firepower and ground units gain +%3% firepower. His non-combat transport units gain +%4 movement.") +
             qsTr("\n\nCO Zone Effect: \nSensei's copters gain +%5% firepower and his footsoldiers gain +%6% firepower. His naval units have -%7% firepower and ground units gain +%8% firepower. All of his units gain +%9% defence.");
         text = replaceTextArgs(text, [values[0], values[1], values[2], values[3], values[4], CO_SENSEI.d2dCoZoneHeliOffBonus, CO_SENSEI.d2dCoZoneInfOffBonus, CO_SENSEI.d2dCoZoneNavalOffBonus, CO_SENSEI.d2dCoZoneGroundBonus, CO_SENSEI.d2dCoZoneDefBonus]);
         return text;
