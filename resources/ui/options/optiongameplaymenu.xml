@@ -446,14 +446,14 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Show pc cursor:")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","Show PC cursor:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If active the Computer's cursor is hidden during a game, giving you a more Gameboy like feeling.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If active: the Computer's cursor is hidden during a game, giving you a more Gameboy like feeling.")</tooltip>
                 <startValue>settings.getShowCursor()</startValue>
                 <onEvent>settings.setShowCursor(input)</onEvent>
             </Checkbox>
@@ -461,14 +461,14 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Warp pc cursor:")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","Warp PC cursor:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If active the Computer's cursor is moved to the first entry when opening menus or similar actions. Only disable this feature if you intend to play using a mouse only.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If active: the Computer's cursor is moved to the first entry when opening menus or similar actions. Only disable this feature if you intend to play using a mouse only.")</tooltip>
                 <startValue>settings.getAutoMoveCursor()</startValue>
                 <onEvent>settings.setAutoMoveCursor(input)</onEvent>
             </Checkbox>
@@ -483,7 +483,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If active the currently selectable fields get animated.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If active: the currently selectable fields get animated.")</tooltip>
                 <startValue>!settings.getStaticMarkedFields()</startValue>
                 <onEvent>settings.setStaticMarkedFields(!input)</onEvent>
             </Checkbox>
