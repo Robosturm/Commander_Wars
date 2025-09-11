@@ -7536,7 +7536,7 @@ Host mods:
     <message>
         <location filename="../menue/optionmenue.cpp" line="114"/>
         <source>Reset settings</source>
-        <translation>Einstellungen zurücksetzen</translation>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="245"/>
