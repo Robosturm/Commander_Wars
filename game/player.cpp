@@ -161,7 +161,7 @@ void Player::loadCOMusic()
     if (!hasCo)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        pApp->getAudioManager()->addMusic("resources/music/cos/no_co.mp3");
+        pApp->getAudioManager()->addMusic("resources/music/cos/no_co.ogg");
     }
 }
 
