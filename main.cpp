@@ -134,3 +134,24 @@ int main(qint32 argc, char* argv[])
     }
     return returncode;
 }
+/**
+ * @mainpage Commander Wars
+ * The project is separated in three parts.
+ * - The core engine written in C++ using oxygine as a render and input engine 
+ * and qt as an interpreter, language support etc. framework
+ * - The resources folder containing the javascript default data 
+ * and images and sounds or music
+ * - The mods folder containing mods for the core engine
+ * 
+ * Consult the <a href="https://github.com/Robosturm/Commander_Wars">Github page</a>  for bug reports, feedback and 
+ * feature requests.
+ * 
+ * The releases page of the game can be found <a href="https://github.com/Robosturm/Commander_Wars/releases"> here </a>
+ * 
+ * Refer to the <a href ="https://github.com/Robosturm/Commander_Wars/wiki"> wiki page </a> for more information about the game and it's features
+ * 
+ * Consult the <a href="https://www.commanderwars.com/wiki/Main_Page"> Website</a> where you can read scripting tutorials and browse content created by the community
+ * 
+ * Join the <a href="https://discord.gg/WKXFcXPmxz">Discord Server </a> to discuss the game, and get more scripting help.
+ * 
+ */
