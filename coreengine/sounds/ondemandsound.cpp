@@ -142,7 +142,7 @@ void AudioManager::cleanUpSounds()
 
 void AudioManager::playDelayedSound(SoundData *soundData, qint32 soundIndex, bool stopOldestSound, qint32 duration)
 {
-    CONSOLE_PRINT_MODULE("Starting delayed sound", GameConsole::eDEBUG, GameConsole::eAudio);
+    CONSOLE_PRINT_MODULE("Starting delayed sound: " + soundData->cacheUrl.toString(), GameConsole::eDEBUG, GameConsole::eAudio);
     if (stopOldestSound)
     {
         AudioManager::stopOldestSound(soundData);
@@ -165,6 +165,10 @@ void AudioManager::playSoundInternal(SoundData *soundData, qint32 soundIndex, qi
             m_soundEffectData[soundIndex].timer.start(duration);
         }
         m_soundEffectData[soundIndex].sound->play();
+    }
+    else
+    {
+        CONSOLE_PRINT_MODULE("Failed to play sound due to no more free sound cache positions: " + soundData->cacheUrl.toString(), GameConsole::eDEBUG, GameConsole::eAudio);
     }
 }
 

@@ -404,7 +404,7 @@ private:
     QString m_jsPostActionFunction{""};
     QString m_jsPreActionObject{""};
     QString m_jsPreActionFunction{""};
-    bool m_stopSoundAtAnimationEnd{true};
+    bool m_stopSoundAtAnimationEnd{false};
     bool m_global{false};
     bool m_finished{false};
 
