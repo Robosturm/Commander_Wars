@@ -99,8 +99,10 @@ void GameMap::extendMap(const QString mapFile, GameEnums::Directions direction)
                 pAi->resetToTurnStart();
             }
         }
+        registerMapAtInterpreter();
         m_gameRules->resetFogSprites();
         m_gameRules->createWeatherSprites();
+        m_GameScript->init();
         Mainapp::getInstance()->continueRendering();
     }
 }

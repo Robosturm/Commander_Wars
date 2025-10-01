@@ -131,15 +131,15 @@ void GameMap::loadMapData()
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
 
-     m_markedFieldsLayer = MemoryManagement::create<oxygine::Actor>();
-     m_markedFieldsLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
-     addChild(m_markedFieldsLayer);
-     m_moveArrowLayer = MemoryManagement::create<oxygine::Actor>();
-     m_moveArrowLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::MoveArrow));
-     addChild(m_moveArrowLayer);
-     m_unitsLayer = MemoryManagement::create<oxygine::Actor>();
-     m_unitsLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::Units));
-     addChild(m_unitsLayer);
+    m_markedFieldsLayer = MemoryManagement::create<oxygine::Actor>();
+    m_markedFieldsLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
+    addChild(m_markedFieldsLayer);
+    m_moveArrowLayer = MemoryManagement::create<oxygine::Actor>();
+    m_moveArrowLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::MoveArrow));
+    addChild(m_moveArrowLayer);
+    m_unitsLayer = MemoryManagement::create<oxygine::Actor>();
+    m_unitsLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::Units));
+    addChild(m_unitsLayer);
 
     connect(this, &GameMap::sigZoomChanged, this, &GameMap::zoomChanged, Qt::QueuedConnection);
 }
