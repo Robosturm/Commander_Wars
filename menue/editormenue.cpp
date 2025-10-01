@@ -246,9 +246,19 @@ void EditorMenue::cleanTemp(qint32 step)
     QDir dir = m_tempDir.path();
     if (step < 0)
     {
-        m_tempCounter = 0;
-        dir.removeRecursively();
         dir.mkpath(".");
+        for (qint32 i = 0; i < std::numeric_limits<qint32>::max(); i++)
+        {
+            QFile file(m_tempDir.path() + "/temp" + QString::number(i) + ".tmp");
+            if (file.exists())
+            {
+                file.remove();
+            }
+            else
+            {
+                break;
+            }
+        }
     }
     else
     {
@@ -1743,6 +1753,7 @@ void EditorMenue::loadMap(QString filename)
     CONSOLE_PRINT("EditorMenue::loadMap " + filename, GameConsole::eDEBUG);
     if (filename.endsWith(".map"))
     {
+        filename = filename.replace("//", "/");
         QFile file(filename);
         if (file.exists())
         {

@@ -123,6 +123,10 @@ void FileDialog::onFileSelected()
     {
         fileStart = folder;
     }
+    else
+    {
+        fileStart += folder;
+    }
     if (!fileStart.isEmpty())
     {
         fileStart += "/";
