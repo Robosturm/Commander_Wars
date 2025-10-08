@@ -385,7 +385,7 @@ var Constructor = function()
                 qsTr("\nGlobal Effect: \nEagle's air units gain +%0% firepower, +%1% defence, and use %2 less fuel per day, but his naval units have %3% firepower.") +
                 qsTr("\n\nCO Zone Effect: \nEagle's air units gain +%4% firepower and +%5% defence. His naval units have -%6% firepower and +%7% defence. All of his other units gain +%8% firepower and +%7% defence.");
         text = replaceTextArgs(text, [values[0], values[1], values[2], values[3],
-                                      CO_EAGLE.d2dCoZoneAirOffBonus, CO_EAGLE.d2dCoZoneDefBonus, CO_EAGLE.d2dCoZoneNavalOffBonus, CO_EAGLE.d2dCoZoneDefBonus, CO_EAGLE.d2dCoZoneOtherOffBonus]);
+                                      CO_EAGLE.d2dCoZoneAirOffBonus, CO_EAGLE.d2dCoZoneAirDefBonus, CO_EAGLE.d2dCoZoneNavalOffBonus, CO_EAGLE.d2dCoZoneDefBonus, CO_EAGLE.d2dCoZoneOtherOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
