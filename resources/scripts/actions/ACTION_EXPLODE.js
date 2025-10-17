@@ -118,7 +118,6 @@ var Constructor = function()
         // we destroyed a unit
         map.getGameRecorder().destroyedUnit(owner.getPlayerID(), ACTION_EXPLODE.postAnimationUnit.getUnitID(), ACTION_EXPLODE.postAnimationUnit.getOwner().getPlayerID());
         ACTION_EXPLODE.postAnimationUnit.killUnit();
-        ACTION_EXPLODE.postAnimationUnit.killUnit();
         ACTION_EXPLODE.postAnimationUnit = null;
         ACTION_EXPLODE.postAnimationTargetX = -1;
         ACTION_EXPLODE.postAnimationTargetY = -1;
