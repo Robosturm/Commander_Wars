@@ -36,6 +36,7 @@ public slots:
     void slotBack();
 private slots:
     void remove();
+    void keyInput(oxygine::KeyEvent event);
 private:
     oxygine::spButton m_NextButton;
     oxygine::spButton m_QuitButton;

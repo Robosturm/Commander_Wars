@@ -268,6 +268,21 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
 
     connect(this, &DialogAttackLog::sigShowAttack, this, &DialogAttackLog::showAttack, Qt::QueuedConnection);
     connect(this, &DialogAttackLog::sigFinished, this, &DialogAttackLog::remove, Qt::QueuedConnection);
+    connect(Mainapp::getInstance(), &Mainapp::sigKeyDown, this, &DialogAttackLog::keyInput, Qt::QueuedConnection);
+}
+
+void DialogAttackLog::keyInput(oxygine::KeyEvent event)
+{
+    if (!event.getContinousPress())
+    {
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if (cur == Settings::getInstance()->getKey_cancel() ||
+            cur == Settings::getInstance()->getKey_cancel2())
+        {
+            emit sigFinished();
+        }
+    }
 }
 
 void DialogAttackLog::remove()

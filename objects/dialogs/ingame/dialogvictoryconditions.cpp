@@ -141,6 +141,21 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     pPanel->setContentHeigth(y + 40);
     connect(this, &DialogVictoryConditions::sigShowPopup, this, &DialogVictoryConditions::showPopup, Qt::QueuedConnection);
     connect(this, &DialogVictoryConditions::sigFinished, this, &DialogVictoryConditions::remove, Qt::QueuedConnection);
+    connect(Mainapp::getInstance(), &Mainapp::sigKeyDown, this, &DialogVictoryConditions::keyInput, Qt::QueuedConnection);
+}
+
+void DialogVictoryConditions::keyInput(oxygine::KeyEvent event)
+{
+    if (!event.getContinousPress())
+    {
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if (cur == Settings::getInstance()->getKey_cancel() ||
+            cur == Settings::getInstance()->getKey_cancel2())
+        {
+            emit sigFinished();
+        }
+    }
 }
 
 void DialogVictoryConditions::remove()
@@ -161,3 +176,4 @@ void DialogVictoryConditions::showPopup(QString rule)
         }
     }
 }
+

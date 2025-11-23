@@ -77,6 +77,21 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
     m_pPanel->addItem(m_COInfo);
     showCO();
     connect(this, &COInfoDialog::quit, this, &COInfoDialog::remove, Qt::QueuedConnection);
+    connect(Mainapp::getInstance(), &Mainapp::sigKeyDown, this, &COInfoDialog::keyInput, Qt::QueuedConnection);
+}
+
+void COInfoDialog::keyInput(oxygine::KeyEvent event)
+{
+    if (!event.getContinousPress())
+    {
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if (cur == Settings::getInstance()->getKey_cancel() ||
+            cur == Settings::getInstance()->getKey_cancel2())
+        {
+            emit quit();
+        }
+    }
 }
 
 void COInfoDialog::remove()

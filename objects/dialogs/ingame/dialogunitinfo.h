@@ -24,6 +24,7 @@ public slots:
     void moveToUnit(qint32 posX, qint32 posY);
 private slots:
     void remove();
+    void keyInput(oxygine::KeyEvent event);
 private:
     Player* m_pPlayer{nullptr};
 };

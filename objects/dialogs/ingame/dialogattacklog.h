@@ -28,6 +28,7 @@ public slots:
     void showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAtk, qint32 posDefX, qint32 posDefY, qint32 playerDef);
 private slots:
     void remove();
+    void keyInput(oxygine::KeyEvent event);
 private:
     QVector<spAttackReport> m_Log;
     Player* m_pPlayer{nullptr};
