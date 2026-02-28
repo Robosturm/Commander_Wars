@@ -489,7 +489,7 @@ QString GameMap::getMapTagsText()
     }
     if (GameEnums::MapFilterFlags_Symetric & m_headerInfo.m_mapFlags)
     {
-        ret += tr("Symetric\n");
+        ret += tr("Symmetric\n");
     }
     if (GameEnums::MapFilterFlags_PvP & m_headerInfo.m_mapFlags)
     {
