@@ -172,7 +172,7 @@ void MapEditDialog::setMapFlag(GameEnums::MapFilterFlags flag, bool value)
     }
     else
     {
-        m_info.mapFlags = static_cast<GameEnums::MapFilterFlags>(m_info.mapFlags & !flag);
+        m_info.mapFlags = static_cast<GameEnums::MapFilterFlags>(m_info.mapFlags & ~flag);
     }
 }
 
