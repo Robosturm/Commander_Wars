@@ -320,7 +320,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("Founder of the Dark Matter Cooperation. He's the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn't care if people die.");
+        return qsTr("Founder of the Dark Matter Cooperation. He's the primary reason for the invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn't care if people die.");
     };
     this.getHits = function(co)
     {
@@ -332,7 +332,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("As the leader of dark matter, his troops have special armor, as well as armor piercing weapons.");
+        return qsTr("As the leader of Dark Matter, his troops have special armor, as well as armor-piercing weapons.");
     };
     this.getLongCODescription = function(co, map)
     {
@@ -344,14 +344,14 @@ var Constructor = function()
         }
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
                    qsTr("\nGlobal Effect: \nEnemy attacks deal -%0% damage to Yukio's units. If an attack from Yukio's units would deal at least %2 HP damage, they deal an additional defense-ignoring -%1 HP of damage.") +
-                   qsTr("\n\nCO Zone Effect: \nEnemy attacks deal -%3% damage to Yukio's units. If an attack from Yukio's units would deal at least %5 HP damage, they deal an additional defense-ignoring -%4 HP of damage. Yukio's units also gain +%5% firepower and +%6% defence.");
+                   qsTr("\n\nCO Zone Effect: \nEnemy attacks deal -%3% damage to Yukio's units. If an attack from Yukio's units would deal at least %5 HP damage, they deal an additional defense-ignoring -%4 HP of damage. Yukio's units also gain +%6% firepower and +%7% defense.");
         text = replaceTextArgs(text, [values[0], values[1], values[2],
                                       CO_YUKIO.d2dCoZoneTrueDefenseBonus, CO_YUKIO.d2dCoZoneTrueDamageBonus/10, CO_YUKIO.d2dCoZoneMinTrueDamage/10, CO_YUKIO.d2dCoZoneOffBonus, CO_YUKIO.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("A small army deploys to fight for Yukio. A random 40% of his owned buildings, if empty, will randomly deploy either a Light Tank, Anti Air, or Artillery, ready to move. Enemy attacks deal -%0% damage to Yukio's units. If an attack from Yukio's units would deal at least %1 HP damage, they deal an additional defense-ignoring -%2 HP of damage. Yukio's units also gain +%3% firepower and +%4% defence.");
+        var text = qsTr("A small army deploys to fight for Yukio. A random 40% of his unoccupied cities will randomly deploy either a Light Tank, Anti Air, or Artillery, ready to move. \nEnemy attacks deal -%0% damage to Yukio's units. If an attack from Yukio's units would deal at least %1 HP damage, they deal an additional defense-ignoring -%2 HP of damage. Yukio's units also gain +%3% firepower and +%4% defense.");
 		text = replaceTextArgs(text, [CO_YUKIO.powerTrueDefenseBonus, CO_YUKIO.powerMinTrueDamage/10, CO_YUKIO.powerTrueDamageBonus/10,
                                       CO_YUKIO.powerOffBonus, CO_YUKIO.powerDefBonus]);
         return text;
@@ -362,7 +362,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-         var text =  qsTr("A large army deploys to fight for Yukio. A random 70% of his owned buildings, if empty, will randomly deploy either a Light Tank, Anti Air, Artillery, Heavy Tank, or Battle Copter, ready to move. In order to support the invasion, a bombardment is launched dealing -%0 HP of damage to a random 50% of all enemies. Enemy attacks deal -%1% damage to Yukio's units. If an attack from Yukio's units would deal at least %2 HP damage, they deal an additional defense-ignoring -%3 HP of damage. Yukio's units also gain +%4% firepower and +%5% defence.");
+         var text =  qsTr("A large army deploys to fight for Yukio. A random 70% of his unoccupied cities will randomly deploy either a Light Tank, Anti Air, Artillery, Heavy Tank, or Battle Copter, ready to move. In order to support the invasion, a bombardment is launched dealing -%0 HP of damage to a random 50% of all enemies. \nEnemy attacks deal -%1% damage to Yukio's units. If an attack from Yukio's units would deal at least %2 HP damage, they deal an additional defense-ignoring -%3 HP of damage. Yukio's units also gain +%4% firepower and +%5% defense.");
         text = replaceTextArgs(text, [CO_YUKIO.superPowerBombDamage, CO_YUKIO.powerTrueDefenseBonus, CO_YUKIO.powerMinTrueDamage/10, CO_YUKIO.powerTrueDamageBonus/10,
                                       CO_YUKIO.powerOffBonus, CO_YUKIO.powerDefBonus]);
         return text;
@@ -376,7 +376,7 @@ var Constructor = function()
         return [qsTr("I'll show you what true power means."),
                 qsTr("Me? I'm the evil that destroys you."),
                 qsTr("Your weapons are the rubbish my factories dispose of."),
-                qsTr("Victory is mine!  Alea iacta est!"),
+                qsTr("Victory is mine! Alea iacta est!"),
                 qsTr("I'll become the ruler of this world!")];
     };
     this.getVictorySentences = function(co)
