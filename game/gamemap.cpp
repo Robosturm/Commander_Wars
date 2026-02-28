@@ -531,6 +531,10 @@ QString GameMap::getMapTagsText()
     {
         ret += tr("Air\n");
     }
+    if (GameEnums::MapFilterFlags_Amphibious & m_headerInfo.m_mapFlags)
+    {
+        ret += tr("Amphibious\n");
+    }
     if (GameEnums::MapFilterFlags_Scripted & m_headerInfo.m_mapFlags)
     {
         ret += tr("Scripted\n");
