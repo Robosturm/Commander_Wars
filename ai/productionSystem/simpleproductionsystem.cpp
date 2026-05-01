@@ -573,7 +573,7 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
         while(i < item.distribution.unitIds.size())
         {
             qint32 cost = item.distribution.units[i]->getUnitCosts();
-            if (cost >= minBaseCost ||
+            if (cost >= minBaseCost &&
                 cost <= maxBaseCost)
             {
                 ++i;

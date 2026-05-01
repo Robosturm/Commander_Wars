@@ -3675,7 +3675,7 @@ void Unit::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << units;
     for (qint32 i = 0; i < units; i++)
     {
-        m_TransportUnits[i]->serializeObject(pStream);
+        m_TransportUnits[i]->serializeObject(pStream, forHash);
     }
     pStream << m_capturePoints;
     pStream << m_Hidden;

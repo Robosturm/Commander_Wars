@@ -47,8 +47,8 @@ void NetworkInterface::attachKeys(QSslConfiguration &sslConfiguration)
             X509_gmtime_adj(X509_get_notAfter(x509.get()), 3600L * 24L * 365L * 10L);
             X509_set_pubkey(x509.get(), pkey);
             auto * nameField = X509_get_subject_name(x509.get());
-            X509_NAME_add_entry_by_txt(nameField, "C",  MBSTRING_ASC, reinterpret_cast<const unsigned char *>("DE"),        -1, -1, 0);
-            X509_NAME_add_entry_by_txt(nameField, "O",  MBSTRING_ASC, reinterpret_cast<const unsigned char *>("CommanderWars"), -1, -1, 0);
+            X509_NAME_add_entry_by_txt(nameField, "C",  MBSTRING_ASC, const_cast<unsigned char*>(reinterpret_cast<const unsigned char *>("DE")),        -1, -1, 0);
+            X509_NAME_add_entry_by_txt(nameField, "O",  MBSTRING_ASC, const_cast<unsigned char*>(reinterpret_cast<const unsigned char *>("CommanderWars")), -1, -1, 0);
             // X509_NAME_add_entry_by_txt(nameField, "CN", MBSTRING_ASC, reinterpret_cast<const unsigned char *>("localhost"), -1, -1, 0);
             X509_set_issuer_name(x509.get(), nameField);
             if (X509_sign(x509.get(), pkey, EVP_sha1()))
