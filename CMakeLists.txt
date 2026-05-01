@@ -109,8 +109,8 @@ if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
 elseif(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     message("Using local pre-compiled openssl version from path: ${OPENSSL_LIB_PATH} for windows")
     set(OPENSSL_LIBS
-        ${OPENSSL_LIB_PATH}/libcrypto-4-x64.dll
-        ${OPENSSL_LIB_PATH}/libssl-4-x64.dll
+        ${OPENSSL_LIB_PATH}/libcrypto-3-x64.dll
+        ${OPENSSL_LIB_PATH}/libssl-3-x64.dll
     CACHE INTERNAL "")
     include_directories(${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
