@@ -138,6 +138,7 @@ void Shopmenu::onEnter()
 
 void Shopmenu::exitMenue()
 {
+    Userdata::getInstance()->storeUser();
     CONSOLE_PRINT("Leaving Shop Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
     auto window = MemoryManagement::create<Mainwindow>("ui/menu/playermenu.xml");
