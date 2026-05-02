@@ -387,7 +387,10 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
                     }
                     else if (ai == GameEnums::AiTypes_Human)
                     {
-                        pPlayer->setPlayerNameId(Settings::getInstance()->getUsername());
+                        if (!Mainapp::getSlave())
+                        {
+                            pPlayer->setPlayerNameId(Settings::getInstance()->getUsername());
+                        }
                     }
                     pPlayer->setControlType(ai);
                 }
@@ -397,7 +400,10 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
                     CONSOLE_PRINT("PlayerSelection::initializeMap changing player " + QString::number(i) + " to human", GameConsole::eDEBUG);
                     pPlayer->setBaseGameInput(MemoryManagement::create<HumanPlayerInput>(m_pMap));
                     pPlayer->setControlType(GameEnums::AiTypes_Human);
-                    pPlayer->setPlayerNameId(Settings::getInstance()->getUsername());
+                    if (!Mainapp::getSlave())
+                    {
+                        pPlayer->setPlayerNameId(Settings::getInstance()->getUsername());
+                    }
                 }
                 else
                 {
@@ -437,7 +443,10 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
                     const auto ai = GameEnums::AiTypes_Human;
                     m_pMap->getPlayer(i)->setControlType(ai);
                     m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, m_pMap->getPlayer(i)->getControlType()));
-                    m_pMap->getPlayer(i)->setPlayerNameId(Settings::getInstance()->getUsername());
+                    if (!Mainapp::getSlave())
+                    {
+                        m_pMap->getPlayer(i)->setPlayerNameId(Settings::getInstance()->getUsername());
+                    }
                 }
             }
         }
@@ -449,7 +458,10 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
                 m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, controType));
                 if (controType == GameEnums::AiTypes_Human)
                 {
-                    m_pMap->getPlayer(i)->setPlayerNameId(Settings::getInstance()->getUsername());
+                    if (!Mainapp::getSlave())
+                    {
+                        m_pMap->getPlayer(i)->setPlayerNameId(Settings::getInstance()->getUsername());
+                    }
                 }
                 else if (controType <= GameEnums::AiTypes::AiTypes_ProxyAi)
                 {
