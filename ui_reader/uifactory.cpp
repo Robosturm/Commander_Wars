@@ -1,5 +1,7 @@
 #include "ui_reader/uifactory.h"
 
+#include <QtGlobal>
+
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
@@ -171,8 +173,19 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                 if (file.open(QIODevice::ReadOnly))
                 {
                     bool success = false;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
                     auto result = document.setContent(&file);
-                    if (result)
+                    bool loaded = static_cast<bool>(result);
+                    QString errorMessage = result.errorMessage;
+                    qsizetype errorLine = result.errorLine;
+                    qsizetype errorColumn = result.errorColumn;
+#else
+                    QString errorMessage;
+                    int errorLine = 0;
+                    int errorColumn = 0;
+                    bool loaded = document.setContent(&file, &errorMessage, &errorLine, &errorColumn);
+#endif
+                    if (loaded)
                     {
                         success = true;
                         oxygine::spActor root = MemoryManagement::create<oxygine::Actor>();
@@ -224,7 +237,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                     else
                     {
                         CONSOLE_PRINT("Unable to load: " + uiFile, GameConsole::eERROR);
-                        CONSOLE_PRINT("Error: " + result.errorMessage + " at line " + QString::number(result.errorLine) + " at column " + QString::number(result.errorColumn), GameConsole::eERROR);
+                        CONSOLE_PRINT("Error: " + errorMessage + " at line " + QString::number(errorLine) + " at column " + QString::number(errorColumn), GameConsole::eERROR);
                     }
                     if (success)
                     {

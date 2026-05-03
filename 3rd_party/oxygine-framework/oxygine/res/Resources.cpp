@@ -6,6 +6,7 @@
 #include "coreengine/gameconsole.h"
 
 #include <QFile>
+#include <QtGlobal>
 
 namespace oxygine
 {
@@ -120,8 +121,19 @@ namespace oxygine
         updateName(xmlFile);
         m_docs.push_back(QDomDocument());
         QDomDocument& doc = m_docs.last();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
         auto result = doc.setContent(&file);
-        if (result)
+        bool loaded = static_cast<bool>(result);
+        QString errorMessage = result.errorMessage;
+        qsizetype errorLine = result.errorLine;
+        qsizetype errorColumn = result.errorColumn;
+#else
+        QString errorMessage;
+        int errorLine = 0;
+        int errorColumn = 0;
+        bool loaded = doc.setContent(&file, &errorMessage, &errorLine, &errorColumn);
+#endif
+        if (loaded)
         {
             QDomElement resources = doc.documentElement();
             CONSOLE_PRINT_MODULE("loading xml resources", GameConsole::eDEBUG, GameConsole::eResources);
@@ -167,7 +179,7 @@ namespace oxygine
         }
         else
         {
-            CONSOLE_PRINT("Error: " + result.errorMessage + " at line " + QString::number(result.errorLine) + " at column " + QString::number(result.errorColumn), GameConsole::eERROR);
+            CONSOLE_PRINT("Error: " + errorMessage + " at line " + QString::number(errorLine) + " at column " + QString::number(errorColumn), GameConsole::eERROR);
         }
 #endif
         return true;
@@ -218,4 +230,3 @@ namespace oxygine
     }
 
 }
-

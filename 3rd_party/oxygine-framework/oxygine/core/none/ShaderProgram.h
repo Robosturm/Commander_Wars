@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QtTypes>
+#include <QtGlobal>
 #include <memory>
 
 namespace oxygine

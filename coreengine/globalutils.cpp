@@ -52,10 +52,7 @@ QString GlobalUtils::stripStartPath(QString path)
     {
             if (path.startsWith(start))
             {
-                for (auto i = 0; i < start.length(); ++i)
-                {
-                    path = path.removeFirst();
-                }
+                path.remove(0, start.length());
             }
     }
     return path;

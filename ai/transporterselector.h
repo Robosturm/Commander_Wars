@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QtTypes>
+#include <QtGlobal>
 #include "ai/coreai.h"
 
 class GameAction;
@@ -22,4 +22,3 @@ private:
 private:
     CoreAI & m_owner;
 };
-

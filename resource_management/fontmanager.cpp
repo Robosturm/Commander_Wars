@@ -1,4 +1,5 @@
 #include <QFontDatabase>
+#include <QtGlobal>
 
 #include "coreengine/virtualpaths.h"
 
@@ -24,8 +25,19 @@ FontManager::FontManager()
             QDomDocument document;
             QFile file(folder + "res.xml");
             file.open(QIODevice::ReadOnly);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
             auto result = document.setContent(&file);
-            if (result)
+            bool loaded = static_cast<bool>(result);
+            QString errorMessage = result.errorMessage;
+            qsizetype errorLine = result.errorLine;
+            qsizetype errorColumn = result.errorColumn;
+#else
+            QString errorMessage;
+            int errorLine = 0;
+            int errorColumn = 0;
+            bool loaded = document.setContent(&file, &errorMessage, &errorLine, &errorColumn);
+#endif
+            if (loaded)
             {
                 auto rootElement = document.documentElement();
                 auto node = rootElement.firstChild();
@@ -107,7 +119,7 @@ FontManager::FontManager()
             else
             {
                 CONSOLE_PRINT("Unable to load: " + folder + "res.xml", GameConsole::eERROR);
-                CONSOLE_PRINT("Error: " + result.errorMessage + " at line " + QString::number(result.errorLine) + " at column " + QString::number(result.errorColumn), GameConsole::eERROR);
+                CONSOLE_PRINT("Error: " + errorMessage + " at line " + QString::number(errorLine) + " at column " + QString::number(errorColumn), GameConsole::eERROR);
             }
         }
     }
