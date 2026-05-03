@@ -1,5 +1,7 @@
 #include "objects/base/h_scrollbar.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/interpreter.h"
@@ -27,57 +29,83 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
     m_pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Actor* pPtrDown = m_pArrowDown.get();
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [pPtrDown](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [this, pPtrDown](oxygine::Event*)
     {
-        pPtrDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        if (m_enabled)
+        {
+            pPtrDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        }
     });
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [pPtrDown](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [this, pPtrDown](oxygine::Event*)
     {
-        pPtrDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        if (m_enabled)
+        {
+            pPtrDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        }
     });
     m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event* pEvent)
     {
-        pEvent->stopPropagation();
-        m_scroll = 1;
-        m_Scrollspeed = 1.0f;
-        m_speedCounter = 0;
+        if (m_enabled)
+        {
+            pEvent->stopPropagation();
+            m_trackSliding = false;
+            m_scroll = 1;
+            m_Scrollspeed = 1.0f;
+            m_speedCounter = 0;
+        }
     });
     m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event* pEvent)
     {
-        pEvent->stopPropagation();
-        m_scroll = 0;
+        if (m_enabled && m_scroll > 0)
+        {
+            pEvent->stopPropagation();
+            m_scroll = 0;
+        }
     });
     m_pBox->addChild(m_pArrowDown);
     m_pArrowDown->setPosition(9, heigth - m_pArrowDown->getScaledHeight() - 8);
 
-    oxygine::spButton pArrowUp = MemoryManagement::create<oxygine::Button>();
+    m_pArrowUp = MemoryManagement::create<oxygine::Button>();
     // pButton->setPosition(200, 200);
-    pArrowUp->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
-    pArrowUp->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    pArrowUp->setFlippedY(true);
-    oxygine::Actor* pPtrUp = pArrowUp.get();
-    pArrowUp->addEventListener(oxygine::TouchEvent::OVER, [pPtrUp](oxygine::Event*)
+    m_pArrowUp->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
+    m_pArrowUp->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    m_pArrowUp->setFlippedY(true);
+    oxygine::Actor* pPtrUp = m_pArrowUp.get();
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::OVER, [this, pPtrUp](oxygine::Event*)
     {
-        pPtrUp->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        if (m_enabled)
+        {
+            pPtrUp->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        }
     });
-    pArrowUp->addEventListener(oxygine::TouchEvent::OUTX, [pPtrUp](oxygine::Event*)
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::OUTX, [this, pPtrUp](oxygine::Event*)
     {
-        pPtrUp->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        if (m_enabled)
+        {
+            pPtrUp->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        }
     });
-    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event* pEvent)
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event* pEvent)
     {
-        pEvent->stopPropagation();
-        m_scroll = -1;
-        m_Scrollspeed = 1.0f;
-        m_speedCounter = 0;
+        if (m_enabled)
+        {
+            pEvent->stopPropagation();
+            m_trackSliding = false;
+            m_scroll = -1;
+            m_Scrollspeed = 1.0f;
+            m_speedCounter = 0;
+        }
     });
-    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event* pEvent)
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event* pEvent)
     {
-        pEvent->stopPropagation();
-        m_scroll = 0;
+        if (m_enabled && m_scroll < 0)
+        {
+            pEvent->stopPropagation();
+            m_scroll = 0;
+        }
     });
-    m_pBox->addChild(pArrowUp);
-    pArrowUp->setPosition(9, 8);
+    m_pBox->addChild(m_pArrowUp);
+    m_pArrowUp->setPosition(9, 8);
 
     m_slider = MemoryManagement::create<oxygine::Box9Sprite>();
     pAnim = pObjectManager->getResAnim("h_scrollbar");
@@ -102,25 +130,41 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     m_slider->setPosition(9, 20);
     m_pBox->addChild(m_slider);
     oxygine::Sprite* pSlider = m_slider.get();
-    m_slider->addEventListener(oxygine::TouchEvent::OVER, [pSlider, pObjectManager](oxygine::Event*)
+    m_slider->addEventListener(oxygine::TouchEvent::OVER, [this, pSlider, pObjectManager](oxygine::Event*)
     {
-        oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("h_scrollbar_active");
-        pSlider->setResAnim(pAnimState);
-        pSlider->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        if (m_enabled)
+        {
+            oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("h_scrollbar_active");
+            pSlider->setResAnim(pAnimState);
+            pSlider->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        }
     });
     addEventListener(oxygine::TouchEvent::OUTX, [this](oxygine::Event*)
     {
-        setSliding(getSliding());
+        if (m_enabled)
+        {
+            setSliding(getSliding());
+        }
     });
     m_slider->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event* pEvent)
     {
-        pEvent->stopPropagation();
-        setSliding(true);
+        if (m_enabled)
+        {
+            pEvent->stopPropagation();
+            m_trackSliding = false;
+            setSliding(true);
+        }
     });
     m_slider->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event* pEvent)
     {
-        pEvent->stopPropagation();
-        setSliding(false);
+        if (m_enabled && getSliding())
+        {
+            if (!m_trackSliding)
+            {
+                pEvent->stopPropagation();
+            }
+            setSliding(false);
+        }
     });
     m_slider->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* pEvent)
     {
@@ -131,20 +175,72 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     });
     m_pBox->addEventListener(oxygine::TouchEvent::MOVE, [this](oxygine::Event* pEvent)
     {
-        pEvent->stopPropagation();
-        scroll(pEvent);
+        if (m_enabled)
+        {
+            scroll(pEvent);
+        }
+    });
+    m_pBox->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event* pEvent)
+    {
+        if (!m_enabled)
+        {
+            return;
+        }
+        auto target = pEvent->target.get();
+        if (target == m_slider.get() ||
+            target == m_pArrowDown.get() ||
+            target == m_pArrowUp.get())
+        {
+            return;
+        }
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent == nullptr)
+        {
+            return;
+        }
+        pTouchEvent->stopPropagation();
+        m_trackSliding = true;
+        setSliding(true);
+        scrollToLocalY(pTouchEvent->localPosition.y());
+    });
+    m_pBox->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event*)
+    {
+        if (!m_enabled)
+        {
+            return;
+        }
+        if (m_trackSliding && getSliding())
+        {
+            setSliding(false);
+        }
     });
 
     addEventListener(oxygine::TouchEvent::WHEEL_DIR, [this](oxygine::Event* pEvent)
     {
-        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
-        if (pTouchEvent != nullptr && m_ContentHeigth > 0)
+        if (m_enabled)
         {
-           emit sigChangeScrollValue(-pTouchEvent->wheelDirection.y() / m_ContentHeigth);
-           pTouchEvent->stopPropagation();
+            oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
+            if (pTouchEvent != nullptr && m_ContentHeigth > 0)
+            {
+               emit sigChangeScrollValue(-pTouchEvent->wheelDirection.y() / m_ContentHeigth);
+               pTouchEvent->stopPropagation();
+            }
         }
     });
     connect(this, &H_Scrollbar::sigChangeScrollValue, this, &H_Scrollbar::changeScrollValue, Qt::QueuedConnection);
+}
+
+H_Scrollbar::~H_Scrollbar()
+{
+    if (m_globalMoveListenerId >= 0)
+    {
+        auto stage = oxygine::Stage::getStage();
+        if (stage != nullptr)
+        {
+            stage->removeEventListener(m_globalMoveListenerId);
+        }
+        m_globalMoveListenerId = -1;
+    }
 }
 
 void H_Scrollbar::scroll(oxygine::Event* pEvent)
@@ -155,30 +251,36 @@ void H_Scrollbar::scroll(oxygine::Event* pEvent)
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            qint32 y = pTouchEvent->localPosition.y() - m_slider->getScaledHeight() / 2;
-            if (y < 20)
-            {
-                y = 20;
-            }
-            else if (y > getScaledHeight() - m_slider->getScaledHeight() - 20)
-            {
-                y = getScaledHeight() - m_slider->getScaledHeight() - 20;
-            }
-            m_slider->setY(y);
-            // calc scroll value :)
-            auto div = getHeight() - m_slider->getScaledHeight() - 20 - 20;
-            if (div > 0)
-            {
-                m_Scrollvalue = static_cast<float>(y - 20) / static_cast<float>(div);
-            }
-            else
-            {
-                m_Scrollvalue = 0;
-            }
-            emit sigScrollValueChanged(m_Scrollvalue);
+            scrollToLocalY(pTouchEvent->localPosition.y());
         }
         
     }
+}
+
+void H_Scrollbar::scrollToLocalY(qint32 localY)
+{
+    qint32 y = localY - m_slider->getScaledHeight() / 2;
+    qint32 minY = 20;
+    qint32 maxY = m_Heigth - m_slider->getScaledHeight() - 20;
+    if (y < minY)
+    {
+        y = minY;
+    }
+    else if (y > maxY)
+    {
+        y = maxY;
+    }
+    m_slider->setY(y);
+    auto div = m_Heigth - m_slider->getScaledHeight() - 20 - 20;
+    if (div > 0)
+    {
+        m_Scrollvalue = static_cast<float>(y - 20) / static_cast<float>(div);
+    }
+    else
+    {
+        m_Scrollvalue = 0;
+    }
+    emit sigScrollValueChanged(m_Scrollvalue);
 }
 
 float H_Scrollbar::getScrollvalue() const
@@ -198,20 +300,43 @@ bool H_Scrollbar::getSliding() const
 
 void H_Scrollbar::setSliding(bool sliding)
 {
-    
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_sliding = sliding;
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    auto stage = oxygine::Stage::getStage();
     if (sliding)
     {
+        if (m_globalMoveListenerId < 0 && stage != nullptr)
+        {
+            m_globalMoveListenerId = stage->addEventListenerWithId(oxygine::TouchEvent::MOVE,
+                [this](oxygine::Event* pEvent)
+            {
+                if (!m_enabled || !m_sliding)
+                {
+                    return;
+                }
+                oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
+                if (pTouchEvent == nullptr)
+                {
+                    return;
+                }
+                QPoint boxLocal = m_pBox->stage2local(pTouchEvent->localPosition, oxygine::Stage::getStage().get());
+                scrollToLocalY(boxLocal.y());
+            });
+        }
         oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("h_scrollbar_pressed");
         m_slider->setResAnim(pAnimState);
     }
     else
     {
+        m_trackSliding = false;
+        if (m_globalMoveListenerId >= 0 && stage != nullptr)
+        {
+            stage->removeEventListener(m_globalMoveListenerId);
+        }
+        m_globalMoveListenerId = -1;
         oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("h_scrollbar");
         m_slider->setResAnim(pAnimState);
     }
-    
 }
 
 void H_Scrollbar::setContentHeigth(qint32 heigth)
@@ -220,15 +345,15 @@ void H_Scrollbar::setContentHeigth(qint32 heigth)
     qint32 sliderHeight = 50;
     if (m_ContentHeigth > 0)
     {
-        sliderHeight = ((getHeight() - 20 - 20) * getHeight()) / m_ContentHeigth;
+        sliderHeight = ((m_Heigth - 20 - 20) * m_Heigth) / m_ContentHeigth;
     }
     if (sliderHeight < 11)
     {
         sliderHeight = 11;
     }
-    else if (sliderHeight > (getHeight() - 20 - 20))
+    else if (sliderHeight > (m_Heigth - 20 - 20))
     {
-        sliderHeight = (getHeight() - 20 - 20);
+        sliderHeight = (m_Heigth - 20 - 20);
     }
     m_Scrollvalue = 0;
     m_slider->setSize(18, sliderHeight);
@@ -309,4 +434,18 @@ void H_Scrollbar::setHeight(qint32 h)
     m_pArrowDown->setPosition(9, m_Heigth - m_pArrowDown->getScaledHeight() - 8);
     setContentHeigth(m_ContentHeigth);
     
+}
+
+void H_Scrollbar::setEnabled(bool value)
+{
+    if (!value)
+    {
+        m_scroll = 0;
+        setSliding(false);
+    }
+    oxygine::Actor::setEnabled(value);
+    m_slider->setEnabled(value);
+    m_pBox->setEnabled(value);
+    m_pArrowDown->setEnabled(value);
+    m_pArrowUp->setEnabled(value);
 }

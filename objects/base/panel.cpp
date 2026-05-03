@@ -129,20 +129,26 @@ void Panel::scrolledX(float value)
 void Panel::doUpdate(const oxygine::UpdateState& us)
 {
     auto div = m_ContentRect->getScaledWidth() - m_SlidingActor->getScaledWidth();
-    if (m_VScrollbar->getVisible())
+    if (m_VScrollbar->getVisible() && div > 0)
     {
-        float value = static_cast<float>(m_ContentRect->getX()) / -static_cast<float>(div);
-        m_VScrollbar->setScrollvalue(value);
+        if (!m_VScrollbar->getSliding())
+        {
+            float value = static_cast<float>(m_ContentRect->getX()) / -static_cast<float>(div);
+            m_VScrollbar->setScrollvalue(value);
+        }
     }
-    else
+    else if (!m_VScrollbar->getVisible())
     {
         m_ContentRect->setX(0);
     }
     div = m_ContentRect->getScaledHeight() - m_SlidingActor->getScaledHeight();
     if (m_HScrollbar->getVisible() && div > 0)
     {
-        float value = static_cast<float>(m_ContentRect->getY()) / -static_cast<float>(div);
-        m_HScrollbar->setScrollvalue(value);
+        if (!m_HScrollbar->getSliding())
+        {
+            float value = static_cast<float>(m_ContentRect->getY()) / -static_cast<float>(div);
+            m_HScrollbar->setScrollvalue(value);
+        }
     }
     else
     {

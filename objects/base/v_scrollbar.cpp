@@ -1,5 +1,7 @@
 #include "objects/base/v_scrollbar.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/interpreter.h"
@@ -45,6 +47,8 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
+            pEvent->stopPropagation();
+            m_trackSliding = false;
             m_scroll = 1;
             m_currentScrollspeed = m_Scrollspeed;
             m_speedCounter = 0;
@@ -53,8 +57,9 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     });
     m_pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event* pEvent)
     {
-        if (m_enabled)
+        if (m_enabled && m_scroll > 0)
         {
+            pEvent->stopPropagation();
             m_scroll = 0;
             emit sigEndEditValue(m_Scrollvalue);
         }
@@ -86,6 +91,8 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
+            pEvent->stopPropagation();
+            m_trackSliding = false;
             m_scroll = -1;
             m_currentScrollspeed = m_Scrollspeed;
             m_speedCounter = 0;
@@ -94,8 +101,9 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     });
     m_pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event* pEvent)
     {
-        if (m_enabled)
+        if (m_enabled && m_scroll < 0)
         {
+            pEvent->stopPropagation();
             m_scroll = 0;
             emit sigEndEditValue(m_Scrollvalue);
         }
@@ -147,6 +155,8 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
+            event->stopPropagation();
+            m_trackSliding = false;
             setSliding(true);
             emit sigStartEditValue();
             emit sigFocused();
@@ -154,13 +164,14 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     });
     m_slider->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event* event)
     {
-        if (m_enabled)
+        if (m_enabled && getSliding())
         {
-            if (getSliding())
+            if (!m_trackSliding)
             {
-                setSliding(false);
-                emit sigEndEditValue(m_Scrollvalue);
+                event->stopPropagation();
             }
+            setSliding(false);
+            emit sigEndEditValue(m_Scrollvalue);
             emit sigFocusedLost();
         }
     });
@@ -171,8 +182,64 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             scroll(pEvent);
         }
     });
+    m_pBox->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [this](oxygine::Event* pEvent)
+    {
+        if (!m_enabled)
+        {
+            return;
+        }
+        auto target = pEvent->target.get();
+        if (target == m_slider.get() ||
+            target == m_pArrowLeft.get() ||
+            target == m_pArrowRigth.get())
+        {
+            return;
+        }
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent == nullptr)
+        {
+            return;
+        }
+        Tooltip::hideTooltip();
+        pTouchEvent->stopPropagation();
+        bool wasSliding = getSliding();
+        m_trackSliding = true;
+        setSliding(true);
+        scrollToLocalX(pTouchEvent->localPosition.x());
+        if (!wasSliding)
+        {
+            emit sigStartEditValue();
+            emit sigFocused();
+        }
+    });
+    m_pBox->addEventListener(oxygine::TouchEvent::TOUCH_UP, [this](oxygine::Event*)
+    {
+        if (!m_enabled)
+        {
+            return;
+        }
+        if (m_trackSliding && getSliding())
+        {
+            setSliding(false);
+            emit sigEndEditValue(m_Scrollvalue);
+            emit sigFocusedLost();
+        }
+    });
 
     connect(this, &V_Scrollbar::sigChangeScrollValue, this, &V_Scrollbar::changeScrollValue, Qt::QueuedConnection);
+}
+
+V_Scrollbar::~V_Scrollbar()
+{
+    if (m_globalMoveListenerId >= 0)
+    {
+        auto stage = oxygine::Stage::getStage();
+        if (stage != nullptr)
+        {
+            stage->removeEventListener(m_globalMoveListenerId);
+        }
+        m_globalMoveListenerId = -1;
+    }
 }
 
 void V_Scrollbar::focusedLost()
@@ -194,29 +261,35 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
         {
             Tooltip::hideTooltip();
             pTouchEvent->stopPropagation();
-            qint32 x = pTouchEvent->localPosition.x() - m_slider->getScaledWidth() / 2;
-            if (x < 20)
-            {
-                x = 20;
-            }
-            else if (x > m_Width - m_slider->getScaledWidth() - 20)
-            {
-                x = m_Width - m_slider->getScaledWidth() - 20;
-            }
-            m_slider->setX(x);
-            // calc scroll value :)
-            auto div = m_Width - m_slider->getScaledWidth() - 20 - 20;
-            if (div > 0)
-            {
-                m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(div);
-            }
-            else
-            {
-                m_Scrollvalue = 0;
-            }
-            emit sigScrollValueChanged(m_Scrollvalue);
+            scrollToLocalX(pTouchEvent->localPosition.x());
         }
     }
+}
+
+void V_Scrollbar::scrollToLocalX(qint32 localX)
+{
+    qint32 x = localX - m_slider->getScaledWidth() / 2;
+    qint32 minX = 20;
+    qint32 maxX = m_Width - m_slider->getScaledWidth() - 20;
+    if (x < minX)
+    {
+        x = minX;
+    }
+    else if (x > maxX)
+    {
+        x = maxX;
+    }
+    m_slider->setX(x);
+    auto div = m_Width - m_slider->getScaledWidth() - 20 - 20;
+    if (div > 0)
+    {
+        m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(div);
+    }
+    else
+    {
+        m_Scrollvalue = 0;
+    }
+    emit sigScrollValueChanged(m_Scrollvalue);
 }
 
 bool V_Scrollbar::getSliding() const
@@ -226,20 +299,44 @@ bool V_Scrollbar::getSliding() const
 
 void V_Scrollbar::setSliding(bool sliding)
 {
-    
     m_sliding = sliding;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
+    auto stage = oxygine::Stage::getStage();
     if (sliding)
     {
+        if (m_globalMoveListenerId < 0 && stage != nullptr)
+        {
+            m_globalMoveListenerId = stage->addEventListenerWithId(oxygine::TouchEvent::MOVE,
+                [this](oxygine::Event* pEvent)
+            {
+                if (!m_enabled || !m_sliding)
+                {
+                    return;
+                }
+                oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
+                if (pTouchEvent == nullptr)
+                {
+                    return;
+                }
+                Tooltip::hideTooltip();
+                QPoint boxLocal = m_pBox->stage2local(pTouchEvent->localPosition, oxygine::Stage::getStage().get());
+                scrollToLocalX(boxLocal.x());
+            });
+        }
         oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar_pressed");
         m_slider->setResAnim(pAnimState);
     }
     else
     {
+        m_trackSliding = false;
+        if (m_globalMoveListenerId >= 0 && stage != nullptr)
+        {
+            stage->removeEventListener(m_globalMoveListenerId);
+        }
+        m_globalMoveListenerId = -1;
         oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar");
         m_slider->setResAnim(pAnimState);
     }
-    
 }
 
 float V_Scrollbar::getScrollspeed() const
@@ -357,6 +454,11 @@ void V_Scrollbar::setWidth(qint32 w)
 
 void V_Scrollbar::setEnabled(bool value)
 {
+    if (!value)
+    {
+        m_scroll = 0;
+        setSliding(false);
+    }
     oxygine::Actor::setEnabled(value);
     m_slider->setEnabled(value);
     m_pBox->setEnabled(value);
