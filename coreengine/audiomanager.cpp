@@ -9,6 +9,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
+#include <QtGlobal>
 #include <QDirIterator>
 #include <QList>
 #ifdef AUDIOSUPPORT
@@ -173,8 +174,19 @@ void AudioManager::readSoundCacheFromXml(QString folder)
         QFile file(folder + "res.xml");
         if (file.open(QIODevice::ReadOnly))
         {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
             auto result = document.setContent(&file);
-            if (result)
+            bool loaded = static_cast<bool>(result);
+            QString errorMessage = result.errorMessage;
+            qsizetype errorLine = result.errorLine;
+            qsizetype errorColumn = result.errorColumn;
+#else
+            QString errorMessage;
+            int errorLine = 0;
+            int errorColumn = 0;
+            bool loaded = document.setContent(&file, &errorMessage, &errorLine, &errorColumn);
+#endif
+            if (loaded)
             {
                 auto rootElement = document.documentElement();
                 auto node = rootElement.firstChild();
@@ -200,7 +212,7 @@ void AudioManager::readSoundCacheFromXml(QString folder)
             else
             {
                 CONSOLE_PRINT_MODULE("Unable to load: " + folder + "res.xml", GameConsole::eERROR, GameConsole::eAudio);
-                CONSOLE_PRINT_MODULE("Error: " + result.errorMessage + " at line " + QString::number(result.errorLine) + " at column " + QString::number(result.errorColumn), GameConsole::eERROR, GameConsole::eAudio);
+                CONSOLE_PRINT_MODULE("Error: " + errorMessage + " at line " + QString::number(errorLine) + " at column " + QString::number(errorColumn), GameConsole::eERROR, GameConsole::eAudio);
             }
         }
     }

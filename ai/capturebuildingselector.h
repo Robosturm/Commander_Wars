@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QtTypes>
+#include <QtGlobal>
 #include "ai/coreai.h"
 
 class GameAction;
@@ -47,4 +47,3 @@ private:
     CoreAI & m_owner;
     QVector<QPoint> m_usedFarAwayBuildings;
 };
-

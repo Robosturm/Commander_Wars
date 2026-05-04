@@ -1,4 +1,5 @@
 #include <QCoreApplication>
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QList>
@@ -7,6 +8,20 @@
 #include "coreengine/virtualpaths.h"
 
 QList<VirtualPaths::SearchPathInfo> VirtualPaths::m_searchPath;
+
+QString VirtualPaths::normalizedPath(const QFileInfo& info)
+{
+    QString path = info.canonicalFilePath();
+    if (path.isEmpty())
+    {
+        path = info.absoluteFilePath();
+    }
+    path = QDir::cleanPath(path);
+#ifdef _WIN32
+    path = path.toLower();
+#endif
+    return path;
+}
 
 void VirtualPaths::setSearchPath(const QString& userPath, const QStringList& mods)
 {
@@ -19,7 +34,8 @@ void VirtualPaths::setSearchPath(const QString& userPath, const QStringList& mod
 #ifndef USEAPPCONFIGPATH
     // USEAPPCONFIGPATH is primarily set on Linux, where the "current directory" of programs launched from the start
     // menu is normally the user's home directory. This is very unexpected behavior, and this should not be checked.
-    if (QFileInfo(".") != QFileInfo(userPath))
+    QFileInfo currentPath(".");
+    if (normalizedPath(currentPath) != normalizedPath(QFileInfo(userPath)))
     {
         m_searchPath.append({ "." });
     }

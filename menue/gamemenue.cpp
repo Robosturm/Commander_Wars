@@ -1414,6 +1414,11 @@ bool GameMenue::doDespawnSlave()
             mods.insert(JsonKeys::JSONKEY_MOD + QString::number(i), activeMods[i]);
         }
         data.insert(JsonKeys::JSONKEY_USEDMODS, mods);
+        GameVersion gameVersion;
+        data.insert(JsonKeys::JSONKEY_VERSION_MAJOR, gameVersion.getMajor());
+        data.insert(JsonKeys::JSONKEY_VERSION_MINOR, gameVersion.getMinor());
+        data.insert(JsonKeys::JSONKEY_VERSION_REVISION, gameVersion.getRevision());
+        data.insert(JsonKeys::JSONKEY_VERSION_SUFIX, gameVersion.getSufix());
         QJsonArray usernames;
         qint32 count = m_pMap->getPlayerCount();
         for (qint32 i = 0; i < count; ++i)

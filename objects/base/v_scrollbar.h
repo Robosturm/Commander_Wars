@@ -22,7 +22,7 @@ public:
      * @param contentWidth width of the area you can scroll with this scrollbar. Needed for the arrows to calculate the add value. :)
      */
     explicit V_Scrollbar(qint32 width, qint32 contentWidth);
-    virtual ~V_Scrollbar() = default;
+    virtual ~V_Scrollbar();
     /**
      * @brief setContentWidth
      * @param heigth
@@ -68,8 +68,10 @@ public slots:
     virtual void focusedLost() override;
 private:
     void scroll(oxygine::Event* pEvent);
+    void scrollToLocalX(qint32 localX);
 private:
     float m_Scrollvalue{0.0f};
+    qint32 m_globalMoveListenerId{-1};
     qint32 m_speedCounter{0};
     qint32 m_Width;
     qint32 m_ContentWidth;
@@ -77,6 +79,7 @@ private:
     float m_currentScrollspeed{0.0f};
     float m_Scrollspeed{1.0f};
     bool m_sliding{false};
+    bool m_trackSliding{false};
     oxygine::spBox9Sprite  m_slider;
     QElapsedTimer m_ScrollTimer;
     oxygine::spBox9Sprite m_pBox;

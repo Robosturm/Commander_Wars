@@ -21,7 +21,7 @@ public:
      * @param contentHeigth heigth of the area you can scroll with this scrollbar. Needed for the arrows to calculate the add value. :)
      */
     explicit H_Scrollbar(qint32 heigth, qint32 contentHeigth);
-    virtual ~H_Scrollbar() = default;
+    virtual ~H_Scrollbar();
     /**
      * @brief setContentHeigth
      * @param heigth
@@ -31,6 +31,7 @@ public:
 
     virtual void update(const oxygine::UpdateState&) override;
     virtual void setHeight(qint32 h) override;
+    virtual void setEnabled(bool value) override;
     Q_INVOKABLE void setScrollvalue(float Scrollvalue);
     Q_INVOKABLE float getScrollvalue() const;
     Q_INVOKABLE bool getSliding() const;
@@ -51,19 +52,23 @@ public slots:
     void changeScrollValue(float value);
 private:
     void scroll(oxygine::Event* pEvent);
+    void scrollToLocalY(qint32 localY);
 private:
     float m_Scrollvalue{0.0f};
     float m_Scrollspeed{1.0f};
+    qint32 m_globalMoveListenerId{-1};
     qint32 m_speedCounter{0};
     qint32 m_Heigth;
     qint32 m_ContentHeigth;
     qint32 m_scroll{0};
     bool m_sliding{false};
+    bool m_trackSliding{false};
     oxygine::spBox9Sprite  m_slider;
     QElapsedTimer m_ScrollTimer;
 
     oxygine::spBox9Sprite m_pBox;
     oxygine::spButton m_pArrowDown;
+    oxygine::spButton m_pArrowUp;
 };
 
 Q_DECLARE_INTERFACE(H_Scrollbar, "H_Scrollbar");
