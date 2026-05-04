@@ -70,6 +70,7 @@ private:
     static QStringList createSearchPathInternal(const QString& name, bool checkMods = true, bool firstPriority = false);
     static QStringList findAllInternal(const QString& name, bool checkMods = true, bool firstPriority = false);
     static VirtualPaths::ProcessedName processName(const QString& pName);
+    static QString normalizedPath(const QFileInfo& info);
 
 private:
     static QList<SearchPathInfo> m_searchPath;

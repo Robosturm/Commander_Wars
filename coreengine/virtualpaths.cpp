@@ -9,21 +9,18 @@
 
 QList<VirtualPaths::SearchPathInfo> VirtualPaths::m_searchPath;
 
-namespace
+QString VirtualPaths::normalizedPath(const QFileInfo& info)
 {
-    QString normalizedPath(const QFileInfo& info)
+    QString path = info.canonicalFilePath();
+    if (path.isEmpty())
     {
-        QString path = info.canonicalFilePath();
-        if (path.isEmpty())
-        {
-            path = info.absoluteFilePath();
-        }
-        path = QDir::cleanPath(path);
-#ifdef _WIN32
-        path = path.toLower();
-#endif
-        return path;
+        path = info.absoluteFilePath();
     }
+    path = QDir::cleanPath(path);
+#ifdef _WIN32
+    path = path.toLower();
+#endif
+    return path;
 }
 
 void VirtualPaths::setSearchPath(const QString& userPath, const QStringList& mods)
