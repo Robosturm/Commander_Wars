@@ -150,7 +150,7 @@ void Panel::doUpdate(const oxygine::UpdateState& us)
             m_HScrollbar->setScrollvalue(value);
         }
     }
-    else
+    else if (!m_HScrollbar->getVisible())
     {
         m_ContentRect->setY(0);
     }
