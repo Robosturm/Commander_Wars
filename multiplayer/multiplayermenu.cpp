@@ -1461,7 +1461,12 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
             if (j < 0)
             {
                 missingHere.append(settings->getModName(mod) + " " + versions[i]);
-                modsToDownloadPaths.append(mod);
+                // Only queue a download if the mod folder is absent from disk; otherwise post-sync activation re-enables the local copy.
+                const QString resolvedAbs = VirtualPaths::find(mod, false);
+                if (resolvedAbs.isEmpty() || !QDir(resolvedAbs).exists())
+                {
+                    modsToDownloadPaths.append(mod);
+                }
             }
             else if (versions[i] != myVersions[j])
             {
