@@ -1092,6 +1092,34 @@ QStringList Settings::getActiveMods()
     return m_activeMods;
 }
 
+QString Settings::stageActiveModsForRestart(const QStringList & activeMods)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (pApp->getSlave() || Settings::getAiSlave() || !m_updateStep.isEmpty())
+    {
+        return QString();
+    }
+    QSettings settings(m_settingFile, QSettings::IniFormat);
+    settings.beginGroup("Mods");
+    const QString prior = settings.value("Mods", QString()).toString();
+    settings.setValue("Mods", getConfigString(activeMods));
+    settings.endGroup();
+    return prior;
+}
+
+void Settings::restoreActiveModsRaw(const QString & rawValue)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (pApp->getSlave() || Settings::getAiSlave() || !m_updateStep.isEmpty())
+    {
+        return;
+    }
+    QSettings settings(m_settingFile, QSettings::IniFormat);
+    settings.beginGroup("Mods");
+    settings.setValue("Mods", rawValue);
+    settings.endGroup();
+}
+
 void Settings::setActiveMods(const QStringList activeMods)
 {
     m_activeMods = activeMods;

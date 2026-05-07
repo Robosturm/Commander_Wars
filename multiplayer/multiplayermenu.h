@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QTimer>
 #include <QDir>
+#include <QSet>
+#include <QPair>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
@@ -188,6 +190,13 @@ protected:
     void handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, bool sameMods, bool differentHash, bool sameVersion);
     bool checkMods(const QStringList & mods, const QStringList & versions, QStringList & myMods, QStringList & myVersions, bool filter);
     void verifyGameData(QDataStream & stream, quint64 socketID);
+    void requestModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
+    void handleModSyncRequest(QDataStream & stream, quint64 socketID);
+    void handleModSyncData(QDataStream & stream, quint64 socketID);
+    void handleModSyncReject(QDataStream & stream, quint64 socketID);
+    void handleModSyncComplete(QDataStream & stream, quint64 socketID);
+    void sendModSyncReject(quint64 socketID, qint32 reasonCode, const QString & modPath, const QString & message);
+    void cancelModSyncSession();
     /**
      * @brief requestRule
      * @param socketID
@@ -365,6 +374,14 @@ private:
     QTimer m_slaveDespawnTimer{this};
     bool m_despawning{false};
     bool m_sameVersionAsServer{false};
+
+    // Mod-sync client-session state; cleared on completion or abort.
+    QList<QPair<QString, QString>> m_modSyncStagings;
+    QSet<QString> m_modSyncRequestedSet;
+    QStringList m_modSyncPostSyncActiveMods;
+    qint64 m_modSyncReceivedBytes{0};
+    qint64 m_modSyncReceivedUncompressedBytes{0};
+    bool m_modSyncActive{false};
 };
 
 Q_DECLARE_INTERFACE(Multiplayermenu, "Multiplayermenu");

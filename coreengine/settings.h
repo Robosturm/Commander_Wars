@@ -438,6 +438,9 @@ public:
     Q_INVOKABLE QStringList getActiveModVersions();
     Q_INVOKABLE QStringList getActiveMods();
     Q_INVOKABLE void setActiveMods(const QStringList activeMods);
+    // Stages Mods/Mods to ini without the missing-folder prune; returns prior raw value so the caller can restore on failure.
+    QString stageActiveModsForRestart(const QStringList & activeMods);
+    void restoreActiveModsRaw(const QString & rawValue);
     Q_INVOKABLE QString getSlaveServerName();
     Q_INVOKABLE void setSlaveServerName(const QString slaveServerName);
     Q_INVOKABLE bool getSyncAnimations();
