@@ -1577,7 +1577,7 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
 
     if (fixableViaSync)
     {
-        spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(message, true, tr("Apply host's mod set"), tr("Leave game"));
+        spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(message, true, tr("Apply"), tr("Leave game"));
         // Host's advertised list is already cosmetic-filtered when the rule allows them; re-add client cosmetic-only mods so the user does not silently lose them on next boot.
         QStringList postSyncActiveMods = mods;
         if (cosmeticAllowed)
