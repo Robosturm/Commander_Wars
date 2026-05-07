@@ -2730,6 +2730,23 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
     qint64 totalSent = 0;
     qint64 totalUncompressed = 0;
 
+    auto packageRejectReason = [this](qint32 code, const QString & mod) -> QString
+    {
+        switch (code)
+        {
+            case NetworkCommands::ModSyncSizeCapExceeded:
+                return tr("Mod %1 exceeds the per-mod size cap on the host.").arg(mod);
+            case NetworkCommands::ModSyncFileCountCapExceeded:
+                return tr("Mod %1 exceeds the per-mod file-count cap on the host.").arg(mod);
+            case NetworkCommands::ModSyncInvalidPath:
+                return tr("Mod %1 has an unsafe internal file path.").arg(mod);
+            case NetworkCommands::ModSyncUnknownMod:
+                return tr("Mod %1 was not found on the host.").arg(mod);
+            default:
+                return tr("Failed to build mod package for %1.").arg(mod);
+        }
+    };
+
     for (const auto & mod : std::as_const(requestedMods))
     {
         if (!Filesupport::validateModPath(mod))
@@ -2767,12 +2784,12 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
         Filesupport::ModSyncPackage pkg = Filesupport::buildModSyncPackage(resolvedRoot, mod, caps);
         if (pkg.rejectReason != 0)
         {
-            sendModSyncReject(socketID, pkg.rejectReason, mod, tr("Failed to build mod package."));
+            sendModSyncReject(socketID, pkg.rejectReason, mod, packageRejectReason(pkg.rejectReason, mod));
             return;
         }
         if (totalSent + pkg.compressedBlob.size() > totalCap || totalUncompressed + pkg.declaredUncompressedSize > totalCap)
         {
-            sendModSyncReject(socketID, NetworkCommands::ModSyncSizeCapExceeded, QString(), tr("Total sync size exceeds cap."));
+            sendModSyncReject(socketID, NetworkCommands::ModSyncSizeCapExceeded, QString(), tr("Total sync size exceeds the host's cap."));
             return;
         }
         totalSent += pkg.compressedBlob.size();
