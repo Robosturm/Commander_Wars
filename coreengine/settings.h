@@ -363,6 +363,8 @@ public:
     Q_INVOKABLE void setModSyncMaxFiles(qint32 newValue);
     Q_INVOKABLE qint32 getModSyncMaxRelativePathLength() const;
     Q_INVOKABLE void setModSyncMaxRelativePathLength(qint32 newValue);
+    Q_INVOKABLE bool getModSyncKeepBackups() const;
+    Q_INVOKABLE void setModSyncKeepBackups(bool newValue);
     Q_INVOKABLE QString getMailServerSendAddress();
     Q_INVOKABLE void setMailServerSendAddress(const QString newMailServerSendAddress);
     Q_INVOKABLE qint32 getMailServerAuthMethod();
@@ -955,6 +957,8 @@ private:
     qint32 m_modSyncMaxFiles{5000};
     // Inside-package relpath cap; the modPath identifier itself uses Filesupport::ModPathDefaultMaxLen.
     qint32 m_modSyncMaxRelativePathLength{260};
+    // Disable to skip keeping the .bak-<iso> directory after a successful staging swap; saves disk for users with large mods.
+    bool m_modSyncKeepBackups{false};
 
     // mailing
     QString m_mailServerAddress;

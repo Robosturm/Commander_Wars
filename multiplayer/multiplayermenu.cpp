@@ -3119,10 +3119,10 @@ void Multiplayermenu::cancelModSyncSession()
 
 void Multiplayermenu::confirmModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods)
 {
-    const bool ok = requestModSync(modsToDownload, postSyncActiveMods);
     if (modsToDownload.isEmpty())
     {
-        // Settings-only branch already either staged Mods/Mods or refused; surface the matching prompt.
+        // Settings-only branch: no untrusted host content downloaded, skip the trust prompt.
+        const bool ok = requestModSync(modsToDownload, postSyncActiveMods);
         if (ok)
         {
             onModSyncSucceeded();
@@ -3133,6 +3133,21 @@ void Multiplayermenu::confirmModSync(const QStringList & modsToDownload, const Q
         }
         return;
     }
+    // Trust prompt before any host-supplied mod content is downloaded; mod scripts execute under the QJSEngine in this process.
+    spDialogMessageBox pTrust = MemoryManagement::create<DialogMessageBox>(
+        tr("You are about to install unverified mods from this host. These mods may include scripts that run in your game. Only continue if you trust this host."),
+        true, tr("Install"), tr("Cancel"));
+    connect(pTrust.get(), &DialogMessageBox::sigOk, this, [this, modsToDownload, postSyncActiveMods]()
+    {
+        startModSyncDownload(modsToDownload, postSyncActiveMods);
+    }, Qt::QueuedConnection);
+    connect(pTrust.get(), &DialogMessageBox::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+    addChild(pTrust);
+}
+
+void Multiplayermenu::startModSyncDownload(const QStringList & modsToDownload, const QStringList & postSyncActiveMods)
+{
+    const bool ok = requestModSync(modsToDownload, postSyncActiveMods);
     if (!ok)
     {
         onModSyncFailed(tr("Could not start mod sync."));

@@ -191,6 +191,7 @@ protected:
     void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, QMap<QString, QByteArray> & hostModHashes, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion, bool & cosmeticAllowed);
     void handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, const QMap<QString, QByteArray> & hostModHashes, quint32 hostCapabilities, bool sameMods, bool differentHash, bool sameVersion, bool cosmeticAllowed);
     void confirmModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
+    void startModSyncDownload(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
     void onModSyncProgress();
     void onModSyncSucceeded();
     void onModSyncFailed(const QString & reason);

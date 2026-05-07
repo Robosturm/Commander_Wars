@@ -820,6 +820,8 @@ QStringList Filesupport::executePendingModSyncManifest(const QString & installRo
     const QJsonArray swaps = root.value(QStringLiteral("swaps")).toArray();
     // UTC + ms keeps backup names lexically sorted across DST and avoids same-second collision on rapid retries.
     const QString isoStamp = QDateTime::currentDateTimeUtc().toString(QStringLiteral("yyyyMMdd-HHmmsszzzZ"));
+    // Read the flag once before the swap loop so settings cannot drift mid-batch. Must be called after Settings::loadSettings has run its binding loop; today the boot order at settings.cpp:1557 satisfies that.
+    const bool keepBackups = Settings::getInstance()->getModSyncKeepBackups();
     for (const auto & v : swaps)
     {
         const QJsonObject entry = v.toObject();
@@ -901,6 +903,14 @@ QStringList Filesupport::executePendingModSyncManifest(const QString & installRo
         }
         CONSOLE_PRINT("Mod sync applied: " + finalRel, GameConsole::eINFO);
         applied.append(finalRel);
+        // Backup retention is opt-in; remove the .bak directory now if disabled. Failure to remove just leaves the dir for the next reapModSyncFolders pass.
+        if (finalExisted && !keepBackups && !backupAbs.isEmpty())
+        {
+            if (!QDir(backupAbs).removeRecursively())
+            {
+                CONSOLE_PRINT("Failed to remove .bak after successful sync; reaper will clean up: " + backupAbs, GameConsole::eWARNING);
+            }
+        }
     }
     QFile::remove(path);
     return applied;

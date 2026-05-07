@@ -311,6 +311,16 @@ void Settings::setModSyncMaxRelativePathLength(qint32 newValue)
     m_modSyncMaxRelativePathLength = newValue;
 }
 
+bool Settings::getModSyncKeepBackups() const
+{
+    return m_modSyncKeepBackups;
+}
+
+void Settings::setModSyncKeepBackups(bool newValue)
+{
+    m_modSyncKeepBackups = newValue;
+}
+
 QString Settings::getMailServerSendAddress()
 {
     return m_mailServerSendAddress;
@@ -1495,6 +1505,7 @@ void Settings::setup()
             MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxTotalBytes", &m_modSyncMaxTotalBytes, 256 * 1024 * 1024, 0, std::numeric_limits<qint32>::max()),
             MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxFiles", &m_modSyncMaxFiles, 5000, 0, std::numeric_limits<qint32>::max()),
             MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxRelativePathLength", &m_modSyncMaxRelativePathLength, 260, 1, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<bool>>("Network", "ModSyncKeepBackups", &m_modSyncKeepBackups, false, false, true),
             // mailing
             MemoryManagement::create<Value<QString>>("Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""),
             MemoryManagement::create<Value<quint16>>("Mailing", "MailServerPort", &m_mailServerPort, 0, 0, std::numeric_limits<quint16>::max()),
@@ -1544,7 +1555,8 @@ void Settings::loadSettings()
     setFramesPerSecond(m_framesPerSecond);
     // Apply any pending mod-sync swaps before setActiveMods, so just-synced folders are visible to its missing-folder pruning pass.
     Filesupport::executePendingModSyncManifest(m_userPath, m_userPath);
-    Filesupport::reapModSyncFolders(m_userPath);
+    // backupKeep follows ModSyncKeepBackups so a user who opted out reaps every leftover .bak (including ones that survived a prior post-swap removeRecursively failure).
+    Filesupport::reapModSyncFolders(m_userPath, m_modSyncKeepBackups ? 3 : 0);
     setActiveMods(m_activeMods);
     GameConsole::setLogLevel(m_defaultLogLevel);
     GameConsole::setActiveModules(m_defaultLogModuls);
