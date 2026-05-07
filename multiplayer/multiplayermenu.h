@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QDir>
+#include <QMap>
 #include <QSet>
 #include <QPair>
 
@@ -187,8 +188,8 @@ protected:
     spGameMap createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
     QString getNewFileName(QString filename);    
     void clientMapInfo(QDataStream & stream, quint64 socketID);
-    void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion, bool & cosmeticAllowed);
-    void handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, quint32 hostCapabilities, bool sameMods, bool differentHash, bool sameVersion, bool cosmeticAllowed);
+    void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, QMap<QString, QByteArray> & hostModHashes, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion, bool & cosmeticAllowed);
+    void handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, const QMap<QString, QByteArray> & hostModHashes, quint32 hostCapabilities, bool sameMods, bool differentHash, bool sameVersion, bool cosmeticAllowed);
     void confirmModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
     void onModSyncProgress();
     void onModSyncSucceeded();

@@ -1196,7 +1196,8 @@ void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
         QStringList mismatchedMods;
         quint32 hostCapabilities = 0;
         bool cosmeticAllowed = false;
-        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
+        QMap<QString, QByteArray> hostModHashes;
+        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostModHashes, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         if (sameVersion && sameMods && !differentHash)
         {
             QString command = QString(NetworkCommands::GAMEDATAVERIFIED);
@@ -1209,7 +1210,7 @@ void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            handleVersionMissmatch(mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
+            handleVersionMissmatch(mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostModHashes, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         }
     }
 }
@@ -1261,10 +1262,11 @@ bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & ve
     return sameMods;
 }
 
-void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion, bool & cosmeticAllowed)
+void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, QMap<QString, QByteArray> & hostModHashes, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion, bool & cosmeticAllowed)
 {
     hostCapabilities = 0;
     cosmeticAllowed = false;
+    hostModHashes.clear();
     GameVersion version;
     version.deserializeObject(stream);
     sameVersion = (version == GameVersion());
@@ -1293,6 +1295,8 @@ void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStri
     // Call once per readHashInfo: appends to mismatch lists without clearing.
     auto compareMaps = [&](const QMap<QString, QByteArray> & hostResources, const QMap<QString, QByteArray> & hostMods)
     {
+        // Surface host's per-mod hash for the inactive-local-copy verification in handleVersionMissmatch.
+        hostModHashes = hostMods;
         auto ownResources = Filesupport::getResourceFolderHashes();
         auto ownMods = Filesupport::getPerModHashes(myMods);
         for (auto iter = hostResources.constBegin(); iter != hostResources.constEnd(); ++iter)
@@ -1371,7 +1375,8 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         QStringList mismatchedMods;
         quint32 hostCapabilities = 0;
         bool cosmeticAllowed = false;
-        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
+        QMap<QString, QByteArray> hostModHashes;
+        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostModHashes, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         if (sameVersion && sameMods && !differentHash)
         {
             stream >> m_saveGame;
@@ -1429,12 +1434,12 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            handleVersionMissmatch(mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
+            handleVersionMissmatch(mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostModHashes, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         }
     }
 }
 
-void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, quint32 hostCapabilities, bool sameMods, bool differentHash, bool sameVersion, bool cosmeticAllowed)
+void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, const QMap<QString, QByteArray> & hostModHashes, quint32 hostCapabilities, bool sameMods, bool differentHash, bool sameVersion, bool cosmeticAllowed)
 {
     // Mod/hash fields are stale on version mismatch because readHashInfo early-returns.
     if (!sameVersion)
@@ -1461,9 +1466,20 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
             if (j < 0)
             {
                 missingHere.append(settings->getModName(mod) + " " + versions[i]);
-                // Only queue a download if the mod folder is absent from disk; otherwise post-sync activation re-enables the local copy.
+                // Skip download only when local hash and version match host; disk presence alone is unsafe (stale or unrelated folder).
+                bool localSatisfies = false;
                 const QString resolvedAbs = VirtualPaths::find(mod, false);
-                if (resolvedAbs.isEmpty() || !QDir(resolvedAbs).exists())
+                if (!resolvedAbs.isEmpty() && QDir(resolvedAbs).exists())
+                {
+                    const QByteArray localHash = Filesupport::getPerModHashes(QStringList{mod}).value(mod);
+                    const QString localVersion = settings->getModVersion(mod);
+                    localSatisfies = (!localHash.isEmpty() && localHash == hostModHashes.value(mod) && localVersion == versions[i]);
+                    if (!localSatisfies)
+                    {
+                        CONSOLE_PRINT("Inactive local copy of " + mod + " differs from host (hash or version); queueing download.", GameConsole::eDEBUG);
+                    }
+                }
+                if (!localSatisfies)
                 {
                     modsToDownloadPaths.append(mod);
                 }
@@ -1532,10 +1548,10 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
     appendSection(message, tr("Content mismatch:"), contentDiffs);
     appendSection(message, tr("Engine resources differ:"), mismatchedResourceFolders);
 
-    // Mod-sync is offerable when host advertised CapabilityModSync, no engine resource drift, and we have something to fix.
+    // Mod-sync is offerable when host advertised CapabilityModSync, no engine resource drift, and any mismatch class is non-empty (downloads OR settings-only activate/deactivate work).
     const bool hostSupportsModSync = (hostCapabilities & Filesupport::CapabilityModSync) != 0;
     const bool resourceDrift = !mismatchedResourceFolders.isEmpty();
-    const bool fixableViaSync = hostSupportsModSync && !resourceDrift && (!modsToDownloadPaths.isEmpty() || !extraHere.isEmpty());
+    const bool fixableViaSync = hostSupportsModSync && !resourceDrift && (!missingHere.isEmpty() || !versionDiffs.isEmpty() || !contentDiffs.isEmpty() || !extraHere.isEmpty());
 
     if (message.isEmpty())
     {
