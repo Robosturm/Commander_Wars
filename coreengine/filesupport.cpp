@@ -905,3 +905,88 @@ QStringList Filesupport::executePendingModSyncManifest(const QString & installRo
     QFile::remove(path);
     return applied;
 }
+
+QString Filesupport::rejoinManifestPath(const QString & userDataPath)
+{
+    return joinPath(userDataPath, QStringLiteral(".rejoin.json"));
+}
+
+bool Filesupport::writeRejoinManifest(const QString & userDataPath, const QString & host, quint16 port)
+{
+    if (host.isEmpty() || port == 0)
+    {
+        return false;
+    }
+    QJsonObject root;
+    root.insert(QStringLiteral("version"), 1);
+    root.insert(QStringLiteral("host"), host);
+    root.insert(QStringLiteral("port"), static_cast<qint32>(port));
+    root.insert(QStringLiteral("timestamp"), QDateTime::currentSecsSinceEpoch());
+    const QString path = rejoinManifestPath(userDataPath);
+    QSaveFile f(path);
+    if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        CONSOLE_PRINT("Failed to open rejoin manifest for write: " + path, GameConsole::eERROR);
+        return false;
+    }
+    f.write(QJsonDocument(root).toJson(QJsonDocument::Compact));
+    if (!f.commit())
+    {
+        CONSOLE_PRINT("Failed to commit rejoin manifest: " + path, GameConsole::eERROR);
+        return false;
+    }
+    return true;
+}
+
+Filesupport::RejoinManifest Filesupport::consumeRejoinManifest(const QString & userDataPath)
+{
+    RejoinManifest result;
+    const QString path = rejoinManifestPath(userDataPath);
+    QFile f(path);
+    if (!f.exists())
+    {
+        return result;
+    }
+    constexpr qint64 kMaxRejoinManifestBytes = 4 * 1024;
+    if (f.size() > kMaxRejoinManifestBytes)
+    {
+        CONSOLE_PRINT("Rejoin manifest oversize, discarding: " + path, GameConsole::eERROR);
+        QFile::remove(path);
+        return result;
+    }
+    if (!f.open(QIODevice::ReadOnly))
+    {
+        CONSOLE_PRINT("Rejoin manifest exists but cannot be read: " + path, GameConsole::eERROR);
+        QFile::remove(path);
+        return result;
+    }
+    const QByteArray data = f.readAll();
+    f.close();
+    QFile::remove(path);
+    QJsonParseError parseErr;
+    const QJsonDocument doc = QJsonDocument::fromJson(data, &parseErr);
+    if (parseErr.error != QJsonParseError::NoError || !doc.isObject())
+    {
+        CONSOLE_PRINT("Rejoin manifest invalid JSON: " + parseErr.errorString(), GameConsole::eERROR);
+        return result;
+    }
+    const QJsonObject root = doc.object();
+    if (root.value(QStringLiteral("version")).toInt(0) != 1)
+    {
+        CONSOLE_PRINT("Rejoin manifest unknown version, discarding", GameConsole::eERROR);
+        return result;
+    }
+    const QString host = root.value(QStringLiteral("host")).toString();
+    const qint32 port = root.value(QStringLiteral("port")).toInt(0);
+    const qint64 timestamp = root.value(QStringLiteral("timestamp")).toVariant().toLongLong();
+    if (host.isEmpty() || port <= 0 || port > 0xFFFF)
+    {
+        CONSOLE_PRINT("Rejoin manifest has invalid host or port, discarding", GameConsole::eERROR);
+        return result;
+    }
+    result.valid = true;
+    result.host = host;
+    result.port = static_cast<quint16>(port);
+    result.timestamp = timestamp;
+    return result;
+}

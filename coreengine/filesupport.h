@@ -63,6 +63,18 @@ public:
     static bool writePendingModSyncManifest(const QString & userDataPath, const QList<QPair<QString, QString>> & swaps);
     // Returns the list of `final` paths that were successfully swapped in; slice 3 uses this to drive settings mutation.
     static QStringList executePendingModSyncManifest(const QString & installRoot, const QString & userDataPath);
+
+    struct RejoinManifest
+    {
+        bool valid{false};
+        QString host;
+        quint16 port{0};
+        qint64 timestamp{0};
+    };
+    static QString rejoinManifestPath(const QString & userDataPath);
+    static bool writeRejoinManifest(const QString & userDataPath, const QString & host, quint16 port);
+    // Reads .rejoin.json, deletes the file, returns parsed contents. Caller decides freshness based on RejoinManifest::timestamp.
+    static RejoinManifest consumeRejoinManifest(const QString & userDataPath);
     /**
      * @brief writeByteArray
      * @param stream

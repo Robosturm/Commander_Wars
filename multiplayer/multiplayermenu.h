@@ -375,6 +375,8 @@ private:
     bool m_slaveGameReady{false};
     Password m_password;
     quint64 m_hostSocket{0};
+    QString m_serverAddress;
+    quint16 m_serverPort{0};
     spDialogConnecting m_pDialogConnecting;
     QElapsedTimer m_slaveDespawnElapseTimer;
     QTimer m_slaveDespawnTimer{this};

@@ -1,7 +1,9 @@
-#include <QJsonObject>
+#include <QCoreApplication>
+#include <QCryptographicHash>
 #include <QJsonArray>
 #include <QJsonDocument>
-#include <QCryptographicHash>
+#include <QJsonObject>
+#include <QTimer>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -42,7 +44,9 @@ Multiplayermenu::Multiplayermenu(const QString & address, const QString & second
     : MapSelectionMapsMenue(MemoryManagement::create<MapSelectionView>(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
-      m_password(password)
+      m_password(password),
+      m_serverAddress(address),
+      m_serverPort(port)
 {
     init();
     if (m_networkMode != NetworkMode::Host)
@@ -68,7 +72,9 @@ Multiplayermenu::Multiplayermenu(const QString & address, quint16 port, const Pa
     : MapSelectionMapsMenue(MemoryManagement::create<MapSelectionView>(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
-      m_password(*password)
+      m_password(*password),
+      m_serverAddress(address),
+      m_serverPort(port)
 {
     init();
     initClientConnection(address, "", port);
@@ -3047,14 +3053,15 @@ void Multiplayermenu::handleModSyncComplete(QDataStream & stream, quint64 socket
         onModSyncFailed(tr("Failed to write the pending mod-sync manifest."));
         return;
     }
-    CONSOLE_PRINT("Mod-sync complete: " + QString::number(m_modSyncStagings.size()) + " mods staged. Restart the game to apply.", GameConsole::eINFO);
+    CONSOLE_PRINT("Mod-sync complete: " + QString::number(m_modSyncStagings.size()) + " mods staged. Restarting to apply.", GameConsole::eINFO);
     m_modSyncActive = false;
     m_modSyncStagings.clear();
     m_modSyncRequestedSet.clear();
     m_modSyncReceivedBytes = 0;
     m_modSyncReceivedUncompressedBytes = 0;
     m_modSyncPostSyncActiveMods.clear();
-    onModSyncSucceeded();
+    // Hold so the progress dialog gets a frame to paint at 100% before the success+restart sequence tears it down.
+    QTimer::singleShot(500, this, &Multiplayermenu::onModSyncSucceeded);
 }
 
 void Multiplayermenu::sendModSyncReject(quint64 socketID, qint32 reasonCode, const QString & modPath, const QString & message)
@@ -3166,9 +3173,43 @@ void Multiplayermenu::onModSyncSucceeded()
         m_modSyncProgressDialog->detach();
         m_modSyncProgressDialog.reset();
     }
-    spDialogMessageBox pDialog = MemoryManagement::create<DialogMessageBox>(tr("Mod sync complete. Restart the game to apply the host's mod set."));
-    connect(pDialog.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
-    addChild(pDialog);
+    auto * settings = Settings::getInstance();
+    QString rejoinHost = m_serverAddress;
+    quint16 rejoinPort = m_serverPort;
+    // Prefer the actually-connected endpoint so secondary-fallback joins rejoin to the working address.
+    if (m_pNetworkInterface != nullptr)
+    {
+        const QString connected = m_pNetworkInterface->getConnectedAdress();
+        const quint16 connectedPort = m_pNetworkInterface->getConnectedPort();
+        if (!connected.isEmpty())
+        {
+            rejoinHost = connected;
+        }
+        if (connectedPort != 0)
+        {
+            rejoinPort = connectedPort;
+        }
+    }
+    QStringList argv;
+    // Forward --userPath only when the parent had it on cmdline; passing it otherwise flips CWD-ini boot mode.
+    QString restartUserPath;
+    if (Mainapp::getInstance()->getParser().getUserPath(restartUserPath))
+    {
+        argv << QStringLiteral("--userPath=") + restartUserPath;
+    }
+    const bool haveRejoinTarget = !rejoinHost.isEmpty() && rejoinPort != 0;
+    if (haveRejoinTarget && Filesupport::writeRejoinManifest(settings->getUserPath(), rejoinHost, rejoinPort))
+    {
+        CONSOLE_PRINT("Wrote .rejoin.json for " + rejoinHost + ":" + QString::number(rejoinPort), GameConsole::eINFO);
+        // Password only after manifest succeeds; do not leak it on the no-rejoin restart.
+        argv << QStringLiteral("--rejoin-password=") + m_password.getPasswordText();
+    }
+    else if (haveRejoinTarget)
+    {
+        CONSOLE_PRINT("Failed to write .rejoin.json; user will return to main menu after restart", GameConsole::eERROR);
+    }
+    Mainapp::setRestartArgv(argv);
+    QCoreApplication::exit(1);
 }
 
 void Multiplayermenu::onModSyncFailed(const QString & reason)
