@@ -1104,6 +1104,11 @@ QString Settings::stageActiveModsForRestart(const QStringList & activeMods)
     const QString prior = settings.value("Mods", QString()).toString();
     settings.setValue("Mods", getConfigString(activeMods));
     settings.endGroup();
+    // Mirror the staged list into the in-memory active set so a saveSettings
+    // call before the manual restart cannot revert Mods/Mods to the stale list.
+    // Versions are cleared and rebuilt by setActiveMods on next boot.
+    m_activeMods = activeMods;
+    m_activeModVersions.clear();
     return prior;
 }
 
@@ -1118,6 +1123,8 @@ void Settings::restoreActiveModsRaw(const QString & rawValue)
     settings.beginGroup("Mods");
     settings.setValue("Mods", rawValue);
     settings.endGroup();
+    m_activeMods = rawValue.isEmpty() ? QStringList() : rawValue.split(QChar(','));
+    m_activeModVersions.clear();
 }
 
 void Settings::setActiveMods(const QStringList activeMods)
