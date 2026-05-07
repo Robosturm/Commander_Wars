@@ -348,14 +348,16 @@ Filesupport::ModSyncPackage Filesupport::buildModSyncPackage(const QString & ins
         pkg.rejectReason = kModSyncUnknownMod;
         return pkg;
     }
+    // Resolve to an absolute root once; QDir::relativeFilePath short-circuits to verbatim when either operand is relative.
+    const QDir absModDir(modDir.absolutePath());
     QMap<QString, QByteArray> files;
     qint64 uncompressedTotal = 0;
     qint32 fileCount = 0;
     QDirIterator it(modRoot, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
     while (it.hasNext())
     {
-        const QString absolute = it.next();
-        const QString rel = QDir(modRoot).relativeFilePath(absolute);
+        const QString absolute = QFileInfo(it.next()).absoluteFilePath();
+        const QString rel = absModDir.relativeFilePath(absolute);
         const QStringList relSegs = rel.split(QChar('/'));
         const QString basename = relSegs.isEmpty() ? rel : relSegs.last();
         // Segment-based filter; substrings would false-positive legit filenames containing .bak- or .sync-staging-.
