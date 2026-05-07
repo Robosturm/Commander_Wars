@@ -18,6 +18,7 @@
 
 #include "objects/base/chat.h"
 #include "objects/dialogs/dialogconnecting.h"
+#include "objects/dialogs/dialogmodsyncprogress.h"
 
 class Multiplayermenu;
 using spMultiplayermenu = std::shared_ptr<Multiplayermenu>;
@@ -186,11 +187,15 @@ protected:
     spGameMap createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
     QString getNewFileName(QString filename);    
     void clientMapInfo(QDataStream & stream, quint64 socketID);
-    void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion);
-    void handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, bool sameMods, bool differentHash, bool sameVersion);
+    void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion, bool & cosmeticAllowed);
+    void handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, quint32 hostCapabilities, bool sameMods, bool differentHash, bool sameVersion, bool cosmeticAllowed);
+    void confirmModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
+    void onModSyncProgress();
+    void onModSyncSucceeded();
+    void onModSyncFailed(const QString & reason);
     bool checkMods(const QStringList & mods, const QStringList & versions, QStringList & myMods, QStringList & myVersions, bool filter);
     void verifyGameData(QDataStream & stream, quint64 socketID);
-    void requestModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
+    bool requestModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
     void handleModSyncRequest(QDataStream & stream, quint64 socketID);
     void handleModSyncData(QDataStream & stream, quint64 socketID);
     void handleModSyncReject(QDataStream & stream, quint64 socketID);
@@ -382,6 +387,7 @@ private:
     qint64 m_modSyncReceivedBytes{0};
     qint64 m_modSyncReceivedUncompressedBytes{0};
     bool m_modSyncActive{false};
+    spDialogModSyncProgress m_modSyncProgressDialog;
 };
 
 Q_DECLARE_INTERFACE(Multiplayermenu, "Multiplayermenu");

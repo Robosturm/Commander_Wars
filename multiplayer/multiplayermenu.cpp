@@ -1195,8 +1195,8 @@ void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
         QStringList mismatchedResourceFolders;
         QStringList mismatchedMods;
         quint32 hostCapabilities = 0;
-        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostCapabilities, sameMods, differentHash, sameVersion);
-        Q_UNUSED(hostCapabilities);
+        bool cosmeticAllowed = false;
+        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         if (sameVersion && sameMods && !differentHash)
         {
             QString command = QString(NetworkCommands::GAMEDATAVERIFIED);
@@ -1209,7 +1209,7 @@ void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            handleVersionMissmatch(mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, sameMods, differentHash, sameVersion);
+            handleVersionMissmatch(mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         }
     }
 }
@@ -1261,9 +1261,10 @@ bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & ve
     return sameMods;
 }
 
-void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion)
+void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion, bool & cosmeticAllowed)
 {
     hostCapabilities = 0;
+    cosmeticAllowed = false;
     GameVersion version;
     version.deserializeObject(stream);
     sameVersion = (version == GameVersion());
@@ -1273,6 +1274,7 @@ void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStri
     }
     bool filter = false;
     stream >> filter;
+    cosmeticAllowed = filter;
     qint32 size = 0;
     stream >> size;
     for (qint32 i = 0; i < size; i++)
@@ -1368,8 +1370,8 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         QStringList mismatchedResourceFolders;
         QStringList mismatchedMods;
         quint32 hostCapabilities = 0;
-        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostCapabilities, sameMods, differentHash, sameVersion);
-        Q_UNUSED(hostCapabilities);
+        bool cosmeticAllowed = false;
+        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         if (sameVersion && sameMods && !differentHash)
         {
             stream >> m_saveGame;
@@ -1427,12 +1429,12 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            handleVersionMissmatch(mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, sameMods, differentHash, sameVersion);
+            handleVersionMissmatch(mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         }
     }
 }
 
-void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, bool sameMods, bool differentHash, bool sameVersion)
+void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, quint32 hostCapabilities, bool sameMods, bool differentHash, bool sameVersion, bool cosmeticAllowed)
 {
     // Mod/hash fields are stale on version mismatch because readHashInfo early-returns.
     if (!sameVersion)
@@ -1449,6 +1451,7 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
     QStringList missingHere;
     QStringList extraHere;
     QStringList versionDiffs;
+    QStringList modsToDownloadPaths;
     if (!sameMods)
     {
         for (qint32 i = 0; i < mods.size(); ++i)
@@ -1458,10 +1461,12 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
             if (j < 0)
             {
                 missingHere.append(settings->getModName(mod) + " " + versions[i]);
+                modsToDownloadPaths.append(mod);
             }
             else if (versions[i] != myVersions[j])
             {
                 versionDiffs.append(tr("%1 (host: %2, you: %3)").arg(settings->getModName(mod), versions[i], myVersions[j]));
+                modsToDownloadPaths.append(mod);
             }
         }
         for (qint32 i = 0; i < myMods.size(); ++i)
@@ -1477,6 +1482,10 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
     for (const auto & mod : std::as_const(mismatchedMods))
     {
         contentDiffs.append(settings->getModName(mod));
+        if (!modsToDownloadPaths.contains(mod))
+        {
+            modsToDownloadPaths.append(mod);
+        }
     }
 
     auto logFullList = [](const QString & label, const QStringList & list)
@@ -1518,6 +1527,11 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
     appendSection(message, tr("Content mismatch:"), contentDiffs);
     appendSection(message, tr("Engine resources differ:"), mismatchedResourceFolders);
 
+    // Mod-sync is offerable when host advertised CapabilityModSync, no engine resource drift, and we have something to fix.
+    const bool hostSupportsModSync = (hostCapabilities & Filesupport::CapabilityModSync) != 0;
+    const bool resourceDrift = !mismatchedResourceFolders.isEmpty();
+    const bool fixableViaSync = hostSupportsModSync && !resourceDrift && (!modsToDownloadPaths.isEmpty() || !extraHere.isEmpty());
+
     if (message.isEmpty())
     {
         // Legacy and fail-closed payloads have no structured detail.
@@ -1531,14 +1545,44 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
             message = tr("Failed to join game due to unknown verification failure.");
         }
     }
+    else if (fixableViaSync)
+    {
+        message = tr("Your game data differs from the host:") + "\n\n" + message + tr("Want me to download host's mod set and apply it on the next start?");
+    }
     else
     {
         message = tr("Cannot join, your game data differs from the host:") + "\n\n" + message + tr("Leaving the game again.");
     }
 
-    spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(message);
-    connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
-    addChild(pDialogMessageBox);
+    if (fixableViaSync)
+    {
+        spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(message, true, tr("Apply host's mod set"), tr("Leave game"));
+        // Host's advertised list is already cosmetic-filtered when the rule allows them; re-add client cosmetic-only mods so the user does not silently lose them on next boot.
+        QStringList postSyncActiveMods = mods;
+        if (cosmeticAllowed)
+        {
+            const QStringList clientFull = settings->getMods();
+            for (const auto & mod : std::as_const(clientFull))
+            {
+                if (!postSyncActiveMods.contains(mod) && settings->getIsCosmetic(mod))
+                {
+                    postSyncActiveMods.append(mod);
+                }
+            }
+        }
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, [this, modsToDownloadPaths, postSyncActiveMods]()
+        {
+            confirmModSync(modsToDownloadPaths, postSyncActiveMods);
+        }, Qt::QueuedConnection);
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+        addChild(pDialogMessageBox);
+    }
+    else
+    {
+        spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(message);
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+        addChild(pDialogMessageBox);
+    }
 }
 
 void Multiplayermenu::requestMap(quint64 socketID)
@@ -2574,30 +2618,30 @@ namespace
     }
 }
 
-void Multiplayermenu::requestModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods)
+bool Multiplayermenu::requestModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods)
 {
     if (m_modSyncActive)
     {
         CONSOLE_PRINT("Mod-sync already in flight; ignoring duplicate requestModSync", GameConsole::eWARNING);
-        return;
+        return false;
     }
     // Network guard runs before the empty-request branch so a host-side caller cannot persist client-side post-sync settings.
     if (m_pNetworkInterface == nullptr || m_pNetworkInterface->getIsServer())
     {
         CONSOLE_PRINT("requestModSync called without a client network interface, ignoring", GameConsole::eWARNING);
-        return;
+        return false;
     }
     if (modsToDownload.size() > kModSyncRequestCountMax)
     {
         CONSOLE_PRINT("requestModSync exceeds count cap (" + QString::number(modsToDownload.size()) + " > " + QString::number(kModSyncRequestCountMax) + "), ignoring", GameConsole::eWARNING);
-        return;
+        return false;
     }
     if (modsToDownload.isEmpty())
     {
         // No downloads needed; persist the post-sync mod selection only. No manifest, no network round-trip.
         Settings::getInstance()->stageActiveModsForRestart(postSyncActiveMods);
         CONSOLE_PRINT("Mod-sync settings-only: " + QString::number(postSyncActiveMods.size()) + " mods staged for restart", GameConsole::eINFO);
-        return;
+        return true;
     }
     m_modSyncActive = true;
     m_modSyncStagings.clear();
@@ -2615,6 +2659,7 @@ void Multiplayermenu::requestModSync(const QStringList & modsToDownload, const Q
     // socketID=0 routes to the server on a TCP client interface; same convention as other client-originated sends.
     emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
     CONSOLE_PRINT("Requested mod-sync for " + QString::number(modsToDownload.size()) + " mods", GameConsole::eINFO);
+    return true;
 }
 
 void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketID)
@@ -2769,12 +2814,18 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     const qint32 fileCountMax = settings->getModSyncMaxFiles();
     const qint64 totalCap = settings->getModSyncMaxTotalBytes();
 
+    auto failData = [this](const QString & uiReason)
+    {
+        cancelModSyncSession();
+        onModSyncFailed(uiReason);
+    };
+
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
     if (stream.status() != QDataStream::Ok || protocolVersion != 1)
     {
         CONSOLE_PRINT("MODSYNCDATA unsupported protocol version", GameConsole::eERROR);
-        cancelModSyncSession();
+        failData(tr("Unsupported mod-sync protocol from host."));
         return;
     }
 
@@ -2782,7 +2833,7 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (!readBoundedQString(stream, modPath, relPathMaxLen))
     {
         CONSOLE_PRINT("MODSYNCDATA mod path overflow or malformed", GameConsole::eERROR);
-        cancelModSyncSession();
+        failData(tr("Malformed mod-sync data frame."));
         return;
     }
 
@@ -2793,7 +2844,7 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (stream.status() != QDataStream::Ok || declaredSize < 0 || fileCount < 0 || fileCount > fileCountMax)
     {
         CONSOLE_PRINT("MODSYNCDATA size/count out of range for " + modPath, GameConsole::eERROR);
-        cancelModSyncSession();
+        failData(tr("Mod %1 exceeds the per-mod file-count cap.").arg(modPath));
         return;
     }
 
@@ -2801,20 +2852,20 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (!readBoundedQByteArray(stream, compressedBlob, perModCap))
     {
         CONSOLE_PRINT("MODSYNCDATA blob overflow or malformed for " + modPath, GameConsole::eERROR);
-        cancelModSyncSession();
+        failData(tr("Mod %1 exceeds the per-mod size cap.").arg(modPath));
         return;
     }
 
     if (!Filesupport::validateModPath(modPath))
     {
         CONSOLE_PRINT("MODSYNCDATA invalid mod path: " + modPath, GameConsole::eERROR);
-        cancelModSyncSession();
+        failData(tr("Host sent an invalid mod path."));
         return;
     }
     if (!m_modSyncRequestedSet.contains(modPath))
     {
         CONSOLE_PRINT("MODSYNCDATA for unrequested or duplicate mod: " + modPath, GameConsole::eERROR);
-        cancelModSyncSession();
+        failData(tr("Host sent an unrequested or duplicate mod."));
         return;
     }
 
@@ -2823,7 +2874,7 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (m_modSyncReceivedBytes > totalCap || m_modSyncReceivedUncompressedBytes > totalCap)
     {
         CONSOLE_PRINT("Mod-sync exceeds total bytes cap, aborting", GameConsole::eERROR);
-        cancelModSyncSession();
+        failData(tr("Mod-sync exceeds the total transfer cap."));
         return;
     }
 
@@ -2837,13 +2888,13 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (rejectReason != 0)
     {
         CONSOLE_PRINT("Mod-sync extract rejected (" + QString::number(rejectReason) + ") for " + modPath, GameConsole::eERROR);
-        cancelModSyncSession();
+        failData(tr("Failed to unpack mod %1.").arg(modPath));
         return;
     }
     if (files.size() != fileCount)
     {
         CONSOLE_PRINT("Mod-sync file count mismatch for " + modPath + " (got " + QString::number(files.size()) + ", expected " + QString::number(fileCount) + ")", GameConsole::eERROR);
-        cancelModSyncSession();
+        failData(tr("Mod %1 file count did not match the host's declaration.").arg(modPath));
         return;
     }
 
@@ -2852,17 +2903,24 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (stageReason != 0 || stagingRel.isEmpty())
     {
         CONSOLE_PRINT("Mod-sync stage rejected (" + QString::number(stageReason) + ") for " + modPath, GameConsole::eERROR);
-        cancelModSyncSession();
+        failData(tr("Failed to stage mod %1 to disk.").arg(modPath));
         return;
     }
     m_modSyncStagings.append(qMakePair(stagingRel, modPath));
     m_modSyncRequestedSet.remove(modPath);
     CONSOLE_PRINT("Mod-sync staged " + modPath + " (" + QString::number(files.size()) + " files)", GameConsole::eINFO);
+    onModSyncProgress();
 }
 
 void Multiplayermenu::handleModSyncReject(QDataStream & stream, quint64 socketID)
 {
     Q_UNUSED(socketID);
+    if (!m_modSyncActive)
+    {
+        // Drop late or unsolicited rejects after cancel/success so we do not stack a second failure dialog.
+        CONSOLE_PRINT("MODSYNCREJECT received with no active mod-sync session, ignoring", GameConsole::eWARNING);
+        return;
+    }
     auto * settings = Settings::getInstance();
     const qint32 relPathMaxLen = settings->getModSyncMaxRelativePathLength();
 
@@ -2872,6 +2930,7 @@ void Multiplayermenu::handleModSyncReject(QDataStream & stream, quint64 socketID
     {
         CONSOLE_PRINT("MODSYNCREJECT unsupported protocol version", GameConsole::eERROR);
         cancelModSyncSession();
+        onModSyncFailed(tr("Unsupported mod-sync protocol from host."));
         return;
     }
     QString modPath;
@@ -2879,6 +2938,7 @@ void Multiplayermenu::handleModSyncReject(QDataStream & stream, quint64 socketID
     {
         CONSOLE_PRINT("MODSYNCREJECT mod path overflow or malformed", GameConsole::eERROR);
         cancelModSyncSession();
+        onModSyncFailed(tr("Malformed mod-sync reject frame."));
         return;
     }
     qint32 reasonCode = 0;
@@ -2888,32 +2948,40 @@ void Multiplayermenu::handleModSyncReject(QDataStream & stream, quint64 socketID
     {
         CONSOLE_PRINT("MODSYNCREJECT reason message overflow or malformed (code=" + QString::number(reasonCode) + " mod=" + modPath + ")", GameConsole::eERROR);
         cancelModSyncSession();
+        onModSyncFailed(tr("Malformed reject reason from host."));
         return;
     }
     CONSOLE_PRINT("Mod-sync rejected by host: code=" + QString::number(reasonCode) + " mod=" + modPath + " msg=" + reasonMessage, GameConsole::eERROR);
+    const QString uiReason = reasonMessage.isEmpty()
+        ? tr("Host rejected the request (code %1).").arg(reasonCode)
+        : reasonMessage;
     cancelModSyncSession();
+    onModSyncFailed(uiReason);
 }
 
 void Multiplayermenu::handleModSyncComplete(QDataStream & stream, quint64 socketID)
 {
     Q_UNUSED(socketID);
+    if (!m_modSyncActive)
+    {
+        // Drop late or unsolicited completes after cancel/success before parsing so a malformed stale frame does not stack a second failure dialog.
+        CONSOLE_PRINT("MODSYNCCOMPLETE received with no active mod-sync session, ignoring", GameConsole::eWARNING);
+        return;
+    }
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
     if (stream.status() != QDataStream::Ok || protocolVersion != 1)
     {
         CONSOLE_PRINT("MODSYNCCOMPLETE unsupported protocol version", GameConsole::eERROR);
         cancelModSyncSession();
-        return;
-    }
-    if (!m_modSyncActive)
-    {
-        CONSOLE_PRINT("MODSYNCCOMPLETE received with no active mod-sync session, ignoring", GameConsole::eWARNING);
+        onModSyncFailed(tr("Unsupported mod-sync protocol from host."));
         return;
     }
     if (!m_modSyncRequestedSet.isEmpty())
     {
         CONSOLE_PRINT("MODSYNCCOMPLETE arrived with " + QString::number(m_modSyncRequestedSet.size()) + " requested mods unsent; aborting", GameConsole::eERROR);
         cancelModSyncSession();
+        onModSyncFailed(tr("Host did not deliver every requested mod."));
         return;
     }
     if (m_modSyncStagings.isEmpty())
@@ -2938,6 +3006,7 @@ void Multiplayermenu::handleModSyncComplete(QDataStream & stream, quint64 socket
         CONSOLE_PRINT("Failed to write pending mod-sync manifest; restoring prior active-mod list", GameConsole::eERROR);
         settings->restoreActiveModsRaw(priorActiveModsRaw);
         cancelModSyncSession();
+        onModSyncFailed(tr("Failed to write the pending mod-sync manifest."));
         return;
     }
     CONSOLE_PRINT("Mod-sync complete: " + QString::number(m_modSyncStagings.size()) + " mods staged. Restart the game to apply.", GameConsole::eINFO);
@@ -2947,6 +3016,7 @@ void Multiplayermenu::handleModSyncComplete(QDataStream & stream, quint64 socket
     m_modSyncReceivedBytes = 0;
     m_modSyncReceivedUncompressedBytes = 0;
     m_modSyncPostSyncActiveMods.clear();
+    onModSyncSucceeded();
 }
 
 void Multiplayermenu::sendModSyncReject(quint64 socketID, qint32 reasonCode, const QString & modPath, const QString & message)
@@ -2965,6 +3035,12 @@ void Multiplayermenu::sendModSyncReject(quint64 socketID, qint32 reasonCode, con
 
 void Multiplayermenu::cancelModSyncSession()
 {
+    // Dialog teardown ahead of the active-session guard so a request that bailed before arming still tears down its progress UI.
+    if (m_modSyncProgressDialog != nullptr)
+    {
+        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog.reset();
+    }
     if (!m_modSyncActive)
     {
         return;
@@ -2994,4 +3070,79 @@ void Multiplayermenu::cancelModSyncSession()
     m_modSyncReceivedUncompressedBytes = 0;
     m_modSyncActive = false;
     m_modSyncPostSyncActiveMods.clear();
+}
+
+void Multiplayermenu::confirmModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods)
+{
+    const bool ok = requestModSync(modsToDownload, postSyncActiveMods);
+    if (modsToDownload.isEmpty())
+    {
+        // Settings-only branch already either staged Mods/Mods or refused; surface the matching prompt.
+        if (ok)
+        {
+            onModSyncSucceeded();
+        }
+        else
+        {
+            onModSyncFailed(tr("Could not start mod sync."));
+        }
+        return;
+    }
+    if (!ok)
+    {
+        onModSyncFailed(tr("Could not start mod sync."));
+        return;
+    }
+    if (m_modSyncProgressDialog != nullptr)
+    {
+        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog.reset();
+    }
+    m_modSyncProgressDialog = MemoryManagement::create<DialogModSyncProgress>(static_cast<qint32>(modsToDownload.size()));
+    connect(m_modSyncProgressDialog.get(), &DialogModSyncProgress::sigCancel, this, [this]()
+    {
+        if (!m_modSyncActive)
+        {
+            return;
+        }
+        cancelModSyncSession();
+        onModSyncFailed(tr("Mod sync canceled."));
+    }, Qt::QueuedConnection);
+    addChild(m_modSyncProgressDialog);
+}
+
+void Multiplayermenu::onModSyncProgress()
+{
+    if (m_modSyncProgressDialog == nullptr)
+    {
+        return;
+    }
+    // Show declared uncompressed bytes so the user sees on-disk size, not wire-compressed size.
+    m_modSyncProgressDialog->setProgress(static_cast<qint32>(m_modSyncStagings.size()), m_modSyncReceivedUncompressedBytes);
+}
+
+void Multiplayermenu::onModSyncSucceeded()
+{
+    if (m_modSyncProgressDialog != nullptr)
+    {
+        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog.reset();
+    }
+    spDialogMessageBox pDialog = MemoryManagement::create<DialogMessageBox>(tr("Mod sync complete. Restart the game to apply the host's mod set."));
+    connect(pDialog.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+    addChild(pDialog);
+}
+
+void Multiplayermenu::onModSyncFailed(const QString & reason)
+{
+    if (m_modSyncProgressDialog != nullptr)
+    {
+        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog.reset();
+    }
+    // Escape because reason can include host-supplied text and DialogMessageBox renders via setHtmlText.
+    const QString safe = reason.toHtmlEscaped();
+    spDialogMessageBox pDialog = MemoryManagement::create<DialogMessageBox>(tr("Mod sync failed: %1\n\nLeaving the game.").arg(safe));
+    connect(pDialog.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+    addChild(pDialog);
 }
