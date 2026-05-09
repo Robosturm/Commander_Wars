@@ -7,8 +7,11 @@
 #include <QMap>
 #include <QSet>
 #include <QPair>
+#include <QVector>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+
+#include "coreengine/filesupport.h"
 
 #include "menue/mapselectionmapsmenue.h"
 
@@ -201,10 +204,15 @@ protected:
     void handleModSyncRequest(QDataStream & stream, quint64 socketID);
     void handleModSyncManifest(QDataStream & stream, quint64 socketID);
     void handleModSyncData(QDataStream & stream, quint64 socketID);
+    void handleModSyncModBegin(QDataStream & stream, quint64 socketID);
+    void handleModSyncModChunk(QDataStream & stream, quint64 socketID);
+    void handleModSyncModEnd(QDataStream & stream, quint64 socketID);
     void handleModSyncReject(QDataStream & stream, quint64 socketID);
     void handleModSyncComplete(QDataStream & stream, quint64 socketID);
     void sendModSyncReject(quint64 socketID, qint32 reasonCode, const QString & modPath, const QString & message);
     void cancelModSyncSession();
+    // Drives the host-side chunked send loop one chunk per event-loop iteration so a large mod cannot pin the GUI thread.
+    void pumpModSyncSend();
     /**
      * @brief requestRule
      * @param socketID
@@ -397,6 +405,32 @@ private:
     qint64 m_modSyncExpectedUncompressedTotal{0};
     bool m_modSyncActive{false};
     spDialogModSyncProgress m_modSyncProgressDialog;
+
+    // Client-side chunked-receive accumulator. modPath empty when no chunked mod is in flight (legacy single-frame path stays untouched).
+    struct ModSyncChunkAccumulator
+    {
+        QString modPath;
+        qint32 declaredUncompressedSize{0};
+        qint32 fileCount{0};
+        qint64 compressedTotal{0};
+        qint32 expectedChunkCount{0};
+        qint32 receivedChunkCount{0};
+        qint64 uncompressedAdvanced{0};
+        QByteArray blob;
+    };
+    ModSyncChunkAccumulator m_modSyncCurrentChunkMod;
+
+    // Host-side chunked-send pump state. socketID==0 means no send in flight.
+    struct ModSyncSendState
+    {
+        quint64 socketID{0};
+        QVector<QPair<QString, Filesupport::ModSyncPackage>> packages;
+        qint32 currentMod{0};
+        qint32 currentChunk{0};
+        bool useChunked{false};
+        bool beginEmitted{false};
+    };
+    ModSyncSendState m_modSyncSendState;
 };
 
 Q_DECLARE_INTERFACE(Multiplayermenu, "Multiplayermenu");
