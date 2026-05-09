@@ -32,9 +32,10 @@ DialogModSyncProgress::DialogModSyncProgress(qint32 totalMods)
 
     m_Header = MemoryManagement::create<oxygine::TextField>();
     m_Header->setStyle(headerStyle);
+    // Same full-width-with-HALIGN_MIDDLE pattern as m_Detail, dodging oxygine's stale getTextRect after setHtmlText.
+    m_Header->setSize(oxygine::Stage::getStage()->getWidth(), 30);
     m_Header->setHtmlText(tr("Downloading host's mod set"));
-    m_Header->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_Header->getTextRect().width() / 2,
-                          oxygine::Stage::getStage()->getHeight() / 2 - 80);
+    m_Header->setPosition(0, oxygine::Stage::getStage()->getHeight() / 2 - 80);
     pSpriteBox->addChild(m_Header);
 
     m_barWidth = 480;
@@ -60,9 +61,10 @@ DialogModSyncProgress::DialogModSyncProgress(qint32 totalMods)
 
     m_Detail = MemoryManagement::create<oxygine::TextField>();
     m_Detail->setStyle(detailStyle);
+    // Full-width field with HALIGN_MIDDLE re-centers via layout on every setHtmlText, dodging oxygine's stale getTextRect on substantial text-length growth.
+    m_Detail->setSize(oxygine::Stage::getStage()->getWidth(), 30);
     m_Detail->setHtmlText(tr("0 / %1 mods").arg(m_totalMods));
-    m_Detail->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_Detail->getTextRect().width() / 2,
-                          barY + barHeight + 10);
+    m_Detail->setPosition(0, barY + barHeight + 10);
     pSpriteBox->addChild(m_Detail);
 
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
@@ -175,8 +177,6 @@ void DialogModSyncProgress::setProgress(qint32 stagedMods, qint64 receivedCompre
                  .arg(formatRate(static_cast<qint64>(m_smoothedRateBytesPerSec)));
     }
     m_Detail->setHtmlText(detail);
-    m_Detail->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_Detail->getTextRect().width() / 2,
-                          m_Detail->getY());
 }
 
 void DialogModSyncProgress::remove()
