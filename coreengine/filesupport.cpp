@@ -435,7 +435,8 @@ Filesupport::ModSyncPackage Filesupport::buildModSyncPackage(const QString & ins
         return pkg;
     }
     pkg.declaredUncompressedSize = static_cast<qint32>(serialized.size());
-    pkg.compressedBlob = qCompress(serialized);
+    // Level 1 = zlib best-speed; ~few percent worse ratio on text-heavy mods, big drop in host CPU stall.
+    pkg.compressedBlob = qCompress(serialized, 1);
     pkg.fileCount = fileCount;
     if (pkg.compressedBlob.size() > caps.perModBytes)
     {

@@ -142,10 +142,12 @@ void Multiplayermenu::initClientAndWaitForConnection()
 
     connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     // wait 10 minutes till timeout
-    spDialogConnecting pDialogConnecting = MemoryManagement::create<DialogConnecting>(tr("Connecting"), 1000 * 60 * 5);
-    addChild(pDialogConnecting);
-    connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
-    connect(this, &Multiplayermenu::sigConnected, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+    m_pJoinConnectingDialog = MemoryManagement::create<DialogConnecting>(tr("Connecting"), 1000 * 60 * 5);
+    addChild(m_pJoinConnectingDialog);
+    connect(m_pJoinConnectingDialog.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+    connect(this, &Multiplayermenu::sigConnected, m_pJoinConnectingDialog.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+    // Drop the smart-ptr after the dialog's own connected() slot has detached it, so a retained reference can't keep the actor alive past the lobby join.
+    connect(this, &Multiplayermenu::sigConnected, this, [this](){ m_pJoinConnectingDialog.reset(); }, Qt::QueuedConnection);
 }
 
 void Multiplayermenu::init()
@@ -546,6 +548,10 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         else if (messageType == NetworkCommands::REQUESTMODSYNC)
         {
             handleModSyncRequest(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::MODSYNCMANIFEST)
+        {
+            handleModSyncManifest(stream, socketID);
         }
         else if (messageType == NetworkCommands::MODSYNCDATA)
         {
@@ -2675,6 +2681,7 @@ bool Multiplayermenu::requestModSync(const QStringList & modsToDownload, const Q
     m_modSyncRequestedSet = QSet<QString>(modsToDownload.cbegin(), modsToDownload.cend());
     m_modSyncReceivedBytes = 0;
     m_modSyncReceivedUncompressedBytes = 0;
+    m_modSyncExpectedUncompressedTotal = 0;
     m_modSyncPostSyncActiveMods = postSyncActiveMods;
 
     QByteArray data;
@@ -2774,6 +2781,9 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
         }
     };
 
+    // Pre-build so the manifest carries exact sizes; peak ~totalCap, each blob freed after its MODSYNCDATA send.
+    QVector<QPair<QString, Filesupport::ModSyncPackage>> builtPackages;
+    builtPackages.reserve(requestedMods.size());
     for (const auto & mod : std::as_const(requestedMods))
     {
         if (!Filesupport::validateModPath(mod))
@@ -2821,18 +2831,40 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
         }
         totalSent += pkg.compressedBlob.size();
         totalUncompressed += pkg.declaredUncompressedSize;
+        builtPackages.append(qMakePair(mod, std::move(pkg)));
+    }
 
+    {
+        QByteArray manifestData;
+        QDataStream manifestStream(&manifestData, QIODevice::WriteOnly);
+        manifestStream.setVersion(QDataStream::Version::Qt_6_5);
+        manifestStream << QString(NetworkCommands::MODSYNCMANIFEST);
+        manifestStream << static_cast<qint32>(1);
+        manifestStream << static_cast<qint32>(builtPackages.size());
+        for (const auto & entry : std::as_const(builtPackages))
+        {
+            manifestStream << entry.first;
+            manifestStream << entry.second.declaredUncompressedSize;
+        }
+        emit m_pNetworkInterface->sig_sendData(socketID, manifestData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        CONSOLE_PRINT("Sent MODSYNCMANIFEST; " + QString::number(builtPackages.size()) + " mods, " + QString::number(totalUncompressed) + " expected uncompressed bytes", GameConsole::eINFO);
+    }
+
+    for (auto & entry : builtPackages)
+    {
         QByteArray data;
         QDataStream sendStream(&data, QIODevice::WriteOnly);
         sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << QString(NetworkCommands::MODSYNCDATA);
         sendStream << static_cast<qint32>(1);
-        sendStream << mod;
-        sendStream << pkg.declaredUncompressedSize;
-        sendStream << pkg.fileCount;
-        sendStream << pkg.compressedBlob;
+        sendStream << entry.first;
+        sendStream << entry.second.declaredUncompressedSize;
+        sendStream << entry.second.fileCount;
+        sendStream << entry.second.compressedBlob;
         emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
-        CONSOLE_PRINT("Sent MODSYNCDATA for " + mod + " (" + QString::number(pkg.compressedBlob.size()) + " bytes)", GameConsole::eINFO);
+        CONSOLE_PRINT("Sent MODSYNCDATA for " + entry.first + " (" + QString::number(entry.second.compressedBlob.size()) + " bytes)", GameConsole::eINFO);
+        // QByteArray COW: clearing here drops only our ref; the queued send keeps its own.
+        entry.second.compressedBlob.clear();
     }
 
     QByteArray data;
@@ -2842,6 +2874,75 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
     sendStream << static_cast<qint32>(1);
     emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
     CONSOLE_PRINT("Sent MODSYNCCOMPLETE; " + QString::number(requestedMods.size()) + " mods, " + QString::number(totalSent) + " compressed bytes, " + QString::number(totalUncompressed) + " uncompressed bytes", GameConsole::eINFO);
+}
+
+void Multiplayermenu::handleModSyncManifest(QDataStream & stream, quint64 socketID)
+{
+    Q_UNUSED(socketID);
+    if (!m_modSyncActive)
+    {
+        CONSOLE_PRINT("MODSYNCMANIFEST received with no active mod-sync session, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    auto * settings = Settings::getInstance();
+    const qint32 relPathMaxLen = settings->getModSyncMaxRelativePathLength();
+    const qint64 totalCap = settings->getModSyncMaxTotalBytes();
+
+    qint32 protocolVersion = 0;
+    stream >> protocolVersion;
+    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    {
+        CONSOLE_PRINT("MODSYNCMANIFEST unsupported protocol version, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    qint32 entryCount = 0;
+    stream >> entryCount;
+    if (stream.status() != QDataStream::Ok || entryCount < 0 || entryCount > kModSyncRequestCountMax)
+    {
+        CONSOLE_PRINT("MODSYNCMANIFEST malformed entry count, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    qint64 expectedTotal = 0;
+    qint32 ignoredEntries = 0;
+    for (qint32 i = 0; i < entryCount; ++i)
+    {
+        QString modPath;
+        if (!readBoundedQString(stream, modPath, relPathMaxLen))
+        {
+            CONSOLE_PRINT("MODSYNCMANIFEST mod path overflow or malformed, ignoring", GameConsole::eWARNING);
+            return;
+        }
+        qint32 declaredSize = 0;
+        stream >> declaredSize;
+        if (stream.status() != QDataStream::Ok || declaredSize < 0)
+        {
+            CONSOLE_PRINT("MODSYNCMANIFEST declared size out of range for " + modPath + ", ignoring", GameConsole::eWARNING);
+            return;
+        }
+        // Only count entries the client actually asked for; a hostile or buggy host could otherwise inflate expectedTotal to drive the bar to 100% before any data lands.
+        if (!m_modSyncRequestedSet.contains(modPath))
+        {
+            ++ignoredEntries;
+            continue;
+        }
+        expectedTotal += declaredSize;
+        if (expectedTotal > totalCap)
+        {
+            CONSOLE_PRINT("MODSYNCMANIFEST expected total exceeds host total cap; clamping for display only", GameConsole::eWARNING);
+            expectedTotal = totalCap;
+            break;
+        }
+    }
+    if (ignoredEntries > 0)
+    {
+        CONSOLE_PRINT("MODSYNCMANIFEST ignored " + QString::number(ignoredEntries) + " entries not in the client's request set", GameConsole::eWARNING);
+    }
+    m_modSyncExpectedUncompressedTotal = expectedTotal;
+    if (m_modSyncProgressDialog != nullptr)
+    {
+        m_modSyncProgressDialog->setExpectedTotalBytes(expectedTotal);
+    }
+    CONSOLE_PRINT("Received MODSYNCMANIFEST; expected uncompressed total " + QString::number(expectedTotal) + " bytes across " + QString::number(entryCount) + " mods", GameConsole::eINFO);
 }
 
 void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
@@ -3034,6 +3135,7 @@ void Multiplayermenu::handleModSyncComplete(QDataStream & stream, quint64 socket
         m_modSyncActive = false;
         m_modSyncReceivedBytes = 0;
         m_modSyncReceivedUncompressedBytes = 0;
+        m_modSyncExpectedUncompressedTotal = 0;
         m_modSyncPostSyncActiveMods.clear();
         return;
     }
@@ -3059,6 +3161,7 @@ void Multiplayermenu::handleModSyncComplete(QDataStream & stream, quint64 socket
     m_modSyncRequestedSet.clear();
     m_modSyncReceivedBytes = 0;
     m_modSyncReceivedUncompressedBytes = 0;
+    m_modSyncExpectedUncompressedTotal = 0;
     m_modSyncPostSyncActiveMods.clear();
     // Hold so the progress dialog gets a frame to paint at 100% before the success+restart sequence tears it down.
     QTimer::singleShot(500, this, &Multiplayermenu::onModSyncSucceeded);
@@ -3113,6 +3216,7 @@ void Multiplayermenu::cancelModSyncSession()
     m_modSyncRequestedSet.clear();
     m_modSyncReceivedBytes = 0;
     m_modSyncReceivedUncompressedBytes = 0;
+    m_modSyncExpectedUncompressedTotal = 0;
     m_modSyncActive = false;
     m_modSyncPostSyncActiveMods.clear();
 }
@@ -3153,12 +3257,19 @@ void Multiplayermenu::startModSyncDownload(const QStringList & modsToDownload, c
         onModSyncFailed(tr("Could not start mod sync."));
         return;
     }
+    if (m_pJoinConnectingDialog != nullptr)
+    {
+        m_pJoinConnectingDialog->detach();
+        m_pJoinConnectingDialog.reset();
+    }
     if (m_modSyncProgressDialog != nullptr)
     {
         m_modSyncProgressDialog->detach();
         m_modSyncProgressDialog.reset();
     }
     m_modSyncProgressDialog = MemoryManagement::create<DialogModSyncProgress>(static_cast<qint32>(modsToDownload.size()));
+    // Defensive seed in case MODSYNCMANIFEST raced ahead of dialog construction.
+    m_modSyncProgressDialog->setExpectedTotalBytes(m_modSyncExpectedUncompressedTotal);
     connect(m_modSyncProgressDialog.get(), &DialogModSyncProgress::sigCancel, this, [this]()
     {
         if (!m_modSyncActive)
@@ -3177,8 +3288,8 @@ void Multiplayermenu::onModSyncProgress()
     {
         return;
     }
-    // Show declared uncompressed bytes so the user sees on-disk size, not wire-compressed size.
-    m_modSyncProgressDialog->setProgress(static_cast<qint32>(m_modSyncStagings.size()), m_modSyncReceivedUncompressedBytes);
+    // Compressed drives the EMA network-rate display; uncompressed drives bar fraction and ETA.
+    m_modSyncProgressDialog->setProgress(static_cast<qint32>(m_modSyncStagings.size()), m_modSyncReceivedBytes, m_modSyncReceivedUncompressedBytes);
 }
 
 void Multiplayermenu::onModSyncSucceeded()

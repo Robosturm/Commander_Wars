@@ -74,26 +74,107 @@ DialogModSyncProgress::DialogModSyncProgress(qint32 totalMods)
         emit sigCancel();
     });
     connect(this, &DialogModSyncProgress::sigCancel, this, &DialogModSyncProgress::remove, Qt::QueuedConnection);
+    m_timer.start();
 }
 
-void DialogModSyncProgress::setProgress(qint32 stagedMods, qint64 receivedBytes)
+void DialogModSyncProgress::setExpectedTotalBytes(qint64 expectedUncompressed)
 {
-    if (m_totalMods <= 0)
+    if (expectedUncompressed < 0)
+    {
+        expectedUncompressed = 0;
+    }
+    // Manifest is canonical and one-shot in the wire-correct flow; refuse downward revisions so the bar stays monotonic against intentional or accidental shrinkage.
+    if (m_expectedTotalBytes > 0 && expectedUncompressed < m_expectedTotalBytes)
     {
         return;
     }
+    m_expectedTotalBytes = expectedUncompressed;
+}
+
+void DialogModSyncProgress::setProgress(qint32 stagedMods, qint64 receivedCompressed, qint64 receivedUncompressed)
+{
     if (stagedMods < 0)
     {
         stagedMods = 0;
     }
-    if (stagedMods > m_totalMods)
+    if (m_totalMods > 0 && stagedMods > m_totalMods)
     {
         stagedMods = m_totalMods;
     }
-    const float fraction = static_cast<float>(stagedMods) / static_cast<float>(m_totalMods);
-    m_BarFill->setWidth(m_barWidth * fraction);
-    const qint64 receivedKb = receivedBytes / 1024;
-    m_Detail->setHtmlText(tr("%1 / %2 mods (%3 KB)").arg(stagedMods).arg(m_totalMods).arg(receivedKb));
+    if (receivedCompressed < 0)
+    {
+        receivedCompressed = 0;
+    }
+    if (receivedUncompressed < 0)
+    {
+        receivedUncompressed = 0;
+    }
+
+    // 50 ms minimum sample window so a hot LAN burst doesn't seed the EMA at multi-GB/s; lastSampleMs starts at 0 (constructor t0) so the first real sample is always rate-eligible.
+    constexpr qint64 RATE_MIN_DT_MS = 50;
+    constexpr double alpha = 0.3;
+    const qint64 nowMs = m_timer.isValid() ? m_timer.elapsed() : 0;
+    const qint64 dtMs = nowMs - m_lastSampleMs;
+    const qint64 dCompressed = receivedCompressed - m_lastReceivedCompressed;
+    const qint64 dUncompressed = receivedUncompressed - m_lastReceivedUncompressed;
+    if (dtMs >= RATE_MIN_DT_MS && dCompressed >= 0 && dUncompressed >= 0)
+    {
+        const double dtSec = static_cast<double>(dtMs) / 1000.0;
+        const double instantCompressed = static_cast<double>(dCompressed) / dtSec;
+        const double instantUncompressed = static_cast<double>(dUncompressed) / dtSec;
+        m_smoothedRateBytesPerSec = alpha * instantCompressed + (1.0 - alpha) * m_smoothedRateBytesPerSec;
+        m_smoothedUncompressedRateBytesPerSec = alpha * instantUncompressed + (1.0 - alpha) * m_smoothedUncompressedRateBytesPerSec;
+        m_lastSampleMs = nowMs;
+        m_lastReceivedCompressed = receivedCompressed;
+        m_lastReceivedUncompressed = receivedUncompressed;
+    }
+
+    float targetFraction = 0.0f;
+    if (m_expectedTotalBytes > 0)
+    {
+        targetFraction = static_cast<float>(static_cast<double>(receivedUncompressed) / static_cast<double>(m_expectedTotalBytes));
+    }
+    else if (m_totalMods > 0)
+    {
+        targetFraction = static_cast<float>(stagedMods) / static_cast<float>(m_totalMods);
+    }
+    if (targetFraction < 0.0f)
+    {
+        targetFraction = 0.0f;
+    }
+    if (targetFraction > 1.0f)
+    {
+        targetFraction = 1.0f;
+    }
+    if (targetFraction < m_lastDisplayedFraction)
+    {
+        targetFraction = m_lastDisplayedFraction;
+    }
+    m_lastDisplayedFraction = targetFraction;
+    m_BarFill->setWidth(static_cast<qint32>(m_barWidth * targetFraction));
+
+    QString detail;
+    if (m_expectedTotalBytes > 0)
+    {
+        detail = tr("%1 / %2 mods, %3 / %4, %5, ETA %6")
+                 .arg(stagedMods)
+                 .arg(m_totalMods)
+                 .arg(formatBytes(receivedUncompressed))
+                 .arg(formatBytes(m_expectedTotalBytes))
+                 .arg(formatRate(static_cast<qint64>(m_smoothedRateBytesPerSec)))
+                 .arg(formatEta(m_smoothedUncompressedRateBytesPerSec > 0.0
+                                ? static_cast<qint64>(static_cast<double>(m_expectedTotalBytes - receivedUncompressed) / m_smoothedUncompressedRateBytesPerSec)
+                                : -1));
+    }
+    else
+    {
+        detail = tr("%1 / %2 mods, %3, %4")
+                 .arg(stagedMods)
+                 .arg(m_totalMods)
+                 .arg(formatBytes(receivedUncompressed))
+                 .arg(formatRate(static_cast<qint64>(m_smoothedRateBytesPerSec)));
+    }
+    m_Detail->setHtmlText(detail);
     m_Detail->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_Detail->getTextRect().width() / 2,
                           m_Detail->getY());
 }
@@ -101,4 +182,54 @@ void DialogModSyncProgress::setProgress(qint32 stagedMods, qint64 receivedBytes)
 void DialogModSyncProgress::remove()
 {
     detach();
+}
+
+QString DialogModSyncProgress::formatBytes(qint64 bytes)
+{
+    if (bytes < 1024)
+    {
+        return tr("%1 B").arg(bytes);
+    }
+    const double kb = static_cast<double>(bytes) / 1024.0;
+    if (kb < 1024.0)
+    {
+        return tr("%1 KB").arg(QString::number(kb, 'f', 1));
+    }
+    const double mb = kb / 1024.0;
+    if (mb < 1024.0)
+    {
+        return tr("%1 MB").arg(QString::number(mb, 'f', 1));
+    }
+    const double gb = mb / 1024.0;
+    return tr("%1 GB").arg(QString::number(gb, 'f', 2));
+}
+
+QString DialogModSyncProgress::formatRate(qint64 bytesPerSecond)
+{
+    if (bytesPerSecond <= 0)
+    {
+        return tr("--");
+    }
+    return tr("%1/s").arg(formatBytes(bytesPerSecond));
+}
+
+QString DialogModSyncProgress::formatEta(qint64 seconds)
+{
+    if (seconds < 0)
+    {
+        return tr("--");
+    }
+    if (seconds < 60)
+    {
+        return tr("%1s").arg(seconds);
+    }
+    const qint64 minutes = seconds / 60;
+    const qint64 remSec = seconds % 60;
+    if (minutes < 60)
+    {
+        return tr("%1m %2s").arg(minutes).arg(remSec);
+    }
+    const qint64 hours = minutes / 60;
+    const qint64 remMin = minutes % 60;
+    return tr("%1h %2m").arg(hours).arg(remMin);
 }

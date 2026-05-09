@@ -160,6 +160,8 @@ namespace NetworkCommands
     const char* const GAMEDATAVERIFIED = "GAMEDATAVERIFIED";
     // Mod-sync wire format v1. Gated by capability bit Filesupport::CapabilityModSync.
     const char* const REQUESTMODSYNC = "REQUESTMODSYNC";
+    // Optional, before MODSYNCDATA, lets the client budget a byte-based progress bar. Older hosts skip it; older clients ignore it.
+    const char* const MODSYNCMANIFEST = "MODSYNCMANIFEST";
     const char* const MODSYNCDATA = "MODSYNCDATA";
     const char* const MODSYNCREJECT = "MODSYNCREJECT";
     const char* const MODSYNCCOMPLETE = "MODSYNCCOMPLETE";

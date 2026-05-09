@@ -199,6 +199,7 @@ protected:
     void verifyGameData(QDataStream & stream, quint64 socketID);
     bool requestModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
     void handleModSyncRequest(QDataStream & stream, quint64 socketID);
+    void handleModSyncManifest(QDataStream & stream, quint64 socketID);
     void handleModSyncData(QDataStream & stream, quint64 socketID);
     void handleModSyncReject(QDataStream & stream, quint64 socketID);
     void handleModSyncComplete(QDataStream & stream, quint64 socketID);
@@ -379,6 +380,8 @@ private:
     QString m_serverAddress;
     quint16 m_serverPort{0};
     spDialogConnecting m_pDialogConnecting;
+    // Held as a member so the mod-sync flow can dismiss it before stacking a second Cancel button.
+    spDialogConnecting m_pJoinConnectingDialog;
     QElapsedTimer m_slaveDespawnElapseTimer;
     QTimer m_slaveDespawnTimer{this};
     bool m_despawning{false};
@@ -390,6 +393,8 @@ private:
     QStringList m_modSyncPostSyncActiveMods;
     qint64 m_modSyncReceivedBytes{0};
     qint64 m_modSyncReceivedUncompressedBytes{0};
+    // Sum of declaredUncompressedSize from MODSYNCMANIFEST; 0 when older hosts skip the frame.
+    qint64 m_modSyncExpectedUncompressedTotal{0};
     bool m_modSyncActive{false};
     spDialogModSyncProgress m_modSyncProgressDialog;
 };
