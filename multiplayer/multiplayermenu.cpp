@@ -1592,7 +1592,7 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
     }
     else if (fixableViaSync)
     {
-        message = tr("Your game data differs from the host:") + "\n\n" + message + tr("Want me to download host's mod set and apply it on the next start?");
+        message = tr("Your game data differs from the host:") + "\n\n" + message + tr("Want me to download host's mod set, apply it, and restart automatically?");
     }
     else
     {
