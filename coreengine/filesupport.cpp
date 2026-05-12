@@ -97,6 +97,77 @@ QMap<QString, QByteArray> Filesupport::getResourceFolderHashes()
     return result;
 }
 
+namespace
+{
+    // reject codes
+    constexpr qint32 kModSyncDisabled = 1;
+    constexpr qint32 kModSyncUnknownMod = 2;
+    constexpr qint32 kModSyncSizeCapExceeded = 3;
+    constexpr qint32 kModSyncFileCountCapExceeded = 4;
+    constexpr qint32 kModSyncInvalidPath = 5;
+    constexpr qint32 kModSyncInternalError = 6;
+    constexpr qint32 kModPathSegments = 2;
+    constexpr qint32 kSpaceCodePoint = 0x20;
+    constexpr qint32 kDelCodePoint = 0x7F;
+
+    bool segmentClean(const QString & seg)
+    {
+        static const QSet<QChar> kInvalid = {
+            QChar('<'), QChar('>'), QChar(':'), QChar('"'),
+            QChar('|'), QChar('?'), QChar('*'),
+        };
+        if (seg.isEmpty() || seg == QStringLiteral(".") || seg == QStringLiteral(".."))
+        {
+            return false;
+        }
+        if (seg.endsWith(QChar('.')) || seg.endsWith(QChar(' ')))
+        {
+            return false;
+        }
+        for (const QChar c : seg)
+        {
+            if (c.unicode() < kSpaceCodePoint || c.unicode() == kDelCodePoint)
+            {
+                return false;
+            }
+            if (kInvalid.contains(c))
+            {
+                return false;
+            }
+        }
+        static const QSet<QString> kReserved = {
+            QStringLiteral("CON"), QStringLiteral("PRN"), QStringLiteral("AUX"), QStringLiteral("NUL"),
+            QStringLiteral("CONIN$"), QStringLiteral("CONOUT$"),
+            QStringLiteral("COM0"), QStringLiteral("COM1"), QStringLiteral("COM2"), QStringLiteral("COM3"),
+            QStringLiteral("COM4"), QStringLiteral("COM5"), QStringLiteral("COM6"), QStringLiteral("COM7"),
+            QStringLiteral("COM8"), QStringLiteral("COM9"),
+            QStringLiteral("LPT0"), QStringLiteral("LPT1"), QStringLiteral("LPT2"), QStringLiteral("LPT3"),
+            QStringLiteral("LPT4"), QStringLiteral("LPT5"), QStringLiteral("LPT6"), QStringLiteral("LPT7"),
+            QStringLiteral("LPT8"), QStringLiteral("LPT9"),
+        };
+        const qint32 dotIdx = seg.indexOf(QChar('.'));
+        const QString basename = (dotIdx >= 0) ? seg.left(dotIdx) : seg;
+        if (kReserved.contains(basename.toUpper()))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    QString joinPath(const QString & a, const QString & b)
+    {
+        if (a.isEmpty())
+        {
+            return b;
+        }
+        if (a.endsWith(QChar('/')))
+        {
+            return a + b;
+        }
+        return a + QChar('/') + b;
+    }
+}
+
 bool Filesupport::validateModPath(const QString & modPath, qint32 maxLen)
 {
     if (modPath.isEmpty() || modPath.size() > maxLen)
@@ -116,50 +187,14 @@ bool Filesupport::validateModPath(const QString & modPath, qint32 maxLen)
     {
         return false;
     }
-    static const QSet<QChar> kInvalidChars = {
-        QChar('<'), QChar('>'), QChar(':'), QChar('"'),
-        QChar('|'), QChar('?'), QChar('*'),
-    };
-    for (const auto & segment : segments)
+    for (const auto & seg : segments)
     {
-        if (segment.isEmpty() || segment == QStringLiteral(".") || segment == QStringLiteral(".."))
+        if (!segmentClean(seg))
         {
             return false;
         }
-        // Windows strips trailing dots and spaces at create time; rejecting them avoids name collisions.
-        if (segment.endsWith(QChar('.')) || segment.endsWith(QChar(' ')))
-        {
-            return false;
-        }
-        for (const QChar c : segment)
-        {
-            if (c.unicode() < kSpaceCodePoint || c.unicode() == kDelCodePoint)
-            {
-                return false;
-            }
-            if (kInvalidChars.contains(c))
-            {
-                return false;
-            }
-        }
     }
-    static const QSet<QString> kReservedNames = {
-        QStringLiteral("CON"), QStringLiteral("PRN"), QStringLiteral("AUX"), QStringLiteral("NUL"),
-        QStringLiteral("CONIN$"), QStringLiteral("CONOUT$"),
-        QStringLiteral("COM0"), QStringLiteral("COM1"), QStringLiteral("COM2"), QStringLiteral("COM3"),
-        QStringLiteral("COM4"), QStringLiteral("COM5"), QStringLiteral("COM6"), QStringLiteral("COM7"),
-        QStringLiteral("COM8"), QStringLiteral("COM9"),
-        QStringLiteral("LPT0"), QStringLiteral("LPT1"), QStringLiteral("LPT2"), QStringLiteral("LPT3"),
-        QStringLiteral("LPT4"), QStringLiteral("LPT5"), QStringLiteral("LPT6"), QStringLiteral("LPT7"),
-        QStringLiteral("LPT8"), QStringLiteral("LPT9"),
-    };
-    const QString & nameSegment = segments[1];
-    const qint32 dotIdx = nameSegment.indexOf(QChar('.'));
-    const QString basename = (dotIdx >= 0) ? nameSegment.left(dotIdx) : nameSegment;
-    if (kReservedNames.contains(basename.toUpper()))
-    {
-        return false;
-    }
+    
     return true;
 }
 
@@ -241,76 +276,6 @@ Filesupport::StringList Filesupport::readList(const QString & file)
     return ret;
 }
 
-namespace
-{
-    // reject codes
-    constexpr qint32 kModSyncDisabled = 1;
-    constexpr qint32 kModSyncUnknownMod = 2;
-    constexpr qint32 kModSyncSizeCapExceeded = 3;
-    constexpr qint32 kModSyncFileCountCapExceeded = 4;
-    constexpr qint32 kModSyncInvalidPath = 5;
-    constexpr qint32 kModSyncInternalError = 6;
-    constexpr qint32 kModPathSegments = 2;
-    constexpr qint32 kSpaceCodePoint = 0x20;
-    constexpr qint32 kDelCodePoint = 0x7F;
-
-    bool segmentClean(const QString & seg)
-    {
-        static const QSet<QChar> kInvalid = {
-            QChar('<'), QChar('>'), QChar(':'), QChar('"'),
-            QChar('|'), QChar('?'), QChar('*'),
-        };
-        if (seg.isEmpty() || seg == QStringLiteral(".") || seg == QStringLiteral(".."))
-        {
-            return false;
-        }
-        if (seg.endsWith(QChar('.')) || seg.endsWith(QChar(' ')))
-        {
-            return false;
-        }
-        for (const QChar c : seg)
-        {
-            if (c.unicode() < kSpaceCodePoint || c.unicode() == kDelCodePoint)
-            {
-                return false;
-            }
-            if (kInvalid.contains(c))
-            {
-                return false;
-            }
-        }
-        static const QSet<QString> kReserved = {
-            QStringLiteral("CON"), QStringLiteral("PRN"), QStringLiteral("AUX"), QStringLiteral("NUL"),
-            QStringLiteral("CONIN$"), QStringLiteral("CONOUT$"),
-            QStringLiteral("COM0"), QStringLiteral("COM1"), QStringLiteral("COM2"), QStringLiteral("COM3"),
-            QStringLiteral("COM4"), QStringLiteral("COM5"), QStringLiteral("COM6"), QStringLiteral("COM7"),
-            QStringLiteral("COM8"), QStringLiteral("COM9"),
-            QStringLiteral("LPT0"), QStringLiteral("LPT1"), QStringLiteral("LPT2"), QStringLiteral("LPT3"),
-            QStringLiteral("LPT4"), QStringLiteral("LPT5"), QStringLiteral("LPT6"), QStringLiteral("LPT7"),
-            QStringLiteral("LPT8"), QStringLiteral("LPT9"),
-        };
-        const qint32 dotIdx = seg.indexOf(QChar('.'));
-        const QString basename = (dotIdx >= 0) ? seg.left(dotIdx) : seg;
-        if (kReserved.contains(basename.toUpper()))
-        {
-            return false;
-        }
-        return true;
-    }
-
-    QString joinPath(const QString & a, const QString & b)
-    {
-        if (a.isEmpty())
-        {
-            return b;
-        }
-        if (a.endsWith(QChar('/')))
-        {
-            return a + b;
-        }
-        return a + QChar('/') + b;
-    }
-}
 
 bool Filesupport::validateRelativeFilePath(const QString & relPath, qint32 maxLen)
 {
