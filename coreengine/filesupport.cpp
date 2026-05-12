@@ -112,7 +112,7 @@ bool Filesupport::validateModPath(const QString & modPath, qint32 maxLen)
         return false;
     }
     const QStringList segments = modPath.split(QChar('/'));
-    if (segments.size() != 2)
+    if (segments.size() != kModPathSegments)
     {
         return false;
     }
@@ -133,7 +133,7 @@ bool Filesupport::validateModPath(const QString & modPath, qint32 maxLen)
         }
         for (const QChar c : segment)
         {
-            if (c.unicode() < 0x20 || c.unicode() == 0x7F)
+            if (c.unicode() < kSpaceCodePoint || c.unicode() == kDelCodePoint)
             {
                 return false;
             }
@@ -243,12 +243,16 @@ Filesupport::StringList Filesupport::readList(const QString & file)
 
 namespace
 {
+    // reject codes
     constexpr qint32 kModSyncDisabled = 1;
     constexpr qint32 kModSyncUnknownMod = 2;
     constexpr qint32 kModSyncSizeCapExceeded = 3;
     constexpr qint32 kModSyncFileCountCapExceeded = 4;
     constexpr qint32 kModSyncInvalidPath = 5;
     constexpr qint32 kModSyncInternalError = 6;
+    constexpr qint32 kModPathSegments = 2;
+    constexpr qint32 kSpaceCodePoint = 0x20;
+    constexpr qint32 kDelCodePoint = 0x7F;
 
     bool segmentClean(const QString & seg)
     {
@@ -266,7 +270,7 @@ namespace
         }
         for (const QChar c : seg)
         {
-            if (c.unicode() < 0x20 || c.unicode() == 0x7F)
+            if (c.unicode() < kSpaceCodePoint || c.unicode() == kDelCodePoint)
             {
                 return false;
             }
