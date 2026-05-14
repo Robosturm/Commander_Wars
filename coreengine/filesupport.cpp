@@ -109,6 +109,18 @@ namespace
     constexpr qint32 kModPathSegments = 2;
     constexpr qint32 kSpaceCodePoint = 0x20;
     constexpr qint32 kDelCodePoint = 0x7F;
+    // QDataStream encodes a null QByteArray or QString length as 0xFFFFFFFFu.
+    constexpr quint32 kQDataStreamNullSentinel = 0xFFFFFFFFu;
+    // TCP/UDP port number ceiling (16-bit unsigned per RFC 793).
+    constexpr qint32 kTcpPortMax = 0xFFFF;
+    // Backup folder timestamp format yyyyMMdd-HHmmsszzzZ; the validator below cross-checks size against these.
+    constexpr qint32 kBakTimestampLength = 19;
+    constexpr qint32 kBakTimestampDateLength = 8;        // yyyyMMdd
+    constexpr qint32 kBakTimestampDateTimeLength = 18;   // yyyyMMdd-HHmmsszzz
+    // Same-second collision suffix is "-<digits>" appended; minimum total length is timestamp + separator + one digit.
+    constexpr qint32 kBakCollisionCounterMinLength = 21;
+    static_assert(kBakTimestampLength == kBakTimestampDateTimeLength + 1, "Z follows datetime");
+    static_assert(kBakCollisionCounterMinLength == kBakTimestampLength + 2, "min counter = timestamp + '-' + 1 digit");
 
     bool segmentClean(const QString & seg)
     {
@@ -471,7 +483,7 @@ QMap<QString, QByteArray> Filesupport::extractModSyncPackage(const QByteArray & 
         {
             return false;
         }
-        if (declared == 0xFFFFFFFFu)
+        if (declared == kQDataStreamNullSentinel)
         {
             out.clear();
             return true;
@@ -648,27 +660,27 @@ void Filesupport::reapModSyncFolders(const QString & installRoot, qint32 backupK
         {
             return false;
         }
-        // Generated suffix is exactly yyyyMMdd-HHmmsszzzZ (19 chars) with optional -<digits> collision counter.
-        if (suffix.size() < 19)
+        // Generated suffix is exactly yyyyMMdd-HHmmsszzzZ with optional -<digits> collision counter.
+        if (suffix.size() < kBakTimestampLength)
         {
             return false;
         }
         auto isDigit = [](QChar c) { return c >= QChar('0') && c <= QChar('9'); };
-        for (qint32 i = 0; i < 8; ++i)
+        for (qint32 i = 0; i < kBakTimestampDateLength; ++i)
         {
             if (!isDigit(suffix[i])) return false;
         }
-        if (suffix[8] != QChar('-')) return false;
-        for (qint32 i = 9; i < 18; ++i)
+        if (suffix[kBakTimestampDateLength] != QChar('-')) return false;
+        for (qint32 i = kBakTimestampDateLength + 1; i < kBakTimestampDateTimeLength; ++i)
         {
             if (!isDigit(suffix[i])) return false;
         }
-        if (suffix[18] != QChar('Z')) return false;
-        if (suffix.size() > 19)
+        if (suffix[kBakTimestampDateTimeLength] != QChar('Z')) return false;
+        if (suffix.size() > kBakTimestampLength)
         {
             // Collision-counter form requires `-<digits>` after the timestamp; bare `-` is invalid.
-            if (suffix[19] != QChar('-') || suffix.size() < 21) return false;
-            for (qint32 i = 20; i < suffix.size(); ++i)
+            if (suffix[kBakTimestampLength] != QChar('-') || suffix.size() < kBakCollisionCounterMinLength) return false;
+            for (qint32 i = kBakTimestampLength + 1; i < suffix.size(); ++i)
             {
                 if (!isDigit(suffix[i])) return false;
             }
@@ -959,7 +971,7 @@ Filesupport::RejoinManifest Filesupport::consumeRejoinManifest(const QString & u
     const QString host = root.value(QStringLiteral("host")).toString();
     const qint32 port = root.value(QStringLiteral("port")).toInt(0);
     const qint64 timestamp = root.value(QStringLiteral("timestamp")).toVariant().toLongLong();
-    if (host.isEmpty() || port <= 0 || port > 0xFFFF)
+    if (host.isEmpty() || port <= 0 || port > kTcpPortMax)
     {
         CONSOLE_PRINT("Rejoin manifest has invalid host or port, discarding", GameConsole::eERROR);
         return result;
