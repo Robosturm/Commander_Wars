@@ -30,6 +30,16 @@
 
 const char* const Settings::DEFAULT_AUDIODEVICE = "@@default@@";
 
+namespace
+{
+    constexpr qint32 kModSyncDefaultPerModBytes = 64 * 1024 * 1024;
+    constexpr qint32 kModSyncDefaultTotalBytes = 256 * 1024 * 1024;
+    constexpr qint32 kModSyncDefaultMaxFiles = 5000;
+    // Windows MAX_PATH legacy ceiling; deeper trees need a settings override.
+    constexpr qint32 kModSyncDefaultMaxRelativePathLength = 260;
+    constexpr qint32 kModSyncBackupKeepCount = 3;
+}
+
 // this Object
 spSettings Settings::m_pInstance;
 
@@ -1501,10 +1511,10 @@ void Settings::setup()
             MemoryManagement::create<Value<std::chrono::seconds>>("Network", "SuspendedDespawnTime", &m_suspendedDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
             MemoryManagement::create<Value<std::chrono::seconds>>("Network", "ReplayDeleteTime", &m_replayDeleteTime, std::chrono::seconds(60 * 60 * 24 * 7), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
             MemoryManagement::create<Value<bool>>("Network", "ModSyncEnabled", &m_modSyncEnabled, false, false, true),
-            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxPerModBytes", &m_modSyncMaxPerModBytes, 64 * 1024 * 1024, 0, std::numeric_limits<qint32>::max()),
-            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxTotalBytes", &m_modSyncMaxTotalBytes, 256 * 1024 * 1024, 0, std::numeric_limits<qint32>::max()),
-            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxFiles", &m_modSyncMaxFiles, 5000, 0, std::numeric_limits<qint32>::max()),
-            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxRelativePathLength", &m_modSyncMaxRelativePathLength, 260, 1, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxPerModBytes", &m_modSyncMaxPerModBytes, kModSyncDefaultPerModBytes, 0, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxTotalBytes", &m_modSyncMaxTotalBytes, kModSyncDefaultTotalBytes, 0, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxFiles", &m_modSyncMaxFiles, kModSyncDefaultMaxFiles, 0, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxRelativePathLength", &m_modSyncMaxRelativePathLength, kModSyncDefaultMaxRelativePathLength, 1, std::numeric_limits<qint32>::max()),
             MemoryManagement::create<Value<bool>>("Network", "ModSyncKeepBackups", &m_modSyncKeepBackups, false, false, true),
             // mailing
             MemoryManagement::create<Value<QString>>("Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""),
@@ -1556,7 +1566,12 @@ void Settings::loadSettings()
     // Apply any pending mod-sync swaps before setActiveMods, so just-synced folders are visible to its missing-folder pruning pass.
     Filesupport::executePendingModSyncManifest(m_userPath, m_userPath);
     // backupKeep follows ModSyncKeepBackups so a user who opted out reaps every leftover .bak (including ones that survived a prior post-swap removeRecursively failure).
-    Filesupport::reapModSyncFolders(m_userPath, m_modSyncKeepBackups ? 3 : 0);
+    qint32 backupKeepCount = 0;
+    if (m_modSyncKeepBackups)
+    {
+        backupKeepCount = kModSyncBackupKeepCount;
+    }
+    Filesupport::reapModSyncFolders(m_userPath, backupKeepCount);
     setActiveMods(m_activeMods);
     GameConsole::setLogLevel(m_defaultLogLevel);
     GameConsole::setActiveModules(m_defaultLogModuls);
