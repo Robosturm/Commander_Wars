@@ -8,6 +8,29 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
+namespace
+{
+    constexpr qint32 kTextFieldHeight = 30;
+    constexpr qint32 kHeaderYOffsetAboveCenter = 80;
+    constexpr qint32 kBarWidth = 480;
+    constexpr qint32 kBarHeight = 24;
+    constexpr qint32 kDetailYGapBelowBar = 10;
+    constexpr qint32 kCancelButtonWidth = 150;
+    constexpr qint32 kCancelButtonYOffsetBelowBar = 60;
+
+    const QColor kBarBackgroundColor{100, 100, 100, 200};
+    const QColor kBarFillColor{35, 180, 80, 255};
+
+    constexpr double kBytesPerKib = 1024.0;
+    constexpr double kMsPerSecond = 1000.0;
+    constexpr qint64 kSecondsPerMinute = 60;
+    constexpr qint64 kMinutesPerHour = 60;
+
+    // 50 ms minimum sample window so a hot LAN burst doesn't seed the EMA at multi-GB/s.
+    constexpr qint64 kRateMinDtMs = 50;
+    constexpr double kRateEmaAlpha = 0.3;
+}
+
 DialogModSyncProgress::DialogModSyncProgress(qint32 totalMods)
     : QObject(),
       m_totalMods(totalMods)
@@ -33,25 +56,24 @@ DialogModSyncProgress::DialogModSyncProgress(qint32 totalMods)
     m_Header = MemoryManagement::create<oxygine::TextField>();
     m_Header->setStyle(headerStyle);
     // Same full-width-with-HALIGN_MIDDLE pattern as m_Detail, dodging oxygine's stale getTextRect after setHtmlText.
-    m_Header->setSize(oxygine::Stage::getStage()->getWidth(), 30);
+    m_Header->setSize(oxygine::Stage::getStage()->getWidth(), kTextFieldHeight);
     m_Header->setHtmlText(tr("Downloading host's mod set"));
-    m_Header->setPosition(0, oxygine::Stage::getStage()->getHeight() / 2 - 80);
+    m_Header->setPosition(0, oxygine::Stage::getStage()->getHeight() / 2 - kHeaderYOffsetAboveCenter);
     pSpriteBox->addChild(m_Header);
 
-    m_barWidth = 480;
-    const qint32 barHeight = 24;
+    m_barWidth = kBarWidth;
     const qint32 barX = oxygine::Stage::getStage()->getWidth() / 2 - m_barWidth / 2;
-    const qint32 barY = oxygine::Stage::getStage()->getHeight() / 2 - barHeight / 2;
+    const qint32 barY = oxygine::Stage::getStage()->getHeight() / 2 - kBarHeight / 2;
 
     m_BarBackground = MemoryManagement::create<oxygine::ColorRectSprite>();
-    m_BarBackground->setSize(m_barWidth, barHeight);
-    m_BarBackground->setColor(QColor(100, 100, 100, 200));
+    m_BarBackground->setSize(m_barWidth, kBarHeight);
+    m_BarBackground->setColor(kBarBackgroundColor);
     m_BarBackground->setPosition(barX, barY);
     pSpriteBox->addChild(m_BarBackground);
 
     m_BarFill = MemoryManagement::create<oxygine::ColorRectSprite>();
-    m_BarFill->setSize(0, barHeight);
-    m_BarFill->setColor(QColor(35, 180, 80, 255));
+    m_BarFill->setSize(0, kBarHeight);
+    m_BarFill->setColor(kBarFillColor);
     m_BarFill->setPosition(barX, barY);
     pSpriteBox->addChild(m_BarFill);
 
@@ -62,14 +84,14 @@ DialogModSyncProgress::DialogModSyncProgress(qint32 totalMods)
     m_Detail = MemoryManagement::create<oxygine::TextField>();
     m_Detail->setStyle(detailStyle);
     // Full-width field with HALIGN_MIDDLE re-centers via layout on every setHtmlText, dodging oxygine's stale getTextRect on substantial text-length growth.
-    m_Detail->setSize(oxygine::Stage::getStage()->getWidth(), 30);
+    m_Detail->setSize(oxygine::Stage::getStage()->getWidth(), kTextFieldHeight);
     m_Detail->setHtmlText(tr("0 / %1 mods").arg(m_totalMods));
-    m_Detail->setPosition(0, barY + barHeight + 10);
+    m_Detail->setPosition(0, barY + kBarHeight + kDetailYGapBelowBar);
     pSpriteBox->addChild(m_Detail);
 
-    m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
+    m_CancelButton = pObjectManager->createButton(tr("Cancel"), kCancelButtonWidth);
     m_CancelButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_CancelButton->getScaledWidth() / 2,
-                                barY + barHeight + 60);
+                                barY + kBarHeight + kCancelButtonYOffsetBelowBar);
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -112,20 +134,18 @@ void DialogModSyncProgress::setProgress(qint32 stagedMods, qint64 receivedCompre
         receivedUncompressed = 0;
     }
 
-    // 50 ms minimum sample window so a hot LAN burst doesn't seed the EMA at multi-GB/s; lastSampleMs starts at 0 (constructor t0) so the first real sample is always rate-eligible.
-    constexpr qint64 RATE_MIN_DT_MS = 50;
-    constexpr double alpha = 0.3;
+    // lastSampleMs starts at 0 (constructor t0) so the first real sample is always rate-eligible.
     const qint64 nowMs = m_timer.isValid() ? m_timer.elapsed() : 0;
     const qint64 dtMs = nowMs - m_lastSampleMs;
     const qint64 dCompressed = receivedCompressed - m_lastReceivedCompressed;
     const qint64 dUncompressed = receivedUncompressed - m_lastReceivedUncompressed;
-    if (dtMs >= RATE_MIN_DT_MS && dCompressed >= 0 && dUncompressed >= 0)
+    if (dtMs >= kRateMinDtMs && dCompressed >= 0 && dUncompressed >= 0)
     {
-        const double dtSec = static_cast<double>(dtMs) / 1000.0;
+        const double dtSec = static_cast<double>(dtMs) / kMsPerSecond;
         const double instantCompressed = static_cast<double>(dCompressed) / dtSec;
         const double instantUncompressed = static_cast<double>(dUncompressed) / dtSec;
-        m_smoothedRateBytesPerSec = alpha * instantCompressed + (1.0 - alpha) * m_smoothedRateBytesPerSec;
-        m_smoothedUncompressedRateBytesPerSec = alpha * instantUncompressed + (1.0 - alpha) * m_smoothedUncompressedRateBytesPerSec;
+        m_smoothedRateBytesPerSec = kRateEmaAlpha * instantCompressed + (1.0 - kRateEmaAlpha) * m_smoothedRateBytesPerSec;
+        m_smoothedUncompressedRateBytesPerSec = kRateEmaAlpha * instantUncompressed + (1.0 - kRateEmaAlpha) * m_smoothedUncompressedRateBytesPerSec;
         m_lastSampleMs = nowMs;
         m_lastReceivedCompressed = receivedCompressed;
         m_lastReceivedUncompressed = receivedUncompressed;
@@ -186,21 +206,21 @@ void DialogModSyncProgress::remove()
 
 QString DialogModSyncProgress::formatBytes(qint64 bytes)
 {
-    if (bytes < 1024)
+    if (bytes < kBytesPerKib)
     {
         return tr("%1 B").arg(bytes);
     }
-    const double kb = static_cast<double>(bytes) / 1024.0;
-    if (kb < 1024.0)
+    const double kb = static_cast<double>(bytes) / kBytesPerKib;
+    if (kb < kBytesPerKib)
     {
         return tr("%1 KB").arg(QString::number(kb, 'f', 1));
     }
-    const double mb = kb / 1024.0;
-    if (mb < 1024.0)
+    const double mb = kb / kBytesPerKib;
+    if (mb < kBytesPerKib)
     {
         return tr("%1 MB").arg(QString::number(mb, 'f', 1));
     }
-    const double gb = mb / 1024.0;
+    const double gb = mb / kBytesPerKib;
     return tr("%1 GB").arg(QString::number(gb, 'f', 2));
 }
 
@@ -219,17 +239,17 @@ QString DialogModSyncProgress::formatEta(qint64 seconds)
     {
         return tr("--");
     }
-    if (seconds < 60)
+    if (seconds < kSecondsPerMinute)
     {
         return tr("%1s").arg(seconds);
     }
-    const qint64 minutes = seconds / 60;
-    const qint64 remSec = seconds % 60;
-    if (minutes < 60)
+    const qint64 minutes = seconds / kSecondsPerMinute;
+    const qint64 remSec = seconds % kSecondsPerMinute;
+    if (minutes < kMinutesPerHour)
     {
         return tr("%1m %2s").arg(minutes).arg(remSec);
     }
-    const qint64 hours = minutes / 60;
-    const qint64 remMin = minutes % 60;
+    const qint64 hours = minutes / kMinutesPerHour;
+    const qint64 remMin = minutes % kMinutesPerHour;
     return tr("%1h %2m").arg(hours).arg(remMin);
 }
