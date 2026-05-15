@@ -2241,6 +2241,7 @@ void GameMap::endOfTurn(Player* pPlayer)
 {
     if (pPlayer != nullptr)
     {
+        m_GameScript->endOfTurn(m_currentDay, pPlayer->getPlayerID());
         pPlayer->endOfTurn();
         endOfTurnPlayer(pPlayer);
         enableUnits(pPlayer);

@@ -75,6 +75,12 @@ public:
      */
     void turnStart(qint32 turn, qint32 player);
     /**
+     * @brief GameScript::endOfTurn
+     * @param turn
+     * @param player
+     */
+    void endOfTurn(qint32 turn, qint32 player);
+    /**
      * @brief onGameLoaded
      * @param pMenu
      */

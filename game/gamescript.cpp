@@ -192,6 +192,22 @@ void GameScript::turnStart(qint32 turn, qint32 player)
     }
 }
 
+void GameScript::endOfTurn(qint32 turn, qint32 player)
+{
+    if (m_loaded)
+    {
+        Mainapp::getInstance()->pauseRendering();
+        CONSOLE_PRINT("Game script on end of turn", GameConsole::eDEBUG);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "endOfTurn";
+        QJSValueList args({turn,
+                           player,
+                           GameMap::getMapJsThis(m_pMap)});
+        pInterpreter->doFunction(m_scriptName, function1, args);
+        Mainapp::getInstance()->continueRendering();
+    }
+}
+
 void GameScript::onGameLoaded(BaseGamemenu* pMenu)
 {
     if (m_loaded)
