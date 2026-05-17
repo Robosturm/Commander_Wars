@@ -277,24 +277,36 @@ private:
     oxygine::spTextField m_editTextfield;
 };
 
-#define CONSOLE_PRINT(message, logLevel) \
-if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & GameConsole::eGeneral) \
-    {  \
-            GameConsole::printDirectly(message, logLevel); \
+template<typename T_StringType>
+void CONSOLE_PRINT(T_StringType message, GameConsole::eLogLevels logLevel)
+{
+    auto * console = GameConsole::getInstance();
+    if (logLevel >= console->getLogLevel() && (console->getActiveModules() & GameConsole::eGeneral) > 0)
+    {
+        GameConsole::printDirectly(message, logLevel);
     }
+}
 
-#define CONSOLE_PRINT_MODULE(message, logLevel, module) \
-if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & module) \
-    {  \
-            GameConsole::printDirectly(message, logLevel); \
+template<typename T_StringType>
+void CONSOLE_PRINT_MODULE(T_StringType message, GameConsole::eLogLevels logLevel, quint64 module)
+{
+    auto * console = GameConsole::getInstance();
+    if (logLevel >= console->getLogLevel() && (console->getActiveModules() & module) > 0)
+    {
+        GameConsole::printDirectly(message, logLevel);
     }
+}
 
 #ifdef GAMEDEBUG
-#define AI_CONSOLE_PRINT(message, logLevel) \
-if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & GameConsole::eAI) \
-    { \
-            GameConsole::printDirectly(message, logLevel); \
+template<typename T_StringType>
+void AI_CONSOLE_PRINT(T_StringType message, GameConsole::eLogLevels logLevel)
+{
+    auto * console = GameConsole::getInstance();
+    if (logLevel >= console->getLogLevel() && console->getActiveModules() & GameConsole::eAI)
+    {
+            GameConsole::printDirectly(message, logLevel);
     }
+}
 #else
 #define AI_CONSOLE_PRINT(text, logLevel)
 #endif
