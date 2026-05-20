@@ -131,6 +131,8 @@ namespace
     constexpr qint64 kMaxPendingManifestBytes = 1 * 1024 * 1024;
     // Cap raw bytes a rejoin manifest may occupy on disk before being treated as corrupt.
     constexpr qint64 kMaxRejoinManifestBytes = 4 * 1024;
+    // Marker between mod folder name and PID during atomic swap; stageModSync, reapModSyncFolders, and the staging scanners must agree on the exact string.
+    const auto kSyncStagingMarker = QStringLiteral(".sync-staging-");
 
     bool segmentClean(const QString & seg)
     {
@@ -362,7 +364,7 @@ Filesupport::ModSyncPackage Filesupport::buildModSyncPackage(const QString & ins
                 break;
             }
             const bool isDir = (si + 1 < relSegs.size());
-            if (isDir && (seg.startsWith(QStringLiteral(".sync-staging-")) || seg.startsWith(QStringLiteral(".bak-"))))
+            if (isDir && (seg.startsWith(kSyncStagingMarker) || seg.startsWith(QStringLiteral(".bak-"))))
             {
                 cruft = true;
                 break;
@@ -578,7 +580,7 @@ QString Filesupport::stageModSync(const QString & installRoot, const QString & m
         }
     }
     const qint64 pid = QCoreApplication::applicationPid();
-    const QString stagingRel = modPath + QStringLiteral(".sync-staging-") + QString::number(pid);
+    const QString stagingRel = modPath + kSyncStagingMarker + QString::number(pid);
     const QString stagingAbs = joinPath(installRoot, stagingRel);
     QDir stagingDir(stagingAbs);
     if (stagingDir.exists() && !stagingDir.removeRecursively())
@@ -633,13 +635,13 @@ void Filesupport::reapModSyncFolders(const QString & installRoot, qint32 backupK
     // Match only exact slice-2-generated shapes; substring matching would catch legitimate mod folder names.
     auto matchStagingShape = [](const QString & name, QString & outPrefix) -> bool
     {
-        const qint32 idx = name.lastIndexOf(QStringLiteral(".sync-staging-"));
+        const qint32 idx = name.lastIndexOf(kSyncStagingMarker);
         if (idx <= 0)
         {
             return false;
         }
         const QString prefix = name.left(idx);
-        const QString suffix = name.mid(idx + QStringLiteral(".sync-staging-").size());
+        const QString suffix = name.mid(idx + kSyncStagingMarker.size());
         if (suffix.isEmpty() || !validateModPath(QStringLiteral("mods/") + prefix))
         {
             return false;
@@ -821,7 +823,7 @@ QStringList Filesupport::executePendingModSyncManifest(const QString & installRo
             continue;
         }
         // Pin staging to the exact shape stageModSync writes: <finalRel>.sync-staging-<digits>.
-        const QString stagingPrefix = finalRel + QStringLiteral(".sync-staging-");
+        const QString stagingPrefix = finalRel + kSyncStagingMarker;
         if (!stagingRel.startsWith(stagingPrefix))
         {
             CONSOLE_PRINT("Manifest staging path shape mismatch, skipping: " + stagingRel, GameConsole::eERROR);
