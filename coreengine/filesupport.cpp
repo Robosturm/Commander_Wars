@@ -121,6 +121,16 @@ namespace
     constexpr qint32 kBakCollisionCounterMinLength = 21;
     static_assert(kBakTimestampLength == kBakTimestampDateTimeLength + 1, "Z follows datetime");
     static_assert(kBakCollisionCounterMinLength == kBakTimestampLength + 2, "min counter = timestamp + '-' + 1 digit");
+    // zlib best-speed; few percent worse ratio on text-heavy mods, big drop in host CPU stall.
+    constexpr qint32 kQCompressBestSpeedLevel = 1;
+    // qCompress prefixes a 4-byte big-endian uncompressed-size header used for pre-allocation; gate it before qUncompress to bound memory.
+    constexpr qint32 kQCompressFramingHeaderBytes = 4;
+    // UTF-8 encodes a Unicode code point in at most 4 bytes.
+    constexpr qint32 kUtf8MaxBytesPerCodePoint = 4;
+    // Cap raw bytes a pending mod-sync manifest may occupy on disk before being treated as corrupt.
+    constexpr qint64 kMaxPendingManifestBytes = 1 * 1024 * 1024;
+    // Cap raw bytes a rejoin manifest may occupy on disk before being treated as corrupt.
+    constexpr qint64 kMaxRejoinManifestBytes = 4 * 1024;
 
     bool segmentClean(const QString & seg)
     {
@@ -416,8 +426,7 @@ Filesupport::ModSyncPackage Filesupport::buildModSyncPackage(const QString & ins
         return pkg;
     }
     pkg.declaredUncompressedSize = static_cast<qint32>(serialized.size());
-    // Level 1 = zlib best-speed; ~few percent worse ratio on text-heavy mods, big drop in host CPU stall.
-    pkg.compressedBlob = qCompress(serialized, 1);
+    pkg.compressedBlob = qCompress(serialized, kQCompressBestSpeedLevel);
     pkg.fileCount = fileCount;
     if (pkg.compressedBlob.size() > caps.perModBytes)
     {
@@ -447,8 +456,7 @@ QMap<QString, QByteArray> Filesupport::extractModSyncPackage(const QByteArray & 
         rejectReason = kModSyncSizeCapExceeded;
         return files;
     }
-    // qCompress prefixes a 4-byte big-endian uncompressed size used for pre-allocation; gate it before qUncompress to bound memory.
-    if (compressedBlob.size() < 4)
+    if (compressedBlob.size() < kQCompressFramingHeaderBytes)
     {
         rejectReason = kModSyncInternalError;
         return files;
@@ -504,8 +512,7 @@ QMap<QString, QByteArray> Filesupport::extractModSyncPackage(const QByteArray & 
     {
         QByteArray keyUtf8;
         QByteArray value;
-        // UTF-8 max 4 bytes per code point; cap key bytes at relPathMaxLen * 4.
-        if (!readBoundedBytes(keyUtf8, static_cast<qint64>(caps.relPathMaxLen) * 4))
+        if (!readBoundedBytes(keyUtf8, static_cast<qint64>(caps.relPathMaxLen) * kUtf8MaxBytesPerCodePoint))
         {
             rejectReason = kModSyncInvalidPath;
             return QMap<QString, QByteArray>();
@@ -770,8 +777,7 @@ QStringList Filesupport::executePendingModSyncManifest(const QString & installRo
         return applied;
     }
     // Oversize manifest is treated as corrupt or tampered: discard rather than try to parse partial state.
-    constexpr qint64 kMaxManifestBytes = 1 * 1024 * 1024;
-    if (f.size() > kMaxManifestBytes)
+    if (f.size() > kMaxPendingManifestBytes)
     {
         CONSOLE_PRINT("Pending mod-sync manifest oversize, discarding: " + path, GameConsole::eERROR);
         QFile::remove(path);
@@ -939,7 +945,6 @@ Filesupport::RejoinManifest Filesupport::consumeRejoinManifest(const QString & u
     {
         return result;
     }
-    constexpr qint64 kMaxRejoinManifestBytes = 4 * 1024;
     if (f.size() > kMaxRejoinManifestBytes)
     {
         CONSOLE_PRINT("Rejoin manifest oversize, discarding: " + path, GameConsole::eERROR);
