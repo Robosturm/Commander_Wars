@@ -1,7 +1,9 @@
-#include <QJsonObject>
+#include <QCoreApplication>
+#include <QCryptographicHash>
 #include <QJsonArray>
 #include <QJsonDocument>
-#include <QCryptographicHash>
+#include <QJsonObject>
+#include <QTimer>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -14,6 +16,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/filesupport.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/virtualpaths.h"
 
 #include "menue/gamemenue.h"
 #include "menue/mainwindow.h"
@@ -41,7 +44,9 @@ Multiplayermenu::Multiplayermenu(const QString & address, const QString & second
     : MapSelectionMapsMenue(MemoryManagement::create<MapSelectionView>(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
-      m_password(password)
+      m_password(password),
+      m_serverAddress(address),
+      m_serverPort(port)
 {
     init();
     if (m_networkMode != NetworkMode::Host)
@@ -67,7 +72,9 @@ Multiplayermenu::Multiplayermenu(const QString & address, quint16 port, const Pa
     : MapSelectionMapsMenue(MemoryManagement::create<MapSelectionView>(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
-      m_password(*password)
+      m_password(*password),
+      m_serverAddress(address),
+      m_serverPort(port)
 {
     init();
     initClientConnection(address, "", port);
@@ -135,10 +142,12 @@ void Multiplayermenu::initClientAndWaitForConnection()
 
     connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     // wait 10 minutes till timeout
-    spDialogConnecting pDialogConnecting = MemoryManagement::create<DialogConnecting>(tr("Connecting"), 1000 * 60 * 5);
-    addChild(pDialogConnecting);
-    connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
-    connect(this, &Multiplayermenu::sigConnected, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+    m_pJoinConnectingDialog = MemoryManagement::create<DialogConnecting>(tr("Connecting"), 1000 * 60 * 5);
+    addChild(m_pJoinConnectingDialog);
+    connect(m_pJoinConnectingDialog.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+    connect(this, &Multiplayermenu::sigConnected, m_pJoinConnectingDialog.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+    // Drop the smart-ptr after the dialog's own connected() slot has detached it, so a retained reference can't keep the actor alive past the lobby join.
+    connect(this, &Multiplayermenu::sigConnected, this, [this](){ m_pJoinConnectingDialog.reset(); }, Qt::QueuedConnection);
 }
 
 void Multiplayermenu::init()
@@ -536,6 +545,38 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             exitMenuToLobby();
         }
+        else if (messageType == NetworkCommands::REQUESTMODSYNC)
+        {
+            handleModSyncRequest(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::MODSYNCMANIFEST)
+        {
+            handleModSyncManifest(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::MODSYNCDATA)
+        {
+            handleModSyncData(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::MODSYNCMODBEGIN)
+        {
+            handleModSyncModBegin(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::MODSYNCMODCHUNK)
+        {
+            handleModSyncModChunk(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::MODSYNCMODEND)
+        {
+            handleModSyncModEnd(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::MODSYNCREJECT)
+        {
+            handleModSyncReject(stream, socketID);
+        }
+        else if (messageType == NetworkCommands::MODSYNCCOMPLETE)
+        {
+            handleModSyncComplete(stream, socketID);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in Multiplayermenu::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -743,13 +784,23 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID)
         stream << mods[i];
         stream << versions[i];
     }
-    auto hostHash = Filesupport::getRuntimeHash(mods);
-    if (GameConsole::eDEBUG >= GameConsole::getLogLevel())
+    quint32 capabilities = 0;
+    if (Settings::getInstance()->getModSyncEnabled())
     {
-        QString hostString = GlobalUtils::getByteArrayString(hostHash);
-        CONSOLE_PRINT("Sending host hash: " + hostString, GameConsole::eDEBUG);
+        capabilities |= Filesupport::CapabilityModSync;
     }
-    Filesupport::writeByteArray(stream, hostHash);
+    // Stay on parent v1 wire format when no caps advertised so v1 clients still join.
+    if (capabilities == 0)
+    {
+        stream << static_cast<qint32>(Filesupport::LegacyHashPayloadVersion);
+    }
+    else
+    {
+        stream << static_cast<qint32>(Filesupport::CurrentHashPayloadVersion);
+        stream << capabilities;
+    }
+    Filesupport::writeMap(stream, Filesupport::getResourceFolderHashes());
+    Filesupport::writeMap(stream, Filesupport::getPerModHashes(mods));
     stream << m_saveGame;
     if (m_saveGame)
     {
@@ -1165,7 +1216,12 @@ void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
         QStringList versions;
         QStringList myMods;
         QStringList myVersions;
-        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
+        QStringList mismatchedResourceFolders;
+        QStringList mismatchedMods;
+        quint32 hostCapabilities = 0;
+        bool cosmeticAllowed = false;
+        QMap<QString, QByteArray> hostModHashes;
+        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostModHashes, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         if (sameVersion && sameMods && !differentHash)
         {
             QString command = QString(NetworkCommands::GAMEDATAVERIFIED);
@@ -1178,7 +1234,7 @@ void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            handleVersionMissmatch(mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
+            handleVersionMissmatch(mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostModHashes, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         }
     }
 }
@@ -1230,12 +1286,21 @@ bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & ve
     return sameMods;
 }
 
-void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, bool & sameMods, bool & differentHash, bool & sameVersion)
+void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, QMap<QString, QByteArray> & hostModHashes, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion, bool & cosmeticAllowed)
 {
+    hostCapabilities = 0;
+    cosmeticAllowed = false;
+    hostModHashes.clear();
     GameVersion version;
     version.deserializeObject(stream);
+    sameVersion = (version == GameVersion());
+    if (!sameVersion)
+    {
+        return;
+    }
     bool filter = false;
     stream >> filter;
+    cosmeticAllowed = filter;
     qint32 size = 0;
     stream >> size;
     for (qint32 i = 0; i < size; i++)
@@ -1248,17 +1313,74 @@ void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStri
         versions.append(version);
     }
     sameMods = checkMods(mods, versions, myMods, myVersions, filter);
-    QByteArray hostRuntime = Filesupport::readByteArray(stream);
-    QByteArray ownRuntime = Filesupport::getRuntimeHash(mods);
-    if (GameConsole::eDEBUG >= GameConsole::getLogLevel())
+    qint32 sentinel = 0;
+    stream >> sentinel;
+
+    // Call once per readHashInfo: appends to mismatch lists without clearing.
+    auto compareMaps = [&](const QMap<QString, QByteArray> & hostResources, const QMap<QString, QByteArray> & hostMods)
     {
-        QString hostString = GlobalUtils::getByteArrayString(hostRuntime);
-        QString ownString = GlobalUtils::getByteArrayString(ownRuntime);
-        CONSOLE_PRINT("Received host hash: " + hostString, GameConsole::eDEBUG);
-        CONSOLE_PRINT("Own hash:           " + ownString, GameConsole::eDEBUG);
+        // Surface host's per-mod hash for the inactive-local-copy verification in handleVersionMissmatch.
+        hostModHashes = hostMods;
+        auto ownResources = Filesupport::getResourceFolderHashes();
+        auto ownMods = Filesupport::getPerModHashes(myMods);
+        for (auto iter = hostResources.constBegin(); iter != hostResources.constEnd(); ++iter)
+        {
+            if (ownResources.value(iter.key()) != iter.value())
+            {
+                mismatchedResourceFolders.append(iter.key());
+            }
+        }
+        for (const auto & mod : std::as_const(mods))
+        {
+            // Mods only on one side belong in the membership-mismatch section, not here.
+            if (!myMods.contains(mod))
+            {
+                continue;
+            }
+            if (hostMods.value(mod) != ownMods.value(mod))
+            {
+                mismatchedMods.append(mod);
+            }
+        }
+        differentHash = !mismatchedResourceFolders.isEmpty() || !mismatchedMods.isEmpty();
+    };
+
+    if (sentinel == Filesupport::LegacyRuntimeHashSize)
+    {
+        QByteArray hostRuntime;
+        for (qint32 i = 0; i < sentinel; ++i)
+        {
+            qint8 byte = 0;
+            stream >> byte;
+            hostRuntime.append(byte);
+        }
+        QByteArray ownRuntime = Filesupport::getLegacyRuntimeHash(mods);
+        if (GameConsole::eDEBUG >= GameConsole::getLogLevel())
+        {
+            CONSOLE_PRINT("Received legacy host hash: " + GlobalUtils::getByteArrayString(hostRuntime), GameConsole::eDEBUG);
+            CONSOLE_PRINT("Own legacy hash:           " + GlobalUtils::getByteArrayString(ownRuntime), GameConsole::eDEBUG);
+        }
+        differentHash = (hostRuntime != ownRuntime);
     }
-    differentHash = (hostRuntime != ownRuntime);
-    sameVersion = version == GameVersion();
+    else if (sentinel == Filesupport::LegacyHashPayloadVersion)
+    {
+        // parent named-mod-mismatch wire format: two maps, no capabilities advertised.
+        auto hostResources = Filesupport::readMap<QString, QByteArray, QMap>(stream);
+        auto hostMods = Filesupport::readMap<QString, QByteArray, QMap>(stream);
+        compareMaps(hostResources, hostMods);
+    }
+    else if (sentinel == Filesupport::CurrentHashPayloadVersion)
+    {
+        stream >> hostCapabilities;
+        auto hostResources = Filesupport::readMap<QString, QByteArray, QMap>(stream);
+        auto hostMods = Filesupport::readMap<QString, QByteArray, QMap>(stream);
+        compareMaps(hostResources, hostMods);
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown hash payload sentinel " + QString::number(sentinel) + ", failing closed", GameConsole::eERROR);
+        differentHash = true;
+    }
 }
 
 void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
@@ -1273,7 +1395,12 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         QStringList versions;
         QStringList myMods;
         QStringList myVersions;
-        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
+        QStringList mismatchedResourceFolders;
+        QStringList mismatchedMods;
+        quint32 hostCapabilities = 0;
+        bool cosmeticAllowed = false;
+        QMap<QString, QByteArray> hostModHashes;
+        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostModHashes, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         if (sameVersion && sameMods && !differentHash)
         {
             stream >> m_saveGame;
@@ -1331,43 +1458,176 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            handleVersionMissmatch(mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
+            handleVersionMissmatch(mods, versions, myMods, myVersions, mismatchedResourceFolders, mismatchedMods, hostModHashes, hostCapabilities, sameMods, differentHash, sameVersion, cosmeticAllowed);
         }
     }
 }
 
-void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, bool sameMods, bool differentHash, bool sameVersion)
+void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, const QMap<QString, QByteArray> & hostModHashes, quint32 hostCapabilities, bool sameMods, bool differentHash, bool sameVersion, bool cosmeticAllowed)
 {
-    // quit game with wrong version
-    spDialogMessageBox pDialogMessageBox;
-    if (differentHash)
+    // Mod/hash fields are stale on version mismatch because readHashInfo early-returns.
+    if (!sameVersion)
     {
-        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Host has a different version of a mod or the game resource folder has been modified by one of the games."));
+        spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Host has a different game version. Leaving the game again."));
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+        addChild(pDialogMessageBox);
+        return;
     }
-    else  if (!sameVersion)
+
+    constexpr qint32 DISPLAY_LIMIT = 5;
+    auto * settings = Settings::getInstance();
+
+    QStringList missingHere;
+    QStringList extraHere;
+    QStringList versionDiffs;
+    QStringList modsToDownloadPaths;
+    if (!sameMods)
     {
-        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Host has a different game version. Leaving the game again."));
-    }
-    else if (!sameMods)
-    {
-        QString hostModsInfo;
         for (qint32 i = 0; i < mods.size(); ++i)
         {
-            hostModsInfo += Settings::getInstance()->getModName(mods[i]) + " " + versions[i] + "\n";
+            const QString & mod = mods[i];
+            const qint32 j = myMods.indexOf(mod);
+            if (j < 0)
+            {
+                missingHere.append(settings->getModName(mod) + " " + versions[i]);
+                // Skip download only when local hash and version match host; disk presence alone is unsafe (stale or unrelated folder).
+                bool localSatisfies = false;
+                const QString resolvedAbs = VirtualPaths::find(mod, false);
+                if (!resolvedAbs.isEmpty() && QDir(resolvedAbs).exists())
+                {
+                    const QByteArray localHash = Filesupport::getPerModHashes(QStringList{mod}).value(mod);
+                    const QString localVersion = settings->getModVersion(mod);
+                    localSatisfies = (!localHash.isEmpty() && localHash == hostModHashes.value(mod) && localVersion == versions[i]);
+                    if (!localSatisfies)
+                    {
+                        CONSOLE_PRINT("Inactive local copy of " + mod + " differs from host (hash or version); queueing download.", GameConsole::eDEBUG);
+                    }
+                }
+                if (!localSatisfies)
+                {
+                    modsToDownloadPaths.append(mod);
+                }
+            }
+            else if (versions[i] != myVersions[j])
+            {
+                versionDiffs.append(tr("%1 (host: %2, you: %3)").arg(settings->getModName(mod), versions[i], myVersions[j]));
+                modsToDownloadPaths.append(mod);
+            }
         }
-        QString myModsInfo;
         for (qint32 i = 0; i < myMods.size(); ++i)
         {
-            myModsInfo += Settings::getInstance()->getModName(myMods[i]) + " " + myVersions[i]  + "\n";
+            if (!mods.contains(myMods[i]))
+            {
+                extraHere.append(settings->getModName(myMods[i]) + " " + myVersions[i]);
+            }
         }
-        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Host has different mods. Leaving the game again.\nHost mods:\n") + hostModsInfo + "\nYour Mods:\n" + myModsInfo);
+    }
+
+    QStringList contentDiffs;
+    for (const auto & mod : std::as_const(mismatchedMods))
+    {
+        contentDiffs.append(settings->getModName(mod));
+        if (!modsToDownloadPaths.contains(mod))
+        {
+            modsToDownloadPaths.append(mod);
+        }
+    }
+
+    auto logFullList = [](const QString & label, const QStringList & list)
+    {
+        if (!list.isEmpty())
+        {
+            CONSOLE_PRINT(label + ": " + list.join(", "), GameConsole::eINFO);
+        }
+    };
+    logFullList(QStringLiteral("Mods host has that you are missing"), missingHere);
+    logFullList(QStringLiteral("Mods you have that host does not"), extraHere);
+    logFullList(QStringLiteral("Mods with version-string mismatch"), versionDiffs);
+    logFullList(QStringLiteral("Mods with different content"), contentDiffs);
+    logFullList(QStringLiteral("Engine resource folders modified"), mismatchedResourceFolders);
+
+    auto appendSection = [&](QString & dst, const QString & header, const QStringList & lines)
+    {
+        if (lines.isEmpty())
+        {
+            return;
+        }
+        dst += header + "\n";
+        const qint32 shown = std::min(static_cast<qint32>(lines.size()), DISPLAY_LIMIT);
+        for (qint32 i = 0; i < shown; ++i)
+        {
+            dst += "  " + lines[i] + "\n";
+        }
+        if (lines.size() > DISPLAY_LIMIT)
+        {
+            dst += "  " + tr("...and %1 more (see console.log)").arg(lines.size() - DISPLAY_LIMIT) + "\n";
+        }
+        dst += "\n";
+    };
+
+    QString message;
+    appendSection(message, tr("Missing mods (host has, you don't):"), missingHere);
+    appendSection(message, tr("Extra mods (you have, host doesn't):"), extraHere);
+    appendSection(message, tr("Version mismatch (mod.txt):"), versionDiffs);
+    appendSection(message, tr("Content mismatch:"), contentDiffs);
+    appendSection(message, tr("Engine resources differ:"), mismatchedResourceFolders);
+
+    // Mod-sync is offerable when host advertised CapabilityModSync, no engine resource drift, and any mismatch class is non-empty (downloads OR settings-only activate/deactivate work).
+    const bool hostSupportsModSync = (hostCapabilities & Filesupport::CapabilityModSync) != 0;
+    const bool resourceDrift = !mismatchedResourceFolders.isEmpty();
+    const bool fixableViaSync = hostSupportsModSync && !resourceDrift && (!missingHere.isEmpty() || !versionDiffs.isEmpty() || !contentDiffs.isEmpty() || !extraHere.isEmpty());
+
+    if (message.isEmpty())
+    {
+        // Legacy and fail-closed payloads have no structured detail.
+        if (differentHash)
+        {
+            message = tr("Host has a different version of a mod or the game resource folder has been modified by one of the games.");
+        }
+        else
+        {
+            CONSOLE_PRINT("handleVersionMissmatch reached unreachable branch: !differentHash with no mod-set or hash diff detail. checkMods set !sameMods but our classification found nothing. Investigate.", GameConsole::eERROR);
+            message = tr("Failed to join game due to unknown verification failure.");
+        }
+    }
+    else if (fixableViaSync)
+    {
+        message = tr("Your game data differs from the host:") + "\n\n" + message + tr("Want me to download host's mod set, apply it, and restart automatically?");
     }
     else
     {
-        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Failed to join game due to unknown verification failure."));
+        message = tr("Cannot join, your game data differs from the host:") + "\n\n" + message + tr("Leaving the game again.");
     }
-    connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
-    addChild(pDialogMessageBox);
+
+    if (fixableViaSync)
+    {
+        spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(message, true, tr("Apply"), tr("Leave game"));
+        // Host's advertised list is already cosmetic-filtered when the rule allows them; re-add client cosmetic-only mods so the user does not silently lose them on next boot.
+        QStringList postSyncActiveMods = mods;
+        if (cosmeticAllowed)
+        {
+            const QStringList clientFull = settings->getMods();
+            for (const auto & mod : std::as_const(clientFull))
+            {
+                if (!postSyncActiveMods.contains(mod) && settings->getIsCosmetic(mod))
+                {
+                    postSyncActiveMods.append(mod);
+                }
+            }
+        }
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, [this, modsToDownloadPaths, postSyncActiveMods]()
+        {
+            confirmModSync(modsToDownloadPaths, postSyncActiveMods);
+        }, Qt::QueuedConnection);
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+        addChild(pDialogMessageBox);
+    }
+    else
+    {
+        spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(message);
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+        addChild(pDialogMessageBox);
+    }
 }
 
 void Multiplayermenu::requestMap(quint64 socketID)
@@ -2313,4 +2573,1243 @@ void Multiplayermenu::countdown()
         m_GameStartTimer.stop();
         sendServerReady(false);
     }
+}
+
+// Pin reject codes to wire literals; filesupport.cpp's anonymous-namespace constants must match.
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncNoReason) == 0, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncDisabled) == 1, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncUnknownMod) == 2, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncSizeCapExceeded) == 3, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncFileCountCapExceeded) == 4, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncInvalidPath) == 5, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncInternalError) == 6, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncBusy) == 7, "ModSync reject code drift");
+
+namespace
+{
+    // Cap on number of mods in a single REQUESTMODSYNC; client mod count is bounded by what the user has installed.
+    constexpr qint32 MOD_SYNC_REQUEST_COUNT_MAX = 1024;
+    // Cap on reject-message char length; anything longer than this is truncated by the host or rejected.
+    constexpr qint32 MOD_SYNC_REASON_CHARS_MAX = 4096;
+    // Wire contract: host and client must agree on this value; chunkCount and per-chunk size are validated against it. Bump MODSYNCMODBEGIN's protocolVersion if it ever changes.
+    constexpr qint32 MOD_SYNC_CHUNK_BYTES = 1 * 1024 * 1024;
+    // Hard ceiling on chunkCount declared in MODSYNCMODBEGIN; even at perModCap = 1 GB that's only ~1024 chunks at 1 MiB.
+    constexpr qint32 MOD_SYNC_CHUNK_COUNT_MAX = 1024 * 1024;
+
+    // QDataStream::operator>> pre-resizes to the declared length; bounded readers reject the header before allocation.
+    constexpr quint32 INT32_MAX_AS_U32 = 0x7FFFFFFFu;
+
+    bool readBoundedQByteArray(QDataStream & stream, QByteArray & out, qint64 maxBytes)
+    {
+        if (maxBytes < 0)
+        {
+            return false;
+        }
+        quint32 declared = 0;
+        stream >> declared;
+        if (stream.status() != QDataStream::Ok)
+        {
+            return false;
+        }
+        if (declared == 0xFFFFFFFFu)
+        {
+            out.clear();
+            return true;
+        }
+        if (declared > INT32_MAX_AS_U32 || static_cast<qint64>(declared) > maxBytes)
+        {
+            return false;
+        }
+        out.resize(static_cast<qint32>(declared));
+        if (out.size() > 0 && stream.readRawData(out.data(), out.size()) != out.size())
+        {
+            return false;
+        }
+        return true;
+    }
+
+    bool readBoundedQString(QDataStream & stream, QString & out, qint32 maxChars)
+    {
+        if (maxChars < 0)
+        {
+            return false;
+        }
+        quint32 declared = 0;
+        stream >> declared;
+        if (stream.status() != QDataStream::Ok)
+        {
+            return false;
+        }
+        if (declared == 0xFFFFFFFFu)
+        {
+            out.clear();
+            return true;
+        }
+        const qint64 maxBytes = static_cast<qint64>(maxChars) * 2;
+        if (declared > INT32_MAX_AS_U32 || static_cast<qint64>(declared) > maxBytes || (declared % 2) != 0)
+        {
+            return false;
+        }
+        QByteArray buf;
+        buf.resize(static_cast<qint32>(declared));
+        if (buf.size() > 0 && stream.readRawData(buf.data(), buf.size()) != buf.size())
+        {
+            return false;
+        }
+        const qint32 codeUnits = buf.size() / 2;
+        out.resize(codeUnits);
+        const uchar * src = reinterpret_cast<const uchar *>(buf.constData());
+        // Wire is big-endian; build each code unit explicitly to skip platform-endian conversion in fromUtf16.
+        for (qint32 i = 0; i < codeUnits; ++i)
+        {
+            out[i] = QChar(static_cast<ushort>((src[i * 2] << 8) | src[i * 2 + 1]));
+        }
+        return true;
+    }
+}
+
+bool Multiplayermenu::requestModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods)
+{
+    if (m_modSyncActive)
+    {
+        CONSOLE_PRINT("Mod-sync already in flight; ignoring duplicate requestModSync", GameConsole::eWARNING);
+        return false;
+    }
+    // Network guard runs before the empty-request branch so a host-side caller cannot persist client-side post-sync settings.
+    if (m_pNetworkInterface == nullptr || m_pNetworkInterface->getIsServer())
+    {
+        CONSOLE_PRINT("requestModSync called without a client network interface, ignoring", GameConsole::eWARNING);
+        return false;
+    }
+    if (modsToDownload.size() > MOD_SYNC_REQUEST_COUNT_MAX)
+    {
+        CONSOLE_PRINT("requestModSync exceeds count cap (" + QString::number(modsToDownload.size()) + " > " + QString::number(MOD_SYNC_REQUEST_COUNT_MAX) + "), ignoring", GameConsole::eWARNING);
+        return false;
+    }
+    if (modsToDownload.isEmpty())
+    {
+        // No downloads needed; persist the post-sync mod selection only. No manifest, no network round-trip.
+        Settings::getInstance()->stageActiveModsForRestart(postSyncActiveMods);
+        CONSOLE_PRINT("Mod-sync settings-only: " + QString::number(postSyncActiveMods.size()) + " mods staged for restart", GameConsole::eINFO);
+        return true;
+    }
+    m_modSyncActive = true;
+    m_modSyncStagings.clear();
+    m_modSyncRequestedSet = QSet<QString>(modsToDownload.cbegin(), modsToDownload.cend());
+    m_modSyncReceivedBytes = 0;
+    m_modSyncReceivedUncompressedBytes = 0;
+    m_modSyncExpectedUncompressedTotal = 0;
+    m_modSyncPostSyncActiveMods = postSyncActiveMods;
+    m_modSyncCurrentChunkMod = ModSyncChunkAccumulator{};
+
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream.setVersion(QDataStream::Version::Qt_6_5);
+    stream << QString(NetworkCommands::REQUESTMODSYNC);
+    stream << static_cast<qint32>(1);
+    stream << modsToDownload;
+    // Trailing optional flag; older hosts read past their known fields and ignore. New hosts try-read and fall back to legacy framing if absent.
+    stream << static_cast<qint32>(NetworkCommands::ModSyncClientFlagChunked);
+    // socketID=0 routes to the server on a TCP client interface; same convention as other client-originated sends.
+    emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+    CONSOLE_PRINT("Requested mod-sync for " + QString::number(modsToDownload.size()) + " mods (chunked-capable)", GameConsole::eINFO);
+    return true;
+}
+
+void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketID)
+{
+    if (m_pNetworkInterface == nullptr || !m_pNetworkInterface->getIsServer())
+    {
+        CONSOLE_PRINT("REQUESTMODSYNC received on non-server, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    auto * settings = Settings::getInstance();
+    if (!settings->getModSyncEnabled())
+    {
+        sendModSyncReject(socketID, NetworkCommands::ModSyncDisabled, QString(), tr("Mod sync is disabled on this host."));
+        return;
+    }
+    // Host-wide pump state is single-slot; reject concurrent peers rather than clobber an in-flight transfer.
+    if (m_modSyncSendState.socketID != 0)
+    {
+        CONSOLE_PRINT("REQUESTMODSYNC arrived while another peer's send is still pumping; rejecting", GameConsole::eWARNING);
+        sendModSyncReject(socketID, NetworkCommands::ModSyncBusy, QString(), tr("Another peer is currently mod-syncing; try again shortly."));
+        return;
+    }
+    qint32 protocolVersion = 0;
+    stream >> protocolVersion;
+    if (protocolVersion != 1)
+    {
+        sendModSyncReject(socketID, NetworkCommands::ModSyncInternalError, QString(), tr("Unsupported mod-sync protocol version."));
+        return;
+    }
+
+    const qint32 relPathMaxLen = settings->getModSyncMaxRelativePathLength();
+    qint32 modCount = 0;
+    stream >> modCount;
+    if (stream.status() != QDataStream::Ok || modCount < 0 || modCount > MOD_SYNC_REQUEST_COUNT_MAX)
+    {
+        sendModSyncReject(socketID, NetworkCommands::ModSyncInternalError, QString(), tr("Malformed mod-sync request."));
+        return;
+    }
+    QStringList requestedMods;
+    requestedMods.reserve(modCount);
+    {
+        // Dedupe at parse time so a hostile client cannot force repeated package builds and duplicate sends within the count cap.
+        QSet<QString> seen;
+        for (qint32 i = 0; i < modCount; ++i)
+        {
+            QString mod;
+            if (!readBoundedQString(stream, mod, relPathMaxLen))
+            {
+                sendModSyncReject(socketID, NetworkCommands::ModSyncInvalidPath, QString(), tr("Malformed mod path in request."));
+                return;
+            }
+            if (!seen.contains(mod))
+            {
+                seen.insert(mod);
+                requestedMods.append(mod);
+            }
+        }
+    }
+    // Optional clientFlags trailer; older clients send 0 trailing bytes. Strict shape: nothing, or exactly one qint32. Anything else is malformed.
+    qint32 clientFlags = 0;
+    if (!stream.atEnd())
+    {
+        stream >> clientFlags;
+        if (stream.status() != QDataStream::Ok || !stream.atEnd())
+        {
+            sendModSyncReject(socketID, NetworkCommands::ModSyncInternalError, QString(), tr("Malformed mod-sync request trailer."));
+            return;
+        }
+    }
+    const bool useChunked = (clientFlags & NetworkCommands::ModSyncClientFlagChunked) != 0;
+
+    QStringList hostMods = settings->getMods();
+    QStringList hostVersions = settings->getActiveModVersions();
+    bool filter = false;
+    auto pMap = m_pMapSelectionView->getCurrentMap();
+    if (pMap != nullptr && pMap->getGameRules() != nullptr)
+    {
+        filter = pMap->getGameRules()->getCosmeticModsAllowed();
+    }
+    settings->filterCosmeticMods(hostMods, hostVersions, filter);
+
+    Filesupport::ModSyncCaps caps;
+    caps.perModBytes = settings->getModSyncMaxPerModBytes();
+    caps.fileCountMax = settings->getModSyncMaxFiles();
+    caps.relPathMaxLen = relPathMaxLen;
+    const qint64 totalCap = settings->getModSyncMaxTotalBytes();
+    qint64 totalSent = 0;
+    qint64 totalUncompressed = 0;
+
+    auto packageRejectReason = [this](qint32 code, const QString & mod) -> QString
+    {
+        switch (code)
+        {
+            case NetworkCommands::ModSyncSizeCapExceeded:
+                return tr("Mod %1 exceeds the per-mod size cap on the host.").arg(mod);
+            case NetworkCommands::ModSyncFileCountCapExceeded:
+                return tr("Mod %1 exceeds the per-mod file-count cap on the host.").arg(mod);
+            case NetworkCommands::ModSyncInvalidPath:
+                return tr("Mod %1 has an unsafe internal file path.").arg(mod);
+            case NetworkCommands::ModSyncUnknownMod:
+                return tr("Mod %1 was not found on the host.").arg(mod);
+            default:
+                return tr("Failed to build mod package for %1.").arg(mod);
+        }
+    };
+
+    // Pre-build so the manifest carries exact sizes; peak ~totalCap, each blob freed after its MODSYNCDATA send.
+    QVector<QPair<QString, Filesupport::ModSyncPackage>> builtPackages;
+    builtPackages.reserve(requestedMods.size());
+    for (const auto & mod : std::as_const(requestedMods))
+    {
+        if (!Filesupport::validateModPath(mod))
+        {
+            sendModSyncReject(socketID, NetworkCommands::ModSyncInvalidPath, mod, tr("Invalid mod path."));
+            return;
+        }
+        if (!hostMods.contains(mod))
+        {
+            sendModSyncReject(socketID, NetworkCommands::ModSyncUnknownMod, mod, tr("Mod not advertised by host."));
+            return;
+        }
+        // Active mods may resolve from CWD or the install/resource path, not just userPath; ask the VFS where the folder actually lives.
+        const QString resolvedAbs = VirtualPaths::find(mod, false);
+        if (resolvedAbs.isEmpty())
+        {
+            sendModSyncReject(socketID, NetworkCommands::ModSyncUnknownMod, mod, tr("Mod folder not found in install search paths."));
+            return;
+        }
+        QString resolvedRoot;
+        const QString suffixSlash = QStringLiteral("/") + mod;
+        if (resolvedAbs.endsWith(suffixSlash))
+        {
+            resolvedRoot = resolvedAbs.left(resolvedAbs.size() - suffixSlash.size());
+        }
+        else if (resolvedAbs == mod)
+        {
+            resolvedRoot = QString();
+        }
+        else
+        {
+            sendModSyncReject(socketID, NetworkCommands::ModSyncInternalError, mod, tr("Mod path resolution shape unexpected."));
+            return;
+        }
+        Filesupport::ModSyncPackage pkg = Filesupport::buildModSyncPackage(resolvedRoot, mod, caps);
+        if (pkg.rejectReason != 0)
+        {
+            sendModSyncReject(socketID, pkg.rejectReason, mod, packageRejectReason(pkg.rejectReason, mod));
+            return;
+        }
+        if (totalSent + pkg.compressedBlob.size() > totalCap || totalUncompressed + pkg.declaredUncompressedSize > totalCap)
+        {
+            sendModSyncReject(socketID, NetworkCommands::ModSyncSizeCapExceeded, QString(), tr("Total sync size exceeds the host's cap."));
+            return;
+        }
+        totalSent += pkg.compressedBlob.size();
+        totalUncompressed += pkg.declaredUncompressedSize;
+        builtPackages.append(qMakePair(mod, std::move(pkg)));
+    }
+
+    {
+        QByteArray manifestData;
+        QDataStream manifestStream(&manifestData, QIODevice::WriteOnly);
+        manifestStream.setVersion(QDataStream::Version::Qt_6_5);
+        manifestStream << QString(NetworkCommands::MODSYNCMANIFEST);
+        manifestStream << static_cast<qint32>(1);
+        manifestStream << static_cast<qint32>(builtPackages.size());
+        for (const auto & entry : std::as_const(builtPackages))
+        {
+            manifestStream << entry.first;
+            manifestStream << entry.second.declaredUncompressedSize;
+        }
+        emit m_pNetworkInterface->sig_sendData(socketID, manifestData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        CONSOLE_PRINT("Sent MODSYNCMANIFEST; " + QString::number(builtPackages.size()) + " mods, " + QString::number(totalUncompressed) + " expected uncompressed bytes", GameConsole::eINFO);
+    }
+
+    // Hand the data send off to a singleShot-driven pump so the GUI thread isn't pinned hot-looping over chunks for a multi-hundred-MB mod.
+    m_modSyncSendState = ModSyncSendState{};
+    m_modSyncSendState.socketID = socketID;
+    m_modSyncSendState.packages = std::move(builtPackages);
+    m_modSyncSendState.useChunked = useChunked;
+    CONSOLE_PRINT("Mod-sync send queued (" + QString(useChunked ? "chunked" : "legacy") + "); " + QString::number(m_modSyncSendState.packages.size()) + " mods, " + QString::number(totalSent) + " compressed bytes, " + QString::number(totalUncompressed) + " uncompressed bytes", GameConsole::eINFO);
+    QTimer::singleShot(0, this, &Multiplayermenu::pumpModSyncSend);
+}
+
+void Multiplayermenu::pumpModSyncSend()
+{
+    if (m_pNetworkInterface == nullptr || m_modSyncSendState.socketID == 0)
+    {
+        return;
+    }
+    auto & state = m_modSyncSendState;
+    if (state.currentMod >= state.packages.size())
+    {
+        QByteArray data;
+        QDataStream sendStream(&data, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
+        sendStream << QString(NetworkCommands::MODSYNCCOMPLETE);
+        sendStream << static_cast<qint32>(1);
+        emit m_pNetworkInterface->sig_sendData(state.socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+        CONSOLE_PRINT("Sent MODSYNCCOMPLETE; " + QString::number(state.packages.size()) + " mods", GameConsole::eINFO);
+        state = ModSyncSendState{};
+        return;
+    }
+    auto & entry = state.packages[state.currentMod];
+    if (!state.useChunked)
+    {
+        QByteArray data;
+        QDataStream sendStream(&data, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
+        sendStream << QString(NetworkCommands::MODSYNCDATA);
+        sendStream << static_cast<qint32>(1);
+        sendStream << entry.first;
+        sendStream << entry.second.declaredUncompressedSize;
+        sendStream << entry.second.fileCount;
+        sendStream << entry.second.compressedBlob;
+        emit m_pNetworkInterface->sig_sendData(state.socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+        CONSOLE_PRINT("Sent MODSYNCDATA for " + entry.first + " (" + QString::number(entry.second.compressedBlob.size()) + " bytes)", GameConsole::eINFO);
+        entry.second.compressedBlob.clear();
+        ++state.currentMod;
+        QTimer::singleShot(0, this, &Multiplayermenu::pumpModSyncSend);
+        return;
+    }
+    const qint64 compressedTotal = entry.second.compressedBlob.size();
+    const qint32 chunkCount = compressedTotal == 0 ? 0 : static_cast<qint32>((compressedTotal + MOD_SYNC_CHUNK_BYTES - 1) / MOD_SYNC_CHUNK_BYTES);
+    if (!state.beginEmitted)
+    {
+        QByteArray data;
+        QDataStream sendStream(&data, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
+        sendStream << QString(NetworkCommands::MODSYNCMODBEGIN);
+        sendStream << static_cast<qint32>(1);
+        sendStream << entry.first;
+        sendStream << entry.second.declaredUncompressedSize;
+        sendStream << entry.second.fileCount;
+        sendStream << compressedTotal;
+        sendStream << chunkCount;
+        emit m_pNetworkInterface->sig_sendData(state.socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+        CONSOLE_PRINT("Sent MODSYNCMODBEGIN for " + entry.first + " (" + QString::number(compressedTotal) + " bytes, " + QString::number(chunkCount) + " chunks)", GameConsole::eINFO);
+        state.beginEmitted = true;
+        state.currentChunk = 0;
+        QTimer::singleShot(0, this, &Multiplayermenu::pumpModSyncSend);
+        return;
+    }
+    if (state.currentChunk < chunkCount)
+    {
+        const qint64 offset = static_cast<qint64>(state.currentChunk) * MOD_SYNC_CHUNK_BYTES;
+        const qint32 sliceLen = static_cast<qint32>(std::min<qint64>(MOD_SYNC_CHUNK_BYTES, compressedTotal - offset));
+        const QByteArray chunkBytes = entry.second.compressedBlob.mid(static_cast<qint32>(offset), sliceLen);
+        QByteArray data;
+        QDataStream sendStream(&data, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
+        sendStream << QString(NetworkCommands::MODSYNCMODCHUNK);
+        sendStream << static_cast<qint32>(1);
+        sendStream << entry.first;
+        sendStream << state.currentChunk;
+        sendStream << chunkBytes;
+        emit m_pNetworkInterface->sig_sendData(state.socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+        ++state.currentChunk;
+        QTimer::singleShot(0, this, &Multiplayermenu::pumpModSyncSend);
+        return;
+    }
+    {
+        QByteArray data;
+        QDataStream sendStream(&data, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
+        sendStream << QString(NetworkCommands::MODSYNCMODEND);
+        sendStream << static_cast<qint32>(1);
+        sendStream << entry.first;
+        emit m_pNetworkInterface->sig_sendData(state.socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+        CONSOLE_PRINT("Sent MODSYNCMODEND for " + entry.first, GameConsole::eINFO);
+    }
+    entry.second.compressedBlob.clear();
+    ++state.currentMod;
+    state.beginEmitted = false;
+    state.currentChunk = 0;
+    QTimer::singleShot(0, this, &Multiplayermenu::pumpModSyncSend);
+}
+
+void Multiplayermenu::handleModSyncManifest(QDataStream & stream, quint64 socketID)
+{
+    Q_UNUSED(socketID);
+    if (!m_modSyncActive)
+    {
+        CONSOLE_PRINT("MODSYNCMANIFEST received with no active mod-sync session, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    auto * settings = Settings::getInstance();
+    const qint32 relPathMaxLen = settings->getModSyncMaxRelativePathLength();
+    const qint64 totalCap = settings->getModSyncMaxTotalBytes();
+
+    qint32 protocolVersion = 0;
+    stream >> protocolVersion;
+    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    {
+        CONSOLE_PRINT("MODSYNCMANIFEST unsupported protocol version, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    qint32 entryCount = 0;
+    stream >> entryCount;
+    if (stream.status() != QDataStream::Ok || entryCount < 0 || entryCount > MOD_SYNC_REQUEST_COUNT_MAX)
+    {
+        CONSOLE_PRINT("MODSYNCMANIFEST malformed entry count, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    qint64 expectedTotal = 0;
+    qint32 ignoredEntries = 0;
+    for (qint32 i = 0; i < entryCount; ++i)
+    {
+        QString modPath;
+        if (!readBoundedQString(stream, modPath, relPathMaxLen))
+        {
+            CONSOLE_PRINT("MODSYNCMANIFEST mod path overflow or malformed, ignoring", GameConsole::eWARNING);
+            return;
+        }
+        qint32 declaredSize = 0;
+        stream >> declaredSize;
+        if (stream.status() != QDataStream::Ok || declaredSize < 0)
+        {
+            CONSOLE_PRINT("MODSYNCMANIFEST declared size out of range for " + modPath + ", ignoring", GameConsole::eWARNING);
+            return;
+        }
+        // Only count entries the client actually asked for; a hostile or buggy host could otherwise inflate expectedTotal to drive the bar to 100% before any data lands.
+        if (!m_modSyncRequestedSet.contains(modPath))
+        {
+            ++ignoredEntries;
+            continue;
+        }
+        expectedTotal += declaredSize;
+        if (expectedTotal > totalCap)
+        {
+            CONSOLE_PRINT("MODSYNCMANIFEST expected total exceeds host total cap; clamping for display only", GameConsole::eWARNING);
+            expectedTotal = totalCap;
+            break;
+        }
+    }
+    if (ignoredEntries > 0)
+    {
+        CONSOLE_PRINT("MODSYNCMANIFEST ignored " + QString::number(ignoredEntries) + " entries not in the client's request set", GameConsole::eWARNING);
+    }
+    m_modSyncExpectedUncompressedTotal = expectedTotal;
+    if (m_modSyncProgressDialog != nullptr)
+    {
+        m_modSyncProgressDialog->setExpectedTotalBytes(expectedTotal);
+    }
+    CONSOLE_PRINT("Received MODSYNCMANIFEST; expected uncompressed total " + QString::number(expectedTotal) + " bytes across " + QString::number(entryCount) + " mods", GameConsole::eINFO);
+}
+
+void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
+{
+    Q_UNUSED(socketID);
+    if (!m_modSyncActive)
+    {
+        CONSOLE_PRINT("MODSYNCDATA received with no active mod-sync session, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    auto * settings = Settings::getInstance();
+    const qint32 relPathMaxLen = settings->getModSyncMaxRelativePathLength();
+    const qint64 perModCap = settings->getModSyncMaxPerModBytes();
+    const qint32 fileCountMax = settings->getModSyncMaxFiles();
+    const qint64 totalCap = settings->getModSyncMaxTotalBytes();
+
+    auto failData = [this](const QString & uiReason)
+    {
+        cancelModSyncSession();
+        onModSyncFailed(uiReason);
+    };
+
+    if (!m_modSyncCurrentChunkMod.modPath.isEmpty())
+    {
+        CONSOLE_PRINT("MODSYNCDATA arrived while a chunked mod is in flight; protocol violation", GameConsole::eERROR);
+        failData(tr("Host mixed chunked and legacy mod-sync framing."));
+        return;
+    }
+
+    qint32 protocolVersion = 0;
+    stream >> protocolVersion;
+    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    {
+        CONSOLE_PRINT("MODSYNCDATA unsupported protocol version", GameConsole::eERROR);
+        failData(tr("Unsupported mod-sync protocol from host."));
+        return;
+    }
+
+    QString modPath;
+    if (!readBoundedQString(stream, modPath, relPathMaxLen))
+    {
+        CONSOLE_PRINT("MODSYNCDATA mod path overflow or malformed", GameConsole::eERROR);
+        failData(tr("Malformed mod-sync data frame."));
+        return;
+    }
+
+    qint32 declaredSize = 0;
+    qint32 fileCount = 0;
+    stream >> declaredSize;
+    stream >> fileCount;
+    if (stream.status() != QDataStream::Ok || declaredSize < 0 || fileCount < 0 || fileCount > fileCountMax)
+    {
+        CONSOLE_PRINT("MODSYNCDATA size/count out of range for " + modPath, GameConsole::eERROR);
+        failData(tr("Mod %1 exceeds the per-mod file-count cap.").arg(modPath));
+        return;
+    }
+
+    QByteArray compressedBlob;
+    if (!readBoundedQByteArray(stream, compressedBlob, perModCap))
+    {
+        CONSOLE_PRINT("MODSYNCDATA blob overflow or malformed for " + modPath, GameConsole::eERROR);
+        failData(tr("Mod %1 exceeds the per-mod size cap.").arg(modPath));
+        return;
+    }
+
+    if (!Filesupport::validateModPath(modPath))
+    {
+        CONSOLE_PRINT("MODSYNCDATA invalid mod path: " + modPath, GameConsole::eERROR);
+        failData(tr("Host sent an invalid mod path."));
+        return;
+    }
+    if (!m_modSyncRequestedSet.contains(modPath))
+    {
+        CONSOLE_PRINT("MODSYNCDATA for unrequested or duplicate mod: " + modPath, GameConsole::eERROR);
+        failData(tr("Host sent an unrequested or duplicate mod."));
+        return;
+    }
+
+    m_modSyncReceivedBytes += compressedBlob.size();
+    m_modSyncReceivedUncompressedBytes += declaredSize;
+    if (m_modSyncReceivedBytes > totalCap || m_modSyncReceivedUncompressedBytes > totalCap)
+    {
+        CONSOLE_PRINT("Mod-sync exceeds total bytes cap, aborting", GameConsole::eERROR);
+        failData(tr("Mod-sync exceeds the total transfer cap."));
+        return;
+    }
+
+    Filesupport::ModSyncCaps caps;
+    caps.perModBytes = perModCap;
+    caps.fileCountMax = fileCountMax;
+    caps.relPathMaxLen = relPathMaxLen;
+
+    qint32 rejectReason = 0;
+    auto files = Filesupport::extractModSyncPackage(compressedBlob, declaredSize, caps, rejectReason);
+    if (rejectReason != 0)
+    {
+        CONSOLE_PRINT("Mod-sync extract rejected (" + QString::number(rejectReason) + ") for " + modPath, GameConsole::eERROR);
+        failData(tr("Failed to unpack mod %1.").arg(modPath));
+        return;
+    }
+    if (files.size() != fileCount)
+    {
+        CONSOLE_PRINT("Mod-sync file count mismatch for " + modPath + " (got " + QString::number(files.size()) + ", expected " + QString::number(fileCount) + ")", GameConsole::eERROR);
+        failData(tr("Mod %1 file count did not match the host's declaration.").arg(modPath));
+        return;
+    }
+
+    qint32 stageReason = 0;
+    QString stagingRel = Filesupport::stageModSync(settings->getUserPath(), modPath, files, caps, stageReason);
+    if (stageReason != 0 || stagingRel.isEmpty())
+    {
+        CONSOLE_PRINT("Mod-sync stage rejected (" + QString::number(stageReason) + ") for " + modPath, GameConsole::eERROR);
+        failData(tr("Failed to stage mod %1 to disk.").arg(modPath));
+        return;
+    }
+    m_modSyncStagings.append(qMakePair(stagingRel, modPath));
+    m_modSyncRequestedSet.remove(modPath);
+    CONSOLE_PRINT("Mod-sync staged " + modPath + " (" + QString::number(files.size()) + " files)", GameConsole::eINFO);
+    onModSyncProgress();
+}
+
+void Multiplayermenu::handleModSyncModBegin(QDataStream & stream, quint64 socketID)
+{
+    Q_UNUSED(socketID);
+    if (!m_modSyncActive)
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN received with no active mod-sync session, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    auto * settings = Settings::getInstance();
+    const qint32 relPathMaxLen = settings->getModSyncMaxRelativePathLength();
+    const qint64 perModCap = settings->getModSyncMaxPerModBytes();
+    const qint32 fileCountMax = settings->getModSyncMaxFiles();
+    const qint64 totalCap = settings->getModSyncMaxTotalBytes();
+
+    auto failBegin = [this](const QString & uiReason)
+    {
+        cancelModSyncSession();
+        onModSyncFailed(uiReason);
+    };
+
+    if (!m_modSyncCurrentChunkMod.modPath.isEmpty())
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN while a chunked mod is already in flight; protocol violation", GameConsole::eERROR);
+        failBegin(tr("Host opened a second chunked mod before finishing the first."));
+        return;
+    }
+
+    qint32 protocolVersion = 0;
+    stream >> protocolVersion;
+    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN unsupported protocol version", GameConsole::eERROR);
+        failBegin(tr("Unsupported mod-sync protocol from host."));
+        return;
+    }
+    QString modPath;
+    if (!readBoundedQString(stream, modPath, relPathMaxLen))
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN mod path overflow or malformed", GameConsole::eERROR);
+        failBegin(tr("Malformed mod-sync begin frame."));
+        return;
+    }
+    qint32 declaredUncompressedSize = 0;
+    qint32 fileCount = 0;
+    qint64 compressedTotal = 0;
+    qint32 chunkCount = 0;
+    stream >> declaredUncompressedSize;
+    stream >> fileCount;
+    stream >> compressedTotal;
+    stream >> chunkCount;
+    if (stream.status() != QDataStream::Ok)
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN truncated header for " + modPath, GameConsole::eERROR);
+        failBegin(tr("Malformed mod-sync begin frame."));
+        return;
+    }
+    if (declaredUncompressedSize < 0 || declaredUncompressedSize > perModCap)
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN declaredUncompressedSize out of range for " + modPath, GameConsole::eERROR);
+        failBegin(tr("Mod %1 exceeds the per-mod size cap.").arg(modPath));
+        return;
+    }
+    if (compressedTotal < 0 || compressedTotal > perModCap)
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN compressedTotal out of range for " + modPath, GameConsole::eERROR);
+        failBegin(tr("Mod %1 exceeds the per-mod size cap.").arg(modPath));
+        return;
+    }
+    // Defensive: QByteArray and downstream offsets use qint32 sizes throughout the slice 5 pipeline. perModCap is qint32 today, but guard explicitly so a future widening cannot silently overflow the casts below.
+    if (compressedTotal > std::numeric_limits<qint32>::max())
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN compressedTotal exceeds qint32 range for " + modPath, GameConsole::eERROR);
+        failBegin(tr("Mod %1 is too large to receive.").arg(modPath));
+        return;
+    }
+    if (fileCount < 0 || fileCount > fileCountMax)
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN fileCount out of range for " + modPath, GameConsole::eERROR);
+        failBegin(tr("Mod %1 exceeds the per-mod file-count cap.").arg(modPath));
+        return;
+    }
+    if (chunkCount < 0 || chunkCount > MOD_SYNC_CHUNK_COUNT_MAX)
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN chunkCount out of range for " + modPath, GameConsole::eERROR);
+        failBegin(tr("Mod %1 has too many chunks.").arg(modPath));
+        return;
+    }
+    const qint32 expectedChunkCount = compressedTotal == 0 ? 0 : static_cast<qint32>((compressedTotal + MOD_SYNC_CHUNK_BYTES - 1) / MOD_SYNC_CHUNK_BYTES);
+    if (chunkCount != expectedChunkCount)
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN chunkCount inconsistent with compressedTotal for " + modPath, GameConsole::eERROR);
+        failBegin(tr("Mod %1 chunk count is inconsistent.").arg(modPath));
+        return;
+    }
+    if (m_modSyncReceivedBytes + compressedTotal > totalCap || m_modSyncReceivedUncompressedBytes + declaredUncompressedSize > totalCap)
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN would exceed total cap for " + modPath, GameConsole::eERROR);
+        failBegin(tr("Mod-sync exceeds the total transfer cap."));
+        return;
+    }
+    if (!Filesupport::validateModPath(modPath))
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN invalid mod path: " + modPath, GameConsole::eERROR);
+        failBegin(tr("Host sent an invalid mod path."));
+        return;
+    }
+    if (!m_modSyncRequestedSet.contains(modPath))
+    {
+        CONSOLE_PRINT("MODSYNCMODBEGIN for unrequested or duplicate mod: " + modPath, GameConsole::eERROR);
+        failBegin(tr("Host sent an unrequested or duplicate mod."));
+        return;
+    }
+
+    m_modSyncCurrentChunkMod = ModSyncChunkAccumulator{};
+    m_modSyncCurrentChunkMod.modPath = modPath;
+    m_modSyncCurrentChunkMod.declaredUncompressedSize = declaredUncompressedSize;
+    m_modSyncCurrentChunkMod.fileCount = fileCount;
+    m_modSyncCurrentChunkMod.compressedTotal = compressedTotal;
+    m_modSyncCurrentChunkMod.expectedChunkCount = chunkCount;
+    if (compressedTotal > 0)
+    {
+        m_modSyncCurrentChunkMod.blob.reserve(static_cast<qint32>(compressedTotal));
+    }
+    CONSOLE_PRINT("Received MODSYNCMODBEGIN for " + modPath + " (" + QString::number(compressedTotal) + " bytes, " + QString::number(chunkCount) + " chunks)", GameConsole::eINFO);
+}
+
+void Multiplayermenu::handleModSyncModChunk(QDataStream & stream, quint64 socketID)
+{
+    Q_UNUSED(socketID);
+    if (!m_modSyncActive)
+    {
+        CONSOLE_PRINT("MODSYNCMODCHUNK received with no active mod-sync session, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    if (m_modSyncCurrentChunkMod.modPath.isEmpty())
+    {
+        CONSOLE_PRINT("MODSYNCMODCHUNK without prior MODSYNCMODBEGIN; protocol violation", GameConsole::eERROR);
+        cancelModSyncSession();
+        onModSyncFailed(tr("Host sent chunk without begin."));
+        return;
+    }
+    auto * settings = Settings::getInstance();
+    const qint32 relPathMaxLen = settings->getModSyncMaxRelativePathLength();
+    const qint64 totalCap = settings->getModSyncMaxTotalBytes();
+
+    auto failChunk = [this](const QString & uiReason)
+    {
+        cancelModSyncSession();
+        onModSyncFailed(uiReason);
+    };
+
+    qint32 protocolVersion = 0;
+    stream >> protocolVersion;
+    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    {
+        CONSOLE_PRINT("MODSYNCMODCHUNK unsupported protocol version", GameConsole::eERROR);
+        failChunk(tr("Unsupported mod-sync protocol from host."));
+        return;
+    }
+    QString modPath;
+    if (!readBoundedQString(stream, modPath, relPathMaxLen))
+    {
+        CONSOLE_PRINT("MODSYNCMODCHUNK mod path overflow or malformed", GameConsole::eERROR);
+        failChunk(tr("Malformed mod-sync chunk frame."));
+        return;
+    }
+    if (modPath != m_modSyncCurrentChunkMod.modPath)
+    {
+        CONSOLE_PRINT("MODSYNCMODCHUNK modPath mismatch; expected " + m_modSyncCurrentChunkMod.modPath + " got " + modPath, GameConsole::eERROR);
+        failChunk(tr("Host interleaved chunks across mods."));
+        return;
+    }
+    qint32 chunkIndex = 0;
+    stream >> chunkIndex;
+    if (stream.status() != QDataStream::Ok || chunkIndex != m_modSyncCurrentChunkMod.receivedChunkCount)
+    {
+        CONSOLE_PRINT("MODSYNCMODCHUNK out-of-order chunkIndex for " + modPath, GameConsole::eERROR);
+        failChunk(tr("Host sent chunks out of order."));
+        return;
+    }
+    QByteArray chunkBytes;
+    if (!readBoundedQByteArray(stream, chunkBytes, MOD_SYNC_CHUNK_BYTES))
+    {
+        CONSOLE_PRINT("MODSYNCMODCHUNK chunk overflow or malformed for " + modPath, GameConsole::eERROR);
+        failChunk(tr("Mod-sync chunk exceeds size limit."));
+        return;
+    }
+    const qint64 newAccumulated = static_cast<qint64>(m_modSyncCurrentChunkMod.blob.size()) + chunkBytes.size();
+    if (newAccumulated > m_modSyncCurrentChunkMod.compressedTotal)
+    {
+        CONSOLE_PRINT("MODSYNCMODCHUNK accumulated exceeds compressedTotal for " + modPath, GameConsole::eERROR);
+        failChunk(tr("Host sent more bytes than declared for mod %1.").arg(modPath));
+        return;
+    }
+    const bool isFinalChunk = (m_modSyncCurrentChunkMod.receivedChunkCount + 1 == m_modSyncCurrentChunkMod.expectedChunkCount);
+    const qint64 expectedThisChunk = isFinalChunk
+        ? (m_modSyncCurrentChunkMod.compressedTotal - static_cast<qint64>(m_modSyncCurrentChunkMod.blob.size()))
+        : MOD_SYNC_CHUNK_BYTES;
+    if (chunkBytes.size() != expectedThisChunk)
+    {
+        CONSOLE_PRINT("MODSYNCMODCHUNK size " + QString::number(chunkBytes.size()) + " differs from expected " + QString::number(expectedThisChunk) + " for " + modPath, GameConsole::eERROR);
+        failChunk(tr("Host sent a chunk of unexpected size."));
+        return;
+    }
+
+    m_modSyncCurrentChunkMod.blob.append(chunkBytes);
+    ++m_modSyncCurrentChunkMod.receivedChunkCount;
+    m_modSyncReceivedBytes += chunkBytes.size();
+    // Display-side proportional uncompressed advance so the bar fraction can move during a single mod; snap-corrected at MODSYNCMODEND to absorb integer-division drift.
+    qint64 perChunkUncompressedDelta = 0;
+    if (m_modSyncCurrentChunkMod.compressedTotal > 0 && m_modSyncCurrentChunkMod.declaredUncompressedSize > 0)
+    {
+        perChunkUncompressedDelta = static_cast<qint64>(chunkBytes.size()) * m_modSyncCurrentChunkMod.declaredUncompressedSize / m_modSyncCurrentChunkMod.compressedTotal;
+    }
+    m_modSyncCurrentChunkMod.uncompressedAdvanced += perChunkUncompressedDelta;
+    m_modSyncReceivedUncompressedBytes += perChunkUncompressedDelta;
+    if (m_modSyncReceivedBytes > totalCap || m_modSyncReceivedUncompressedBytes > totalCap)
+    {
+        CONSOLE_PRINT("Mod-sync exceeds total bytes cap mid-chunk, aborting", GameConsole::eERROR);
+        failChunk(tr("Mod-sync exceeds the total transfer cap."));
+        return;
+    }
+    onModSyncProgress();
+}
+
+void Multiplayermenu::handleModSyncModEnd(QDataStream & stream, quint64 socketID)
+{
+    Q_UNUSED(socketID);
+    if (!m_modSyncActive)
+    {
+        CONSOLE_PRINT("MODSYNCMODEND received with no active mod-sync session, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    if (m_modSyncCurrentChunkMod.modPath.isEmpty())
+    {
+        CONSOLE_PRINT("MODSYNCMODEND without prior MODSYNCMODBEGIN; protocol violation", GameConsole::eERROR);
+        cancelModSyncSession();
+        onModSyncFailed(tr("Host sent end without begin."));
+        return;
+    }
+    auto * settings = Settings::getInstance();
+    const qint32 relPathMaxLen = settings->getModSyncMaxRelativePathLength();
+    const qint64 perModCap = settings->getModSyncMaxPerModBytes();
+    const qint32 fileCountMax = settings->getModSyncMaxFiles();
+
+    auto failEnd = [this](const QString & uiReason)
+    {
+        cancelModSyncSession();
+        onModSyncFailed(uiReason);
+    };
+
+    qint32 protocolVersion = 0;
+    stream >> protocolVersion;
+    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    {
+        CONSOLE_PRINT("MODSYNCMODEND unsupported protocol version", GameConsole::eERROR);
+        failEnd(tr("Unsupported mod-sync protocol from host."));
+        return;
+    }
+    QString modPath;
+    if (!readBoundedQString(stream, modPath, relPathMaxLen))
+    {
+        CONSOLE_PRINT("MODSYNCMODEND mod path overflow or malformed", GameConsole::eERROR);
+        failEnd(tr("Malformed mod-sync end frame."));
+        return;
+    }
+    if (modPath != m_modSyncCurrentChunkMod.modPath)
+    {
+        CONSOLE_PRINT("MODSYNCMODEND modPath mismatch; expected " + m_modSyncCurrentChunkMod.modPath + " got " + modPath, GameConsole::eERROR);
+        failEnd(tr("Host ended a different mod than the one in flight."));
+        return;
+    }
+    if (m_modSyncCurrentChunkMod.receivedChunkCount != m_modSyncCurrentChunkMod.expectedChunkCount)
+    {
+        CONSOLE_PRINT("MODSYNCMODEND chunk count mismatch for " + modPath, GameConsole::eERROR);
+        failEnd(tr("Host ended mod %1 before delivering all chunks.").arg(modPath));
+        return;
+    }
+    if (m_modSyncCurrentChunkMod.blob.size() != m_modSyncCurrentChunkMod.compressedTotal)
+    {
+        CONSOLE_PRINT("MODSYNCMODEND blob size mismatch for " + modPath, GameConsole::eERROR);
+        failEnd(tr("Host blob size for mod %1 did not match its declared total.").arg(modPath));
+        return;
+    }
+
+    Filesupport::ModSyncCaps caps;
+    caps.perModBytes = perModCap;
+    caps.fileCountMax = fileCountMax;
+    caps.relPathMaxLen = relPathMaxLen;
+
+    qint32 rejectReason = 0;
+    auto files = Filesupport::extractModSyncPackage(m_modSyncCurrentChunkMod.blob, m_modSyncCurrentChunkMod.declaredUncompressedSize, caps, rejectReason);
+    if (rejectReason != 0)
+    {
+        CONSOLE_PRINT("MODSYNCMODEND extract rejected (" + QString::number(rejectReason) + ") for " + modPath, GameConsole::eERROR);
+        failEnd(tr("Failed to unpack mod %1.").arg(modPath));
+        return;
+    }
+    if (files.size() != m_modSyncCurrentChunkMod.fileCount)
+    {
+        CONSOLE_PRINT("MODSYNCMODEND file count mismatch for " + modPath + " (got " + QString::number(files.size()) + ", expected " + QString::number(m_modSyncCurrentChunkMod.fileCount) + ")", GameConsole::eERROR);
+        failEnd(tr("Mod %1 file count did not match the host's declaration.").arg(modPath));
+        return;
+    }
+    qint32 stageReason = 0;
+    QString stagingRel = Filesupport::stageModSync(settings->getUserPath(), modPath, files, caps, stageReason);
+    if (stageReason != 0 || stagingRel.isEmpty())
+    {
+        CONSOLE_PRINT("MODSYNCMODEND stage rejected (" + QString::number(stageReason) + ") for " + modPath, GameConsole::eERROR);
+        failEnd(tr("Failed to stage mod %1 to disk.").arg(modPath));
+        return;
+    }
+
+    // Snap-correct the proportional uncompressed advance so the global counter equals the exact sum of declaredUncompressedSize values.
+    const qint64 snapDelta = static_cast<qint64>(m_modSyncCurrentChunkMod.declaredUncompressedSize) - m_modSyncCurrentChunkMod.uncompressedAdvanced;
+    if (snapDelta != 0)
+    {
+        m_modSyncReceivedUncompressedBytes += snapDelta;
+    }
+
+    m_modSyncStagings.append(qMakePair(stagingRel, modPath));
+    m_modSyncRequestedSet.remove(modPath);
+    CONSOLE_PRINT("Mod-sync staged " + modPath + " via chunked path (" + QString::number(files.size()) + " files)", GameConsole::eINFO);
+    m_modSyncCurrentChunkMod = ModSyncChunkAccumulator{};
+    onModSyncProgress();
+}
+
+void Multiplayermenu::handleModSyncReject(QDataStream & stream, quint64 socketID)
+{
+    Q_UNUSED(socketID);
+    if (!m_modSyncActive)
+    {
+        // Drop late or unsolicited rejects after cancel/success so we do not stack a second failure dialog.
+        CONSOLE_PRINT("MODSYNCREJECT received with no active mod-sync session, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    auto * settings = Settings::getInstance();
+    const qint32 relPathMaxLen = settings->getModSyncMaxRelativePathLength();
+
+    qint32 protocolVersion = 0;
+    stream >> protocolVersion;
+    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    {
+        CONSOLE_PRINT("MODSYNCREJECT unsupported protocol version", GameConsole::eERROR);
+        cancelModSyncSession();
+        onModSyncFailed(tr("Unsupported mod-sync protocol from host."));
+        return;
+    }
+    QString modPath;
+    if (!readBoundedQString(stream, modPath, relPathMaxLen))
+    {
+        CONSOLE_PRINT("MODSYNCREJECT mod path overflow or malformed", GameConsole::eERROR);
+        cancelModSyncSession();
+        onModSyncFailed(tr("Malformed mod-sync reject frame."));
+        return;
+    }
+    qint32 reasonCode = 0;
+    stream >> reasonCode;
+    QString reasonMessage;
+    if (!readBoundedQString(stream, reasonMessage, MOD_SYNC_REASON_CHARS_MAX))
+    {
+        CONSOLE_PRINT("MODSYNCREJECT reason message overflow or malformed (code=" + QString::number(reasonCode) + " mod=" + modPath + ")", GameConsole::eERROR);
+        cancelModSyncSession();
+        onModSyncFailed(tr("Malformed reject reason from host."));
+        return;
+    }
+    CONSOLE_PRINT("Mod-sync rejected by host: code=" + QString::number(reasonCode) + " mod=" + modPath + " msg=" + reasonMessage, GameConsole::eERROR);
+    const QString uiReason = reasonMessage.isEmpty()
+        ? tr("Host rejected the request (code %1).").arg(reasonCode)
+        : reasonMessage;
+    cancelModSyncSession();
+    onModSyncFailed(uiReason);
+}
+
+void Multiplayermenu::handleModSyncComplete(QDataStream & stream, quint64 socketID)
+{
+    Q_UNUSED(socketID);
+    if (!m_modSyncActive)
+    {
+        // Drop late or unsolicited completes after cancel/success before parsing so a malformed stale frame does not stack a second failure dialog.
+        CONSOLE_PRINT("MODSYNCCOMPLETE received with no active mod-sync session, ignoring", GameConsole::eWARNING);
+        return;
+    }
+    qint32 protocolVersion = 0;
+    stream >> protocolVersion;
+    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    {
+        CONSOLE_PRINT("MODSYNCCOMPLETE unsupported protocol version", GameConsole::eERROR);
+        cancelModSyncSession();
+        onModSyncFailed(tr("Unsupported mod-sync protocol from host."));
+        return;
+    }
+    if (!m_modSyncCurrentChunkMod.modPath.isEmpty())
+    {
+        CONSOLE_PRINT("MODSYNCCOMPLETE arrived with chunked mod " + m_modSyncCurrentChunkMod.modPath + " still in flight; aborting", GameConsole::eERROR);
+        cancelModSyncSession();
+        onModSyncFailed(tr("Host completed before finishing the chunked mod transfer."));
+        return;
+    }
+    if (!m_modSyncRequestedSet.isEmpty())
+    {
+        CONSOLE_PRINT("MODSYNCCOMPLETE arrived with " + QString::number(m_modSyncRequestedSet.size()) + " requested mods unsent; aborting", GameConsole::eERROR);
+        cancelModSyncSession();
+        onModSyncFailed(tr("Host did not deliver every requested mod."));
+        return;
+    }
+    if (m_modSyncStagings.isEmpty())
+    {
+        CONSOLE_PRINT("MODSYNCCOMPLETE received with no stagings; nothing to apply", GameConsole::eWARNING);
+        m_modSyncActive = false;
+        m_modSyncReceivedBytes = 0;
+        m_modSyncReceivedUncompressedBytes = 0;
+        m_modSyncExpectedUncompressedTotal = 0;
+        m_modSyncCurrentChunkMod = ModSyncChunkAccumulator{};
+        m_modSyncPostSyncActiveMods.clear();
+        return;
+    }
+    auto * settings = Settings::getInstance();
+    // Settings first; the manifest is the commit point so it must be the last thing written.
+    const QString priorActiveModsRaw = settings->stageActiveModsForRestart(m_modSyncPostSyncActiveMods);
+    QList<QPair<QString, QString>> manifestSwaps;
+    for (const auto & p : std::as_const(m_modSyncStagings))
+    {
+        manifestSwaps.append(qMakePair(p.first, p.second));
+    }
+    if (!Filesupport::writePendingModSyncManifest(settings->getUserPath(), manifestSwaps))
+    {
+        CONSOLE_PRINT("Failed to write pending mod-sync manifest; restoring prior active-mod list", GameConsole::eERROR);
+        settings->restoreActiveModsRaw(priorActiveModsRaw);
+        cancelModSyncSession();
+        onModSyncFailed(tr("Failed to write the pending mod-sync manifest."));
+        return;
+    }
+    CONSOLE_PRINT("Mod-sync complete: " + QString::number(m_modSyncStagings.size()) + " mods staged. Restarting to apply.", GameConsole::eINFO);
+    m_modSyncActive = false;
+    m_modSyncStagings.clear();
+    m_modSyncRequestedSet.clear();
+    m_modSyncReceivedBytes = 0;
+    m_modSyncReceivedUncompressedBytes = 0;
+    m_modSyncExpectedUncompressedTotal = 0;
+    m_modSyncCurrentChunkMod = ModSyncChunkAccumulator{};
+    m_modSyncPostSyncActiveMods.clear();
+    // Hold so the progress dialog gets a frame to paint at 100% before the success+restart sequence tears it down.
+    QTimer::singleShot(500, this, &Multiplayermenu::onModSyncSucceeded);
+}
+
+void Multiplayermenu::sendModSyncReject(quint64 socketID, qint32 reasonCode, const QString & modPath, const QString & message)
+{
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream.setVersion(QDataStream::Version::Qt_6_5);
+    stream << QString(NetworkCommands::MODSYNCREJECT);
+    stream << static_cast<qint32>(1);
+    stream << modPath;
+    stream << reasonCode;
+    stream << message;
+    emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+    CONSOLE_PRINT("Sent MODSYNCREJECT code=" + QString::number(reasonCode) + " mod=" + modPath + " msg=" + message, GameConsole::eINFO);
+}
+
+void Multiplayermenu::cancelModSyncSession()
+{
+    // Dialog teardown ahead of the active-session guard so a request that bailed before arming still tears down its progress UI.
+    if (m_modSyncProgressDialog != nullptr)
+    {
+        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog.reset();
+    }
+    // Send-state clearing is host-side and runs even when m_modSyncActive (client-side flag) is false; the next pump tick short-circuits on socketID==0.
+    m_modSyncSendState = ModSyncSendState{};
+    if (!m_modSyncActive)
+    {
+        return;
+    }
+    auto * settings = Settings::getInstance();
+    const QString installRoot = settings->getUserPath();
+    for (const auto & p : std::as_const(m_modSyncStagings))
+    {
+        QString stagingAbs;
+        if (installRoot.isEmpty())
+        {
+            stagingAbs = p.first;
+        }
+        else if (installRoot.endsWith(QChar('/')))
+        {
+            stagingAbs = installRoot + p.first;
+        }
+        else
+        {
+            stagingAbs = installRoot + QChar('/') + p.first;
+        }
+        QDir(stagingAbs).removeRecursively();
+    }
+    m_modSyncStagings.clear();
+    m_modSyncRequestedSet.clear();
+    m_modSyncReceivedBytes = 0;
+    m_modSyncReceivedUncompressedBytes = 0;
+    m_modSyncExpectedUncompressedTotal = 0;
+    m_modSyncActive = false;
+    m_modSyncCurrentChunkMod = ModSyncChunkAccumulator{};
+    m_modSyncPostSyncActiveMods.clear();
+}
+
+void Multiplayermenu::confirmModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods)
+{
+    if (modsToDownload.isEmpty())
+    {
+        // Settings-only branch: no untrusted host content downloaded, skip the trust prompt.
+        const bool ok = requestModSync(modsToDownload, postSyncActiveMods);
+        if (ok)
+        {
+            onModSyncSucceeded();
+        }
+        else
+        {
+            onModSyncFailed(tr("Could not start mod sync."));
+        }
+        return;
+    }
+    // Trust prompt before any host-supplied mod content is downloaded; mod scripts execute under the QJSEngine in this process.
+    spDialogMessageBox pTrust = MemoryManagement::create<DialogMessageBox>(
+        tr("You are about to install unverified mods from this host. These mods may include scripts that run in your game. Only continue if you trust this host."),
+        true, tr("Install"), tr("Cancel"));
+    connect(pTrust.get(), &DialogMessageBox::sigOk, this, [this, modsToDownload, postSyncActiveMods]()
+    {
+        startModSyncDownload(modsToDownload, postSyncActiveMods);
+    }, Qt::QueuedConnection);
+    connect(pTrust.get(), &DialogMessageBox::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+    addChild(pTrust);
+}
+
+void Multiplayermenu::startModSyncDownload(const QStringList & modsToDownload, const QStringList & postSyncActiveMods)
+{
+    const bool ok = requestModSync(modsToDownload, postSyncActiveMods);
+    if (!ok)
+    {
+        onModSyncFailed(tr("Could not start mod sync."));
+        return;
+    }
+    if (m_pJoinConnectingDialog != nullptr)
+    {
+        m_pJoinConnectingDialog->detach();
+        m_pJoinConnectingDialog.reset();
+    }
+    if (m_modSyncProgressDialog != nullptr)
+    {
+        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog.reset();
+    }
+    m_modSyncProgressDialog = MemoryManagement::create<DialogModSyncProgress>(static_cast<qint32>(modsToDownload.size()));
+    // Defensive seed in case MODSYNCMANIFEST raced ahead of dialog construction.
+    m_modSyncProgressDialog->setExpectedTotalBytes(m_modSyncExpectedUncompressedTotal);
+    connect(m_modSyncProgressDialog.get(), &DialogModSyncProgress::sigCancel, this, [this]()
+    {
+        if (!m_modSyncActive)
+        {
+            return;
+        }
+        cancelModSyncSession();
+        onModSyncFailed(tr("Mod sync canceled."));
+    }, Qt::QueuedConnection);
+    addChild(m_modSyncProgressDialog);
+}
+
+void Multiplayermenu::onModSyncProgress()
+{
+    if (m_modSyncProgressDialog == nullptr)
+    {
+        return;
+    }
+    // Compressed drives the EMA network-rate display; uncompressed drives bar fraction and ETA.
+    m_modSyncProgressDialog->setProgress(static_cast<qint32>(m_modSyncStagings.size()), m_modSyncReceivedBytes, m_modSyncReceivedUncompressedBytes);
+}
+
+void Multiplayermenu::onModSyncSucceeded()
+{
+    if (m_modSyncProgressDialog != nullptr)
+    {
+        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog.reset();
+    }
+    auto * settings = Settings::getInstance();
+    QString rejoinHost = m_serverAddress;
+    quint16 rejoinPort = m_serverPort;
+    // Prefer the actually-connected endpoint so secondary-fallback joins rejoin to the working address.
+    if (m_pNetworkInterface != nullptr)
+    {
+        const QString connected = m_pNetworkInterface->getConnectedAdress();
+        const quint16 connectedPort = m_pNetworkInterface->getConnectedPort();
+        if (!connected.isEmpty())
+        {
+            rejoinHost = connected;
+        }
+        if (connectedPort != 0)
+        {
+            rejoinPort = connectedPort;
+        }
+    }
+    QStringList argv;
+    // Forward --userPath only when the parent had it on cmdline; passing it otherwise flips CWD-ini boot mode.
+    QString restartUserPath;
+    if (Mainapp::getInstance()->getParser().getUserPath(restartUserPath))
+    {
+        argv << QStringLiteral("--userPath=") + restartUserPath;
+    }
+    const bool haveRejoinTarget = !rejoinHost.isEmpty() && rejoinPort != 0;
+    if (haveRejoinTarget && Filesupport::writeRejoinManifest(settings->getUserPath(), rejoinHost, rejoinPort))
+    {
+        CONSOLE_PRINT("Wrote .rejoin.json for " + rejoinHost + ":" + QString::number(rejoinPort), GameConsole::eINFO);
+        // Password only after manifest succeeds; do not leak it on the no-rejoin restart.
+        argv << QStringLiteral("--rejoin-password=") + m_password.getPasswordText();
+    }
+    else if (haveRejoinTarget)
+    {
+        CONSOLE_PRINT("Failed to write .rejoin.json; user will return to main menu after restart", GameConsole::eERROR);
+    }
+    Mainapp::setRestartArgv(argv);
+    QCoreApplication::exit(1);
+}
+
+void Multiplayermenu::onModSyncFailed(const QString & reason)
+{
+    if (m_modSyncProgressDialog != nullptr)
+    {
+        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog.reset();
+    }
+    // Escape because reason can include host-supplied text and DialogMessageBox renders via setHtmlText.
+    const QString safe = reason.toHtmlEscaped();
+    spDialogMessageBox pDialog = MemoryManagement::create<DialogMessageBox>(tr("Mod sync failed: %1\n\nLeaving the game.").arg(safe));
+    connect(pDialog.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+    addChild(pDialog);
 }
