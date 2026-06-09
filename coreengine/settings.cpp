@@ -30,6 +30,12 @@
 
 const char* const Settings::DEFAULT_AUDIODEVICE = "@@default@@";
 
+namespace
+{
+    // QSettings group and key of the active mod list ([Mods]/Mods=).
+    const char* const kModsSettingsGroup = "Mods";
+}
+
 // this Object
 spSettings Settings::m_pInstance;
 
@@ -1110,9 +1116,9 @@ QString Settings::stageActiveModsForRestart(const QStringList & activeMods)
         return QString();
     }
     QSettings settings(m_settingFile, QSettings::IniFormat);
-    settings.beginGroup("Mods");
-    const QString prior = settings.value("Mods", QString()).toString();
-    settings.setValue("Mods", getConfigString(activeMods));
+    settings.beginGroup(kModsSettingsGroup);
+    const QString prior = settings.value(kModsSettingsGroup, QString()).toString();
+    settings.setValue(kModsSettingsGroup, getConfigString(activeMods));
     settings.endGroup();
     // Mirror the staged list into the in-memory active set so a saveSettings
     // call before the manual restart cannot revert Mods/Mods to the stale list.
@@ -1130,8 +1136,8 @@ void Settings::restoreActiveModsRaw(const QString & rawValue)
         return;
     }
     QSettings settings(m_settingFile, QSettings::IniFormat);
-    settings.beginGroup("Mods");
-    settings.setValue("Mods", rawValue);
+    settings.beginGroup(kModsSettingsGroup);
+    settings.setValue(kModsSettingsGroup, rawValue);
     settings.endGroup();
     m_activeMods = rawValue.isEmpty() ? QStringList() : rawValue.split(QChar(','));
     m_activeModVersions.clear();
@@ -1518,7 +1524,7 @@ void Settings::setup()
             MemoryManagement::create<Value<std::chrono::seconds>>("Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)),
             MemoryManagement::create<Value<qint32>>("Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 0, 100),
             // mods
-            MemoryManagement::create<Value<QStringList>>("Mods", "Mods", &m_activeMods, QStringList(), QStringList(), QStringList()),
+            MemoryManagement::create<Value<QStringList>>(kModsSettingsGroup, kModsSettingsGroup, &m_activeMods, QStringList(), QStringList(), QStringList()),
             // logging
             MemoryManagement::create<Value<bool>>("Logging", "LogActions", &m_LogActions, false, false, true),
             MemoryManagement::create<Value<GameConsole::eLogLevels>>("Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL),
