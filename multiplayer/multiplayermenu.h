@@ -209,7 +209,7 @@ protected:
     void handleModSyncModEnd(QDataStream & stream, quint64 socketID);
     void handleModSyncReject(QDataStream & stream, quint64 socketID);
     void handleModSyncComplete(QDataStream & stream, quint64 socketID);
-    void sendModSyncReject(quint64 socketID, qint32 reasonCode, const QString & modPath, const QString & message);
+    void sendModSyncReject(quint64 socketID, NetworkCommands::ModSyncRejectReason reasonCode, const QString & modPath, const QString & message);
     void cancelModSyncSession();
     // Drives the host-side chunked send loop one chunk per event-loop iteration so a large mod cannot pin the GUI thread.
     void pumpModSyncSend();

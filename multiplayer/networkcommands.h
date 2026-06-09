@@ -171,13 +171,13 @@ namespace NetworkCommands
     const char* const MODSYNCCOMPLETE = "MODSYNCCOMPLETE";
 
     // Bit flags appended (optional) to REQUESTMODSYNC; older hosts read past them via QDataStream EOF and treat absent flags as zero.
-    enum ModSyncClientFlag : qint32
+    enum class ModSyncClientFlag : qint32
     {
         ModSyncClientFlagChunked = 0x00000001,
     };
 
     // Append-only; serialize as qint32, not the enum's underlying type. 0 reserved so callers can use truthy reads.
-    enum ModSyncRejectReason
+    enum class ModSyncRejectReason : qint32
     {
         ModSyncNoReason = 0,
         ModSyncDisabled = 1,

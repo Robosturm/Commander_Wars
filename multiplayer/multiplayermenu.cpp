@@ -2576,14 +2576,14 @@ void Multiplayermenu::countdown()
 }
 
 // Pin reject codes to wire literals; filesupport.cpp's anonymous-namespace constants must match.
-static_assert(static_cast<qint32>(NetworkCommands::ModSyncNoReason) == 0, "ModSync reject code drift");
-static_assert(static_cast<qint32>(NetworkCommands::ModSyncDisabled) == 1, "ModSync reject code drift");
-static_assert(static_cast<qint32>(NetworkCommands::ModSyncUnknownMod) == 2, "ModSync reject code drift");
-static_assert(static_cast<qint32>(NetworkCommands::ModSyncSizeCapExceeded) == 3, "ModSync reject code drift");
-static_assert(static_cast<qint32>(NetworkCommands::ModSyncFileCountCapExceeded) == 4, "ModSync reject code drift");
-static_assert(static_cast<qint32>(NetworkCommands::ModSyncInvalidPath) == 5, "ModSync reject code drift");
-static_assert(static_cast<qint32>(NetworkCommands::ModSyncInternalError) == 6, "ModSync reject code drift");
-static_assert(static_cast<qint32>(NetworkCommands::ModSyncBusy) == 7, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncRejectReason::ModSyncNoReason) == 0, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncRejectReason::ModSyncDisabled) == 1, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncRejectReason::ModSyncUnknownMod) == 2, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncRejectReason::ModSyncSizeCapExceeded) == 3, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncRejectReason::ModSyncFileCountCapExceeded) == 4, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncRejectReason::ModSyncInvalidPath) == 5, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncRejectReason::ModSyncInternalError) == 6, "ModSync reject code drift");
+static_assert(static_cast<qint32>(NetworkCommands::ModSyncRejectReason::ModSyncBusy) == 7, "ModSync reject code drift");
 
 namespace
 {
@@ -2728,7 +2728,7 @@ bool Multiplayermenu::requestModSync(const QStringList & modsToDownload, const Q
     stream << kModSyncProtocolVersion;
     stream << modsToDownload;
     // Trailing optional flag; older hosts read past their known fields and ignore. New hosts try-read and fall back to legacy framing if absent.
-    stream << static_cast<qint32>(NetworkCommands::ModSyncClientFlagChunked);
+    stream << static_cast<qint32>(NetworkCommands::ModSyncClientFlag::ModSyncClientFlagChunked);
     // socketID=0 routes to the server on a TCP client interface; same convention as other client-originated sends.
     emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
     CONSOLE_PRINT("Requested mod-sync for " + QString::number(modsToDownload.size()) + " mods (chunked-capable)", GameConsole::eINFO);
@@ -2745,21 +2745,21 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
     auto * settings = Settings::getInstance();
     if (!settings->getModSyncEnabled())
     {
-        sendModSyncReject(socketID, NetworkCommands::ModSyncDisabled, QString(), tr("Mod sync is disabled on this host."));
+        sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncDisabled, QString(), tr("Mod sync is disabled on this host."));
         return;
     }
     // Host-wide pump state is single-slot; reject concurrent peers rather than clobber an in-flight transfer.
     if (m_modSyncSendState.socketID != 0)
     {
         CONSOLE_PRINT("REQUESTMODSYNC arrived while another peer's send is still pumping; rejecting", GameConsole::eWARNING);
-        sendModSyncReject(socketID, NetworkCommands::ModSyncBusy, QString(), tr("Another peer is currently mod-syncing; try again shortly."));
+        sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncBusy, QString(), tr("Another peer is currently mod-syncing; try again shortly."));
         return;
     }
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
     if (protocolVersion != kModSyncProtocolVersion)
     {
-        sendModSyncReject(socketID, NetworkCommands::ModSyncInternalError, QString(), tr("Unsupported mod-sync protocol version."));
+        sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncInternalError, QString(), tr("Unsupported mod-sync protocol version."));
         return;
     }
 
@@ -2768,7 +2768,7 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
     stream >> modCount;
     if (stream.status() != QDataStream::Ok || modCount < 0 || modCount > kModSyncRequestCountMax)
     {
-        sendModSyncReject(socketID, NetworkCommands::ModSyncInternalError, QString(), tr("Malformed mod-sync request."));
+        sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncInternalError, QString(), tr("Malformed mod-sync request."));
         return;
     }
     QStringList requestedMods;
@@ -2781,7 +2781,7 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
             QString mod;
             if (!readBoundedQString(stream, mod, relPathMaxLen))
             {
-                sendModSyncReject(socketID, NetworkCommands::ModSyncInvalidPath, QString(), tr("Malformed mod path in request."));
+                sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncInvalidPath, QString(), tr("Malformed mod path in request."));
                 return;
             }
             if (!seen.contains(mod))
@@ -2798,11 +2798,11 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
         stream >> clientFlags;
         if (stream.status() != QDataStream::Ok || !stream.atEnd())
         {
-            sendModSyncReject(socketID, NetworkCommands::ModSyncInternalError, QString(), tr("Malformed mod-sync request trailer."));
+            sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncInternalError, QString(), tr("Malformed mod-sync request trailer."));
             return;
         }
     }
-    const bool useChunked = (clientFlags & NetworkCommands::ModSyncClientFlagChunked) != 0;
+    const bool useChunked = (clientFlags & static_cast<qint32>(NetworkCommands::ModSyncClientFlag::ModSyncClientFlagChunked)) != 0;
 
     QStringList hostMods = settings->getMods();
     QStringList hostVersions = settings->getActiveModVersions();
@@ -2822,17 +2822,17 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
     qint64 totalSent = 0;
     qint64 totalUncompressed = 0;
 
-    auto packageRejectReason = [this](qint32 code, const QString & mod) -> QString
+    auto packageRejectReason = [this](NetworkCommands::ModSyncRejectReason code, const QString & mod) -> QString
     {
         switch (code)
         {
-            case NetworkCommands::ModSyncSizeCapExceeded:
+            case NetworkCommands::ModSyncRejectReason::ModSyncSizeCapExceeded:
                 return tr("Mod %1 exceeds the per-mod size cap on the host.").arg(mod);
-            case NetworkCommands::ModSyncFileCountCapExceeded:
+            case NetworkCommands::ModSyncRejectReason::ModSyncFileCountCapExceeded:
                 return tr("Mod %1 exceeds the per-mod file-count cap on the host.").arg(mod);
-            case NetworkCommands::ModSyncInvalidPath:
+            case NetworkCommands::ModSyncRejectReason::ModSyncInvalidPath:
                 return tr("Mod %1 has an unsafe internal file path.").arg(mod);
-            case NetworkCommands::ModSyncUnknownMod:
+            case NetworkCommands::ModSyncRejectReason::ModSyncUnknownMod:
                 return tr("Mod %1 was not found on the host.").arg(mod);
             default:
                 return tr("Failed to build mod package for %1.").arg(mod);
@@ -2846,19 +2846,19 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
     {
         if (!Filesupport::validateModPath(mod))
         {
-            sendModSyncReject(socketID, NetworkCommands::ModSyncInvalidPath, mod, tr("Invalid mod path."));
+            sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncInvalidPath, mod, tr("Invalid mod path."));
             return;
         }
         if (!hostMods.contains(mod))
         {
-            sendModSyncReject(socketID, NetworkCommands::ModSyncUnknownMod, mod, tr("Mod not advertised by host."));
+            sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncUnknownMod, mod, tr("Mod not advertised by host."));
             return;
         }
         // Active mods may resolve from CWD or the install/resource path, not just userPath; ask the VFS where the folder actually lives.
         const QString resolvedAbs = VirtualPaths::find(mod, false);
         if (resolvedAbs.isEmpty())
         {
-            sendModSyncReject(socketID, NetworkCommands::ModSyncUnknownMod, mod, tr("Mod folder not found in install search paths."));
+            sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncUnknownMod, mod, tr("Mod folder not found in install search paths."));
             return;
         }
         QString resolvedRoot;
@@ -2873,18 +2873,20 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
         }
         else
         {
-            sendModSyncReject(socketID, NetworkCommands::ModSyncInternalError, mod, tr("Mod path resolution shape unexpected."));
+            sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncInternalError, mod, tr("Mod path resolution shape unexpected."));
             return;
         }
         Filesupport::ModSyncPackage pkg = Filesupport::buildModSyncPackage(resolvedRoot, mod, caps);
         if (pkg.rejectReason != 0)
         {
-            sendModSyncReject(socketID, pkg.rejectReason, mod, packageRejectReason(pkg.rejectReason, mod));
+            // Single coreengine boundary cast; Filesupport reports reject codes as qint32 to stay decoupled from multiplayer/.
+            const auto reason = static_cast<NetworkCommands::ModSyncRejectReason>(pkg.rejectReason);
+            sendModSyncReject(socketID, reason, mod, packageRejectReason(reason, mod));
             return;
         }
         if (totalSent + pkg.compressedBlob.size() > totalCap || totalUncompressed + pkg.declaredUncompressedSize > totalCap)
         {
-            sendModSyncReject(socketID, NetworkCommands::ModSyncSizeCapExceeded, QString(), tr("Total sync size exceeds the host's cap."));
+            sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncSizeCapExceeded, QString(), tr("Total sync size exceeds the host's cap."));
             return;
         }
         totalSent += pkg.compressedBlob.size();
@@ -3646,7 +3648,7 @@ void Multiplayermenu::handleModSyncComplete(QDataStream & stream, quint64 socket
     QTimer::singleShot(kModSyncSuccessUiHoldMs, this, &Multiplayermenu::onModSyncSucceeded);
 }
 
-void Multiplayermenu::sendModSyncReject(quint64 socketID, qint32 reasonCode, const QString & modPath, const QString & message)
+void Multiplayermenu::sendModSyncReject(quint64 socketID, NetworkCommands::ModSyncRejectReason reasonCode, const QString & modPath, const QString & message)
 {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
@@ -3654,10 +3656,11 @@ void Multiplayermenu::sendModSyncReject(quint64 socketID, qint32 reasonCode, con
     stream << QString(NetworkCommands::MODSYNCREJECT);
     stream << kModSyncProtocolVersion;
     stream << modPath;
-    stream << reasonCode;
+    // Explicit qint32 per the wire contract in networkcommands.h; never stream the enum directly.
+    stream << static_cast<qint32>(reasonCode);
     stream << message;
     emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
-    CONSOLE_PRINT("Sent MODSYNCREJECT code=" + QString::number(reasonCode) + " mod=" + modPath + " msg=" + message, GameConsole::eINFO);
+    CONSOLE_PRINT("Sent MODSYNCREJECT code=" + QString::number(static_cast<qint32>(reasonCode)) + " mod=" + modPath + " msg=" + message, GameConsole::eINFO);
 }
 
 void Multiplayermenu::cancelModSyncSession()
