@@ -3007,6 +3007,7 @@
         <file>resources/images/game/weather/weather_symbol_thunderstorm.png</file>
         <file>resources/objects/gamepad.png</file>
         <file>resources/ui/gamepadInfoDialog.xml</file>
+        <file>resources/ui/dialogModSyncProgress.xml</file>
         <file>resources/images/game/battlesprites/background/back_creeper.png</file>
         <file>resources/images/game/battlesprites/background/back_wastetempharbour.png</file>
         <file>resources/images/colortables/purple.png</file>

@@ -1,3 +1,4 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "objects/dialogs/dialogmodsyncprogress.h"
@@ -5,18 +6,16 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/mainapp.h"
 
+#include "objects/base/label.h"
+
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
+
+#include "ui_reader/uifactory.h"
 
 namespace
 {
-    constexpr qint32 kTextFieldHeight = 30;
-    constexpr qint32 kHeaderYOffsetAboveCenter = 80;
     constexpr qint32 kBarWidth = 480;
     constexpr qint32 kBarHeight = 24;
-    constexpr qint32 kDetailYGapBelowBar = 10;
-    constexpr qint32 kCancelButtonWidth = 150;
-    constexpr qint32 kCancelButtonYOffsetBelowBar = 60;
 
     const QColor kBarBackgroundColor{100, 100, 100, 200};
     const QColor kBarFillColor{35, 180, 80, 255};
@@ -35,11 +34,15 @@ namespace
     constexpr qint32 kGbDecimalPlaces = 2;
     // Shown while a rate or ETA is not yet computable.
     constexpr const char* const kUnknownPlaceholder = QT_TRANSLATE_NOOP("DialogModSyncProgress", "--");
+
+    // JS global the XML cancel button calls into.
+    constexpr const char* const kModSyncProgressItem = "modSyncProgress";
+    // Label Id in dialogModSyncProgress.xml.
+    const auto kDetailLabelId = QStringLiteral("modSyncDetail");
 }
 
 DialogModSyncProgress::DialogModSyncProgress(qint32 totalMods)
-    : QObject(),
-      m_totalMods(totalMods)
+    : m_totalMods(totalMods)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogModSyncProgress");
@@ -55,18 +58,7 @@ DialogModSyncProgress::DialogModSyncProgress(qint32 totalMods)
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont24());
-    headerStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
-    headerStyle.multiline = false;
-
-    m_Header = MemoryManagement::create<oxygine::TextField>();
-    m_Header->setStyle(headerStyle);
-    // Same full-width-with-HALIGN_MIDDLE pattern as m_Detail, dodging oxygine's stale getTextRect after setHtmlText.
-    m_Header->setSize(oxygine::Stage::getStage()->getWidth(), kTextFieldHeight);
-    m_Header->setHtmlText(tr("Downloading host's mod set"));
-    m_Header->setPosition(0, oxygine::Stage::getStage()->getHeight() / 2 - kHeaderYOffsetAboveCenter);
-    pSpriteBox->addChild(m_Header);
-
+    // The fill bar mutates every progress tick; the XML system cannot hand back a mutable ColoredRect, so both bar rects stay code-built.
     m_barWidth = kBarWidth;
     const qint32 barX = oxygine::Stage::getStage()->getWidth() / 2 - m_barWidth / 2;
     const qint32 barY = oxygine::Stage::getStage()->getHeight() / 2 - kBarHeight / 2;
@@ -83,28 +75,37 @@ DialogModSyncProgress::DialogModSyncProgress(qint32 totalMods)
     m_BarFill->setPosition(barX, barY);
     pSpriteBox->addChild(m_BarFill);
 
-    oxygine::TextStyle detailStyle = oxygine::TextStyle(FontManager::getMainFont24());
-    detailStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
-    detailStyle.multiline = false;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->setGlobal(kModSyncProgressItem, pInterpreter->newQObject(this));
+    UiFactory::getInstance().createUi("ui/dialogModSyncProgress.xml", this);
+    setDetailText(tr("0 / %1 mods").arg(m_totalMods));
 
-    m_Detail = MemoryManagement::create<oxygine::TextField>();
-    m_Detail->setStyle(detailStyle);
-    // Full-width field with HALIGN_MIDDLE re-centers via layout on every setHtmlText, dodging oxygine's stale getTextRect on substantial text-length growth.
-    m_Detail->setSize(oxygine::Stage::getStage()->getWidth(), kTextFieldHeight);
-    m_Detail->setHtmlText(tr("0 / %1 mods").arg(m_totalMods));
-    m_Detail->setPosition(0, barY + kBarHeight + kDetailYGapBelowBar);
-    pSpriteBox->addChild(m_Detail);
-
-    m_CancelButton = pObjectManager->createButton(tr("Cancel"), kCancelButtonWidth);
-    m_CancelButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_CancelButton->getScaledWidth() / 2,
-                                barY + kBarHeight + kCancelButtonYOffsetBelowBar);
-    pSpriteBox->addChild(m_CancelButton);
-    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
-    {
-        emit sigCancel();
-    });
     connect(this, &DialogModSyncProgress::sigCancel, this, &DialogModSyncProgress::remove, Qt::QueuedConnection);
     m_timer.start();
+}
+
+DialogModSyncProgress::~DialogModSyncProgress()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(kModSyncProgressItem);
+    }
+}
+
+void DialogModSyncProgress::cancel()
+{
+    emit sigCancel();
+}
+
+void DialogModSyncProgress::setDetailText(const QString & text)
+{
+    Label* pDetail = getCastedObject<Label>(kDetailLabelId);
+    // createUi failure is non-fatal; progress math keeps running without the label.
+    if (pDetail != nullptr)
+    {
+        pDetail->setHtmlText(text);
+    }
 }
 
 void DialogModSyncProgress::setExpectedTotalBytes(qint64 expectedUncompressed)
@@ -202,7 +203,7 @@ void DialogModSyncProgress::setProgress(qint32 stagedMods, qint64 receivedCompre
                  .arg(formatBytes(receivedUncompressed))
                  .arg(formatRate(static_cast<qint64>(m_smoothedRateBytesPerSec)));
     }
-    m_Detail->setHtmlText(detail);
+    setDetailText(detail);
 }
 
 void DialogModSyncProgress::remove()

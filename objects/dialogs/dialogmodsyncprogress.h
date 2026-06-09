@@ -2,31 +2,32 @@
 #define DIALOGMODSYNCPROGRESS_H
 
 #include <QElapsedTimer>
-#include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+
+#include "ui_reader/createdgui.h"
 
 class DialogModSyncProgress;
 using spDialogModSyncProgress = std::shared_ptr<DialogModSyncProgress>;
 
-class DialogModSyncProgress final : public QObject, public oxygine::Actor
+class DialogModSyncProgress final : public CreatedGui
 {
     Q_OBJECT
 public:
     explicit DialogModSyncProgress(qint32 totalMods);
-    virtual ~DialogModSyncProgress() = default;
+    virtual ~DialogModSyncProgress();
 
     // 0 means unknown; once set the field refuses downward revision so a late or hostile follow-up can't shrink the bar.
     void setExpectedTotalBytes(qint64 expectedUncompressed);
     void setProgress(qint32 stagedMods, qint64 receivedCompressed, qint64 receivedUncompressed);
+    // Entry point for the XML cancel button.
+    Q_INVOKABLE void cancel();
 signals:
     void sigCancel();
 public slots:
     void remove();
 private:
+    void setDetailText(const QString & text);
     static QString formatBytes(qint64 bytes);
     static QString formatRate(qint64 bytesPerSecond);
     static QString formatEta(qint64 seconds);
@@ -44,9 +45,8 @@ private:
     QElapsedTimer m_timer;
     oxygine::spColorRectSprite m_BarBackground;
     oxygine::spColorRectSprite m_BarFill;
-    oxygine::spTextField m_Header;
-    oxygine::spTextField m_Detail;
-    oxygine::spButton m_CancelButton;
 };
+
+Q_DECLARE_INTERFACE(DialogModSyncProgress, "DialogModSyncProgress");
 
 #endif
