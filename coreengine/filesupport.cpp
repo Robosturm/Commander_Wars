@@ -63,13 +63,19 @@ void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, con
     }
 }
 
+namespace
+{
+    const QStringList kHashFileFilter = {QStringLiteral("*.js"), QStringLiteral("*.csv")};
+    const auto kResourceScriptsFolder = QStringLiteral("resources/scripts");
+    const auto kResourceAidataFolder = QStringLiteral("resources/aidata");
+}
+
 QByteArray Filesupport::getLegacyRuntimeHash(const QStringList & mods)
 {
     QStringList folders = mods;
-    folders.append("resources/scripts");
-    folders.append("resources/aidata");
-    QStringList filter = {"*.js", "*.csv"};
-    return getHash(filter, folders);
+    folders.append(kResourceScriptsFolder);
+    folders.append(kResourceAidataFolder);
+    return getHash(kHashFileFilter, folders);
 }
 
 QByteArray Filesupport::hashSingleFolder(const QString & folder, const QStringList & filter)
@@ -79,21 +85,19 @@ QByteArray Filesupport::hashSingleFolder(const QString & folder, const QStringLi
 
 QMap<QString, QByteArray> Filesupport::getPerModHashes(const QStringList & mods)
 {
-    const QStringList filter = {"*.js", "*.csv"};
     QMap<QString, QByteArray> result;
     for (const auto & mod : std::as_const(mods))
     {
-        result.insert(mod, hashSingleFolder(mod, filter));
+        result.insert(mod, hashSingleFolder(mod, kHashFileFilter));
     }
     return result;
 }
 
 QMap<QString, QByteArray> Filesupport::getResourceFolderHashes()
 {
-    const QStringList filter = {"*.js", "*.csv"};
     QMap<QString, QByteArray> result;
-    result.insert(QStringLiteral("resources/scripts"), hashSingleFolder(QStringLiteral("resources/scripts"), filter));
-    result.insert(QStringLiteral("resources/aidata"), hashSingleFolder(QStringLiteral("resources/aidata"), filter));
+    result.insert(kResourceScriptsFolder, hashSingleFolder(kResourceScriptsFolder, kHashFileFilter));
+    result.insert(kResourceAidataFolder, hashSingleFolder(kResourceAidataFolder, kHashFileFilter));
     return result;
 }
 
@@ -133,6 +137,17 @@ namespace
     constexpr qint64 kMaxRejoinManifestBytes = 4 * 1024;
     // Marker between mod folder name and PID during atomic swap; stageModSync, reapModSyncFolders, and the staging scanners must agree on the exact string.
     const auto kSyncStagingMarker = QStringLiteral(".sync-staging-");
+    // Marker between mod folder name and timestamp on pre-swap backups; stageModSync, reapModSyncFolders, and matchBackupShape must agree on the exact string.
+    const auto kBakMarker = QStringLiteral(".bak-");
+    const auto kModsPrefix = QStringLiteral("mods/");
+    // Pending-mod-sync and rejoin manifest JSON keys.
+    const auto kJsonKeyVersion = QStringLiteral("version");
+    const auto kJsonKeySwaps = QStringLiteral("swaps");
+    const auto kJsonKeyStaging = QStringLiteral("staging");
+    const auto kJsonKeyFinal = QStringLiteral("final");
+    const auto kJsonKeyHost = QStringLiteral("host");
+    const auto kJsonKeyPort = QStringLiteral("port");
+    const auto kJsonKeyTimestamp = QStringLiteral("timestamp");
 
     // Bounds of the documented COM<n>/LPT<n> digit suffix. https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file
     constexpr qint32 kDosDeviceMinDigit = 1;
@@ -245,7 +260,7 @@ namespace
         }
         const QString prefix = name.left(idx);
         const QString suffix = name.mid(idx + kSyncStagingMarker.size());
-        if (suffix.isEmpty() || !Filesupport::validateModPath(QStringLiteral("mods/") + prefix))
+        if (suffix.isEmpty() || !Filesupport::validateModPath(kModsPrefix + prefix))
         {
             return false;
         }
@@ -262,14 +277,14 @@ namespace
 
     bool matchBackupShape(const QString & name, QString & outPrefix)
     {
-        const qint32 idx = name.lastIndexOf(QStringLiteral(".bak-"));
+        const qint32 idx = name.lastIndexOf(kBakMarker);
         if (idx <= 0)
         {
             return false;
         }
         const QString prefix = name.left(idx);
-        const QString suffix = name.mid(idx + QStringLiteral(".bak-").size());
-        if (!Filesupport::validateModPath(QStringLiteral("mods/") + prefix))
+        const QString suffix = name.mid(idx + kBakMarker.size());
+        if (!Filesupport::validateModPath(kModsPrefix + prefix))
         {
             return false;
         }
@@ -308,7 +323,7 @@ bool Filesupport::validateModPath(const QString & modPath, qint32 maxLen)
     {
         return false;
     }
-    if (!modPath.startsWith(QStringLiteral("mods/")))
+    if (!modPath.startsWith(kModsPrefix))
     {
         return false;
     }
@@ -474,7 +489,7 @@ Filesupport::ModSyncPackage Filesupport::buildModSyncPackage(const QString & ins
                 break;
             }
             const bool isDir = (si + 1 < relSegs.size());
-            if (isDir && (seg.startsWith(kSyncStagingMarker) || seg.startsWith(QStringLiteral(".bak-"))))
+            if (isDir && (seg.startsWith(kSyncStagingMarker) || seg.startsWith(kBakMarker)))
             {
                 cruft = true;
                 break;
@@ -766,13 +781,13 @@ bool Filesupport::writePendingModSyncManifest(const QString & userDataPath, cons
     for (const auto & pair : swaps)
     {
         QJsonObject entry;
-        entry.insert(QStringLiteral("staging"), pair.first);
-        entry.insert(QStringLiteral("final"), pair.second);
+        entry.insert(kJsonKeyStaging, pair.first);
+        entry.insert(kJsonKeyFinal, pair.second);
         jsonSwaps.append(entry);
     }
     QJsonObject root;
-    root.insert(QStringLiteral("version"), 1);
-    root.insert(QStringLiteral("swaps"), jsonSwaps);
+    root.insert(kJsonKeyVersion, 1);
+    root.insert(kJsonKeySwaps, jsonSwaps);
     const QString path = pendingModSyncManifestPath(userDataPath);
     QSaveFile f(path);
     if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate))
@@ -821,13 +836,13 @@ QStringList Filesupport::executePendingModSyncManifest(const QString & installRo
         return applied;
     }
     const QJsonObject root = doc.object();
-    if (root.value(QStringLiteral("version")).toInt(0) != 1)
+    if (root.value(kJsonKeyVersion).toInt(0) != 1)
     {
         CONSOLE_PRINT("Pending mod-sync manifest has unknown version, discarding", GameConsole::eERROR);
         QFile::remove(path);
         return applied;
     }
-    const QJsonArray swaps = root.value(QStringLiteral("swaps")).toArray();
+    const QJsonArray swaps = root.value(kJsonKeySwaps).toArray();
     // UTC + ms keeps backup names lexically sorted across DST and avoids same-second collision on rapid retries.
     const QString isoStamp = QDateTime::currentDateTimeUtc().toString(QStringLiteral("yyyyMMdd-HHmmsszzzZ"));
     // Read the flag once before the swap loop so settings cannot drift mid-batch. Must be called after Settings::loadSettings has run its binding loop; today the boot order at settings.cpp:1557 satisfies that.
@@ -835,8 +850,8 @@ QStringList Filesupport::executePendingModSyncManifest(const QString & installRo
     for (const auto & v : swaps)
     {
         const QJsonObject entry = v.toObject();
-        const QString stagingRel = entry.value(QStringLiteral("staging")).toString();
-        const QString finalRel = entry.value(QStringLiteral("final")).toString();
+        const QString stagingRel = entry.value(kJsonKeyStaging).toString();
+        const QString finalRel = entry.value(kJsonKeyFinal).toString();
         if (!validateModPath(finalRel))
         {
             CONSOLE_PRINT("Manifest entry has invalid final path, skipping: " + finalRel, GameConsole::eERROR);
@@ -890,10 +905,10 @@ QStringList Filesupport::executePendingModSyncManifest(const QString & installRo
                 continue;
             }
             // Loop suffix defends against duplicate manifest entries for the same finalRel sharing one isoStamp.
-            backupAbs = finalAbs + QStringLiteral(".bak-") + isoStamp;
+            backupAbs = finalAbs + kBakMarker + isoStamp;
             for (qint32 n = 1; QFileInfo::exists(backupAbs); ++n)
             {
-                backupAbs = finalAbs + QStringLiteral(".bak-") + isoStamp + QStringLiteral("-") + QString::number(n);
+                backupAbs = finalAbs + kBakMarker + isoStamp + QStringLiteral("-") + QString::number(n);
             }
             if (!QDir().rename(finalAbs, backupAbs))
             {
@@ -938,10 +953,10 @@ bool Filesupport::writeRejoinManifest(const QString & userDataPath, const QStrin
         return false;
     }
     QJsonObject root;
-    root.insert(QStringLiteral("version"), 1);
-    root.insert(QStringLiteral("host"), host);
-    root.insert(QStringLiteral("port"), static_cast<qint32>(port));
-    root.insert(QStringLiteral("timestamp"), QDateTime::currentSecsSinceEpoch());
+    root.insert(kJsonKeyVersion, 1);
+    root.insert(kJsonKeyHost, host);
+    root.insert(kJsonKeyPort, static_cast<qint32>(port));
+    root.insert(kJsonKeyTimestamp, QDateTime::currentSecsSinceEpoch());
     const QString path = rejoinManifestPath(userDataPath);
     QSaveFile f(path);
     if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate))
@@ -990,14 +1005,14 @@ Filesupport::RejoinManifest Filesupport::consumeRejoinManifest(const QString & u
         return result;
     }
     const QJsonObject root = doc.object();
-    if (root.value(QStringLiteral("version")).toInt(0) != 1)
+    if (root.value(kJsonKeyVersion).toInt(0) != 1)
     {
         CONSOLE_PRINT("Rejoin manifest unknown version, discarding", GameConsole::eERROR);
         return result;
     }
-    const QString host = root.value(QStringLiteral("host")).toString();
-    const qint32 port = root.value(QStringLiteral("port")).toInt(0);
-    const qint64 timestamp = root.value(QStringLiteral("timestamp")).toVariant().toLongLong();
+    const QString host = root.value(kJsonKeyHost).toString();
+    const qint32 port = root.value(kJsonKeyPort).toInt(0);
+    const qint64 timestamp = root.value(kJsonKeyTimestamp).toVariant().toLongLong();
     if (host.isEmpty() || port <= 0 || port > kTcpPortMax)
     {
         CONSOLE_PRINT("Rejoin manifest has invalid host or port, discarding", GameConsole::eERROR);
