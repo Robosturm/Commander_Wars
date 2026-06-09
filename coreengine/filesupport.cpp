@@ -134,6 +134,27 @@ namespace
     // Marker between mod folder name and PID during atomic swap; stageModSync, reapModSyncFolders, and the staging scanners must agree on the exact string.
     const auto kSyncStagingMarker = QStringLiteral(".sync-staging-");
 
+    // Bounds of the documented COM<n>/LPT<n> digit suffix. https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+    constexpr qint32 kDosDeviceMinDigit = 1;
+    constexpr qint32 kDosDeviceMaxDigit = 9;
+
+    QSet<QString> buildReservedDosDeviceNames()
+    {
+        QSet<QString> names = {
+            QStringLiteral("CON"), QStringLiteral("PRN"),
+            QStringLiteral("AUX"), QStringLiteral("NUL"),
+            QStringLiteral("CONIN$"), QStringLiteral("CONOUT$"),
+            QStringLiteral("COM\u00B9"), QStringLiteral("COM\u00B2"), QStringLiteral("COM\u00B3"),
+            QStringLiteral("LPT\u00B9"), QStringLiteral("LPT\u00B2"), QStringLiteral("LPT\u00B3"),
+        };
+        for (qint32 i = kDosDeviceMinDigit; i <= kDosDeviceMaxDigit; ++i)
+        {
+            names.insert(QStringLiteral("COM") + QString::number(i));
+            names.insert(QStringLiteral("LPT") + QString::number(i));
+        }
+        return names;
+    }
+
     bool segmentClean(const QString & seg)
     {
         static const QSet<QChar> kInvalid = {
@@ -159,16 +180,7 @@ namespace
                 return false;
             }
         }
-        static const QSet<QString> kReserved = {
-            QStringLiteral("CON"), QStringLiteral("PRN"), QStringLiteral("AUX"), QStringLiteral("NUL"),
-            QStringLiteral("CONIN$"), QStringLiteral("CONOUT$"),
-            QStringLiteral("COM0"), QStringLiteral("COM1"), QStringLiteral("COM2"), QStringLiteral("COM3"),
-            QStringLiteral("COM4"), QStringLiteral("COM5"), QStringLiteral("COM6"), QStringLiteral("COM7"),
-            QStringLiteral("COM8"), QStringLiteral("COM9"),
-            QStringLiteral("LPT0"), QStringLiteral("LPT1"), QStringLiteral("LPT2"), QStringLiteral("LPT3"),
-            QStringLiteral("LPT4"), QStringLiteral("LPT5"), QStringLiteral("LPT6"), QStringLiteral("LPT7"),
-            QStringLiteral("LPT8"), QStringLiteral("LPT9"),
-        };
+        static const QSet<QString> kReserved = buildReservedDosDeviceNames();
         const qint32 dotIdx = seg.indexOf(QChar('.'));
         const QString basename = (dotIdx >= 0) ? seg.left(dotIdx) : seg;
         if (kReserved.contains(basename.toUpper()))
