@@ -29,6 +29,12 @@ namespace
     // 50 ms minimum sample window so a hot LAN burst doesn't seed the EMA at multi-GB/s.
     constexpr qint64 kRateMinDtMs = 50;
     constexpr double kRateEmaAlpha = 0.3;
+
+    constexpr qint32 kSizeDecimalPlaces = 1;
+    // GB steps are coarse enough that a second decimal carries real information.
+    constexpr qint32 kGbDecimalPlaces = 2;
+    // Shown while a rate or ETA is not yet computable.
+    constexpr const char* const kUnknownPlaceholder = QT_TRANSLATE_NOOP("DialogModSyncProgress", "--");
 }
 
 DialogModSyncProgress::DialogModSyncProgress(qint32 totalMods)
@@ -213,22 +219,22 @@ QString DialogModSyncProgress::formatBytes(qint64 bytes)
     const double kb = static_cast<double>(bytes) / kBytesPerKib;
     if (kb < kBytesPerKib)
     {
-        return tr("%1 KB").arg(QString::number(kb, 'f', 1));
+        return tr("%1 KB").arg(QString::number(kb, 'f', kSizeDecimalPlaces));
     }
     const double mb = kb / kBytesPerKib;
     if (mb < kBytesPerKib)
     {
-        return tr("%1 MB").arg(QString::number(mb, 'f', 1));
+        return tr("%1 MB").arg(QString::number(mb, 'f', kSizeDecimalPlaces));
     }
     const double gb = mb / kBytesPerKib;
-    return tr("%1 GB").arg(QString::number(gb, 'f', 2));
+    return tr("%1 GB").arg(QString::number(gb, 'f', kGbDecimalPlaces));
 }
 
 QString DialogModSyncProgress::formatRate(qint64 bytesPerSecond)
 {
     if (bytesPerSecond <= 0)
     {
-        return tr("--");
+        return tr(kUnknownPlaceholder);
     }
     return tr("%1/s").arg(formatBytes(bytesPerSecond));
 }
@@ -237,7 +243,7 @@ QString DialogModSyncProgress::formatEta(qint64 seconds)
 {
     if (seconds < 0)
     {
-        return tr("--");
+        return tr(kUnknownPlaceholder);
     }
     if (seconds < kSecondsPerMinute)
     {
