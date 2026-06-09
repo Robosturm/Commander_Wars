@@ -148,6 +148,12 @@ namespace
     const auto kJsonKeyHost = QStringLiteral("host");
     const auto kJsonKeyPort = QStringLiteral("port");
     const auto kJsonKeyTimestamp = QStringLiteral("timestamp");
+    constexpr qint32 kPendingManifestVersion = 1;
+    constexpr qint32 kRejoinManifestVersion = 1;
+    // Length of a Windows drive-letter prefix ("C:").
+    constexpr qint32 kWindowsDrivePrefixLength = 2;
+    // Staging dirs older than this are presumed orphaned by a dead process and reaped.
+    constexpr qint64 kStaleStagingMaxAgeSecs = 3600;
 
     // Bounds of the documented COM<n>/LPT<n> digit suffix. https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file
     constexpr qint32 kDosDeviceMinDigit = 1;
@@ -436,7 +442,7 @@ bool Filesupport::validateRelativeFilePath(const QString & relPath, qint32 maxLe
     {
         return false;
     }
-    if (relPath.size() >= 2 && relPath[1] == QChar(':'))
+    if (relPath.size() >= kWindowsDrivePrefixLength && relPath[1] == QChar(':'))
     {
         return false;
     }
@@ -731,7 +737,7 @@ void Filesupport::reapModSyncFolders(const QString & installRoot, qint32 backupK
     }
     const auto entries = modsDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
     QMap<QString, QList<QFileInfo>> backupsByMod;
-    const QDateTime cutoff = QDateTime::currentDateTime().addSecs(-3600);
+    const QDateTime cutoff = QDateTime::currentDateTime().addSecs(-kStaleStagingMaxAgeSecs);
     for (const auto & entry : entries)
     {
         const QString name = entry.fileName();
@@ -786,7 +792,7 @@ bool Filesupport::writePendingModSyncManifest(const QString & userDataPath, cons
         jsonSwaps.append(entry);
     }
     QJsonObject root;
-    root.insert(kJsonKeyVersion, 1);
+    root.insert(kJsonKeyVersion, kPendingManifestVersion);
     root.insert(kJsonKeySwaps, jsonSwaps);
     const QString path = pendingModSyncManifestPath(userDataPath);
     QSaveFile f(path);
@@ -836,7 +842,7 @@ QStringList Filesupport::executePendingModSyncManifest(const QString & installRo
         return applied;
     }
     const QJsonObject root = doc.object();
-    if (root.value(kJsonKeyVersion).toInt(0) != 1)
+    if (root.value(kJsonKeyVersion).toInt(0) != kPendingManifestVersion)
     {
         CONSOLE_PRINT("Pending mod-sync manifest has unknown version, discarding", GameConsole::eERROR);
         QFile::remove(path);
@@ -953,7 +959,7 @@ bool Filesupport::writeRejoinManifest(const QString & userDataPath, const QStrin
         return false;
     }
     QJsonObject root;
-    root.insert(kJsonKeyVersion, 1);
+    root.insert(kJsonKeyVersion, kRejoinManifestVersion);
     root.insert(kJsonKeyHost, host);
     root.insert(kJsonKeyPort, static_cast<qint32>(port));
     root.insert(kJsonKeyTimestamp, QDateTime::currentSecsSinceEpoch());
@@ -1005,7 +1011,7 @@ Filesupport::RejoinManifest Filesupport::consumeRejoinManifest(const QString & u
         return result;
     }
     const QJsonObject root = doc.object();
-    if (root.value(kJsonKeyVersion).toInt(0) != 1)
+    if (root.value(kJsonKeyVersion).toInt(0) != kRejoinManifestVersion)
     {
         CONSOLE_PRINT("Rejoin manifest unknown version, discarding", GameConsole::eERROR);
         return result;
