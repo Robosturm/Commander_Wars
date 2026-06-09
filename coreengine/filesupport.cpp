@@ -202,6 +202,104 @@ namespace
         }
         return a + QChar('/') + b;
     }
+
+    // Deliberately ASCII-only; QChar::isDigit also accepts non-ASCII Unicode digits.
+    bool isAsciiDigit(QChar c)
+    {
+        return c >= QChar('0') && c <= QChar('9');
+    }
+
+    // Validate length header before allocation; defends against decompression-bomb pre-allocation in operator>>.
+    bool readBoundedBytes(QDataStream & stream, QByteArray & out, qint64 maxBytes)
+    {
+        quint32 declared = 0;
+        stream >> declared;
+        if (stream.status() != QDataStream::Ok)
+        {
+            return false;
+        }
+        if (declared == kQDataStreamNullSentinel)
+        {
+            out.clear();
+            return true;
+        }
+        if (declared > static_cast<quint32>(maxBytes))
+        {
+            return false;
+        }
+        out.resize(static_cast<qint32>(declared));
+        if (out.size() > 0 && stream.readRawData(out.data(), out.size()) != out.size())
+        {
+            return false;
+        }
+        return true;
+    }
+
+    // Match only exact slice-2-generated shapes; substring matching would catch legitimate mod folder names.
+    bool matchStagingShape(const QString & name, QString & outPrefix)
+    {
+        const qint32 idx = name.lastIndexOf(kSyncStagingMarker);
+        if (idx <= 0)
+        {
+            return false;
+        }
+        const QString prefix = name.left(idx);
+        const QString suffix = name.mid(idx + kSyncStagingMarker.size());
+        if (suffix.isEmpty() || !Filesupport::validateModPath(QStringLiteral("mods/") + prefix))
+        {
+            return false;
+        }
+        for (const QChar c : suffix)
+        {
+            if (!isAsciiDigit(c))
+            {
+                return false;
+            }
+        }
+        outPrefix = prefix;
+        return true;
+    }
+
+    bool matchBackupShape(const QString & name, QString & outPrefix)
+    {
+        const qint32 idx = name.lastIndexOf(QStringLiteral(".bak-"));
+        if (idx <= 0)
+        {
+            return false;
+        }
+        const QString prefix = name.left(idx);
+        const QString suffix = name.mid(idx + QStringLiteral(".bak-").size());
+        if (!Filesupport::validateModPath(QStringLiteral("mods/") + prefix))
+        {
+            return false;
+        }
+        // Generated suffix is exactly yyyyMMdd-HHmmsszzzZ with optional -<digits> collision counter.
+        if (suffix.size() < kBakTimestampLength)
+        {
+            return false;
+        }
+        for (qint32 i = 0; i < kBakTimestampDateLength; ++i)
+        {
+            if (!isAsciiDigit(suffix[i])) return false;
+        }
+        if (suffix[kBakTimestampDateLength] != QChar('-')) return false;
+        for (qint32 i = kBakTimestampDateLength + 1; i < kBakTimestampDateTimeLength; ++i)
+        {
+            if (!isAsciiDigit(suffix[i])) return false;
+        }
+        if (suffix[kBakTimestampDateTimeLength] != QChar('Z')) return false;
+        if (suffix.size() > kBakTimestampLength)
+        {
+            // Collision-counter form requires `-<digits>` after the timestamp; bare `-` is invalid.
+            if (suffix[kBakTimestampLength] != QChar('-') || suffix.size() < kBakCollisionCounterMinLength) return false;
+            for (qint32 i = kBakTimestampLength + 1; i < suffix.size(); ++i)
+            {
+                if (!isAsciiDigit(suffix[i])) return false;
+            }
+        }
+        outPrefix = prefix;
+        return true;
+    }
 }
 
 bool Filesupport::validateModPath(const QString & modPath, qint32 maxLen)
@@ -496,42 +594,17 @@ QMap<QString, QByteArray> Filesupport::extractModSyncPackage(const QByteArray & 
         rejectReason = kModSyncFileCountCapExceeded;
         return QMap<QString, QByteArray>();
     }
-    // Validate length header before allocation; defends against decompression-bomb pre-allocation in operator>>.
-    auto readBoundedBytes = [&stream](QByteArray & out, qint64 maxBytes) -> bool
-    {
-        quint32 declared = 0;
-        stream >> declared;
-        if (stream.status() != QDataStream::Ok)
-        {
-            return false;
-        }
-        if (declared == kQDataStreamNullSentinel)
-        {
-            out.clear();
-            return true;
-        }
-        if (declared > static_cast<quint32>(maxBytes))
-        {
-            return false;
-        }
-        out.resize(static_cast<qint32>(declared));
-        if (out.size() > 0 && stream.readRawData(out.data(), out.size()) != out.size())
-        {
-            return false;
-        }
-        return true;
-    };
     qint64 uncompressedTotal = 0;
     for (qint32 i = 0; i < mapSize; ++i)
     {
         QByteArray keyUtf8;
         QByteArray value;
-        if (!readBoundedBytes(keyUtf8, static_cast<qint64>(caps.relPathMaxLen) * kUtf8MaxBytesPerCodePoint))
+        if (!readBoundedBytes(stream, keyUtf8, static_cast<qint64>(caps.relPathMaxLen) * kUtf8MaxBytesPerCodePoint))
         {
             rejectReason = kModSyncInvalidPath;
             return QMap<QString, QByteArray>();
         }
-        if (!readBoundedBytes(value, caps.perModBytes))
+        if (!readBoundedBytes(stream, value, caps.perModBytes))
         {
             rejectReason = kModSyncSizeCapExceeded;
             return QMap<QString, QByteArray>();
@@ -644,71 +717,6 @@ void Filesupport::reapModSyncFolders(const QString & installRoot, qint32 backupK
     const auto entries = modsDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
     QMap<QString, QList<QFileInfo>> backupsByMod;
     const QDateTime cutoff = QDateTime::currentDateTime().addSecs(-3600);
-    // Match only exact slice-2-generated shapes; substring matching would catch legitimate mod folder names.
-    auto matchStagingShape = [](const QString & name, QString & outPrefix) -> bool
-    {
-        const qint32 idx = name.lastIndexOf(kSyncStagingMarker);
-        if (idx <= 0)
-        {
-            return false;
-        }
-        const QString prefix = name.left(idx);
-        const QString suffix = name.mid(idx + kSyncStagingMarker.size());
-        if (suffix.isEmpty() || !validateModPath(QStringLiteral("mods/") + prefix))
-        {
-            return false;
-        }
-        for (const QChar c : suffix)
-        {
-            if (c < QChar('0') || c > QChar('9'))
-            {
-                return false;
-            }
-        }
-        outPrefix = prefix;
-        return true;
-    };
-    auto matchBackupShape = [](const QString & name, QString & outPrefix) -> bool
-    {
-        const qint32 idx = name.lastIndexOf(QStringLiteral(".bak-"));
-        if (idx <= 0)
-        {
-            return false;
-        }
-        const QString prefix = name.left(idx);
-        const QString suffix = name.mid(idx + QStringLiteral(".bak-").size());
-        if (!validateModPath(QStringLiteral("mods/") + prefix))
-        {
-            return false;
-        }
-        // Generated suffix is exactly yyyyMMdd-HHmmsszzzZ with optional -<digits> collision counter.
-        if (suffix.size() < kBakTimestampLength)
-        {
-            return false;
-        }
-        auto isDigit = [](QChar c) { return c >= QChar('0') && c <= QChar('9'); };
-        for (qint32 i = 0; i < kBakTimestampDateLength; ++i)
-        {
-            if (!isDigit(suffix[i])) return false;
-        }
-        if (suffix[kBakTimestampDateLength] != QChar('-')) return false;
-        for (qint32 i = kBakTimestampDateLength + 1; i < kBakTimestampDateTimeLength; ++i)
-        {
-            if (!isDigit(suffix[i])) return false;
-        }
-        if (suffix[kBakTimestampDateTimeLength] != QChar('Z')) return false;
-        if (suffix.size() > kBakTimestampLength)
-        {
-            // Collision-counter form requires `-<digits>` after the timestamp; bare `-` is invalid.
-            if (suffix[kBakTimestampLength] != QChar('-') || suffix.size() < kBakCollisionCounterMinLength) return false;
-            for (qint32 i = kBakTimestampLength + 1; i < suffix.size(); ++i)
-            {
-                if (!isDigit(suffix[i])) return false;
-            }
-        }
-        outPrefix = prefix;
-        return true;
-    };
     for (const auto & entry : entries)
     {
         const QString name = entry.fileName();
@@ -845,7 +853,7 @@ QStringList Filesupport::executePendingModSyncManifest(const QString & installRo
         bool suffixDigits = !suffix.isEmpty();
         for (const QChar c : suffix)
         {
-            if (c < QChar('0') || c > QChar('9'))
+            if (!isAsciiDigit(c))
             {
                 suffixDigits = false;
                 break;
