@@ -13,6 +13,7 @@
 #endif
 #include <QTemporaryDir>
 
+#include "coreengine/filesupport.h"
 #include "coreengine/gameconsole.h"
 
 #include "game/GameEnums.h"
@@ -952,11 +953,11 @@ private:
     // Default false until slice 4 wires the request receiver; operator opt-in.
     bool m_modSyncEnabled{false};
     // TODO slice 2: enforced by the package builder and receive path.
-    qint32 m_modSyncMaxPerModBytes{64 * 1024 * 1024};
-    qint32 m_modSyncMaxTotalBytes{256 * 1024 * 1024};
-    qint32 m_modSyncMaxFiles{5000};
+    qint32 m_modSyncMaxPerModBytes{Filesupport::ModSyncDefaultPerModBytes};
+    qint32 m_modSyncMaxTotalBytes{Filesupport::ModSyncDefaultTotalBytes};
+    qint32 m_modSyncMaxFiles{Filesupport::ModSyncDefaultMaxFiles};
     // Inside-package relpath cap; the modPath identifier itself uses Filesupport::ModPathDefaultMaxLen.
-    qint32 m_modSyncMaxRelativePathLength{260};
+    qint32 m_modSyncMaxRelativePathLength{Filesupport::ModSyncDefaultMaxRelativePathLength};
     // Disable to skip keeping the .bak-<iso> directory after a successful staging swap; saves disk for users with large mods.
     bool m_modSyncKeepBackups{false};
 

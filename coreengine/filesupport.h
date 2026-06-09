@@ -16,11 +16,18 @@ public:
         QString name;
         QStringList items;
     };
+    // Mod-sync cap defaults; Settings seeds its user-overridable values from these.
+    static constexpr qint32 ModSyncDefaultPerModBytes = 64 * 1024 * 1024;
+    static constexpr qint32 ModSyncDefaultTotalBytes = 256 * 1024 * 1024;
+    static constexpr qint32 ModSyncDefaultMaxFiles = 5000;
+    // Windows MAX_PATH legacy ceiling; deeper trees need a settings override.
+    static constexpr qint32 ModSyncDefaultMaxRelativePathLength = 260;
+    static constexpr qint32 ModSyncDefaultBackupKeep = 3;
     struct ModSyncCaps
     {
-        qint32 perModBytes{64 * 1024 * 1024};
-        qint32 fileCountMax{5000};
-        qint32 relPathMaxLen{260};
+        qint32 perModBytes{ModSyncDefaultPerModBytes};
+        qint32 fileCountMax{ModSyncDefaultMaxFiles};
+        qint32 relPathMaxLen{ModSyncDefaultMaxRelativePathLength};
     };
     // rejectReason matches NetworkCommands::ModSyncRejectReason; qint32 keeps coreengine decoupled from multiplayer/.
     struct ModSyncPackage
@@ -58,7 +65,7 @@ public:
     // Returns staging path RELATIVE to installRoot on success (e.g. "mods/foo.sync-staging-12345"); the caller writes that into the manifest.
     // `caps` re-validates relpath, file count, per-file and total bytes here as defense in depth; callers should still run extractModSyncPackage first.
     static QString stageModSync(const QString & installRoot, const QString & modPath, const QMap<QString, QByteArray> & files, const ModSyncCaps & caps, qint32 & rejectReason);
-    static void reapModSyncFolders(const QString & installRoot, qint32 backupKeep = 3);
+    static void reapModSyncFolders(const QString & installRoot, qint32 backupKeep = ModSyncDefaultBackupKeep);
     static QString pendingModSyncManifestPath(const QString & userDataPath);
     static bool writePendingModSyncManifest(const QString & userDataPath, const QList<QPair<QString, QString>> & swaps);
     // Returns the list of `final` paths that were successfully swapped in; slice 3 uses this to drive settings mutation.
