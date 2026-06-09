@@ -141,8 +141,8 @@ void Multiplayermenu::initClientAndWaitForConnection()
     connectNetworkSlots();
 
     connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
-    // wait 10 minutes till timeout
-    m_pJoinConnectingDialog = MemoryManagement::create<DialogConnecting>(tr("Connecting"), 1000 * 60 * 5);
+    constexpr qint32 kJoinConnectTimeoutMs = 1000 * 60 * 5;
+    m_pJoinConnectingDialog = MemoryManagement::create<DialogConnecting>(tr("Connecting"), kJoinConnectTimeoutMs);
     addChild(m_pJoinConnectingDialog);
     connect(m_pJoinConnectingDialog.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     connect(this, &Multiplayermenu::sigConnected, m_pJoinConnectingDialog.get(), &DialogConnecting::connected, Qt::QueuedConnection);
@@ -2598,6 +2598,12 @@ namespace
 
     // QDataStream::operator>> pre-resizes to the declared length; bounded readers reject the header before allocation.
     constexpr quint32 kInt32MaxAsU32 = 0x7FFFFFFFu;
+    // QDataStream encodes a null QByteArray or QString length as 0xFFFFFFFFu; mirrors filesupport.cpp.
+    constexpr quint32 kQDataStreamNullSentinel = 0xFFFFFFFFu;
+    constexpr qint32 kBytesPerUtf16CodeUnit = 2;
+    constexpr qint32 kBitsPerByte = 8;
+    // Version prefix on every mod-sync wire frame; bump on schema breakage.
+    constexpr qint32 kModSyncProtocolVersion = 1;
 
     bool readBoundedQByteArray(QDataStream & stream, QByteArray & out, qint64 maxBytes)
     {
@@ -2611,7 +2617,7 @@ namespace
         {
             return false;
         }
-        if (declared == 0xFFFFFFFFu)
+        if (declared == kQDataStreamNullSentinel)
         {
             out.clear();
             return true;
@@ -2640,13 +2646,13 @@ namespace
         {
             return false;
         }
-        if (declared == 0xFFFFFFFFu)
+        if (declared == kQDataStreamNullSentinel)
         {
             out.clear();
             return true;
         }
-        const qint64 maxBytes = static_cast<qint64>(maxChars) * 2;
-        if (declared > kInt32MaxAsU32 || static_cast<qint64>(declared) > maxBytes || (declared % 2) != 0)
+        const qint64 maxBytes = static_cast<qint64>(maxChars) * kBytesPerUtf16CodeUnit;
+        if (declared > kInt32MaxAsU32 || static_cast<qint64>(declared) > maxBytes || (declared % kBytesPerUtf16CodeUnit) != 0)
         {
             return false;
         }
@@ -2656,13 +2662,13 @@ namespace
         {
             return false;
         }
-        const qint32 codeUnits = buf.size() / 2;
+        const qint32 codeUnits = buf.size() / kBytesPerUtf16CodeUnit;
         out.resize(codeUnits);
         const uchar * src = reinterpret_cast<const uchar *>(buf.constData());
         // Wire is big-endian; build each code unit explicitly to skip platform-endian conversion in fromUtf16.
         for (qint32 i = 0; i < codeUnits; ++i)
         {
-            out[i] = QChar(static_cast<ushort>((src[i * 2] << 8) | src[i * 2 + 1]));
+            out[i] = QChar(static_cast<ushort>((src[i * kBytesPerUtf16CodeUnit] << kBitsPerByte) | src[i * kBytesPerUtf16CodeUnit + 1]));
         }
         return true;
     }
@@ -2706,7 +2712,7 @@ bool Multiplayermenu::requestModSync(const QStringList & modsToDownload, const Q
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream.setVersion(QDataStream::Version::Qt_6_5);
     stream << QString(NetworkCommands::REQUESTMODSYNC);
-    stream << static_cast<qint32>(1);
+    stream << kModSyncProtocolVersion;
     stream << modsToDownload;
     // Trailing optional flag; older hosts read past their known fields and ignore. New hosts try-read and fall back to legacy framing if absent.
     stream << static_cast<qint32>(NetworkCommands::ModSyncClientFlagChunked);
@@ -2738,7 +2744,7 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
     }
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
-    if (protocolVersion != 1)
+    if (protocolVersion != kModSyncProtocolVersion)
     {
         sendModSyncReject(socketID, NetworkCommands::ModSyncInternalError, QString(), tr("Unsupported mod-sync protocol version."));
         return;
@@ -2878,7 +2884,7 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
         QDataStream manifestStream(&manifestData, QIODevice::WriteOnly);
         manifestStream.setVersion(QDataStream::Version::Qt_6_5);
         manifestStream << QString(NetworkCommands::MODSYNCMANIFEST);
-        manifestStream << static_cast<qint32>(1);
+        manifestStream << kModSyncProtocolVersion;
         manifestStream << static_cast<qint32>(builtPackages.size());
         for (const auto & entry : std::as_const(builtPackages))
         {
@@ -2911,7 +2917,7 @@ void Multiplayermenu::pumpModSyncSend()
         QDataStream sendStream(&data, QIODevice::WriteOnly);
         sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << QString(NetworkCommands::MODSYNCCOMPLETE);
-        sendStream << static_cast<qint32>(1);
+        sendStream << kModSyncProtocolVersion;
         emit m_pNetworkInterface->sig_sendData(state.socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
         CONSOLE_PRINT("Sent MODSYNCCOMPLETE; " + QString::number(state.packages.size()) + " mods", GameConsole::eINFO);
         state = ModSyncSendState{};
@@ -2924,7 +2930,7 @@ void Multiplayermenu::pumpModSyncSend()
         QDataStream sendStream(&data, QIODevice::WriteOnly);
         sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << QString(NetworkCommands::MODSYNCDATA);
-        sendStream << static_cast<qint32>(1);
+        sendStream << kModSyncProtocolVersion;
         sendStream << entry.first;
         sendStream << entry.second.declaredUncompressedSize;
         sendStream << entry.second.fileCount;
@@ -2944,7 +2950,7 @@ void Multiplayermenu::pumpModSyncSend()
         QDataStream sendStream(&data, QIODevice::WriteOnly);
         sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << QString(NetworkCommands::MODSYNCMODBEGIN);
-        sendStream << static_cast<qint32>(1);
+        sendStream << kModSyncProtocolVersion;
         sendStream << entry.first;
         sendStream << entry.second.declaredUncompressedSize;
         sendStream << entry.second.fileCount;
@@ -2966,7 +2972,7 @@ void Multiplayermenu::pumpModSyncSend()
         QDataStream sendStream(&data, QIODevice::WriteOnly);
         sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << QString(NetworkCommands::MODSYNCMODCHUNK);
-        sendStream << static_cast<qint32>(1);
+        sendStream << kModSyncProtocolVersion;
         sendStream << entry.first;
         sendStream << state.currentChunk;
         sendStream << chunkBytes;
@@ -2980,7 +2986,7 @@ void Multiplayermenu::pumpModSyncSend()
         QDataStream sendStream(&data, QIODevice::WriteOnly);
         sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << QString(NetworkCommands::MODSYNCMODEND);
-        sendStream << static_cast<qint32>(1);
+        sendStream << kModSyncProtocolVersion;
         sendStream << entry.first;
         emit m_pNetworkInterface->sig_sendData(state.socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
         CONSOLE_PRINT("Sent MODSYNCMODEND for " + entry.first, GameConsole::eINFO);
@@ -3006,7 +3012,7 @@ void Multiplayermenu::handleModSyncManifest(QDataStream & stream, quint64 socket
 
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
-    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    if (stream.status() != QDataStream::Ok || protocolVersion != kModSyncProtocolVersion)
     {
         CONSOLE_PRINT("MODSYNCMANIFEST unsupported protocol version, ignoring", GameConsole::eWARNING);
         return;
@@ -3090,7 +3096,7 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
 
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
-    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    if (stream.status() != QDataStream::Ok || protocolVersion != kModSyncProtocolVersion)
     {
         CONSOLE_PRINT("MODSYNCDATA unsupported protocol version", GameConsole::eERROR);
         failData(tr("Unsupported mod-sync protocol from host."));
@@ -3209,7 +3215,7 @@ void Multiplayermenu::handleModSyncModBegin(QDataStream & stream, quint64 socket
 
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
-    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    if (stream.status() != QDataStream::Ok || protocolVersion != kModSyncProtocolVersion)
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN unsupported protocol version", GameConsole::eERROR);
         failBegin(tr("Unsupported mod-sync protocol from host."));
@@ -3333,7 +3339,7 @@ void Multiplayermenu::handleModSyncModChunk(QDataStream & stream, quint64 socket
 
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
-    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    if (stream.status() != QDataStream::Ok || protocolVersion != kModSyncProtocolVersion)
     {
         CONSOLE_PRINT("MODSYNCMODCHUNK unsupported protocol version", GameConsole::eERROR);
         failChunk(tr("Unsupported mod-sync protocol from host."));
@@ -3433,7 +3439,7 @@ void Multiplayermenu::handleModSyncModEnd(QDataStream & stream, quint64 socketID
 
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
-    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    if (stream.status() != QDataStream::Ok || protocolVersion != kModSyncProtocolVersion)
     {
         CONSOLE_PRINT("MODSYNCMODEND unsupported protocol version", GameConsole::eERROR);
         failEnd(tr("Unsupported mod-sync protocol from host."));
@@ -3521,7 +3527,7 @@ void Multiplayermenu::handleModSyncReject(QDataStream & stream, quint64 socketID
 
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
-    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    if (stream.status() != QDataStream::Ok || protocolVersion != kModSyncProtocolVersion)
     {
         CONSOLE_PRINT("MODSYNCREJECT unsupported protocol version", GameConsole::eERROR);
         cancelModSyncSession();
@@ -3565,7 +3571,7 @@ void Multiplayermenu::handleModSyncComplete(QDataStream & stream, quint64 socket
     }
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
-    if (stream.status() != QDataStream::Ok || protocolVersion != 1)
+    if (stream.status() != QDataStream::Ok || protocolVersion != kModSyncProtocolVersion)
     {
         CONSOLE_PRINT("MODSYNCCOMPLETE unsupported protocol version", GameConsole::eERROR);
         cancelModSyncSession();
@@ -3623,7 +3629,8 @@ void Multiplayermenu::handleModSyncComplete(QDataStream & stream, quint64 socket
     m_modSyncCurrentChunkMod = ModSyncChunkAccumulator{};
     m_modSyncPostSyncActiveMods.clear();
     // Hold so the progress dialog gets a frame to paint at 100% before the success+restart sequence tears it down.
-    QTimer::singleShot(500, this, &Multiplayermenu::onModSyncSucceeded);
+    constexpr qint32 kModSyncSuccessUiHoldMs = 500;
+    QTimer::singleShot(kModSyncSuccessUiHoldMs, this, &Multiplayermenu::onModSyncSucceeded);
 }
 
 void Multiplayermenu::sendModSyncReject(quint64 socketID, qint32 reasonCode, const QString & modPath, const QString & message)
@@ -3632,7 +3639,7 @@ void Multiplayermenu::sendModSyncReject(quint64 socketID, qint32 reasonCode, con
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream.setVersion(QDataStream::Version::Qt_6_5);
     stream << QString(NetworkCommands::MODSYNCREJECT);
-    stream << static_cast<qint32>(1);
+    stream << kModSyncProtocolVersion;
     stream << modPath;
     stream << reasonCode;
     stream << message;
