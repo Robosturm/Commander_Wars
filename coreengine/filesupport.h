@@ -60,6 +60,9 @@ public:
     static void addHash(QCryptographicHash & hash, const QString & folder, const QStringList & filter);
     static bool validateModPath(const QString & modPath, qint32 maxLen = ModPathDefaultMaxLen);
     static bool validateRelativeFilePath(const QString & relPath, qint32 maxLen);
+    // Bounded QDataStream readers; validate the length header before allocation, defending against decompression-bomb pre-allocation in operator>>.
+    static bool readBoundedBytes(QDataStream & stream, QByteArray & out, qint64 maxBytes);
+    static bool readBoundedString(QDataStream & stream, QString & out, qint32 maxChars);
     static ModSyncPackage buildModSyncPackage(const QString & installRoot, const QString & modPath, const ModSyncCaps & caps);
     static QMap<QString, QByteArray> extractModSyncPackage(const QByteArray & compressedBlob, qint32 declaredUncompressedSize, const ModSyncCaps & caps, qint32 & rejectReason);
     // Returns staging path RELATIVE to installRoot on success (e.g. "mods/foo.sync-staging-12345"); the caller writes that into the manifest.

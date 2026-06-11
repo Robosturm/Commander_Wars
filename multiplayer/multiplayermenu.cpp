@@ -2596,12 +2596,6 @@ namespace
     // Hard ceiling on chunkCount declared in MODSYNCMODBEGIN; even at perModCap = 1 GB that's only ~1024 chunks at 1 MiB.
     constexpr qint32 kModSyncChunkCountMax = 1024 * 1024;
 
-    // QDataStream::operator>> pre-resizes to the declared length; bounded readers reject the header before allocation.
-    constexpr quint32 kInt32MaxAsU32 = 0x7FFFFFFFu;
-    // QDataStream encodes a null QByteArray or QString length as 0xFFFFFFFFu; mirrors filesupport.cpp.
-    constexpr quint32 kQDataStreamNullSentinel = 0xFFFFFFFFu;
-    constexpr qint32 kBytesPerUtf16CodeUnit = 2;
-    constexpr qint32 kBitsPerByte = 8;
     // Version prefix on every mod-sync wire frame; bump on schema breakage.
     constexpr qint32 kModSyncProtocolVersion = 1;
 
@@ -2618,73 +2612,6 @@ namespace
     constexpr const char* const kMsgModSyncMalformedBegin = QT_TRANSLATE_NOOP("Multiplayermenu", "Malformed mod-sync begin frame.");
     constexpr const char* const kMsgModSyncStartFailed = QT_TRANSLATE_NOOP("Multiplayermenu", "Could not start mod sync.");
 
-    bool readBoundedQByteArray(QDataStream & stream, QByteArray & out, qint64 maxBytes)
-    {
-        if (maxBytes < 0)
-        {
-            return false;
-        }
-        quint32 declared = 0;
-        stream >> declared;
-        if (stream.status() != QDataStream::Ok)
-        {
-            return false;
-        }
-        if (declared == kQDataStreamNullSentinel)
-        {
-            out.clear();
-            return true;
-        }
-        if (declared > kInt32MaxAsU32 || static_cast<qint64>(declared) > maxBytes)
-        {
-            return false;
-        }
-        out.resize(static_cast<qint32>(declared));
-        if (out.size() > 0 && stream.readRawData(out.data(), out.size()) != out.size())
-        {
-            return false;
-        }
-        return true;
-    }
-
-    bool readBoundedQString(QDataStream & stream, QString & out, qint32 maxChars)
-    {
-        if (maxChars < 0)
-        {
-            return false;
-        }
-        quint32 declared = 0;
-        stream >> declared;
-        if (stream.status() != QDataStream::Ok)
-        {
-            return false;
-        }
-        if (declared == kQDataStreamNullSentinel)
-        {
-            out.clear();
-            return true;
-        }
-        const qint64 maxBytes = static_cast<qint64>(maxChars) * kBytesPerUtf16CodeUnit;
-        if (declared > kInt32MaxAsU32 || static_cast<qint64>(declared) > maxBytes || (declared % kBytesPerUtf16CodeUnit) != 0)
-        {
-            return false;
-        }
-        QByteArray buf;
-        buf.resize(static_cast<qint32>(declared));
-        if (buf.size() > 0 && stream.readRawData(buf.data(), buf.size()) != buf.size())
-        {
-            return false;
-        }
-        const qint32 codeUnits = buf.size() / kBytesPerUtf16CodeUnit;
-        out.resize(codeUnits);
-        const uchar * src = reinterpret_cast<const uchar *>(buf.constData());
-        // Wire is big-endian; build each code unit explicitly to skip platform-endian conversion in fromUtf16.
-        for (qint32 i = 0; i < codeUnits; ++i)
-        {
-            out[i] = QChar(static_cast<ushort>((src[i * kBytesPerUtf16CodeUnit] << kBitsPerByte) | src[i * kBytesPerUtf16CodeUnit + 1]));
-        }
-        return true;
-    }
 }
 
 bool Multiplayermenu::requestModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods)
@@ -2779,7 +2706,7 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
         for (qint32 i = 0; i < modCount; ++i)
         {
             QString mod;
-            if (!readBoundedQString(stream, mod, relPathMaxLen))
+            if (!Filesupport::readBoundedString(stream, mod, relPathMaxLen))
             {
                 sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncInvalidPath, QString(), tr("Malformed mod path in request."));
                 return;
@@ -3044,7 +2971,7 @@ void Multiplayermenu::handleModSyncManifest(QDataStream & stream, quint64 socket
     for (qint32 i = 0; i < entryCount; ++i)
     {
         QString modPath;
-        if (!readBoundedQString(stream, modPath, relPathMaxLen))
+        if (!Filesupport::readBoundedString(stream, modPath, relPathMaxLen))
         {
             CONSOLE_PRINT("MODSYNCMANIFEST mod path overflow or malformed, ignoring", GameConsole::eWARNING);
             return;
@@ -3119,7 +3046,7 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     }
 
     QString modPath;
-    if (!readBoundedQString(stream, modPath, relPathMaxLen))
+    if (!Filesupport::readBoundedString(stream, modPath, relPathMaxLen))
     {
         CONSOLE_PRINT("MODSYNCDATA mod path overflow or malformed", GameConsole::eERROR);
         failData(tr("Malformed mod-sync data frame."));
@@ -3138,7 +3065,7 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     }
 
     QByteArray compressedBlob;
-    if (!readBoundedQByteArray(stream, compressedBlob, perModCap))
+    if (!Filesupport::readBoundedBytes(stream, compressedBlob, perModCap))
     {
         CONSOLE_PRINT("MODSYNCDATA blob overflow or malformed for " + modPath, GameConsole::eERROR);
         failData(tr(kMsgModSyncPerModSizeCap).arg(modPath));
@@ -3237,7 +3164,7 @@ void Multiplayermenu::handleModSyncModBegin(QDataStream & stream, quint64 socket
         return;
     }
     QString modPath;
-    if (!readBoundedQString(stream, modPath, relPathMaxLen))
+    if (!Filesupport::readBoundedString(stream, modPath, relPathMaxLen))
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN mod path overflow or malformed", GameConsole::eERROR);
         failBegin(tr(kMsgModSyncMalformedBegin));
@@ -3361,7 +3288,7 @@ void Multiplayermenu::handleModSyncModChunk(QDataStream & stream, quint64 socket
         return;
     }
     QString modPath;
-    if (!readBoundedQString(stream, modPath, relPathMaxLen))
+    if (!Filesupport::readBoundedString(stream, modPath, relPathMaxLen))
     {
         CONSOLE_PRINT("MODSYNCMODCHUNK mod path overflow or malformed", GameConsole::eERROR);
         failChunk(tr("Malformed mod-sync chunk frame."));
@@ -3382,7 +3309,7 @@ void Multiplayermenu::handleModSyncModChunk(QDataStream & stream, quint64 socket
         return;
     }
     QByteArray chunkBytes;
-    if (!readBoundedQByteArray(stream, chunkBytes, kModSyncChunkBytes))
+    if (!Filesupport::readBoundedBytes(stream, chunkBytes, kModSyncChunkBytes))
     {
         CONSOLE_PRINT("MODSYNCMODCHUNK chunk overflow or malformed for " + modPath, GameConsole::eERROR);
         failChunk(tr("Mod-sync chunk exceeds size limit."));
@@ -3461,7 +3388,7 @@ void Multiplayermenu::handleModSyncModEnd(QDataStream & stream, quint64 socketID
         return;
     }
     QString modPath;
-    if (!readBoundedQString(stream, modPath, relPathMaxLen))
+    if (!Filesupport::readBoundedString(stream, modPath, relPathMaxLen))
     {
         CONSOLE_PRINT("MODSYNCMODEND mod path overflow or malformed", GameConsole::eERROR);
         failEnd(tr("Malformed mod-sync end frame."));
@@ -3550,7 +3477,7 @@ void Multiplayermenu::handleModSyncReject(QDataStream & stream, quint64 socketID
         return;
     }
     QString modPath;
-    if (!readBoundedQString(stream, modPath, relPathMaxLen))
+    if (!Filesupport::readBoundedString(stream, modPath, relPathMaxLen))
     {
         CONSOLE_PRINT("MODSYNCREJECT mod path overflow or malformed", GameConsole::eERROR);
         cancelModSyncSession();
@@ -3560,7 +3487,7 @@ void Multiplayermenu::handleModSyncReject(QDataStream & stream, quint64 socketID
     qint32 reasonCode = 0;
     stream >> reasonCode;
     QString reasonMessage;
-    if (!readBoundedQString(stream, reasonMessage, kModSyncReasonCharsMax))
+    if (!Filesupport::readBoundedString(stream, reasonMessage, kModSyncReasonCharsMax))
     {
         CONSOLE_PRINT("MODSYNCREJECT reason message overflow or malformed (code=" + QString::number(reasonCode) + " mod=" + modPath + ")", GameConsole::eERROR);
         cancelModSyncSession();

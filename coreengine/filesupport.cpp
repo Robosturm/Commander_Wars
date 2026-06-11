@@ -230,31 +230,10 @@ namespace
         return c >= QChar('0') && c <= QChar('9');
     }
 
-    // Validate length header before allocation; defends against decompression-bomb pre-allocation in operator>>.
-    bool readBoundedBytes(QDataStream & stream, QByteArray & out, qint64 maxBytes)
-    {
-        quint32 declared = 0;
-        stream >> declared;
-        if (stream.status() != QDataStream::Ok)
-        {
-            return false;
-        }
-        if (declared == kQDataStreamNullSentinel)
-        {
-            out.clear();
-            return true;
-        }
-        if (declared > static_cast<quint32>(maxBytes))
-        {
-            return false;
-        }
-        out.resize(static_cast<qint32>(declared));
-        if (out.size() > 0 && stream.readRawData(out.data(), out.size()) != out.size())
-        {
-            return false;
-        }
-        return true;
-    }
+    // QDataStream::operator>> pre-resizes to the declared length; the bounded readers reject the header before allocation.
+    constexpr quint32 kInt32MaxAsU32 = 0x7FFFFFFFu;
+    constexpr qint32 kBytesPerUtf16CodeUnit = 2;
+    constexpr qint32 kBitsPerByte = 8;
 
     // Match only exact slice-2-generated shapes; substring matching would catch legitimate mod folder names.
     bool matchStagingShape(const QString & name, QString & outPrefix)
@@ -568,6 +547,74 @@ Filesupport::ModSyncPackage Filesupport::buildModSyncPackage(const QString & ins
         return pkg;
     }
     return pkg;
+}
+
+bool Filesupport::readBoundedBytes(QDataStream & stream, QByteArray & out, qint64 maxBytes)
+{
+    if (maxBytes < 0)
+    {
+        return false;
+    }
+    quint32 declared = 0;
+    stream >> declared;
+    if (stream.status() != QDataStream::Ok)
+    {
+        return false;
+    }
+    if (declared == kQDataStreamNullSentinel)
+    {
+        out.clear();
+        return true;
+    }
+    if (declared > kInt32MaxAsU32 || static_cast<qint64>(declared) > maxBytes)
+    {
+        return false;
+    }
+    out.resize(static_cast<qint32>(declared));
+    if (out.size() > 0 && stream.readRawData(out.data(), out.size()) != out.size())
+    {
+        return false;
+    }
+    return true;
+}
+
+bool Filesupport::readBoundedString(QDataStream & stream, QString & out, qint32 maxChars)
+{
+    if (maxChars < 0)
+    {
+        return false;
+    }
+    quint32 declared = 0;
+    stream >> declared;
+    if (stream.status() != QDataStream::Ok)
+    {
+        return false;
+    }
+    if (declared == kQDataStreamNullSentinel)
+    {
+        out.clear();
+        return true;
+    }
+    const qint64 maxBytes = static_cast<qint64>(maxChars) * kBytesPerUtf16CodeUnit;
+    if (declared > kInt32MaxAsU32 || static_cast<qint64>(declared) > maxBytes || (declared % kBytesPerUtf16CodeUnit) != 0)
+    {
+        return false;
+    }
+    QByteArray buf;
+    buf.resize(static_cast<qint32>(declared));
+    if (buf.size() > 0 && stream.readRawData(buf.data(), buf.size()) != buf.size())
+    {
+        return false;
+    }
+    const qint32 codeUnits = buf.size() / kBytesPerUtf16CodeUnit;
+    out.resize(codeUnits);
+    const uchar * src = reinterpret_cast<const uchar *>(buf.constData());
+    // Wire is big-endian; build each code unit explicitly to skip platform-endian conversion in fromUtf16.
+    for (qint32 i = 0; i < codeUnits; ++i)
+    {
+        out[i] = QChar(static_cast<ushort>((src[i * kBytesPerUtf16CodeUnit] << kBitsPerByte) | src[i * kBytesPerUtf16CodeUnit + 1]));
+    }
+    return true;
 }
 
 QMap<QString, QByteArray> Filesupport::extractModSyncPackage(const QByteArray & compressedBlob, qint32 declaredUncompressedSize, const ModSyncCaps & caps, qint32 & rejectReason)
