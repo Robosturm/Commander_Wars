@@ -211,6 +211,8 @@ protected:
     void handleModSyncComplete(QDataStream & stream, quint64 socketID);
     void sendModSyncReject(quint64 socketID, NetworkCommands::ModSyncRejectReason reasonCode, const QString & modPath, const QString & message);
     void cancelModSyncSession();
+    // Shared failure path of the client-side receive handlers: tear down the session, then surface the reason.
+    void failModSync(const QString & uiReason);
     // Drives the host-side chunked send loop one chunk per event-loop iteration so a large mod cannot pin the GUI thread.
     void pumpModSyncSend();
     /**

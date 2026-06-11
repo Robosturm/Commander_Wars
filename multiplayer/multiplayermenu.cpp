@@ -1463,6 +1463,39 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
     }
 }
 
+namespace
+{
+    // Cap per mismatch section in the dialog; the full lists go to the console log.
+    constexpr qint32 kMismatchDisplayLimit = 5;
+
+    void logFullList(const QString & label, const QStringList & list)
+    {
+        if (!list.isEmpty())
+        {
+            CONSOLE_PRINT(label + ": " + list.join(", "), GameConsole::eINFO);
+        }
+    }
+
+    void appendSection(QString & dst, const QString & header, const QStringList & lines)
+    {
+        if (lines.isEmpty())
+        {
+            return;
+        }
+        dst += header + "\n";
+        const qint32 shown = std::min(static_cast<qint32>(lines.size()), kMismatchDisplayLimit);
+        for (qint32 i = 0; i < shown; ++i)
+        {
+            dst += "  " + lines[i] + "\n";
+        }
+        if (lines.size() > kMismatchDisplayLimit)
+        {
+            dst += "  " + Multiplayermenu::tr("...and %1 more (see console.log)").arg(lines.size() - kMismatchDisplayLimit) + "\n";
+        }
+        dst += "\n";
+    }
+}
+
 void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, const QMap<QString, QByteArray> & hostModHashes, quint32 hostCapabilities, bool sameMods, bool differentHash, bool sameVersion, bool cosmeticAllowed)
 {
     // Mod/hash fields are stale on version mismatch because readHashInfo early-returns.
@@ -1474,7 +1507,6 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
         return;
     }
 
-    constexpr qint32 DISPLAY_LIMIT = 5;
     auto * settings = Settings::getInstance();
 
     QStringList missingHere;
@@ -1533,37 +1565,11 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
         }
     }
 
-    auto logFullList = [](const QString & label, const QStringList & list)
-    {
-        if (!list.isEmpty())
-        {
-            CONSOLE_PRINT(label + ": " + list.join(", "), GameConsole::eINFO);
-        }
-    };
     logFullList(QStringLiteral("Mods host has that you are missing"), missingHere);
     logFullList(QStringLiteral("Mods you have that host does not"), extraHere);
     logFullList(QStringLiteral("Mods with version-string mismatch"), versionDiffs);
     logFullList(QStringLiteral("Mods with different content"), contentDiffs);
     logFullList(QStringLiteral("Engine resource folders modified"), mismatchedResourceFolders);
-
-    auto appendSection = [&](QString & dst, const QString & header, const QStringList & lines)
-    {
-        if (lines.isEmpty())
-        {
-            return;
-        }
-        dst += header + "\n";
-        const qint32 shown = std::min(static_cast<qint32>(lines.size()), DISPLAY_LIMIT);
-        for (qint32 i = 0; i < shown; ++i)
-        {
-            dst += "  " + lines[i] + "\n";
-        }
-        if (lines.size() > DISPLAY_LIMIT)
-        {
-            dst += "  " + tr("...and %1 more (see console.log)").arg(lines.size() - DISPLAY_LIMIT) + "\n";
-        }
-        dst += "\n";
-    };
 
     QString message;
     appendSection(message, tr("Missing mods (host has, you don't):"), missingHere);
@@ -2612,6 +2618,23 @@ namespace
     constexpr const char* const kMsgModSyncMalformedBegin = QT_TRANSLATE_NOOP("Multiplayermenu", "Malformed mod-sync begin frame.");
     constexpr const char* const kMsgModSyncStartFailed = QT_TRANSLATE_NOOP("Multiplayermenu", "Could not start mod sync.");
 
+    QString packageRejectReason(NetworkCommands::ModSyncRejectReason code, const QString & mod)
+    {
+        switch (code)
+        {
+            case NetworkCommands::ModSyncRejectReason::ModSyncSizeCapExceeded:
+                return Multiplayermenu::tr("Mod %1 exceeds the per-mod size cap on the host.").arg(mod);
+            case NetworkCommands::ModSyncRejectReason::ModSyncFileCountCapExceeded:
+                return Multiplayermenu::tr("Mod %1 exceeds the per-mod file-count cap on the host.").arg(mod);
+            case NetworkCommands::ModSyncRejectReason::ModSyncInvalidPath:
+                return Multiplayermenu::tr("Mod %1 has an unsafe internal file path.").arg(mod);
+            case NetworkCommands::ModSyncRejectReason::ModSyncUnknownMod:
+                return Multiplayermenu::tr("Mod %1 was not found on the host.").arg(mod);
+            default:
+                return Multiplayermenu::tr("Failed to build mod package for %1.").arg(mod);
+        }
+    }
+
 }
 
 bool Multiplayermenu::requestModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods)
@@ -2748,23 +2771,6 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
     const qint64 totalCap = settings->getModSyncMaxTotalBytes();
     qint64 totalSent = 0;
     qint64 totalUncompressed = 0;
-
-    auto packageRejectReason = [this](NetworkCommands::ModSyncRejectReason code, const QString & mod) -> QString
-    {
-        switch (code)
-        {
-            case NetworkCommands::ModSyncRejectReason::ModSyncSizeCapExceeded:
-                return tr("Mod %1 exceeds the per-mod size cap on the host.").arg(mod);
-            case NetworkCommands::ModSyncRejectReason::ModSyncFileCountCapExceeded:
-                return tr("Mod %1 exceeds the per-mod file-count cap on the host.").arg(mod);
-            case NetworkCommands::ModSyncRejectReason::ModSyncInvalidPath:
-                return tr("Mod %1 has an unsafe internal file path.").arg(mod);
-            case NetworkCommands::ModSyncRejectReason::ModSyncUnknownMod:
-                return tr("Mod %1 was not found on the host.").arg(mod);
-            default:
-                return tr("Failed to build mod package for %1.").arg(mod);
-        }
-    };
 
     // Pre-build so the manifest carries exact sizes; peak ~totalCap, each blob freed after its MODSYNCDATA send.
     QVector<QPair<QString, Filesupport::ModSyncPackage>> builtPackages;
@@ -3023,16 +3029,10 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     const qint32 fileCountMax = settings->getModSyncMaxFiles();
     const qint64 totalCap = settings->getModSyncMaxTotalBytes();
 
-    auto failData = [this](const QString & uiReason)
-    {
-        cancelModSyncSession();
-        onModSyncFailed(uiReason);
-    };
-
     if (!m_modSyncCurrentChunkMod.modPath.isEmpty())
     {
         CONSOLE_PRINT("MODSYNCDATA arrived while a chunked mod is in flight; protocol violation", GameConsole::eERROR);
-        failData(tr("Host mixed chunked and legacy mod-sync framing."));
+        failModSync(tr("Host mixed chunked and legacy mod-sync framing."));
         return;
     }
 
@@ -3041,7 +3041,7 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (stream.status() != QDataStream::Ok || protocolVersion != kModSyncProtocolVersion)
     {
         CONSOLE_PRINT("MODSYNCDATA unsupported protocol version", GameConsole::eERROR);
-        failData(tr(kMsgUnsupportedModSyncProtocol));
+        failModSync(tr(kMsgUnsupportedModSyncProtocol));
         return;
     }
 
@@ -3049,7 +3049,7 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (!Filesupport::readBoundedString(stream, modPath, relPathMaxLen))
     {
         CONSOLE_PRINT("MODSYNCDATA mod path overflow or malformed", GameConsole::eERROR);
-        failData(tr("Malformed mod-sync data frame."));
+        failModSync(tr("Malformed mod-sync data frame."));
         return;
     }
 
@@ -3060,7 +3060,7 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (stream.status() != QDataStream::Ok || declaredSize < 0 || fileCount < 0 || fileCount > fileCountMax)
     {
         CONSOLE_PRINT("MODSYNCDATA size/count out of range for " + modPath, GameConsole::eERROR);
-        failData(tr(kMsgModSyncFileCountCap).arg(modPath));
+        failModSync(tr(kMsgModSyncFileCountCap).arg(modPath));
         return;
     }
 
@@ -3068,20 +3068,20 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (!Filesupport::readBoundedBytes(stream, compressedBlob, perModCap))
     {
         CONSOLE_PRINT("MODSYNCDATA blob overflow or malformed for " + modPath, GameConsole::eERROR);
-        failData(tr(kMsgModSyncPerModSizeCap).arg(modPath));
+        failModSync(tr(kMsgModSyncPerModSizeCap).arg(modPath));
         return;
     }
 
     if (!Filesupport::validateModPath(modPath))
     {
         CONSOLE_PRINT("MODSYNCDATA invalid mod path: " + modPath, GameConsole::eERROR);
-        failData(tr(kMsgModSyncInvalidModPath));
+        failModSync(tr(kMsgModSyncInvalidModPath));
         return;
     }
     if (!m_modSyncRequestedSet.contains(modPath))
     {
         CONSOLE_PRINT("MODSYNCDATA for unrequested or duplicate mod: " + modPath, GameConsole::eERROR);
-        failData(tr(kMsgModSyncUnrequestedMod));
+        failModSync(tr(kMsgModSyncUnrequestedMod));
         return;
     }
 
@@ -3090,7 +3090,7 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (m_modSyncReceivedBytes > totalCap || m_modSyncReceivedUncompressedBytes > totalCap)
     {
         CONSOLE_PRINT("Mod-sync exceeds total bytes cap, aborting", GameConsole::eERROR);
-        failData(tr(kMsgModSyncTotalCap));
+        failModSync(tr(kMsgModSyncTotalCap));
         return;
     }
 
@@ -3104,13 +3104,13 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (rejectReason != 0)
     {
         CONSOLE_PRINT("Mod-sync extract rejected (" + QString::number(rejectReason) + ") for " + modPath, GameConsole::eERROR);
-        failData(tr(kMsgModSyncUnpackFailed).arg(modPath));
+        failModSync(tr(kMsgModSyncUnpackFailed).arg(modPath));
         return;
     }
     if (files.size() != fileCount)
     {
         CONSOLE_PRINT("Mod-sync file count mismatch for " + modPath + " (got " + QString::number(files.size()) + ", expected " + QString::number(fileCount) + ")", GameConsole::eERROR);
-        failData(tr(kMsgModSyncFileCountMismatch).arg(modPath));
+        failModSync(tr(kMsgModSyncFileCountMismatch).arg(modPath));
         return;
     }
 
@@ -3119,7 +3119,7 @@ void Multiplayermenu::handleModSyncData(QDataStream & stream, quint64 socketID)
     if (stageReason != 0 || stagingRel.isEmpty())
     {
         CONSOLE_PRINT("Mod-sync stage rejected (" + QString::number(stageReason) + ") for " + modPath, GameConsole::eERROR);
-        failData(tr(kMsgModSyncStageFailed).arg(modPath));
+        failModSync(tr(kMsgModSyncStageFailed).arg(modPath));
         return;
     }
     m_modSyncStagings.append(qMakePair(stagingRel, modPath));
@@ -3142,16 +3142,10 @@ void Multiplayermenu::handleModSyncModBegin(QDataStream & stream, quint64 socket
     const qint32 fileCountMax = settings->getModSyncMaxFiles();
     const qint64 totalCap = settings->getModSyncMaxTotalBytes();
 
-    auto failBegin = [this](const QString & uiReason)
-    {
-        cancelModSyncSession();
-        onModSyncFailed(uiReason);
-    };
-
     if (!m_modSyncCurrentChunkMod.modPath.isEmpty())
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN while a chunked mod is already in flight; protocol violation", GameConsole::eERROR);
-        failBegin(tr("Host opened a second chunked mod before finishing the first."));
+        failModSync(tr("Host opened a second chunked mod before finishing the first."));
         return;
     }
 
@@ -3160,14 +3154,14 @@ void Multiplayermenu::handleModSyncModBegin(QDataStream & stream, quint64 socket
     if (stream.status() != QDataStream::Ok || protocolVersion != kModSyncProtocolVersion)
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN unsupported protocol version", GameConsole::eERROR);
-        failBegin(tr(kMsgUnsupportedModSyncProtocol));
+        failModSync(tr(kMsgUnsupportedModSyncProtocol));
         return;
     }
     QString modPath;
     if (!Filesupport::readBoundedString(stream, modPath, relPathMaxLen))
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN mod path overflow or malformed", GameConsole::eERROR);
-        failBegin(tr(kMsgModSyncMalformedBegin));
+        failModSync(tr(kMsgModSyncMalformedBegin));
         return;
     }
     qint32 declaredUncompressedSize = 0;
@@ -3181,63 +3175,63 @@ void Multiplayermenu::handleModSyncModBegin(QDataStream & stream, quint64 socket
     if (stream.status() != QDataStream::Ok)
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN truncated header for " + modPath, GameConsole::eERROR);
-        failBegin(tr(kMsgModSyncMalformedBegin));
+        failModSync(tr(kMsgModSyncMalformedBegin));
         return;
     }
     if (declaredUncompressedSize < 0 || declaredUncompressedSize > perModCap)
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN declaredUncompressedSize out of range for " + modPath, GameConsole::eERROR);
-        failBegin(tr(kMsgModSyncPerModSizeCap).arg(modPath));
+        failModSync(tr(kMsgModSyncPerModSizeCap).arg(modPath));
         return;
     }
     if (compressedTotal < 0 || compressedTotal > perModCap)
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN compressedTotal out of range for " + modPath, GameConsole::eERROR);
-        failBegin(tr(kMsgModSyncPerModSizeCap).arg(modPath));
+        failModSync(tr(kMsgModSyncPerModSizeCap).arg(modPath));
         return;
     }
     // Defensive: QByteArray and downstream offsets use qint32 sizes throughout the slice 5 pipeline. perModCap is qint32 today, but guard explicitly so a future widening cannot silently overflow the casts below.
     if (compressedTotal > std::numeric_limits<qint32>::max())
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN compressedTotal exceeds qint32 range for " + modPath, GameConsole::eERROR);
-        failBegin(tr("Mod %1 is too large to receive.").arg(modPath));
+        failModSync(tr("Mod %1 is too large to receive.").arg(modPath));
         return;
     }
     if (fileCount < 0 || fileCount > fileCountMax)
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN fileCount out of range for " + modPath, GameConsole::eERROR);
-        failBegin(tr(kMsgModSyncFileCountCap).arg(modPath));
+        failModSync(tr(kMsgModSyncFileCountCap).arg(modPath));
         return;
     }
     if (chunkCount < 0 || chunkCount > kModSyncChunkCountMax)
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN chunkCount out of range for " + modPath, GameConsole::eERROR);
-        failBegin(tr("Mod %1 has too many chunks.").arg(modPath));
+        failModSync(tr("Mod %1 has too many chunks.").arg(modPath));
         return;
     }
     const qint32 expectedChunkCount = compressedTotal == 0 ? 0 : static_cast<qint32>((compressedTotal + kModSyncChunkBytes - 1) / kModSyncChunkBytes);
     if (chunkCount != expectedChunkCount)
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN chunkCount inconsistent with compressedTotal for " + modPath, GameConsole::eERROR);
-        failBegin(tr("Mod %1 chunk count is inconsistent.").arg(modPath));
+        failModSync(tr("Mod %1 chunk count is inconsistent.").arg(modPath));
         return;
     }
     if (m_modSyncReceivedBytes + compressedTotal > totalCap || m_modSyncReceivedUncompressedBytes + declaredUncompressedSize > totalCap)
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN would exceed total cap for " + modPath, GameConsole::eERROR);
-        failBegin(tr(kMsgModSyncTotalCap));
+        failModSync(tr(kMsgModSyncTotalCap));
         return;
     }
     if (!Filesupport::validateModPath(modPath))
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN invalid mod path: " + modPath, GameConsole::eERROR);
-        failBegin(tr(kMsgModSyncInvalidModPath));
+        failModSync(tr(kMsgModSyncInvalidModPath));
         return;
     }
     if (!m_modSyncRequestedSet.contains(modPath))
     {
         CONSOLE_PRINT("MODSYNCMODBEGIN for unrequested or duplicate mod: " + modPath, GameConsole::eERROR);
-        failBegin(tr(kMsgModSyncUnrequestedMod));
+        failModSync(tr(kMsgModSyncUnrequestedMod));
         return;
     }
 
@@ -3273,31 +3267,25 @@ void Multiplayermenu::handleModSyncModChunk(QDataStream & stream, quint64 socket
     const qint32 relPathMaxLen = settings->getModSyncMaxRelativePathLength();
     const qint64 totalCap = settings->getModSyncMaxTotalBytes();
 
-    auto failChunk = [this](const QString & uiReason)
-    {
-        cancelModSyncSession();
-        onModSyncFailed(uiReason);
-    };
-
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
     if (stream.status() != QDataStream::Ok || protocolVersion != kModSyncProtocolVersion)
     {
         CONSOLE_PRINT("MODSYNCMODCHUNK unsupported protocol version", GameConsole::eERROR);
-        failChunk(tr(kMsgUnsupportedModSyncProtocol));
+        failModSync(tr(kMsgUnsupportedModSyncProtocol));
         return;
     }
     QString modPath;
     if (!Filesupport::readBoundedString(stream, modPath, relPathMaxLen))
     {
         CONSOLE_PRINT("MODSYNCMODCHUNK mod path overflow or malformed", GameConsole::eERROR);
-        failChunk(tr("Malformed mod-sync chunk frame."));
+        failModSync(tr("Malformed mod-sync chunk frame."));
         return;
     }
     if (modPath != m_modSyncCurrentChunkMod.modPath)
     {
         CONSOLE_PRINT("MODSYNCMODCHUNK modPath mismatch; expected " + m_modSyncCurrentChunkMod.modPath + " got " + modPath, GameConsole::eERROR);
-        failChunk(tr("Host interleaved chunks across mods."));
+        failModSync(tr("Host interleaved chunks across mods."));
         return;
     }
     qint32 chunkIndex = 0;
@@ -3305,21 +3293,21 @@ void Multiplayermenu::handleModSyncModChunk(QDataStream & stream, quint64 socket
     if (stream.status() != QDataStream::Ok || chunkIndex != m_modSyncCurrentChunkMod.receivedChunkCount)
     {
         CONSOLE_PRINT("MODSYNCMODCHUNK out-of-order chunkIndex for " + modPath, GameConsole::eERROR);
-        failChunk(tr("Host sent chunks out of order."));
+        failModSync(tr("Host sent chunks out of order."));
         return;
     }
     QByteArray chunkBytes;
     if (!Filesupport::readBoundedBytes(stream, chunkBytes, kModSyncChunkBytes))
     {
         CONSOLE_PRINT("MODSYNCMODCHUNK chunk overflow or malformed for " + modPath, GameConsole::eERROR);
-        failChunk(tr("Mod-sync chunk exceeds size limit."));
+        failModSync(tr("Mod-sync chunk exceeds size limit."));
         return;
     }
     const qint64 newAccumulated = static_cast<qint64>(m_modSyncCurrentChunkMod.blob.size()) + chunkBytes.size();
     if (newAccumulated > m_modSyncCurrentChunkMod.compressedTotal)
     {
         CONSOLE_PRINT("MODSYNCMODCHUNK accumulated exceeds compressedTotal for " + modPath, GameConsole::eERROR);
-        failChunk(tr("Host sent more bytes than declared for mod %1.").arg(modPath));
+        failModSync(tr("Host sent more bytes than declared for mod %1.").arg(modPath));
         return;
     }
     const bool isFinalChunk = (m_modSyncCurrentChunkMod.receivedChunkCount + 1 == m_modSyncCurrentChunkMod.expectedChunkCount);
@@ -3329,7 +3317,7 @@ void Multiplayermenu::handleModSyncModChunk(QDataStream & stream, quint64 socket
     if (chunkBytes.size() != expectedThisChunk)
     {
         CONSOLE_PRINT("MODSYNCMODCHUNK size " + QString::number(chunkBytes.size()) + " differs from expected " + QString::number(expectedThisChunk) + " for " + modPath, GameConsole::eERROR);
-        failChunk(tr("Host sent a chunk of unexpected size."));
+        failModSync(tr("Host sent a chunk of unexpected size."));
         return;
     }
 
@@ -3347,7 +3335,7 @@ void Multiplayermenu::handleModSyncModChunk(QDataStream & stream, quint64 socket
     if (m_modSyncReceivedBytes > totalCap || m_modSyncReceivedUncompressedBytes > totalCap)
     {
         CONSOLE_PRINT("Mod-sync exceeds total bytes cap mid-chunk, aborting", GameConsole::eERROR);
-        failChunk(tr(kMsgModSyncTotalCap));
+        failModSync(tr(kMsgModSyncTotalCap));
         return;
     }
     onModSyncProgress();
@@ -3373,43 +3361,37 @@ void Multiplayermenu::handleModSyncModEnd(QDataStream & stream, quint64 socketID
     const qint64 perModCap = settings->getModSyncMaxPerModBytes();
     const qint32 fileCountMax = settings->getModSyncMaxFiles();
 
-    auto failEnd = [this](const QString & uiReason)
-    {
-        cancelModSyncSession();
-        onModSyncFailed(uiReason);
-    };
-
     qint32 protocolVersion = 0;
     stream >> protocolVersion;
     if (stream.status() != QDataStream::Ok || protocolVersion != kModSyncProtocolVersion)
     {
         CONSOLE_PRINT("MODSYNCMODEND unsupported protocol version", GameConsole::eERROR);
-        failEnd(tr(kMsgUnsupportedModSyncProtocol));
+        failModSync(tr(kMsgUnsupportedModSyncProtocol));
         return;
     }
     QString modPath;
     if (!Filesupport::readBoundedString(stream, modPath, relPathMaxLen))
     {
         CONSOLE_PRINT("MODSYNCMODEND mod path overflow or malformed", GameConsole::eERROR);
-        failEnd(tr("Malformed mod-sync end frame."));
+        failModSync(tr("Malformed mod-sync end frame."));
         return;
     }
     if (modPath != m_modSyncCurrentChunkMod.modPath)
     {
         CONSOLE_PRINT("MODSYNCMODEND modPath mismatch; expected " + m_modSyncCurrentChunkMod.modPath + " got " + modPath, GameConsole::eERROR);
-        failEnd(tr("Host ended a different mod than the one in flight."));
+        failModSync(tr("Host ended a different mod than the one in flight."));
         return;
     }
     if (m_modSyncCurrentChunkMod.receivedChunkCount != m_modSyncCurrentChunkMod.expectedChunkCount)
     {
         CONSOLE_PRINT("MODSYNCMODEND chunk count mismatch for " + modPath, GameConsole::eERROR);
-        failEnd(tr("Host ended mod %1 before delivering all chunks.").arg(modPath));
+        failModSync(tr("Host ended mod %1 before delivering all chunks.").arg(modPath));
         return;
     }
     if (m_modSyncCurrentChunkMod.blob.size() != m_modSyncCurrentChunkMod.compressedTotal)
     {
         CONSOLE_PRINT("MODSYNCMODEND blob size mismatch for " + modPath, GameConsole::eERROR);
-        failEnd(tr("Host blob size for mod %1 did not match its declared total.").arg(modPath));
+        failModSync(tr("Host blob size for mod %1 did not match its declared total.").arg(modPath));
         return;
     }
 
@@ -3423,13 +3405,13 @@ void Multiplayermenu::handleModSyncModEnd(QDataStream & stream, quint64 socketID
     if (rejectReason != 0)
     {
         CONSOLE_PRINT("MODSYNCMODEND extract rejected (" + QString::number(rejectReason) + ") for " + modPath, GameConsole::eERROR);
-        failEnd(tr(kMsgModSyncUnpackFailed).arg(modPath));
+        failModSync(tr(kMsgModSyncUnpackFailed).arg(modPath));
         return;
     }
     if (files.size() != m_modSyncCurrentChunkMod.fileCount)
     {
         CONSOLE_PRINT("MODSYNCMODEND file count mismatch for " + modPath + " (got " + QString::number(files.size()) + ", expected " + QString::number(m_modSyncCurrentChunkMod.fileCount) + ")", GameConsole::eERROR);
-        failEnd(tr(kMsgModSyncFileCountMismatch).arg(modPath));
+        failModSync(tr(kMsgModSyncFileCountMismatch).arg(modPath));
         return;
     }
     qint32 stageReason = 0;
@@ -3437,7 +3419,7 @@ void Multiplayermenu::handleModSyncModEnd(QDataStream & stream, quint64 socketID
     if (stageReason != 0 || stagingRel.isEmpty())
     {
         CONSOLE_PRINT("MODSYNCMODEND stage rejected (" + QString::number(stageReason) + ") for " + modPath, GameConsole::eERROR);
-        failEnd(tr(kMsgModSyncStageFailed).arg(modPath));
+        failModSync(tr(kMsgModSyncStageFailed).arg(modPath));
         return;
     }
 
@@ -3588,6 +3570,12 @@ void Multiplayermenu::sendModSyncReject(quint64 socketID, NetworkCommands::ModSy
     stream << message;
     emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
     CONSOLE_PRINT("Sent MODSYNCREJECT code=" + QString::number(static_cast<qint32>(reasonCode)) + " mod=" + modPath + " msg=" + message, GameConsole::eINFO);
+}
+
+void Multiplayermenu::failModSync(const QString & uiReason)
+{
+    cancelModSyncSession();
+    onModSyncFailed(uiReason);
 }
 
 void Multiplayermenu::cancelModSyncSession()
