@@ -19,6 +19,7 @@
 #include <QUuid>
 
 #include "coreengine/settings.h"
+#include "coreengine/filesupport.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/userdata.h"
@@ -28,6 +29,12 @@
 #include "coreengine/virtualpaths.h"
 
 const char* const Settings::DEFAULT_AUDIODEVICE = "@@default@@";
+
+namespace
+{
+    // QSettings group and key of the active mod list ([Mods]/Mods=).
+    const char* const kModsSettingsGroup = "Mods";
+}
 
 // this Object
 spSettings Settings::m_pInstance;
@@ -258,6 +265,66 @@ void Settings::setServerPassword(const QString newServerPassword)
 {
     CONSOLE_PRINT("Changed buffered server login password", GameConsole::eDEBUG);
     m_serverPassword = newServerPassword;
+}
+
+bool Settings::getModSyncEnabled() const
+{
+    return m_modSyncEnabled;
+}
+
+void Settings::setModSyncEnabled(bool newModSyncEnabled)
+{
+    m_modSyncEnabled = newModSyncEnabled;
+}
+
+qint32 Settings::getModSyncMaxPerModBytes() const
+{
+    return m_modSyncMaxPerModBytes;
+}
+
+void Settings::setModSyncMaxPerModBytes(qint32 newValue)
+{
+    m_modSyncMaxPerModBytes = newValue;
+}
+
+qint32 Settings::getModSyncMaxTotalBytes() const
+{
+    return m_modSyncMaxTotalBytes;
+}
+
+void Settings::setModSyncMaxTotalBytes(qint32 newValue)
+{
+    m_modSyncMaxTotalBytes = newValue;
+}
+
+qint32 Settings::getModSyncMaxFiles() const
+{
+    return m_modSyncMaxFiles;
+}
+
+void Settings::setModSyncMaxFiles(qint32 newValue)
+{
+    m_modSyncMaxFiles = newValue;
+}
+
+qint32 Settings::getModSyncMaxRelativePathLength() const
+{
+    return m_modSyncMaxRelativePathLength;
+}
+
+void Settings::setModSyncMaxRelativePathLength(qint32 newValue)
+{
+    m_modSyncMaxRelativePathLength = newValue;
+}
+
+bool Settings::getModSyncKeepBackups() const
+{
+    return m_modSyncKeepBackups;
+}
+
+void Settings::setModSyncKeepBackups(bool newValue)
+{
+    m_modSyncKeepBackups = newValue;
 }
 
 QString Settings::getMailServerSendAddress()
@@ -1041,9 +1108,46 @@ QStringList Settings::getActiveMods()
     return m_activeMods;
 }
 
+QString Settings::stageActiveModsForRestart(const QStringList & activeMods)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (pApp->getSlave() || Settings::getAiSlave() || !m_updateStep.isEmpty())
+    {
+        return QString();
+    }
+    QSettings settings(m_settingFile, QSettings::IniFormat);
+    settings.beginGroup(kModsSettingsGroup);
+    const QString prior = settings.value(kModsSettingsGroup, QString()).toString();
+    settings.setValue(kModsSettingsGroup, getConfigString(activeMods));
+    settings.endGroup();
+    // Mirror the staged list into the in-memory active set so a saveSettings
+    // call before the manual restart cannot revert Mods/Mods to the stale list.
+    // Versions are cleared and rebuilt by setActiveMods on next boot.
+    m_activeMods = activeMods;
+    m_activeModVersions.clear();
+    return prior;
+}
+
+void Settings::restoreActiveModsRaw(const QString & rawValue)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (pApp->getSlave() || Settings::getAiSlave() || !m_updateStep.isEmpty())
+    {
+        return;
+    }
+    QSettings settings(m_settingFile, QSettings::IniFormat);
+    settings.beginGroup(kModsSettingsGroup);
+    settings.setValue(kModsSettingsGroup, rawValue);
+    settings.endGroup();
+    m_activeMods = rawValue.isEmpty() ? QStringList() : rawValue.split(QChar(','));
+    m_activeModVersions.clear();
+}
+
 void Settings::setActiveMods(const QStringList activeMods)
 {
     m_activeMods = activeMods;
+    // Rebuild versions so repeated setActiveMods calls stay aligned.
+    m_activeModVersions.clear();
     qint32 i = 0;
     while (i < m_activeMods.size())
     {
@@ -1402,6 +1506,12 @@ void Settings::setup()
             MemoryManagement::create<Value<std::chrono::seconds>>("Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
             MemoryManagement::create<Value<std::chrono::seconds>>("Network", "SuspendedDespawnTime", &m_suspendedDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
             MemoryManagement::create<Value<std::chrono::seconds>>("Network", "ReplayDeleteTime", &m_replayDeleteTime, std::chrono::seconds(60 * 60 * 24 * 7), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)),
+            MemoryManagement::create<Value<bool>>("Network", "ModSyncEnabled", &m_modSyncEnabled, false, false, true),
+            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxPerModBytes", &m_modSyncMaxPerModBytes, Filesupport::ModSyncDefaultPerModBytes, 0, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxTotalBytes", &m_modSyncMaxTotalBytes, Filesupport::ModSyncDefaultTotalBytes, 0, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxFiles", &m_modSyncMaxFiles, Filesupport::ModSyncDefaultMaxFiles, 0, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<qint32>>("Network", "ModSyncMaxRelativePathLength", &m_modSyncMaxRelativePathLength, Filesupport::ModSyncDefaultMaxRelativePathLength, 1, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<bool>>("Network", "ModSyncKeepBackups", &m_modSyncKeepBackups, false, false, true),
             // mailing
             MemoryManagement::create<Value<QString>>("Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""),
             MemoryManagement::create<Value<quint16>>("Mailing", "MailServerPort", &m_mailServerPort, 0, 0, std::numeric_limits<quint16>::max()),
@@ -1414,7 +1524,7 @@ void Settings::setup()
             MemoryManagement::create<Value<std::chrono::seconds>>("Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)),
             MemoryManagement::create<Value<qint32>>("Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 0, 100),
             // mods
-            MemoryManagement::create<Value<QStringList>>("Mods", "Mods", &m_activeMods, QStringList(), QStringList(), QStringList()),
+            MemoryManagement::create<Value<QStringList>>(kModsSettingsGroup, kModsSettingsGroup, &m_activeMods, QStringList(), QStringList(), QStringList()),
             // logging
             MemoryManagement::create<Value<bool>>("Logging", "LogActions", &m_LogActions, false, false, true),
             MemoryManagement::create<Value<GameConsole::eLogLevels>>("Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL),
@@ -1449,6 +1559,15 @@ void Settings::loadSettings()
     }
     setUserPath(m_userPath);
     setFramesPerSecond(m_framesPerSecond);
+    // Apply any pending mod-sync swaps before setActiveMods, so just-synced folders are visible to its missing-folder pruning pass.
+    Filesupport::executePendingModSyncManifest(m_userPath, m_userPath);
+    // backupKeep follows ModSyncKeepBackups so a user who opted out reaps every leftover .bak (including ones that survived a prior post-swap removeRecursively failure).
+    qint32 backupKeepCount = 0;
+    if (m_modSyncKeepBackups)
+    {
+        backupKeepCount = Filesupport::ModSyncDefaultBackupKeep;
+    }
+    Filesupport::reapModSyncFolders(m_userPath, backupKeepCount);
     setActiveMods(m_activeMods);
     GameConsole::setLogLevel(m_defaultLogLevel);
     GameConsole::setActiveModules(m_defaultLogModuls);
@@ -1494,7 +1613,7 @@ QString Settings::getModString()
     return getConfigString(m_activeMods);
 }
 
-void Settings::filterCosmeticMods(QStringList mods, QStringList versions, bool filter)
+void Settings::filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter)
 {
     if (filter)
     {

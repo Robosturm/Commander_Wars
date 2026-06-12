@@ -60,6 +60,8 @@ Mainapp* Mainapp::m_pMainapp{nullptr};
 
 bool Mainapp::m_slave{false};
 bool Mainapp::m_trainingSession{false};
+QStringList Mainapp::m_restartArgv;
+QString Mainapp::m_rejoinPassword;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
 
 Mainapp::Mainapp()
@@ -739,6 +741,26 @@ bool Mainapp::getSlave()
 void Mainapp::setSlave(bool slave)
 {
     m_slave = slave;
+}
+
+QStringList Mainapp::getRestartArgv()
+{
+    return m_restartArgv;
+}
+
+void Mainapp::setRestartArgv(const QStringList & argv)
+{
+    m_restartArgv = argv;
+}
+
+QString Mainapp::getRejoinPassword()
+{
+    return m_rejoinPassword;
+}
+
+void Mainapp::setRejoinPassword(const QString & password)
+{
+    m_rejoinPassword = password;
 }
 
 void Mainapp::showCrashReport(const QString & log)

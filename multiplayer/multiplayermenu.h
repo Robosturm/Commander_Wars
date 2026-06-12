@@ -4,8 +4,14 @@
 #include <QObject>
 #include <QTimer>
 #include <QDir>
+#include <QMap>
+#include <QSet>
+#include <QPair>
+#include <QVector>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+
+#include "coreengine/filesupport.h"
 
 #include "menue/mapselectionmapsmenue.h"
 
@@ -16,6 +22,7 @@
 
 #include "objects/base/chat.h"
 #include "objects/dialogs/dialogconnecting.h"
+#include "objects/dialogs/dialogmodsyncprogress.h"
 
 class Multiplayermenu;
 using spMultiplayermenu = std::shared_ptr<Multiplayermenu>;
@@ -184,16 +191,30 @@ protected:
     spGameMap createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
     QString getNewFileName(QString filename);    
     void clientMapInfo(QDataStream & stream, quint64 socketID);
-    void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, bool & sameMods, bool & differentHash, bool & sameVersion);
-    void handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, bool sameMods, bool differentHash, bool sameVersion);
+    void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, QMap<QString, QByteArray> & hostModHashes, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion, bool & cosmeticAllowed);
+    void handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, const QMap<QString, QByteArray> & hostModHashes, quint32 hostCapabilities, bool sameMods, bool differentHash, bool sameVersion, bool cosmeticAllowed);
+    void confirmModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
+    void startModSyncDownload(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
+    void onModSyncProgress();
+    void onModSyncSucceeded();
+    void onModSyncFailed(const QString & reason);
     bool checkMods(const QStringList & mods, const QStringList & versions, QStringList & myMods, QStringList & myVersions, bool filter);
     void verifyGameData(QDataStream & stream, quint64 socketID);
-    /**
-     * @brief filterCosmeticMods
-     * @param mods
-     * @param versions
-     */
-    void filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter);
+    bool requestModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
+    void handleModSyncRequest(QDataStream & stream, quint64 socketID);
+    void handleModSyncManifest(QDataStream & stream, quint64 socketID);
+    void handleModSyncData(QDataStream & stream, quint64 socketID);
+    void handleModSyncModBegin(QDataStream & stream, quint64 socketID);
+    void handleModSyncModChunk(QDataStream & stream, quint64 socketID);
+    void handleModSyncModEnd(QDataStream & stream, quint64 socketID);
+    void handleModSyncReject(QDataStream & stream, quint64 socketID);
+    void handleModSyncComplete(QDataStream & stream, quint64 socketID);
+    void sendModSyncReject(quint64 socketID, NetworkCommands::ModSyncRejectReason reasonCode, const QString & modPath, const QString & message);
+    void cancelModSyncSession();
+    // Shared failure path of the client-side receive handlers: tear down the session, then surface the reason.
+    void failModSync(const QString & uiReason);
+    // Drives the host-side chunked send loop one chunk per event-loop iteration so a large mod cannot pin the GUI thread.
+    void pumpModSyncSend();
     /**
      * @brief requestRule
      * @param socketID
@@ -366,11 +387,52 @@ private:
     bool m_slaveGameReady{false};
     Password m_password;
     quint64 m_hostSocket{0};
+    QString m_serverAddress;
+    quint16 m_serverPort{0};
     spDialogConnecting m_pDialogConnecting;
+    // Held as a member so the mod-sync flow can dismiss it before stacking a second Cancel button.
+    spDialogConnecting m_pJoinConnectingDialog;
     QElapsedTimer m_slaveDespawnElapseTimer;
     QTimer m_slaveDespawnTimer{this};
     bool m_despawning{false};
     bool m_sameVersionAsServer{false};
+
+    // Mod-sync client-session state; cleared on completion or abort.
+    QList<QPair<QString, QString>> m_modSyncStagings;
+    QSet<QString> m_modSyncRequestedSet;
+    QStringList m_modSyncPostSyncActiveMods;
+    qint64 m_modSyncReceivedBytes{0};
+    qint64 m_modSyncReceivedUncompressedBytes{0};
+    // Sum of declaredUncompressedSize from MODSYNCMANIFEST; 0 when older hosts skip the frame.
+    qint64 m_modSyncExpectedUncompressedTotal{0};
+    bool m_modSyncActive{false};
+    spDialogModSyncProgress m_modSyncProgressDialog;
+
+    // Client-side chunked-receive accumulator. modPath empty when no chunked mod is in flight (legacy single-frame path stays untouched).
+    struct ModSyncChunkAccumulator
+    {
+        QString modPath;
+        qint32 declaredUncompressedSize{0};
+        qint32 fileCount{0};
+        qint64 compressedTotal{0};
+        qint32 expectedChunkCount{0};
+        qint32 receivedChunkCount{0};
+        qint64 uncompressedAdvanced{0};
+        QByteArray blob;
+    };
+    ModSyncChunkAccumulator m_modSyncCurrentChunkMod;
+
+    // Host-side chunked-send pump state. socketID==0 means no send in flight.
+    struct ModSyncSendState
+    {
+        quint64 socketID{0};
+        QVector<QPair<QString, Filesupport::ModSyncPackage>> packages;
+        qint32 currentMod{0};
+        qint32 currentChunk{0};
+        bool useChunked{false};
+        bool beginEmitted{false};
+    };
+    ModSyncSendState m_modSyncSendState;
 };
 
 Q_DECLARE_INTERFACE(Multiplayermenu, "Multiplayermenu");

@@ -99,6 +99,36 @@
                 <max>65535</max>
                 <onEvent>settings.setGamePort(input)</onEvent>
             </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>400</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Allow clients to sync mods from this host:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","When hosting, advertise the mod-sync capability so connecting clients can opt to download your mod set if theirs differs.")</tooltip>
+                <startValue>settings.getModSyncEnabled()</startValue>
+                <onEvent>settings.setModSyncEnabled(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>400</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Keep backup of replaced mods after sync:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","When syncing mods from a host, retain the previous mod folder as mods/&lt;name&gt;.bak-&lt;timestamp&gt;. Disable to save disk space if you have large mod files.")</tooltip>
+                <startValue>settings.getModSyncKeepBackups()</startValue>
+                <onEvent>settings.setModSyncKeepBackups(input)</onEvent>
+            </Checkbox>
         </childs>
     </Panel>
 </ui>

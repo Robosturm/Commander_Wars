@@ -540,6 +540,7 @@ set(${PROJECT_NAME}_SRCS
     objects/dialogs/filedialog.cpp objects/dialogs/filedialog.h
     objects/dialogs/dialogcostyle.cpp objects/dialogs/dialogcostyle.h
     objects/dialogs/dialogmessagebox.cpp objects/dialogs/dialogmessagebox.h
+    objects/dialogs/dialogmodsyncprogress.cpp objects/dialogs/dialogmodsyncprogress.h
     objects/dialogs/dialogtextinput.cpp objects/dialogs/dialogtextinput.h
     objects/dialogs/folderdialog.cpp objects/dialogs/folderdialog.h
     objects/dialogs/dialogvaluecounter.cpp objects/dialogs/dialogvaluecounter.h

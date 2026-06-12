@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ui>
+    <Label>
+        <x>0</x>
+        <y>settings.getStageHeight() / 2 - 80</y>
+        <width>settings.getStageWidth()</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Downloading host's mod set")</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+        <hAlign>"Middle"</hAlign>
+    </Label>
+    <Label>
+        <Id>"modSyncDetail"</Id>
+        <x>0</x>
+        <y>settings.getStageHeight() / 2 + 22</y>
+        <width>settings.getStageWidth()</width>
+        <text>""</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+        <hAlign>"Middle"</hAlign>
+    </Label>
+    <Button>
+        <x>settings.getStageWidth() / 2 - 75</x>
+        <y>settings.getStageHeight() / 2 + 72</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Cancels the mod download")</tooltip>
+        <onEvent>modSyncProgress.cancel();</onEvent>
+    </Button>
+</ui>
