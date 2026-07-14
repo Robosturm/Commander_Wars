@@ -148,7 +148,7 @@ var Constructor = function()
     this.d2dCostModifier = 0.01;
     this.d2dOffModifier = 1;
 
-    this.d2dExceedBonus = 0.01;    
+    this.d2dExceedBonus = 0.01;
     this.d2dMaxBonus = 20;
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -254,8 +254,8 @@ var Constructor = function()
     this.startOfTurn = function(co, map)
     {
         var player = co.getOwner();
-        var funds = player.getFunds();
         var income = player.calcIncome();
+        var funds = player.getFunds() - income;
         var costModifier = 0.0;
         var damageModifier = 0.0;
         var exceed = 0;
@@ -263,10 +263,8 @@ var Constructor = function()
         var counter = 0;
         if (income < funds)
         {
-            // we have more funds than income
             exceed = funds - income;
-            // this means our troops get stronger and more expensive
-            while (exceed >= 0 && counter < maxCounter)
+            while (exceed > 0 && counter < maxCounter)
             {
                 damageModifier += CO_SANJURO.d2dOffModifier;
                 costModifier += CO_SANJURO.d2dCostModifier;
@@ -276,10 +274,8 @@ var Constructor = function()
         }
         else
         {
-            // we have less funds than income
             exceed = income - funds;
-            // this means our troops get weaker and less expensive
-            while (exceed >= 0 && counter < maxCounter)
+            while (exceed > 0 && counter < maxCounter)
             {
                 damageModifier -= CO_SANJURO.d2dOffModifier;
                 costModifier -= CO_SANJURO.d2dCostModifier;
