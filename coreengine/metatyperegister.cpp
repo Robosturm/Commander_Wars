@@ -147,6 +147,7 @@ void MetaTypeRegister::registerInterfaceData()
     qRegisterMetaType<GameEnums::UnitType>("GameEnums::UnitType");
     qRegisterMetaType<GameEnums::VisionType>("GameEnums::VisionType");
     qRegisterMetaType<GameEnums::AiTypes>("GameEnums::AiTypes");
+    qRegisterMetaType<GameEnums::AiBehavior>("GameEnums::AiBehavior");
     qRegisterMetaType<GameEnums::Recoloring>("GameEnums::Recoloring");
     qRegisterMetaType<GameEnums::COInfoPosition>("GameEnums::COInfoPosition");
     qRegisterMetaType<GameEnums::WeaponType>("GameEnums::WeaponType");

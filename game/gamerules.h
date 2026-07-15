@@ -66,7 +66,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 32;
+        return SERIALIZATION_VERSION;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -593,6 +593,8 @@ public:
     Q_INVOKABLE void setRandomWeather(bool randomWeather);
     Q_INVOKABLE GameEnums::Fog getFogMode() const;
     Q_INVOKABLE void setFogMode(const GameEnums::Fog FogMode);
+    Q_INVOKABLE GameEnums::AiBehavior getAiBehaviorMode() const;
+    Q_INVOKABLE void setAiBehaviorMode(GameEnums::AiBehavior aiBehaviorMode);
     /**
      * @brief createFogVision
      */
@@ -675,6 +677,9 @@ private:
     void resetArrays();
 
 private:
+    static constexpr qint32 AI_BEHAVIOR_SERIALIZATION_VERSION = 33;
+    static constexpr qint32 SERIALIZATION_VERSION = AI_BEHAVIOR_SERIALIZATION_VERSION;
+
     QVector<spGameRule> m_GameRules;
     // victory conditions
     QVector<spVictoryRule> m_VictoryRules;
@@ -690,6 +695,8 @@ private:
     bool m_RankingSystem{true};
     bool m_NoPower{false};
     GameEnums::Fog m_FogMode{GameEnums::Fog_Off};
+    GameEnums::AiBehavior m_aiBehaviorMode{GameEnums::AiBehavior_Standard};
+    bool m_invalidAiBehaviorLogged{false};
     qint32 m_UnitLimit{0};
     bool m_moveVision{true};
 

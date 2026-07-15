@@ -209,6 +209,13 @@ public:
     };
     Q_ENUM(AiTypes)
 
+    enum AiBehavior : qint32
+    {
+        AiBehavior_Standard = 0,
+        AiBehavior_Counterpoint = 1,
+    };
+    Q_ENUM(AiBehavior)
+
     enum RandomMapTerrainType
     {
         RandomMapTerrainType_Group,
