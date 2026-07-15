@@ -37,6 +37,7 @@ public:
 
     explicit GameAction(GameMap* pMap);
     explicit GameAction(const QString & actionID, GameMap* pMap);
+    explicit GameAction(const QString & actionID, GameMap* pMap, quint32 seed);
     virtual ~GameAction() = default;
     /**
      * @brief setTarget sets the target for the current action

@@ -6,6 +6,97 @@
 #include "coreengine/globalutils.h"
 #include "resource_management/unitspritemanager.h"
 
+namespace
+{
+constexpr quint32 PRODUCTION_QUERY_SEED = 0;
+const QString BASE_PRODUCTION_MENU_FUNCTION = QStringLiteral("getStepData");
+const QString CUSTOM_PRODUCTION_MENU_FUNCTION = QStringLiteral("getProductionMenuData");
+
+bool isBaseProductionAction(const QString & actionId)
+{
+    return actionId == CoreAI::ACTION_BUILD_UNITS ||
+           actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1 ||
+           actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2 ||
+           actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3 ||
+           actionId == CoreAI::ACTION_NEST_FACTORY_DOOR;
+}
+}
+
+ProductionActionData::ProductionActionData(GameMap* pMap, qint32 x, qint32 y, QString actionId)
+    : m_pMap{pMap},
+      m_x{x},
+      m_y{y},
+      m_actionId{actionId}
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
+void ProductionActionData::addData(QString text, QString unitId, QString icon, qint32 transactionCost, bool enabled)
+{
+    Q_UNUSED(text);
+    Q_UNUSED(icon);
+    if (UnitSpriteManager::getInstance()->exists(unitId))
+    {
+        m_unitIds.append(unitId);
+        m_transactionCosts.append(transactionCost);
+        m_strategicValues.append(transactionCost == 0 ? Unit::getBaseCosts(unitId, m_pMap) : transactionCost);
+        m_enabledList.append(enabled);
+    }
+}
+
+qint32 ProductionActionData::getX() const
+{
+    return m_x;
+}
+
+qint32 ProductionActionData::getY() const
+{
+    return m_y;
+}
+
+QString ProductionActionData::getActionId() const
+{
+    return m_actionId;
+}
+
+bool ProductionActionData::getActionAvailable() const
+{
+    return m_actionAvailable;
+}
+
+QStringList ProductionActionData::getUnitIds() const
+{
+    return m_unitIds;
+}
+
+QVector<qint32> ProductionActionData::getTransactionCosts() const
+{
+    return m_transactionCosts;
+}
+
+QVector<qint32> ProductionActionData::getStrategicValues() const
+{
+    return m_strategicValues;
+}
+
+QVector<bool> ProductionActionData::getEnabledList() const
+{
+    return m_enabledList;
+}
+
+void ProductionActionData::setActionAvailable(bool actionAvailable)
+{
+    m_actionAvailable = actionAvailable;
+}
+
+bool ProductionActionData::validData() const
+{
+    return !m_unitIds.isEmpty() &&
+           m_unitIds.size() == m_transactionCosts.size() &&
+           m_transactionCosts.size() == m_strategicValues.size() &&
+           m_strategicValues.size() == m_enabledList.size();
+}
+
 SimpleProductionSystem::SimpleProductionSystem(CoreAI * owner)
     : m_owner(owner)
 {
@@ -163,6 +254,66 @@ qint32 SimpleProductionSystem::getMaxSingleDamage() const
 void SimpleProductionSystem::setMaxSingleDamage(qint32 newMaxSingleDamage)
 {
     m_maxSingleDamage = newMaxSingleDamage;
+}
+
+ProductionActionData* SimpleProductionSystem::getProductionActionData(Building* pBuilding, const QString & actionId) const
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    if (!pInterpreter->getInJsCall())
+    {
+        return nullptr;
+    }
+    spProductionActionData pData = queryProductionAction(pBuilding, actionId);
+    if (pData.get() != nullptr)
+    {
+        pInterpreter->trackJsObject(pData);
+    }
+    return pData.get();
+}
+
+spProductionActionData SimpleProductionSystem::queryProductionAction(Building* pBuilding, const QString & actionId) const
+{
+    GameMap* pMap = m_owner != nullptr ? m_owner->getMap() : nullptr;
+    if (pBuilding == nullptr ||
+        pMap == nullptr ||
+        pBuilding->getMap() != pMap ||
+        pBuilding->getOwner() == nullptr ||
+        !pMap->onMap(pBuilding->getX(), pBuilding->getY()) ||
+        pMap->getTerrain(pBuilding->getX(), pBuilding->getY())->getBuilding() != pBuilding ||
+        !pBuilding->getActionList().contains(actionId))
+    {
+        return nullptr;
+    }
+
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function;
+    if (pInterpreter->exists(actionId, CUSTOM_PRODUCTION_MENU_FUNCTION))
+    {
+        function = CUSTOM_PRODUCTION_MENU_FUNCTION;
+    }
+    else if (isBaseProductionAction(actionId))
+    {
+        function = BASE_PRODUCTION_MENU_FUNCTION;
+    }
+    else
+    {
+        return nullptr;
+    }
+
+    spGameAction pAction = MemoryManagement::create<GameAction>(actionId, pMap, PRODUCTION_QUERY_SEED);
+    pAction->setTarget(pBuilding->getPosition());
+    spProductionActionData pData = MemoryManagement::create<ProductionActionData>(pMap, pBuilding->getX(), pBuilding->getY(), actionId);
+    QJSValueList args({JsThis::getJsThis(pAction.get()),
+                       pInterpreter->newQObject(pData.get()),
+                       GameMap::getMapJsThis(pMap)});
+    QJSValue result = pInterpreter->doFunction(actionId, function, args);
+    if (result.isError() || !pData->validData())
+    {
+        return nullptr;
+    }
+    pData->setActionAvailable(pAction->canBePerformed(actionId, false, pBuilding->getOwner()));
+    return pData;
 }
 
 qint32 SimpleProductionSystem::getMaxDamageCheckRange() const

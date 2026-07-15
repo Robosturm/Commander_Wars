@@ -77,13 +77,13 @@ var Constructor = function()
         var player = building.getOwner();
         var units = building.getConstructionList();
         var unitData = [];
-        for (i = 0; i < units.length; i++)
+        for (var i = 0; i < units.length; i++)
         {
             var cost = player.getCosts(units[i], building.getPosition());
             unitData.push([cost, units[i]]);
         }
         var funds = player.getFunds();
-        for (i = 0; i < unitData.length; i++)
+        for (var i = 0; i < unitData.length; i++)
         {
             if (unitData[i][0] <= funds)
             {
@@ -99,7 +99,7 @@ var Constructor = function()
         var units = building.getConstructionList();
         var player = building.getOwner();
         var unitData = [];
-        for (i = 0; i < units.length; i++)
+        for (var i = 0; i < units.length; i++)
         {
             var cost = player.getCosts(units[i], building.getPosition());
             unitData.push([cost, units[i]]);
@@ -113,7 +113,7 @@ var Constructor = function()
             }
         }
         var funds = player.getFunds();
-        for (i = 0; i < unitData.length; i++)
+        for (var i = 0; i < unitData.length; i++)
         {
             var name = Global[unitData[i][1]].getName();
             var enabled = false;

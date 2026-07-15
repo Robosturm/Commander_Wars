@@ -67,6 +67,7 @@ var ACTION =
         // type of the data object depends on the StepInputType
     },
     getStepData : null,
+    getProductionMenuData : null,
 
     getDescription : function()
     {

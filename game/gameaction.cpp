@@ -29,8 +29,14 @@ GameAction::GameAction(GameMap* pMap)
 }
 
 GameAction::GameAction(const QString & actionID, GameMap* pMap)
+    : GameAction(actionID, pMap, QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max()))
+{
+}
+
+GameAction::GameAction(const QString & actionID, GameMap* pMap, quint32 seed)
     : m_actionID(actionID),
       m_target(-1, -1),
+      m_seed(seed),
       m_pMap{pMap}
 {
 #ifdef GRAPHICSUPPORT
@@ -40,7 +46,6 @@ GameAction::GameAction(const QString & actionID, GameMap* pMap)
     Interpreter::setCppOwnerShip(this);
     setupJsThis(this);
     m_buffer.open(QIODevice::ReadWrite);
-    m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
 void GameAction::setSeed(quint32 seed)
