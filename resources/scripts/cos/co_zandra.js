@@ -214,7 +214,7 @@ var Constructor = function()
                         case GameEnums.PowerMode_Tagpower:
                         case GameEnums.PowerMode_Superpower:
                         case GameEnums.PowerMode_Power:
-                            return CO_ZANDRA.sandstormRangeBonus;
+                            return CO_ZANDRA.powerSandstormRangeBonus;
                         default:
                             return 0;
                         }
@@ -280,7 +280,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Changes the weather to a Sandstorm. Zandra's indirect units gain +%0 range. Her units gain +%2% firepower and +%3% defence. Her units gain a total of +%1% firepower while the weather is a Sandstorm.");
+        var text = qsTr("Changes the weather to a Sandstorm. During this power, while the weather is a Sandstorm, Zandra's indirect units gain +%0 range. Her units gain +%2% firepower and +%3% defence. Her units gain a total of +%1% firepower while the weather is a Sandstorm.");
         text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus, CO_ZANDRA.powerOffBonus, CO_ZANDRA.powerDefBonus]);
         return text;
     };
@@ -290,7 +290,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("A massive gust front changes the weather to a Sandstorm and deals -%2 HP of damage to all enemy units. Zandra's indirect units gain +%0 range. Her units gain +%3% firepower and +%4% defence. Her units gain a total of +%1% firepower while the weather is a Sandstorm.");
+        var text = qsTr("A massive gust front changes the weather to a Sandstorm and deals -%2 HP of damage to all enemy units. During this power, while the weather is a Sandstorm, Zandra's indirect units gain +%0 range. Her units gain +%3% firepower and +%4% defence. Her units gain a total of +%1% firepower while the weather is a Sandstorm.");
         text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus, CO_ZANDRA.superPowerSandstormDamage, CO_ZANDRA.powerOffBonus, CO_ZANDRA.powerDefBonus]);
         return text;
     };
