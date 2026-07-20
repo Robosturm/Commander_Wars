@@ -56,7 +56,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("<r>A harbour made by an APC. </r><div c='#00ff00'>Repairing and resupplying </div><r>of </r><div c='#00ff00'>naval </div><r>units is possible here. It does not produce any funds or units.</r>");
+        return qsTr("<r>A harbour made by an APC. </r><div c='#00ff00'>Repairing and resupplying </div><r>of </r><div c='#00ff00'>naval </div><r> and </r><div c='#00ff00'>amphibious </div><r>units is possible here. It does not produce any funds or units.</r>");
     };
 
     this.getVisionHide = function(building)
