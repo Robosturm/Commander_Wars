@@ -615,6 +615,13 @@ public:
     }
     void addSelectedFieldData(spGameAction & pGameAction, const QPoint & point);
 protected:
+    enum class BuildingMenuResult
+    {
+        None,
+        RetryAction,
+        RestartBuildingScan,
+    };
+
     /**
      * @brief prepareEnemieData
      * @param pUnits
@@ -772,7 +779,8 @@ protected:
      * @param index
      * @return
      */
-    bool getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, const spMenuData & pData, qint32 & index);
+    bool getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, const spMenuData & pData, qint32 & index, QString & scriptName);
+    BuildingMenuResult sendBuildingMenuItemResultToScript(spGameAction & pAction, bool succeeded, const QString & scriptName, bool & handled);
     /**
      * @brief deserializeObjectVersion
      * @param stream

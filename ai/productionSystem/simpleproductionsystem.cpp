@@ -6,11 +6,14 @@
 #include "coreengine/globalutils.h"
 #include "resource_management/unitspritemanager.h"
 
+#include <QCryptographicHash>
+
 namespace
 {
 constexpr quint32 PRODUCTION_QUERY_SEED = 0;
 const QString BASE_PRODUCTION_MENU_FUNCTION = QStringLiteral("getStepData");
 const QString CUSTOM_PRODUCTION_MENU_FUNCTION = QStringLiteral("getProductionMenuData");
+const QString COUNTERPOINT_SEED_NAMESPACE = QStringLiteral("counterpoint-production");
 
 bool isBaseProductionAction(const QString & actionId)
 {
@@ -272,6 +275,62 @@ ProductionActionData* SimpleProductionSystem::getProductionActionData(Building* 
     return pData.get();
 }
 
+quint32 SimpleProductionSystem::deriveCounterpointSeed(qint32 algorithmVersion, qint32 generation) const
+{
+    if (m_owner == nullptr || m_owner->getMap() == nullptr || m_owner->getPlayer() == nullptr)
+    {
+        return 0;
+    }
+    GameMap* pMap = m_owner->getMap();
+    QByteArray seedData;
+    QDataStream seedStream(&seedData, QIODevice::WriteOnly);
+    seedStream.setVersion(QDataStream::Version::Qt_6_5);
+    seedStream << COUNTERPOINT_SEED_NAMESPACE;
+    seedStream << algorithmVersion;
+    seedStream << m_owner->getPlayer()->getPlayerID();
+    seedStream << pMap->getCurrentDay();
+    seedStream << generation;
+    seedStream << pMap->getMapHash();
+    const QByteArray hash = QCryptographicHash::hash(seedData, QCryptographicHash::Sha256);
+    QDataStream hashStream(hash);
+    hashStream.setVersion(QDataStream::Version::Qt_6_5);
+    quint32 seed = 0;
+    hashStream >> seed;
+    return seed;
+}
+
+qreal SimpleProductionSystem::getCounterpointBaseDamage(const QString & attackerId, const QString & defenderId) const
+{
+    if (m_owner == nullptr || m_owner->getMap() == nullptr || m_owner->getPlayer() == nullptr ||
+        !UnitSpriteManager::getInstance()->exists(attackerId) ||
+        !UnitSpriteManager::getInstance()->exists(defenderId))
+    {
+        return 0;
+    }
+    spUnit pAttacker = MemoryManagement::create<Unit>(attackerId, m_owner->getPlayer(), false, m_owner->getMap());
+    spUnit pDefender = MemoryManagement::create<Unit>(defenderId, m_owner->getPlayer(), false, m_owner->getMap());
+    return pAttacker->getBaseDamage(pDefender.get());
+}
+
+bool SimpleProductionSystem::executeCounterpointBuild(qint32 x, qint32 y, const QString & unitId, qint32 ordinal, qint32 expectedCost)
+{
+    if (m_owner == nullptr || m_owner->getPlayer() == nullptr || unitId.isEmpty() || ordinal < 0)
+    {
+        return false;
+    }
+    GameMap* pMap = m_owner->getMap();
+    if (pMap == nullptr || !pMap->onMap(x, y))
+    {
+        return false;
+    }
+    Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+    if (pBuilding == nullptr || pBuilding->getOwner() != m_owner->getPlayer())
+    {
+        return false;
+    }
+    return executeBuildAction(pBuilding, unitId, ordinal, expectedCost, true);
+}
+
 spProductionActionData SimpleProductionSystem::queryProductionAction(Building* pBuilding, const QString & actionId) const
 {
     GameMap* pMap = m_owner != nullptr ? m_owner->getMap() : nullptr;
@@ -279,6 +338,7 @@ spProductionActionData SimpleProductionSystem::queryProductionAction(Building* p
         pMap == nullptr ||
         pBuilding->getMap() != pMap ||
         pBuilding->getOwner() == nullptr ||
+        pBuilding->getOwner() != m_owner->getPlayer() ||
         !pMap->onMap(pBuilding->getX(), pBuilding->getY()) ||
         pMap->getTerrain(pBuilding->getX(), pBuilding->getY())->getBuilding() != pBuilding ||
         !pBuilding->getActionList().contains(actionId))
@@ -795,39 +855,76 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
 
 bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId, bool alwaysBuild)
 {
-    Building* pBuilding = m_owner->getMap()->getTerrain(x, y)->getBuilding();
-    if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS) &&
-        pBuilding->getTerrain()->getUnit() == nullptr &&
-        (alwaysBuild || reasonableBuildField(x, y, unitId, m_maxDamageCheckRange, m_maxSingleDamage)))
+    if (m_owner == nullptr || m_owner->getMap() == nullptr || m_owner->getPlayer() == nullptr ||
+        unitId.isEmpty() || !m_owner->getMap()->onMap(x, y))
     {
-        spGameAction pAction = MemoryManagement::create<GameAction>(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
-        pAction->setTarget(QPoint(x, y));
-        if (pAction->canBePerformed())
+        return false;
+    }
+    Building* pBuilding = m_owner->getMap()->getTerrain(x, y)->getBuilding();
+    if (pBuilding == nullptr || pBuilding->getOwner() != m_owner->getPlayer())
+    {
+        return false;
+    }
+    return executeBuildAction(pBuilding, unitId, 0, -1, alwaysBuild);
+}
+
+bool SimpleProductionSystem::executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild)
+{
+    if (pBuilding == nullptr || pBuilding->getOwner() != m_owner->getPlayer() ||
+        !pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS) ||
+        pBuilding->getTerrain()->getUnit() != nullptr)
+    {
+        return false;
+    }
+    if (!alwaysBuild &&
+        !reasonableBuildField(pBuilding->getX(), pBuilding->getY(), unitId, m_maxDamageCheckRange, m_maxSingleDamage))
+    {
+        return false;
+    }
+    spGameAction pAction = MemoryManagement::create<GameAction>(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
+    pAction->setTarget(pBuilding->getPosition());
+    if (!pAction->canBePerformed())
+    {
+        return false;
+    }
+    spMenuData pData = pAction->getMenuStepData();
+    if (!pData->validData())
+    {
+        return false;
+    }
+    const QStringList actionIds = pData->getActionIDs();
+    qint32 currentOrdinal = 0;
+    qint32 selectedIndex = -1;
+    for (qint32 index = 0; index < actionIds.size(); ++index)
+    {
+        if (actionIds[index] == unitId)
         {
-            // we're allowed to build units here
-            spMenuData pData = pAction->getMenuStepData();
-            if (pData->validData())
+            if (currentOrdinal == ordinal)
             {
-                auto indexOf = pData->getActionIDs().indexOf(unitId);
-                if (indexOf >= 0 && pData->getEnabledList()[indexOf])
-                {
-                    m_owner->addMenuItemData(pAction, unitId, pData->getCostList()[indexOf]);
-                    // produce the unit
-                    if (pAction->isFinalStep())
-                    {
-                        if (pAction->canBePerformed())
-                        {
-                            CONSOLE_PRINT("Building unit " + unitId + " at x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
-                            ++m_currentTurnProducedUnitsCounter;
-                            emit m_owner->sigPerformAction(pAction);
-                            return true;
-                        }
-                    }
-                }
+                selectedIndex = index;
+                break;
             }
+            ++currentOrdinal;
         }
     }
-    return false;
+    if (selectedIndex < 0 || !pData->getEnabledList()[selectedIndex])
+    {
+        return false;
+    }
+    const qint32 liveCost = pData->getCostList()[selectedIndex];
+    if (expectedCost >= 0 && liveCost != expectedCost)
+    {
+        return false;
+    }
+    m_owner->addMenuItemData(pAction, unitId, liveCost);
+    if (!pAction->isFinalStep() || !pAction->canBePerformed())
+    {
+        return false;
+    }
+    CONSOLE_PRINT("Building unit " + unitId + " at x=" + QString::number(pBuilding->getX()) + " y=" + QString::number(pBuilding->getY()), GameConsole::eDEBUG);
+    ++m_currentTurnProducedUnitsCounter;
+    emit m_owner->sigPerformAction(pAction);
+    return true;
 }
 
 bool SimpleProductionSystem::reasonableBuildField(qint32 x, qint32 y, QString unitId, qint32 maxDamageCheckRange, qint32 maxSingleDamage)

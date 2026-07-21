@@ -148,8 +148,12 @@ public:
     Q_INVOKABLE void setMaxSingleDamage(qint32 newMaxSingleDamage);
     Q_INVOKABLE bool reasonableBuildField(qint32 x, qint32 y, QString unitId, qint32 maxDamageCheckRange, qint32 maxSingleDamage);
     Q_INVOKABLE ProductionActionData* getProductionActionData(Building* pBuilding, const QString & actionId) const;
+    Q_INVOKABLE quint32 deriveCounterpointSeed(qint32 algorithmVersion, qint32 generation) const;
+    Q_INVOKABLE qreal getCounterpointBaseDamage(const QString & attackerId, const QString & defenderId) const;
+    Q_INVOKABLE bool executeCounterpointBuild(qint32 x, qint32 y, const QString & unitId, qint32 ordinal = 0, qint32 expectedCost = -1);
 private:
     spProductionActionData queryProductionAction(Building* pBuilding, const QString & actionId) const;
+    bool executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild);
     bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, bool alwaysBuild);
     bool buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits, bool alwaysBuild);
     bool buildUnit(qint32 x, qint32 y, QString unitId, bool alwaysBuild);

@@ -24,6 +24,12 @@
 #include <QSettings>
 #include <map>
 
+namespace
+{
+constexpr qint32 MENU_SELECTION_SKIP = -2;
+constexpr qint32 MENU_SELECTION_RESTART = -3;
+}
+
 const char* const CoreAI::ACTION_WAIT = "ACTION_WAIT";
 const char* const CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
 const char* const CoreAI::ACTION_SUPPORTSINGLE = "ACTION_SUPPORTSINGLE";
@@ -2303,9 +2309,37 @@ void CoreAI::finishTurn()
 bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
 {
     AI_CONSOLE_PRINT("CoreAI::useBuilding", GameConsole::eDEBUG);
-    for (auto & pBuilding : pBuildings->getVector())
+    auto & buildingVector = pBuildings->getVector();
+    QVector<QStringList> buildingActions(buildingVector.size());
+    QVector<bool> buildingActionsLoaded(buildingVector.size(), false);
+    qint32 remainingBuildingScanRestarts = 0;
+    auto requestBuildingScanRestart = [&remainingBuildingScanRestarts]()
     {
-        QStringList actions = pBuilding->getActionList();
+        if (remainingBuildingScanRestarts > 0)
+        {
+            --remainingBuildingScanRestarts;
+            return true;
+        }
+        CONSOLE_PRINT("Building menu restart limit reached", GameConsole::eWARNING);
+        return false;
+    };
+    for (qint32 buildingIndex = 0; buildingIndex < buildingVector.size(); ++buildingIndex)
+    {
+        auto & pBuilding = buildingVector[buildingIndex];
+        bool restartBuildingScan = false;
+        if (!buildingActionsLoaded[buildingIndex])
+        {
+            buildingActions[buildingIndex] = pBuilding->getActionList();
+            buildingActionsLoaded[buildingIndex] = true;
+            for (const auto & action : buildingActions[buildingIndex])
+            {
+                if (action != ACTION_BUILD_UNITS)
+                {
+                    ++remainingBuildingScanRestarts;
+                }
+            }
+        }
+        const QStringList & actions = buildingActions[buildingIndex];
         if (actions.size() >= 1 &&
             !actions[0].isEmpty())
         {
@@ -2313,129 +2347,216 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
             {
                 if (action != ACTION_BUILD_UNITS)
                 {
-                    spGameAction pAction = MemoryManagement::create<GameAction>(action, m_pMap);
-                    pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
-                    if (pAction->canBePerformed())
+                    qint32 actionAttempts = 0;
+                    qint32 actionAttemptLimit = 1;
+                    bool retryAction = false;
+                    do
                     {
-                        if (pAction->isFinalStep())
+                        ++actionAttempts;
+                        retryAction = false;
+                        spGameAction pAction = MemoryManagement::create<GameAction>(action, m_pMap);
+                        pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
+                        if (pAction->canBePerformed())
                         {
-                            emit sigPerformAction(pAction);
-                            return true;
-                        }
-                        else
-                        {
-                            while (!pAction->isFinalStep())
+                            if (pAction->isFinalStep())
                             {
-                                QString stepType = pAction->getStepInputType();
-                                if (stepType == GameAction::INPUTSTEP_FIELD)
+                                emit sigPerformAction(pAction);
+                                return true;
+                            }
+                            else
+                            {
+                                QString pendingMenuScript;
+                                while (!pAction->isFinalStep())
                                 {
-                                    QPoint target(0, 0);
-                                    spMarkedFieldData pData = pAction->getMarkedFieldStepData();
-                                    if (!getBuildingTargetPointFromScript(pAction, pData, target))
+                                    QString stepType = pAction->getStepInputType();
+                                    if (stepType == GameAction::INPUTSTEP_FIELD)
                                     {
-                                        qint32 maxValue = std::numeric_limits<qint32>::lowest();
-                                        if (pData->getAllFields())
+                                        QPoint target(0, 0);
+                                        spMarkedFieldData pData = pAction->getMarkedFieldStepData();
+                                        if (!getBuildingTargetPointFromScript(pAction, pData, target))
                                         {
-                                            qint32 width = m_pMap->getMapWidth();
-                                            qint32 height = m_pMap->getMapHeight();
-                                            for (qint32 x = 0; x < width; ++x)
+                                            qint32 maxValue = std::numeric_limits<qint32>::lowest();
+                                            if (pData->getAllFields())
                                             {
-                                                for (qint32 y = 0; y < height; ++y)
+                                                qint32 width = m_pMap->getMapWidth();
+                                                qint32 height = m_pMap->getMapHeight();
+                                                for (qint32 x = 0; x < width; ++x)
                                                 {
-                                                    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-                                                    if (pUnit != nullptr)
+                                                    for (qint32 y = 0; y < height; ++y)
                                                     {
-                                                        qint32 unitValue = pUnit->getCoUnitValue();
-                                                        if (unitValue > maxValue)
+                                                        Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                                                        if (pUnit != nullptr)
                                                         {
-                                                            maxValue = unitValue;
-                                                            target = QPoint(x, y);
+                                                            qint32 unitValue = pUnit->getCoUnitValue();
+                                                            if (unitValue > maxValue)
+                                                            {
+                                                                maxValue = unitValue;
+                                                                target = QPoint(x, y);
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
-                                        }
-                                        else
-                                        {
-                                            QVector<QPoint> & points = *pData->getPoints();
-                                            qint32 index = -1;
-                                            for (qint32 i2 = 0; i2 < points.size(); ++i2)
-                                            {
-                                                Unit* pUnit = m_pMap->getTerrain(points[i2].x(), points[i2].y())->getUnit();
-                                                qint32 unitValue = pUnit->getCoUnitValue();
-                                                if (pUnit != nullptr && unitValue > maxValue)
-                                                {
-                                                    maxValue = unitValue;
-                                                    index = i2;
-                                                }
-                                            }
-                                            if (index < 0)
-                                            {
-                                                target = points.at(GlobalUtils::randIntBase(0, points.size() -1));
-                                            }
                                             else
                                             {
-                                                target = points.at(index);
-                                            }
-                                        }
-                                    }
-                                    addSelectedFieldData(pAction, target);
-                                }
-                                else if (stepType == "MENU")
-                                {
-                                    spMenuData pData = pAction->getMenuStepData();
-                                    if (pData->validData())
-                                    {
-                                        qint32 selection = -1;
-                                        auto enable = pData->getEnabledList();
-                                        QStringList items = pData->getActionIDs();
-                                        auto costs = pData->getCostList();
-                                        if (!getBuildingMenuItemFromScript(pAction, pUnits, pBuildings, pData, selection))
-                                        {
-                                            qint32 i = 0;
-                                            while (i < enable.size())
-                                            {
-                                                if (enable[i])
+                                                QVector<QPoint> & points = *pData->getPoints();
+                                                qint32 index = -1;
+                                                for (qint32 i2 = 0; i2 < points.size(); ++i2)
                                                 {
-                                                    i++;
+                                                    Unit* pUnit = m_pMap->getTerrain(points[i2].x(), points[i2].y())->getUnit();
+                                                    qint32 unitValue = pUnit->getCoUnitValue();
+                                                    if (pUnit != nullptr && unitValue > maxValue)
+                                                    {
+                                                        maxValue = unitValue;
+                                                        index = i2;
+                                                    }
+                                                }
+                                                if (index < 0)
+                                                {
+                                                    target = points.at(GlobalUtils::randIntBase(0, points.size() -1));
                                                 }
                                                 else
                                                 {
-                                                    items.removeAt(i);
-                                                    enable.removeAt(i);
+                                                    target = points.at(index);
                                                 }
                                             }
-                                            selection = GlobalUtils::randIntBase(0, items.size() - 1);
                                         }
-                                        if (selection >= 0 && selection < items.size() && enable[selection])
+                                        addSelectedFieldData(pAction, target);
+                                    }
+                                    else if (stepType == "MENU")
+                                    {
+                                        spMenuData pData = pAction->getMenuStepData();
+                                        if (pData->validData())
                                         {
-                                            addMenuItemData(pAction, items[selection], costs[selection]);
-                                        }
-                                        else
-                                        {
-                                            CONSOLE_PRINT("Illegal menu selection skipping building action", GameConsole::eERROR);
-                                            break;
+                                            qint32 selection = -1;
+                                            auto enable = pData->getEnabledList();
+                                            QStringList items = pData->getActionIDs();
+                                            auto costs = pData->getCostList();
+                                            if (actionAttempts == 1)
+                                            {
+                                                actionAttemptLimit = std::max(
+                                                    actionAttemptLimit,
+                                                    static_cast<qint32>(items.size())
+                                                );
+                                            }
+                                            QString selectionScript;
+                                            if (!getBuildingMenuItemFromScript(
+                                                    pAction,
+                                                    pUnits,
+                                                    pBuildings,
+                                                    pData,
+                                                    selection,
+                                                    selectionScript
+                                                ))
+                                            {
+                                                bool failureHandled = false;
+                                                const BuildingMenuResult failureResult = sendBuildingMenuItemResultToScript(
+                                                    pAction,
+                                                    false,
+                                                    selectionScript,
+                                                    failureHandled
+                                                );
+                                                retryAction = failureResult == BuildingMenuResult::RetryAction;
+                                                if (failureResult == BuildingMenuResult::RestartBuildingScan)
+                                                {
+                                                    restartBuildingScan = requestBuildingScanRestart();
+                                                    break;
+                                                }
+                                                if (failureHandled)
+                                                {
+                                                    break;
+                                                }
+                                                selectionScript.clear();
+                                                qint32 i = 0;
+                                                while (i < enable.size())
+                                                {
+                                                    if (enable[i])
+                                                    {
+                                                        i++;
+                                                    }
+                                                    else
+                                                    {
+                                                        items.removeAt(i);
+                                                        costs.removeAt(i);
+                                                        enable.removeAt(i);
+                                                    }
+                                                }
+                                                if (items.isEmpty())
+                                                {
+                                                    break;
+                                                }
+                                                selection = GlobalUtils::randIntBase(0, items.size() - 1);
+                                            }
+                                            if (selection == MENU_SELECTION_RESTART)
+                                            {
+                                                restartBuildingScan = requestBuildingScanRestart();
+                                                break;
+                                            }
+                                            else if (selection == MENU_SELECTION_SKIP)
+                                            {
+                                                break;
+                                            }
+                                            else if (selection >= 0 && selection < items.size() && enable[selection])
+                                            {
+                                                addMenuItemData(pAction, items[selection], costs[selection]);
+                                                pendingMenuScript = selectionScript;
+                                            }
+                                            else
+                                            {
+                                                CONSOLE_PRINT("Illegal menu selection skipping building action", GameConsole::eERROR);
+                                                break;
+                                            }
                                         }
                                     }
+                                    else
+                                    {
+                                        CONSOLE_PRINT("Uknown action step type: " + stepType, GameConsole::eERROR);
+                                        break;
+                                    }
                                 }
-                                else
+                                if (restartBuildingScan)
                                 {
-                                    CONSOLE_PRINT("Uknown action step type: " + stepType, GameConsole::eERROR);
                                     break;
                                 }
-                            }
-                            if (pAction->isFinalStep())
-                            {
-                                if (pAction->canBePerformed())
+                                const bool actionReady = pAction->isFinalStep() && pAction->canBePerformed();
+                                if (actionReady)
                                 {
                                     emit sigPerformAction(pAction);
+                                    bool resultHandled = false;
+                                    sendBuildingMenuItemResultToScript(
+                                        pAction,
+                                        true,
+                                        pendingMenuScript,
+                                        resultHandled
+                                    );
                                     return true;
+                                }
+                                bool resultHandled = false;
+                                const BuildingMenuResult failureResult = sendBuildingMenuItemResultToScript(
+                                    pAction,
+                                    false,
+                                    pendingMenuScript,
+                                    resultHandled
+                                );
+                                retryAction = retryAction || failureResult == BuildingMenuResult::RetryAction;
+                                if (failureResult == BuildingMenuResult::RestartBuildingScan)
+                                {
+                                    restartBuildingScan = requestBuildingScanRestart();
                                 }
                             }
                         }
                     }
+                    while (!restartBuildingScan && retryAction && actionAttempts < actionAttemptLimit);
+                    if (restartBuildingScan)
+                    {
+                        break;
+                    }
                 }
             }
+        }
+        if (restartBuildingScan)
+        {
+            buildingIndex = -1;
         }
     }
     return false;
@@ -2490,9 +2611,10 @@ bool CoreAI::getBuildingTargetPointFromScript(spGameAction & pAction, const spMa
     return ret;
 }
 
-bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, const spMenuData & pData, qint32 & index)
+bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, const spMenuData & pData, qint32 & index, QString & scriptName)
 {
     bool ret = false;
+    scriptName.clear();
     Interpreter* pInterpreter = Interpreter::getInstance();
     auto enable = pData->getEnabledList();
     QStringList items = pData->getActionIDs();
@@ -2514,6 +2636,7 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
         if (erg.isNumber())
         {
             index = erg.toInt();
+            scriptName = GameScript::m_scriptName;
         }
     }
     if (erg.isBool() && !erg.toBool())
@@ -2524,10 +2647,12 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
             if (erg.isNumber())
             {
                 index = erg.toInt();
+                scriptName = m_aiName;
             }
         }
     }
-    if (index >= 0 && index < enable.size())
+    if (index == MENU_SELECTION_SKIP || index == MENU_SELECTION_RESTART ||
+        (index >= 0 && index < enable.size()))
     {
         ret = true;
     }
@@ -2535,13 +2660,42 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
     {
         ret = erg.toBool();
     }
-    if (ret && !enable[index])
+    if (ret && index != MENU_SELECTION_SKIP && index != MENU_SELECTION_RESTART &&
+        (index < 0 || index >= enable.size() || !enable[index]))
     {
         CONSOLE_PRINT("Illegal menu selection skipping building action target item index=" + QString::number(index) +
                       " building x=" + QString::number(pAction->getTarget().x()) +  " building y=" + QString::number(pAction->getTarget().y()), GameConsole::eERROR);
         ret = false;
     }
     return ret;
+}
+
+CoreAI::BuildingMenuResult CoreAI::sendBuildingMenuItemResultToScript(spGameAction & pAction, bool succeeded, const QString & scriptName, bool & handled)
+{
+    handled = false;
+    const QString functionName = QStringLiteral("onBuildingMenuItemResult");
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    if (!scriptName.isEmpty() && pInterpreter->exists(scriptName, functionName))
+    {
+        handled = true;
+        QJSValueList args({m_jsThis,
+                           JsThis::getJsThis(pAction.get()),
+                           QJSValue(succeeded),
+                           QJSValue(pAction->getTarget().x()),
+                           QJSValue(pAction->getTarget().y()),
+                           QJSValue(pAction->getActionID()),
+                           GameMap::getMapJsThis(m_pMap)});
+        QJSValue result = pInterpreter->doFunction(scriptName, functionName, args);
+        if (result.isNumber() && result.toInt() == MENU_SELECTION_RESTART)
+        {
+            return BuildingMenuResult::RestartBuildingScan;
+        }
+        if (result.isBool() && result.toBool())
+        {
+            return BuildingMenuResult::RetryAction;
+        }
+    }
+    return BuildingMenuResult::None;
 }
 
 float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)
