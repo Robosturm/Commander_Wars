@@ -26,8 +26,7 @@
 
 namespace
 {
-constexpr qint32 MENU_SELECTION_SKIP = -2;
-constexpr qint32 MENU_SELECTION_RESTART = -3;
+const QString BUILDING_MENU_RESULT_FUNCTION = QStringLiteral("onBuildingMenuItemResult");
 }
 
 const char* const CoreAI::ACTION_WAIT = "ACTION_WAIT";
@@ -2487,12 +2486,12 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
                                                 }
                                                 selection = GlobalUtils::randIntBase(0, items.size() - 1);
                                             }
-                                            if (selection == MENU_SELECTION_RESTART)
+                                            if (selection == GameEnums::MenuSelection_Restart)
                                             {
                                                 restartBuildingScan = requestBuildingScanRestart();
                                                 break;
                                             }
-                                            else if (selection == MENU_SELECTION_SKIP)
+                                            else if (selection == GameEnums::MenuSelection_Skip)
                                             {
                                                 break;
                                             }
@@ -2651,7 +2650,7 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
             }
         }
     }
-    if (index == MENU_SELECTION_SKIP || index == MENU_SELECTION_RESTART ||
+    if (index == GameEnums::MenuSelection_Skip || index == GameEnums::MenuSelection_Restart ||
         (index >= 0 && index < enable.size()))
     {
         ret = true;
@@ -2660,7 +2659,7 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
     {
         ret = erg.toBool();
     }
-    if (ret && index != MENU_SELECTION_SKIP && index != MENU_SELECTION_RESTART &&
+    if (ret && index != GameEnums::MenuSelection_Skip && index != GameEnums::MenuSelection_Restart &&
         (index < 0 || index >= enable.size() || !enable[index]))
     {
         CONSOLE_PRINT("Illegal menu selection skipping building action target item index=" + QString::number(index) +
@@ -2675,7 +2674,7 @@ CoreAI::BuildingMenuResult CoreAI::sendBuildingMenuItemResultToScript(spGameActi
     handled = false;
     const QString functionName = QStringLiteral("onBuildingMenuItemResult");
     Interpreter* pInterpreter = Interpreter::getInstance();
-    if (!scriptName.isEmpty() && pInterpreter->exists(scriptName, functionName))
+    if (!scriptName.isEmpty() && pInterpreter->exists(scriptName, BUILDING_MENU_RESULT_FUNCTION))
     {
         handled = true;
         QJSValueList args({m_jsThis,
@@ -2685,8 +2684,8 @@ CoreAI::BuildingMenuResult CoreAI::sendBuildingMenuItemResultToScript(spGameActi
                            QJSValue(pAction->getTarget().y()),
                            QJSValue(pAction->getActionID()),
                            GameMap::getMapJsThis(m_pMap)});
-        QJSValue result = pInterpreter->doFunction(scriptName, functionName, args);
-        if (result.isNumber() && result.toInt() == MENU_SELECTION_RESTART)
+        QJSValue result = pInterpreter->doFunction(scriptName, BUILDING_MENU_RESULT_FUNCTION, args);
+        if (result.isNumber() && result.toInt() == GameEnums::MenuSelection_Restart)
         {
             return BuildingMenuResult::RestartBuildingScan;
         }

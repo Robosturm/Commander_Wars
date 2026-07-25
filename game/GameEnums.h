@@ -216,6 +216,14 @@ public:
     };
     Q_ENUM(AiBehavior)
 
+    // Negative results a building-menu script may return instead of a menu row index.
+    enum MenuSelection : qint32
+    {
+        MenuSelection_Restart = -3,
+        MenuSelection_Skip = -2,
+    };
+    Q_ENUM(MenuSelection)
+
     enum RandomMapTerrainType
     {
         RandomMapTerrainType_Group,

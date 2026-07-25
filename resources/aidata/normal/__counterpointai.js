@@ -6,8 +6,6 @@
     DOMAIN_NAVAL : "naval",
     DOMAIN_HOVER : "hover",
     ACTION_BUILD_UNITS : "ACTION_BUILD_UNITS",
-    MENU_SELECTION_SKIP : -2,
-    MENU_SELECTION_RESTART : -3,
     PHASE_SPECIAL : "special",
     PHASE_ORDINARY : "ordinary",
     PLANNER_STATE_VARIABLE_ID : "COUNTERPOINT_STATE",
@@ -26,6 +24,9 @@
     PLANNER_TOTAL_CANDIDATE_HARD_LIMIT : 32768,
     PLANNER_DRAW_COUNT_HARD_LIMIT : 1000000000,
     PLANNER_STATE_LENGTH_HARD_LIMIT : 8388608,
+    PLANNER_CANDIDATE_HARD_LIMIT : 65536,
+    // Kept under the signed limit of the engine's bounded random API.
+    PLANNER_RANDOM_WEIGHT_HARD_LIMIT : 1000000000,
 
     _finiteNumber : function(value, fallback)
     {
@@ -168,22 +169,20 @@
 
     _candidateLimit : function()
     {
-        var CANDIDATE_HARD_LIMIT = 65536;
         var configured = Math.floor(COUNTERPOINTAI._finiteNumber(
             COUNTERPOINTAI.MAX_CANDIDATE_COUNT,
-            CANDIDATE_HARD_LIMIT
+            COUNTERPOINTAI.PLANNER_CANDIDATE_HARD_LIMIT
         ));
-        return COUNTERPOINTAI._clamp(configured, 1, CANDIDATE_HARD_LIMIT);
+        return COUNTERPOINTAI._clamp(configured, 1, COUNTERPOINTAI.PLANNER_CANDIDATE_HARD_LIMIT);
     },
 
     _randomWeightLimit : function()
     {
-        var RANDOM_WEIGHT_HARD_LIMIT = 1000000000;
         var configured = Math.floor(COUNTERPOINTAI._finiteNumber(
             COUNTERPOINTAI.MAX_RANDOM_WEIGHT_TOTAL,
-            RANDOM_WEIGHT_HARD_LIMIT
+            COUNTERPOINTAI.PLANNER_RANDOM_WEIGHT_HARD_LIMIT
         ));
-        return COUNTERPOINTAI._clamp(configured, 1, RANDOM_WEIGHT_HARD_LIMIT);
+        return COUNTERPOINTAI._clamp(configured, 1, COUNTERPOINTAI.PLANNER_RANDOM_WEIGHT_HARD_LIMIT);
     },
 
     _captureBaseChance : function()
@@ -1594,11 +1593,11 @@
         );
         if (stateChanged === null)
         {
-            return COUNTERPOINTAI.MENU_SELECTION_SKIP;
+            return GameEnums.MenuSelection_Skip;
         }
         return stateChanged ?
-            COUNTERPOINTAI.MENU_SELECTION_RESTART :
-            COUNTERPOINTAI.MENU_SELECTION_SKIP;
+            GameEnums.MenuSelection_Restart :
+            GameEnums.MenuSelection_Skip;
     },
 
     _clonePlannerState : function(state)
@@ -3424,7 +3423,7 @@
                 previousStateJson
             );
         }
-        return COUNTERPOINTAI.MENU_SELECTION_SKIP;
+        return GameEnums.MenuSelection_Skip;
     },
 
     onBuildingMenuItemResult : function(ai, action, succeeded, x, y, actionId, map)
@@ -3488,7 +3487,7 @@
         if (!retry)
         {
             COUNTERPOINTAI._savePlannerState(system, state);
-            return COUNTERPOINTAI.MENU_SELECTION_RESTART;
+            return GameEnums.MenuSelection_Restart;
         }
         if (!COUNTERPOINTAI._plannerSelectionFits(
                 state,
@@ -3498,7 +3497,7 @@
             ) ||
             !COUNTERPOINTAI._savePlannerState(system, state))
         {
-            return COUNTERPOINTAI.MENU_SELECTION_RESTART;
+            return GameEnums.MenuSelection_Restart;
         }
         return true;
     },
@@ -3635,8 +3634,6 @@
     var plannerConstants = [
         "STRATEGY_VERSION",
         "ACTION_BUILD_UNITS",
-        "MENU_SELECTION_SKIP",
-        "MENU_SELECTION_RESTART",
         "PHASE_SPECIAL",
         "PHASE_ORDINARY",
         "PLANNER_STATE_VARIABLE_ID",
@@ -3654,7 +3651,9 @@
         "PLANNER_CANDIDATE_COUNT_HARD_LIMIT",
         "PLANNER_TOTAL_CANDIDATE_HARD_LIMIT",
         "PLANNER_DRAW_COUNT_HARD_LIMIT",
-        "PLANNER_STATE_LENGTH_HARD_LIMIT"
+        "PLANNER_STATE_LENGTH_HARD_LIMIT",
+        "PLANNER_CANDIDATE_HARD_LIMIT",
+        "PLANNER_RANDOM_WEIGHT_HARD_LIMIT"
     ];
     for (var index = 0; index < plannerConstants.length; ++index)
     {

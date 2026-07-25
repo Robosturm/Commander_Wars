@@ -123,6 +123,9 @@ void GameEnums::registerEnums()
     value.setProperty("AiBehavior_Standard", AiBehavior_Standard);
     value.setProperty("AiBehavior_Counterpoint", AiBehavior_Counterpoint);
 
+    value.setProperty("MenuSelection_Restart", MenuSelection_Restart);
+    value.setProperty("MenuSelection_Skip", MenuSelection_Skip);
+
     value.setProperty("RandomMapTerrainType_Group", RandomMapTerrainType_Group);
     value.setProperty("RandomMapTerrainType_Line", RandomMapTerrainType_Line);
 
