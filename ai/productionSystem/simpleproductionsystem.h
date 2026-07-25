@@ -147,10 +147,15 @@ public:
     Q_INVOKABLE qint32 getMaxSingleDamage() const;
     Q_INVOKABLE void setMaxSingleDamage(qint32 newMaxSingleDamage);
     Q_INVOKABLE bool reasonableBuildField(qint32 x, qint32 y, QString unitId, qint32 maxDamageCheckRange, qint32 maxSingleDamage);
+    // Selects the first row when a unit id appears more than once in one action menu.
+    static constexpr qint32 DEFAULT_ACTION_ORDINAL = 0;
+    // Skips the live cost check, so the build proceeds at whatever the menu currently reports.
+    static constexpr qint32 NO_EXPECTED_COST = -1;
+
     Q_INVOKABLE ProductionActionData* getProductionActionData(Building* pBuilding, const QString & actionId) const;
     Q_INVOKABLE quint32 deriveCounterpointSeed(qint32 algorithmVersion, qint32 generation) const;
     Q_INVOKABLE qreal getCounterpointBaseDamage(const QString & attackerId, const QString & defenderId) const;
-    Q_INVOKABLE bool executeCounterpointBuild(qint32 x, qint32 y, const QString & unitId, qint32 ordinal = 0, qint32 expectedCost = -1);
+    Q_INVOKABLE bool executeCounterpointBuild(qint32 x, qint32 y, const QString & unitId, qint32 ordinal = DEFAULT_ACTION_ORDINAL, qint32 expectedCost = NO_EXPECTED_COST);
 private:
     spProductionActionData queryProductionAction(Building* pBuilding, const QString & actionId) const;
     bool executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild);

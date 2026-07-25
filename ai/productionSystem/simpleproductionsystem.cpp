@@ -11,6 +11,8 @@
 namespace
 {
 constexpr quint32 PRODUCTION_QUERY_SEED = 0;
+// Pinned so a Qt upgrade cannot silently change every derived Counterpoint seed.
+constexpr QDataStream::Version COUNTERPOINT_SEED_STREAM_VERSION = QDataStream::Version::Qt_6_5;
 const QString BASE_PRODUCTION_MENU_FUNCTION = QStringLiteral("getStepData");
 const QString CUSTOM_PRODUCTION_MENU_FUNCTION = QStringLiteral("getProductionMenuData");
 const QString COUNTERPOINT_SEED_NAMESPACE = QStringLiteral("counterpoint-production");
@@ -284,7 +286,7 @@ quint32 SimpleProductionSystem::deriveCounterpointSeed(qint32 algorithmVersion, 
     GameMap* pMap = m_owner->getMap();
     QByteArray seedData;
     QDataStream seedStream(&seedData, QIODevice::WriteOnly);
-    seedStream.setVersion(QDataStream::Version::Qt_6_5);
+    seedStream.setVersion(COUNTERPOINT_SEED_STREAM_VERSION);
     seedStream << COUNTERPOINT_SEED_NAMESPACE;
     seedStream << algorithmVersion;
     seedStream << m_owner->getPlayer()->getPlayerID();
@@ -293,7 +295,7 @@ quint32 SimpleProductionSystem::deriveCounterpointSeed(qint32 algorithmVersion, 
     seedStream << pMap->getMapHash();
     const QByteArray hash = QCryptographicHash::hash(seedData, QCryptographicHash::Sha256);
     QDataStream hashStream(hash);
-    hashStream.setVersion(QDataStream::Version::Qt_6_5);
+    hashStream.setVersion(COUNTERPOINT_SEED_STREAM_VERSION);
     quint32 seed = 0;
     hashStream >> seed;
     return seed;
@@ -865,7 +867,7 @@ bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId, bool 
     {
         return false;
     }
-    return executeBuildAction(pBuilding, unitId, 0, -1, alwaysBuild);
+    return executeBuildAction(pBuilding, unitId, DEFAULT_ACTION_ORDINAL, NO_EXPECTED_COST, alwaysBuild);
 }
 
 bool SimpleProductionSystem::executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild)
@@ -912,7 +914,8 @@ bool SimpleProductionSystem::executeBuildAction(Building* pBuilding, const QStri
         return false;
     }
     const qint32 liveCost = pData->getCostList()[selectedIndex];
-    if (expectedCost >= 0 && liveCost != expectedCost)
+    const bool hasExpectedCost = expectedCost > NO_EXPECTED_COST;
+    if (hasExpectedCost && liveCost != expectedCost)
     {
         return false;
     }
