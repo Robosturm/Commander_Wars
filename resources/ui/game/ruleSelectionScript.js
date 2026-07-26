@@ -58,6 +58,20 @@ var RuleSelectionScript =
     {
         return [qsTr("Advance Wars 4"), qsTr("Advance Wars  1-3")];
     },
+    getAiBehaviorRule : function()
+    {
+        return [qsTr("Standard"), qsTr("Counterpoint")];
+    },
+    // GameEnums.AiBehavior_Standard and _Counterpoint are 0 and 1, so the item index is the
+    // rule value. The setter validates anything else back to Standard.
+    getAiBehaviorValue : function()
+    {
+        return currentMenu.getMap().getGameRules().getAiBehaviorMode();
+    },
+    setAiBehaviorValue : function(input)
+    {
+        currentMenu.getMap().getGameRules().setAiBehaviorMode(input);
+    },
     getFogValue : function()
     {
         var fogMode = currentMenu.getMap().getGameRules().getFogMode();

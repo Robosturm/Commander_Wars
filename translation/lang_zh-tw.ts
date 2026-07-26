@@ -6475,6 +6475,17 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <source>Closes the mass edit dialog</source>
         <translation>關閉批量編輯對話方塊</translation>
     </message>
+    <message>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="524"/>
+        <source>AI behavior:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="532"/>
+        <source>Select how the ai plans unit production.
+ Counterpoint uses the full enemy army when planning production, including units hidden by Fog of War.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GAMERULE_REFILL_MATERIAL</name>
@@ -31587,6 +31598,16 @@ Fullscreen  - Animations are upscaled based on the resolution
         <location filename="../resources/ui/game/ruleSelectionScript.js" line="94"/>
         <source>Permanent</source>
         <translation>常駐</translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/ruleSelectionScript.js" line="63"/>
+        <source>Standard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/ruleSelectionScript.js" line="63"/>
+        <source>Counterpoint</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
