@@ -18,6 +18,8 @@ const QString BASE_PRODUCTION_MENU_FUNCTION = QStringLiteral("getStepData");
 const QString CUSTOM_PRODUCTION_MENU_FUNCTION = QStringLiteral("getProductionMenuData");
 const QString COUNTERPOINT_SEED_NAMESPACE = QStringLiteral("counterpoint-production");
 const QString PREPARE_PRODUCTION_FUNCTION = QStringLiteral("prepareProduction");
+// Comfortably above any real roster, including large mods, and a hard ceiling on retained units.
+constexpr std::size_t COUNTERPOINT_UNIT_CACHE_LIMIT = 512;
 
 bool isBaseProductionAction(const QString & actionId)
 {
@@ -27,81 +29,6 @@ bool isBaseProductionAction(const QString & actionId)
            actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3 ||
            actionId == CoreAI::ACTION_NEST_FACTORY_DOOR;
 }
-}
-
-ProductionActionData::ProductionActionData(GameMap* pMap, qint32 x, qint32 y, QString actionId)
-    : m_pMap{pMap},
-      m_x{x},
-      m_y{y},
-      m_actionId{actionId}
-{
-    Interpreter::setCppOwnerShip(this);
-}
-
-void ProductionActionData::addData(QString text, QString unitId, QString icon, qint32 transactionCost, bool enabled)
-{
-    Q_UNUSED(text);
-    Q_UNUSED(icon);
-    if (UnitSpriteManager::getInstance()->exists(unitId))
-    {
-        m_unitIds.append(unitId);
-        m_transactionCosts.append(transactionCost);
-        m_strategicValues.append(transactionCost == 0 ? Unit::getBaseCosts(unitId, m_pMap) : transactionCost);
-        m_enabledList.append(enabled);
-    }
-}
-
-qint32 ProductionActionData::getX() const
-{
-    return m_x;
-}
-
-qint32 ProductionActionData::getY() const
-{
-    return m_y;
-}
-
-QString ProductionActionData::getActionId() const
-{
-    return m_actionId;
-}
-
-bool ProductionActionData::getActionAvailable() const
-{
-    return m_actionAvailable;
-}
-
-QStringList ProductionActionData::getUnitIds() const
-{
-    return m_unitIds;
-}
-
-QVector<qint32> ProductionActionData::getTransactionCosts() const
-{
-    return m_transactionCosts;
-}
-
-QVector<qint32> ProductionActionData::getStrategicValues() const
-{
-    return m_strategicValues;
-}
-
-QVector<bool> ProductionActionData::getEnabledList() const
-{
-    return m_enabledList;
-}
-
-void ProductionActionData::setActionAvailable(bool actionAvailable)
-{
-    m_actionAvailable = actionAvailable;
-}
-
-bool ProductionActionData::validData() const
-{
-    return !m_unitIds.isEmpty() &&
-           m_unitIds.size() == m_transactionCosts.size() &&
-           m_transactionCosts.size() == m_strategicValues.size() &&
-           m_strategicValues.size() == m_enabledList.size();
 }
 
 SimpleProductionSystem::SimpleProductionSystem(CoreAI * owner)
@@ -324,6 +251,9 @@ quint32 SimpleProductionSystem::deriveCounterpointSeed(qint32 algorithmVersion, 
 {
     if (m_owner == nullptr || m_owner->getMap() == nullptr || m_owner->getPlayer() == nullptr)
     {
+        // Zero is also a legal hash result, so the caller cannot tell these apart. Say so here
+        // rather than let every failing system share one silent stream.
+        CONSOLE_PRINT("Counterpoint seed unavailable, falling back to a shared stream", GameConsole::eERROR);
         return 0;
     }
     GameMap* pMap = m_owner->getMap();
@@ -344,7 +274,24 @@ quint32 SimpleProductionSystem::deriveCounterpointSeed(qint32 algorithmVersion, 
     return seed;
 }
 
-qreal SimpleProductionSystem::getCounterpointBaseDamage(const QString & attackerId, const QString & defenderId) const
+spUnit SimpleProductionSystem::getCounterpointUnit(const QString & unitId)
+{
+    auto entry = m_counterpointUnits.find(unitId);
+    if (entry != m_counterpointUnits.end())
+    {
+        return entry->second;
+    }
+    spUnit pUnit = MemoryManagement::create<Unit>(unitId, m_owner->getPlayer(), false, m_owner->getMap());
+    // Past the cap callers still get a unit, it is just not retained, so an oversized roster
+    // degrades to the uncached cost instead of thrashing the cache.
+    if (m_counterpointUnits.size() < COUNTERPOINT_UNIT_CACHE_LIMIT)
+    {
+        m_counterpointUnits.emplace(unitId, pUnit);
+    }
+    return pUnit;
+}
+
+qreal SimpleProductionSystem::getCounterpointBaseDamage(const QString & attackerId, const QString & defenderId)
 {
     if (m_owner == nullptr || m_owner->getMap() == nullptr || m_owner->getPlayer() == nullptr ||
         !UnitSpriteManager::getInstance()->exists(attackerId) ||
@@ -352,8 +299,10 @@ qreal SimpleProductionSystem::getCounterpointBaseDamage(const QString & attacker
     {
         return 0;
     }
-    spUnit pAttacker = MemoryManagement::create<Unit>(attackerId, m_owner->getPlayer(), false, m_owner->getMap());
-    spUnit pDefender = MemoryManagement::create<Unit>(defenderId, m_owner->getPlayer(), false, m_owner->getMap());
+    // Base damage is a weapon table lookup keyed by unit id, so the pair is stable for the
+    // whole match and the units can be reused.
+    spUnit pAttacker = getCounterpointUnit(attackerId);
+    spUnit pDefender = getCounterpointUnit(defenderId);
     return pAttacker->getBaseDamage(pDefender.get());
 }
 

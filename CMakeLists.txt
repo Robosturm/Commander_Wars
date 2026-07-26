@@ -763,6 +763,7 @@ set(${PROJECT_NAME}_SRCS
     ai/aiprocesspipe.h ai/aiprocesspipe.cpp
     ai/trainingdatagenerator.h ai/trainingdatagenerator.cpp
     # production system
+    ai/productionSystem/productionactiondata.h ai/productionSystem/productionactiondata.cpp
     ai/productionSystem/simpleproductionsystem.h ai/productionSystem/simpleproductionsystem.cpp
 
     # decision tree

@@ -12,41 +12,11 @@
 #include "coreengine/qmlvector.h"
 #include "coreengine/jsthis.h"
 #include "game/unit.h"
+#include "ai/productionSystem/productionactiondata.h"
 
 class Building;
 class CoreAI;
 class GameMap;
-class ProductionActionData;
-using spProductionActionData = std::shared_ptr<ProductionActionData>;
-
-class ProductionActionData final : public QObject
-{
-    Q_OBJECT
-public:
-    explicit ProductionActionData(GameMap* pMap, qint32 x, qint32 y, QString actionId);
-    Q_INVOKABLE void addData(QString text, QString unitId, QString icon, qint32 transactionCost = 0, bool enabled = true);
-    Q_INVOKABLE qint32 getX() const;
-    Q_INVOKABLE qint32 getY() const;
-    Q_INVOKABLE QString getActionId() const;
-    Q_INVOKABLE bool getActionAvailable() const;
-    Q_INVOKABLE QStringList getUnitIds() const;
-    Q_INVOKABLE QVector<qint32> getTransactionCosts() const;
-    Q_INVOKABLE QVector<qint32> getStrategicValues() const;
-    Q_INVOKABLE QVector<bool> getEnabledList() const;
-    void setActionAvailable(bool actionAvailable);
-    bool validData() const;
-
-private:
-    GameMap* m_pMap{nullptr};
-    qint32 m_x{-1};
-    qint32 m_y{-1};
-    QString m_actionId;
-    bool m_actionAvailable{false};
-    QStringList m_unitIds;
-    QVector<qint32> m_transactionCosts;
-    QVector<qint32> m_strategicValues;
-    QVector<bool> m_enabledList;
-};
 
 class SimpleProductionSystem final : public QObject, public FileSerializable, public JsThis
 {
@@ -156,9 +126,10 @@ public:
 
     Q_INVOKABLE ProductionActionData* getProductionActionData(Building* pBuilding, const QString & actionId) const;
     Q_INVOKABLE quint32 deriveCounterpointSeed(qint32 algorithmVersion, qint32 generation) const;
-    Q_INVOKABLE qreal getCounterpointBaseDamage(const QString & attackerId, const QString & defenderId) const;
+    Q_INVOKABLE qreal getCounterpointBaseDamage(const QString & attackerId, const QString & defenderId);
     Q_INVOKABLE bool executeCounterpointBuild(qint32 x, qint32 y, const QString & unitId, qint32 ordinal = DEFAULT_ACTION_ORDINAL, qint32 expectedCost = NO_EXPECTED_COST);
 private:
+    spUnit getCounterpointUnit(const QString & unitId);
     spProductionActionData queryProductionAction(Building* pBuilding, const QString & actionId) const;
     bool executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild);
     bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, bool alwaysBuild);
@@ -181,6 +152,8 @@ private:
     std::map<Building*, AverageBuildData> m_averageMoverange;
     ScriptVariables m_Variables;
     spUnit m_dummy;
+    // Matchup scoring asks for the same ids repeatedly and Unit construction is not cheap.
+    std::map<QString, spUnit> m_counterpointUnits;
     qint32 m_currentTurnProducedUnitsCounter{0};
     // Transient: a mid-turn load re-dispatches once and the strategy's own planner state absorbs it.
     bool m_productionPrepared{false};
