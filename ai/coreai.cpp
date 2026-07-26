@@ -185,6 +185,23 @@ void CoreAI::loadIni(QString file)
     }
 }
 
+qint32 CoreAI::getLoadedIniCount(const QString & file) const
+{
+    return static_cast<qint32>(m_iniFiles.count(file));
+}
+
+double CoreAI::getIniValue(const QString & name, double fallback) const
+{
+    for (const auto & entry : std::as_const(m_iniData))
+    {
+        if (entry.m_name == name)
+        {
+            return *entry.m_value;
+        }
+    }
+    return fallback;
+}
+
 void CoreAI::readIni(QString name)
 {
     if (QFile::exists(name))
@@ -2271,6 +2288,7 @@ void CoreAI::finishTurn()
     m_usedTransportSystem = false;
     m_usedPredefinedAi = false;
     m_productionSystem.setCurrentTurnProducedUnitsCounter(0);
+    m_productionSystem.resetProductionPreparation();
     spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_NEXT_PLAYER, m_pMap);
     CO* pCO0 = m_pPlayer->getCO(0);
     CO* pCO1 = m_pPlayer->getCO(1);
@@ -2672,7 +2690,6 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
 CoreAI::BuildingMenuResult CoreAI::sendBuildingMenuItemResultToScript(spGameAction & pAction, bool succeeded, const QString & scriptName, bool & handled)
 {
     handled = false;
-    const QString functionName = QStringLiteral("onBuildingMenuItemResult");
     Interpreter* pInterpreter = Interpreter::getInstance();
     if (!scriptName.isEmpty() && pInterpreter->exists(scriptName, BUILDING_MENU_RESULT_FUNCTION))
     {

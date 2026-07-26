@@ -110,6 +110,8 @@ public:
     void initialize();
     bool buildUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings, bool & executed);
     void onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, spQmlVectorUnit &pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
+    void prepareProduction(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits);
+    void resetProductionPreparation();
     Q_INVOKABLE bool getInit() const;
     Q_INVOKABLE bool getEnabled() const;
     Q_INVOKABLE void setEnabled(bool newEnabled);
@@ -180,6 +182,8 @@ private:
     ScriptVariables m_Variables;
     spUnit m_dummy;
     qint32 m_currentTurnProducedUnitsCounter{0};
+    // Transient: a mid-turn load re-dispatches once and the strategy's own planner state absorbs it.
+    bool m_productionPrepared{false};
 };
 
 Q_DECLARE_INTERFACE(SimpleProductionSystem, "SimpleProductionSystem");

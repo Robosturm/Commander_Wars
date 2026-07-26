@@ -20,6 +20,11 @@
 #include "resource_management/weaponmanager.h"
 #include "resource_management/movementtablemanager.h"
 
+namespace
+{
+const QString COUNTERPOINT_PROFILE_INI = QStringLiteral("normal/counterpoint.ini");
+}
+
 NormalAi::NormalAi(GameMap *pMap, const QString &configurationFile, GameEnums::AiTypes aiType, const QString &jsName)
     : CoreAI(pMap, aiType, jsName),
     m_InfluenceFrontMap(pMap, m_IslandMaps),
@@ -199,6 +204,8 @@ void NormalAi::process()
     qint32 cost = 0;
     m_pPlayer->getSiloRockettarget(2, 3, cost);
     m_missileTarget = (cost >= m_minSiloDamage);
+    // Special production actions are claimed inside useBuilding, so planning has to be ready first.
+    m_productionSystem.prepareProduction(pBuildings.get(), pUnits.get());
     if (useBuilding(pBuildings, pUnits))
     {
     }
@@ -300,6 +307,21 @@ void NormalAi::resetToTurnStart()
     m_captureBuildingSelector.resetUsedFarAwayBuildings();
     m_secondMoveRound = false;
     CoreAI::resetToTurnStart();
+}
+
+void NormalAi::onGameStart()
+{
+    // Runs after restored GameRules are available. Deserialization replays m_iniFiles, so the
+    // profile must not be appended a second time on load or in a reconstructed ai subprocess.
+    if (m_pMap != nullptr &&
+        m_pMap->getGameRules() != nullptr &&
+        m_pMap->getGameRules()->getAiBehaviorMode() == GameEnums::AiBehavior_Counterpoint &&
+        getAiType() == GameEnums::AiTypes_Normal &&
+        getLoadedIniCount(COUNTERPOINT_PROFILE_INI) == 0)
+    {
+        loadIni(COUNTERPOINT_PROFILE_INI);
+    }
+    CoreAI::onGameStart();
 }
 
 void NormalAi::finishTurn()

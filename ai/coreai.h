@@ -393,6 +393,17 @@ public:
      */
     Q_INVOKABLE void loadIni(QString file);
     /**
+     * @brief getLoadedIniCount how often the given ini is in the loaded list, deserialization replays it
+     * @param file
+     */
+    Q_INVOKABLE qint32 getLoadedIniCount(const QString & file) const;
+    /**
+     * @brief getIniValue current value of a tuning entry, fallback when the ai has no such entry
+     * @param name
+     * @param fallback
+     */
+    Q_INVOKABLE double getIniValue(const QString & name, double fallback = 0.0) const;
+    /**
      * @brief readIni
      * @param name
      */

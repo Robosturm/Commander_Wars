@@ -118,6 +118,7 @@ public:
     virtual ~NormalAi() = default;
 
     virtual void resetToTurnStart() override;
+    virtual void onGameStart() override;
 public slots:
     virtual void process() override;
 public:

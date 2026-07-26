@@ -167,6 +167,24 @@
         }
     },
 
+    // Production scoring intentionally sees the whole enemy army. prepareProduction is already
+    // handed that snapshot, but the ordinary build queue's vector is distance pruned by the
+    // caller before it ever reaches a strategy.
+    _fullEnemyUnits : function(ai, fallback)
+    {
+        if (ai === null || ai === undefined)
+        {
+            return fallback;
+        }
+        var player = ai.getPlayer();
+        if (player === null || player === undefined)
+        {
+            return fallback;
+        }
+        var enemies = player.getEnemyUnits();
+        return enemies === null || enemies === undefined ? fallback : enemies;
+    },
+
     _candidateLimit : function()
     {
         var configured = Math.floor(COUNTERPOINTAI._finiteNumber(
@@ -3137,7 +3155,7 @@
                 ai,
                 buildings,
                 units,
-                enemyUnits,
+                COUNTERPOINTAI._fullEnemyUnits(ai, enemyUnits),
                 enemyBuildings,
                 map,
                 state,

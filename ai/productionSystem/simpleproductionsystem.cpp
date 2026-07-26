@@ -1,6 +1,7 @@
 #include "ai/productionSystem/simpleproductionsystem.h"
 #include "ai/coreai.h"
 #include "game/gamemap.h"
+#include "game/player.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
@@ -16,6 +17,7 @@ constexpr QDataStream::Version COUNTERPOINT_SEED_STREAM_VERSION = QDataStream::V
 const QString BASE_PRODUCTION_MENU_FUNCTION = QStringLiteral("getStepData");
 const QString CUSTOM_PRODUCTION_MENU_FUNCTION = QStringLiteral("getProductionMenuData");
 const QString COUNTERPOINT_SEED_NAMESPACE = QStringLiteral("counterpoint-production");
+const QString PREPARE_PRODUCTION_FUNCTION = QStringLiteral("prepareProduction");
 
 bool isBaseProductionAction(const QString & actionId)
 {
@@ -185,6 +187,47 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
         }
     }
     return m_init && m_enabled;
+}
+
+void SimpleProductionSystem::resetProductionPreparation()
+{
+    m_productionPrepared = false;
+}
+
+void SimpleProductionSystem::prepareProduction(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits)
+{
+    if (!m_enabled || !m_init || m_productionPrepared)
+    {
+        return;
+    }
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    const bool gameScriptHandles = pInterpreter->exists(GameScript::m_scriptName, PREPARE_PRODUCTION_FUNCTION);
+    const bool aiHandles = pInterpreter->exists(m_owner->getAiName(), PREPARE_PRODUCTION_FUNCTION);
+    if (!gameScriptHandles && !aiHandles)
+    {
+        return;
+    }
+    m_productionPrepared = true;
+    // Deliberately unpruned, unlike the vector the ordinary build queue receives: production
+    // planning scores the whole enemy army.
+    spQmlVectorUnit pEnemyUnits = m_owner->getPlayer()->getSpEnemyUnits();
+    spQmlVectorBuilding pEnemyBuildings = m_owner->getPlayer()->getSpEnemyBuildings();
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_owner),
+                       JsThis::getJsThis(pBuildings),
+                       JsThis::getJsThis(pUnits),
+                       JsThis::getJsThis(pEnemyUnits.get()),
+                       JsThis::getJsThis(pEnemyBuildings.get()),
+                       GameMap::getMapJsThis(m_owner->getMap())});
+    QJSValue erg(false);
+    if (gameScriptHandles)
+    {
+        erg = pInterpreter->doFunction(GameScript::m_scriptName, PREPARE_PRODUCTION_FUNCTION, args);
+    }
+    if (erg.isBool() && !erg.toBool() && aiHandles)
+    {
+        pInterpreter->doFunction(m_owner->getAiName(), PREPARE_PRODUCTION_FUNCTION, args);
+    }
 }
 
 void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, spQmlVectorUnit &pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
