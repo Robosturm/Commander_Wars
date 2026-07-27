@@ -36,6 +36,9 @@
     strategy.AVOID_BUDGET_BASE_SKIPS = false;
     // Hands a finished factory's unspent budget to the factories that have not built yet.
     strategy.RECYCLE_UNUSED_BUDGET = true;
+    // Looks for factories again once the planned ones are done. Without this, a factory that had a
+    // unit parked on it when the turn's plan was drawn up sits idle even after the unit moves off.
+    strategy.LATE_FACTORY_RESCAN = true;
     // Reserved for every factory before the surplus is dealt out, so no factory is left broke.
     strategy.FACTORY_FLOOR = 1000;
     // Score multiplier for tank class units, meaning ground, direct, no capture, no cargo, and

@@ -1911,7 +1911,7 @@
         return plan;
     },
 
-    _discoverPlans : function(system, ai, buildings, phase)
+    _discoverPlans : function(system, ai, buildings, phase, knownKeys)
     {
         var playerId = ai.getPlayer().getPlayerID();
         var buildingRecords = [];
@@ -1937,6 +1937,12 @@
 
         var plans = [];
         var seen = Object.create(null);
+        for (var knownIndex = 0;
+             knownKeys !== null && knownKeys !== undefined && knownIndex < knownKeys.length;
+             ++knownIndex)
+        {
+            seen[knownKeys[knownIndex]] = true;
+        }
         var planLimit = COUNTERPOINTAI._plannerLimit("MAX_PLAN_COUNT", 1);
         for (var recordIndex = 0;
              recordIndex < buildingRecords.length && plans.length < planLimit;
@@ -3052,7 +3058,87 @@
     _preparePlanPhase : function(system, ai, buildings, units, enemyUnits,
                                  enemyBuildings, map, state, phase)
     {
-        var plans = COUNTERPOINTAI._discoverPlans(system, ai, buildings, phase);
+        COUNTERPOINTAI._preparePlans(
+            system,
+            ai,
+            COUNTERPOINTAI._discoverPlans(
+                system,
+                ai,
+                buildings,
+                phase,
+                COUNTERPOINTAI._planKeys(state.plans)
+            ),
+            buildings,
+            units,
+            enemyUnits,
+            enemyBuildings,
+            map,
+            state
+        );
+    },
+
+    _planKeys : function(plans)
+    {
+        var keys = [];
+        for (var index = 0; index < plans.length; ++index)
+        {
+            keys.push(plans[index].key);
+        }
+        return keys;
+    },
+
+    _hasPendingOrdinaryPlan : function(state)
+    {
+        for (var index = 0; index < state.plans.length; ++index)
+        {
+            if (state.plans[index].phase === COUNTERPOINTAI.PHASE_ORDINARY &&
+                !state.plans[index].complete)
+            {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    // A factory with a unit parked on it reports no build action, so the once per turn scan drops
+    // it for the rest of the turn. Look again once the planned factories are done, by which point
+    // the occupying units have usually moved off.
+    _rescanFreedFactories : function(system, ai, buildings, units, enemyUnits,
+                                     enemyBuildings, map, state)
+    {
+        if (COUNTERPOINTAI.LATE_FACTORY_RESCAN === false)
+        {
+            return false;
+        }
+        var plans = COUNTERPOINTAI._discoverPlans(
+            system,
+            ai,
+            buildings,
+            COUNTERPOINTAI.PHASE_ORDINARY,
+            COUNTERPOINTAI._planKeys(state.plans)
+        );
+        if (plans.length === 0)
+        {
+            return false;
+        }
+        COUNTERPOINTAI._preparePlans(
+            system,
+            ai,
+            plans,
+            buildings,
+            units,
+            COUNTERPOINTAI._fullEnemyUnits(ai, enemyUnits),
+            enemyBuildings,
+            map,
+            state
+        );
+        COUNTERPOINTAI._savePlannerState(system, state);
+        return true;
+    },
+
+    _preparePlans : function(system, ai, plans, buildings, units, enemyUnits,
+                             enemyBuildings, map, state)
+    {
         var room = Math.max(
             0,
             COUNTERPOINTAI._plannerLimit("MAX_PLAN_COUNT", 1) - state.plans.length
@@ -3527,6 +3613,19 @@
         if (state === null || !state.ordinaryPrepared)
         {
             return false;
+        }
+        if (!COUNTERPOINTAI._hasPendingOrdinaryPlan(state))
+        {
+            COUNTERPOINTAI._rescanFreedFactories(
+                system,
+                ai,
+                buildings,
+                units,
+                enemyUnits,
+                enemyBuildings,
+                map,
+                state
+            );
         }
         var remainingPlanScanRestarts = 0;
         for (var limitIndex = 0; limitIndex < state.plans.length; ++limitIndex)
