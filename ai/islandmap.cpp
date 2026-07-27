@@ -49,7 +49,13 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, cons
                 {                    
                     if (pUnit->canMoveOver(x, y))
                     {
-                        pInterpreter->threadProcessEvents();
+                        // Pumping the event loop is only safe outside a script call. Building an
+                        // island map from a js ai hook is otherwise a hard assert, and re-entering
+                        // the event loop there would be wrong even without one.
+                        if (!pInterpreter->getInJsCall())
+                        {
+                            pInterpreter->threadProcessEvents();
+                        }
                         UnitPathFindingSystem pfs(m_pMap, pUnit.get());
                         pfs.setMovepoints(-2);
                         pfs.setFast(true);
