@@ -59,7 +59,7 @@
     strategy.ISLAND_AIR_BONUS = 1.5;
     // Island maps: score multiplier for warships.
     strategy.ISLAND_NAVAL_BONUS = 1.60;
-    // Island maps: score multiplier for sea and hover transports.
+    // Island maps: score multiplier for any transport that can cross water, sea, hover or air.
     strategy.ISLAND_NAVAL_TRANSPORT_BONUS = 3.0;
     // Island maps: score multiplier for tanks, which cannot reach another landmass unaided.
     strategy.ISLAND_GROUND_TANK_PENALTY = 0.50;
@@ -135,7 +135,8 @@
     strategy.TANK_MIN_MOVEMENT = 5;
     // Scales the logarithmic tail above CAP_HP_SOFT_CAP. Raising it softens the compression.
     strategy.CAP_HP_LOG_SCALE = 1.5;
-    // Fraction of a transport's cost used as its island mode score, before the island bonuses.
+    // Island mode transport score, as a fraction of COST_SCALE rather than of the hull's own price,
+    // so that cheaper transports win on efficiency instead of losing for being cheap.
     strategy.TRANSPORT_BASE_SCORE_FACTOR = 0.1;
     // Discounts the defensive half of an indirect's score, since it is rarely the one shot at.
     strategy.INDIRECT_DEFENSE_FACTOR = 0.8;

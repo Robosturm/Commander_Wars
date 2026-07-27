@@ -651,9 +651,15 @@
 
         if (scoreContext.islandMode === true && candidate.isTransporter === true)
         {
-            var transportScore = candidateValue * COUNTERPOINTAI.TRANSPORT_BASE_SCORE_FACTOR;
+            // Scored from a fixed reference rather than the hull's own price. A cost proportional
+            // score cancels against the division by cost in _netDamageWeights, leaving every hull
+            // with identical efficiency and the pick decided by the cost term alone, which rises.
+            // That preferred a transport purely for being expensive.
+            var transportScore = COUNTERPOINTAI.COST_SCALE *
+                COUNTERPOINTAI.TRANSPORT_BASE_SCORE_FACTOR;
             if (candidate.domain === COUNTERPOINTAI.DOMAIN_NAVAL ||
-                candidate.domain === COUNTERPOINTAI.DOMAIN_HOVER)
+                candidate.domain === COUNTERPOINTAI.DOMAIN_HOVER ||
+                candidate.domain === COUNTERPOINTAI.DOMAIN_AIR)
             {
                 transportScore *= COUNTERPOINTAI._safeFactor(
                     COUNTERPOINTAI.ISLAND_NAVAL_TRANSPORT_BONUS
