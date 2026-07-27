@@ -2568,6 +2568,89 @@
         )));
     },
 
+    _hasPlanKey : function(plans, key)
+    {
+        for (var index = 0; index < plans.length; ++index)
+        {
+            if (plans[index].key === key)
+            {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    // Candidates are not enriched yet at allocation time for a building with no plan, so read the
+    // dummy directly rather than relying on candidate.canCapture.
+    _cheapestGroundCapperCost : function(system, data)
+    {
+        var ids = data.getUnitIds();
+        var costs = data.getTransactionCosts();
+        var length = COUNTERPOINTAI._collectionLength(ids);
+        var best = -1;
+        for (var index = 0; index < length; ++index)
+        {
+            var cost = COUNTERPOINTAI._collectionAt(costs, index);
+            if (typeof cost !== "number" || cost < 0 || (best >= 0 && cost >= best))
+            {
+                continue;
+            }
+            var dummy = system.getDummyUnit(String(COUNTERPOINTAI._collectionAt(ids, index)));
+            if (dummy === null || dummy === undefined || dummy.canCapture() !== true ||
+                COUNTERPOINTAI._domainFromUnitType(dummy.getUnitType()) !==
+                    COUNTERPOINTAI.DOMAIN_GROUND)
+            {
+                continue;
+            }
+            best = cost;
+        }
+        return best < 0 ? 0 : best;
+    },
+
+    // A factory with a unit parked on it has no plan yet, so nothing stops the factories that do
+    // have plans from spending its money before the rescan can reach it. Hold back what each of
+    // them needs for its cheapest ground capturer.
+    _blockedCapperReserve : function(system, ai, buildings, state, pendingPlans)
+    {
+        if (COUNTERPOINTAI.RESERVE_BLOCKED_FACTORIES === false)
+        {
+            return 0;
+        }
+        var playerId = ai.getPlayer().getPlayerID();
+        var length = COUNTERPOINTAI._collectionLength(buildings);
+        var reserve = 0;
+        for (var index = 0; index < length; ++index)
+        {
+            var building = COUNTERPOINTAI._collectionAt(buildings, index);
+            if (building === null || building === undefined ||
+                building.getOwnerID() !== playerId)
+            {
+                continue;
+            }
+            var key = COUNTERPOINTAI._planKey(
+                building.getX(),
+                building.getY(),
+                COUNTERPOINTAI.ACTION_BUILD_UNITS
+            );
+            if (COUNTERPOINTAI._hasPlanKey(state.plans, key) ||
+                COUNTERPOINTAI._hasPlanKey(pendingPlans, key))
+            {
+                continue;
+            }
+            var data = system.getProductionActionData(
+                building,
+                COUNTERPOINTAI.ACTION_BUILD_UNITS
+            );
+            // Only blocked ones: an available building with no plan simply has nothing to build.
+            if (data === null || data === undefined || data.getActionAvailable() === true)
+            {
+                continue;
+            }
+            reserve += COUNTERPOINTAI._cheapestGroundCapperCost(system, data);
+        }
+        return reserve;
+    },
+
     // Short of covering every floor, fund the cheapest floors first. Spreading the shortfall
     // proportionally instead would leave every factory below its own floor, so none could build and
     // none could lend, and the turn would pass with the money still in the bank.
@@ -3253,7 +3336,8 @@
         COUNTERPOINTAI._allocatePhaseBudgets(
             state,
             plans,
-            ai.getPlayer().getFunds()
+            Math.max(0, ai.getPlayer().getFunds() -
+                COUNTERPOINTAI._blockedCapperReserve(system, ai, buildings, state, plans))
         );
         for (var planIndex = 0; planIndex < plans.length; ++planIndex)
         {

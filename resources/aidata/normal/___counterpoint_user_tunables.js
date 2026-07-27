@@ -39,6 +39,10 @@
     // Looks for factories again once the planned ones are done. Without this, a factory that had a
     // unit parked on it when the turn's plan was drawn up sits idle even after the unit moves off.
     strategy.LATE_FACTORY_RESCAN = true;
+    // Holds back the cheapest ground capturer for each factory that is currently blocked by a unit
+    // parked on it, so the factories that can build right now cannot spend its money first. Turning
+    // this off lets an expensive transport be bought sooner at the cost of idling those factories.
+    strategy.RESERVE_BLOCKED_FACTORIES = true;
     // Raises the reservation of a factory that can build a capturer; it never lowers it below that
     // capturer's own cost, so anything under the cheapest capturer price does nothing. 0 means
     // reserve exactly the cheapest capturer, which keeps ground factories from sitting idle without
