@@ -13,6 +13,12 @@
     PLANNER_STATE_VARIABLE_ID : "COUNTERPOINT_STATE",
     PLANNER_STATE_SCHEMA_VERSION : 1,
     RNG_ALGORITHM_VERSION : 1,
+    // Fallbacks for the ferry tunables. The user tunables file is the only place those values are
+    // set, so an install carrying an older copy of it would otherwise read undefined and clamp to
+    // something that quietly disables the feature.
+    MAX_ISLAND_MAPS_DEFAULT : 6,
+    FERRY_TARGET_SAMPLE_DEFAULT : 24,
+    FERRY_URGENT_STRANDED_SHARE_DEFAULT : 0.5,
     RNG_COUNTER_MULTIPLIER : 1831565813,
     RNG_LEFT_SHIFT_A : 13,
     RNG_RIGHT_SHIFT : 17,
@@ -2429,7 +2435,7 @@
         };
     },
 
-    _planningContext : function(system, ai, plans, buildings, units, enemyUnits, enemyBuildings)
+    _planningContext : function(system, ai, plans, buildings, units, enemyUnits, enemyBuildings, map)
     {
         var enemyIds = COUNTERPOINTAI._unitIdsFromCollection(enemyUnits);
         var candidateIds = COUNTERPOINTAI._uniqueUnitIds(plans);
@@ -2491,8 +2497,361 @@
                 islandMode
             ),
             ownTransporters : COUNTERPOINTAI._countOwnTransporters(ownSnapshots),
+            ferry : COUNTERPOINTAI._ferryContext(
+                system,
+                ai,
+                plans,
+                enemyBuildings,
+                map,
+                islandMode
+            ),
             banIndirects : banIndirects
         };
+    },
+
+    // Which transports can actually deliver a ground capturer to somewhere we cannot already walk.
+    // Air needs no shore, so it is asked directly; sea and hover need a mutually passable tile.
+    _ferryContext : function(system, ai, plans, enemyBuildings, map, islandMode)
+    {
+        var ferry = { strandedShare : 0, stranded : 0, urgent : false,
+                      deliverable : Object.create(null) };
+        if (islandMode !== true)
+        {
+            return ferry;
+        }
+        var capper = COUNTERPOINTAI._cheapestGroundCapper(plans);
+        var homes = COUNTERPOINTAI._capperHomes(plans);
+        if (capper === null || homes.length === 0)
+        {
+            return ferry;
+        }
+        var capperDummy = system.getDummyUnit(String(capper.id));
+        if (capperDummy === null || capperDummy === undefined)
+        {
+            return ferry;
+        }
+        var capperMove = String(capperDummy.getMovementType());
+        var created = Object.create(null);
+        if (!COUNTERPOINTAI._ensureIslandMapFor(ai, created, capperMove, capper.id))
+        {
+            return ferry;
+        }
+        var targets = COUNTERPOINTAI._captureTargets(map, enemyBuildings);
+        if (targets.length === 0)
+        {
+            return ferry;
+        }
+        var stranded = [];
+        for (var targetIndex = 0; targetIndex < targets.length; ++targetIndex)
+        {
+            var target = targets[targetIndex];
+            var walkable = false;
+            for (var homeIndex = 0; homeIndex < homes.length && !walkable; ++homeIndex)
+            {
+                walkable = ai.onSameIsland(
+                    capperMove,
+                    homes[homeIndex].x,
+                    homes[homeIndex].y,
+                    target.x,
+                    target.y
+                );
+            }
+            if (!walkable)
+            {
+                stranded.push(target);
+            }
+        }
+        ferry.stranded = stranded.length;
+        ferry.strandedShare = stranded.length / targets.length;
+        if (stranded.length === 0)
+        {
+            return ferry;
+        }
+
+        var capperIds = Object.create(null);
+        COUNTERPOINTAI._visitPlanCandidates(plans, function(candidate)
+        {
+            if (candidate.canCapture === true &&
+                candidate.domain === COUNTERPOINTAI.DOMAIN_GROUND)
+            {
+                capperIds["#" + candidate.id] = true;
+            }
+        });
+
+        // Keyed on movement type and dock rather than domain: a lander and a black boat are
+        // different movement types, so a verdict for one says nothing about the other.
+        var verdicts = Object.create(null);
+        for (var planIndex = 0; planIndex < plans.length; ++planIndex)
+        {
+            var plan = plans[planIndex];
+            for (var index = 0; plan.candidates && index < plan.candidates.length; ++index)
+            {
+                var candidate = plan.candidates[index];
+                if (candidate.isTransporter !== true)
+                {
+                    continue;
+                }
+                var dummy = system.getDummyUnit(String(candidate.id));
+                if (dummy === null || dummy === undefined ||
+                    !COUNTERPOINTAI._cargoHasCapper(dummy, capperIds))
+                {
+                    continue;
+                }
+                var transportMove = String(dummy.getMovementType());
+                var key = transportMove + "@" + plan.x + "," + plan.y;
+                if (verdicts[key] === undefined)
+                {
+                    verdicts[key] = COUNTERPOINTAI._ensureIslandMapFor(
+                            ai,
+                            created,
+                            transportMove,
+                            candidate.id
+                        ) &&
+                        COUNTERPOINTAI._deliversToStranded(
+                            ai,
+                            map,
+                            candidate.domain,
+                            plan,
+                            transportMove,
+                            capperMove,
+                            homes,
+                            stranded
+                        );
+                }
+                if (verdicts[key] === true)
+                {
+                    ferry.deliverable[candidate.domain] = true;
+                }
+            }
+        }
+        // measured stays false when nothing at all can deliver, which is the difference between
+        // "this transport is useless" and "we could not tell". Only the former may refuse a build.
+        ferry.measured = COUNTERPOINTAI._countKeys(ferry.deliverable) > 0;
+        ferry.urgent = ferry.measured &&
+            ferry.strandedShare >= COUNTERPOINTAI._finiteNumber(
+                COUNTERPOINTAI.FERRY_URGENT_STRANDED_SHARE,
+                COUNTERPOINTAI.FERRY_URGENT_STRANDED_SHARE_DEFAULT);
+        return ferry;
+    },
+
+    // On an island map a transport that cannot deliver a capturer anywhere new is dead weight, so
+    // it is refused outright rather than left to the turn ramp. One that can is offered straight
+    // away once enough of the map is unwalkable, instead of waiting for the ramp to climb.
+    _admitTransports : function(context, state, domain, turn)
+    {
+        var ferry = context.ferry;
+        if (context.islandMode === true && ferry !== null && ferry !== undefined &&
+            ferry.stranded > 0 && ferry.measured === true)
+        {
+            if (ferry.deliverable[domain] !== true)
+            {
+                return false;
+            }
+            if (ferry.urgent === true)
+            {
+                return true;
+            }
+        }
+        return context.transportContext[domain] === true &&
+            COUNTERPOINTAI._nextPlannerRoll(state, COUNTERPOINTAI.PERCENT_MAX) <
+                COUNTERPOINTAI._transportChance(
+                    context.ownTransporters[domain],
+                    turn,
+                    domain,
+                    context.islandMode
+                );
+    },
+
+    _reachesAny : function(ai, capperMove, x, y, spots)
+    {
+        for (var index = 0; index < spots.length; ++index)
+        {
+            if (ai.onSameIsland(capperMove, x, y, spots[index].x, spots[index].y))
+            {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    // Loading is symmetric to unloading: the capturer walks onto the transport to board, so a real
+    // ferry needs terrain it shares with the transport at BOTH ends. The two tiles may differ, one
+    // beach to load and another to unload. The scan carries no sample cap because capping it by
+    // hits while walking the map in column order only ever collects our own coastline.
+    _deliversToStranded : function(ai, map, domain, plan, transportMove, capperMove, homes, stranded)
+    {
+        var index = 0;
+        if (domain === COUNTERPOINTAI.DOMAIN_AIR)
+        {
+            // Air unloads anywhere on the target's landmass, so there is no shore question to ask.
+            for (index = 0; index < stranded.length; ++index)
+            {
+                if (ai.onSameIsland(transportMove, plan.x, plan.y,
+                                    stranded[index].x, stranded[index].y))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        var width = map.getMapWidth();
+        var height = map.getMapHeight();
+        var canLoad = false;
+        var canUnload = false;
+        for (var x = 0; x < width; ++x)
+        {
+            for (var y = 0; y < height; ++y)
+            {
+                if (!ai.onSameIsland(transportMove, plan.x, plan.y, x, y))
+                {
+                    continue;
+                }
+                if (!canLoad)
+                {
+                    canLoad = COUNTERPOINTAI._reachesAny(ai, capperMove, x, y, homes);
+                }
+                if (!canUnload)
+                {
+                    canUnload = COUNTERPOINTAI._reachesAny(ai, capperMove, x, y, stranded);
+                }
+                if (canLoad && canUnload)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    },
+
+    _countKeys : function(table)
+    {
+        var count = 0;
+        for (var key in table)
+        {
+            if (Object.prototype.hasOwnProperty.call(table, key))
+            {
+                ++count;
+            }
+        }
+        return count;
+    },
+
+    // createIslandMap dedups on the movement type string but tags the map it builds from the probe
+    // unit itself, so the string handed in must be that unit's own movement type. Anything else
+    // never matches the dedup and quietly builds another full map flood fill on every call.
+    _ensureIslandMapFor : function(ai, created, movementType, unitId)
+    {
+        if (movementType === "" || movementType === null || movementType === undefined)
+        {
+            return false;
+        }
+        if (created[movementType] === true)
+        {
+            return true;
+        }
+        if (COUNTERPOINTAI._countKeys(created) >=
+            Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
+                COUNTERPOINTAI.MAX_ISLAND_MAPS, COUNTERPOINTAI.MAX_ISLAND_MAPS_DEFAULT))))
+        {
+            return false;
+        }
+        ai.createIslandMap(movementType, String(unitId));
+        created[movementType] = true;
+        return true;
+    },
+
+    _appendBuildingPositions : function(targets, collection, limit)
+    {
+        var length = COUNTERPOINTAI._collectionLength(collection);
+        for (var index = 0; index < length && targets.length < limit; ++index)
+        {
+            var building = COUNTERPOINTAI._collectionAt(collection, index);
+            if (building === null || building === undefined)
+            {
+                continue;
+            }
+            targets.push({ x : building.getX(), y : building.getY() });
+        }
+    },
+
+    // Both matter: an enemy town is a target, and so is an unclaimed neutral one. Each side gets
+    // its own budget, otherwise a map with many enemy buildings crowds the neutrals out entirely.
+    _captureTargets : function(map, enemyBuildings)
+    {
+        var limit = Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
+            COUNTERPOINTAI.FERRY_TARGET_SAMPLE,
+            COUNTERPOINTAI.FERRY_TARGET_SAMPLE_DEFAULT)));
+        var targets = [];
+        COUNTERPOINTAI._appendBuildingPositions(targets, enemyBuildings, limit);
+        limit += targets.length;
+        var neutral = null;
+        try
+        {
+            neutral = map.getBuildings(null);
+        }
+        catch (neutralError)
+        {
+            neutral = null;
+        }
+        COUNTERPOINTAI._appendBuildingPositions(targets, neutral, limit);
+        return targets;
+    },
+
+    _cheapestGroundCapper : function(plans)
+    {
+        var best = null;
+        for (var planIndex = 0; planIndex < plans.length; ++planIndex)
+        {
+            var plan = plans[planIndex];
+            for (var index = 0; plan.candidates && index < plan.candidates.length; ++index)
+            {
+                var candidate = plan.candidates[index];
+                if (candidate.canCapture !== true ||
+                    candidate.domain !== COUNTERPOINTAI.DOMAIN_GROUND ||
+                    typeof candidate.transactionCost !== "number" ||
+                    candidate.transactionCost < 0)
+                {
+                    continue;
+                }
+                if (best === null || candidate.transactionCost < best.cost)
+                {
+                    best = { id : candidate.id, cost : candidate.transactionCost,
+                             x : plan.x, y : plan.y };
+                }
+            }
+        }
+        return best;
+    },
+
+    _capperHomes : function(plans)
+    {
+        var homes = [];
+        for (var planIndex = 0; planIndex < plans.length; ++planIndex)
+        {
+            if (COUNTERPOINTAI._planFloor(plans[planIndex]) > 0)
+            {
+                homes.push({ x : plans[planIndex].x, y : plans[planIndex].y });
+            }
+        }
+        return homes;
+    },
+
+    _cargoHasCapper : function(dummy, capperIds)
+    {
+        if (dummy.isTransporter() !== true)
+        {
+            return false;
+        }
+        var cargo = dummy.getTransportUnits();
+        var length = COUNTERPOINTAI._collectionLength(cargo);
+        for (var index = 0; index < length; ++index)
+        {
+            if (capperIds["#" + String(COUNTERPOINTAI._collectionAt(cargo, index))] === true)
+            {
+                return true;
+            }
+        }
+        return false;
     },
 
     _spreadBudget : function(targets, amount)
@@ -3016,14 +3375,7 @@
             var domain = domains[poolIndex];
             var domainPool = pools[domain].combat.slice();
             if (pools[domain].transport.length > 0 &&
-                context.transportContext[domain] === true &&
-                COUNTERPOINTAI._nextPlannerRoll(state, COUNTERPOINTAI.PERCENT_MAX) <
-                    COUNTERPOINTAI._transportChance(
-                        context.ownTransporters[domain],
-                        turn,
-                        domain,
-                        context.islandMode
-                    ))
+                COUNTERPOINTAI._admitTransports(context, state, domain, turn))
             {
                 domainPool = domainPool.concat(pools[domain].transport);
             }
@@ -3337,7 +3689,8 @@
             buildings,
             units,
             enemyUnits,
-            enemyBuildings
+            enemyBuildings,
+            map
         );
         COUNTERPOINTAI._allocatePhaseBudgets(
             state,

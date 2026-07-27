@@ -114,6 +114,16 @@
     strategy.ISLAND_ROLE_NUDGE_MULTIPLIER = 5;
     // Island maps: boost for tank capable transports when tanks outnumber ferry capacity.
     strategy.ISLAND_TANK_FERRY_DEMAND_BOOST = 2.5;
+    // Share of capture targets that must be unwalkable before a transport that can actually deliver
+    // one is offered immediately rather than waiting for the per turn chance to climb. 0 means
+    // always offer it, 1 means only when nothing at all can be captured on foot.
+    strategy.FERRY_URGENT_STRANDED_SHARE = 0.5;
+    // How many buildings are sampled when measuring what is unwalkable, counted separately for
+    // enemy and for neutral so a map full of enemy property cannot crowd the neutrals out.
+    strategy.FERRY_TARGET_SAMPLE = 24;
+    // Ceiling on island maps built per turn. Each one is a full flood fill of the map, and each
+    // distinct transport movement type needs its own, so this bounds the worst case.
+    strategy.MAX_ISLAND_MAPS = 6;
 
     // ----- Internal scales and safety limits -----
     // These shape the scoring maths rather than expressing a preference. Most players never need
