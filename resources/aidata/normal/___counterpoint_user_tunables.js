@@ -39,8 +39,11 @@
     // Looks for factories again once the planned ones are done. Without this, a factory that had a
     // unit parked on it when the turn's plan was drawn up sits idle even after the unit moves off.
     strategy.LATE_FACTORY_RESCAN = true;
-    // Reserved for every factory before the surplus is dealt out, so no factory is left broke.
-    strategy.FACTORY_FLOOR = 1000;
+    // Raises the reservation of a factory that can build a capturer; it never lowers it below that
+    // capturer's own cost, so anything under the cheapest capturer price does nothing. 0 means
+    // reserve exactly the cheapest capturer, which keeps ground factories from sitting idle without
+    // hardcoding a price. Factories with no capturer reserve nothing and stay skippable.
+    strategy.FACTORY_FLOOR = 0;
     // Score multiplier for tank class units, meaning ground, direct, no capture, no cargo, and
     // past both TANK_MIN_BASE_COST and TANK_MIN_MOVEMENT.
     strategy.TANK_BONUS = 1.5;

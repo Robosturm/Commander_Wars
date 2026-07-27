@@ -1,6 +1,8 @@
 ;var COUNTERPOINTAI =
 {
-    STRATEGY_VERSION : 1,
+    // 2: per-plan capturer floors replaced the flat factory floor, so budgets in state saved by
+    // version 1 were computed under different rules and must be rebuilt rather than resumed.
+    STRATEGY_VERSION : 2,
     DOMAIN_GROUND : "ground",
     DOMAIN_AIR : "air",
     DOMAIN_NAVAL : "naval",
@@ -2527,6 +2529,78 @@
         return targets;
     },
 
+    // Never leave a factory that can produce a capturer empty: its floor is that capturer's own
+    // menu cost, so a roster whose cheapest foot soldier is 1500 needs no retuning. A plan with no
+    // capturer, which is an airport or port on most rosters, reserves nothing and stays skippable,
+    // and that is what leaves room for an expensive transport.
+    // Only ground capturers set a floor. Naval capturers exist (a gunboat carries ACTION_CAPTURE),
+    // but reserving a harbour's gunboat cost would starve the ground factories that actually do the
+    // capturing, and ports are meant to stay skippable.
+    // Deliberately not gated on candidate.enabled: the engine sets that from whether the player can
+    // afford the unit right now (resources/scripts/actions/ACTION_BUILD_UNITS.js), so gating on it
+    // would collapse the floor to 0 exactly when funds are tight, which is when it matters most.
+    _planFloor : function(plan)
+    {
+        var best = -1;
+        for (var index = 0; plan.candidates && index < plan.candidates.length; ++index)
+        {
+            var candidate = plan.candidates[index];
+            if (candidate.canCapture !== true ||
+                candidate.domain !== COUNTERPOINTAI.DOMAIN_GROUND ||
+                typeof candidate.transactionCost !== "number" ||
+                candidate.transactionCost < 0 ||
+                COUNTERPOINTAI._candidateRejected(plan, index))
+            {
+                continue;
+            }
+            if (best < 0 || candidate.transactionCost < best)
+            {
+                best = candidate.transactionCost;
+            }
+        }
+        if (best < 0)
+        {
+            return 0;
+        }
+        // FACTORY_FLOOR raises the reservation, it never lowers it below the capturer's own cost.
+        return Math.max(best, Math.max(0, Math.floor(
+            COUNTERPOINTAI._finiteNumber(COUNTERPOINTAI.FACTORY_FLOOR, 0)
+        )));
+    },
+
+    // Short of covering every floor, fund the cheapest floors first. Spreading the shortfall
+    // proportionally instead would leave every factory below its own floor, so none could build and
+    // none could lend, and the turn would pass with the money still in the bank.
+    _fundCheapestFloorsFirst : function(paidPlans, floors, safeFunds)
+    {
+        var order = [];
+        for (var index = 0; index < paidPlans.length; ++index)
+        {
+            paidPlans[index].reservedBudget = 0;
+            order.push(index);
+        }
+        order.sort(function(left, right)
+        {
+            return floors[left] !== floors[right] ?
+                floors[left] - floors[right] : left - right;
+        });
+        var remaining = safeFunds;
+        for (var orderIndex = 0; orderIndex < order.length; ++orderIndex)
+        {
+            var planIndex = order[orderIndex];
+            if (floors[planIndex] > 0 && floors[planIndex] <= remaining)
+            {
+                paidPlans[planIndex].reservedBudget = floors[planIndex];
+                remaining -= floors[planIndex];
+            }
+        }
+        // Whatever is left over goes to the cheapest floor rather than being stranded.
+        if (remaining > 0)
+        {
+            paidPlans[order[0]].reservedBudget += remaining;
+        }
+    },
+
     _allocatePhaseBudgets : function(state, plans, funds)
     {
         var paidPlans = [];
@@ -2569,33 +2643,29 @@
             return;
         }
 
-        var floor = Math.max(0, Math.floor(COUNTERPOINTAI.FACTORY_FLOOR));
-        if (safeFunds < floor * paidPlans.length)
+        var floors = [];
+        var totalFloor = 0;
+        for (var totalIndex = 0; totalIndex < paidPlans.length; ++totalIndex)
         {
-            var split = Math.floor(safeFunds / paidPlans.length);
-            var splitRemainder = safeFunds - split * paidPlans.length;
-            for (var splitIndex = 0; splitIndex < paidPlans.length; ++splitIndex)
-            {
-                paidPlans[splitIndex].reservedBudget = split;
-                if (splitRemainder > 0)
-                {
-                    paidPlans[splitIndex].reservedBudget += 1;
-                    splitRemainder -= 1;
-                }
-            }
+            floors.push(COUNTERPOINTAI._planFloor(paidPlans[totalIndex]));
+            totalFloor += floors[totalIndex];
+        }
+        if (safeFunds < totalFloor)
+        {
+            COUNTERPOINTAI._fundCheapestFloorsFirst(paidPlans, floors, safeFunds);
         }
         else
         {
             for (var floorIndex = 0; floorIndex < paidPlans.length; ++floorIndex)
             {
-                paidPlans[floorIndex].reservedBudget = floor;
+                paidPlans[floorIndex].reservedBudget = floors[floorIndex];
             }
-            var remaining = safeFunds - floor * paidPlans.length;
-            var capacity = Math.max(0, dynamicCap - floor);
+            var remaining = safeFunds - totalFloor;
             for (var capIndex = 0;
                  capIndex < paidPlans.length && remaining > 0;
                  ++capIndex)
             {
+                var capacity = Math.max(0, dynamicCap - floors[capIndex]);
                 var addition = Math.min(remaining, capacity);
                 paidPlans[capIndex].reservedBudget += addition;
                 remaining -= addition;
@@ -2632,7 +2702,6 @@
         {
             return true;
         }
-        var floor = Math.max(0, Math.floor(COUNTERPOINTAI.FACTORY_FLOOR));
         var borrowed = [];
         for (var index = 0; index < plans.length && needed > 0; ++index)
         {
@@ -2645,7 +2714,9 @@
             {
                 continue;
             }
-            var available = Math.max(0, donor.reservedBudget - floor);
+            // Lend only what the donor holds above its own capturer floor, so borrowing can never
+            // be the reason a ground factory sits idle.
+            var available = Math.max(0, donor.reservedBudget - COUNTERPOINTAI._planFloor(donor));
             var amount = Math.min(needed, available);
             if (amount > 0)
             {
