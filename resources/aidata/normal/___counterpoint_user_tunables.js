@@ -124,6 +124,20 @@
     // Ceiling on island maps built per turn. Each one is a full flood fill of the map, and each
     // distinct transport movement type needs its own, so this bounds the worst case.
     strategy.MAX_ISLAND_MAPS = 6;
+    // Most transports the urgency above may buy outright. Past this count they still get built, but
+    // only through the ordinary per turn chance below, which tapers off sharply. Raise it for maps
+    // where one boat cannot keep up, lower it to 1 to stop a second hull being rushed.
+    strategy.FERRY_MAX_HULLS = 2;
+    // Ground capturers owned per transport wanted, up to the ceiling above. Lower means each new
+    // batch of capturers asks for another hull sooner.
+    strategy.FERRY_CAPPERS_PER_HULL = 2;
+    // Whether the AI may leave money unspent to afford a transport it cannot buy this turn. With
+    // this off it always spends what it has, so an expensive hull on a poor map is never reached.
+    strategy.SAVE_FOR_FERRY = true;
+    // How many turns of income the saving above may plan across. The money is only held when the
+    // transport is reachable within this many turns, so an unaffordable one is never hoarded for.
+    // Capturer budgets are reserved before any of this, so saving never idles a ground factory.
+    strategy.FERRY_SAVE_MAX_TURNS = 2;
 
     // ----- Internal scales and safety limits -----
     // These shape the scoring maths rather than expressing a preference. Most players never need

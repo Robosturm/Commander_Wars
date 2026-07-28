@@ -1,8 +1,8 @@
 ;var COUNTERPOINTAI =
 {
-    // 2: per-plan capturer floors replaced the flat factory floor, so budgets in state saved by
-    // version 1 were computed under different rules and must be rebuilt rather than resumed.
-    STRATEGY_VERSION : 2,
+    // 3: funds can now be held back across a turn for a ferry, which state saved by an earlier
+    // version has no field for. Budgets computed under the old rules must be rebuilt, not resumed.
+    STRATEGY_VERSION : 3,
     DOMAIN_GROUND : "ground",
     DOMAIN_AIR : "air",
     DOMAIN_NAVAL : "naval",
@@ -19,6 +19,9 @@
     MAX_ISLAND_MAPS_DEFAULT : 6,
     FERRY_TARGET_SAMPLE_DEFAULT : 24,
     FERRY_URGENT_STRANDED_SHARE_DEFAULT : 0.5,
+    FERRY_MAX_HULLS_DEFAULT : 2,
+    FERRY_CAPPERS_PER_HULL_DEFAULT : 2,
+    FERRY_SAVE_MAX_TURNS_DEFAULT : 2,
     RNG_COUNTER_MULTIPLIER : 1831565813,
     RNG_LEFT_SHIFT_A : 13,
     RNG_RIGHT_SHIFT : 17,
@@ -1479,6 +1482,11 @@
                 state.drawCounter,
                 0,
                 COUNTERPOINTAI._plannerLimit("MAX_PLANNER_DRAW_COUNT", 1)
+            ) ||
+            !COUNTERPOINTAI._validPlannerInteger(
+                state.heldFunds,
+                0,
+                COUNTERPOINTAI.PLANNER_VALUE_MAX
             ))
         {
             return false;
@@ -1723,6 +1731,7 @@
             generation : generation,
             seed : COUNTERPOINTAI._finiteNumber(seed, 0) >>> 0,
             drawCounter : 0,
+            heldFunds : 0,
             specialPrepared : false,
             ordinaryPrepared : false,
             plans : []
@@ -2478,6 +2487,7 @@
                 break;
             }
         }
+        var ownTransporters = COUNTERPOINTAI._countOwnTransporters(ownSnapshots);
         return {
             enemyComposition : enemyComposition,
             ownComposition : ownComposition,
@@ -2496,14 +2506,16 @@
                 COUNTERPOINTAI._availableDomains(plans),
                 islandMode
             ),
-            ownTransporters : COUNTERPOINTAI._countOwnTransporters(ownSnapshots),
+            ownTransporters : ownTransporters,
             ferry : COUNTERPOINTAI._ferryContext(
                 system,
                 ai,
                 plans,
                 enemyBuildings,
                 map,
-                islandMode
+                islandMode,
+                ownSnapshots,
+                ownTransporters
             ),
             banIndirects : banIndirects
         };
@@ -2511,10 +2523,12 @@
 
     // Which transports can actually deliver a ground capturer to somewhere we cannot already walk.
     // Air needs no shore, so it is asked directly; sea and hover need a mutually passable tile.
-    _ferryContext : function(system, ai, plans, enemyBuildings, map, islandMode)
+    _ferryContext : function(system, ai, plans, enemyBuildings, map, islandMode,
+                             ownSnapshots, ownTransporters)
     {
         var ferry = { strandedShare : 0, stranded : 0, urgent : false, measured : false,
-                      deliverable : Object.create(null), plans : Object.create(null) };
+                      cost : 0, want : 0, deliverable : Object.create(null),
+                      needed : Object.create(null), plans : Object.create(null) };
         if (islandMode !== true)
         {
             return ferry;
@@ -2566,6 +2580,18 @@
         if (stranded.length === 0)
         {
             return ferry;
+        }
+
+        // How many hulls the urgent path may buy outright. Stranded targets do not fall when a boat
+        // is bought, so without a demand cap urgency has no end and the port builds nothing else.
+        ferry.want = COUNTERPOINTAI._ferryHullsWanted(ownSnapshots);
+        var counts = ownTransporters || {};
+        var domains = [COUNTERPOINTAI.DOMAIN_GROUND, COUNTERPOINTAI.DOMAIN_AIR,
+                       COUNTERPOINTAI.DOMAIN_NAVAL, COUNTERPOINTAI.DOMAIN_HOVER];
+        for (var domainIndex = 0; domainIndex < domains.length; ++domainIndex)
+        {
+            ferry.needed[domains[domainIndex]] =
+                COUNTERPOINTAI._readNumber(counts, domains[domainIndex], 0) < ferry.want;
         }
 
         var capperIds = Object.create(null);
@@ -2621,7 +2647,17 @@
                 if (verdicts[key] === true)
                 {
                     ferry.deliverable[candidate.domain] = true;
-                    ferry.plans[plan.key] = true;
+                    // Only a domain still short of hulls gets first call on the surplus, and only
+                    // its price is worth saving towards.
+                    if (ferry.needed[candidate.domain] === true)
+                    {
+                        ferry.plans[plan.key] = true;
+                        if (candidate.transactionCost > 0 &&
+                            (ferry.cost <= 0 || candidate.transactionCost < ferry.cost))
+                        {
+                            ferry.cost = candidate.transactionCost;
+                        }
+                    }
                 }
             }
         }
@@ -2633,6 +2669,35 @@
                 COUNTERPOINTAI.FERRY_URGENT_STRANDED_SHARE,
                 COUNTERPOINTAI.FERRY_URGENT_STRANDED_SHARE_DEFAULT);
         return ferry;
+    },
+
+    // Hulls wanted at once, sized by the capturers there are to carry. One is always wanted, since
+    // a map that strands its targets needs a first boat before it can have anything to ferry.
+    _ferryHullsWanted : function(ownSnapshots)
+    {
+        var cappers = 0;
+        var length = COUNTERPOINTAI._collectionLength(ownSnapshots);
+        for (var index = 0; index < length; ++index)
+        {
+            var unit = COUNTERPOINTAI._collectionAt(ownSnapshots, index);
+            if (unit !== null && unit !== undefined && unit.canCapture === true &&
+                unit.domain === COUNTERPOINTAI.DOMAIN_GROUND)
+            {
+                cappers += 1;
+            }
+        }
+        var perHull = Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
+            COUNTERPOINTAI.FERRY_CAPPERS_PER_HULL,
+            COUNTERPOINTAI.FERRY_CAPPERS_PER_HULL_DEFAULT
+        )));
+        return COUNTERPOINTAI._clamp(
+            Math.floor(cappers / perHull),
+            1,
+            Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
+                COUNTERPOINTAI.FERRY_MAX_HULLS,
+                COUNTERPOINTAI.FERRY_MAX_HULLS_DEFAULT
+            )))
+        );
     },
 
     // On an island map a transport that cannot deliver a capturer anywhere new is dead weight, so
@@ -2648,7 +2713,9 @@
             {
                 return false;
             }
-            if (ferry.urgent === true)
+            // Past the wanted hull count the ordinary ramp takes over, which tapers hard on how
+            // many are already owned. Urgency alone would keep admitting boats for the whole game.
+            if (ferry.urgent === true && ferry.needed[domain] === true)
             {
                 return true;
             }
@@ -3015,6 +3082,59 @@
             reserve += COUNTERPOINTAI._cheapestGroundCapperCost(system, data);
         }
         return reserve;
+    },
+
+    _spendableFunds : function(state, ai)
+    {
+        var funds = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(
+            ai.getPlayer().getFunds(),
+            0
+        )));
+        var held = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(state.heldFunds, 0)));
+        return Math.max(0, funds - Math.min(funds, held));
+    },
+
+    // What a turn can spare above the capturer floors, which the hold must never eat into.
+    _planFloorTotal : function(plans)
+    {
+        var total = 0;
+        for (var index = 0; index < plans.length; ++index)
+        {
+            if (plans[index].hasPaid === true)
+            {
+                total += COUNTERPOINTAI._planFloor(plans[index]);
+            }
+        }
+        return total;
+    },
+
+    // Money left unallocated stays in the bank into the next turn, which is the whole saving
+    // mechanism: a hull too dear for one turn's surplus is reached by holding that surplus back.
+    // The forecast bounds it, so an unreachable hull never turns into a permanent hoard.
+    _ferrySaving : function(ai, plans, ferry, funds)
+    {
+        if (COUNTERPOINTAI.SAVE_FOR_FERRY === false || ferry === null || ferry === undefined ||
+            ferry.urgent !== true || ferry.cost <= 0)
+        {
+            return 0;
+        }
+        var floors = COUNTERPOINTAI._planFloorTotal(plans);
+        var surplus = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(funds, 0))) - floors;
+        // Nothing to hold once the surplus covers a hull: the allocation buys it this turn instead.
+        if (surplus <= 0 || surplus >= ferry.cost)
+        {
+            return 0;
+        }
+        var perTurn = COUNTERPOINTAI._finiteNumber(ai.getPlayer().calcIncome(), 0) - floors;
+        var turns = Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
+            COUNTERPOINTAI.FERRY_SAVE_MAX_TURNS,
+            COUNTERPOINTAI.FERRY_SAVE_MAX_TURNS_DEFAULT
+        )));
+        if (perTurn <= 0 || surplus + perTurn * turns < ferry.cost)
+        {
+            return 0;
+        }
+        return surplus;
     },
 
     // Short of covering every floor, fund the cheapest floors first. Spreading the shortfall
@@ -3717,11 +3837,19 @@
             enemyBuildings,
             map
         );
+        var available = Math.max(0, ai.getPlayer().getFunds() -
+            COUNTERPOINTAI._blockedCapperReserve(system, ai, buildings, state, plans));
+        // Only the ordinary phase builds units, so it is the only one that can see a ferry to save
+        // for. Letting the special phase run the check would just clear the hold it set.
+        if (plans.length > 0 && plans[0].phase === COUNTERPOINTAI.PHASE_ORDINARY)
+        {
+            state.heldFunds = COUNTERPOINTAI._ferrySaving(ai, plans, context.ferry, available);
+        }
         COUNTERPOINTAI._allocatePhaseBudgets(
             state,
             plans,
-            Math.max(0, ai.getPlayer().getFunds() -
-                COUNTERPOINTAI._blockedCapperReserve(system, ai, buildings, state, plans)),
+            Math.max(0, available -
+                Math.max(0, COUNTERPOINTAI._finiteNumber(state.heldFunds, 0))),
             context.ferry
         );
         for (var planIndex = 0; planIndex < plans.length; ++planIndex)
@@ -4046,7 +4174,7 @@
             ids,
             costs,
             enabled,
-            ai.getPlayer().getFunds()
+            COUNTERPOINTAI._spendableFunds(state, ai)
         );
         if (resolved !== null &&
             COUNTERPOINTAI._plannerSelectionFits(
@@ -4126,7 +4254,7 @@
         var retry = COUNTERPOINTAI._selectPlanCandidate(
             state.plans,
             planIndex,
-            ai.getPlayer().getFunds()
+            COUNTERPOINTAI._spendableFunds(state, ai)
         );
         if (!retry)
         {
@@ -4219,7 +4347,7 @@
                                 ids,
                                 costs,
                                 enabled,
-                                ai.getPlayer().getFunds()
+                                COUNTERPOINTAI._spendableFunds(state, ai)
                             );
                             if (resolved === null)
                             {
