@@ -2513,8 +2513,8 @@
     // Air needs no shore, so it is asked directly; sea and hover need a mutually passable tile.
     _ferryContext : function(system, ai, plans, enemyBuildings, map, islandMode)
     {
-        var ferry = { strandedShare : 0, stranded : 0, urgent : false,
-                      deliverable : Object.create(null) };
+        var ferry = { strandedShare : 0, stranded : 0, urgent : false, measured : false,
+                      deliverable : Object.create(null), plans : Object.create(null) };
         if (islandMode !== true)
         {
             return ferry;
@@ -2621,6 +2621,7 @@
                 if (verdicts[key] === true)
                 {
                     ferry.deliverable[candidate.domain] = true;
+                    ferry.plans[plan.key] = true;
                 }
             }
         }
@@ -3049,7 +3050,29 @@
         }
     },
 
-    _allocatePhaseBudgets : function(state, plans, funds)
+    // The floors already guarantee the ground factories, so the surplus is what a ferry competes
+    // for. Handing it out strictly front to back gave the whole pot to the first factory and left
+    // the port at zero, which no amount of urgency could fix.
+    _surplusOrder : function(paidPlans, ferry)
+    {
+        var first = [];
+        var rest = [];
+        var urgent = ferry !== null && ferry !== undefined && ferry.urgent === true;
+        for (var index = 0; index < paidPlans.length; ++index)
+        {
+            if (urgent && ferry.plans[paidPlans[index].key] === true)
+            {
+                first.push(index);
+            }
+            else
+            {
+                rest.push(index);
+            }
+        }
+        return first.concat(rest);
+    },
+
+    _allocatePhaseBudgets : function(state, plans, funds, ferry)
     {
         var paidPlans = [];
         var safeFunds = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(funds, 0)));
@@ -3109,13 +3132,15 @@
                 paidPlans[floorIndex].reservedBudget = floors[floorIndex];
             }
             var remaining = safeFunds - totalFloor;
+            var order = COUNTERPOINTAI._surplusOrder(paidPlans, ferry);
             for (var capIndex = 0;
-                 capIndex < paidPlans.length && remaining > 0;
+                 capIndex < order.length && remaining > 0;
                  ++capIndex)
             {
-                var capacity = Math.max(0, dynamicCap - floors[capIndex]);
+                var planIndex = order[capIndex];
+                var capacity = Math.max(0, dynamicCap - floors[planIndex]);
                 var addition = Math.min(remaining, capacity);
-                paidPlans[capIndex].reservedBudget += addition;
+                paidPlans[planIndex].reservedBudget += addition;
                 remaining -= addition;
             }
             if (remaining > 0)
@@ -3696,7 +3721,8 @@
             state,
             plans,
             Math.max(0, ai.getPlayer().getFunds() -
-                COUNTERPOINTAI._blockedCapperReserve(system, ai, buildings, state, plans))
+                COUNTERPOINTAI._blockedCapperReserve(system, ai, buildings, state, plans)),
+            context.ferry
         );
         for (var planIndex = 0; planIndex < plans.length; ++planIndex)
         {
