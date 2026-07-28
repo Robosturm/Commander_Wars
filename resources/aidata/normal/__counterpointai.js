@@ -3752,6 +3752,38 @@
             COUNTERPOINTAI._appendCandidateIndexes(ordered, seen, cheapCappers);
         }
         plan.order = ordered;
+        COUNTERPOINTAI._ferryFirstOrder(plan, context);
+    },
+
+    // Urgency decides funding, not what the funding buys, so a harbour handed the money for a hull
+    // it needs could still draw a warship and spend it. Where a wanted ferry can actually be built,
+    // it goes to the front of the order, which makes it the pick as soon as the budget covers it and
+    // otherwise falls straight through to the rest of the list.
+    _ferryFirstOrder : function(plan, context)
+    {
+        var ferry = context.ferry;
+        if (context.islandMode !== true || ferry === null || ferry === undefined ||
+            ferry.urgent !== true || ferry.plans[plan.key] !== true)
+        {
+            return;
+        }
+        var front = [];
+        var rest = [];
+        for (var index = 0; index < plan.order.length; ++index)
+        {
+            var candidate = plan.candidates[plan.order[index]];
+            if (candidate.isTransporter === true &&
+                ferry.needed[candidate.domain] === true &&
+                COUNTERPOINTAI._readFlag(context.groundCarriers, candidate.id))
+            {
+                front.push(plan.order[index]);
+            }
+            else
+            {
+                rest.push(plan.order[index]);
+            }
+        }
+        plan.order = front.concat(rest);
     },
 
     _canUseUnreservedFunds : function(plan, transactionCost, funds)
