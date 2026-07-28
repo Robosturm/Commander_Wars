@@ -134,10 +134,12 @@
     // Whether the AI may leave money unspent to afford a transport it cannot buy this turn. With
     // this off it always spends what it has, so an expensive hull on a poor map is never reached.
     strategy.SAVE_FOR_FERRY = true;
-    // How many turns of income the saving above may plan across. The money is only held when the
-    // transport is reachable within this many turns, so an unaffordable one is never hoarded for.
+    // How many turns of income the saving above may plan across. The test is money already spare
+    // plus this many turns of income, not income alone, so 1 still reaches a hull far dearer than
+    // one turn earns: the spare money accumulates until it does. Raising it only matters when
+    // income is thin, where it trades a longer gamble for arriving a turn sooner.
     // Capturer budgets are reserved before any of this, so saving never idles a ground factory.
-    strategy.FERRY_SAVE_MAX_TURNS = 2;
+    strategy.FERRY_SAVE_MAX_TURNS = 1;
 
     // ----- Internal scales and safety limits -----
     // These shape the scoring maths rather than expressing a preference. Most players never need

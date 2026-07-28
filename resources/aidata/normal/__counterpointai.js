@@ -21,7 +21,7 @@
     FERRY_URGENT_STRANDED_SHARE_DEFAULT : 0.5,
     FERRY_MAX_HULLS_DEFAULT : 2,
     FERRY_CAPPERS_PER_HULL_DEFAULT : 2,
-    FERRY_SAVE_MAX_TURNS_DEFAULT : 2,
+    FERRY_SAVE_MAX_TURNS_DEFAULT : 1,
     RNG_COUNTER_MULTIPLIER : 1831565813,
     RNG_LEFT_SHIFT_A : 13,
     RNG_RIGHT_SHIFT : 17,
@@ -3211,7 +3211,7 @@
     },
 
     // Money left unallocated stays in the bank into the next turn, which is the whole saving
-    // mechanism: a hull too dear for one turn's surplus is reached by holding that surplus back.
+    // mechanism: a hull too dear for one turn's spare money is reached by holding some of it back.
     // The forecast bounds it, so an unreachable hull never turns into a permanent hoard.
     _ferrySaving : function(ai, plans, ferry, funds)
     {
@@ -3236,7 +3236,11 @@
         {
             return 0;
         }
-        return surplus;
+        // Only what has to survive the turn is held. Next turn's income pays the rest, so idling the
+        // whole surplus would park money that could have bought something now. Short of that amount
+        // everything spare is held so it accumulates, which is what a horizon past one turn is for.
+        var needed = ferry.cost - perTurn;
+        return needed <= 0 ? 0 : Math.min(surplus, needed);
     },
 
     // Short of covering every floor, fund the cheapest floors first. Spreading the shortfall
