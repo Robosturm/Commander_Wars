@@ -2035,18 +2035,6 @@
         }
     },
 
-    _uniqueUnitIds : function(plans)
-    {
-        var ids = [];
-        var seen = Object.create(null);
-        COUNTERPOINTAI._visitPlanCandidates(plans, function(candidate)
-        {
-            COUNTERPOINTAI._appendUniqueId(ids, seen, candidate.id);
-        });
-        ids.sort();
-        return ids;
-    },
-
     _unitIdsFromCollection : function(units)
     {
         var ids = [];
@@ -2414,25 +2402,6 @@
         return context;
     },
 
-    _availableDomains : function(plans)
-    {
-        var domains = {
-            ground : false,
-            air : false,
-            naval : false,
-            hover : false
-        };
-        COUNTERPOINTAI._visitPlanCandidates(plans, function(candidate)
-        {
-            var domain = candidate.domain;
-            if (domains[domain] !== undefined)
-            {
-                domains[domain] = true;
-            }
-        });
-        return domains;
-    },
-
     _transportContext : function(ownComposition, availableDomains, islandMode)
     {
         var capperCount = 0;
@@ -2453,19 +2422,6 @@
 
     // Ground unit ids this match can actually produce. A transport is only worth its ferry score if
     // it can carry one of these: a cruiser is a transporter too, but it takes nothing but copters.
-    _buildableGroundIds : function(plans)
-    {
-        var ids = Object.create(null);
-        COUNTERPOINTAI._visitPlanCandidates(plans, function(candidate)
-        {
-            if (candidate.domain === COUNTERPOINTAI.DOMAIN_GROUND)
-            {
-                ids["#" + candidate.id] = true;
-            }
-        });
-        return ids;
-    },
-
     _readFlag : function(source, id)
     {
         return source !== null && source !== undefined && source["#" + id] === true;
@@ -2484,25 +2440,13 @@
         return false;
     },
 
-    // Which build options are ferries rather than merely transporters, keyed by unit id.
-    _groundCarrierIds : function(plans, groundIds)
-    {
-        var carriers = Object.create(null);
-        COUNTERPOINTAI._visitPlanCandidates(plans, function(candidate)
-        {
-            if (candidate.isTransporter === true && candidate.scoreData !== undefined &&
-                COUNTERPOINTAI._carriesAnyOf(candidate.scoreData.cargoIds, groundIds))
-            {
-                carriers["#" + candidate.id] = true;
-            }
-        });
-        return carriers;
-    },
-
     _planningContext : function(system, ai, plans, buildings, units, enemyUnits, enemyBuildings, map)
     {
         var enemyIds = COUNTERPOINTAI._unitIdsFromCollection(enemyUnits);
-        var candidateIds = COUNTERPOINTAI._uniqueUnitIds(plans);
+        var roster = COUNTERPOINTAI._productionRoster(system, ai, buildings);
+        // Every facility's roster, not just this batch's, so an enemy snapshot carries the same
+        // damage table whichever factories happened to be planned first.
+        var candidateIds = roster.unitIds;
         var armoredIds = COUNTERPOINTAI._armoredProbeIds(units, enemyUnits);
         COUNTERPOINTAI._enrichPlanCandidates(system, plans, enemyIds, armoredIds);
         var ownSnapshots = COUNTERPOINTAI._snapshotCollection(
@@ -2542,10 +2486,13 @@
                 break;
             }
         }
-        var groundIds = COUNTERPOINTAI._buildableGroundIds(plans);
-        var ownTransporters = COUNTERPOINTAI._countOwnTransporters(ownSnapshots, groundIds);
+        var ownTransporters = COUNTERPOINTAI._countOwnTransporters(
+            ownSnapshots,
+            roster.groundIds
+        );
         return {
-            groundCarriers : COUNTERPOINTAI._groundCarrierIds(plans, groundIds),
+            roster : roster,
+            groundCarriers : roster.carriers,
             enemyComposition : enemyComposition,
             ownComposition : ownComposition,
             ownSnapshots : ownSnapshots,
@@ -2560,7 +2507,7 @@
             islandMode : islandMode,
             transportContext : COUNTERPOINTAI._transportContext(
                 ownComposition,
-                COUNTERPOINTAI._availableDomains(plans),
+                roster.domains,
                 islandMode
             ),
             ownTransporters : ownTransporters,
@@ -2568,7 +2515,7 @@
                 system,
                 ai,
                 plans,
-                buildings,
+                roster,
                 enemyBuildings,
                 map,
                 islandMode,
@@ -2581,7 +2528,7 @@
 
     // Which transports can actually deliver a ground capturer to somewhere we cannot already walk.
     // Air needs no shore, so it is asked directly; sea and hover need a mutually passable tile.
-    _ferryContext : function(system, ai, plans, buildings, enemyBuildings, map, islandMode,
+    _ferryContext : function(system, ai, plans, roster, enemyBuildings, map, islandMode,
                              ownSnapshots, ownTransporters)
     {
         var ferry = { strandedShare : 0, stranded : 0, urgent : false, measured : false,
@@ -2591,11 +2538,8 @@
         {
             return ferry;
         }
-        // Every batch this turn must reach the same verdict, so demand is always measured from the
-        // buildings. Reading it off the batch made it depend on which factories happened to be free.
-        var sources = COUNTERPOINTAI._capperSources(system, ai, buildings);
-        var capper = sources.capper;
-        var homes = sources.homes;
+        var capper = roster.capper;
+        var homes = roster.homes;
         if (capper === null || homes.length === 0)
         {
             return ferry;
@@ -2655,61 +2599,54 @@
                 COUNTERPOINTAI._readNumber(counts, domains[domainIndex], 0) < ferry.want;
         }
 
-        var capperIds = sources.ids;
+        var capperIds = roster.capperIds;
 
         // Keyed on movement type and dock rather than domain: a lander and a black boat are
         // different movement types, so a verdict for one says nothing about the other.
+        // Read from the roster, not the batch. A port whose hulls are all unaffordable reports no
+        // build action, so it never becomes a plan, so a batch-derived scan saw no transport, so
+        // nothing was ever urgent and nothing was ever saved, so the funds never arrived. The port
+        // has to be visible while it is still unbuildable for that loop to be broken.
         var verdicts = Object.create(null);
-        for (var planIndex = 0; planIndex < plans.length; ++planIndex)
+        for (var index = 0; index < roster.transports.length; ++index)
         {
-            var plan = plans[planIndex];
-            for (var index = 0; plan.candidates && index < plan.candidates.length; ++index)
+            var transport = roster.transports[index];
+            if (!COUNTERPOINTAI._carriesAnyOf(transport.cargoIds, capperIds))
             {
-                var candidate = plan.candidates[index];
-                if (candidate.isTransporter !== true)
+                continue;
+            }
+            var key = transport.move + "@" + transport.x + "," + transport.y;
+            if (verdicts[key] === undefined)
+            {
+                verdicts[key] = COUNTERPOINTAI._ensureIslandMapFor(
+                        ai,
+                        created,
+                        transport.move,
+                        transport.id
+                    ) &&
+                    COUNTERPOINTAI._deliversToStranded(
+                        ai,
+                        map,
+                        transport.domain,
+                        transport,
+                        transport.move,
+                        capperMove,
+                        homes,
+                        stranded
+                    );
+            }
+            if (verdicts[key] === true)
+            {
+                ferry.deliverable[transport.domain] = true;
+                // Only a domain still short of hulls gets first call on the surplus, and only its
+                // price is worth saving towards.
+                if (ferry.needed[transport.domain] === true)
                 {
-                    continue;
-                }
-                var dummy = system.getDummyUnit(String(candidate.id));
-                if (dummy === null || dummy === undefined ||
-                    !COUNTERPOINTAI._cargoHasCapper(dummy, capperIds))
-                {
-                    continue;
-                }
-                var transportMove = String(dummy.getMovementType());
-                var key = transportMove + "@" + plan.x + "," + plan.y;
-                if (verdicts[key] === undefined)
-                {
-                    verdicts[key] = COUNTERPOINTAI._ensureIslandMapFor(
-                            ai,
-                            created,
-                            transportMove,
-                            candidate.id
-                        ) &&
-                        COUNTERPOINTAI._deliversToStranded(
-                            ai,
-                            map,
-                            candidate.domain,
-                            plan,
-                            transportMove,
-                            capperMove,
-                            homes,
-                            stranded
-                        );
-                }
-                if (verdicts[key] === true)
-                {
-                    ferry.deliverable[candidate.domain] = true;
-                    // Only a domain still short of hulls gets first call on the surplus, and only
-                    // its price is worth saving towards.
-                    if (ferry.needed[candidate.domain] === true)
+                    ferry.plans[transport.key] = true;
+                    if (transport.cost > 0 &&
+                        (ferry.cost <= 0 || transport.cost < ferry.cost))
                     {
-                        ferry.plans[plan.key] = true;
-                        if (candidate.transactionCost > 0 &&
-                            (ferry.cost <= 0 || candidate.transactionCost < ferry.cost))
-                        {
-                            ferry.cost = candidate.transactionCost;
-                        }
+                        ferry.cost = transport.cost;
                     }
                 }
             }
@@ -2923,24 +2860,6 @@
         return targets;
     },
 
-    _cargoHasCapper : function(dummy, capperIds)
-    {
-        if (dummy.isTransporter() !== true)
-        {
-            return false;
-        }
-        var cargo = dummy.getTransportUnits();
-        var length = COUNTERPOINTAI._collectionLength(cargo);
-        for (var index = 0; index < length; ++index)
-        {
-            if (capperIds["#" + String(COUNTERPOINTAI._collectionAt(cargo, index))] === true)
-            {
-                return true;
-            }
-        }
-        return false;
-    },
-
     _spreadBudget : function(targets, amount)
     {
         var value = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(amount, 0)));
@@ -3059,15 +2978,32 @@
         return best < 0 ? 0 : best;
     },
 
-    // Where capturers come from, asked of the buildings rather than of the plan batch. A factory
-    // with a unit parked on it is planned in a later batch, so a batch can hold nothing but a
-    // harbour. Measuring ferry demand from such a batch reported "no capturers, cannot tell", which
-    // switched off both the refusal and the hull cap and left the plain turn ramp buying boats.
-    _capperSources : function(system, ai, buildings)
+    // Everything this match can produce, read from the player's own facilities once per planning
+    // pass. Plan batches are partial by nature: a factory with a unit parked on it reports no build
+    // action and is planned in a later batch, so a batch can hold nothing but a harbour. Any fact
+    // about what can be built therefore has to come from here. Deriving one from the batch in hand
+    // silently changes the answer depending on which factories happened to be free that turn.
+    _productionRoster : function(system, ai, buildings)
     {
         var playerId = ai.getPlayer().getPlayerID();
         var length = COUNTERPOINTAI._collectionLength(buildings);
-        var sources = { capper : null, homes : [], ids : Object.create(null) };
+        var roster = {
+            unitIds : [],
+            groundIds : Object.create(null),
+            capperIds : Object.create(null),
+            carriers : Object.create(null),
+            cheapestCost : Object.create(null),
+            domains : { ground : false, air : false, naval : false, hover : false },
+            capper : null,
+            homes : [],
+            transports : [],
+            floorTotal : 0
+        };
+        var floor = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(
+            COUNTERPOINTAI.FACTORY_FLOOR,
+            0
+        )));
+        var seen = Object.create(null);
         var checked = Object.create(null);
         for (var index = 0; index < length; ++index)
         {
@@ -3089,7 +3025,7 @@
             var ids = data.getUnitIds();
             var costs = data.getTransactionCosts();
             var idLength = COUNTERPOINTAI._collectionLength(ids);
-            var buildsCapper = false;
+            var facilityCapper = -1;
             for (var idIndex = 0; idIndex < idLength; ++idIndex)
             {
                 var cost = COUNTERPOINTAI._collectionAt(costs, idIndex);
@@ -3099,33 +3035,105 @@
                 }
                 var id = String(COUNTERPOINTAI._collectionAt(ids, idIndex));
                 var key = "#" + id;
-                // Memoised across buildings: the roster repeats at every factory, and each miss
-                // costs a dummy unit.
+                // Memoised across facilities: the roster repeats at every one, and each miss costs
+                // a dummy unit.
                 if (checked[key] === undefined)
                 {
                     var dummy = system.getDummyUnit(id);
-                    checked[key] = dummy !== null && dummy !== undefined &&
-                        dummy.canCapture() === true &&
-                        COUNTERPOINTAI._domainFromUnitType(dummy.getUnitType()) ===
-                            COUNTERPOINTAI.DOMAIN_GROUND;
+                    checked[key] = dummy === null || dummy === undefined ? null : {
+                        domain : COUNTERPOINTAI._domainFromUnitType(dummy.getUnitType()),
+                        canCapture : dummy.canCapture() === true,
+                        isTransporter : dummy.isTransporter() === true,
+                        move : String(dummy.getMovementType()),
+                        cargoIds : dummy.isTransporter() === true ?
+                            COUNTERPOINTAI._stringList(dummy.getTransportUnits()) : []
+                    };
                 }
-                if (checked[key] !== true)
+                var info = checked[key];
+                if (info === null)
                 {
                     continue;
                 }
-                buildsCapper = true;
-                sources.ids[key] = true;
-                if (sources.capper === null || cost < sources.capper.cost)
+                if (seen[key] !== true)
                 {
-                    sources.capper = { id : id, cost : cost };
+                    seen[key] = true;
+                    roster.unitIds.push(id);
+                }
+                if (roster.cheapestCost[key] === undefined || cost < roster.cheapestCost[key])
+                {
+                    roster.cheapestCost[key] = cost;
+                }
+                roster.domains[info.domain] = true;
+                // Every dock that can build a hull, whether or not the engine will let it today.
+                // The whole point is to know a ferry is wanted while the port is still unbuildable.
+                if (info.isTransporter === true)
+                {
+                    roster.transports.push({
+                        id : id,
+                        cost : cost,
+                        domain : info.domain,
+                        move : info.move,
+                        cargoIds : info.cargoIds,
+                        x : building.getX(),
+                        y : building.getY(),
+                        key : COUNTERPOINTAI._planKey(
+                            building.getX(),
+                            building.getY(),
+                            COUNTERPOINTAI.ACTION_BUILD_UNITS
+                        )
+                    });
+                }
+                if (info.domain !== COUNTERPOINTAI.DOMAIN_GROUND)
+                {
+                    continue;
+                }
+                roster.groundIds[key] = true;
+                if (info.canCapture !== true)
+                {
+                    continue;
+                }
+                roster.capperIds[key] = true;
+                if (facilityCapper < 0 || cost < facilityCapper)
+                {
+                    facilityCapper = cost;
+                }
+                if (roster.capper === null || cost < roster.capper.cost)
+                {
+                    roster.capper = { id : id, cost : cost };
                 }
             }
-            if (buildsCapper)
+            if (facilityCapper >= 0)
             {
-                sources.homes.push({ x : building.getX(), y : building.getY() });
+                roster.homes.push({ x : building.getX(), y : building.getY() });
+                // Same rule as _planFloor, so what saving treats as committed matches what the
+                // allocation will actually reserve once every factory has a plan.
+                roster.floorTotal += Math.max(facilityCapper, floor);
             }
         }
-        return sources;
+        // Second pass, because a hull is only a ferry relative to the full ground roster and the
+        // ground ids are not complete until every facility has been read.
+        for (var transportIndex = 0;
+             transportIndex < roster.transports.length;
+             ++transportIndex)
+        {
+            var transport = roster.transports[transportIndex];
+            if (COUNTERPOINTAI._carriesAnyOf(transport.cargoIds, roster.groundIds))
+            {
+                roster.carriers["#" + transport.id] = true;
+            }
+        }
+        return roster;
+    },
+
+    _stringList : function(collection)
+    {
+        var list = [];
+        var length = COUNTERPOINTAI._collectionLength(collection);
+        for (var index = 0; index < length; ++index)
+        {
+            list.push(String(COUNTERPOINTAI._collectionAt(collection, index)));
+        }
+        return list;
     },
 
     _hasAction : function(building, actionId)
@@ -3197,50 +3205,54 @@
     },
 
     // What a turn can spare above the capturer floors, which the hold must never eat into.
-    _planFloorTotal : function(plans)
+    // Money left unallocated stays in the bank into the next turn, which is the whole saving
+    // mechanism: a purchase too dear for one turn's spare money is reached by holding some back.
+    // Nothing is held once the spare money already covers it, or when it can never be reached, so
+    // an unaffordable target never turns into a permanent hoard. Between those, only what has to
+    // survive the turn is held, since next turn's income pays the rest and idling the whole surplus
+    // would park money that could have bought something now. Short of that amount everything spare
+    // is held so it accumulates, which is what a horizon past one turn is for.
+    _savingHold : function(surplus, perTurn, cost, turns)
     {
-        var total = 0;
-        for (var index = 0; index < plans.length; ++index)
+        var horizon = Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(turns, 1)));
+        if (surplus <= 0 || cost <= 0 || surplus >= cost || perTurn <= 0 ||
+            surplus + perTurn * horizon < cost)
         {
-            if (plans[index].hasPaid === true)
-            {
-                total += COUNTERPOINTAI._planFloor(plans[index]);
-            }
+            return 0;
         }
-        return total;
+        var needed = cost - perTurn;
+        return needed <= 0 ? 0 : Math.min(surplus, needed);
     },
 
-    // Money left unallocated stays in the bank into the next turn, which is the whole saving
-    // mechanism: a hull too dear for one turn's spare money is reached by holding some of it back.
-    // The forecast bounds it, so an unreachable hull never turns into a permanent hoard.
-    _ferrySaving : function(ai, plans, ferry, funds)
+    // Spare money is what is left after every facility's capturer bill, counted across all of them
+    // rather than the batch in hand: a batch holding only a harbour reported no floors at all, so
+    // the whole treasury looked free to bank.
+    _spareThisTurn : function(ai, roster, funds)
+    {
+        var floors = Math.max(0, COUNTERPOINTAI._finiteNumber(roster.floorTotal, 0));
+        return {
+            surplus : Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(funds, 0))) - floors,
+            perTurn : COUNTERPOINTAI._finiteNumber(ai.getPlayer().calcIncome(), 0) - floors
+        };
+    },
+
+    _ferrySaving : function(ai, roster, ferry, funds)
     {
         if (COUNTERPOINTAI.SAVE_FOR_FERRY === false || ferry === null || ferry === undefined ||
             ferry.urgent !== true || ferry.cost <= 0)
         {
             return 0;
         }
-        var floors = COUNTERPOINTAI._planFloorTotal(plans);
-        var surplus = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(funds, 0))) - floors;
-        // Nothing to hold once the surplus covers a hull: the allocation buys it this turn instead.
-        if (surplus <= 0 || surplus >= ferry.cost)
-        {
-            return 0;
-        }
-        var perTurn = COUNTERPOINTAI._finiteNumber(ai.getPlayer().calcIncome(), 0) - floors;
-        var turns = Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
-            COUNTERPOINTAI.FERRY_SAVE_MAX_TURNS,
-            COUNTERPOINTAI.FERRY_SAVE_MAX_TURNS_DEFAULT
-        )));
-        if (perTurn <= 0 || surplus + perTurn * turns < ferry.cost)
-        {
-            return 0;
-        }
-        // Only what has to survive the turn is held. Next turn's income pays the rest, so idling the
-        // whole surplus would park money that could have bought something now. Short of that amount
-        // everything spare is held so it accumulates, which is what a horizon past one turn is for.
-        var needed = ferry.cost - perTurn;
-        return needed <= 0 ? 0 : Math.min(surplus, needed);
+        var spare = COUNTERPOINTAI._spareThisTurn(ai, roster, funds);
+        return COUNTERPOINTAI._savingHold(
+            spare.surplus,
+            spare.perTurn,
+            ferry.cost,
+            COUNTERPOINTAI._finiteNumber(
+                COUNTERPOINTAI.FERRY_SAVE_MAX_TURNS,
+                COUNTERPOINTAI.FERRY_SAVE_MAX_TURNS_DEFAULT
+            )
+        );
     },
 
     // Short of covering every floor, fund the cheapest floors first. Spreading the shortfall
@@ -3958,7 +3970,14 @@
         // for. Letting the special phase run the check would just clear the hold it set.
         if (plans.length > 0 && plans[0].phase === COUNTERPOINTAI.PHASE_ORDINARY)
         {
-            state.heldFunds = COUNTERPOINTAI._ferrySaving(ai, plans, context.ferry, available);
+            // Measured against raw funds, because the roster's floor total already covers every
+            // facility's capturer bill, including the blocked ones reserved for separately below.
+            state.heldFunds = COUNTERPOINTAI._ferrySaving(
+                ai,
+                context.roster,
+                context.ferry,
+                ai.getPlayer().getFunds()
+            );
         }
         COUNTERPOINTAI._allocatePhaseBudgets(
             state,
