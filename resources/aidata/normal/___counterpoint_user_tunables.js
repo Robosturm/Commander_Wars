@@ -140,6 +140,26 @@
     // income is thin, where it trades a longer gamble for arriving a turn sooner.
     // Capturer budgets are reserved before any of this, so saving never idles a ground factory.
     strategy.FERRY_SAVE_MAX_TURNS = 1;
+    // Whether the AI may bank for a unit that answers a threat it is currently short against, the
+    // way a player holds funds for a tank after seeing one built. Off means it always spends what it
+    // has and only ever counters with whatever this turn's money reaches.
+    strategy.SAVE_FOR_COUNTERS = true;
+    // How short of an enemy unit class the AI must be before banking for an answer is considered.
+    // This is existing damage against that class over the damage needed to deal with it, so 0.5
+    // means "less than half covered". Raise it to bank more readily, lower it to bank only when
+    // nearly helpless. This is the main dial on how cautious the AI is with its money.
+    strategy.COUNTER_GAP_RATIO = 0.5;
+    // How much better the banked-for unit must be than the best answer this turn's money already
+    // buys, as a damage multiple. 1.5 means it must hit half again as hard, which stops the AI
+    // waiting a turn for a marginal upgrade over something it could build right now.
+    strategy.COUNTER_WORTH_RATIO = 1.5;
+    // Turns of income the counter saving may plan across, same meaning as the ferry setting above.
+    // 1 keeps it to answers that are one turn away, which is what a player usually does.
+    strategy.COUNTER_SAVE_MAX_TURNS = 1;
+    // First day the AI may bank for a counter. Before the enemy army is on the board the coverage
+    // reading is mostly noise, and holding money that early costs opening presence to answer a
+    // threat that does not exist yet. Ferry saving is not affected by this.
+    strategy.COUNTER_SAVE_MIN_DAY = 3;
 
     // ----- Internal scales and safety limits -----
     // These shape the scoring maths rather than expressing a preference. Most players never need

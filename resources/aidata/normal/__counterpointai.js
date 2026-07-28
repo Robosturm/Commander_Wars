@@ -22,6 +22,10 @@
     FERRY_MAX_HULLS_DEFAULT : 2,
     FERRY_CAPPERS_PER_HULL_DEFAULT : 2,
     FERRY_SAVE_MAX_TURNS_DEFAULT : 1,
+    COUNTER_SAVE_MAX_TURNS_DEFAULT : 1,
+    COUNTER_SAVE_MIN_DAY_DEFAULT : 3,
+    COUNTER_GAP_RATIO_DEFAULT : 0.5,
+    COUNTER_WORTH_RATIO_DEFAULT : 1.5,
     RNG_COUNTER_MULTIPLIER : 1831565813,
     RNG_LEFT_SHIFT_A : 13,
     RNG_RIGHT_SHIFT : 17,
@@ -3255,6 +3259,169 @@
         );
     },
 
+    // Damage the best answer we can already afford does to one enemy class, against the best answer
+    // a turn of income would reach, and what that one costs. Read from the roster so a counter
+    // sitting in an unplanned factory still counts, and asked of the engine directly rather than of
+    // candidate snapshots, which only exist for the batch being planned.
+    _bestAnswers : function(system, roster, enemyId, surplus, reach)
+    {
+        var answers = { now : 0, later : 0, cost : 0 };
+        for (var index = 0; index < roster.unitIds.length; ++index)
+        {
+            var id = roster.unitIds[index];
+            var cost = COUNTERPOINTAI._readNumber(roster.cheapestCost, "#" + id, -1);
+            if (cost <= 0 || cost > reach)
+            {
+                continue;
+            }
+            var damage = Math.max(0, COUNTERPOINTAI._finiteNumber(
+                system.getCounterpointBaseDamage(id, enemyId),
+                0
+            ));
+            if (damage <= 0)
+            {
+                continue;
+            }
+            if (cost <= surplus)
+            {
+                answers.now = Math.max(answers.now, damage);
+            }
+            else if (damage > answers.later ||
+                     (damage === answers.later && cost < answers.cost))
+            {
+                answers.later = damage;
+                answers.cost = cost;
+            }
+        }
+        return answers;
+    },
+
+    // The cheapest unit that answers a threat we are short against, out of reach this turn but not
+    // next. Cheapest rather than hardest hitting: it puts an answer on the board soonest and holds
+    // back the least money doing it.
+    _counterTarget : function(system, context, surplus, perTurn, turns)
+    {
+        var enemies = context.enemyComposition;
+        var length = COUNTERPOINTAI._collectionLength(enemies);
+        var reach = surplus + perTurn * Math.max(1, Math.floor(turns));
+        var gapRatio = COUNTERPOINTAI._finiteNumber(
+            COUNTERPOINTAI.COUNTER_GAP_RATIO,
+            COUNTERPOINTAI.COUNTER_GAP_RATIO_DEFAULT
+        );
+        var worthRatio = COUNTERPOINTAI._finiteNumber(
+            COUNTERPOINTAI.COUNTER_WORTH_RATIO,
+            COUNTERPOINTAI.COUNTER_WORTH_RATIO_DEFAULT
+        );
+        var best = 0;
+        for (var index = 0; index < length; ++index)
+        {
+            var enemy = COUNTERPOINTAI._collectionAt(enemies, index);
+            var enemyId = COUNTERPOINTAI._unitId(enemy);
+            if (enemyId === "")
+            {
+                continue;
+            }
+            var enemyHp = Math.max(0, COUNTERPOINTAI._readNumber(enemy, "hpSum", 0));
+            if (enemy.canCapture === true)
+            {
+                enemyHp = COUNTERPOINTAI._softcapCapperHP(enemyHp);
+            }
+            // Same ratio the scoring uses for its gap factor, so "under covered" means one thing.
+            var threatNeed = enemyHp * COUNTERPOINTAI.COVERAGE_DAMAGE_SCALE;
+            if (threatNeed <= 0)
+            {
+                continue;
+            }
+            var coverage = COUNTERPOINTAI._contextNumber(
+                context,
+                "ownCoverage",
+                COUNTERPOINTAI._unitKey(enemy),
+                0
+            );
+            if (coverage / threatNeed >= gapRatio)
+            {
+                continue;
+            }
+            var answers = COUNTERPOINTAI._bestAnswers(
+                system,
+                context.roster,
+                enemyId,
+                surplus,
+                reach
+            );
+            // Worth waiting a turn only if it beats what the money already buys by a clear margin,
+            // otherwise every threat we are merely imperfect against would stall production.
+            if (answers.later <= 0 || answers.later < answers.now * worthRatio)
+            {
+                continue;
+            }
+            if (best <= 0 || answers.cost < best)
+            {
+                best = answers.cost;
+            }
+        }
+        return best;
+    },
+
+    // Bank for a counter the way a player does: a threat we are not equipped for, and a unit that
+    // answers it which this turn cannot afford but next turn can.
+    // A ferry outranks a counter: on a map that strands its targets there is nothing to counter
+    // with until the capturers can get out. Only one hold at a time either way, since banking for
+    // both at once would idle more than either purchase needs. A zero ferry hold does not mean
+    // there is no ferry, though: it also means the hull is affordable right now. Reading the two
+    // the same let a counter bank exactly the money the hull was about to be bought with, and the
+    // port passed the turn with nothing built.
+    _savingDecision : function(system, ai, context, funds, day)
+    {
+        var ferry = context.ferry;
+        var held = COUNTERPOINTAI._ferrySaving(ai, context.roster, ferry, funds);
+        if (held > 0)
+        {
+            return held;
+        }
+        if (ferry !== null && ferry !== undefined && ferry.urgent === true && ferry.cost > 0 &&
+            COUNTERPOINTAI._spareThisTurn(ai, context.roster, funds).surplus >= ferry.cost)
+        {
+            return 0;
+        }
+        return COUNTERPOINTAI._counterSaving(system, ai, context, funds, day);
+    },
+
+    _counterSaving : function(system, ai, context, funds, day)
+    {
+        // Early on the enemy army is barely on the board, so the coverage ratio is mostly noise and
+        // a hold costs a unit of opening presence to answer a threat that is not there yet.
+        if (COUNTERPOINTAI.SAVE_FOR_COUNTERS === false ||
+            day < Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
+                COUNTERPOINTAI.COUNTER_SAVE_MIN_DAY,
+                COUNTERPOINTAI.COUNTER_SAVE_MIN_DAY_DEFAULT
+            ))))
+        {
+            return 0;
+        }
+        var spare = COUNTERPOINTAI._spareThisTurn(ai, context.roster, funds);
+        if (spare.surplus <= 0 || spare.perTurn <= 0)
+        {
+            return 0;
+        }
+        var turns = Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
+            COUNTERPOINTAI.COUNTER_SAVE_MAX_TURNS,
+            COUNTERPOINTAI.COUNTER_SAVE_MAX_TURNS_DEFAULT
+        )));
+        return COUNTERPOINTAI._savingHold(
+            spare.surplus,
+            spare.perTurn,
+            COUNTERPOINTAI._counterTarget(
+                system,
+                context,
+                spare.surplus,
+                spare.perTurn,
+                turns
+            ),
+            turns
+        );
+    },
+
     // Short of covering every floor, fund the cheapest floors first. Spreading the shortfall
     // proportionally instead would leave every factory below its own floor, so none could build and
     // none could lend, and the turn would pass with the money still in the bank.
@@ -4004,11 +4171,12 @@
         {
             // Measured against raw funds, because the roster's floor total already covers every
             // facility's capturer bill, including the blocked ones reserved for separately below.
-            state.heldFunds = COUNTERPOINTAI._ferrySaving(
+            state.heldFunds = COUNTERPOINTAI._savingDecision(
+                system,
                 ai,
-                context.roster,
-                context.ferry,
-                ai.getPlayer().getFunds()
+                context,
+                ai.getPlayer().getFunds(),
+                state.day
             );
         }
         COUNTERPOINTAI._allocatePhaseBudgets(
