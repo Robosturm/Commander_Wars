@@ -512,14 +512,17 @@
         return !validEnemyFound;
     },
 
-    _countOwnTransporters : function(units)
+    // Only hulls that can carry a ground unit are counted, so a fleet of copter carrying cruisers
+    // cannot convince the ramp that the ferries are already built.
+    _countOwnTransporters : function(units, groundIds)
     {
         var counts = { ground : 0, air : 0, naval : 0, hover : 0 };
         var length = COUNTERPOINTAI._collectionLength(units);
         for (var index = 0; index < length; ++index)
         {
             var unit = COUNTERPOINTAI._collectionAt(units, index);
-            if (unit === null || unit === undefined || unit.isTransporter !== true)
+            if (unit === null || unit === undefined || unit.isTransporter !== true ||
+                !COUNTERPOINTAI._carriesAnyOf(unit.cargoIds, groundIds))
             {
                 continue;
             }
@@ -658,7 +661,10 @@
         var isTank = COUNTERPOINTAI._isTankClass(candidate);
         var ownCount = COUNTERPOINTAI._ownCount(scoreContext, candidateId);
 
-        if (scoreContext.islandMode === true && candidate.isTransporter === true)
+        // A transporter that cannot take a ground unit is no ferry, whatever its cargo bay says, so
+        // it falls through and is scored on its guns like any other warship.
+        if (scoreContext.islandMode === true && candidate.isTransporter === true &&
+            COUNTERPOINTAI._readFlag(scoreContext.groundCarriers, candidateId))
         {
             // Scored from a fixed reference rather than the hull's own price. A cost proportional
             // score cancels against the division by cost in _netDamageWeights, leaving every hull
@@ -2182,6 +2188,7 @@
             maxRange : unit.getBaseMaxRange(),
             canCapture : unit.canCapture() === true,
             isTransporter : unit.isTransporter() === true,
+            cargoIds : transportIds,
             loadingPlace : unit.isTransporter() === true ? unit.getLoadingPlace() : 0,
             maxDamageVsArmored : COUNTERPOINTAI._maxArmoredDamage(
                 system,
@@ -2444,6 +2451,54 @@
         };
     },
 
+    // Ground unit ids this match can actually produce. A transport is only worth its ferry score if
+    // it can carry one of these: a cruiser is a transporter too, but it takes nothing but copters.
+    _buildableGroundIds : function(plans)
+    {
+        var ids = Object.create(null);
+        COUNTERPOINTAI._visitPlanCandidates(plans, function(candidate)
+        {
+            if (candidate.domain === COUNTERPOINTAI.DOMAIN_GROUND)
+            {
+                ids["#" + candidate.id] = true;
+            }
+        });
+        return ids;
+    },
+
+    _readFlag : function(source, id)
+    {
+        return source !== null && source !== undefined && source["#" + id] === true;
+    },
+
+    _carriesAnyOf : function(cargoIds, wantedIds)
+    {
+        var length = COUNTERPOINTAI._collectionLength(cargoIds);
+        for (var index = 0; index < length; ++index)
+        {
+            if (wantedIds["#" + String(COUNTERPOINTAI._collectionAt(cargoIds, index))] === true)
+            {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    // Which build options are ferries rather than merely transporters, keyed by unit id.
+    _groundCarrierIds : function(plans, groundIds)
+    {
+        var carriers = Object.create(null);
+        COUNTERPOINTAI._visitPlanCandidates(plans, function(candidate)
+        {
+            if (candidate.isTransporter === true && candidate.scoreData !== undefined &&
+                COUNTERPOINTAI._carriesAnyOf(candidate.scoreData.cargoIds, groundIds))
+            {
+                carriers["#" + candidate.id] = true;
+            }
+        });
+        return carriers;
+    },
+
     _planningContext : function(system, ai, plans, buildings, units, enemyUnits, enemyBuildings, map)
     {
         var enemyIds = COUNTERPOINTAI._unitIdsFromCollection(enemyUnits);
@@ -2487,8 +2542,10 @@
                 break;
             }
         }
-        var ownTransporters = COUNTERPOINTAI._countOwnTransporters(ownSnapshots);
+        var groundIds = COUNTERPOINTAI._buildableGroundIds(plans);
+        var ownTransporters = COUNTERPOINTAI._countOwnTransporters(ownSnapshots, groundIds);
         return {
+            groundCarriers : COUNTERPOINTAI._groundCarrierIds(plans, groundIds),
             enemyComposition : enemyComposition,
             ownComposition : ownComposition,
             ownSnapshots : ownSnapshots,
@@ -3401,6 +3458,7 @@
             threatProfile : context.threatProfile,
             indirectRangeDeltas : context.indirectRangeDeltas,
             tankFerryStats : context.tankFerryStats,
+            groundCarriers : context.groundCarriers,
             islandMode : context.islandMode
         };
     },
@@ -3504,7 +3562,11 @@
                 continue;
             }
             var pool = pools[candidate.domain] || pools[COUNTERPOINTAI.DOMAIN_GROUND];
-            if (candidate.isTransporter)
+            // Only ferries belong in the transport pool. Pooling every transporter there put a
+            // cruiser behind the transport gate, which both hid it as a warship and let it be
+            // bought as though it were a ferry.
+            if (candidate.isTransporter &&
+                COUNTERPOINTAI._readFlag(context.groundCarriers, candidate.id))
             {
                 pool.transport.push(candidate);
             }
@@ -3531,7 +3593,11 @@
                 for (var openingIndex = 0; openingIndex < domainPool.length; ++openingIndex)
                 {
                     if (domainPool[openingIndex].canCapture ||
-                        (context.islandMode && domainPool[openingIndex].isTransporter))
+                        (context.islandMode && domainPool[openingIndex].isTransporter &&
+                         COUNTERPOINTAI._readFlag(
+                             context.groundCarriers,
+                             domainPool[openingIndex].id
+                         )))
                     {
                         opening.push(domainPool[openingIndex]);
                     }
