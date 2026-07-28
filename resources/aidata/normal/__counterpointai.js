@@ -2568,6 +2568,7 @@
                 system,
                 ai,
                 plans,
+                buildings,
                 enemyBuildings,
                 map,
                 islandMode,
@@ -2580,7 +2581,7 @@
 
     // Which transports can actually deliver a ground capturer to somewhere we cannot already walk.
     // Air needs no shore, so it is asked directly; sea and hover need a mutually passable tile.
-    _ferryContext : function(system, ai, plans, enemyBuildings, map, islandMode,
+    _ferryContext : function(system, ai, plans, buildings, enemyBuildings, map, islandMode,
                              ownSnapshots, ownTransporters)
     {
         var ferry = { strandedShare : 0, stranded : 0, urgent : false, measured : false,
@@ -2590,8 +2591,11 @@
         {
             return ferry;
         }
-        var capper = COUNTERPOINTAI._cheapestGroundCapper(plans);
-        var homes = COUNTERPOINTAI._capperHomes(plans);
+        // Every batch this turn must reach the same verdict, so demand is always measured from the
+        // buildings. Reading it off the batch made it depend on which factories happened to be free.
+        var sources = COUNTERPOINTAI._capperSources(system, ai, buildings);
+        var capper = sources.capper;
+        var homes = sources.homes;
         if (capper === null || homes.length === 0)
         {
             return ferry;
@@ -2651,15 +2655,7 @@
                 COUNTERPOINTAI._readNumber(counts, domains[domainIndex], 0) < ferry.want;
         }
 
-        var capperIds = Object.create(null);
-        COUNTERPOINTAI._visitPlanCandidates(plans, function(candidate)
-        {
-            if (candidate.canCapture === true &&
-                candidate.domain === COUNTERPOINTAI.DOMAIN_GROUND)
-            {
-                capperIds["#" + candidate.id] = true;
-            }
-        });
+        var capperIds = sources.ids;
 
         // Keyed on movement type and dock rather than domain: a lander and a black boat are
         // different movement types, so a verdict for one says nothing about the other.
@@ -2770,9 +2766,14 @@
             {
                 return false;
             }
-            // Past the wanted hull count the ordinary ramp takes over, which tapers hard on how
-            // many are already owned. Urgency alone would keep admitting boats for the whole game.
-            if (ferry.urgent === true && ferry.needed[domain] === true)
+            // Having measured the demand, "enough hulls already" is an answer, not a gap in what we
+            // know, so it refuses outright. Leaving the turn ramp to decide meant a satisfied fleet
+            // still drew for another boat every turn, and at 40 percent a draw it kept winning.
+            if (ferry.needed[domain] !== true)
+            {
+                return false;
+            }
+            if (ferry.urgent === true)
             {
                 return true;
             }
@@ -2922,45 +2923,6 @@
         return targets;
     },
 
-    _cheapestGroundCapper : function(plans)
-    {
-        var best = null;
-        for (var planIndex = 0; planIndex < plans.length; ++planIndex)
-        {
-            var plan = plans[planIndex];
-            for (var index = 0; plan.candidates && index < plan.candidates.length; ++index)
-            {
-                var candidate = plan.candidates[index];
-                if (candidate.canCapture !== true ||
-                    candidate.domain !== COUNTERPOINTAI.DOMAIN_GROUND ||
-                    typeof candidate.transactionCost !== "number" ||
-                    candidate.transactionCost < 0)
-                {
-                    continue;
-                }
-                if (best === null || candidate.transactionCost < best.cost)
-                {
-                    best = { id : candidate.id, cost : candidate.transactionCost,
-                             x : plan.x, y : plan.y };
-                }
-            }
-        }
-        return best;
-    },
-
-    _capperHomes : function(plans)
-    {
-        var homes = [];
-        for (var planIndex = 0; planIndex < plans.length; ++planIndex)
-        {
-            if (COUNTERPOINTAI._planFloor(plans[planIndex]) > 0)
-            {
-                homes.push({ x : plans[planIndex].x, y : plans[planIndex].y });
-            }
-        }
-        return homes;
-    },
-
     _cargoHasCapper : function(dummy, capperIds)
     {
         if (dummy.isTransporter() !== true)
@@ -3095,6 +3057,89 @@
             best = cost;
         }
         return best < 0 ? 0 : best;
+    },
+
+    // Where capturers come from, asked of the buildings rather than of the plan batch. A factory
+    // with a unit parked on it is planned in a later batch, so a batch can hold nothing but a
+    // harbour. Measuring ferry demand from such a batch reported "no capturers, cannot tell", which
+    // switched off both the refusal and the hull cap and left the plain turn ramp buying boats.
+    _capperSources : function(system, ai, buildings)
+    {
+        var playerId = ai.getPlayer().getPlayerID();
+        var length = COUNTERPOINTAI._collectionLength(buildings);
+        var sources = { capper : null, homes : [], ids : Object.create(null) };
+        var checked = Object.create(null);
+        for (var index = 0; index < length; ++index)
+        {
+            var building = COUNTERPOINTAI._collectionAt(buildings, index);
+            if (building === null || building === undefined ||
+                building.getOwnerID() !== playerId ||
+                !COUNTERPOINTAI._hasAction(building, COUNTERPOINTAI.ACTION_BUILD_UNITS))
+            {
+                continue;
+            }
+            var data = system.getProductionActionData(
+                building,
+                COUNTERPOINTAI.ACTION_BUILD_UNITS
+            );
+            if (data === null || data === undefined)
+            {
+                continue;
+            }
+            var ids = data.getUnitIds();
+            var costs = data.getTransactionCosts();
+            var idLength = COUNTERPOINTAI._collectionLength(ids);
+            var buildsCapper = false;
+            for (var idIndex = 0; idIndex < idLength; ++idIndex)
+            {
+                var cost = COUNTERPOINTAI._collectionAt(costs, idIndex);
+                if (typeof cost !== "number" || cost < 0)
+                {
+                    continue;
+                }
+                var id = String(COUNTERPOINTAI._collectionAt(ids, idIndex));
+                var key = "#" + id;
+                // Memoised across buildings: the roster repeats at every factory, and each miss
+                // costs a dummy unit.
+                if (checked[key] === undefined)
+                {
+                    var dummy = system.getDummyUnit(id);
+                    checked[key] = dummy !== null && dummy !== undefined &&
+                        dummy.canCapture() === true &&
+                        COUNTERPOINTAI._domainFromUnitType(dummy.getUnitType()) ===
+                            COUNTERPOINTAI.DOMAIN_GROUND;
+                }
+                if (checked[key] !== true)
+                {
+                    continue;
+                }
+                buildsCapper = true;
+                sources.ids[key] = true;
+                if (sources.capper === null || cost < sources.capper.cost)
+                {
+                    sources.capper = { id : id, cost : cost };
+                }
+            }
+            if (buildsCapper)
+            {
+                sources.homes.push({ x : building.getX(), y : building.getY() });
+            }
+        }
+        return sources;
+    },
+
+    _hasAction : function(building, actionId)
+    {
+        var actions = building.getActionList();
+        var length = COUNTERPOINTAI._collectionLength(actions);
+        for (var index = 0; index < length; ++index)
+        {
+            if (String(COUNTERPOINTAI._collectionAt(actions, index)) === actionId)
+            {
+                return true;
+            }
+        }
+        return false;
     },
 
     // A factory with a unit parked on it has no plan yet, so nothing stops the factories that do
