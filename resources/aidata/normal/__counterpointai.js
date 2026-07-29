@@ -3560,7 +3560,24 @@
         {
             if (paidPlans[paidIndex].skipped)
             {
-                reclaimed += paidPlans[paidIndex].reservedBudget;
+                var freed = paidPlans[paidIndex].reservedBudget;
+                // The skip roll stays blind, but skipping is banking, so money that was funded for
+                // an urgently wanted hull stays banked instead of turning into ground units. Only
+                // the hull's price is held; anything above it spreads as usual. Ferries only: a
+                // ferry purchase is bound to the dock named in ferry.plans, while a counter can be
+                // bought at any surviving factory, where the spread is what funds it.
+                if (ferry !== null && ferry !== undefined && ferry.urgent === true &&
+                    ferry.cost > 0 && ferry.plans[paidPlans[paidIndex].key] === true &&
+                    state !== null && state !== undefined)
+                {
+                    var banked = Math.min(freed, ferry.cost);
+                    state.heldFunds = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(
+                        state.heldFunds,
+                        0
+                    ))) + banked;
+                    freed -= banked;
+                }
+                reclaimed += freed;
                 paidPlans[paidIndex].reservedBudget = 0;
                 paidPlans[paidIndex].complete = true;
             }
