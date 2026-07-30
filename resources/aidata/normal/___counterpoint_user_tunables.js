@@ -1,8 +1,10 @@
 // Counterpoint production tunables. This file loads after the strategy, so a copy dropped in an
 // install's resources/aidata/normal/ folder wins over the one compiled into the exe.
-// These assignments are the only place the values are defined. Change the numbers, do not delete
-// lines: a missing key leaves the strategy reading undefined, which lands on 0.001 for a
-// multiplier, 0 for a percent chance, or NaN for a funds amount.
+// These assignments are the only place most of the values are defined. Change the numbers, do not
+// delete lines: a missing key leaves the strategy reading undefined, which lands on 0.001 for a
+// multiplier, 0 for a percent chance, or NaN for a funds amount. The exceptions are the keys the
+// strategy carries a compiled fallback for, named X_DEFAULT there, which survive a stale copy of
+// this file at their shipped value.
 ;(function()
 {
     if (typeof COUNTERPOINTAI !== "object" || COUNTERPOINTAI === null)
@@ -124,9 +126,10 @@
     // Ceiling on island maps built per turn. Each one is a full flood fill of the map, and each
     // distinct transport movement type needs its own, so this bounds the worst case.
     strategy.MAX_ISLAND_MAPS = 6;
-    // Most transports the urgency above may buy outright. Past this count they still get built, but
-    // only through the ordinary per turn chance below, which tapers off sharply. Raise it for maps
-    // where one boat cannot keep up, lower it to 1 to stop a second hull being rushed.
+    // Most transports the urgency above may buy outright. Past this count no more are bought at all
+    // on an island map that strands its targets; anywhere else the ordinary per turn chance below
+    // still applies. Raise it for maps where one boat cannot keep up, lower it to 1 to stop a
+    // second hull being rushed.
     strategy.FERRY_MAX_HULLS = 2;
     // Ground capturers owned per transport wanted, up to the ceiling above. Lower means each new
     // batch of capturers asks for another hull sooner.
@@ -241,8 +244,6 @@
     strategy.SCORE_EFFICIENCY_EXPONENT = 1.5;
     // Exponent on raw cost in the same weight. Raising it tilts picks towards pricier units.
     strategy.SCORE_VALUE_EXPONENT = 0.3;
-    // Used when TEMPERATURE is missing or not a number.
-    strategy.DEFAULT_TEMPERATURE = 1.0;
     // Lower clamp on TEMPERATURE.
     strategy.TEMPERATURE_MIN = 0.1;
     // Upper clamp on TEMPERATURE.
@@ -271,7 +272,7 @@
 
     // Island maps, ground transports: ceiling on the first transport chance.
     strategy.ISLAND_GROUND_TRANSPORT_MAX_CHANCE = 20;
-    // Its turn 1 starting chance.
+    // Its base before the per turn ramp; turn 1 already adds one step.
     strategy.ISLAND_GROUND_TRANSPORT_BASE_CHANCE = 3;
     // Percentage points added per turn.
     strategy.ISLAND_GROUND_TRANSPORT_TURN_STEP = 2;
@@ -281,7 +282,7 @@
     strategy.ISLAND_GROUND_TRANSPORT_MANY_CHANCE = 1;
     // Island maps, sea and air transports: ceiling on the first transport chance.
     strategy.ISLAND_TRANSPORT_MAX_CHANCE = 95;
-    // Its turn 1 starting chance.
+    // Its base before the per turn ramp; turn 1 already adds one step.
     strategy.ISLAND_TRANSPORT_BASE_CHANCE = 25;
     // Percentage points added per turn.
     strategy.ISLAND_TRANSPORT_TURN_STEP = 12;
@@ -289,19 +290,15 @@
     strategy.ISLAND_TRANSPORT_ONE_CHANCE = 60;
     // Flat chance with exactly two owned.
     strategy.ISLAND_TRANSPORT_TWO_CHANCE = 40;
-    // Owned count that selects the third bracket.
-    strategy.ISLAND_TRANSPORT_THREE_COUNT = 3;
-    // Flat chance at that bracket.
+    // Flat chance with exactly three owned.
     strategy.ISLAND_TRANSPORT_THREE_CHANCE = 25;
-    // Owned count that selects the fourth bracket.
-    strategy.ISLAND_TRANSPORT_FOUR_COUNT = 4;
-    // Flat chance at that bracket.
+    // Flat chance with exactly four owned.
     strategy.ISLAND_TRANSPORT_FOUR_CHANCE = 15;
     // Flat chance beyond the fourth bracket.
     strategy.ISLAND_TRANSPORT_MANY_CHANCE = 8;
     // Non island maps: ceiling on the first transport chance.
     strategy.CONNECTED_TRANSPORT_MAX_CHANCE = 75;
-    // Its turn 1 starting chance.
+    // Its base before the per turn ramp; turn 1 already adds one step.
     strategy.CONNECTED_TRANSPORT_BASE_CHANCE = 5;
     // Percentage points added per turn.
     strategy.CONNECTED_TRANSPORT_TURN_STEP = 7;

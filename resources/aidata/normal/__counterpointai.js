@@ -13,9 +13,12 @@
     PLANNER_STATE_VARIABLE_ID : "COUNTERPOINT_STATE",
     PLANNER_STATE_SCHEMA_VERSION : 1,
     RNG_ALGORITHM_VERSION : 1,
-    // Fallbacks for the ferry tunables. The user tunables file is the only place those values are
-    // set, so an install carrying an older copy of it would otherwise read undefined and clamp to
-    // something that quietly disables the feature.
+    // Fallbacks paired with the tunable of the same name by _tunable, so an install carrying an
+    // older tunables file reads these instead of undefined and quietly disabling the feature.
+    // PERCENT_MAX is here because the planner rolls against it, where undefined would poison
+    // every percent chance at once rather than one feature.
+    PERCENT_MAX_DEFAULT : 100,
+    TEMPERATURE_DEFAULT : 1.0,
     MAX_ISLAND_MAPS_DEFAULT : 6,
     FERRY_TARGET_SAMPLE_DEFAULT : 24,
     FERRY_URGENT_STRANDED_SHARE_DEFAULT : 0.5,
@@ -26,6 +29,9 @@
     COUNTER_SAVE_MIN_DAY_DEFAULT : 3,
     COUNTER_GAP_RATIO_DEFAULT : 0.5,
     COUNTER_WORTH_RATIO_DEFAULT : 1.5,
+    // Compiled, not tunable: below this the ground transport ramp cannot pay for itself, and an
+    // undefined read here would disable ground transports outright rather than loosen them.
+    GROUND_TRANSPORT_MIN_CAPPERS : 2,
     RNG_COUNTER_MULTIPLIER : 1831565813,
     RNG_LEFT_SHIFT_A : 13,
     RNG_RIGHT_SHIFT : 17,
@@ -34,14 +40,18 @@
     PLANNER_VALUE_MAX : 2147483647,
     PLANNER_ID_LENGTH_HARD_LIMIT : 1024,
     PLANNER_KEY_LENGTH_HARD_LIMIT : 2048,
-    PLANNER_PLAN_COUNT_HARD_LIMIT : 512,
-    PLANNER_CANDIDATE_COUNT_HARD_LIMIT : 512,
-    PLANNER_TOTAL_CANDIDATE_HARD_LIMIT : 32768,
-    PLANNER_DRAW_COUNT_HARD_LIMIT : 1000000000,
-    PLANNER_STATE_LENGTH_HARD_LIMIT : 8388608,
-    PLANNER_CANDIDATE_HARD_LIMIT : 65536,
-    // Kept under the signed limit of the engine's bounded random API.
-    PLANNER_RANDOM_WEIGHT_HARD_LIMIT : 1000000000,
+    // Ceilings the tunables cannot raise, keyed by the tunable each one bounds.
+    PLANNER_HARD_LIMITS :
+    {
+        MAX_PLAN_COUNT : 512,
+        MAX_PLAN_CANDIDATES : 512,
+        MAX_TOTAL_PLAN_CANDIDATES : 32768,
+        MAX_PLANNER_DRAW_COUNT : 1000000000,
+        MAX_PLANNER_STATE_LENGTH : 8388608,
+        MAX_CANDIDATE_COUNT : 65536,
+        // Kept under the signed limit of the engine's bounded random API.
+        MAX_RANDOM_WEIGHT_TOTAL : 1000000000
+    },
 
     _finiteNumber : function(value, fallback)
     {
@@ -54,6 +64,13 @@
         return Math.max(minimum, Math.min(maximum, value));
     },
 
+    // Funds, counts and indexes all arrive from engine calls or restored state, so they get read
+    // as a whole number at or above zero rather than trusted.
+    _wholeCount : function(value)
+    {
+        return Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(value, 0)));
+    },
+
     _readNumber : function(source, key, fallback)
     {
         if (source === null || source === undefined || source[key] === undefined)
@@ -61,6 +78,13 @@
             return fallback;
         }
         return COUNTERPOINTAI._finiteNumber(source[key], fallback);
+    },
+
+    // Pairs a tunable with its compiled fallback through the *_DEFAULT naming convention, so the
+    // two cannot drift apart at a call site.
+    _tunable : function(name)
+    {
+        return COUNTERPOINTAI._finiteNumber(COUNTERPOINTAI[name], COUNTERPOINTAI[name + "_DEFAULT"]);
     },
 
     _readUnitNumber : function(source, unitId, fallback)
@@ -151,11 +175,11 @@
         }
         if (collection.length !== undefined)
         {
-            return Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(collection.length, 0)));
+            return COUNTERPOINTAI._wholeCount(collection.length);
         }
         if (typeof collection.size === "function")
         {
-            return Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(collection.size(), 0)));
+            return COUNTERPOINTAI._wholeCount(collection.size());
         }
         return 0;
     },
@@ -200,22 +224,23 @@
         return enemies === null || enemies === undefined ? fallback : enemies;
     },
 
+    // Missing key falls back to the ceiling here, unlike _plannerLimit, which falls back to its
+    // minimum. Both keep the behaviour they shipped with.
+    _ceilingLimit : function(name)
+    {
+        var ceiling = COUNTERPOINTAI._readNumber(COUNTERPOINTAI.PLANNER_HARD_LIMITS, name, 1);
+        var configured = Math.floor(COUNTERPOINTAI._finiteNumber(COUNTERPOINTAI[name], ceiling));
+        return COUNTERPOINTAI._clamp(configured, 1, ceiling);
+    },
+
     _candidateLimit : function()
     {
-        var configured = Math.floor(COUNTERPOINTAI._finiteNumber(
-            COUNTERPOINTAI.MAX_CANDIDATE_COUNT,
-            COUNTERPOINTAI.PLANNER_CANDIDATE_HARD_LIMIT
-        ));
-        return COUNTERPOINTAI._clamp(configured, 1, COUNTERPOINTAI.PLANNER_CANDIDATE_HARD_LIMIT);
+        return COUNTERPOINTAI._ceilingLimit("MAX_CANDIDATE_COUNT");
     },
 
     _randomWeightLimit : function()
     {
-        var configured = Math.floor(COUNTERPOINTAI._finiteNumber(
-            COUNTERPOINTAI.MAX_RANDOM_WEIGHT_TOTAL,
-            COUNTERPOINTAI.PLANNER_RANDOM_WEIGHT_HARD_LIMIT
-        ));
-        return COUNTERPOINTAI._clamp(configured, 1, COUNTERPOINTAI.PLANNER_RANDOM_WEIGHT_HARD_LIMIT);
+        return COUNTERPOINTAI._ceilingLimit("MAX_RANDOM_WEIGHT_TOTAL");
     },
 
     _captureBaseChance : function()
@@ -225,7 +250,7 @@
         {
             return 0;
         }
-        return Math.min(COUNTERPOINTAI.PERCENT_MAX, chance);
+        return Math.min(COUNTERPOINTAI._tunable("PERCENT_MAX"), chance);
     },
 
     _capperBuildsAllowed : function()
@@ -306,16 +331,6 @@
             entries[entryIndex].hpSum += COUNTERPOINTAI._hpFrac(unit);
         }
         return entries;
-    },
-
-    _sampleEnemyComp : function(units)
-    {
-        return COUNTERPOINTAI._sampleComposition(units);
-    },
-
-    _sampleOwnComp : function(units)
-    {
-        return COUNTERPOINTAI._sampleComposition(units);
     },
 
     _hasValidComposition : function(composition)
@@ -553,7 +568,7 @@
 
     _transportChance : function(ownCount, turn, domain, islandMode)
     {
-        var count = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(ownCount, 0)));
+        var count = COUNTERPOINTAI._wholeCount(ownCount);
         var currentTurn = Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(turn, 1)));
         if (islandMode === true)
         {
@@ -587,11 +602,11 @@
             {
                 return COUNTERPOINTAI.ISLAND_TRANSPORT_TWO_CHANCE;
             }
-            if (count === COUNTERPOINTAI.ISLAND_TRANSPORT_THREE_COUNT)
+            if (count === 3)
             {
                 return COUNTERPOINTAI.ISLAND_TRANSPORT_THREE_CHANCE;
             }
-            if (count === COUNTERPOINTAI.ISLAND_TRANSPORT_FOUR_COUNT)
+            if (count === 4)
             {
                 return COUNTERPOINTAI.ISLAND_TRANSPORT_FOUR_CHANCE;
             }
@@ -1112,8 +1127,8 @@
             }
         }
         biasFraction = COUNTERPOINTAI._clamp(biasFraction, 0, 1);
-        biasFraction = Math.floor(biasFraction * COUNTERPOINTAI.PERCENT_MAX) /
-            COUNTERPOINTAI.PERCENT_MAX;
+        biasFraction = Math.floor(biasFraction * COUNTERPOINTAI._tunable("PERCENT_MAX")) /
+            COUNTERPOINTAI._tunable("PERCENT_MAX");
         var otherWeight = (1 - biasFraction) / (length - 1);
         var rawWeights = [];
         for (var weightIndex = 0; weightIndex < length; ++weightIndex)
@@ -1171,10 +1186,7 @@
         }
 
         var temperature = COUNTERPOINTAI._clamp(
-            COUNTERPOINTAI._finiteNumber(
-                COUNTERPOINTAI.TEMPERATURE,
-                COUNTERPOINTAI.DEFAULT_TEMPERATURE
-            ),
+            COUNTERPOINTAI._tunable("TEMPERATURE"),
             COUNTERPOINTAI.TEMPERATURE_MIN,
             COUNTERPOINTAI.TEMPERATURE_MAX
         );
@@ -1271,28 +1283,8 @@
 
     _plannerLimit : function(name, minimum)
     {
+        var maximum = COUNTERPOINTAI._readNumber(COUNTERPOINTAI.PLANNER_HARD_LIMITS, name, minimum);
         var value = Math.floor(COUNTERPOINTAI._finiteNumber(COUNTERPOINTAI[name], minimum));
-        var maximum = minimum;
-        if (name === "MAX_PLAN_COUNT")
-        {
-            maximum = COUNTERPOINTAI.PLANNER_PLAN_COUNT_HARD_LIMIT;
-        }
-        else if (name === "MAX_PLAN_CANDIDATES")
-        {
-            maximum = COUNTERPOINTAI.PLANNER_CANDIDATE_COUNT_HARD_LIMIT;
-        }
-        else if (name === "MAX_TOTAL_PLAN_CANDIDATES")
-        {
-            maximum = COUNTERPOINTAI.PLANNER_TOTAL_CANDIDATE_HARD_LIMIT;
-        }
-        else if (name === "MAX_PLANNER_DRAW_COUNT")
-        {
-            maximum = COUNTERPOINTAI.PLANNER_DRAW_COUNT_HARD_LIMIT;
-        }
-        else if (name === "MAX_PLANNER_STATE_LENGTH")
-        {
-            maximum = COUNTERPOINTAI.PLANNER_STATE_LENGTH_HARD_LIMIT;
-        }
         return COUNTERPOINTAI._clamp(value, minimum, maximum);
     },
 
@@ -1673,48 +1665,33 @@
         return state;
     },
 
-    _settledPlannerStateFits : function(state, planIndex, spent)
+    // Applies the change to a throwaway copy and asks whether the result would still serialize,
+    // so the caller can refuse a move that would not fit rather than discover it after committing.
+    _plannerStateFitsAfter : function(state, planIndex, apply)
     {
-        var settled = COUNTERPOINTAI._clonePlannerState(state);
-        if (settled === null)
+        var copy = COUNTERPOINTAI._clonePlannerState(state);
+        if (copy === null)
         {
             return false;
         }
-        if (planIndex < 0 || planIndex >= settled.plans.length)
+        if (planIndex < 0 || planIndex >= copy.plans.length)
         {
             return false;
         }
-        COUNTERPOINTAI._completePlan(settled.plans, planIndex, spent);
-        return COUNTERPOINTAI._plannerStateJson(settled) !== null;
-    },
-
-    _rejectedPlannerStateFits : function(state, planIndex, candidateIndex)
-    {
-        var rejected = COUNTERPOINTAI._clonePlannerState(state);
-        if (rejected === null)
-        {
-            return false;
-        }
-        if (planIndex < 0 || planIndex >= rejected.plans.length)
-        {
-            return false;
-        }
-        COUNTERPOINTAI._rejectPlanCandidate(
-            rejected.plans,
-            planIndex,
-            candidateIndex
-        );
-        return COUNTERPOINTAI._plannerStateJson(rejected) !== null;
+        apply(copy.plans);
+        return COUNTERPOINTAI._plannerStateJson(copy) !== null;
     },
 
     _plannerSelectionFits : function(state, planIndex, candidateIndex, spent)
     {
-        return COUNTERPOINTAI._settledPlannerStateFits(state, planIndex, spent) &&
-            COUNTERPOINTAI._rejectedPlannerStateFits(
-                state,
-                planIndex,
-                candidateIndex
-            );
+        return COUNTERPOINTAI._plannerStateFitsAfter(state, planIndex, function(plans)
+            {
+                COUNTERPOINTAI._completePlan(plans, planIndex, spent);
+            }) &&
+            COUNTERPOINTAI._plannerStateFitsAfter(state, planIndex, function(plans)
+            {
+                COUNTERPOINTAI._rejectPlanCandidate(plans, planIndex, candidateIndex);
+            });
     },
 
     _ensurePlannerState : function(system, ai, map)
@@ -1773,17 +1750,27 @@
         return String(x) + "," + String(y) + ":" + String(actionId);
     },
 
-    _findPlan : function(state, x, y, actionId)
+    _planIndexByKey : function(plans, key)
     {
-        var key = COUNTERPOINTAI._planKey(x, y, actionId);
-        for (var index = 0; index < state.plans.length; ++index)
+        for (var index = 0; index < plans.length; ++index)
         {
-            if (state.plans[index].key === key)
+            if (plans[index].key === key)
             {
-                return state.plans[index];
+                return index;
             }
         }
-        return null;
+        return -1;
+    },
+
+    _planByKey : function(plans, key)
+    {
+        var index = COUNTERPOINTAI._planIndexByKey(plans, key);
+        return index < 0 ? null : plans[index];
+    },
+
+    _findPlan : function(state, x, y, actionId)
+    {
+        return COUNTERPOINTAI._planByKey(state.plans, COUNTERPOINTAI._planKey(x, y, actionId));
     },
 
     _sortPlans : function(plans)
@@ -2146,19 +2133,9 @@
         {
             return null;
         }
-        var transportIds = [];
-        if (unit.isTransporter() === true)
-        {
-            var sourceTransportIds = unit.getTransportUnits();
-            var transportLength = COUNTERPOINTAI._collectionLength(sourceTransportIds);
-            for (var transportIndex = 0; transportIndex < transportLength; ++transportIndex)
-            {
-                transportIds.push(String(COUNTERPOINTAI._collectionAt(
-                    sourceTransportIds,
-                    transportIndex
-                )));
-            }
-        }
+        var transportIds = unit.isTransporter() === true
+            ? COUNTERPOINTAI._stringList(unit.getTransportUnits())
+            : [];
         var damageById = Object.create(null);
         for (var damageIndex = 0; damageIndex < damageTargets.length; ++damageIndex)
         {
@@ -2417,7 +2394,7 @@
             }
         }
         return {
-            ground : capperCount >= 2,
+            ground : capperCount >= COUNTERPOINTAI.GROUND_TRANSPORT_MIN_CAPPERS,
             air : islandMode && availableDomains.air,
             naval : islandMode && availableDomains.naval,
             hover : islandMode && availableDomains.hover
@@ -2467,8 +2444,8 @@
             armoredIds,
             true
         );
-        var ownComposition = COUNTERPOINTAI._sampleOwnComp(ownSnapshots);
-        var enemyComposition = COUNTERPOINTAI._sampleEnemyComp(enemySnapshots);
+        var ownComposition = COUNTERPOINTAI._sampleComposition(ownSnapshots);
+        var enemyComposition = COUNTERPOINTAI._sampleComposition(enemySnapshots);
         var mapContext = COUNTERPOINTAI._mapPlanningContext(
             ai,
             buildings,
@@ -2659,9 +2636,7 @@
         // "this transport is useless" and "we could not tell". Only the former may refuse a build.
         ferry.measured = COUNTERPOINTAI._countKeys(ferry.deliverable) > 0;
         ferry.urgent = ferry.measured &&
-            ferry.strandedShare >= COUNTERPOINTAI._finiteNumber(
-                COUNTERPOINTAI.FERRY_URGENT_STRANDED_SHARE,
-                COUNTERPOINTAI.FERRY_URGENT_STRANDED_SHARE_DEFAULT);
+            ferry.strandedShare >= COUNTERPOINTAI._tunable("FERRY_URGENT_STRANDED_SHARE");
         return ferry;
     },
 
@@ -2680,17 +2655,11 @@
                 cappers += 1;
             }
         }
-        var perHull = Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
-            COUNTERPOINTAI.FERRY_CAPPERS_PER_HULL,
-            COUNTERPOINTAI.FERRY_CAPPERS_PER_HULL_DEFAULT
-        )));
+        var perHull = Math.max(1, Math.floor(COUNTERPOINTAI._tunable("FERRY_CAPPERS_PER_HULL")));
         return COUNTERPOINTAI._clamp(
             Math.floor(cappers / perHull),
             1,
-            Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
-                COUNTERPOINTAI.FERRY_MAX_HULLS,
-                COUNTERPOINTAI.FERRY_MAX_HULLS_DEFAULT
-            )))
+            Math.max(1, Math.floor(COUNTERPOINTAI._tunable("FERRY_MAX_HULLS")))
         );
     },
 
@@ -2720,7 +2689,7 @@
             }
         }
         return context.transportContext[domain] === true &&
-            COUNTERPOINTAI._nextPlannerRoll(state, COUNTERPOINTAI.PERCENT_MAX) <
+            COUNTERPOINTAI._nextPlannerRoll(state, COUNTERPOINTAI._tunable("PERCENT_MAX")) <
                 COUNTERPOINTAI._transportChance(
                     context.ownTransporters[domain],
                     turn,
@@ -2817,8 +2786,7 @@
             return true;
         }
         if (COUNTERPOINTAI._countKeys(created) >=
-            Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
-                COUNTERPOINTAI.MAX_ISLAND_MAPS, COUNTERPOINTAI.MAX_ISLAND_MAPS_DEFAULT))))
+            Math.max(1, Math.floor(COUNTERPOINTAI._tunable("MAX_ISLAND_MAPS"))))
         {
             return false;
         }
@@ -2845,9 +2813,7 @@
     // its own budget, otherwise a map with many enemy buildings crowds the neutrals out entirely.
     _captureTargets : function(map, enemyBuildings)
     {
-        var limit = Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
-            COUNTERPOINTAI.FERRY_TARGET_SAMPLE,
-            COUNTERPOINTAI.FERRY_TARGET_SAMPLE_DEFAULT)));
+        var limit = Math.max(1, Math.floor(COUNTERPOINTAI._tunable("FERRY_TARGET_SAMPLE")));
         var targets = [];
         COUNTERPOINTAI._appendBuildingPositions(targets, enemyBuildings, limit);
         limit += targets.length;
@@ -2866,7 +2832,7 @@
 
     _spreadBudget : function(targets, amount)
     {
-        var value = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(amount, 0)));
+        var value = COUNTERPOINTAI._wholeCount(amount);
         if (value === 0 || targets.length === 0)
         {
             return;
@@ -2938,21 +2904,12 @@
             return 0;
         }
         // FACTORY_FLOOR raises the reservation, it never lowers it below the capturer's own cost.
-        return Math.max(best, Math.max(0, Math.floor(
-            COUNTERPOINTAI._finiteNumber(COUNTERPOINTAI.FACTORY_FLOOR, 0)
-        )));
+        return Math.max(best, COUNTERPOINTAI._wholeCount(COUNTERPOINTAI.FACTORY_FLOOR));
     },
 
     _hasPlanKey : function(plans, key)
     {
-        for (var index = 0; index < plans.length; ++index)
-        {
-            if (plans[index].key === key)
-            {
-                return true;
-            }
-        }
-        return false;
+        return COUNTERPOINTAI._planByKey(plans, key) !== null;
     },
 
     // Candidates are not enriched yet at allocation time for a building with no plan, so read the
@@ -3003,10 +2960,7 @@
             transports : [],
             floorTotal : 0
         };
-        var floor = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(
-            COUNTERPOINTAI.FACTORY_FLOOR,
-            0
-        )));
+        var floor = COUNTERPOINTAI._wholeCount(COUNTERPOINTAI.FACTORY_FLOOR);
         var seen = Object.create(null);
         var checked = Object.create(null);
         for (var index = 0; index < length; ++index)
@@ -3200,11 +3154,8 @@
 
     _spendableFunds : function(state, ai)
     {
-        var funds = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(
-            ai.getPlayer().getFunds(),
-            0
-        )));
-        var held = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(state.heldFunds, 0)));
+        var funds = COUNTERPOINTAI._wholeCount(ai.getPlayer().getFunds());
+        var held = COUNTERPOINTAI._wholeCount(state.heldFunds);
         return Math.max(0, funds - Math.min(funds, held));
     },
 
@@ -3235,7 +3186,7 @@
     {
         var floors = Math.max(0, COUNTERPOINTAI._finiteNumber(roster.floorTotal, 0));
         return {
-            surplus : Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(funds, 0))) - floors,
+            surplus : COUNTERPOINTAI._wholeCount(funds) - floors,
             perTurn : COUNTERPOINTAI._finiteNumber(ai.getPlayer().calcIncome(), 0) - floors
         };
     },
@@ -3252,10 +3203,7 @@
             spare.surplus,
             spare.perTurn,
             ferry.cost,
-            COUNTERPOINTAI._finiteNumber(
-                COUNTERPOINTAI.FERRY_SAVE_MAX_TURNS,
-                COUNTERPOINTAI.FERRY_SAVE_MAX_TURNS_DEFAULT
-            )
+            COUNTERPOINTAI._tunable("FERRY_SAVE_MAX_TURNS")
         );
     },
 
@@ -3304,14 +3252,8 @@
         var enemies = context.enemyComposition;
         var length = COUNTERPOINTAI._collectionLength(enemies);
         var reach = surplus + perTurn * Math.max(1, Math.floor(turns));
-        var gapRatio = COUNTERPOINTAI._finiteNumber(
-            COUNTERPOINTAI.COUNTER_GAP_RATIO,
-            COUNTERPOINTAI.COUNTER_GAP_RATIO_DEFAULT
-        );
-        var worthRatio = COUNTERPOINTAI._finiteNumber(
-            COUNTERPOINTAI.COUNTER_WORTH_RATIO,
-            COUNTERPOINTAI.COUNTER_WORTH_RATIO_DEFAULT
-        );
+        var gapRatio = COUNTERPOINTAI._tunable("COUNTER_GAP_RATIO");
+        var worthRatio = COUNTERPOINTAI._tunable("COUNTER_WORTH_RATIO");
         var best = 0;
         for (var index = 0; index < length; ++index)
         {
@@ -3392,10 +3334,7 @@
         // Early on the enemy army is barely on the board, so the coverage ratio is mostly noise and
         // a hold costs a unit of opening presence to answer a threat that is not there yet.
         if (COUNTERPOINTAI.SAVE_FOR_COUNTERS === false ||
-            day < Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
-                COUNTERPOINTAI.COUNTER_SAVE_MIN_DAY,
-                COUNTERPOINTAI.COUNTER_SAVE_MIN_DAY_DEFAULT
-            ))))
+            day < Math.max(1, Math.floor(COUNTERPOINTAI._tunable("COUNTER_SAVE_MIN_DAY"))))
         {
             return 0;
         }
@@ -3404,10 +3343,7 @@
         {
             return 0;
         }
-        var turns = Math.max(1, Math.floor(COUNTERPOINTAI._finiteNumber(
-            COUNTERPOINTAI.COUNTER_SAVE_MAX_TURNS,
-            COUNTERPOINTAI.COUNTER_SAVE_MAX_TURNS_DEFAULT
-        )));
+        var turns = Math.max(1, Math.floor(COUNTERPOINTAI._tunable("COUNTER_SAVE_MAX_TURNS")));
         return COUNTERPOINTAI._savingHold(
             spare.surplus,
             spare.perTurn,
@@ -3480,11 +3416,11 @@
     _allocatePhaseBudgets : function(state, plans, funds, ferry)
     {
         var paidPlans = [];
-        var safeFunds = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(funds, 0)));
+        var safeFunds = COUNTERPOINTAI._wholeCount(funds);
         var skipChance = COUNTERPOINTAI._clamp(
             COUNTERPOINTAI._finiteNumber(COUNTERPOINTAI.BASE_SKIP_CHANCE, 0),
             0,
-            COUNTERPOINTAI.PERCENT_MAX
+            COUNTERPOINTAI._tunable("PERCENT_MAX")
         );
         var maySkip = state.day >= COUNTERPOINTAI.BASE_SKIP_MIN_DAY &&
             safeFunds >= COUNTERPOINTAI.BASE_SKIP_MIN_FUNDS;
@@ -3498,7 +3434,7 @@
                 continue;
             }
             if (!plan.hasFree && maySkip && skipChance > 0 &&
-                COUNTERPOINTAI._nextPlannerRoll(state, COUNTERPOINTAI.PERCENT_MAX) < skipChance)
+                COUNTERPOINTAI._nextPlannerRoll(state, COUNTERPOINTAI._tunable("PERCENT_MAX")) < skipChance)
             {
                 plan.skipped = true;
             }
@@ -3571,10 +3507,7 @@
                     state !== null && state !== undefined)
                 {
                     var banked = Math.min(freed, ferry.cost);
-                    state.heldFunds = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(
-                        state.heldFunds,
-                        0
-                    ))) + banked;
+                    state.heldFunds = COUNTERPOINTAI._wholeCount(state.heldFunds) + banked;
                     freed -= banked;
                 }
                 reclaimed += freed;
@@ -3623,51 +3556,43 @@
         }
         if (needed > 0)
         {
-            for (var restoreIndex = 0; restoreIndex < borrowed.length; ++restoreIndex)
-            {
-                var restore = borrowed[restoreIndex];
-                for (var donorIndex = 0; donorIndex < plans.length; ++donorIndex)
-                {
-                    if (plans[donorIndex].key === restore.key)
-                    {
-                        plans[donorIndex].reservedBudget += restore.amount;
-                        break;
-                    }
-                }
-                plan.reservedBudget -= restore.amount;
-            }
+            COUNTERPOINTAI._returnBorrowedBudget(plans, plan, borrowed);
             return false;
         }
         plan.borrowed = plan.borrowed.concat(borrowed);
         return true;
     },
 
+    // Hands each borrowed amount back to the plan it came from. The clamp only ever bites on a
+    // restore, since a rollback is undoing increments made moments earlier.
+    _returnBorrowedBudget : function(plans, plan, borrowed)
+    {
+        for (var index = 0; index < borrowed.length; ++index)
+        {
+            var entry = borrowed[index];
+            var donor = COUNTERPOINTAI._planByKey(plans, entry.key);
+            if (donor !== null)
+            {
+                donor.reservedBudget += entry.amount;
+            }
+            plan.reservedBudget = Math.max(0, plan.reservedBudget - entry.amount);
+        }
+    },
+
     _restoreBorrowedBudget : function(plans, plan)
     {
-        for (var index = 0; index < plan.borrowed.length; ++index)
-        {
-            var borrowed = plan.borrowed[index];
-            for (var donorIndex = 0; donorIndex < plans.length; ++donorIndex)
-            {
-                if (plans[donorIndex].key === borrowed.key)
-                {
-                    plans[donorIndex].reservedBudget += borrowed.amount;
-                    break;
-                }
-            }
-            plan.reservedBudget = Math.max(0, plan.reservedBudget - borrowed.amount);
-        }
+        COUNTERPOINTAI._returnBorrowedBudget(plans, plan, plan.borrowed);
         plan.borrowed = [];
     },
 
     _releasePlanBudget : function(plans, planIndex, spent)
     {
         var plan = plans[planIndex];
-        var used = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(spent, 0)));
+        var used = COUNTERPOINTAI._wholeCount(spent);
         var remainder = Math.max(0, plan.reservedBudget - used);
         plan.reservedBudget = used;
         plan.borrowed = [];
-        if (COUNTERPOINTAI.RECYCLE_UNUSED_BUDGET)
+        if (COUNTERPOINTAI.RECYCLE_UNUSED_BUDGET !== false)
         {
             COUNTERPOINTAI._spreadBudget(
                 COUNTERPOINTAI._remainingBudgetPlans(plans, planIndex),
@@ -3831,7 +3756,7 @@
             {
                 domainPool = domainPool.concat(pools[domain].transport);
             }
-            if (turn <= 1 && COUNTERPOINTAI.TURN1_FORCE_CAPPERS &&
+            if (turn <= 1 && COUNTERPOINTAI.TURN1_FORCE_CAPPERS !== false &&
                 COUNTERPOINTAI._capperBuildsAllowed())
             {
                 var opening = [];
@@ -3881,12 +3806,12 @@
                 affordableCappers.push(cappers[capperIndex]);
             }
         }
-        var borrowEnabled = COUNTERPOINTAI.RECYCLE_UNUSED_BUDGET &&
-            COUNTERPOINTAI.CAPPER_BORROW_FROM_RESERVE;
+        var borrowEnabled = COUNTERPOINTAI.RECYCLE_UNUSED_BUDGET !== false &&
+            COUNTERPOINTAI.CAPPER_BORROW_FROM_RESERVE !== false;
         var capperRollPool = borrowEnabled ? cappers : affordableCappers;
         var capperRollHit = capperRollPool.length > 0 &&
             plan.reservedBudget <= COUNTERPOINTAI.CAP_ROLL_MAX_BUDGET &&
-            COUNTERPOINTAI._nextPlannerRoll(state, COUNTERPOINTAI.PERCENT_MAX) <
+            COUNTERPOINTAI._nextPlannerRoll(state, COUNTERPOINTAI._tunable("PERCENT_MAX")) <
                 COUNTERPOINTAI._captureBaseChance();
         plan.allowCapperBorrow = capperRollHit && borrowEnabled;
 
@@ -3972,7 +3897,7 @@
 
     _canUseUnreservedFunds : function(plan, transactionCost, funds)
     {
-        var safeFunds = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(funds, 0)));
+        var safeFunds = COUNTERPOINTAI._wholeCount(funds);
         return COUNTERPOINTAI.AVOID_BUDGET_BASE_SKIPS === true &&
             plan.reservedBudget < safeFunds && transactionCost <= safeFunds;
     },
@@ -4401,14 +4326,7 @@
 
     _planIndex : function(plans, plan)
     {
-        for (var index = 0; index < plans.length; ++index)
-        {
-            if (plans[index].key === plan.key)
-            {
-                return index;
-            }
-        }
-        return -1;
+        return COUNTERPOINTAI._planIndexByKey(plans, plan.key);
     },
 
     _resolveLivePlanCandidate : function(plans, planIndex, ids, costs, enabled, funds)
@@ -4767,35 +4685,24 @@
 
 ;(function()
 {
-    var plannerConstants = [
-        "STRATEGY_VERSION",
-        "ACTION_BUILD_UNITS",
-        "PHASE_SPECIAL",
-        "PHASE_ORDINARY",
-        "PLANNER_STATE_VARIABLE_ID",
-        "PLANNER_STATE_SCHEMA_VERSION",
-        "RNG_ALGORITHM_VERSION",
-        "RNG_COUNTER_MULTIPLIER",
-        "RNG_LEFT_SHIFT_A",
-        "RNG_RIGHT_SHIFT",
-        "RNG_LEFT_SHIFT_B",
-        "PLANNER_UINT32_MAX",
-        "PLANNER_VALUE_MAX",
-        "PLANNER_ID_LENGTH_HARD_LIMIT",
-        "PLANNER_KEY_LENGTH_HARD_LIMIT",
-        "PLANNER_PLAN_COUNT_HARD_LIMIT",
-        "PLANNER_CANDIDATE_COUNT_HARD_LIMIT",
-        "PLANNER_TOTAL_CANDIDATE_HARD_LIMIT",
-        "PLANNER_DRAW_COUNT_HARD_LIMIT",
-        "PLANNER_STATE_LENGTH_HARD_LIMIT",
-        "PLANNER_CANDIDATE_HARD_LIMIT",
-        "PLANNER_RANDOM_WEIGHT_HARD_LIMIT"
-    ];
-    for (var index = 0; index < plannerConstants.length; ++index)
+    // Derived, not listed: the tunables file loads after this one, so every non function property
+    // declared above is a constant it must not be able to overwrite. A hand written list only
+    // drifts, and the names it missed were silently writable.
+    var names = Object.keys(COUNTERPOINTAI);
+    for (var index = 0; index < names.length; ++index)
     {
-        var name = plannerConstants[index];
+        var name = names[index];
+        var value = COUNTERPOINTAI[name];
+        if (typeof value === "function")
+        {
+            continue;
+        }
+        if (value !== null && typeof value === "object")
+        {
+            Object.freeze(value);
+        }
         Object.defineProperty(COUNTERPOINTAI, name, {
-            value : COUNTERPOINTAI[name],
+            value : value,
             writable : false,
             configurable : false,
             enumerable : true
