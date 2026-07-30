@@ -45,23 +45,10 @@ void SimpleProductionSystem::initialize()
 {
     if (!m_init)
     {
-        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({m_jsThis,
                            JsThis::getJsThis(m_owner),
                            GameMap::getMapJsThis(m_owner->getMap())});
-        QString function1 = "initializeSimpleProductionSystem";
-        QJSValue erg(false);
-        if (pInterpreter->exists(GameScript::m_scriptName, function1))
-        {
-            erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
-        }
-        if (erg.isBool() && !erg.toBool())
-        {
-            if (pInterpreter->exists(m_owner->getAiName(), function1))
-            {
-                erg = pInterpreter->doFunction(m_owner->getAiName(), function1, args);
-            }
-        }
+        QJSValue erg = dispatchScriptFunction(QStringLiteral("initializeSimpleProductionSystem"), args);
         if (erg.isBool())
         {
             m_init = erg.toBool();
@@ -87,8 +74,6 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
     executed = false;
     if (m_enabled && m_init)
     {
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        QString function1 = "buildUnitSimpleProductionSystem";
         QJSValueList args({m_jsThis,
                            JsThis::getJsThis(m_owner),
                            JsThis::getJsThis(pBuildings),
@@ -96,24 +81,47 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
                            JsThis::getJsThis(pEnemyUnits),
                            JsThis::getJsThis(pEnemyBuildings),
                            GameMap::getMapJsThis(m_owner->getMap())});
-        QJSValue erg(false);
-        if (pInterpreter->exists(GameScript::m_scriptName, function1))
-        {
-            erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
-        }
-        if (erg.isBool() && !erg.toBool())
-        {
-            if (pInterpreter->exists(m_owner->getAiName(), function1))
-            {
-                erg = pInterpreter->doFunction(m_owner->getAiName(), function1, args);
-            }
-        }
+        QJSValue erg = dispatchScriptFunction(QStringLiteral("buildUnitSimpleProductionSystem"), args);
         if (erg.isBool())
         {
             executed = erg.toBool();
         }
     }
     return m_init && m_enabled;
+}
+
+QJSValue SimpleProductionSystem::dispatchScriptFunction(const QString & function, const QJSValueList & args) const
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg(false);
+    if (pInterpreter->exists(GameScript::m_scriptName, function))
+    {
+        erg = pInterpreter->doFunction(GameScript::m_scriptName, function, args);
+    }
+    if (erg.isBool() && !erg.toBool() && pInterpreter->exists(m_owner->getAiName(), function))
+    {
+        erg = pInterpreter->doFunction(m_owner->getAiName(), function, args);
+    }
+    return erg;
+}
+
+Building* SimpleProductionSystem::ownedBuildingAt(qint32 x, qint32 y) const
+{
+    if (m_owner == nullptr || m_owner->getPlayer() == nullptr)
+    {
+        return nullptr;
+    }
+    GameMap* pMap = m_owner->getMap();
+    if (pMap == nullptr || !pMap->onMap(x, y))
+    {
+        return nullptr;
+    }
+    Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+    if (pBuilding == nullptr || pBuilding->getOwner() != m_owner->getPlayer())
+    {
+        return nullptr;
+    }
+    return pBuilding;
 }
 
 void SimpleProductionSystem::resetProductionPreparation()
@@ -146,22 +154,12 @@ void SimpleProductionSystem::prepareProduction(QmlVectorBuilding* pBuildings, Qm
                        JsThis::getJsThis(pEnemyUnits.get()),
                        JsThis::getJsThis(pEnemyBuildings.get()),
                        GameMap::getMapJsThis(m_owner->getMap())});
-    QJSValue erg(false);
-    if (gameScriptHandles)
-    {
-        erg = pInterpreter->doFunction(GameScript::m_scriptName, PREPARE_PRODUCTION_FUNCTION, args);
-    }
-    if (erg.isBool() && !erg.toBool() && aiHandles)
-    {
-        pInterpreter->doFunction(m_owner->getAiName(), PREPARE_PRODUCTION_FUNCTION, args);
-    }
+    dispatchScriptFunction(PREPARE_PRODUCTION_FUNCTION, args);
 }
 
 void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, spQmlVectorUnit &pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
     m_pEnemyUnits = pEnemyUnits;
-    QString function1 = "onNewBuildQueue";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_owner),
                        JsThis::getJsThis(pBuildings),
@@ -169,18 +167,7 @@ void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlV
                        JsThis::getJsThis(pEnemyUnits.get()),
                        JsThis::getJsThis(pEnemyBuildings),
                        GameMap::getMapJsThis(m_owner->getMap())});
-    QJSValue erg(false);
-    if (pInterpreter->exists(GameScript::m_scriptName, function1))
-    {
-        erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
-    }
-    if (erg.isBool() && !erg.toBool())
-    {
-        if (pInterpreter->exists(m_owner->getAiName(), function1))
-        {
-            erg = pInterpreter->doFunction(m_owner->getAiName(), function1, args);
-        }
-    }
+    dispatchScriptFunction(QStringLiteral("onNewBuildQueue"), args);
     updateActiveProductionSystem(pBuildings);
     updateIslandSizeForBuildings(pBuildings);
 }
@@ -308,17 +295,12 @@ qreal SimpleProductionSystem::getCounterpointBaseDamage(const QString & attacker
 
 bool SimpleProductionSystem::executeCounterpointBuild(qint32 x, qint32 y, const QString & unitId, qint32 ordinal, qint32 expectedCost)
 {
-    if (m_owner == nullptr || m_owner->getPlayer() == nullptr || unitId.isEmpty() || ordinal < 0)
+    if (unitId.isEmpty() || ordinal < 0)
     {
         return false;
     }
-    GameMap* pMap = m_owner->getMap();
-    if (pMap == nullptr || !pMap->onMap(x, y))
-    {
-        return false;
-    }
-    Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-    if (pBuilding == nullptr || pBuilding->getOwner() != m_owner->getPlayer())
+    Building* pBuilding = ownedBuildingAt(x, y);
+    if (pBuilding == nullptr)
     {
         return false;
     }
@@ -849,13 +831,12 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
 
 bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId, bool alwaysBuild)
 {
-    if (m_owner == nullptr || m_owner->getMap() == nullptr || m_owner->getPlayer() == nullptr ||
-        unitId.isEmpty() || !m_owner->getMap()->onMap(x, y))
+    if (unitId.isEmpty())
     {
         return false;
     }
-    Building* pBuilding = m_owner->getMap()->getTerrain(x, y)->getBuilding();
-    if (pBuilding == nullptr || pBuilding->getOwner() != m_owner->getPlayer())
+    Building* pBuilding = ownedBuildingAt(x, y);
+    if (pBuilding == nullptr)
     {
         return false;
     }

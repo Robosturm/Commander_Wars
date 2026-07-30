@@ -313,14 +313,7 @@ void CoreAI::setInitValue(QString name, double newValue)
 
 double CoreAI::getInitValue(QString name) const
 {
-    for (auto & entry : m_iniData)
-    {
-        if (entry.m_name == name)
-        {
-            return *entry.m_value;
-        }
-    }
-    return 0.0;
+    return getIniValue(name, 0.0);
 }
 
 void CoreAI::nextAction()
@@ -2367,6 +2360,20 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
                     qint32 actionAttempts = 0;
                     qint32 actionAttemptLimit = 1;
                     bool retryAction = false;
+                    // Returns whether the script consumed the failure, which is also the signal to
+                    // stop walking this action's steps.
+                    auto applyMenuFailure = [&](spGameAction & pFailedAction, const QString & scriptName)
+                    {
+                        bool handled = false;
+                        const BuildingMenuResult result = sendBuildingMenuItemResultToScript(
+                            pFailedAction, false, scriptName, &handled);
+                        retryAction = retryAction || result == BuildingMenuResult::RetryAction;
+                        if (result == BuildingMenuResult::RestartBuildingScan)
+                        {
+                            restartBuildingScan = requestBuildingScanRestart();
+                        }
+                        return handled;
+                    };
                     do
                     {
                         ++actionAttempts;
@@ -2466,20 +2473,7 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
                                                     selectionScript
                                                 ))
                                             {
-                                                bool failureHandled = false;
-                                                const BuildingMenuResult failureResult = sendBuildingMenuItemResultToScript(
-                                                    pAction,
-                                                    false,
-                                                    selectionScript,
-                                                    failureHandled
-                                                );
-                                                retryAction = failureResult == BuildingMenuResult::RetryAction;
-                                                if (failureResult == BuildingMenuResult::RestartBuildingScan)
-                                                {
-                                                    restartBuildingScan = requestBuildingScanRestart();
-                                                    break;
-                                                }
-                                                if (failureHandled)
+                                                if (applyMenuFailure(pAction, selectionScript))
                                                 {
                                                     break;
                                                 }
@@ -2539,27 +2533,10 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
                                 if (actionReady)
                                 {
                                     emit sigPerformAction(pAction);
-                                    bool resultHandled = false;
-                                    sendBuildingMenuItemResultToScript(
-                                        pAction,
-                                        true,
-                                        pendingMenuScript,
-                                        resultHandled
-                                    );
+                                    sendBuildingMenuItemResultToScript(pAction, true, pendingMenuScript);
                                     return true;
                                 }
-                                bool resultHandled = false;
-                                const BuildingMenuResult failureResult = sendBuildingMenuItemResultToScript(
-                                    pAction,
-                                    false,
-                                    pendingMenuScript,
-                                    resultHandled
-                                );
-                                retryAction = retryAction || failureResult == BuildingMenuResult::RetryAction;
-                                if (failureResult == BuildingMenuResult::RestartBuildingScan)
-                                {
-                                    restartBuildingScan = requestBuildingScanRestart();
-                                }
+                                applyMenuFailure(pAction, pendingMenuScript);
                             }
                         }
                     }
@@ -2687,13 +2664,19 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
     return ret;
 }
 
-CoreAI::BuildingMenuResult CoreAI::sendBuildingMenuItemResultToScript(spGameAction & pAction, bool succeeded, const QString & scriptName, bool & handled)
+CoreAI::BuildingMenuResult CoreAI::sendBuildingMenuItemResultToScript(spGameAction & pAction, bool succeeded, const QString & scriptName, bool * handled)
 {
-    handled = false;
+    if (handled != nullptr)
+    {
+        *handled = false;
+    }
     Interpreter* pInterpreter = Interpreter::getInstance();
     if (!scriptName.isEmpty() && pInterpreter->exists(scriptName, BUILDING_MENU_RESULT_FUNCTION))
     {
-        handled = true;
+        if (handled != nullptr)
+        {
+            *handled = true;
+        }
         QJSValueList args({m_jsThis,
                            JsThis::getJsThis(pAction.get()),
                            QJSValue(succeeded),

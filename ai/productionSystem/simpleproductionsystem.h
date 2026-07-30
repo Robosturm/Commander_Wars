@@ -16,7 +16,6 @@
 
 class Building;
 class CoreAI;
-class GameMap;
 
 class SimpleProductionSystem final : public QObject, public FileSerializable, public JsThis
 {
@@ -129,6 +128,9 @@ public:
     Q_INVOKABLE qreal getCounterpointBaseDamage(const QString & attackerId, const QString & defenderId);
     Q_INVOKABLE bool executeCounterpointBuild(qint32 x, qint32 y, const QString & unitId, qint32 ordinal = DEFAULT_ACTION_ORDINAL, qint32 expectedCost = NO_EXPECTED_COST);
 private:
+    // Game script first, owning ai second, which is the seam every scripted hook here goes through.
+    QJSValue dispatchScriptFunction(const QString & function, const QJSValueList & args) const;
+    Building* ownedBuildingAt(qint32 x, qint32 y) const;
     spUnit getCounterpointUnit(const QString & unitId);
     spProductionActionData queryProductionAction(Building* pBuilding, const QString & actionId) const;
     bool executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild);

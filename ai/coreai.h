@@ -791,7 +791,8 @@ protected:
      * @return
      */
     bool getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, const spMenuData & pData, qint32 & index, QString & scriptName);
-    BuildingMenuResult sendBuildingMenuItemResultToScript(spGameAction & pAction, bool succeeded, const QString & scriptName, bool & handled);
+    // handled reports whether a script consumed the result, which None alone cannot express.
+    BuildingMenuResult sendBuildingMenuItemResultToScript(spGameAction & pAction, bool succeeded, const QString & scriptName, bool * handled = nullptr);
     /**
      * @brief deserializeObjectVersion
      * @param stream

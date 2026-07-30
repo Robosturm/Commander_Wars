@@ -12,6 +12,7 @@ ProductionActionData::ProductionActionData(GameMap* pMap, qint32 x, qint32 y, QS
     Interpreter::setCppOwnerShip(this);
 }
 
+// Signature mirrors MenuData::addData so one script getStepData can fill either object.
 void ProductionActionData::addData(QString text, QString unitId, QString icon, qint32 transactionCost, bool enabled)
 {
     Q_UNUSED(text);
@@ -20,6 +21,7 @@ void ProductionActionData::addData(QString text, QString unitId, QString icon, q
     {
         m_unitIds.append(unitId);
         m_transactionCosts.append(transactionCost);
+        // A free unit still has a strategic worth, so price it at what it would have cost.
         m_strategicValues.append(transactionCost == 0 ? Unit::getBaseCosts(unitId, m_pMap) : transactionCost);
         m_enabledList.append(enabled);
     }
