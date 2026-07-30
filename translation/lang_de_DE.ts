@@ -6428,14 +6428,14 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="524"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="257"/>
         <source>AI behavior:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="532"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="265"/>
         <source>Select how the ai plans unit production.
- Counterpoint uses the full enemy army when planning production, including units hidden by Fog of War.</source>
+ Counterpoint budgets across all of its factories at once and builds to answer the enemy army.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
