@@ -67,6 +67,12 @@ var ACTION =
         // type of the data object depends on the StepInputType
     },
     getStepData : null,
+
+    // Optional. Define it to describe buildable units to the ai without opening a menu step; the
+    // production system falls back to getStepData when an action leaves this null.
+    getProductionMenuData : function(action, data, map)
+    {
+    },
     getProductionMenuData : null,
 
     getDescription : function()
