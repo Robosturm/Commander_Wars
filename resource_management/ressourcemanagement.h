@@ -321,7 +321,10 @@ template<class TClass>
 QString RessourceManagement<TClass>::getName(const QString & id)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue value = pInterpreter->doFunction(id, "getName");
+    QJSValueList args;
+    args << id;
+    // base scripts that don't override getName resolve the id themselves, so it has to be passed
+    QJSValue value = pInterpreter->doFunction(id, "getName", args);
     if (value.isString())
     {
         return value.toString();
