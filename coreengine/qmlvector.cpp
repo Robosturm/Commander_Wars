@@ -40,6 +40,24 @@ void QmlVectorUnit::randomize()
     });
 }
 
+void QmlVectorUnit::sortAiPriority()
+{
+    for (auto & unit : m_Vector)
+    {
+        unit->setSortValues({unit->getAiPriority(), unit->getUniqueID()});
+    }
+    std::sort(m_Vector.begin(), m_Vector.end(), [](const spUnit& lhs, const spUnit& rhs)
+    {
+        auto & lhsVec = lhs->getSortValues();
+        auto & rhsVec = rhs->getSortValues();
+        if (lhsVec[0] == rhsVec[0])
+        {
+            return lhsVec[1] < rhsVec[1];
+        }
+        return lhsVec[0] > rhsVec[0];
+    });
+}
+
 void QmlVectorUnit::sortExpensive()
 {
     for (auto & unit : m_Vector)

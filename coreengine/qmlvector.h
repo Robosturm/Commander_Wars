@@ -94,6 +94,10 @@ public:
     }
     Q_INVOKABLE void randomize();
     /**
+     * @brief sortAiPriority deterministic order: higher ai priority first, ties by lowest unique id
+     */
+    Q_INVOKABLE void sortAiPriority();
+    /**
      * @brief sortExpensive most expensive units are sorted in first
      */
     Q_INVOKABLE void sortExpensive();

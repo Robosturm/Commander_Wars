@@ -438,6 +438,47 @@ void SimpleProductionSystem::resetForcedProduction()
     m_forcedProduction.clear();
 }
 
+void SimpleProductionSystem::resetPriorityProduction()
+{
+    m_priorityProduction.clear();
+}
+
+void SimpleProductionSystem::addPriorityProduction(const QStringList & unitIds, qint32 x, qint32 y, bool blocking)
+{
+    if (unitIds.isEmpty())
+    {
+        CONSOLE_PRINT("SimpleProductionSystem::addPriorityProduction ignoring entry with empty unitIds", GameConsole::eWARNING);
+        return;
+    }
+    for (const auto & existing : m_priorityProduction)
+    {
+        // makes re-queueing every turn idempotent
+        if (existing.x == x &&
+            existing.y == y &&
+            existing.blocking == blocking &&
+            existing.unitIds == unitIds)
+        {
+            return;
+        }
+    }
+    PriorityProduction item;
+    item.unitIds = unitIds;
+    item.x = x;
+    item.y = y;
+    item.blocking = blocking;
+    m_priorityProduction.push_back(item);
+}
+
+qint32 SimpleProductionSystem::getPriorityProductionCount() const
+{
+    return static_cast<qint32>(m_priorityProduction.size());
+}
+
+QString SimpleProductionSystem::getLastPriorityBuildResult() const
+{
+    return m_lastPriorityBuildResult;
+}
+
 void SimpleProductionSystem::addForcedProduction(const QStringList & unitIds, qint32 x, qint32 y)
 {
     ForcedProduction item;
@@ -512,6 +553,74 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, c
     }
 }
 
+bool SimpleProductionSystem::buildPriorityProduction(QmlVectorBuilding* pBuildings, qreal minAverageIslandSize, bool & blocked)
+{
+    bool success = false;
+    GameMap* pMap = m_owner->getMap();
+    for (qint32 i = 0; i < m_priorityProduction.size(); ++i)
+    {
+        auto & item = m_priorityProduction[i];
+        QString reason = "NO_FACTORY";
+        QString lastUnitId = item.unitIds[0];
+        if (pMap->onMap(item.x, item.y))
+        {
+            Building* pBuilding = pMap->getTerrain(item.x, item.y)->getBuilding();
+            if (pBuilding != nullptr &&
+                pBuilding->getOwner() == m_owner->getPlayer())
+            {
+                for (auto & unitId : item.unitIds)
+                {
+                    lastUnitId = unitId;
+                    success = buildUnit(item.x, item.y, unitId, true, &reason);
+                    if (success)
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                reason = "INVALID_POSITION";
+            }
+        }
+        else
+        {
+            for (auto & unitId : item.unitIds)
+            {
+                lastUnitId = unitId;
+                // island filter bypassed on purpose, the build menu decides instead
+                success = buildUnit(pBuildings, unitId, 0.0, true, &reason);
+                if (success)
+                {
+                    break;
+                }
+            }
+        }
+        m_lastPriorityBuildResult = (success ? QString("BUILT") : reason) + "|" + lastUnitId + "|" +
+                                    QString::number(item.x) + "," + QString::number(item.y);
+        CONSOLE_PRINT("SimpleProductionSystem priority production " + m_lastPriorityBuildResult, GameConsole::eDEBUG);
+        if (success)
+        {
+            m_priorityProduction.erase(m_priorityProduction.cbegin() + i);
+            break;
+        }
+        else if (reason != "NO_FUNDS" &&
+                 reason != "FACTORY_BLOCKED")
+        {
+            // permanent failure: drop the entry so a blocking one cannot starve the ai forever
+            CONSOLE_PRINT("SimpleProductionSystem dropping priority production " + m_lastPriorityBuildResult, GameConsole::eWARNING);
+            m_priorityProduction.erase(m_priorityProduction.cbegin() + i);
+            --i;
+        }
+        else if (item.blocking)
+        {
+            blocked = true;
+            break;
+        }
+    }
+    return success;
+}
+
 bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode,
                                            qreal minAverageIslandSize, qint32 minBaseCost, qint32 maxBaseCost, bool alwaysBuild)
 {
@@ -519,9 +628,14 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
     {
         maxBaseCost = m_owner->getPlayer()->getFunds();
     }
-    bool success = false;
     GameMap* pMap = m_owner->getMap();
-    for (qint32 i = 0; i < m_initialProduction.size(); ++i)
+    bool blocked = false;
+    bool success = buildPriorityProduction(pBuildings, minAverageIslandSize, blocked);
+    if (blocked)
+    {
+        return false;
+    }
+    for (qint32 i = 0; i < m_initialProduction.size() && !success; ++i)
     {
         auto & item = m_initialProduction[i];
         for (auto & unitId : item.unitIds)
@@ -830,7 +944,24 @@ bool SimpleProductionSystem::buildUnitCloseTo(QmlVectorBuilding* pBuildings, QSt
     return success;
 }
 
-bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, bool alwaysBuild)
+static qint32 buildFailureRank(const QString & reason)
+{
+    if (reason == "NO_FUNDS")
+    {
+        return 2;
+    }
+    else if (reason == "FACTORY_BLOCKED")
+    {
+        return 1;
+    }
+    else if (reason == "NO_FACTORY" || reason.isEmpty())
+    {
+        return -1;
+    }
+    return 0;
+}
+
+bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, bool alwaysBuild, QString * failureReason)
 {
     bool success = false;
     for (auto & pBuilding : pBuildings->getVector())
@@ -838,10 +969,17 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
         auto & item = m_averageMoverange[pBuilding.get()];
         if (item.averageValue * minAverageIslandSize <= item.islandSizes[unitId])
         {
-            success = buildUnit(pBuilding->getX(), pBuilding->getY(), unitId, alwaysBuild);
+            QString reason;
+            success = buildUnit(pBuilding->getX(), pBuilding->getY(), unitId, alwaysBuild, failureReason != nullptr ? &reason : nullptr);
             if (success)
             {
                 break;
+            }
+            // keep the most retryable failure so one town cannot mask a blocked factory
+            if (failureReason != nullptr &&
+                buildFailureRank(reason) > buildFailureRank(*failureReason))
+            {
+                *failureReason = reason;
             }
         }
     }
@@ -852,42 +990,60 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
     return success;
 }
 
-bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId, bool alwaysBuild)
+void SimpleProductionSystem::setBuildFailure(QString * failureReason, const char * reason)
+{
+    if (failureReason != nullptr)
+    {
+        *failureReason = reason;
+    }
+}
+
+bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId, bool alwaysBuild, QString * failureReason)
 {
     if (unitId.isEmpty())
     {
+        setBuildFailure(failureReason, "NOT_IN_BUILD_LIST");
         return false;
     }
     Building* pBuilding = ownedBuildingAt(x, y);
     if (pBuilding == nullptr)
     {
+        setBuildFailure(failureReason, "INVALID_POSITION");
         return false;
     }
-    return executeBuildAction(pBuilding, unitId, DEFAULT_ACTION_ORDINAL, NO_EXPECTED_COST, alwaysBuild);
+    return executeBuildAction(pBuilding, unitId, DEFAULT_ACTION_ORDINAL, NO_EXPECTED_COST, alwaysBuild, failureReason);
 }
 
-bool SimpleProductionSystem::executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild)
+bool SimpleProductionSystem::executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild, QString * failureReason)
 {
     if (pBuilding == nullptr || pBuilding->getOwner() != m_owner->getPlayer() ||
-        !pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS) ||
-        pBuilding->getTerrain()->getUnit() != nullptr)
+        !pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
     {
+        setBuildFailure(failureReason, "NOT_A_FACTORY");
+        return false;
+    }
+    if (pBuilding->getTerrain()->getUnit() != nullptr)
+    {
+        setBuildFailure(failureReason, "FACTORY_BLOCKED");
         return false;
     }
     if (!alwaysBuild &&
         !reasonableBuildField(pBuilding->getX(), pBuilding->getY(), unitId, m_maxDamageCheckRange, m_maxSingleDamage))
     {
+        setBuildFailure(failureReason, "DANGER");
         return false;
     }
     spGameAction pAction = MemoryManagement::create<GameAction>(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
     pAction->setTarget(pBuilding->getPosition());
     if (!pAction->canBePerformed())
     {
+        setBuildFailure(failureReason, "NOT_ALLOWED");
         return false;
     }
     spMenuData pData = pAction->getMenuStepData();
     if (!pData->validData())
     {
+        setBuildFailure(failureReason, "NOT_ALLOWED");
         return false;
     }
     const QStringList actionIds = pData->getActionIDs();
@@ -905,19 +1061,34 @@ bool SimpleProductionSystem::executeBuildAction(Building* pBuilding, const QStri
             ++currentOrdinal;
         }
     }
-    if (selectedIndex < 0 || !pData->getEnabledList()[selectedIndex])
+    if (selectedIndex < 0)
     {
+        setBuildFailure(failureReason, "NOT_IN_BUILD_LIST");
+        return false;
+    }
+    if (!pData->getEnabledList()[selectedIndex])
+    {
+        if (pData->getCostList()[selectedIndex] > m_owner->getPlayer()->getFunds())
+        {
+            setBuildFailure(failureReason, "NO_FUNDS");
+        }
+        else
+        {
+            setBuildFailure(failureReason, "DISABLED");
+        }
         return false;
     }
     const qint32 liveCost = pData->getCostList()[selectedIndex];
     const bool hasExpectedCost = expectedCost > NO_EXPECTED_COST;
     if (hasExpectedCost && liveCost != expectedCost)
     {
+        setBuildFailure(failureReason, "DISABLED");
         return false;
     }
     m_owner->addMenuItemData(pAction, unitId, liveCost);
     if (!pAction->isFinalStep() || !pAction->canBePerformed())
     {
+        setBuildFailure(failureReason, "NOT_ALLOWED");
         return false;
     }
     CONSOLE_PRINT("Building unit " + unitId + " at x=" + QString::number(pBuilding->getX()) + " y=" + QString::number(pBuilding->getY()), GameConsole::eDEBUG);
@@ -1014,6 +1185,30 @@ void SimpleProductionSystem::serializeObject(QDataStream& pStream) const
     }
     m_Variables.serializeObject(pStream);
     pStream << m_currentTurnProducedUnitsCounter;
+    // version 2: forced production loses close-to-target references, those entries degrade to any factory
+    pStream << static_cast<qint32>(m_forcedProduction.size());
+    for (const auto& item : m_forcedProduction)
+    {
+        pStream << item.x;
+        pStream << item.y;
+        pStream << static_cast<qint32>(item.unitIds.size());
+        for (const auto& unitId : item.unitIds)
+        {
+            pStream << unitId;
+        }
+    }
+    pStream << static_cast<qint32>(m_priorityProduction.size());
+    for (const auto& item : m_priorityProduction)
+    {
+        pStream << item.x;
+        pStream << item.y;
+        pStream << item.blocking;
+        pStream << static_cast<qint32>(item.unitIds.size());
+        for (const auto& unitId : item.unitIds)
+        {
+            pStream << unitId;
+        }
+    }
 }
 
 void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
@@ -1066,6 +1261,45 @@ void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
     if (version > 0)
     {
         pStream >> m_currentTurnProducedUnitsCounter;
+    }
+    if (version > 1)
+    {
+        pStream >> size;
+        for (qint32 i = 0; i < size; ++i)
+        {
+            ForcedProduction item;
+            pStream >> item.x;
+            pStream >> item.y;
+            qint32 size2 = 0;
+            pStream >> size2;
+            for (qint32 i2 = 0; i2 < size2; ++i2)
+            {
+                QString id;
+                pStream >> id;
+                item.unitIds.append(id);
+            }
+            m_forcedProduction.push_back(item);
+        }
+        pStream >> size;
+        for (qint32 i = 0; i < size; ++i)
+        {
+            PriorityProduction item;
+            pStream >> item.x;
+            pStream >> item.y;
+            pStream >> item.blocking;
+            qint32 size2 = 0;
+            pStream >> size2;
+            for (qint32 i2 = 0; i2 < size2; ++i2)
+            {
+                QString id;
+                pStream >> id;
+                item.unitIds.append(id);
+            }
+            if (!item.unitIds.isEmpty())
+            {
+                m_priorityProduction.push_back(item);
+            }
+        }
     }
 }
 
