@@ -75,6 +75,14 @@ var ACTION =
     },
     getProductionMenuData : null,
 
+    // Optional. Return true when the action opens a unit build menu, so the ai production
+    // system queries it like the base factory actions.
+    getIsBaseProductionAction : function(map)
+    {
+        return false;
+    },
+    getIsBaseProductionAction : null,
+
     getDescription : function()
     {
         return "";

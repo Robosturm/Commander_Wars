@@ -18,17 +18,9 @@ const QString BASE_PRODUCTION_MENU_FUNCTION = QStringLiteral("getStepData");
 const QString CUSTOM_PRODUCTION_MENU_FUNCTION = QStringLiteral("getProductionMenuData");
 const QString COUNTERPOINT_SEED_NAMESPACE = QStringLiteral("counterpoint-production");
 const QString PREPARE_PRODUCTION_FUNCTION = QStringLiteral("prepareProduction");
+const QString BASE_PRODUCTION_ACTION_FUNCTION = QStringLiteral("getIsBaseProductionAction");
 // Comfortably above any real roster, including large mods, and a hard ceiling on retained units.
 constexpr std::size_t COUNTERPOINT_UNIT_CACHE_LIMIT = 512;
-
-bool isBaseProductionAction(const QString & actionId)
-{
-    return actionId == CoreAI::ACTION_BUILD_UNITS ||
-           actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1 ||
-           actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2 ||
-           actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3 ||
-           actionId == CoreAI::ACTION_NEST_FACTORY_DOOR;
-}
 }
 
 SimpleProductionSystem::SimpleProductionSystem(CoreAI * owner)
@@ -305,6 +297,33 @@ bool SimpleProductionSystem::executeCounterpointBuild(qint32 x, qint32 y, const 
         return false;
     }
     return executeBuildAction(pBuilding, unitId, ordinal, expectedCost, true);
+}
+
+bool SimpleProductionSystem::isBaseProductionAction(const QString & actionId) const
+{
+    auto entry = m_baseProductionActions.find(actionId);
+    if (entry != m_baseProductionActions.end())
+    {
+        return entry->second;
+    }
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    bool result = false;
+    if (pInterpreter->exists(actionId, BASE_PRODUCTION_ACTION_FUNCTION))
+    {
+        QJSValueList args({GameMap::getMapJsThis(m_owner->getMap())});
+        result = pInterpreter->doFunction(actionId, BASE_PRODUCTION_ACTION_FUNCTION, args).toBool();
+    }
+    else
+    {
+        // Keeps mods that replace a base action script without the new hook working.
+        result = actionId == CoreAI::ACTION_BUILD_UNITS ||
+                 actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1 ||
+                 actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2 ||
+                 actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3 ||
+                 actionId == CoreAI::ACTION_NEST_FACTORY_DOOR;
+    }
+    m_baseProductionActions.emplace(actionId, result);
+    return result;
 }
 
 spProductionActionData SimpleProductionSystem::queryProductionAction(Building* pBuilding, const QString & actionId) const

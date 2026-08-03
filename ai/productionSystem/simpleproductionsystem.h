@@ -131,6 +131,7 @@ private:
     // Game script first, owning ai second, which is the seam every scripted hook here goes through.
     QJSValue dispatchScriptFunction(const QString & function, const QJSValueList & args) const;
     Building* ownedBuildingAt(qint32 x, qint32 y) const;
+    bool isBaseProductionAction(const QString & actionId) const;
     spUnit getCounterpointUnit(const QString & unitId);
     spProductionActionData queryProductionAction(Building* pBuilding, const QString & actionId) const;
     bool executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild);
@@ -156,6 +157,8 @@ private:
     spUnit m_dummy;
     // Matchup scoring asks for the same ids repeatedly and Unit construction is not cheap.
     std::map<QString, spUnit> m_counterpointUnits;
+    // Scripted lookups, cached for the match since action scripts cannot change mid-game.
+    mutable std::map<QString, bool> m_baseProductionActions;
     qint32 m_currentTurnProducedUnitsCounter{0};
     // Transient: a mid-turn load re-dispatches once and the strategy's own planner state absorbs it.
     bool m_productionPrepared{false};

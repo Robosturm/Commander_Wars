@@ -125,6 +125,11 @@ var Constructor = function()
         }
     };
 
+    this.getIsBaseProductionAction = function(map)
+    {
+        return true;
+    };
+
     this.getName = function()
     {
         return qsTr("Build unit");
