@@ -267,6 +267,10 @@ spUnit SimpleProductionSystem::getCounterpointUnit(const QString & unitId)
     {
         m_counterpointUnits.emplace(unitId, pUnit);
     }
+    else
+    {
+        CONSOLE_PRINT("Counterpoint unit cache limit reached, " + unitId + " stays uncached", GameConsole::eERROR);
+    }
     return pUnit;
 }
 
