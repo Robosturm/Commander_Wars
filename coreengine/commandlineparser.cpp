@@ -32,6 +32,7 @@ const char* const CommandLineParser::ARG_AISLAVE                = "aiSlave";
 const char* const CommandLineParser::ARG_USERPATH               = "userPath";
 const char* const CommandLineParser::ARG_DEBUGLEVEL             = "debugLevel";
 const char* const CommandLineParser::ARG_SLAVETRAINING          = "slaveTraining";
+const char* const CommandLineParser::ARG_REJOINPASSWORD          = "rejoin-password";
 
 // options required for hosting a dedicated server
 const char* const CommandLineParser::ARG_SERVER                     = "server";
@@ -88,7 +89,8 @@ CommandLineParser::CommandLineParser()
       m_mailServerSendAddress(ARG_MAILSERVERSENDADDRESS, tr("E-Mail address used on the mail server for the server for sending mails to accounts."), tr("address"), ""),
       m_mailServerAuthMethod(ARG_MAILSERVERAUTHMETHOD, tr("Mail server authentication type (Plain, Login) for the server for sending mails to accounts."), tr("method"), ""),
       m_serverSaveFile(ARG_SERVERSAVEFILE, tr("Path to the server game save file"), tr("path"), ""),
-      m_slaveTraining(ARG_SLAVETRAINING, tr("mode for starting an ai training session."))
+      m_slaveTraining(ARG_SLAVETRAINING, tr("mode for starting an ai training session.")),
+      m_rejoinPassword(ARG_REJOINPASSWORD, tr("Password used by the auto-rejoin path after a mod-sync restart. Internal; not for manual use."), tr("password"), "")
 {
     Interpreter::setCppOwnerShip(this);
     m_parser.setApplicationDescription("Commander Wars game");
@@ -130,6 +132,7 @@ CommandLineParser::CommandLineParser()
     m_parser.addOption(m_mailServerAuthMethod);
     m_parser.addOption(m_serverSaveFile);
     m_parser.addOption(m_slaveTraining);
+    m_parser.addOption(m_rejoinPassword);
 }
 
 void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
@@ -173,6 +176,10 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     {
         QString value = m_parser.value(m_update);
         Settings::getInstance()->setUpdateStep(value);
+    }
+    if (m_parser.isSet(m_rejoinPassword))
+    {
+        Mainapp::setRejoinPassword(m_parser.value(m_rejoinPassword));
     }
 }
 

@@ -110,7 +110,7 @@ int main(qint32 argc, char* argv[])
             CONSOLE_PRINT("No automatic restart on android", GameConsole::eDEBUG);
 #else
             CONSOLE_PRINT("Restarting application", GameConsole::eDEBUG);
-            QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
+            QProcess::startDetached(QCoreApplication::applicationFilePath(), Mainapp::getRestartArgv());
 #endif
         }
 #ifdef UPDATESUPPORT

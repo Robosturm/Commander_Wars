@@ -63,12 +63,17 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCanc
 void DialogConnecting::cancel()
 {
     CONSOLE_PRINT("Canceling DialogConnecting", GameConsole::eDEBUG);
+    m_Timer.stop();
+    m_TimerConnectionTimeout.stop();
     detach();
 }
 
 void DialogConnecting::connected()
 {
     CONSOLE_PRINT("Connected in DialogConnecting", GameConsole::eDEBUG);
+    // Stop timers so a retained spDialogConnecting cannot fire a late connectionTimeout that re-emits sigCancel after the user is already in-game.
+    m_Timer.stop();
+    m_TimerConnectionTimeout.stop();
     emit sigConnected();
     detach();
 }

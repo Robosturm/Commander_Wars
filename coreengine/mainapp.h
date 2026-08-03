@@ -135,6 +135,11 @@ public:
      * @param slave
      */
     static void setSlave(bool slave);
+    // Argv passed to QProcess::startDetached when main() restarts after exit(1). Set this before exit(1) to thread args (e.g. --rejoin-password=...) into the child without persisting them to disk.
+    static QStringList getRestartArgv();
+    static void setRestartArgv(const QStringList & argv);
+    static QString getRejoinPassword();
+    static void setRejoinPassword(const QString & password);
     /**
      * @brief qsTr
      * @param text
@@ -311,6 +316,8 @@ private:
     static Mainapp* m_pMainapp;
     static bool m_slave;
     static bool m_trainingSession;
+    static QStringList m_restartArgv;
+    static QString m_rejoinPassword;
     QMutex m_crashMutex;
     spQThread m_Workerthread;
     spQThread m_Networkthread;

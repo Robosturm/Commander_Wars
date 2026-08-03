@@ -5,6 +5,8 @@
 #include <QObject>
 #include <QDataStream>
 #include <QCryptographicHash>
+#include <QMap>
+#include <QPair>
 
 class Filesupport final
 {
@@ -14,28 +16,75 @@ public:
         QString name;
         QStringList items;
     };
+    // Mod-sync cap defaults; Settings seeds its user-overridable values from these.
+    static constexpr qint32 ModSyncDefaultPerModBytes = 64 * 1024 * 1024;
+    static constexpr qint32 ModSyncDefaultTotalBytes = 256 * 1024 * 1024;
+    static constexpr qint32 ModSyncDefaultMaxFiles = 5000;
+    // Windows MAX_PATH legacy ceiling; deeper trees need a settings override.
+    static constexpr qint32 ModSyncDefaultMaxRelativePathLength = 260;
+    static constexpr qint32 ModSyncDefaultBackupKeep = 3;
+    struct ModSyncCaps
+    {
+        qint32 perModBytes{ModSyncDefaultPerModBytes};
+        qint32 fileCountMax{ModSyncDefaultMaxFiles};
+        qint32 relPathMaxLen{ModSyncDefaultMaxRelativePathLength};
+    };
+    // rejectReason matches NetworkCommands::ModSyncRejectReason; qint32 keeps coreengine decoupled from multiplayer/.
+    struct ModSyncPackage
+    {
+        QByteArray compressedBlob;
+        qint32 declaredUncompressedSize{0};
+        qint32 fileCount{0};
+        qint32 rejectReason{0};
+    };
     static const char* const LIST_FILENAME_ENDING;
+    static constexpr qint32 LegacyRuntimeHashSize = 64;
+    // Old clients read this field as a QByteArray length, so versions must stay small and never collide with 64.
+    static constexpr qint32 LegacyHashPayloadVersion = 1;
+    static constexpr qint32 CurrentHashPayloadVersion = 2;
+    static_assert(CurrentHashPayloadVersion != LegacyRuntimeHashSize, "sentinel collision with legacy hash size");
+    static_assert(CurrentHashPayloadVersion != LegacyHashPayloadVersion, "sentinel collision with legacy payload version");
+
+    // Bit 0 = slice-1 mod-sync wire format; future schema breakages claim new bits.
+    static constexpr quint32 CapabilityModSync = 0x00000001u;
+
+    static constexpr qint32 ModPathDefaultMaxLen = 260;
+
     Filesupport() = delete;
     ~Filesupport() = delete;
-    /**
-     * @brief getRuntimeHash
-     * @return
-     */
-    static QByteArray getRuntimeHash(const QStringList & mods);
-    /**
-     * @brief getHash
-     * @param filter
-     * @param folders
-     * @return
-     */
+    static QByteArray getLegacyRuntimeHash(const QStringList & mods);
+    static QMap<QString, QByteArray> getPerModHashes(const QStringList & mods);
+    static QMap<QString, QByteArray> getResourceFolderHashes();
+    static QByteArray hashSingleFolder(const QString & folder, const QStringList & filter);
     static QByteArray getHash(const QStringList & filter, const QStringList & folders);
-    /**
-     * @brief addHash
-     * @param hash
-     * @param folder
-     * @param filter
-     */
     static void addHash(QCryptographicHash & hash, const QString & folder, const QStringList & filter);
+    static bool validateModPath(const QString & modPath, qint32 maxLen = ModPathDefaultMaxLen);
+    static bool validateRelativeFilePath(const QString & relPath, qint32 maxLen);
+    // Bounded QDataStream readers; validate the length header before allocation, defending against decompression-bomb pre-allocation in operator>>.
+    static bool readBoundedBytes(QDataStream & stream, QByteArray & out, qint64 maxBytes);
+    static bool readBoundedString(QDataStream & stream, QString & out, qint32 maxChars);
+    static ModSyncPackage buildModSyncPackage(const QString & installRoot, const QString & modPath, const ModSyncCaps & caps);
+    static QMap<QString, QByteArray> extractModSyncPackage(const QByteArray & compressedBlob, qint32 declaredUncompressedSize, const ModSyncCaps & caps, qint32 & rejectReason);
+    // Returns staging path RELATIVE to installRoot on success (e.g. "mods/foo.sync-staging-12345"); the caller writes that into the manifest.
+    // `caps` re-validates relpath, file count, per-file and total bytes here as defense in depth; callers should still run extractModSyncPackage first.
+    static QString stageModSync(const QString & installRoot, const QString & modPath, const QMap<QString, QByteArray> & files, const ModSyncCaps & caps, qint32 & rejectReason);
+    static void reapModSyncFolders(const QString & installRoot, qint32 backupKeep = ModSyncDefaultBackupKeep);
+    static QString pendingModSyncManifestPath(const QString & userDataPath);
+    static bool writePendingModSyncManifest(const QString & userDataPath, const QList<QPair<QString, QString>> & swaps);
+    // Returns the list of `final` paths that were successfully swapped in; slice 3 uses this to drive settings mutation.
+    static QStringList executePendingModSyncManifest(const QString & installRoot, const QString & userDataPath);
+
+    struct RejoinManifest
+    {
+        bool valid{false};
+        QString host;
+        quint16 port{0};
+        qint64 timestamp{0};
+    };
+    static QString rejoinManifestPath(const QString & userDataPath);
+    static bool writeRejoinManifest(const QString & userDataPath, const QString & host, quint16 port);
+    // Reads .rejoin.json, deletes the file, returns parsed contents. Caller decides freshness based on RejoinManifest::timestamp.
+    static RejoinManifest consumeRejoinManifest(const QString & userDataPath);
     /**
      * @brief writeByteArray
      * @param stream

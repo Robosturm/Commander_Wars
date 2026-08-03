@@ -8,13 +8,16 @@
 
 #include "ai/aiprocesspipe.h"
 
+#include "coreengine/filesupport.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/workerthread.h"
 #include "coreengine/gameconsole.h"
+#include "coreengine/settings.h"
 #include "coreengine/userdata.h"
 #include "coreengine/virtualpaths.h"
 
 #include "menue/mainwindow.h"
+#include "multiplayer/multiplayermenu.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
 
@@ -228,6 +231,28 @@ void WorkerThread::showMainwindow()
 
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
+
+    // Consume before the slave guard so a leftover cannot survive into a later normal launch.
+    const Filesupport::RejoinManifest rejoin = Filesupport::consumeRejoinManifest(Settings::getInstance()->getUserPath());
+    // Clear the static slot before branching so non-rejoin paths do not retain plaintext.
+    const QString rejoinPassword = Mainapp::getRejoinPassword();
+    Mainapp::setRejoinPassword(QString());
+
+    constexpr qint64 kRejoinFreshnessSeconds = 300;
+    const bool slaveLaunch = Mainapp::getSlave() || Settings::getInstance()->getAiSlave();
+    if (!slaveLaunch && rejoin.valid)
+    {
+        const qint64 now = QDateTime::currentSecsSinceEpoch();
+        const qint64 age = now - rejoin.timestamp;
+        if (age >= 0 && age <= kRejoinFreshnessSeconds)
+        {
+            CONSOLE_PRINT("Auto-rejoining " + rejoin.host + ":" + QString::number(rejoin.port) + " from .rejoin.json", GameConsole::eINFO);
+            oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>(rejoin.host, "", rejoin.port, rejoinPassword, Multiplayermenu::NetworkMode::Client));
+            return;
+        }
+        CONSOLE_PRINT("Stale .rejoin.json (" + QString::number(age) + "s old), proceeding to main menu", GameConsole::eINFO);
+    }
+
     auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
 }

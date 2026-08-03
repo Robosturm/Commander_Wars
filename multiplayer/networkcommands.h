@@ -158,6 +158,36 @@ namespace NetworkCommands
      * @brief GAMEDATAVERIFIED
      */
     const char* const GAMEDATAVERIFIED = "GAMEDATAVERIFIED";
+    // Mod-sync wire format v1. Gated by capability bit Filesupport::CapabilityModSync.
+    const char* const REQUESTMODSYNC = "REQUESTMODSYNC";
+    // Optional, before MODSYNCDATA, lets the client budget a byte-based progress bar. Older hosts skip it; older clients ignore it.
+    const char* const MODSYNCMANIFEST = "MODSYNCMANIFEST";
+    const char* const MODSYNCDATA = "MODSYNCDATA";
+    // Chunked-transfer triple, used when the client signals ModSyncClientFlagChunked. BEGIN announces a mod, CHUNK*N delivers slices in order, END finalises.
+    const char* const MODSYNCMODBEGIN = "MODSYNCMODBEGIN";
+    const char* const MODSYNCMODCHUNK = "MODSYNCMODCHUNK";
+    const char* const MODSYNCMODEND = "MODSYNCMODEND";
+    const char* const MODSYNCREJECT = "MODSYNCREJECT";
+    const char* const MODSYNCCOMPLETE = "MODSYNCCOMPLETE";
+
+    // Bit flags appended (optional) to REQUESTMODSYNC; older hosts read past them via QDataStream EOF and treat absent flags as zero.
+    enum class ModSyncClientFlag : qint32
+    {
+        ModSyncClientFlagChunked = 0x00000001,
+    };
+
+    // Append-only; serialize as qint32, not the enum's underlying type. 0 reserved so callers can use truthy reads.
+    enum class ModSyncRejectReason : qint32
+    {
+        ModSyncNoReason = 0,
+        ModSyncDisabled = 1,
+        ModSyncUnknownMod = 2,
+        ModSyncSizeCapExceeded = 3,
+        ModSyncFileCountCapExceeded = 4,
+        ModSyncInvalidPath = 5,
+        ModSyncInternalError = 6,
+        ModSyncBusy = 7,
+    };
     /**
      * @brief JOINASPLAYER
      */

@@ -23,7 +23,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "build";
+        return "TEMPORARY_HARBOUR";
     };
     this.perform = function(action, map)
     {
@@ -71,7 +71,6 @@ var Constructor = function()
     };
     this.isFinalStep = function(action, map)
     {
-
         return true;
     };
     this.getName = function()
@@ -80,7 +79,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Orders an APC to build a harbour on a beach which can be used to repair and resupply sea units. The harbour will reduce the material of the APC by 1.");
+        return qsTr("Orders an APC to build a harbour on a beach which can be used to repair and resupply naval and amphibious units. Successfully building the harbour will reduce the material of the APC by 1.");
     };
 }
 

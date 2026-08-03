@@ -13,6 +13,7 @@
 #endif
 #include <QTemporaryDir>
 
+#include "coreengine/filesupport.h"
 #include "coreengine/gameconsole.h"
 
 #include "game/GameEnums.h"
@@ -353,6 +354,18 @@ public:
     Q_INVOKABLE void setServerPort(const quint16 ServerPort);
     Q_INVOKABLE QString getServerPassword();
     Q_INVOKABLE void setServerPassword(const QString newServerPassword);
+    Q_INVOKABLE bool getModSyncEnabled() const;
+    Q_INVOKABLE void setModSyncEnabled(bool newModSyncEnabled);
+    Q_INVOKABLE qint32 getModSyncMaxPerModBytes() const;
+    Q_INVOKABLE void setModSyncMaxPerModBytes(qint32 newValue);
+    Q_INVOKABLE qint32 getModSyncMaxTotalBytes() const;
+    Q_INVOKABLE void setModSyncMaxTotalBytes(qint32 newValue);
+    Q_INVOKABLE qint32 getModSyncMaxFiles() const;
+    Q_INVOKABLE void setModSyncMaxFiles(qint32 newValue);
+    Q_INVOKABLE qint32 getModSyncMaxRelativePathLength() const;
+    Q_INVOKABLE void setModSyncMaxRelativePathLength(qint32 newValue);
+    Q_INVOKABLE bool getModSyncKeepBackups() const;
+    Q_INVOKABLE void setModSyncKeepBackups(bool newValue);
     Q_INVOKABLE QString getMailServerSendAddress();
     Q_INVOKABLE void setMailServerSendAddress(const QString newMailServerSendAddress);
     Q_INVOKABLE qint32 getMailServerAuthMethod();
@@ -428,6 +441,9 @@ public:
     Q_INVOKABLE QStringList getActiveModVersions();
     Q_INVOKABLE QStringList getActiveMods();
     Q_INVOKABLE void setActiveMods(const QStringList activeMods);
+    // Stages Mods/Mods to ini without the missing-folder prune; returns prior raw value so the caller can restore on failure.
+    QString stageActiveModsForRestart(const QStringList & activeMods);
+    void restoreActiveModsRaw(const QString & rawValue);
     Q_INVOKABLE QString getSlaveServerName();
     Q_INVOKABLE void setSlaveServerName(const QString slaveServerName);
     Q_INVOKABLE bool getSyncAnimations();
@@ -527,7 +543,7 @@ public:
     Q_INVOKABLE qint32 getMenuItemCount();
     Q_INVOKABLE void setMenuItemCount(const qint32 MenuItemCount);
     Q_INVOKABLE QString getModString();
-    Q_INVOKABLE void filterCosmeticMods(QStringList mods, QStringList versions, bool filter);
+    void filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter);
     Q_INVOKABLE QString getConfigString(QStringList mods);
     Q_INVOKABLE quint32 getMultiTurnCounter();
     Q_INVOKABLE void setMultiTurnCounter(const quint32 value);
@@ -933,6 +949,17 @@ private:
     std::chrono::seconds m_slaveDespawnTime{std::chrono::minutes(0)};
     std::chrono::seconds m_suspendedDespawnTime{std::chrono::minutes(0)};
     std::chrono::seconds m_replayDeleteTime{std::chrono::minutes(0)};
+
+    // Default false until slice 4 wires the request receiver; operator opt-in.
+    bool m_modSyncEnabled{false};
+    // TODO slice 2: enforced by the package builder and receive path.
+    qint32 m_modSyncMaxPerModBytes{Filesupport::ModSyncDefaultPerModBytes};
+    qint32 m_modSyncMaxTotalBytes{Filesupport::ModSyncDefaultTotalBytes};
+    qint32 m_modSyncMaxFiles{Filesupport::ModSyncDefaultMaxFiles};
+    // Inside-package relpath cap; the modPath identifier itself uses Filesupport::ModPathDefaultMaxLen.
+    qint32 m_modSyncMaxRelativePathLength{Filesupport::ModSyncDefaultMaxRelativePathLength};
+    // Disable to skip keeping the .bak-<iso> directory after a successful staging swap; saves disk for users with large mods.
+    bool m_modSyncKeepBackups{false};
 
     // mailing
     QString m_mailServerAddress;
