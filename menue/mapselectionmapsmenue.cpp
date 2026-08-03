@@ -307,12 +307,17 @@ void MapSelectionMapsMenue::exitMenu()
 
 void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
 {    
+    if (!m_pMapSelectionView->getVisible())
+    {
+        CONSOLE_PRINT("Ignoring map selection click", GameConsole::eDEBUG);
+        return;
+    }
     QFileInfo info = QFileInfo(item);
     if (info.isFile())
     {
         m_pMapSelectionView->setCurrentFile(info.filePath());
         emit sigButtonNext();
-    }    
+    }
 }
 
 void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)

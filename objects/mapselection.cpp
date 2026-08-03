@@ -93,12 +93,13 @@ void MapSelection::refresh()
 
 void MapSelection::changeFolder(QString folder)
 {
+    // before the early return, else a clicked map latches the flag for the pending timer
+    m_itemClicked = false;
     if (folder.endsWith(".map"))
     {
         return;
     }
     CONSOLE_PRINT("MapSelection::changeFolder " + folder, GameConsole::eDEBUG);
-    m_itemClicked = false;
     QString newFolder =  folder;
     if (newFolder == "")
     {
