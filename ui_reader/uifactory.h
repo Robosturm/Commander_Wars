@@ -7,6 +7,7 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
+#include "objects/base/tabbedbox.h"
 
 #include "game/player.h"
 
@@ -88,6 +89,29 @@ private:
      * optional: fontColor, id, visible
      */
     bool createTextfield(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+     * Nodename: Topbar
+     * supported attributes are:
+     * mandatory: x, width, groups
+     * optional: id, visible
+     * groups: a childs element containing group elements, each group element has:
+     *   mandatory: text
+     *   optional: (none)
+     *   items: a childs element containing item elements, each item element has:
+     *     mandatory: text, itemID
+     *     optional: tooltip
+     */
+    bool createTopbar(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+     * Nodename: TabbedBox
+     * supported attributes are:
+     * mandatory: x, y, width, height
+     * optional: id, visible, tabBarHeight, tabButtonWidth
+     * children: Tab elements, each with attributes:
+     *   mandatory: name, label
+     *   optional: inactiveResAnim, activeResAnim, childs
+     */
+    bool createTabbedBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Checkbox
       * supported attributes are:
@@ -252,6 +276,7 @@ private:
     QString getId(QString attribute);
     oxygine::TextStyle::HorizontalAlign getHAlignment(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
     void updateMenuSize(CreatedGui* pMenu);
+    QDomNode addTabNode(QDomNode & tabNode, spTabbedBox & pTabbedBox, CreatedGui* pMenu, qint32 loopIdx, bool & success);
 
     template<typename TType>
     void onEvent(QString line, TType value, QString objectId, qint32 loopIdx, CreatedGui* pMenu)

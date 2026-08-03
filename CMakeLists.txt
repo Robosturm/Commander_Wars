@@ -1195,6 +1195,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_OpenNN_SRCS}
     ${${PROJECT_NAME}_UPDATE_SRCS}
     ${WIN_ICON}
+    objects/base/tabbedbox.h objects/base/tabbedbox.cpp
 )
 
 if (PRECOMPILED_HEADERS)

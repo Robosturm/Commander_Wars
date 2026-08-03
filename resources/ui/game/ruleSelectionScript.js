@@ -165,7 +165,14 @@ var RuleSelectionScript =
     {
         if (loopIdx === 0)
         {
-            return lastY + lastHeight + 10;
+            if (RuleSelectionScript.currentVictoryRuleIndex === 0)
+            {
+                return 5;
+            }
+            else
+            {
+                return lastY + lastHeight + 10;
+            }
         }
         else
         {

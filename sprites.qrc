@@ -4994,5 +4994,8 @@
         <file>resources/ui/coGenerator/coability_perfecthpview.xml</file>
         <file>resources/ui/coGenerator/coability_perfecthpviewunit.js</file>
         <file>resources/ui/coGenerator/coability_perfecthpviewunit.xml</file>
+        <file>resources/objects/barForeground.png</file>
+        <file>resources/objects/tab_active.png</file>
+        <file>resources/objects/tab_inactive.png</file>
     </qresource>
 </RCC>
