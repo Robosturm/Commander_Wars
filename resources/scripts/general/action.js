@@ -98,7 +98,7 @@ var ACTION =
         return "";
     },
     getSubWikiInfoName : null,
-    getSubWikiInfoDescription = function(item)
+    getSubWikiInfoDescription : function(item)
     {
         return "";
     },
