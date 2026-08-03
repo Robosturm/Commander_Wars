@@ -183,11 +183,7 @@ if(GRAPHICSUPPORT)
         find_package(Vulkan REQUIRED)
     else()
         message("Building with OpenGl")
-        if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-            message("Skipping Qt6::OpenGL on macOS to avoid AGL framework link failures on GitHub runners")
-        else()
-            find_package(Qt6 COMPONENTS OpenGL REQUIRED)
-        endif()
+        find_package(Qt6 COMPONENTS OpenGL REQUIRED)
     endif()
     add_definitions(
         -DGRAPHICSUPPORT
@@ -995,7 +991,7 @@ endif()
 
 if (GRAPHICSUPPORT)
     if (USEVULKAN)
-    elseif(NOT CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    else
         set(QT_LIBRARIES
             ${QT_LIBRARIES}
             Qt6::OpenGL
