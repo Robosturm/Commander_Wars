@@ -991,7 +991,7 @@ endif()
 
 if (GRAPHICSUPPORT)
     if (USEVULKAN)
-    else
+    else()
         set(QT_LIBRARIES
             ${QT_LIBRARIES}
             Qt6::OpenGL
