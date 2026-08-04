@@ -170,7 +170,12 @@ var Constructor = function()
             }
             if (fixedDamage)
             {
-                return baseDamage * 10 / attacker.getHpRounded() - 100;
+                // use the battle hp so counterattacks after taking damage stay at full firepower
+                var hp = attacker.getVirtualHp();
+                if (hp > 0)
+                {
+                    return baseDamage * 10 / hp - 100;
+                }
             }
         }
         return 0;
