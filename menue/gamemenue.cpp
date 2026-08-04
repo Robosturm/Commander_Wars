@@ -1221,6 +1221,8 @@ void GameMenue::continueAfterSyncGame()
             sendStream << command;
             CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
             emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+            // the host never receives its own broadcast, so close its waiting dialog here
+            emit sigSyncFinished();
         }
         if (multiplayerSyncData.m_postSyncAction.get() != nullptr)
         {
