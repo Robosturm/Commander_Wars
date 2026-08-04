@@ -37,6 +37,7 @@ namespace oxygine
                     Q_ASSERT(false);
             }
         }
+        m_eventUpdateActions.clear();
     }
 
     bool EventDispatcher::detached() const
