@@ -30,6 +30,7 @@
 #include "objects/base/dropdownmenucolor.h"
 #include "objects/base/passwordbox.h"
 #include "objects/base/selectkey.h"
+#include "objects/base/topbar.h"
 
 #include "game/gamemap.h"
 
@@ -60,6 +61,9 @@ static const char* const itemSelectKey = "SelectKey";
 static const char* const itemCustom = "Custom";
 static const char* const itemLoop = "loop";
 static const char* const itemIf = "if";
+static const char* const itemTopbar = "Topbar";
+static const char* const itemTabbedBox = "TabbedBox";
+static const char* const itemTab = "Tab";
 
 static const char* const attrX = "x";
 static const char* const attrY = "y";
@@ -102,6 +106,21 @@ static const char* const attrSpinSpeed = "spinSpeed";
 static const char* const attrShowUnitPreview = "showUnitPreview";
 static const char* const attrCustomItem = "customItem";
 static const char* const attrShowBorder = "showBorder";
+static const char* const attrRows = "rows";
+static const char* const attrGroups = "groups";
+static const char* const attrItemID = "itemID";
+static const char* const attrColumns = "columns";
+static const char* const attrCellSize = "cellSize";
+static const char* const attrLineWidth = "lineWidth";
+static const char* const attrOnHovered = "onHovered";
+static const char* const attrTabBarHeight = "tabBarHeight";
+static const char* const attrTabBarButtonHeight = "tabBarButtonHeight";
+static const char* const attrTabButtonWidth = "tabButtonWidth";
+static const char* const attrTabName = "name";
+static const char* const attrTabLabel = "label";
+static const char* const attrInactiveResAnim = "inactiveResAnim";
+static const char* const attrActiveResAnim = "activeResAnim";
+static const char* const attrTabs = "tabs";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -137,6 +156,8 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemMultiSlider), std::bind(&UiFactory::createMultiSlider, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemCustom), std::bind(&UiFactory::createCustom, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemColoredRect), std::bind(&UiFactory::createColoredRect, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.push_back({QString(itemTopbar), std::bind(&UiFactory::createTopbar, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.push_back({QString(itemTabbedBox), std::bind(&UiFactory::createTabbedBox, this, _1, _2, _3, _4, _5)});
 
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
@@ -692,6 +713,217 @@ bool UiFactory::createSprite(oxygine::spActor parent, QDomElement element, oxygi
         updateMenuSize(pMenu);
     }
     return success;
+}
+
+bool UiFactory::createTopbar(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrWidth, attrGroups, attrOnEvent});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
+        qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
+        qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
+        bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
+        QString onEventLine = getAttribute(childs, attrOnEvent);
+
+        spTopbar pTopbar = MemoryManagement::create<Topbar>(x, width);
+        if (!id.isEmpty())
+        {
+            pTopbar->setObjectName(id);
+        }
+        pTopbar->setVisible(visible);
+
+        // Parse groups
+        auto groupsNode = getNode(childs, attrGroups);
+        auto groupNode = groupsNode.firstChild();
+        qint32 groupId = 0;
+        while (!groupNode.isNull())
+        {
+            while (groupNode.isComment())
+            {
+                groupNode = groupNode.nextSibling();
+            }
+            if (!groupNode.isNull())
+            {
+                QDomElement groupElement = groupNode.toElement();
+                QString groupText = getStringValue(getAttribute(groupElement.childNodes(), attrText), "", loopIdx, pMenu);
+                if (!groupText.isEmpty())
+                {
+                    pTopbar->addGroup(groupText);
+
+                    // Parse items within this group
+                    auto itemsNode = getNode(groupElement.childNodes(), attrChilds);
+                    auto itemNode = itemsNode.firstChild();
+                    while (!itemNode.isNull())
+                    {
+                        while (itemNode.isComment())
+                        {
+                            itemNode = itemNode.nextSibling();
+                        }
+                        if (!itemNode.isNull())
+                        {
+                            QDomElement itemElement = itemNode.toElement();
+                            QString itemText = getStringValue(getAttribute(itemElement.childNodes(), attrText), "", loopIdx, pMenu);
+                            QString itemID = getAttribute(itemElement.childNodes(), attrItemID);
+                            QString itemTooltip = getStringValue(getAttribute(itemElement.childNodes(), attrTooltip), "", loopIdx, pMenu);
+                            if (!itemText.isEmpty() && !itemID.isEmpty())
+                            {
+                                pTopbar->addItem(itemText, itemID, groupId, itemTooltip);
+                            }
+                        }
+                        itemNode = itemNode.nextSibling();
+                    }
+                    ++groupId;
+                }
+            }
+            groupNode = groupNode.nextSibling();
+        }
+
+        pTopbar->finishCreation();
+
+        connect(pTopbar.get(), &Topbar::sigItemClicked, pMenu, [this, onEventLine, id, loopIdx, pMenu](const QString& itemId)
+                {
+                    onEvent(onEventLine, itemId, id, loopIdx, pMenu);
+                }, Qt::QueuedConnection);
+
+        parent->addChild(pTopbar);
+        item = pTopbar;
+
+        m_lastCoordinates = QRect(x, 0, pTopbar->getScaledWidth(), pTopbar->getScaledHeight());
+        updateMenuSize(pMenu);
+    }
+    return success;
+}
+
+bool UiFactory::createTabbedBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
+        qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
+        qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
+        qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
+        qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
+        qint32 tabBarHeight = getIntValue(getAttribute(childs, attrTabBarHeight), id, loopIdx, pMenu, 40);
+        qint32 tabBarButtonHeight = getIntValue(getAttribute(childs, attrTabBarButtonHeight), id, loopIdx, pMenu, 40);
+        qint32 tabButtonWidth = getIntValue(getAttribute(childs, attrTabButtonWidth), id, loopIdx, pMenu, 100);
+        bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
+        bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
+
+        spTabbedBox pTabbedBox = MemoryManagement::create<TabbedBox>(QSize(width, height), tabBarHeight, tabBarButtonHeight, tabButtonWidth);
+        pTabbedBox->setX(x);
+        pTabbedBox->setY(y);
+        pTabbedBox->setVisible(visible);
+        pTabbedBox->setEnabled(enabled);
+        if (!id.isEmpty())
+        {
+            pTabbedBox->setObjectName(id);
+        }
+
+        m_lastCoordinates = QRect(x, y, pTabbedBox->getScaledWidth(), pTabbedBox->getScaledHeight());
+        updateMenuSize(pMenu);
+
+        // Store the parent size for processing tab contents
+        QSize savedParentSize = m_parentSize;
+        m_parentSize = QSize(width, height - tabBarHeight);
+
+        // Parse Tab elements
+        auto tabsNode = getNode(childs, attrTabs);
+        auto tabNode = tabsNode.firstChild();
+        while (!tabNode.isNull())
+        {
+            while (tabNode.isComment())
+            {
+                tabNode = tabNode.nextSibling();
+            }
+            if (!tabNode.isNull() && tabNode.toElement().nodeName() == itemIf)
+            {
+                auto ifNode = tabNode.toElement();
+                bool create = getBoolValue(ifNode.attribute("condition"), "", loopIdx, pMenu);
+                if (create)
+                {
+                    auto node = tabNode.firstChild();
+                    addTabNode(node, pTabbedBox, pMenu, loopIdx, success);
+                }
+                tabNode = tabNode.nextSibling();
+            }
+            else
+            {
+                tabNode = addTabNode(tabNode, pTabbedBox, pMenu, loopIdx, success);
+            }
+        }
+
+        m_parentSize = savedParentSize;
+        parent->addChild(pTabbedBox);
+        item = pTabbedBox;
+    }
+    return success;
+}
+
+QDomNode UiFactory::addTabNode(QDomNode & tabNode, spTabbedBox & pTabbedBox, CreatedGui* pMenu, qint32 loopIdx, bool & success)
+{
+    while (tabNode.isComment())
+    {
+        tabNode = tabNode.nextSibling();
+    }
+    if (!tabNode.isNull() && tabNode.toElement().nodeName() == itemTab)
+    {
+        QDomElement tabElement = tabNode.toElement();
+        auto tabChilds = tabElement.childNodes();
+
+        QString tabName = getStringValue(getAttribute(tabChilds, attrTabName), "", loopIdx, pMenu);
+        QString tabLabel = getStringValue(getAttribute(tabChilds, attrTabLabel), "", loopIdx, pMenu);
+        QString inactiveResAnim = getStringValue(getAttribute(tabChilds, attrInactiveResAnim), "", loopIdx, pMenu);
+        QString activeResAnim = getStringValue(getAttribute(tabChilds, attrActiveResAnim), "", loopIdx, pMenu);
+
+        // Use default values if not provided
+        if (inactiveResAnim.isEmpty())
+        {
+            inactiveResAnim = "tab_inactive";
+        }
+        if (activeResAnim.isEmpty())
+        {
+            activeResAnim = "tab_active";
+        }
+
+        if (!tabName.isEmpty() && !tabLabel.isEmpty())
+        {
+            spPanel tabPanel = pTabbedBox->addTab(tabName, tabLabel, inactiveResAnim, activeResAnim);
+
+            // Add child elements to the tab panel
+            auto childNode = tabElement.firstChild();
+            while (!childNode.isNull())
+            {
+                while (childNode.isComment())
+                {
+                    childNode = childNode.nextSibling();
+                }
+                // Skip the attribute nodes (name, label, etc.)
+                if (!childNode.isNull() && childNode.nodeName() != attrTabName &&
+                    childNode.nodeName() != attrTabLabel &&
+                    childNode.nodeName() != attrInactiveResAnim &&
+                    childNode.nodeName() != attrActiveResAnim)
+                {
+                    QDomElement childElement = childNode.toElement();
+                    if (!childElement.isNull() && childElement.nodeName() != "")
+                    {
+                        oxygine::spActor tabItem;
+                        success = success && createItem(tabPanel, childElement, tabItem, pMenu, loopIdx);
+                        if (tabItem.get() != nullptr)
+                        {
+                            tabPanel->addItem(tabItem);
+                        }
+                    }
+                }
+                childNode = childNode.nextSibling();
+            }
+        }
+    }
+    tabNode = tabNode.nextSibling();
+    return tabNode;
 }
 
 bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)

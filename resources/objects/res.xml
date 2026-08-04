@@ -85,5 +85,8 @@
         <image file="barforeground.png"/>
         <image file="gamepad.png"/>
         <image file="logo.png"/>
+
+        <image file="tab_active.png" guideX1="4" guideX2="118" guideY1="4" guideY2="118"/>
+        <image file="tab_inactive.png" guideX1="4" guideX2="118" guideY1="4" guideY2="118"/>
     </atlas>
 </resources>

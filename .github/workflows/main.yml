@@ -118,7 +118,7 @@ jobs:
             serverFlag: '-server'
             linuxFlag: 'linux'
           - buildTarget: macos-desktop
-            os: macos-latest
+            os: macos-15
             COMPILER_VERSION: 'clang_64'
             qtPath: 'clang_64'
             qtTools: ''
