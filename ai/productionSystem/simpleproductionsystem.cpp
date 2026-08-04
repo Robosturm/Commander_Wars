@@ -1052,7 +1052,8 @@ void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
         InitialProduction item;
         qint32 size2 = 0;
         pStream >> size2;
-        for (qint32 i2 = 0; i2 < size; ++i2)
+        // size2 is this entry's id count; size is the entry count, and reading by it misaligns.
+        for (qint32 i2 = 0; i2 < size2; ++i2)
         {
             QString id;
             pStream >> id;
