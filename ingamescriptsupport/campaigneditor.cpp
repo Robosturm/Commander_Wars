@@ -175,7 +175,7 @@ void CampaignEditor::showExitBox()
 void CampaignEditor::exitEditor()
 {    
     emit sigFinished();
-    detach();    
+    detachAndRemove();
 }
 
 void CampaignEditor::showAddCampaign()

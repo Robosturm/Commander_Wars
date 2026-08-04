@@ -402,7 +402,7 @@ void Mainwindow::leaveMenue()
 {    
     CONSOLE_PRINT("Leaving Main Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void Mainwindow::enterCOStyleMenu()

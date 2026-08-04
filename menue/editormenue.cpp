@@ -2240,7 +2240,7 @@ void EditorMenue::exitEditor()
     m_onEnterTimer.stop();
     auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void EditorMenue::autosave()

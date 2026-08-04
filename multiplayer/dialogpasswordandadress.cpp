@@ -76,5 +76,5 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
 
 void DialogPasswordAndAdress::remove()
 {
-    detach();
+    detachAndRemove();
 }

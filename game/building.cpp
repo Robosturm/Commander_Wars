@@ -330,7 +330,7 @@ void Building::unloadSprites()
 {
     for (auto & sprite : m_pBuildingSprites)
     {
-        sprite->detach();
+        sprite->detachAndRemove();
     }
     m_pBuildingSprites.clear();
 }
@@ -342,7 +342,7 @@ void Building::onWeatherChanged(Weather* pWeather)
 {
     for (auto & weatherOverlay : m_pWeatherOverlaySprites)
     {
-        weatherOverlay->detach();
+        weatherOverlay->detachAndRemove();
     }
     m_pWeatherOverlaySprites.clear();
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -513,7 +513,7 @@ void Building::updateBuildingSprites(bool neutral)
     Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & sprite : m_pBuildingSprites)
     {
-        sprite->detach();
+        sprite->detachAndRemove();
     }
     // call the js loader function to do the rest
     m_pBuildingSprites.clear();

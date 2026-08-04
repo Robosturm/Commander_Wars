@@ -194,7 +194,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
 void COBannListDialog::remove()
 {
     m_Checkboxes.clear();
-    detach();
+    detachAndRemove();
 }
 
 void COBannListDialog::setCOBannlist(qint32 item)
@@ -339,7 +339,7 @@ void COBannListDialog::updatePredefinedList()
 {
     if (m_PredefinedLists.get() != nullptr)
     {
-        m_PredefinedLists->detach();
+        m_PredefinedLists->detachAndRemove();
     }
 
     auto items = getNameList();

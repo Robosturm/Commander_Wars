@@ -338,7 +338,7 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
 
 void DialogModifyTerrain::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void DialogModifyTerrain::terrainClicked(QString id)

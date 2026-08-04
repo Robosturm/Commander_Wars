@@ -798,7 +798,7 @@ void GameMenue::resyncGame()
         m_onEnterTimer.stop();
         spMultiplayermenu pMenu = MemoryManagement::create<Multiplayermenu>(connectedAdress, connectedPort, &password, networkMode);
         oxygine::Stage::getStage()->addChild(pMenu);
-        oxygine::Actor::detach();
+        detachAndRemove();
     }
     else
     {
@@ -1970,7 +1970,7 @@ void GameMenue::victory(qint32 team)
         m_terminated = 2;
         if (m_pNetworkInterface.get() != nullptr)
         {
-            m_pChat->detach();
+            m_pChat->detachAndRemove();
             m_pChat.reset();
         }
         if (m_pMap->getCampaign() != nullptr)
@@ -1983,7 +1983,7 @@ void GameMenue::victory(qint32 team)
         m_onEnterTimer.stop();
         auto window = MemoryManagement::create<VictoryMenue>(m_pMap, m_pNetworkInterface);
         oxygine::Stage::getStage()->addChild(window);
-        oxygine::Actor::detach();
+        detachAndRemove();
     }
     else
     {
@@ -2826,7 +2826,7 @@ void GameMenue::exitMovementPlanner()
         {
             m_pMovementPlanner->onExitPlanner();
         }
-        m_pMovementPlanner->detach();
+        m_pMovementPlanner->detachAndRemove();
         m_pMovementPlanner.reset();
     }
     unhideGameMenue();
@@ -2920,7 +2920,7 @@ void GameMenue::loadSaveGame(const QString savefile)
         pMenue->startGame();
         CONSOLE_PRINT("Leaving Game Menue", GameConsole::eDEBUG);
         m_onEnterTimer.stop();
-        oxygine::Actor::detach();
+        detachAndRemove();
     }
     else
     {

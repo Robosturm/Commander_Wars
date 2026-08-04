@@ -96,7 +96,7 @@ void COInfoDialog::keyInput(oxygine::KeyEvent event)
 
 void COInfoDialog::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void COInfoDialog::slotNext()

@@ -72,7 +72,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color, bool showUnitPreview)
 
 void ColorSelectionDialog::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void ColorSelectionDialog::selecetedColorChanged(QColor color)

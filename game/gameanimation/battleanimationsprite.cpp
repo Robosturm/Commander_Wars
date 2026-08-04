@@ -160,7 +160,7 @@ void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Un
             {
                 for (auto & sprite : m_currentFrame[i])
                 {
-                    sprite->detach();
+                    sprite->detachAndRemove();
                 }
                 m_currentFrame[i].clear();
             }
@@ -489,7 +489,7 @@ void BattleAnimationSprite::loadMovingSpriteV2(QString spriteID, GameEnums::Reco
         if (m_lastLoadedSprite.get() != nullptr)
         {
             m_nextFrames[m_nextFrames.length() - 1][maxUnitCount - i].append(m_lastLoadedSprite);
-            m_lastLoadedSprite->detach();
+            m_lastLoadedSprite->detachAndRemove();
         }
     }
 }
@@ -519,7 +519,7 @@ void BattleAnimationSprite::loadDyingMovingSprite(QString livingSpriteId, QStrin
         if (m_lastLoadedSprite.get() != nullptr)
         {
             m_nextFrames[m_nextFrames.length() - 1][maxUnitCount - i].append(m_lastLoadedSprite);
-            m_lastLoadedSprite->detach();
+            m_lastLoadedSprite->detachAndRemove();
         }
     }
 }
@@ -545,7 +545,7 @@ void BattleAnimationSprite::loadOnlyDyingMovingSprite(QString dyingSpriteId, Gam
             {
                 m_lastLoadedSprite->setAlpha(alpha);
                 m_nextFrames[m_nextFrames.length() - 1][maxUnitCount - i].append(m_lastLoadedSprite);
-                m_lastLoadedSprite->detach();
+                m_lastLoadedSprite->detachAndRemove();
             }
         }
     }
@@ -871,7 +871,7 @@ void BattleAnimationSprite::detachChild(oxygine::spActor pActor)
 {
     if (pActor.get() != nullptr)
     {
-        pActor->detach();
+        pActor->detachAndRemove();
     }
 }
 
@@ -955,7 +955,7 @@ void BattleAnimationSprite::startNextUnitFrames()
         {
             for (auto & sprite : m_currentFrame[m_frameIterator])
             {
-                sprite->detach();
+                sprite->detachAndRemove();
             }
             m_currentFrame[m_frameIterator].clear();
         }

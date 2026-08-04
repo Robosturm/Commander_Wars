@@ -27,7 +27,7 @@ void Cursor::changeCursor(const QString & spriteID, qint32 xOffset, qint32 yOffs
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     if (m_CurrentCursor.get() != nullptr)
     {
-        m_CurrentCursor->detach();
+        m_CurrentCursor->detachAndRemove();
         m_CurrentCursor.reset();
     }
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteID);

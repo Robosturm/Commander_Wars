@@ -88,6 +88,11 @@ namespace oxygine
                     oxygine::safeSpCast<oxygine::Sprite>(item.parent)->setColorTable(item.pAnim, item.matrix);
                     break;
                 }
+                case UpdateAction::DetachAndRemove:
+                {
+                    item.parent->detach();
+                    break;
+                }
                 default:
                     Q_ASSERT(false);
             }
@@ -787,6 +792,11 @@ namespace oxygine
 
     void Actor::insertActor(spActor & actor)
     {
+        if (!actor.get())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertActor trying to add empty actor");
+            return;
+        }
 #ifdef GRAPHICSUPPORT
         Q_ASSERT(!m_internalUpdateRunning);
 #endif
@@ -837,6 +847,7 @@ namespace oxygine
     {
         if (actor->m_parent == nullptr)
         {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove a child without a parent");
             return;
         }
         else if (requiresThreadChange())
@@ -901,7 +912,7 @@ namespace oxygine
         }
     }
 
-    Actor* Actor::detach()
+    void Actor::detach()
     {
         Actor* parent = getParent();
         if (parent)
@@ -909,7 +920,25 @@ namespace oxygine
             spActor pActor = getSharedPtr<Actor>();
             parent->removeChild(pActor);
         }
-        return parent;
+    }
+
+    void Actor::detachAndRemove()
+    {
+        Actor* parent = getParent();
+        if (parent)
+        {
+            spActor pActor = getSharedPtr<Actor>();
+            parent->removeChild(pActor);
+        }
+        else
+        {
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::DetachAndRemove;
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
+        }
+
     }
 
     void Actor::internalUpdate(const UpdateState& us)

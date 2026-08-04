@@ -215,11 +215,11 @@ Terrain::~Terrain()
 {
     if (m_Unit.get())
     {
-        m_Unit->detach();
+        m_Unit->detachAndRemove();
     }
     if (m_Building.get())
     {
-        m_Building->detach();
+        m_Building->detachAndRemove();
     }
 }
 
@@ -563,7 +563,7 @@ void Terrain::setBaseTerrain(spTerrain terrain)
 {
     if (m_pBaseTerrain.get() != nullptr)
     {
-        m_pBaseTerrain->detach();
+        m_pBaseTerrain->detachAndRemove();
         m_pBaseTerrain.reset();
     }
     if (terrain.get() != nullptr)
@@ -580,12 +580,12 @@ void Terrain::unloadSprites()
     // unload old stuff
     if (m_pTerrainSprite.get() != nullptr)
     {
-        m_pTerrainSprite->detach();
+        m_pTerrainSprite->detachAndRemove();
         m_pTerrainSprite.reset();
     }
     for (qint32 i = 0; i < m_pOverlaySprites.size(); i++)
     {
-        m_pOverlaySprites[i]->detach();
+        m_pOverlaySprites[i]->detachAndRemove();
     }
     m_pOverlaySprites.clear();
 }
@@ -1215,7 +1215,7 @@ void Terrain::removeBuilding()
         if (m_Building->getTerrain() == this)
         {
             // remove it
-            m_Building->detach();
+            m_Building->detachAndRemove();
             qint32 width = m_Building->getBuildingWidth();
             qint32 heigth = m_Building->getBuildingHeigth();
             
@@ -1685,7 +1685,7 @@ void Terrain::removeTerrainOverlay(const QString & id)
     {
         if (m_terrainOverlay[i].resAnim == id)
         {
-            m_terrainOverlay[i].sprite->detach();
+            m_terrainOverlay[i].sprite->detachAndRemove();
             m_terrainOverlay.removeAt(i);
         }
     }

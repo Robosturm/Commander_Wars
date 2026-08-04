@@ -77,7 +77,7 @@ void Wikipage::keyInput(oxygine::KeyEvent event)
 
 void Wikipage::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void Wikipage::loadText(QString text)

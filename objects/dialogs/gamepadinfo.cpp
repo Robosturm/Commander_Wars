@@ -43,5 +43,5 @@ GamepadInfo::~GamepadInfo()
 
 void GamepadInfo::remove()
 {
-    detach();
+    detachAndRemove();
 }

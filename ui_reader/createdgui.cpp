@@ -22,7 +22,7 @@ CreatedGui::~CreatedGui()
 {
     for (auto & pItem : m_factoryUiItem)
     {
-        pItem->detach();
+        pItem->detachAndRemove();
     }
     m_factoryUiItem.clear();
 }
@@ -50,7 +50,7 @@ void CreatedGui::resetUi()
 {
     for (auto & item : m_factoryUiItem)
     {
-        item->detach();
+        item->detachAndRemove();
     }
     m_factoryUiItem.clear();
 }
@@ -155,7 +155,7 @@ void CreatedGui::restart()
 {
     CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", GameConsole::eDEBUG);
     removeChildren();
-    detach();
+    detachAndRemove();
     emit Mainapp::getInstance()->sigQuit(1);
 }
 
@@ -171,5 +171,5 @@ void CreatedGui::exit()
 
 void CreatedGui::remove()
 {
-    detach();
+    detachAndRemove();
 }

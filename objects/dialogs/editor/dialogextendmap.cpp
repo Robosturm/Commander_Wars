@@ -67,7 +67,7 @@ void DialogExtendMap::cancel()
 
 void DialogExtendMap::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void DialogExtendMap::mapFileChanged(QString file)

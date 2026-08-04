@@ -388,7 +388,7 @@ void MovementPlanner::stopAddIn()
         {
             m_activeAddIn->removeAllSprites();
         }
-        m_activeAddIn->detach();
+        m_activeAddIn->detachAndRemove();
         m_activeAddIn.reset();
         CursorData data;
         getCursor()->changeCursor(data.getCursor(), data.getXOffset(), data.getYOffset(), data.getScale());

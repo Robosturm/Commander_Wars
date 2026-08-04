@@ -66,7 +66,7 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
 
 void DialogModifyUnit::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void DialogModifyUnit::updateData()

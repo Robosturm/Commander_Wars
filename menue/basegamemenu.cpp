@@ -67,7 +67,7 @@ BaseGamemenu::~BaseGamemenu()
     QCursor cursor = pApp->cursor();
     cursor.setShape(Qt::CursorShape::ArrowCursor);
 #endif
-    m_pMap->detach();
+    m_pMap->detachAndRemove();
     m_pMap.reset();
     m_MapMover.reset();
     if (!m_jsName.isEmpty())

@@ -314,7 +314,7 @@ qint32 Panel::getContentY() const
 
 void Panel::removeItem(oxygine::spActor pActor)
 {
-    pActor->detach();
+    pActor->detachAndRemove();
 }
 
 void Panel::clearContent()

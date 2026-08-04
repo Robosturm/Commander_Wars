@@ -553,8 +553,8 @@ void VictoryMenue::quitOnAiPipe()
 {
     CONSOLE_PRINT("Killing vicotry menu on ai slave", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    m_pMap->detach();
-    oxygine::Actor::detach();
+    m_pMap->detachAndRemove();
+    detachAndRemove();
 }
 
 void VictoryMenue::multiplayerGameFinished()
@@ -884,8 +884,8 @@ void VictoryMenue::exitMenue()
         auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
     }
-    m_pMap->detach();
-    oxygine::Actor::detach();
+    m_pMap->detachAndRemove();
+    detachAndRemove();
 }
 
 oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor color)
@@ -1240,7 +1240,7 @@ void VictoryMenue::showPlayerStatistic(qint32 player)
     CONSOLE_PRINT("VictoryMenue::showPlayerStatistic for " + QString::number(player), GameConsole::eDEBUG);
     if (m_statisticsView.get() != nullptr)
     {
-        m_statisticsView->detach();
+        m_statisticsView->detachAndRemove();
     }
     
     const auto & data = m_pMap->getGameRecorder()->getPlayerDataRecords();

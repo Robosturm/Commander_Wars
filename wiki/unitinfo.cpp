@@ -419,7 +419,7 @@ qint32 UnitInfo::showWeaponInfo(bool showAll)
 
     if (m_weaponInfopActor.get() != nullptr)
     {
-        m_weaponInfopActor->detach();
+        m_weaponInfopActor->detachAndRemove();
     }
     m_weaponInfopActor = MemoryManagement::create<oxygine::Actor>();
     m_weaponInfopActor->setY(m_weaponStartY);
@@ -456,7 +456,7 @@ void UnitInfo::loadBattleSprite(Unit* pUnit)
 {
     if (m_pBattleAnimationSprite.get() != nullptr)
     {
-        m_pBattleAnimationSprite->detach();
+        m_pBattleAnimationSprite->detachAndRemove();
     }
     m_pBattleAnimationSprite = MemoryManagement::create<BattleAnimationSprite>(pUnit->getMap(), pUnit, nullptr, BattleAnimationSprite::standingAnimation, -1, false);
     m_pBattleAnimationSprite->setPosition(m_pSpriteBox->getX() + 7, m_pSpriteBox->getY() + 5);

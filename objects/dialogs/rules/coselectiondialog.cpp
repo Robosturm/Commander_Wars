@@ -123,7 +123,7 @@ void COSelectionDialog::filterAndSortCoIds(const QStringList & coids)
 
 void COSelectionDialog::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void COSelectionDialog::showCOInfo()

@@ -114,7 +114,7 @@ void COStyleMenu::exitMenue()
     CONSOLE_PRINT("Leaving CO Style Menue", GameConsole::eDEBUG);
     auto window = MemoryManagement::create<Mainwindow>("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void COStyleMenu::reloadMenue()
@@ -123,7 +123,7 @@ void COStyleMenu::reloadMenue()
     m_onEnterTimer.stop();
     auto window = MemoryManagement::create<COStyleMenu>();
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void COStyleMenu::selectedCOIDChanged(QString coid)

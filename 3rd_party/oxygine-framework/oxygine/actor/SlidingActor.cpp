@@ -65,7 +65,7 @@ namespace oxygine
         if (m_content)
         {
             m_drag.destroy();
-            m_content->detach();
+            m_content->detachAndRemove();
         }
 
         m_current = 0;

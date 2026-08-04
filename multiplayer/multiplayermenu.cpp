@@ -515,7 +515,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             {
                 initClientGame(socketID, stream);
                 m_onEnterTimer.stop();
-                oxygine::Actor::detach();
+                detachAndRemove();
             }
         }
         else if (messageType == NetworkCommands::STARTSERVERGAME ||
@@ -662,7 +662,7 @@ void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject &
     addChild(pDialog);
     if (m_pDialogConnecting.get() != nullptr)
     {
-        m_pDialogConnecting->detach();
+        m_pDialogConnecting->detachAndRemove();
         m_pDialogConnecting.reset();
     }
     emit m_pNetworkInterface->sigDisconnectClient(socketID);
@@ -920,7 +920,7 @@ void Multiplayermenu::relaunchRunningGame(quint64 socketID, const QString & save
     spGameMenue pMenu = MemoryManagement::create<GameMenue>(pMap, true, m_pNetworkInterface, false, true);
     oxygine::Stage::getStage()->addChild(pMenu);
     sendSlaveRelaunched(socketID);
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void Multiplayermenu::relaunchRunningLobby(quint64 socketID, const QString & savefile)
@@ -968,7 +968,7 @@ void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 sock
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     if (pMap.get() != nullptr)
     {
-        pMap->detach();
+        pMap->detachAndRemove();
     }
     m_pMapSelectionView->setCurrentMap(spGameMap());
     pMap = MemoryManagement::create<GameMap, QDataStream &, bool>(stream, true);
@@ -1073,7 +1073,7 @@ void Multiplayermenu::startRejoinedGame(qint64 syncCounter)
     sendStream << command;
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void Multiplayermenu::sendJoinReason(QDataStream & stream, quint64 socketID)
@@ -1719,7 +1719,7 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
         spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         if (pMap.get() != nullptr)
         {
-            pMap->detach();
+            pMap->detachAndRemove();
         }
         if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) ||
             mapFile.startsWith(NetworkCommands::SERVERMAPIDENTIFIER))
@@ -2147,7 +2147,7 @@ void Multiplayermenu::exitMenu()
     m_onEnterTimer.stop();
     spMainwindow window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void Multiplayermenu::exitMenuToLobby()
@@ -2156,7 +2156,7 @@ void Multiplayermenu::exitMenuToLobby()
     m_onEnterTimer.stop();
     disconnectNetwork();
     oxygine::Stage::getStage()->addChild(MemoryManagement::create<LobbyMenu>());
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void Multiplayermenu::disconnected(quint64 socket)
@@ -2184,7 +2184,7 @@ void Multiplayermenu::disconnected(quint64 socket)
         m_onEnterTimer.stop();
         disconnectNetwork();
         oxygine::Stage::getStage()->addChild(MemoryManagement::create<LobbyMenu>());
-        oxygine::Actor::detach();
+        detachAndRemove();
     }
 }
 
@@ -2230,7 +2230,7 @@ void Multiplayermenu::buttonBack()
         }
         if (m_Chat.get() != nullptr)
         {
-            m_Chat->detach();
+            m_Chat->detachAndRemove();
             m_Chat.reset();
         }
         disconnectNetwork();
@@ -2415,7 +2415,7 @@ void Multiplayermenu::createChat()
 {
     if (m_Chat.get() != nullptr)
     {
-        m_Chat->detach();
+        m_Chat->detachAndRemove();
     }
     if (Settings::getInstance()->getSmallScreenDevice())
     {
@@ -2443,7 +2443,7 @@ void Multiplayermenu::disconnectNetwork()
     {
         if (m_Chat.get())
         {
-            m_Chat->detach();
+            m_Chat->detachAndRemove();
             m_Chat.reset();
         }
         m_pPlayerSelection->attachNetworkInterface(spNetworkInterface());
@@ -2636,7 +2636,7 @@ void Multiplayermenu::countdown()
             QThread::msleep(200);
             CONSOLE_PRINT("Sending init game to clients", GameConsole::eDEBUG);
             emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, true);
-            oxygine::Actor::detach();
+            detachAndRemove();
         }
     }
     else
@@ -3649,7 +3649,7 @@ void Multiplayermenu::cancelModSyncSession()
     // Dialog teardown ahead of the active-session guard so a request that bailed before arming still tears down its progress UI.
     if (m_modSyncProgressDialog != nullptr)
     {
-        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog->detachAndRemove();
         m_modSyncProgressDialog.reset();
     }
     // Send-state clearing is host-side and runs even when m_modSyncActive (client-side flag) is false; the next pump tick short-circuits on socketID==0.
@@ -3725,12 +3725,12 @@ void Multiplayermenu::startModSyncDownload(const QStringList & modsToDownload, c
     }
     if (m_pJoinConnectingDialog != nullptr)
     {
-        m_pJoinConnectingDialog->detach();
+        m_pJoinConnectingDialog->detachAndRemove();
         m_pJoinConnectingDialog.reset();
     }
     if (m_modSyncProgressDialog != nullptr)
     {
-        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog->detachAndRemove();
         m_modSyncProgressDialog.reset();
     }
     m_modSyncProgressDialog = MemoryManagement::create<DialogModSyncProgress>(static_cast<qint32>(modsToDownload.size()));
@@ -3762,7 +3762,7 @@ void Multiplayermenu::onModSyncSucceeded()
 {
     if (m_modSyncProgressDialog != nullptr)
     {
-        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog->detachAndRemove();
         m_modSyncProgressDialog.reset();
     }
     auto * settings = Settings::getInstance();
@@ -3808,7 +3808,7 @@ void Multiplayermenu::onModSyncFailed(const QString & reason)
 {
     if (m_modSyncProgressDialog != nullptr)
     {
-        m_modSyncProgressDialog->detach();
+        m_modSyncProgressDialog->detachAndRemove();
         m_modSyncProgressDialog.reset();
     }
     // Escape because reason can include host-supplied text and DialogMessageBox renders via setHtmlText.

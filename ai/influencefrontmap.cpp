@@ -404,7 +404,7 @@ void InfluenceFrontMap::hide()
 {
     for (auto & field : m_info)
     {
-        field->detach();
+        field->detachAndRemove();
     }
     m_info.clear();
 }

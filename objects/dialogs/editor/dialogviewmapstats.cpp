@@ -60,5 +60,5 @@ void DialogViewMapStats::close()
 
 void DialogViewMapStats::remove()
 {
-    detach();
+    detachAndRemove();
 }

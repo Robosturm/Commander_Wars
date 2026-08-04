@@ -190,7 +190,7 @@ void ScriptEditor::showExitBox()
 void ScriptEditor::exitEditor()
 {    
     emit sigFinished();
-    detach();
+    detachAndRemove();
 }
 
 void ScriptEditor::showSaveScript()

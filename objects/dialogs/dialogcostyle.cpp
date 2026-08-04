@@ -185,7 +185,7 @@ void DialogCOStyle::remove()
 {
     m_pCOBoxes.clear();
     m_Pixels.clear();
-    detach();
+    detachAndRemove();
 }
 
 void DialogCOStyle::selecetedColorChanged(QColor color)
@@ -211,7 +211,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         m_CurrentIndex = index;
         if (m_pPredefinedStyles.get() != nullptr)
         {
-            m_pPredefinedStyles->detach();
+            m_pPredefinedStyles->detachAndRemove();
             m_pPredefinedStyles.reset();
         }
         oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + "+nrm"));

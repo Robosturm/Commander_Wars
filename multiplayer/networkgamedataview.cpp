@@ -70,7 +70,7 @@ oxygine::spActor NetworkGameDataView::loadCustomId(const QString & item, qint32 
 
 void NetworkGameDataView::close()
 {
-    detach();
+    detachAndRemove();
 }
 
 void NetworkGameDataView::getMinimapImage(QImage & img, NetworkGameData & data)

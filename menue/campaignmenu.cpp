@@ -445,7 +445,7 @@ void CampaignMenu::exitMenue()
     auto mapSelectionView = MemoryManagement::create<MapSelectionView>(filter);
     auto window = MemoryManagement::create<MapSelectionMapsMenue>(mapSelectionView);
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();    
+    detachAndRemove();
 }
 
 void CampaignMenu::onEnter()
@@ -527,7 +527,7 @@ void CampaignMenu::slotButtonNext()
                 // start game
                 spGameMenue window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
                 oxygine::Stage::getStage()->addChild(window);
-                oxygine::Actor::detach();
+                detachAndRemove();
             }
             else if (m_Multiplayer)
             {
@@ -537,7 +537,7 @@ void CampaignMenu::slotButtonNext()
             {
                 auto window = MemoryManagement::create<MapSelectionMapsMenue>(m_pMapSelectionView);
                 oxygine::Stage::getStage()->addChild(window);
-                oxygine::Actor::detach();
+                detachAndRemove();
             }
         }
         Mainapp::getInstance()->continueRendering();

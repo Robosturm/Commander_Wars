@@ -58,7 +58,7 @@ void MovementPlannerAddIn::removeAllSprites()
 {
     for (auto & sprite : m_sprites)
     {
-        sprite->detach();
+        sprite->detachAndRemove();
     }
     m_sprites.clear();;
 }
@@ -86,7 +86,7 @@ void MovementPlannerAddIn::hide()
         pInterpreter->deleteObject(AddIn);
     }
     resetUi();
-    detach();
+    detachAndRemove();
     m_pPlanner->setFocused(true);
 }
 

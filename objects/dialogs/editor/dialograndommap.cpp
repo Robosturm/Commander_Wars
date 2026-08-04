@@ -391,7 +391,7 @@ void DialogRandomMap::generatorFinished()
 
 void DialogRandomMap::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void DialogRandomMap::showGeneratorSelection()
@@ -422,11 +422,11 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
     {
         if (m_TerrainChances.get())
         {
-            m_TerrainChances->detach();
+            m_TerrainChances->detachAndRemove();
         }
         if (m_BuildingChances.get())
         {
-            m_BuildingChances->detach();
+            m_BuildingChances->detachAndRemove();
         }
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->openScript(filename, false);
@@ -491,7 +491,7 @@ void DialogRandomMap::playerChanged(qreal)
     
     if (m_OwnerDistribution.get())
     {
-        m_OwnerDistribution->detach();
+        m_OwnerDistribution->detachAndRemove();
     }
     QStringList playerStrings;
     QVector<qint32> playerChances;
@@ -514,11 +514,11 @@ void DialogRandomMap::createUnitChances()
 {
     if (m_unitDistribution.get())
     {
-        m_unitDistribution->detach();
+        m_unitDistribution->detachAndRemove();
     }
     if (m_UnitChances.get())
     {
-        m_UnitChances->detach();
+        m_UnitChances->detachAndRemove();
     }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList unitStrings;

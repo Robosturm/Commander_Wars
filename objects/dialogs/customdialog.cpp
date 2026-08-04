@@ -88,7 +88,7 @@ void CustomDialog::exit()
 
 void CustomDialog::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void CustomDialog::createDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu)

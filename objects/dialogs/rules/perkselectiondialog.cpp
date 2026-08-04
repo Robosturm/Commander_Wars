@@ -225,7 +225,7 @@ void PerkSelectionDialog::perkViewUpdated()
 
 void PerkSelectionDialog::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void PerkSelectionDialog::setPerkBannlist(qint32)
@@ -374,7 +374,7 @@ void PerkSelectionDialog::updatePredefinedList()
 {
     if (m_PredefinedLists.get() != nullptr)
     {
-        m_PredefinedLists->detach();
+        m_PredefinedLists->detachAndRemove();
     }
     QString path = getFilepath();
     auto items = getNameList(path);

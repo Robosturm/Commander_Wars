@@ -875,7 +875,7 @@ void GameRules::resetWeatherSprites()
     {
         if (sprite.get() != nullptr)
         {
-            sprite->detach();
+            sprite->detachAndRemove();
             sprite.reset();
         }
     }
@@ -892,7 +892,7 @@ void GameRules::resetFogSprites()
         {
             if (sprite.get() != nullptr)
             {
-                sprite->detach();
+                sprite->detachAndRemove();
                 sprite.reset();
             }
         }
@@ -1030,7 +1030,7 @@ void GameRules::createFieldFog(qint32 x, qint32 y, Player* pPlayer, QColor fogOf
     }
     if (m_FogSprites[x][y].get() != nullptr)
     {
-        m_FogSprites[x][y]->detach();
+        m_FogSprites[x][y]->detachAndRemove();
         m_FogSprites[x][y].reset();
     }
     switch (visible)

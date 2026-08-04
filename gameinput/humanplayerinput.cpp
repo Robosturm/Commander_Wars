@@ -72,12 +72,12 @@ HumanPlayerInput::~HumanPlayerInput()
     m_pUnitPathFindingSystem.reset();
     if (m_ZInformationLabel.get() != nullptr)
     {
-        m_ZInformationLabel->detach();
+        m_ZInformationLabel->detachAndRemove();
         m_ZInformationLabel.reset();
     }
     if (m_CurrentMenu.get() != nullptr)
     {
-        m_CurrentMenu->detach();
+        m_CurrentMenu->detachAndRemove();
         m_CurrentMenu.reset();
     }
     m_pMarkedFieldData.reset();
@@ -375,7 +375,7 @@ void HumanPlayerInput::clearMenu()
         {
             m_pMenu->setFocused(true);
         }
-        m_CurrentMenu->detach();
+        m_CurrentMenu->detachAndRemove();
         m_CurrentMenu.reset();
     }
 }
@@ -385,19 +385,19 @@ void HumanPlayerInput::clearMarkedFields()
     Mainapp::getInstance()->pauseRendering();
     for (auto & field : m_Fields)
     {
-        field->detach();
+        field->detachAndRemove();
     }
     m_FieldPoints.clear();
     m_Fields.clear();
     m_pMarkedFieldData.reset();
     if (m_ZInformationLabel.get() != nullptr)
     {
-        m_ZInformationLabel->detach();
+        m_ZInformationLabel->detachAndRemove();
         m_ZInformationLabel.reset();
     }
     for (auto & fields : m_InfoFields)
     {
-        fields->detach();
+        fields->detachAndRemove();
     }
     m_InfoFields.clear();
     Mainapp::getInstance()->continueRendering();
@@ -1002,7 +1002,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                         {
                             if (m_ZInformationLabel.get() != nullptr)
                             {
-                                m_ZInformationLabel->detach();
+                                m_ZInformationLabel->detachAndRemove();
                                 m_ZInformationLabel.reset();
                             }
                             QPoint field(x, y);
@@ -1032,7 +1032,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                         {
                             if (m_ZInformationLabel.get() != nullptr)
                             {
-                                m_ZInformationLabel->detach();
+                                m_ZInformationLabel->detachAndRemove();
                                 m_ZInformationLabel.reset();
                             }
                         }
@@ -1075,7 +1075,11 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
 {
     CONSOLE_PRINT("HumanPlayerInput::createSimpleZInformation " + QString::number(pData->singleValue) , GameConsole::eDEBUG);
-    
+    if (m_ZInformationLabel.get() != nullptr)
+    {
+        m_ZInformationLabel->detachAndRemove();
+        m_ZInformationLabel.reset();
+    }
     QString labelText = "";
     labelText = QString::number(pData->singleValue) + " %";
     m_ZInformationLabel = MemoryManagement::create<oxygine::Actor>();
@@ -1172,6 +1176,11 @@ void HumanPlayerInput::nextTurn()
 
 void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
 {
+    if (m_ZInformationLabel.get() != nullptr)
+    {
+        m_ZInformationLabel->detachAndRemove();
+        m_ZInformationLabel.reset();
+    }
     QString attackInfo = "Info: ";
     for (qint32 i = 0; i < pData->valueNames.size(); ++i)
     {
@@ -1468,7 +1477,7 @@ void HumanPlayerInput::deleteArrow()
 {
     for (qint32 i = 0; i < m_Arrows.size(); i++)
     {
-        m_Arrows[i]->detach();
+        m_Arrows[i]->detachAndRemove();
     }
     m_ArrowPoints.clear();
     m_Arrows.clear();
@@ -1563,7 +1572,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
         {
             for (auto & fields : m_InfoFields)
             {
-                fields->detach();
+                fields->detachAndRemove();
             }
             m_InfoFields.clear();
             for (auto & fields : m_Fields)

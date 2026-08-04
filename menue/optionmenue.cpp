@@ -165,7 +165,7 @@ void OptionMenue::exitMenue()
         m_onEnterTimer.stop();
         auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainoptionmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
-        oxygine::Actor::detach();
+        detachAndRemove();
     }
 }
 
@@ -177,7 +177,7 @@ void OptionMenue::reloadSettings()
     // carry over restart flag
     newMenu->m_restartNeeded = m_restartNeeded;
     oxygine::Stage::getStage()->addChild(newMenu);
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 quint8 OptionMenue::getSupportedScreenCount()
@@ -592,7 +592,7 @@ void OptionMenue::restart()
 {
     CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", GameConsole::eDEBUG);
     removeChildren();
-    detach();
+    detachAndRemove();
     emit Mainapp::getInstance()->sigQuit(1);
 }
 

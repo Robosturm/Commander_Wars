@@ -287,7 +287,7 @@ void DialogAttackLog::keyInput(oxygine::KeyEvent event)
 
 void DialogAttackLog::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void DialogAttackLog::showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAtk, qint32 posDefX, qint32 posDefY, qint32 playerDef)
@@ -301,5 +301,5 @@ void DialogAttackLog::showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAt
         pInput->createMarkedField(QPoint(posDefX, posDefY), m_pMap->getPlayer(playerDef)->getColor());
     }
     emit sigFinished();
-    oxygine::Actor::detach();
+    detachAndRemove();
 }

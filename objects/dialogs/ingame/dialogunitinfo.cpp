@@ -189,7 +189,7 @@ void DialogUnitInfo::keyInput(oxygine::KeyEvent event)
 
 void DialogUnitInfo::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void DialogUnitInfo::moveToUnit(qint32 posX, qint32 posY)
@@ -205,5 +205,5 @@ void DialogUnitInfo::moveToUnit(qint32 posX, qint32 posY)
         }
     }
     emit sigFinished();
-    oxygine::Actor::detach();
+    detachAndRemove();
 }

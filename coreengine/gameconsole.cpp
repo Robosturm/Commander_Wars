@@ -169,12 +169,12 @@ void GameConsole::release()
 {
     if (m_pBackgroundsprite.get() != nullptr)
     {
-        m_pBackgroundsprite->detach();
+        m_pBackgroundsprite->detachAndRemove();
         m_pBackgroundsprite = oxygine::spSprite();
     }
     if (m_text.get() != nullptr)
     {
-        m_text->detach();
+        m_text->detachAndRemove();
         m_text = oxygine::spTextField();
     }
 }

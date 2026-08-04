@@ -171,5 +171,5 @@ void CreditsMenue::exitMenue()
     m_onEnterTimer.stop();
     auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainoptionmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();    
+    detachAndRemove();
 }

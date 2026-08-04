@@ -98,6 +98,7 @@ namespace oxygine
             SetAddColor,
             ChangeAnimFrame,
             SetColorTable,
+            DetachAndRemove,
         };
         struct UpdateInfo
         {
@@ -353,7 +354,8 @@ namespace oxygine
         /**Removes all children from Actor*/
         void removeChildren();
         /**detaches actor from parent and returns parent. return NULL If actor doesn't have parent*/
-        Actor* detach();
+        void detach();
+        void detachAndRemove();
         /**Dispatches an event into the event flow. The event target is the EventDispatcher object upon which the dispatchEvent() method is called.*/
         virtual void dispatchEvent(Event* event) override;
 

@@ -176,7 +176,7 @@ void Achievementmenu::exitMenue()
     m_onEnterTimer.stop();
     auto window = MemoryManagement::create<Mainwindow>("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void Achievementmenu::search()

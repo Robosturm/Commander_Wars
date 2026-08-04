@@ -265,7 +265,7 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
             m_CurrentLoadedCampaign.reset();
             if (m_pCurrentMap.get() != nullptr)
             {
-                m_pCurrentMap->detach();
+                m_pCurrentMap->detachAndRemove();
                 m_pCurrentMap.reset();
             }
             bool savegame = info.fileName().endsWith(".msav");
@@ -319,7 +319,7 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
         {
             if (m_pCurrentMap.get() != nullptr)
             {
-                m_pCurrentMap->detach();
+                m_pCurrentMap->detachAndRemove();
                 m_currentMapFile = QFileInfo();
                 m_pCurrentMap.reset();
             }
@@ -337,7 +337,7 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
     {
         if (m_pCurrentMap.get() != nullptr)
         {
-            m_pCurrentMap->detach();
+            m_pCurrentMap->detachAndRemove();
             m_pCurrentMap.reset();
         }
         m_CurrentLoadedCampaign.reset();

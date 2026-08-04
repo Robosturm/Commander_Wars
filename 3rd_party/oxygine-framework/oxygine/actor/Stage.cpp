@@ -83,7 +83,7 @@ namespace oxygine
     void Stage::cleanup()
     {
         removeChildren();
-        instance->detach();
+        instance->detachAndRemove();
         instance.reset();
     }
 

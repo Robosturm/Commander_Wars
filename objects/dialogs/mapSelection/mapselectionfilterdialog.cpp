@@ -49,7 +49,7 @@ void MapSelectionFilterDialog::exit()
 
 void MapSelectionFilterDialog::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 bool MapSelectionFilterDialog::getFlagActive(GameEnums::MapFilterFlags flag) const

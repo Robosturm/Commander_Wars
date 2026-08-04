@@ -157,7 +157,7 @@ void FileDialog::onFileSelected()
 
 void FileDialog::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void FileDialog::filterChanged(qint32)

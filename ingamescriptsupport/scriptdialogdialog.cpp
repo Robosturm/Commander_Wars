@@ -73,7 +73,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
 
 void ScriptDialogDialog::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void ScriptDialogDialog::addItem()
@@ -243,7 +243,7 @@ void ScriptDialogDialog::removeLast()
         auto & items = m_dialogItems[m_dialogItems.size() - 1];
         for (auto & item : items)
         {
-            item->detach();
+            item->detachAndRemove();
         }
         m_dialogItems.removeLast();
         m_backgrounds.removeLast();

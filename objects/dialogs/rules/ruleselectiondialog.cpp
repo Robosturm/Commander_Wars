@@ -115,7 +115,7 @@ void RuleSelectionDialog::loadRules(QString filename)
             m_pMap->getGameRules()->deserializeObject(stream);
             file.close();
             auto mode = m_pRuleSelection->getMode();
-            m_pRuleSelection->detach();
+            m_pRuleSelection->detachAndRemove();
             m_pRuleSelection = MemoryManagement::create<RuleSelection>(m_pMap, oxygine::Stage::getStage()->getWidth() - 80, mode);
             m_pPanel->addItem(m_pRuleSelection);
             m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 40);
@@ -147,5 +147,5 @@ void RuleSelectionDialog::saveRules(QString filename)
 void RuleSelectionDialog::pressedOk()
 {
     emit sigRulesChanged();
-    detach();    
+    detachAndRemove();
 }

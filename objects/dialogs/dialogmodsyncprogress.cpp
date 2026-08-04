@@ -208,7 +208,7 @@ void DialogModSyncProgress::setProgress(qint32 stagedMods, qint64 receivedCompre
 
 void DialogModSyncProgress::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 QString DialogModSyncProgress::formatBytes(qint64 bytes)

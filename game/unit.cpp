@@ -69,14 +69,14 @@ Unit::~Unit()
     if (m_CORange.get() != nullptr)
     {
         m_CORange->removeChildren();
-        m_CORange->detach();
+        m_CORange->detachAndRemove();
     }
     for (auto & customRange: m_customRangeInfo)
     {
         if (customRange.pActor.get())
         {
             customRange.pActor->removeChildren();
-            customRange.pActor->detach();
+            customRange.pActor->detachAndRemove();
         }
     }
 }
@@ -415,11 +415,11 @@ void Unit::resetSprites()
 {
     for (qint32 i = 0; i < m_pUnitSprites.size(); i++)
     {
-        m_pUnitSprites[i]->detach();
+        m_pUnitSprites[i]->detachAndRemove();
     }
     for (qint32 i = 0; i < m_pUnitWaitSprites.size(); i++)
     {
-        m_pUnitWaitSprites[i]->detach();
+        m_pUnitWaitSprites[i]->detachAndRemove();
     }
     // call the js loader function to do the rest
     m_pUnitSprites.clear();
@@ -3168,7 +3168,7 @@ void Unit::unloadIcon(const QString & iconID)
         {
             if (m_pIconSprites[i]->getResAnim() == pAnim)
             {
-                m_pIconSprites[i]->detach();
+                m_pIconSprites[i]->detachAndRemove();
                 m_pIconSprites.removeAt(i);
                 break;
             }
@@ -4233,7 +4233,7 @@ void Unit::removeCustomRange(const QString & id)
         if (m_customRangeInfo[i].id == id)
         {
             m_customRangeInfo[i].pActor->removeChildren();
-            m_customRangeInfo[i].pActor->detach();
+            m_customRangeInfo[i].pActor->detachAndRemove();
             m_customRangeInfo.removeAt(i);
             break;
         }
@@ -4261,15 +4261,15 @@ void Unit::transformUnit(const QString & unitID)
 {
     for (auto & sprite : m_pUnitWaitSprites)
     {
-        sprite->detach();
+        sprite->detachAndRemove();
     }
     for (auto & sprite : m_pUnitSprites)
     {
-        sprite->detach();
+        sprite->detachAndRemove();
     }
     for (auto & sprite : m_pIconSprites)
     {
-        sprite->detach();
+        sprite->detachAndRemove();
     }
     while (m_customRangeInfo.size() > 0)
     {

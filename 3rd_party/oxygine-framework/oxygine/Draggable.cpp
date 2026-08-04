@@ -21,7 +21,7 @@ namespace oxygine
                 oxygine::Stage::getStage()->removeEventListeners(this);
             }
             m_dragClient->removeEventListeners(this);
-            m_dragClient->detach();
+            m_dragClient->detachAndRemove();
             m_dragClient = nullptr;
         }
         m_pressed = false;

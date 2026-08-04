@@ -200,7 +200,7 @@ void COSelection::armyChanged(QString army)
     Mainapp::getInstance()->pauseRendering();
     for (qint32 i = 0; i < m_COFields.size(); i++)
     {
-        m_COFields[i]->detach();
+        m_COFields[i]->detachAndRemove();
     }
     m_COFields.clear();
     m_CoIDs.clear();    

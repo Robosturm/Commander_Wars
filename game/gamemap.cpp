@@ -401,12 +401,12 @@ GameMap::~GameMap()
     // clean up session
     for (qint32 y = 0; y < m_fields.size(); ++y)
     {
-        m_rowSprites[y]->detach();
+        m_rowSprites[y]->detachAndRemove();
         for (qint32 x = 0; x < m_fields[y].size(); ++x)
         {
             if (m_fields[y][x].get() != nullptr)
             {
-                m_fields[y][x]->detach();
+                m_fields[y][x]->detachAndRemove();
             }
         }
         m_fields[y].clear();
@@ -1353,7 +1353,7 @@ void GameMap::replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bo
 
             if (useTerrainAsBaseTerrain && terrainAsBaseTerrain.toBool() && canBePlaced(terrainID, x, y))
             {
-                pTerrainOld->detach();
+                pTerrainOld->detachAndRemove();
                 pTerrain->setBaseTerrain(pTerrainOld);
                 m_fields[y][x] = pTerrain;
                 m_rowSprites[y]->addChild(pTerrain);
@@ -1365,7 +1365,7 @@ void GameMap::replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bo
             }
             else
             {
-                pTerrainOld->detach();
+                pTerrainOld->detachAndRemove();
                 m_fields[y][x] = pTerrain;
                 m_rowSprites[y]->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
@@ -2021,10 +2021,10 @@ void GameMap::clearMap()
 {
     for (qint32 y = 0; y < m_fields.size(); y++)
     {
-        m_rowSprites[y]->detach();
+        m_rowSprites[y]->detachAndRemove();
         for (qint32 x = 0; x < m_fields[y].size(); x++)
         {
-            m_fields[y][x]->detach();
+            m_fields[y][x]->detachAndRemove();
         }
         m_fields[y].clear();
     }
@@ -2866,7 +2866,7 @@ void GameMap::showGrid(bool show)
 {
     for (auto & sprite : m_gridSprites)
     {
-        sprite->detach();
+        sprite->detachAndRemove();
     }
     m_gridSprites.clear();
     if (show)
@@ -2905,7 +2905,7 @@ void GameMap::showMiddleCrossGrid(bool show)
 {
     for (auto & sprite : m_middleCrossGridSprites)
     {
-        sprite->detach();
+        sprite->detachAndRemove();
     }
     m_middleCrossGridSprites.clear();
     if (show)

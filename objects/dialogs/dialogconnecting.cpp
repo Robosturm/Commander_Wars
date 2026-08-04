@@ -65,7 +65,7 @@ void DialogConnecting::cancel()
     CONSOLE_PRINT("Canceling DialogConnecting", GameConsole::eDEBUG);
     m_Timer.stop();
     m_TimerConnectionTimeout.stop();
-    detach();
+    detachAndRemove();
 }
 
 void DialogConnecting::connected()
@@ -75,7 +75,7 @@ void DialogConnecting::connected()
     m_Timer.stop();
     m_TimerConnectionTimeout.stop();
     emit sigConnected();
-    detach();
+    detachAndRemove();
 }
 
 void DialogConnecting::connectionTimeout()

@@ -61,7 +61,7 @@ namespace oxygine
             m_content->removeEventListener(m_touchUpId);
             m_content->removeEventListener(m_touchMoveId);
             m_drag.destroy();
-            m_content->detach();
+            m_content->detachAndRemove();
         }
         m_touchDownId = content->addEventListenerWithId(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
         m_touchUpId = content->addEventListenerWithId(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActorNoClipRect::_newEvent));

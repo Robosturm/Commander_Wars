@@ -63,5 +63,5 @@ void AchievementBanner::init()
 void AchievementBanner::removeBanner()
 {
     m_activeBanners--;
-    detach();
+    detachAndRemove();
 }

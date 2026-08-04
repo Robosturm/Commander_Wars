@@ -71,5 +71,5 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
 
 void DialogTextInput::remove()
 {
-    detach();
+    detachAndRemove();
 }

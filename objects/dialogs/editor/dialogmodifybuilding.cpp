@@ -141,5 +141,5 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
 
 void DialogModifyBuilding::remove()
 {
-    detach();
+    detachAndRemove();
 }

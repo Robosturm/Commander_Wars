@@ -160,7 +160,7 @@ void DialogVictoryConditions::keyInput(oxygine::KeyEvent event)
 
 void DialogVictoryConditions::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void DialogVictoryConditions::showPopup(QString rule)

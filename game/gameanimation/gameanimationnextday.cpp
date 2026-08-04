@@ -179,7 +179,7 @@ void GameAnimationNextDay::rightClick()
         else
         {
             onFinished(false);
-            detach();
+            detachAndRemove();
         }
     }
 }

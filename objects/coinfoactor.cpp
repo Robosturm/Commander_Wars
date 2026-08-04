@@ -320,8 +320,8 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         // show co synergys
         for (qint32 i = 0; i < m_SynergyCONames.size(); i++)
         {
-            m_SynergyCONames[i]->detach();
-            m_SynergyStarActors[i]->detach();
+            m_SynergyCONames[i]->detachAndRemove();
+            m_SynergyStarActors[i]->detachAndRemove();
         }
         m_SynergyCONames.clear();
         m_SynergyStarActors.clear();
@@ -385,7 +385,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
 
     for (qint32 i = 0; i < m_UnitDataActors.size(); i++)
     {
-        m_UnitDataActors[i]->detach();
+        m_UnitDataActors[i]->detachAndRemove();
     }
     m_UnitDataActors.clear();
 
@@ -625,7 +625,7 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
 {
     for (qint32 i = 0; i < m_PerkActors.size(); i++)
     {
-        m_PerkActors[i]->detach();
+        m_PerkActors[i]->detachAndRemove();
     }
     m_PerkActors.clear();
     if (pCO.get() != nullptr)

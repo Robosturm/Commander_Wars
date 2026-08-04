@@ -65,6 +65,6 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
 
 void DialogMessageBox::remove()
 {
-    detach();
+    detachAndRemove();
 }
 

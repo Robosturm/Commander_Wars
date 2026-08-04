@@ -62,7 +62,7 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
 
 void DialogValueCounter::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void DialogValueCounter::updateData()

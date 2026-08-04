@@ -74,5 +74,5 @@ void Wikimenu::exitMenue()
     m_onEnterTimer.stop();
     auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();    
+    detachAndRemove();
 }

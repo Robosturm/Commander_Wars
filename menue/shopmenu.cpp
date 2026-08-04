@@ -143,7 +143,7 @@ void Shopmenu::exitMenue()
     m_onEnterTimer.stop();
     auto window = MemoryManagement::create<Mainwindow>("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void Shopmenu::filterChanged(qint32 item)

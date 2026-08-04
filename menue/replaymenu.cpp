@@ -127,7 +127,7 @@ void ReplayMenu::exitReplay()
     m_onEnterTimer.stop();
     auto window = MemoryManagement::create<VictoryMenue>(m_pMap, m_pNetworkInterface, true);
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void ReplayMenu::nextReplayAction()

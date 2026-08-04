@@ -213,7 +213,7 @@ void MapSelectionMapsMenue::buttonBack()
                 {
                     oxygine::Stage::getStage()->addChild(MemoryManagement::create<CampaignMenu>(m_pMapSelectionView->getCurrentCampaign(), false));
                 }
-                oxygine::Actor::detach();
+                detachAndRemove();
             }
             break;
         }
@@ -274,7 +274,7 @@ void MapSelectionMapsMenue::buttonNext()
                             {
                                 oxygine::Stage::getStage()->addChild(MemoryManagement::create<CampaignMenu>(m_pMapSelectionView->getCurrentLoadedCampaign(), false));
                             }
-                            oxygine::Actor::detach();
+                            detachAndRemove();
                         }
                     }
                 }
@@ -302,7 +302,7 @@ void MapSelectionMapsMenue::exitMenu()
     m_onEnterTimer.stop();
     spMainwindow window = MemoryManagement::create<Mainwindow>("ui/menu/mainsinglemenu.xml");
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();
+    detachAndRemove();
 }
 
 void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
@@ -416,7 +416,7 @@ void MapSelectionMapsMenue::startGame()
 
         spGameMenue window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
         oxygine::Stage::getStage()->addChild(window);
-        oxygine::Actor::detach();
+        detachAndRemove();
     }
 }
 

@@ -54,7 +54,7 @@ GenericBox::GenericBox(bool cancel)
 
 void GenericBox::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void GenericBox::addItem(oxygine::spActor pActor)

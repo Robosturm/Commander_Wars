@@ -43,5 +43,5 @@ PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
 
 void PlayerSelectionDialog::remove()
 {
-    detach();
+    detachAndRemove();
 }

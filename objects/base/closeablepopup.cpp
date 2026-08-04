@@ -61,7 +61,7 @@ void CloseablePopUp::setLocked(bool locked)
 
 void CloseablePopUp::close()
 {
-    detach();
+    detachAndRemove();
 }
 
 void CloseablePopUp::addItem(oxygine::spActor pActor)

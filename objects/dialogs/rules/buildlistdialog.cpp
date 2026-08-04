@@ -217,7 +217,7 @@ QVector<BuildListDialog::UnitGroup> BuildListDialog::getUnitGroups()
 void BuildListDialog::remove()
 {
     m_Checkboxes.clear();
-    detach();
+    detachAndRemove();
 }
 
 void BuildListDialog::setBuildlist(qint32 item)
@@ -378,7 +378,7 @@ void BuildListDialog::updatePredefinedList()
 {
     if (m_PredefinedLists.get() != nullptr)
     {
-        m_PredefinedLists->detach();
+        m_PredefinedLists->detachAndRemove();
     }
     auto items = getNameList();
     m_PredefinedLists = MemoryManagement::create<DropDownmenu>(300, items);

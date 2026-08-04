@@ -183,7 +183,7 @@ bool MapEditDialog::getMapFlag(GameEnums::MapFilterFlags flag) const
 
 void MapEditDialog::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void MapEditDialog::scriptFileChanged(QString file)

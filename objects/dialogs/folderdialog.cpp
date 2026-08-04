@@ -77,7 +77,7 @@ FolderDialog::FolderDialog(QString startFolder)
 
 void FolderDialog::remove()
 {
-    detach();
+    detachAndRemove();
 }
 
 void FolderDialog::showFolder(QString inputFolder)

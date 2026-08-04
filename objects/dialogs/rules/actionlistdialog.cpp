@@ -190,7 +190,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
 void ActionListDialog::remove()
 {
     m_Checkboxes.clear();
-    detach();
+    detachAndRemove();
 }
 
 QStringList ActionListDialog::getNameList()
@@ -283,7 +283,7 @@ void ActionListDialog::updatePredefinedList()
 {
     if (m_PredefinedLists.get() != nullptr)
     {
-        m_PredefinedLists->detach();
+        m_PredefinedLists->detachAndRemove();
     }
     auto items = getNameList();
     m_PredefinedLists = MemoryManagement::create<DropDownmenu>(300, items);

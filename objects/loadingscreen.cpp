@@ -110,6 +110,6 @@ void LoadingScreen::setWorktext(QString workText)
 void LoadingScreen::hide()
 {
     CONSOLE_PRINT("LoadingScreen::hide", GameConsole::eDEBUG);
-    m_pLoadingScreen->detach();
+    m_pLoadingScreen->detachAndRemove();
     m_pLoadingScreen.reset();
 }

@@ -66,5 +66,5 @@ DialogPassword::DialogPassword(QString text, bool showCancel, QString startInput
 
 void DialogPassword::remove()
 {
-    detach();
+    detachAndRemove();
 }

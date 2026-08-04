@@ -36,7 +36,7 @@ void GameAnimationFactory::queueAnimation(GameAnimation* pGameAnimation)
     {
         if (m_Animations[i].get() == pGameAnimation)
         {
-            m_Animations[i]->detach();
+            m_Animations[i]->detachAndRemove();
             m_Animations[i]->stop();
             break;
         }
@@ -406,7 +406,7 @@ void GameAnimationFactory::removeAnimation(spGameAnimation pAnimation, bool skip
     }
     if (pAnimation.get() != nullptr)
     {
-        pAnimation->detach();
+        pAnimation->detachAndRemove();
     }
     if (m_Animations.size() == 0 && !skipping)
     {
@@ -421,7 +421,7 @@ void GameAnimationFactory::clearAllAnimations()
     CONSOLE_PRINT("GameAnimationFactory -> clearAllAnimations()", GameConsole::eDEBUG);
     for (qint32 i = 0; i < m_Animations.size(); i++)
     {
-        m_Animations[i]->detach();
+        m_Animations[i]->detachAndRemove();
     }
     m_Animations.clear();
     Mainapp::getInstance()->continueRendering();
