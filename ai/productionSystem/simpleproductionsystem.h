@@ -40,6 +40,19 @@ public:
         bool blocking{true};
         QStringList unitIds;
     };
+    // ordered by how retryable the failure is, so keeping the best reason is a plain comparison
+    enum class BuildFailure
+    {
+        NoFactory,
+        Danger,
+        InvalidPosition,
+        NotAFactory,
+        NotAllowed,
+        NotInBuildList,
+        Disabled,
+        FactoryBlocked,
+        NoFunds,
+    };
     struct BuildDistribution
     {
         QStringList unitIds;
@@ -157,11 +170,12 @@ private:
     bool isBaseProductionAction(const QString & actionId) const;
     spUnit getCounterpointUnit(const QString & unitId);
     spProductionActionData queryProductionAction(Building* pBuilding, const QString & actionId) const;
-    bool executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild, QString * failureReason = nullptr);
-    bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, bool alwaysBuild, QString * failureReason = nullptr);
+    bool executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild, BuildFailure * failureReason = nullptr);
+    bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, bool alwaysBuild, BuildFailure * failureReason = nullptr);
     bool buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits, bool alwaysBuild);
-    bool buildUnit(qint32 x, qint32 y, QString unitId, bool alwaysBuild, QString * failureReason = nullptr);
-    static void setBuildFailure(QString * failureReason, const char * reason);
+    bool buildUnit(qint32 x, qint32 y, QString unitId, bool alwaysBuild, BuildFailure * failureReason = nullptr);
+    static void setBuildFailure(BuildFailure * failureReason, BuildFailure reason);
+    static const char* buildFailureName(BuildFailure reason);
     bool buildPriorityProduction(QmlVectorBuilding* pBuildings, bool & blocked);
     void getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits,
                               qint32 minBuildMode, qint32 maxBuildMode, qint32 minBaseCost, qint32 maxBaseCost);
