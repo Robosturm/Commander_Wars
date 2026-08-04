@@ -2099,6 +2099,13 @@ void CoreAI::sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQm
     }
     std::sort(pUnits.begin(), pUnits.end(), [](const MoveUnitData& lhs, const MoveUnitData& rhs)
     {
+        // script-set ai priority overrides the heuristic, zero means no opinion
+        qint32 lhsPriority = lhs.pUnit->getAiPriority();
+        qint32 rhsPriority = rhs.pUnit->getAiPriority();
+        if (lhsPriority != rhsPriority)
+        {
+            return lhsPriority > rhsPriority;
+        }
         if (lhs.canCapture == rhs.canCapture)
         {
             if (lhs.distanceToEnemy == rhs.distanceToEnemy)

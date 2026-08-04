@@ -52,24 +52,25 @@ void QmlVectorUnit::sortAiPriority()
             break;
         }
     }
+    randomize();
     if (!hasPriority)
     {
-        randomize();
         return;
     }
-    for (auto & unit : m_Vector)
+    // prioritized units are fully deterministic, the zero-priority rest keeps the shuffled order
+    std::stable_sort(m_Vector.begin(), m_Vector.end(), [](const spUnit& lhs, const spUnit& rhs)
     {
-        unit->setSortValues({unit->getAiPriority(), unit->getUniqueID()});
-    }
-    std::sort(m_Vector.begin(), m_Vector.end(), [](const spUnit& lhs, const spUnit& rhs)
-    {
-        auto & lhsVec = lhs->getSortValues();
-        auto & rhsVec = rhs->getSortValues();
-        if (lhsVec[0] == rhsVec[0])
+        qint32 lhsPriority = lhs->getAiPriority();
+        qint32 rhsPriority = rhs->getAiPriority();
+        if (lhsPriority != rhsPriority)
         {
-            return lhsVec[1] < rhsVec[1];
+            return lhsPriority > rhsPriority;
         }
-        return lhsVec[0] > rhsVec[0];
+        if (lhsPriority != 0)
+        {
+            return lhs->getUniqueID() < rhs->getUniqueID();
+        }
+        return false;
     });
 }
 

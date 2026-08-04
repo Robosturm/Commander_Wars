@@ -94,8 +94,8 @@ public:
     }
     Q_INVOKABLE void randomize();
     /**
-     * @brief sortAiPriority higher ai priority first, ties by lowest unique id. Falls back to
-     * randomize when no unit has a priority, so unscripted maps keep the legacy behavior.
+     * @brief sortAiPriority higher ai priority first, ties by lowest unique id. Units without a
+     * priority keep a randomized order behind them, so unscripted behavior stays unpredictable.
      */
     Q_INVOKABLE void sortAiPriority();
     /**
