@@ -42,6 +42,21 @@ void QmlVectorUnit::randomize()
 
 void QmlVectorUnit::sortAiPriority()
 {
+    // maps that never set a priority keep the legacy randomized order
+    bool hasPriority = false;
+    for (auto & unit : m_Vector)
+    {
+        if (unit->getAiPriority() != 0)
+        {
+            hasPriority = true;
+            break;
+        }
+    }
+    if (!hasPriority)
+    {
+        randomize();
+        return;
+    }
     for (auto & unit : m_Vector)
     {
         unit->setSortValues({unit->getAiPriority(), unit->getUniqueID()});
