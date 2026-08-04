@@ -55,7 +55,7 @@ namespace oxygine
                 }
                 case UpdateAction::RemoveTween:
                 {
-                    item.parent->addTween(item.tween);
+                    item.parent->removeTween(item.tween);
                     break;
                 }
                 case UpdateAction::RemoveChildren:
