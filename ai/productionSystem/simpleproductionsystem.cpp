@@ -1033,6 +1033,15 @@ bool SimpleProductionSystem::executeBuildAction(Building* pBuilding, const QStri
         setBuildFailure(failureReason, "DANGER");
         return false;
     }
+    // Ask about this unit before the action does, because ACTION_BUILD_UNITS
+    // refuses outright when the player cannot afford anything the factory
+    // offers. That reads as NOT_ALLOWED, which callers treat as permanent, when
+    // it is only poverty and will fix itself once funds accumulate.
+    if (m_owner->getPlayer()->getCosts(unitId, pBuilding->getPosition()) > m_owner->getPlayer()->getFunds())
+    {
+        setBuildFailure(failureReason, "NO_FUNDS");
+        return false;
+    }
     spGameAction pAction = MemoryManagement::create<GameAction>(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
     pAction->setTarget(pBuilding->getPosition());
     if (!pAction->canBePerformed())
