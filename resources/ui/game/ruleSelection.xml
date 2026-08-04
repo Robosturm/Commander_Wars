@@ -59,7 +59,7 @@
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY</y>
                     <width>400</width>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","Select how the ai plans unit production.\n Counterpoint budgets across all of its factories at once and builds to answer the enemy army.\n Counterpoint uses the full enemy army when planning production, including units hidden by Fog of War.")</tooltip>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Select how the ai plans unit production.\n Counterpoint budgets across all of its factories at once and builds to answer the enemy army.")</tooltip>
                     <startValue>RuleSelectionScript.getAiBehaviorValue()</startValue>
                     <items>RuleSelectionScript.getAiBehaviorRule()</items>
                     <onEvent>RuleSelectionScript.setAiBehaviorValue(input);</onEvent>
