@@ -109,7 +109,7 @@ public:
     bool getInvertFlipX() const;
     void setInvertFlipX(bool value);
     virtual void doRender(const RenderState&) override;
-
+    virtual void changeAnimFrame(const AnimationFrame& f);
 
 protected:
     friend MemoryManagement;
@@ -121,7 +121,6 @@ protected:
             flag_flipY = flag_last << 3
         };
 #endif
-    virtual void changeAnimFrame(const AnimationFrame& f);
     virtual void animFrameChanged(const AnimationFrame& f);
 
 protected:

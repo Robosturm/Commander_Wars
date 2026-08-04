@@ -105,41 +105,6 @@ public:
     static void printDeletionInfo(const QString & name);
     static void printCreationInfo(QObject* obj);
     static void printCreationInfo(const QString & name);
-signals:
-    void sigSetAddColor(oxygine::spVStyleActor actor, QColor color);
-    void sigRebuildText(oxygine::spTextField actor);
-    void sigChangeAnimFrame(oxygine::spSprite actor, const oxygine::AnimationFrame& frame);
-    void sigSetColorTable(oxygine::spSprite actor, const oxygine::spResAnim pAnim, bool matrix);
-    void sigRestartAllTweens(oxygine::spActor actor);
-    void sigSyncAllTweens(oxygine::spActor actor, oxygine::timeMS syncTime);
-    void sigAddChild(oxygine::spActor parent, oxygine::spActor actor);
-    void sigRemoveChild(oxygine::spActor parent, oxygine::spActor actor);
-    void sigSetPriority(oxygine::spActor parent, qint32 zorder);
-    void sigAddTween(oxygine::spActor parent, oxygine::spTween tween);
-    void sigRemoveTween(oxygine::spActor parent, oxygine::spTween tween);
-    void sigRemoveChildren(oxygine::spActor actor);
-    void sigRemoveTweens(oxygine::spActor actor);
-    void sigAddEventListener(oxygine::spEventDispatcher dispatcher, oxygine::eventType et, const oxygine::EventCallback cb);
-    void sigRemoveEventListener(oxygine::spEventDispatcher dispatcher, qint32 id);
-    void sigRemoveEventListeners(oxygine::spEventDispatcher dispatcher, oxygine::IClosureOwner* callbackThis);
-
-private slots:
-    void setAddColor(oxygine::spVStyleActor actor, QColor color);
-    void rebuildText(oxygine::spTextField actor);
-    void changeAnimFrame(oxygine::spSprite actor, const oxygine::AnimationFrame& frame);
-    void setColorTable(oxygine::spSprite actor, const oxygine::spResAnim pAnim, bool matrix);
-    void restartAllTweens(oxygine::spActor actor);
-    void syncAllTweens(oxygine::spActor actor, oxygine::timeMS syncTime);
-    void addChild(oxygine::spActor parent, oxygine::spActor actor);
-    void removeChild(oxygine::spActor parent, oxygine::spActor actor);
-    void setPriority(oxygine::spActor parent, qint32 zorder);
-    void addTween(oxygine::spActor parent, oxygine::spTween tween);
-    void removeTween(oxygine::spActor parent, oxygine::spTween tween);
-    void removeChildren(oxygine::spActor actor);
-    void removeTweens(oxygine::spActor actor);
-    void addEventListener(oxygine::spEventDispatcher dispatcher, oxygine::eventType et, const oxygine::EventCallback cb);
-    void removeEventListener(oxygine::spEventDispatcher dispatcher, qint32 id);
-    void removeEventListeners(oxygine::spEventDispatcher dispatcher, oxygine::IClosureOwner* callbackThis);
 private:
     explicit MemoryManagement();
 

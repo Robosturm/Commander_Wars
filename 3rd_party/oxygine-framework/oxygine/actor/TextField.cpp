@@ -182,7 +182,11 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigRebuildText(getSharedPtr<TextField>());
+            QMutexLocker lock(&m_updateActionMutex);
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::RebuildText;
+            m_updateActions.push_back(info);
         }
         else
         {

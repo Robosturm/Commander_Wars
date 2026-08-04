@@ -5,10 +5,96 @@
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/VisualStyleActor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 #include <QtMath>
 
 namespace oxygine
 {
+
+    std::vector<Actor::UpdateInfo> Actor::m_updateActions;
+    QMutex Actor::m_updateActionMutex;
+
+    void Actor::doUpdateInfos()
+    {
+        QMutexLocker locker(&m_updateActionMutex);
+        for (auto & item : m_updateActions)
+        {
+            switch (item.action)
+            {
+                case UpdateAction::RestartAllTweens:
+                {
+                    item.parent->restartAllTweens();
+                    break;
+                }
+                case UpdateAction::SyncTweens:
+                {
+                    item.parent->syncAllTweens(item.syncTime);
+                    break;
+                }
+                case UpdateAction::AddChild:
+                {
+                    item.parent->addChild(item.actor);
+                    break;
+                }
+                case UpdateAction::RemoveChild:
+                {
+                    item.parent->removeChild(item.actor);
+                    break;
+                }
+                case UpdateAction::Priority:
+                {
+                    item.parent->setPriority(item.zOrder);
+                    break;
+                }
+                case UpdateAction::AddTween:
+                {
+                    item.parent->addTween(item.tween);
+                    break;
+                }
+                case UpdateAction::RemoveTween:
+                {
+                    item.parent->addTween(item.tween);
+                    break;
+                }
+                case UpdateAction::RemoveChildren:
+                {
+                    item.parent->removeChildren();
+                    break;
+                }
+                case UpdateAction::RemoveTweens:
+                {
+                    item.parent->removeTweens();
+                    break;
+                }
+                case UpdateAction::RebuildText:
+                {
+                    oxygine::safeSpCast<oxygine::TextField>(item.parent)->rebuildText();
+                    break;
+                }
+                case UpdateAction::SetAddColor:
+                {
+                    oxygine::safeSpCast<oxygine::VStyleActor>(item.parent)->setAddColor(item.color);
+                    break;
+                }
+                case UpdateAction::ChangeAnimFrame:
+                {
+                    oxygine::safeSpCast<oxygine::Sprite>(item.parent)->changeAnimFrame(*item.frame);
+                    break;
+                }
+                case UpdateAction::SetColorTable:
+                {
+                    oxygine::safeSpCast<oxygine::Sprite>(item.parent)->setColorTable(item.pAnim, item.matrix);
+                    break;
+                }
+                default:
+                    Q_ASSERT(false);
+            }
+        }
+        m_updateActions.clear();
+    }
+
 #ifndef GRAPHICSUPPORT
     QPoint Actor::m_dummyPoint;
     QSize Actor::m_dummySize;
@@ -372,7 +458,12 @@ namespace oxygine
         {
             if (requiresThreadChange())
             {
-                emit MemoryManagement::getInstance().sigSetPriority(getSharedPtr<Actor>(), zorder);
+                UpdateInfo info;
+                info.parent = getSharedPtr<Actor>();
+                info.zOrder = zorder;
+                info.action = Actor::UpdateAction::Priority;
+                QMutexLocker lock(&m_updateActionMutex);
+                m_updateActions.push_back(std::move(info));
             }
             else
             {
@@ -518,7 +609,11 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigRestartAllTweens(getSharedPtr<Actor>());
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::RestartAllTweens;            
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
         }
         else
         {
@@ -536,7 +631,12 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigSyncAllTweens(getSharedPtr<Actor>(), syncTime);
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::SyncTweens;
+            info.syncTime = syncTime;
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
         }
         else
         {
@@ -709,7 +809,12 @@ namespace oxygine
     {
         if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigAddChild(getSharedPtr<Actor>(), actor);
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::AddChild;
+            info.actor = actor;
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
         }
         else if (actor.get() == nullptr)
         {
@@ -736,7 +841,12 @@ namespace oxygine
         }
         else if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigRemoveChild(getSharedPtr<Actor>(), actor);
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::RemoveChild;
+            info.actor = actor;
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
         }
         else if (actor)
         {
@@ -772,7 +882,11 @@ namespace oxygine
     {
         if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigRemoveChildren(getSharedPtr<Actor>());
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::RemoveChildren;
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
         }
         else
         {
@@ -962,7 +1076,12 @@ namespace oxygine
         }
         else if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigAddTween(getSharedPtr<Actor>(), tween);
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::AddTween;
+            info.tween = tween;
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
         }
         else
         {
@@ -981,7 +1100,12 @@ namespace oxygine
         }
         else if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigRemoveTween(getSharedPtr<Actor>(), pTween);
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::RemoveTween;
+            info.tween = pTween;
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
         }
         else
         {
@@ -1006,7 +1130,11 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigRemoveTweens(getSharedPtr<Actor>());
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::RemoveTweens;
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
         }
         else
         {

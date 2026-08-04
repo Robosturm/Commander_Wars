@@ -83,6 +83,37 @@ namespace oxygine
     class Actor: public EventDispatcher
     {
     public:
+        enum class UpdateAction
+        {
+            RestartAllTweens,
+            SyncTweens,
+            AddChild,
+            RemoveChild,
+            Priority,
+            AddTween,
+            RemoveTween,
+            RemoveChildren,
+            RemoveTweens,
+            RebuildText,
+            SetAddColor,
+            ChangeAnimFrame,
+            SetColorTable,
+        };
+        struct UpdateInfo
+        {
+            UpdateAction action;
+            oxygine::spActor parent;
+            oxygine::spActor actor;
+            oxygine::spTween tween;
+            oxygine::timeMS syncTime;
+            qint32 zOrder;
+            QColor color;
+            const oxygine::AnimationFrame* frame;
+            oxygine::spResAnim pAnim;
+            bool matrix;
+        };
+        static void doUpdateInfos();
+
         static constexpr const char* const getTypeName()
         {
             return "Actor";
@@ -451,6 +482,8 @@ namespace oxygine
             };
             int32_t m_pressedOvered;
         };
+        static QMutex m_updateActionMutex;
+        static std::vector<UpdateInfo> m_updateActions;
     private:
 #ifdef GRAPHICSUPPORT
         unsigned char   m_alpha{255};

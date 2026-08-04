@@ -92,7 +92,8 @@ namespace oxygine
         timeMS t = Clock::getTimeMS();
         UpdateState us;
         Actor::update(us);
-
+        EventDispatcher::doUpdateInfos();
+        Actor::doUpdateInfos();
         m_statUpdate = Clock::getTimeMS() - t;
     }
 }

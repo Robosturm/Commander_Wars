@@ -28,6 +28,23 @@ namespace oxygine
     class EventDispatcher : public IClosureOwner, public RefObject<EventDispatcher>
     {
     public:
+        enum class EventUpdateAction
+        {
+            AddEventListener,
+            RemoveEventListenerId,
+            RemoveEventListenerThis,
+        };
+        struct EventUpdateInfo
+        {
+            EventUpdateAction action;
+            oxygine::spEventDispatcher dispatcher;
+            oxygine::eventType et;
+            oxygine::EventCallback cb;
+            qint32 id;
+            oxygine::IClosureOwner* callbackThis;
+        };
+        static void doUpdateInfos();
+
         explicit EventDispatcher() = default;
         virtual ~EventDispatcher() = default;
 
@@ -74,5 +91,8 @@ namespace oxygine
         listeners m_listeners;
 
         bool m_enabled{true};
+
+        static QMutex m_eventUpdateActionMutex;
+        static std::vector<EventUpdateInfo> m_eventUpdateActions;
     };
 }

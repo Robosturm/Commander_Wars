@@ -196,7 +196,13 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigSetColorTable(getSharedPtr<Sprite>(), pAnim, matrix);
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::SetColorTable;
+            info.pAnim = pAnim;
+            info.matrix = matrix;
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
         }
         else
         {
@@ -251,7 +257,12 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigChangeAnimFrame(getSharedPtr<Sprite>(), frame);
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::ChangeAnimFrame;
+            info.frame = &frame;
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
         }
         else
         {

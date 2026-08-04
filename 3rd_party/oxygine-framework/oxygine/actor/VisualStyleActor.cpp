@@ -41,7 +41,12 @@ namespace oxygine
         }
         else if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigSetAddColor(getSharedPtr<VStyleActor>(), color);
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::SetAddColor;
+            info.color = color;
+            QMutexLocker lock(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
         }
         else
         {

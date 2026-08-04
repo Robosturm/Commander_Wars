@@ -9,6 +9,35 @@
 
 namespace oxygine
 {
+    std::vector<EventDispatcher::EventUpdateInfo> EventDispatcher::m_eventUpdateActions;
+    QMutex EventDispatcher::m_eventUpdateActionMutex;
+    void EventDispatcher::doUpdateInfos()
+    {
+        QMutexLocker locker(&m_eventUpdateActionMutex);
+        for (auto & item : m_eventUpdateActions)
+        {
+            switch (item.action)
+            {
+                case EventUpdateAction::AddEventListener:
+                {
+                    item.dispatcher->addEventListener(item.et, item.cb);
+                    break;
+                }
+                case EventUpdateAction::RemoveEventListenerId:
+                {
+                    item.dispatcher->removeEventListener(item.id);
+                    break;
+                }
+                case EventUpdateAction::RemoveEventListenerThis:
+                {
+                    item.dispatcher->removeEventListeners(item.callbackThis);
+                    break;
+                }
+                default:
+                    Q_ASSERT(false);
+            }
+        }
+    }
 
     bool EventDispatcher::detached() const
     {
@@ -27,7 +56,13 @@ namespace oxygine
     {
         if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigAddEventListener(getSharedPtr<EventDispatcher>(), et, cb);
+            EventUpdateInfo info;
+            info.action = EventUpdateAction::RemoveEventListenerId;
+            info.dispatcher = getSharedPtr<EventDispatcher>();
+            info.et = et;
+            info.cb = cb;
+            QMutexLocker lock(&m_eventUpdateActionMutex);
+            m_eventUpdateActions.push_back(info);
         }
         else
         {
@@ -64,7 +99,12 @@ namespace oxygine
     {
         if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigRemoveEventListener(getSharedPtr<EventDispatcher>(), id);
+            EventUpdateInfo info;
+            info.action = EventUpdateAction::RemoveEventListenerId;
+            info.dispatcher = getSharedPtr<EventDispatcher>();
+            info.id = id;
+            QMutexLocker lock(&m_eventUpdateActionMutex);
+            m_eventUpdateActions.push_back(info);
         }
         else
         {
@@ -85,7 +125,12 @@ namespace oxygine
     {
         if (requiresThreadChange())
         {
-            emit MemoryManagement::getInstance().sigRemoveEventListeners(getSharedPtr<EventDispatcher>(), callbackThis);
+            EventUpdateInfo info;
+            info.action = EventUpdateAction::RemoveEventListenerId;
+            info.dispatcher = getSharedPtr<EventDispatcher>();
+            info.callbackThis = callbackThis;
+            QMutexLocker lock(&m_eventUpdateActionMutex);
+            m_eventUpdateActions.push_back(info);
         }
         else
         {

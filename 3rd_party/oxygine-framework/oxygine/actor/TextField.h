@@ -58,12 +58,11 @@ namespace oxygine
         virtual bool isOn(const QPoint & localPosition) override;
         virtual void doRender(const RenderState&) override;
         text::Node* getRootNode();
-
+        void rebuildText();
         using TweenColor = Property<QColor, const QColor&, TextField, &TextField::getStyleColor, &TextField::setStyleColor>;
     protected:
         virtual void sizeChanged(const QSize& size) override;
         friend MemoryManagement;
-        void rebuildText();
 
     protected:
 #ifdef GRAPHICSUPPORT
