@@ -427,8 +427,8 @@ void AudioManager::SlotContinueMusic(QString file, qint32 position)
                     }
                     m_player->m_currentMedia = i;
                     loadMediaForFile(m_PlayListdata[i].m_file, position);
+                    m_seekPosition = position;
                     m_player->m_player.play();
-                    auto newPosition = m_player->m_player.position();
                     break;
                 }
             }
@@ -450,11 +450,17 @@ void AudioManager::loadMediaForFile(QString filePath, qint32 position)
         m_player->m_fileStream.close();
         QFile file(filePath);
         m_player->m_currentMediaFile = filePath;
-        file.open(QIODevice::ReadOnly);
-        m_player->m_content = file.readAll();
-        m_player->m_fileStream.open(QIODevice::ReadOnly);
-        m_player->m_player.setSourceDevice(&(m_player->m_fileStream), GlobalUtils::getUrlForFile(filePath));
-        m_player->m_player.setPosition(position);
+        if (file.open(QIODevice::ReadOnly))
+        {
+            m_player->m_content = file.readAll();
+            m_player->m_fileStream.open(QIODevice::ReadOnly);
+            m_player->m_player.setSourceDevice(&(m_player->m_fileStream), GlobalUtils::getUrlForFile(filePath));
+            m_player->m_player.setPosition(position);
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
 #endif
 }
@@ -639,6 +645,18 @@ void AudioManager::loadNextAudioFile()
 void AudioManager::mediaPlaybackStateChanged(QMediaPlayer::PlaybackState newState)
 {
     CONSOLE_PRINT_MODULE("Playback state changed to " + QString::number(newState) + " for player", GameConsole::eDEBUG, GameConsole::eAudio);
+    if (newState == QMediaPlayer::PlaybackState::PlayingState)
+    {
+        if (m_seekPosition > 0)
+        {
+            m_player->m_player.setPosition(m_seekPosition);
+            if (m_player->m_player.position() < m_seekPosition)
+            {
+                CONSOLE_PRINT("Failed to seek audio to " + QString::number(m_seekPosition) + " device seekable state " + QString::number(m_player->m_player.isSeekable()), GameConsole::eERROR);
+            }
+        }
+        m_seekPosition = -1;
+    }
 }
 #endif
 
@@ -647,7 +665,7 @@ void AudioManager::SlotLoadFolder(QString folder)
 #ifdef AUDIOSUPPORT
     QStringList loadedSounds;
     QStringList searchPath = VirtualPaths::createSearchPathRev(folder);
-    for (QString folder : searchPath)
+    for (const QString & folder : std::as_const(searchPath))
     {
         loadMusicFolder(folder, loadedSounds);
     }
@@ -665,7 +683,7 @@ void AudioManager::loadMusicFolder(const QString & folder, QStringList& loadedSo
             QStringList filter;
             filter << "*.mp3" << "*.wav" << "*.ogg";
             QStringList files = directory.entryList(filter);
-            for (const auto& file : files)
+            for (const auto& file : std::as_const(files))
             {
                 if (!loadedSounds.contains(file) && QFile::exists(folder + '/' + file))
                 {

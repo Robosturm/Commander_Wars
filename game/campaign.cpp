@@ -43,12 +43,19 @@ void Campaign::init()
         if (QFile::exists(m_scriptFile))
         {
             QFile file(m_scriptFile);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            m_script = stream.readAll();
-            file.close();
-            pInterpreter->loadScript(m_script, scriptName);
-            m_loaded = true;
+            if (file.open(QIODevice::ReadOnly))
+            {
+                QTextStream stream(&file);
+                m_script = stream.readAll();
+                file.close();
+                pInterpreter->loadScript(m_script, scriptName);
+                m_loaded = true;
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                m_loaded = false;
+            }
         }
         else
         {

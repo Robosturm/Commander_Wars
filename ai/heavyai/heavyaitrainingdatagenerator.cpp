@@ -12,7 +12,10 @@ HeavyAiTrainingDataGenerator::HeavyAiTrainingDataGenerator(GameMap* pMap, const 
     m_trainingDataFile(trainingFile),
     m_stream(&m_trainingDataFile)
 {
-    m_trainingDataFile.open(QIODevice::Append);
+    if (!m_trainingDataFile.open(QIODevice::Append))
+    {
+        CONSOLE_PRINT("Failed to open file " + m_trainingDataFile.fileName(), GameConsole::eERROR);
+    }
 }
 
 void HeavyAiTrainingDataGenerator::init(BaseGamemenu* pMenu)

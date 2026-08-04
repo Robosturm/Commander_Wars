@@ -63,34 +63,40 @@ void ReplayRecorder::startRecording(const QString & file)
         QByteArray data = Interpreter::getInstance()->getRuntimeData().toUtf8();
         data = qCompress(data);
         m_recordFile.setFileName(fileName);
-        m_recordFile.open(QIODevice::WriteOnly);
-        m_stream << VERSION;
-        m_stream << QString(RECORD_INFO_MARKER);
-        m_stream << createRecordJson();
-        qint64 streamStartPos = m_recordFile.pos();
-        m_stream << m_streamStart;
-        m_stream << static_cast<qint32>(data.size());
-        for (qint32 i = 0; i < data.size(); i++)
+        if (m_recordFile.open(QIODevice::WriteOnly))
         {
-            m_stream << static_cast<qint8>(data.at(i));
+            m_stream << VERSION;
+            m_stream << QString(RECORD_INFO_MARKER);
+            m_stream << createRecordJson();
+            qint64 streamStartPos = m_recordFile.pos();
+            m_stream << m_streamStart;
+            m_stream << static_cast<qint32>(data.size());
+            for (qint32 i = 0; i < data.size(); i++)
+            {
+                m_stream << static_cast<qint8>(data.at(i));
+            }
+            QStringList mods = Settings::getInstance()->getMods();
+            Filesupport::writeVectorList(m_stream, mods);
+            m_winnerTeamPos = m_recordFile.pos();
+            m_stream << m_winnerTeam;
+            m_countPos = m_recordFile.pos();
+            m_stream << m_count;
+            m_pMap->serializeObject(m_stream);
+            // seek to start and write size
+            m_streamStart = m_recordFile.pos();
+            m_recordFile.seek(streamStartPos);
+            m_stream << m_streamStart;
+            m_recordFile.seek(m_streamStart);
+            m_recordFile.flush();
+            m_recording = true;
+            m_currentDay = m_pMap->getCurrentDay();
+            m_currentPlayer = m_pMap->getCurrentPlayer()->getPlayerID();
+            m_pMap->setRecordFile(fileName);
         }
-        QStringList mods = Settings::getInstance()->getMods();
-        Filesupport::writeVectorList(m_stream, mods);
-        m_winnerTeamPos = m_recordFile.pos();
-        m_stream << m_winnerTeam;
-        m_countPos = m_recordFile.pos();
-        m_stream << m_count;
-        m_pMap->serializeObject(m_stream);
-        // seek to start and write size
-        m_streamStart = m_recordFile.pos();
-        m_recordFile.seek(streamStartPos);
-        m_stream << m_streamStart;
-        m_recordFile.seek(m_streamStart);
-        m_recordFile.flush();
-        m_recording = true;
-        m_currentDay = m_pMap->getCurrentDay();
-        m_currentPlayer = m_pMap->getCurrentPlayer()->getPlayerID();
-        m_pMap->setRecordFile(fileName);
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + m_recordFile.fileName(), GameConsole::eERROR);
+        }
     }
 }
 
@@ -109,10 +115,17 @@ bool ReplayRecorder::continueRecording(const QString & file)
                 m_recording = true;
                 m_currentDay = m_pMap->getCurrentDay();
                 m_recordFile.close();
-                m_recordFile.open(QIODevice::WriteOnly | QIODevice::Append);
-                m_recordFile.seek(m_recordFile.size());
-                CONSOLE_PRINT("Continue record at stream pos " + QString::number(m_recordFile.pos()), GameConsole::eDEBUG);
-                success = m_pMap->getReplayActionCount() == m_count;
+                if (m_recordFile.open(QIODevice::WriteOnly | QIODevice::Append))
+                {
+                    m_recordFile.seek(m_recordFile.size());
+                    CONSOLE_PRINT("Continue record at stream pos " + QString::number(m_recordFile.pos()), GameConsole::eDEBUG);
+                    success = m_pMap->getReplayActionCount() == m_count;
+                }
+                else
+                {
+                    CONSOLE_PRINT("Failed to open file " + m_recordFile.fileName(), GameConsole::eERROR);
+                    success = false;
+                }
             }
         }
     }
@@ -230,7 +243,12 @@ bool ReplayRecorder::loadRecord(const QString & filename)
 
 bool ReplayRecorder::validRecord(QByteArray & envData)
 {
-    m_recordFile.open(QIODevice::ReadOnly);
+    if (!m_recordFile.open(QIODevice::ReadOnly))
+    {
+        CONSOLE_PRINT("Failed to open file " + m_recordFile.fileName(), GameConsole::eERROR);
+        return false;
+    }
+
     bool success = readRecordInfo(m_stream, m_recordJson, m_version);
     if (success)
     {

@@ -12,7 +12,11 @@ QString CsvTableImporter::ImportCsvTable(QString csvTable, QString jsHeaderStrin
     if (file.exists())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
-        file.open(QIODevice::ReadOnly);
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + csvTable, GameConsole::eERROR);
+            return "";
+        }
         QTextStream stream(&file);
         QStringList header = stream.readLine().split(";");
         MergeCsvEntry(header);

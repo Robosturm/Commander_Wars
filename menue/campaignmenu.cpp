@@ -559,11 +559,17 @@ void CampaignMenu::saveCampaign(QString filename)
     if (filename.endsWith(".camp"))
     {
         QFile file(filename);
-        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        QDataStream stream(&file);
-        stream.setVersion(QDataStream::Version::Qt_6_5);
-        m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
-        file.close();
+        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
+            m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
+            file.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }   
 }
 

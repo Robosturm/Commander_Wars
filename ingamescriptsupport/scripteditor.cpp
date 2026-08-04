@@ -219,10 +219,16 @@ void ScriptEditor::saveScript(QString filename)
     if (filename.endsWith(".js"))
     {
         QFile file(filename);
-        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        QTextStream stream(&file);
-        m_Data->writeScript(stream);
-        file.close();
+        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            QTextStream stream(&file);
+            m_Data->writeScript(stream);
+            file.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
     
 }
@@ -233,10 +239,16 @@ void ScriptEditor::loadScript(QString filename)
     if (filename.endsWith(".js"))
     {
         QFile file(filename);
-        file.open(QIODevice::ReadOnly | QIODevice::Truncate);
-        QTextStream stream(&file);
-        m_Data->readScript(stream);
-        file.close();
+        if (file.open(QIODevice::ReadOnly | QIODevice::Truncate))
+        {
+            QTextStream stream(&file);
+            m_Data->readScript(stream);
+            file.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
     updateConditios();
     

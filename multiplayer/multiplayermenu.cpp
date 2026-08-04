@@ -262,12 +262,18 @@ QJsonDocument Multiplayermenu::doSaveLobbyState(const QString & saveFile, const 
 void Multiplayermenu::saveLobbyState(const QString & filename)
 {
     QFile file(filename);
-    file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-    QDataStream stream(&file);
-    stream.setVersion(QDataStream::Version::Qt_6_5);
-    m_pMapSelectionView->serializeObject(stream);
-    m_pPlayerSelection->serializeObject(stream);
-    file.close();
+    if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
+        m_pMapSelectionView->serializeObject(stream);
+        m_pPlayerSelection->serializeObject(stream);
+        file.close();
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+    }
 }
 
 void Multiplayermenu::closeSlave()
@@ -757,9 +763,15 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID)
     QFile mapFile(file);
     if (mapFile.exists())
     {
-        mapFile.open(QIODevice::ReadOnly);
-        myHash.addData(mapFile.readAll());
-        mapFile.close();
+        if (mapFile.open(QIODevice::ReadOnly))
+        {
+            myHash.addData(mapFile.readAll());
+            mapFile.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + mapFile.fileName(), GameConsole::eERROR);
+        }
     }
     QString command = QString(NetworkCommands::MAPINFO);
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
@@ -816,12 +828,18 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID)
             // create hash for script file
             QFile scriptData(scriptFile);
             QCryptographicHash myScriptHash(QCryptographicHash::Sha512);
-            scriptData.open(QIODevice::ReadOnly);
-            while (!scriptData.atEnd())
+            if (scriptData.open(QIODevice::ReadOnly))
             {
-                myHash.addData(scriptData.readLine().trimmed());
+                while (!scriptData.atEnd())
+                {
+                    myHash.addData(scriptData.readLine().trimmed());
+                }
+                scriptData.close();
             }
-            scriptData.close();
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + scriptData.fileName(), GameConsole::eERROR);
+            }
             QByteArray scriptHash = myScriptHash.result();
             stream << scriptHash;
         }
@@ -1660,18 +1678,30 @@ void Multiplayermenu::requestMap(quint64 socketID)
         }
         else
         {
-            mapFile.open(QIODevice::ReadOnly);
-            QByteArray data = mapFile.readAll();
-            mapFile.close();
-            Filesupport::writeByteArray(sendStream, data);
+            if (mapFile.open(QIODevice::ReadOnly))
+            {
+                QByteArray data = mapFile.readAll();
+                mapFile.close();
+                Filesupport::writeByteArray(sendStream, data);
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + mapFile.fileName(), GameConsole::eERROR);
+            }
         }
         if (!scriptFile.isEmpty())
         {
             QFile script(scriptFile);
-            script.open(QIODevice::ReadOnly);
-            QByteArray data = script.readAll();
-            Filesupport::writeByteArray(sendStream, data);
-            script.close();
+            if (script.open(QIODevice::ReadOnly))
+            {
+                QByteArray data = script.readAll();
+                Filesupport::writeByteArray(sendStream, data);
+                script.close();
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + script.fileName(), GameConsole::eERROR);
+            }
         }
         emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
@@ -1854,13 +1884,19 @@ spGameMap Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFi
     QDir dir;
     QString fileDir = mapInfo.filePath().replace(mapInfo.fileName(), "");
     dir.mkdir(fileDir);
-    map.open(QIODevice::WriteOnly);
-    QDataStream mapFilestream(&map);
-    mapFilestream.setVersion(QDataStream::Version::Qt_6_5);
-    QByteArray mapData;
-    mapData = Filesupport::readByteArray(stream);
-    Filesupport::writeBytes(mapFilestream, mapData);
-    map.close();
+    if (map.open(QIODevice::WriteOnly))
+    {
+        QDataStream mapFilestream(&map);
+        mapFilestream.setVersion(QDataStream::Version::Qt_6_5);
+        QByteArray mapData;
+        mapData = Filesupport::readByteArray(stream);
+        Filesupport::writeBytes(mapFilestream, mapData);
+        map.close();
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + map.fileName(), GameConsole::eERROR);
+    }
     pNewMap = MemoryManagement::create<GameMap>(mapFile, true, false, m_saveGame);
     if (!scriptFile.isEmpty())
     {
@@ -1871,19 +1907,31 @@ spGameMap Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFi
         QFileInfo scriptInfo(scriptFile);
         fileDir = scriptInfo.filePath().replace(scriptInfo.fileName(), "");
         dir.mkdir(fileDir);
-        script.open(QIODevice::WriteOnly);
-        QDataStream scriptFilestream(&script);
-        scriptFilestream.setVersion(QDataStream::Version::Qt_6_5);
-        Filesupport::writeBytes(scriptFilestream, scriptData);
-        script.close();
+        if (script.open(QIODevice::WriteOnly))
+        {
+            QDataStream scriptFilestream(&script);
+            scriptFilestream.setVersion(QDataStream::Version::Qt_6_5);
+            Filesupport::writeBytes(scriptFilestream, scriptData);
+            script.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + script.fileName(), GameConsole::eERROR);
+        }
         scriptFile = GlobalUtils::makePathRelative(scriptFile, true);
         // save script file
         pNewMap->getGameScript()->setScriptFile(scriptFile);
-        map.open(QIODevice::WriteOnly);
-        QDataStream stream(&map);
-        stream.setVersion(QDataStream::Version::Qt_6_5);
-        pNewMap->serializeObject(stream);
-        map.close();
+        if (map.open(QIODevice::WriteOnly))
+        {
+            QDataStream stream(&map);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
+            pNewMap->serializeObject(stream);
+            map.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + map.fileName(), GameConsole::eERROR);
+        }
     }
     return pNewMap;
 }
@@ -1984,29 +2032,41 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             if (QFile::exists(Settings::getInstance()->getUserPath() + scriptFileName))
             {
                 scriptFile.setFileName(Settings::getInstance()->getUserPath() + scriptFileName);
-                scriptFile.open(QIODevice::ReadOnly);
-                QCryptographicHash myHash(QCryptographicHash::Sha512);
-                while (!scriptFile.atEnd())
+                if (scriptFile.open(QIODevice::ReadOnly))
                 {
-                    myHash.addData(scriptFile.readLine().trimmed());
+                    QCryptographicHash myHash(QCryptographicHash::Sha512);
+                    while (!scriptFile.atEnd())
+                    {
+                        myHash.addData(scriptFile.readLine().trimmed());
+                    }
+                    scriptFile.close();
+                    myHashArray = myHash.result();
                 }
-                scriptFile.close();
-                myHashArray = myHash.result();
-
+                else
+                {
+                    CONSOLE_PRINT("Failed to open file " + scriptFile.fileName(), GameConsole::eERROR);
+                }
             }
             if (myHashArray != scriptHash && QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + scriptFileName))
             {
                 scriptFile.setFileName(oxygine::Resource::RCC_PREFIX_PATH + scriptFileName);
-                scriptFile.open(QIODevice::ReadOnly);
-                QCryptographicHash myHash(QCryptographicHash::Sha512);
-                while (!scriptFile.atEnd())
+                if (scriptFile.open(QIODevice::ReadOnly))
                 {
-                    myHash.addData(scriptFile.readLine().trimmed());
+                    QCryptographicHash myHash(QCryptographicHash::Sha512);
+                    while (!scriptFile.atEnd())
+                    {
+                        myHash.addData(scriptFile.readLine().trimmed());
+                    }
+                    scriptFile.close();
+                    QByteArray myHashArray = myHash.result();
+                    if (myHashArray != scriptHash)
+                    {
+                        found = false;
+                    }
                 }
-                scriptFile.close();
-                QByteArray myHashArray = myHash.result();
-                if (myHashArray != scriptHash)
+                else
                 {
+                    CONSOLE_PRINT("Failed to open file " + scriptFile.fileName(), GameConsole::eERROR);
                     found = false;
                 }
             }
@@ -2027,17 +2087,23 @@ bool Multiplayermenu::findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, b
         dirIter.next();
         QString file = dirIter.fileInfo().canonicalFilePath();
         QFile mapFile(file);
-        mapFile.open(QIODevice::ReadOnly);
-        QCryptographicHash myHash(QCryptographicHash::Sha512);
-        myHash.addData(&mapFile);
-        mapFile.close();
-        QByteArray myHashArray = myHash.result();
-        if (hash == myHashArray)
+        if (mapFile.open(QIODevice::ReadOnly))
         {
-            spGameMap pMap = MemoryManagement::create<GameMap>(file, true, false, m_saveGame);
-            m_pMapSelectionView->setCurrentMap(pMap);
-            loadMultiplayerMap();
-            found = true;
+            QCryptographicHash myHash(QCryptographicHash::Sha512);
+            myHash.addData(&mapFile);
+            mapFile.close();
+            QByteArray myHashArray = myHash.result();
+            if (hash == myHashArray)
+            {
+                spGameMap pMap = MemoryManagement::create<GameMap>(file, true, false, m_saveGame);
+                m_pMapSelectionView->setCurrentMap(pMap);
+                loadMultiplayerMap();
+                found = true;
+            }
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + mapFile.fileName(), GameConsole::eERROR);
         }
     }
     return found;

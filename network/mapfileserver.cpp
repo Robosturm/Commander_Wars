@@ -41,7 +41,11 @@ void MapFileServer::onMapUpload(quint64 socketID, const QJsonObject & objData)
                 QFile::remove(filePath);
                 QFile::remove(imagePath);
                 QFile file(filePath);
-                file.open(QIODevice::WriteOnly);
+                if (!file.open(QIODevice::WriteOnly))
+                {
+                    CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                    return;
+                }
                 QDataStream stream(&file);
                 qint32 contentSize = mapArray.size();
                 stream.writeRawData(mapArray.constData(), contentSize);
@@ -263,9 +267,16 @@ void MapFileServer::onRequestDownloadMap(quint64 socketID, const QJsonObject & o
             MainServer::sqlQueryFailed(changeQuery);
             // load map data and send it to client
             QFile file(mapPath);
-            file.open(QIODevice::ReadOnly);
-            data.insert(JsonKeys::JSONKEY_MAPDATA, GlobalUtils::toJsonArray(file.readAll()));
-            success = true;
+            if (file.open(QIODevice::ReadOnly))
+            {
+                data.insert(JsonKeys::JSONKEY_MAPDATA, GlobalUtils::toJsonArray(file.readAll()));
+                success = true;
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                success = false;
+            }
         }
     }
     data.insert(JsonKeys::JSONKEY_DOWNLOADRESULT, success);

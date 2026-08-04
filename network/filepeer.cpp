@@ -17,20 +17,32 @@ FilePeer::FilePeer(NetworkInterface* pNetworkInterface, const QString & filePath
 
 void FilePeer::startUpload()
 {
-    m_file.open(QIODevice::ReadOnly);
-    sendNextPacket();
+    if (m_file.open(QIODevice::ReadOnly))
+    {
+        sendNextPacket();
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + m_file.fileName(), GameConsole::eERROR);
+    }
 }
 
 void FilePeer::startDownload(const QString & command)
 {
     m_file.remove();
-    m_file.open(QIODevice::WriteOnly);
-    QJsonObject sendMessage;
-    sendMessage.insert(JsonKeys::JSONKEY_COMMAND, command);
-    sendMessage.insert(JsonKeys::JSONKEY_REPLAYFILE, m_filePath);
-    QJsonDocument doc(sendMessage);
-    CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(m_connectSocket), GameConsole::eDEBUG);
-    emit m_pNetworkInterface->sig_sendData(m_connectSocket, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    if (m_file.open(QIODevice::WriteOnly))
+    {
+        QJsonObject sendMessage;
+        sendMessage.insert(JsonKeys::JSONKEY_COMMAND, command);
+        sendMessage.insert(JsonKeys::JSONKEY_REPLAYFILE, m_filePath);
+        QJsonDocument doc(sendMessage);
+        CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(m_connectSocket), GameConsole::eDEBUG);
+        emit m_pNetworkInterface->sig_sendData(m_connectSocket, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + m_file.fileName(), GameConsole::eERROR);
+    }
 }
 
 bool FilePeer::sendNextPacket()

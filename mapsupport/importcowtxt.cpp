@@ -116,7 +116,11 @@ void GameMap::importTxtMap(QString file)
         clearMap();
 
         QFile data(file);
-        data.open(QFile::ReadOnly);
+        if (!data.open(QFile::ReadOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + data.fileName(), GameConsole::eERROR);
+            return;
+        }
         QTextStream out(&data);
         while (!out.atEnd())
         {

@@ -314,7 +314,11 @@ void MapSelection::updateSelection()
                 QString fullFilename = m_Files[i];
                 CONSOLE_PRINT("MapSelection::updateSelection Loading: " + fullFilename, GameConsole::eDEBUG);
                 QFile file(fullFilename);
-                file.open(QIODevice::ReadOnly);
+                if (!file.open(QIODevice::ReadOnly))
+                {
+                    CONSOLE_PRINT("Failed to open file " + fullFilename, GameConsole::eERROR);
+                    return;
+                }
                 QDataStream pStream(&file);
                 pStream.setVersion(QDataStream::Version::Qt_6_5);
                 GameMap::MapHeaderInfo headerInfo;

@@ -32,12 +32,18 @@ void SituationEvaluator::loadNetwork(const QString & filePath)
     if (QFile::exists(finalPath))
     {
         QFile file(finalPath);
-        file.open(QIODevice::ReadOnly);
-        QTextStream stream(&file);
-        QString content = stream.readAll();
-        tinyxml2::XMLDocument xml;
-        xml.Parse(content.toStdString().c_str());
-        m_neuralNetwork.from_XML(xml);
+        if (file.open(QIODevice::ReadOnly))
+        {
+            QTextStream stream(&file);
+            QString content = stream.readAll();
+            tinyxml2::XMLDocument xml;
+            xml.Parse(content.toStdString().c_str());
+            m_neuralNetwork.from_XML(xml);
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
 }
 

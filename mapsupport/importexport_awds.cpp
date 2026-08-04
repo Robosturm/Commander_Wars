@@ -19,7 +19,11 @@ void GameMap::importAWDSMap(QString file, EditorMenue* pMenu)
         clearMap();
 
         QFile data(file);
-        data.open(QFile::ReadOnly);
+        if (!data.open(QFile::ReadOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + data.fileName(), GameConsole::eERROR);
+            return;
+        }
         QDataStream stream(&data);
         stream.setVersion(QDataStream::Version::Qt_6_5);
         for (qint32 i = 0; i < 10; i++)
@@ -1636,7 +1640,11 @@ void GameMap::exportAWDSMap(QString file)
     if (getPlayerCount() <= 5)
     {
         QFile data(file);
-        data.open(QFile::WriteOnly);
+        if (!data.open(QFile::WriteOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + data.fileName(), GameConsole::eERROR);
+            return;
+        }
         QDataStream stream(&data);
         stream.setVersion(QDataStream::Version::Qt_6_5);
         stream << static_cast<uchar>(4 * 16 + 1);

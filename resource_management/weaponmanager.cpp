@@ -56,17 +56,23 @@ void WeaponManager::loadAll()
     QTemporaryDir tempDir = Settings::getInstance()->newTempDir();
     QStringList data;
     QFile file(VirtualPaths::find("resources/scripts/weapons/weapon_csv_import.txt"));
-    file.open(QIODevice::ReadOnly);
-    QTextStream stream(&file);
-    QString jsHeader = stream.readAll();
-    QStringList searchPaths = getSearchPaths();
-    for (auto & path : searchPaths)
+    if (file.open(QIODevice::ReadOnly))
     {
-        QString jsData = CsvTableImporter::ImportCsvTable(path + "/weapontable.csv", jsHeader, "damageTable", data);
-        if (!jsData.isEmpty())
+        QTextStream stream(&file);
+        QString jsHeader = stream.readAll();
+        QStringList searchPaths = getSearchPaths();
+        for (auto & path : searchPaths)
         {
-            m_loadedRessources.append(data);
-            pInterpreter->loadScript(jsData, tempDir.path() + "/weaponttable.js");
+            QString jsData = CsvTableImporter::ImportCsvTable(path + "/weapontable.csv", jsHeader, "damageTable", data);
+            if (!jsData.isEmpty())
+            {
+                m_loadedRessources.append(data);
+                pInterpreter->loadScript(jsData, tempDir.path() + "/weaponttable.js");
+            }
         }
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
     }
 }

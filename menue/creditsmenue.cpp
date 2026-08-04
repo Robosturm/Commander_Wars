@@ -58,40 +58,46 @@ CreditsMenue::CreditsMenue()
 
     QFile file;
     file.setFileName(VirtualPaths::find("resources/credits/credits.cred"));
-    file.open(QIODevice::ReadOnly);
-    QTextStream stream(&file);
-    while (!stream.atEnd())
+    if (file.open(QIODevice::ReadOnly))
     {
-        QString line = stream.readLine().trimmed();
-        QString lowerLine = line.toLower();
-        if (line.startsWith("//"))
+        QTextStream stream(&file);
+        while (!stream.atEnd())
         {
-            continue;
-        }
-        if (lowerLine.startsWith("headline:"))
-        {
-            QString headline = line.remove(0, line.indexOf(":") + 1);
-            m_Headlines.append(headline);
-            m_Authors.append(QStringList());
-            while (!stream.atEnd())
+            QString line = stream.readLine().trimmed();
+            QString lowerLine = line.toLower();
+            if (line.startsWith("//"))
             {
-                line = stream.readLine();
-                line = line.trimmed();
-                lowerLine = line.toLower();
-                if (lowerLine.startsWith("end"))
+                continue;
+            }
+            if (lowerLine.startsWith("headline:"))
+            {
+                QString headline = line.remove(0, line.indexOf(":") + 1);
+                m_Headlines.append(headline);
+                m_Authors.append(QStringList());
+                while (!stream.atEnd())
                 {
-                    break;
-                }
-                else if (line.startsWith("//"))
-                {
-                    continue;
-                }
-                else
-                {
-                    m_Authors[m_Headlines.size() - 1].append(line);
+                    line = stream.readLine();
+                    line = line.trimmed();
+                    lowerLine = line.toLower();
+                    if (lowerLine.startsWith("end"))
+                    {
+                        break;
+                    }
+                    else if (line.startsWith("//"))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        m_Authors[m_Headlines.size() - 1].append(line);
+                    }
                 }
             }
         }
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
     }
     m_creditsActor = MemoryManagement::create<oxygine::Actor>();
     addChild(m_creditsActor);

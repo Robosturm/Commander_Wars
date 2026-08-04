@@ -50,35 +50,47 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
     QByteArray hash;
     if (trainingFile.exists())
     {
-        trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-        QCryptographicHash myHash(QCryptographicHash::Sha512);
-        while (!trainingFile.atEnd())
+        if (trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate))
         {
-            myHash.addData(trainingFile.readLine().trimmed());
+            QCryptographicHash myHash(QCryptographicHash::Sha512);
+            while (!trainingFile.atEnd())
+            {
+                myHash.addData(trainingFile.readLine().trimmed());
+            }
+            myHash.addData(Settings::getInstance()->getModString().toUtf8());
+            hash = myHash.result();
+            trainingFile.close();
         }
-        myHash.addData(Settings::getInstance()->getModString().toUtf8());
-        hash = myHash.result();
-        trainingFile.close();
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + trainingFile.fileName(), GameConsole::eERROR);
+        }
         bool needsTraining = true;
         if (file.exists())
         {
-            file.open(QIODevice::ReadOnly | QIODevice::Truncate);
-            QDataStream stream(&file);
-            stream.setVersion(QDataStream::Version::Qt_6_5);
-            QByteArray currentHash;
-            for (qint32 i = 0; i < hash.size(); i++)
+            if (file.open(QIODevice::ReadOnly | QIODevice::Truncate))
             {
-                qint8 value = 0;
-                stream >> value;
-                currentHash.append(value);
+                QDataStream stream(&file);
+                stream.setVersion(QDataStream::Version::Qt_6_5);
+                QByteArray currentHash;
+                for (qint32 i = 0; i < hash.size(); i++)
+                {
+                    qint8 value = 0;
+                    stream >> value;
+                    currentHash.append(value);
+                }
+                // check if the training data has changed
+                if (currentHash == hash)
+                {
+                    DecisionTree::deserializeObject(stream);
+                    needsTraining = false;
+                }
+                file.close();
             }
-            // check if the training data has changed
-            if (currentHash == hash)
+            else
             {
-                DecisionTree::deserializeObject(stream);
-                needsTraining = false;
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
             }
-            file.close();
         }
         if (needsTraining)
         {
@@ -88,14 +100,20 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
             m_pRootNode = train(trainingData, questions);
             CONSOLE_PRINT("Storing tree: " + treeFile, GameConsole::eDEBUG);
             // store trained tree for next use.
-            file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-            QDataStream stream(&file);
-            stream.setVersion(QDataStream::Version::Qt_6_5);
-            for (qint32 i = 0; i < hash.size(); i++)
+            if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
             {
-                stream << static_cast<qint8>(hash[i]);
+                QDataStream stream(&file);
+                stream.setVersion(QDataStream::Version::Qt_6_5);
+                for (qint32 i = 0; i < hash.size(); i++)
+                {
+                    stream << static_cast<qint8>(hash[i]);
+                }
+                DecisionTree::serializeObject(stream);
             }
-            DecisionTree::serializeObject(stream);
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            }
         }
     }
 }
@@ -293,31 +311,43 @@ void DecisionTree::getTrainingData(QString file, std::vector<std::vector<float>>
     {
         trainingFile.setFileName(oxygine::Resource::RCC_PREFIX_PATH + file);
     }
-    trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-    QTextStream stream(&trainingFile);
-    bool questionsFound = false;
-    QStringList types;
-    std::vector<spDecisionQuestion> readQuestions;
-
-    readTrainingFile(stream, questionsFound, types, readQuestions, trainingData, questions);
-
-    QStringList mods = Settings::getInstance()->getMods();
-    QStringList fullMods;
-    for(const QString & mod : std::as_const(mods))
+    if (trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate))
     {
-        fullMods.append(oxygine::Resource::RCC_PREFIX_PATH + mod);
-        fullMods.append(Settings::getInstance()->getUserPath() + mod);
-    }
-    for (qint32 i = 0; i < fullMods.size(); i++)
-    {
-        QString modFilename = file;
-        QFile modFile(modFilename.replace("resources/", fullMods[i] + "/"));
-        if (modFile.exists())
+        QTextStream stream(&trainingFile);
+        bool questionsFound = false;
+        QStringList types;
+        std::vector<spDecisionQuestion> readQuestions;
+
+        readTrainingFile(stream, questionsFound, types, readQuestions, trainingData, questions);
+
+        QStringList mods = Settings::getInstance()->getMods();
+        QStringList fullMods;
+        for(const QString & mod : std::as_const(mods))
         {
-            modFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-            QTextStream modStream(&modFile);
-            readTrainingFile(modStream, questionsFound, types, readQuestions, trainingData, questions);
+            fullMods.append(oxygine::Resource::RCC_PREFIX_PATH + mod);
+            fullMods.append(Settings::getInstance()->getUserPath() + mod);
         }
+        for (qint32 i = 0; i < fullMods.size(); i++)
+        {
+            QString modFilename = file;
+            QFile modFile(modFilename.replace("resources/", fullMods[i] + "/"));
+            if (modFile.exists())
+            {
+                if (modFile.open(QIODevice::ReadOnly | QIODevice::Truncate))
+                {
+                    QTextStream modStream(&modFile);
+                    readTrainingFile(modStream, questionsFound, types, readQuestions, trainingData, questions);
+                }
+                else
+                {
+                    CONSOLE_PRINT("Failed to open file " + modFile.fileName(), GameConsole::eERROR);
+                }
+            }
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + trainingFile.fileName(), GameConsole::eERROR);
     }
 }
 
@@ -353,9 +383,15 @@ void DecisionTree::readTrainingFile(QTextStream& stream, bool& questionsFound, Q
                         if (typeLine.startsWith("NUMBERFILE:"))
                         {
                             QFile numberFile(typeLine.split(":")[1]);
-                            numberFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-                            QTextStream stream(&numberFile);
-                            typeLine = stream.readLine();
+                            if (numberFile.open(QIODevice::ReadOnly | QIODevice::Truncate))
+                            {
+                                QTextStream stream(&numberFile);
+                                typeLine = stream.readLine();
+                            }
+                            else
+                            {
+                                CONSOLE_PRINT("Failed to open file " + numberFile.fileName(), GameConsole::eERROR);
+                            }
                         }
                         QStringList questionString = typeLine.split(":")[1].split("|");
                         for (qint32 i2 = 0; i2 < questionString.size(); i2++)

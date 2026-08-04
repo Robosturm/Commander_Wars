@@ -66,12 +66,19 @@ void GameScript::init()
         if (file.exists())
         {
             CONSOLE_PRINT("Loading map script " + file.fileName(), GameConsole::eDEBUG);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            m_script = stream.readAll();
-            file.close();
-            pInterpreter->loadScript(m_script, m_scriptName);
-            m_loaded = true;
+            if (file.open(QIODevice::ReadOnly))
+            {
+                QTextStream stream(&file);
+                m_script = stream.readAll();
+                file.close();
+                pInterpreter->loadScript(m_script, m_scriptName);
+                m_loaded = true;
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                m_loaded = false;
+            }
         }
         else
         {

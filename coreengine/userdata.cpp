@@ -79,11 +79,17 @@ void Userdata::storeUser()
         {
             CONSOLE_PRINT("Userdata::storeUser", GameConsole::eDEBUG);
             QFile user(Settings::getInstance()->getUserPath() + Settings::getInstance()->getUsername() + ".dat");
-            user.open(QIODevice::WriteOnly | QIODevice::Truncate);
-            QDataStream pStream(&user);
-            pStream.setVersion(QDataStream::Version::Qt_6_5);
-            Userdata::serializeObject(pStream);
-            user.close();
+            if (user.open(QIODevice::WriteOnly | QIODevice::Truncate))
+            {
+                QDataStream pStream(&user);
+                pStream.setVersion(QDataStream::Version::Qt_6_5);
+                Userdata::serializeObject(pStream);
+                user.close();
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + user.fileName(), GameConsole::eERROR);
+            }
         }
     }
 }
@@ -95,11 +101,17 @@ void Userdata::changeUser()
     if (user.exists())
     {
         CONSOLE_PRINT("Userdata::changeUser", GameConsole::eDEBUG);
-        user.open(QIODevice::ReadOnly);
-        QDataStream pStream(&user);
-        pStream.setVersion(QDataStream::Version::Qt_6_5);
-        Userdata::deserializeObject(pStream);
-        user.close();
+        if (user.open(QIODevice::ReadOnly))
+        {
+            QDataStream pStream(&user);
+            pStream.setVersion(QDataStream::Version::Qt_6_5);
+            Userdata::deserializeObject(pStream);
+            user.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + user.fileName(), GameConsole::eERROR);
+        }
     }
     else
     {
@@ -112,7 +124,7 @@ void Userdata::reset()
 {
     m_customCOStyles.clear();
     m_mapVictoryInfo.clear();
-    for (auto achievement : m_achievements)
+    for (auto & achievement : m_achievements)
     {
         achievement.progress = 0;
     }
@@ -445,7 +457,7 @@ void Userdata::unlockAllShopItems(bool bought)
 
 ScriptVariableFile* Userdata::getScriptVariableFile(const QString & filename)
 {
-    for (const auto & variableFile : m_scriptVariableFiles)
+    for (const auto & variableFile : std::as_const(m_scriptVariableFiles))
     {
         if (variableFile->getFilename() == filename)
         {
@@ -456,10 +468,16 @@ ScriptVariableFile* Userdata::getScriptVariableFile(const QString & filename)
     QFile file(Settings::getInstance()->getUserPath() + filename);
     if (file.exists())
     {
-        file.open(QIODevice::ReadOnly);
-        QDataStream pStream(&file);
-        pStream.setVersion(QDataStream::Version::Qt_6_5);
-        pScriptVariableFile->deserializeObject(pStream);
+        if (file.open(QIODevice::ReadOnly))
+        {
+            QDataStream pStream(&file);
+            pStream.setVersion(QDataStream::Version::Qt_6_5);
+            pScriptVariableFile->deserializeObject(pStream);
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
     m_scriptVariableFiles.append(pScriptVariableFile);
     return pScriptVariableFile.get();

@@ -19,7 +19,11 @@ void GameMap::importAW4Map(QString file, EditorMenue* pMenu)
         clearMap();
 
         QFile data(file);
-        data.open(QFile::ReadOnly);
+        if (!data.open(QFile::ReadOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + data.fileName(), GameConsole::eERROR);
+            return;
+        }
         QDataStream stream(&data);
         stream.setVersion(QDataStream::Version::Qt_6_5);
         stream >> sign;

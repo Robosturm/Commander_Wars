@@ -16,10 +16,16 @@ ScriptVariableFile::ScriptVariableFile(const QString & filename)
 void ScriptVariableFile::writeFile()
 {
     QFile file(Settings::getInstance()->getUserPath() + m_filename);
-    file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-    QDataStream pStream(&file);
-    pStream.setVersion(QDataStream::Version::Qt_6_5);
-    serializeObject(pStream);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        QDataStream pStream(&file);
+        pStream.setVersion(QDataStream::Version::Qt_6_5);
+        serializeObject(pStream);
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+    }
 }
 
 void ScriptVariableFile::serializeObject(QDataStream& pStream) const

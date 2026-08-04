@@ -19,15 +19,21 @@ namespace oxygine
         if (QFile::exists(filepath))
         {
             QFile file(filepath);
-            file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            return stream.readAll();
+            if (file.open(QIODevice::ReadOnly))
+            {
+                QTextStream stream(&file);
+                return stream.readAll();
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + name, GameConsole::eERROR);
+            }
         }
         else
         {
             CONSOLE_PRINT("Unable to find shader: " + filepath, GameConsole::eERROR);
-            return "";
         }
+        return "";
     }
 
     void UberShaderProgram::init()

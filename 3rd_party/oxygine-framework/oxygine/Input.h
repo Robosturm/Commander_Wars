@@ -2,7 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
-
+#include <QElapsedTimer>
 #include "coreengine/memorymanagement.h"
 
 namespace oxygine

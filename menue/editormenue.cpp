@@ -285,7 +285,11 @@ void EditorMenue::createTempFile(bool cleanUp)
         cleanTemp(m_tempCounter);
     }
     QFile file(m_tempDir.path() + "/temp" + QString::number(m_tempCounter) + ".tmp");
-    file.open(QIODevice::WriteOnly);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        return;
+    }
     QDataStream stream(&file);
     stream.setVersion(QDataStream::Version::Qt_6_5);
     
@@ -295,13 +299,21 @@ void EditorMenue::createTempFile(bool cleanUp)
     QFile previous(m_tempDir.path() + "/temp" + QString::number(m_tempCounter - 1) + ".tmp");
     if (previous.exists())
     {
-        file.open(QIODevice::ReadOnly);
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            return;
+        }
         QCryptographicHash myHash(QCryptographicHash::Sha512);
         myHash.addData(file.readAll());
         QByteArray hash = myHash.result();
         file.close();
 
-        previous.open(QIODevice::ReadOnly);
+        if (!previous.open(QIODevice::ReadOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + previous.fileName(), GameConsole::eERROR);
+            return;
+        }
         QCryptographicHash myHash1(QCryptographicHash::Sha512);
         myHash1.addData(previous.readAll());
         QByteArray hash1 = myHash1.result();
@@ -334,7 +346,11 @@ void EditorMenue::editorUndo()
             m_tempCounter++;
             createTempFile(false);
             m_tempCounter -= 2;
-            file.open(QIODevice::ReadOnly);
+            if (!file.open(QIODevice::ReadOnly))
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                return;
+            }
             QDataStream stream(&file);
             stream.setVersion(QDataStream::Version::Qt_6_5);
             m_pMap->deserializeObject(stream);
@@ -359,7 +375,11 @@ void EditorMenue::editorRedo()
     QFile file(m_tempDir.path() + "/temp" + QString::number(m_tempCounter) + ".tmp");
     if (file.exists())
     {
-        file.open(QIODevice::ReadOnly);
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            return;
+        }
         QDataStream stream(&file);
         stream.setVersion(QDataStream::Version::Qt_6_5);
         m_pMap->deserializeObject(stream);
@@ -1503,7 +1523,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     bool placed = false;
     const QString palette = Terrain::getPaletteId(m_EditorSelection->getActivePalette(), terrainID);
     QVector<QPoint> placedPoints;
-    for (auto point : points)
+    for (const auto & point : std::as_const(points))
     {
         if (m_pMap->onMap(point.x(), point.y()))
         {
@@ -1738,7 +1758,11 @@ void EditorMenue::saveMap(QString filename)
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
-        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            return;
+        }
         QDataStream stream(&file);
         stream.setVersion(QDataStream::Version::Qt_6_5);
         
@@ -1759,7 +1783,11 @@ void EditorMenue::loadMap(QString filename)
         {
             cleanTemp(-1);
             QFile file(filename);
-            file.open(QIODevice::ReadOnly);
+            if (!file.open(QIODevice::ReadOnly))
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                return;
+            }
             QDataStream stream(&file);
             stream.setVersion(QDataStream::Version::Qt_6_5);
             m_pMap->deserializeObject(stream);
@@ -2222,7 +2250,12 @@ void EditorMenue::autosave()
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
-        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            return;
+        }
+
         QDataStream stream(&file);
         stream.setVersion(QDataStream::Version::Qt_6_5);
         

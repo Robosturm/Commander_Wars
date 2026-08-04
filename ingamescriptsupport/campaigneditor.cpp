@@ -226,12 +226,19 @@ void CampaignEditor::addCampaign(QString filename)
 QString CampaignEditor::getMapName(QString filename)
 {
     QFile file(filename);
-    file.open(QIODevice::ReadOnly);
-    QDataStream stream(&file);
-    stream.setVersion(QDataStream::Version::Qt_6_5);
-    QString ret = GameMap::readMapName(stream);
-    file.close();
-    return ret;
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
+        QString ret = GameMap::readMapName(stream);
+        file.close();
+        return ret;
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+    }
+    return "";
 }
 
 void CampaignEditor::showSelectFolder()
@@ -331,7 +338,11 @@ void CampaignEditor::loadCampaign(QString filename)
     if (filename.endsWith(".jsm"))
     {
         QFile file(filename);
-        file.open(QIODevice::ReadOnly);
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            return;
+        }
         QTextStream stream(&file);
         bool started = false;
         while (!stream.atEnd())
@@ -560,7 +571,11 @@ void CampaignEditor::saveCampaign(QString filename)
     if (filename.endsWith(".jsm"))
     {
         QFile file(filename);
-        file.open(QIODevice::WriteOnly);
+        if (!file.open(QIODevice::WriteOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            return;
+        }
         QTextStream stream(&file);
         stream << "var Constructor = function() { // " << campaign << "\n";
 

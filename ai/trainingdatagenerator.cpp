@@ -60,7 +60,11 @@ void TrainingDataGenerator::saveDataToFile(const QString & filepath)
         if (winner >= 0 || m_pMap->getGameRules()->getDrawVotingResult() == GameEnums::DrawVoting_Yes)
         {
             QFile file("situationResults_" + filepath);
-            file.open(QFile::OpenModeFlag::WriteOnly);
+            if (!file.open(QFile::OpenModeFlag::WriteOnly))
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                return;
+            }
             QTextStream stream(&file);
             for (qint32 i = 0; i < m_data.size(); ++i)
             {

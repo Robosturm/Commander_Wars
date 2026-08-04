@@ -63,9 +63,15 @@ bool Interpreter::reloadInterpreter(const QString runtime)
     if (!success)
     {
         QFile file("scriptDumb.js");
-        file.open(QIODevice::WriteOnly);
-        file.write(runtime.toUtf8());
-        file.close();
+        if (file.open(QIODevice::WriteOnly))
+        {
+            file.write(runtime.toUtf8());
+            file.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
     return success;
 }

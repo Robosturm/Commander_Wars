@@ -23,7 +23,11 @@ void GameMap::importAWByWebMap(QString file)
         spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
         pLoadingScreen->show();
         QFile data(file);
-        data.open(QFile::ReadOnly);
+        if (!data.open(QFile::ReadOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + data.fileName(), GameConsole::eERROR);
+            return;
+        }
         QTextStream stream(&data);
         QVector<QVector<quint32>> mapIDs;
         pLoadingScreen->setProgress(tr("Reading Map File"), 5);

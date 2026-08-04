@@ -24,10 +24,15 @@ FontManager::FontManager()
         {
             QDomDocument document;
             QFile file(folder + "res.xml");
-            file.open(QIODevice::ReadOnly);
+            bool loaded = false;
+            if (!file.open(QIODevice::ReadOnly))
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                continue;
+            }
 #if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
             auto result = document.setContent(&file);
-            bool loaded = static_cast<bool>(result);
+            loaded = static_cast<bool>(result);
             QString errorMessage = result.errorMessage;
             qsizetype errorLine = result.errorLine;
             qsizetype errorColumn = result.errorColumn;
@@ -35,7 +40,7 @@ FontManager::FontManager()
             QString errorMessage;
             int errorLine = 0;
             int errorColumn = 0;
-            bool loaded = document.setContent(&file, &errorMessage, &errorLine, &errorColumn);
+            loaded = document.setContent(&file, &errorMessage, &errorLine, &errorColumn);
 #endif
             if (loaded)
             {

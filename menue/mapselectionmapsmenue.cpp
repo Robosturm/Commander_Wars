@@ -508,11 +508,17 @@ void MapSelectionMapsMenue::loadRules(QString filename)
         {
             spGameMap pMap = m_pMapSelectionView->getCurrentMap();
             QFile file(filename);
-            file.open(QIODevice::ReadOnly);
-            QDataStream stream(&file);
-            stream.setVersion(QDataStream::Version::Qt_6_5);
-            pMap->getGameRules()->deserializeObject(stream);
-            file.close();
+            if (file.open(QIODevice::ReadOnly))
+            {
+                QDataStream stream(&file);
+                stream.setVersion(QDataStream::Version::Qt_6_5);
+                pMap->getGameRules()->deserializeObject(stream);
+                file.close();
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            }
             hideRuleSelection();
             showRuleSelection();
         }
@@ -561,12 +567,18 @@ void MapSelectionMapsMenue::saveMap(QString filename)
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
-        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        QDataStream stream(&file);
-        stream.setVersion(QDataStream::Version::Qt_6_5);
-        spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-        pMap->serializeObject(stream);
-        file.close();
+        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
+            spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+            pMap->serializeObject(stream);
+            file.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }    
 }
 

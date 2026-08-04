@@ -117,7 +117,11 @@ namespace oxygine
             oxygine::handleErrorPolicy(oxygine::ep_ignore_error, "Resources::loadXML can't find xml file: " + xmlFile);
             return false;
         }
-        file.open(QIODevice::ReadOnly);
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + xmlFile, GameConsole::eERROR);
+            return false;
+        }
         updateName(xmlFile);
         m_docs.push_back(QDomDocument());
         QDomDocument& doc = m_docs.last();

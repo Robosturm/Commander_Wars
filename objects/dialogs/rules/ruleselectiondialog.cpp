@@ -105,7 +105,11 @@ void RuleSelectionDialog::loadRules(QString filename)
         if (file.exists())
         {
             QFile file(filename);
-            file.open(QIODevice::ReadOnly);
+            if (!file.open(QIODevice::ReadOnly))
+            {
+                CONSOLE_PRINT("Failed to open file " + filename, GameConsole::eERROR);
+                return;
+            }
             QDataStream stream(&file);
             stream.setVersion(QDataStream::Version::Qt_6_5);
             m_pMap->getGameRules()->deserializeObject(stream);
@@ -125,12 +129,18 @@ void RuleSelectionDialog::saveRules(QString filename)
     if (filename.endsWith(".grl"))
     {
         QFile file(filename);
-        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        QDataStream stream(&file);
-        stream.setVersion(QDataStream::Version::Qt_6_5);
-        
-        m_pMap->getGameRules()->serializeObject(stream);
-        file.close();
+        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
+
+            m_pMap->getGameRules()->serializeObject(stream);
+            file.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + filename, GameConsole::eERROR);
+        }
     }    
 }
 

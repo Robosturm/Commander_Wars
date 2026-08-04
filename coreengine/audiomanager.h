@@ -535,6 +535,7 @@ private:
     bool m_loadBaseGameFolders{true};
     bool m_noAudio{false};
     bool m_internalMuted{false};
+    qint64 m_seekPosition = -1;
 };
 
 Q_DECLARE_INTERFACE(AudioManager, "AudioManager");

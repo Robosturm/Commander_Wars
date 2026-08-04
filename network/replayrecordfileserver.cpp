@@ -32,18 +32,24 @@ void ReplayRecordFileserver::addRecordToDatabase(const QString & filePath)
         QJsonObject objData;
         objData.insert(JsonKeys::JSONKEY_REPLAYFILE, filePath);
         QFile file(filePath);
-        file.open(QFile::ReadOnly);
-        QDataStream stream(&file);
-        QJsonObject recordInfo;
-        if (ReplayRecorder::readRecordInfo(stream, recordInfo))
+        if (file.open(QFile::ReadOnly))
         {
-            objData.insert(JsonKeys::JSONKEY_MAPNAME, recordInfo.value(JsonKeys::JSONKEY_MAPNAME).toString());
-            objData.insert(JsonKeys::JSONKEY_MAPAUTHOR, recordInfo.value(JsonKeys::JSONKEY_MAPAUTHOR).toString());
-            objData.insert(JsonKeys::JSONKEY_MAPPLAYERS, recordInfo.value(JsonKeys::JSONKEY_PLAYERDATA).toArray().size());
-            objData.insert(JsonKeys::JSONKEY_MAPWIDTH, recordInfo.value(JsonKeys::JSONKEY_MAPWIDTH).toInt());
-            objData.insert(JsonKeys::JSONKEY_MAPHEIGHT, recordInfo.value(JsonKeys::JSONKEY_MAPHEIGHT).toInt());
-            objData.insert(JsonKeys::JSONKEY_MAPFLAGS, recordInfo.value(JsonKeys::JSONKEY_MAPFLAGS).toInteger());
-            addRecordToDatabase(objData);
+            QDataStream stream(&file);
+            QJsonObject recordInfo;
+            if (ReplayRecorder::readRecordInfo(stream, recordInfo))
+            {
+                objData.insert(JsonKeys::JSONKEY_MAPNAME, recordInfo.value(JsonKeys::JSONKEY_MAPNAME).toString());
+                objData.insert(JsonKeys::JSONKEY_MAPAUTHOR, recordInfo.value(JsonKeys::JSONKEY_MAPAUTHOR).toString());
+                objData.insert(JsonKeys::JSONKEY_MAPPLAYERS, recordInfo.value(JsonKeys::JSONKEY_PLAYERDATA).toArray().size());
+                objData.insert(JsonKeys::JSONKEY_MAPWIDTH, recordInfo.value(JsonKeys::JSONKEY_MAPWIDTH).toInt());
+                objData.insert(JsonKeys::JSONKEY_MAPHEIGHT, recordInfo.value(JsonKeys::JSONKEY_MAPHEIGHT).toInt());
+                objData.insert(JsonKeys::JSONKEY_MAPFLAGS, recordInfo.value(JsonKeys::JSONKEY_MAPFLAGS).toInteger());
+                addRecordToDatabase(objData);
+            }
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
         }
     }
 }
@@ -168,12 +174,18 @@ void ReplayRecordFileserver::onRequestFilteredRecords(quint64 socketID, const QJ
                         mapData.insert(JsonKeys::JSONKEY_MAPHEIGHT, query.value(MainServer::SQL_MAPHEIGHT).toInt());
                         mapData.insert(JsonKeys::JSONKEY_MAPFLAGS, query.value(MainServer::SQL_MAPFLAGS).toLongLong());
                         QFile file(path);
-                        file.open(QFile::ReadOnly);
-                        QDataStream stream(&file);
-                        QJsonObject jsonRecordInfo;
-                        ReplayRecorder::readRecordInfo(stream, jsonRecordInfo);
-                        mapData.insert(JsonKeys::JSONKEY_REPLAYRECORDHEADER, jsonRecordInfo);
-                        foundRecords.append(mapData);
+                        if (file.open(QFile::ReadOnly))
+                        {
+                            QDataStream stream(&file);
+                            QJsonObject jsonRecordInfo;
+                            ReplayRecorder::readRecordInfo(stream, jsonRecordInfo);
+                            mapData.insert(JsonKeys::JSONKEY_REPLAYRECORDHEADER, jsonRecordInfo);
+                            foundRecords.append(mapData);
+                        }
+                        else
+                        {
+                            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                        }
                     }
                 }
             } while (query.next());

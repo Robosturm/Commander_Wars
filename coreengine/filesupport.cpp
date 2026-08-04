@@ -48,12 +48,18 @@ void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, con
         QString filePath = item.filePath();
         CONSOLE_PRINT_MODULE("Adding file: " + filePath + " to hash", GameConsole::eDEBUG, GameConsole::eFileSupport);
         QFile file(filePath);
-        file.open(QIODevice::ReadOnly);
-        while (!file.atEnd())
+        if (file.open(QIODevice::ReadOnly))
         {
-            hash.addData(file.readLine().trimmed());
+            while (!file.atEnd())
+            {
+                hash.addData(file.readLine().trimmed());
+            }
+            file.close();
         }
-        file.close();
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
     list = dir.entryInfoList(QStringList(), QDir::Dirs | QDir::NoDotAndDotDot);
     for (auto & item : list)
@@ -368,14 +374,20 @@ void Filesupport::storeList(const QString & file, const QStringList & items, con
     QDir dir(folder);
     dir.mkpath(".");
     QFile dataFile(folder + file + LIST_FILENAME_ENDING);
-    dataFile.open(QIODevice::WriteOnly);
-    QDataStream stream(&dataFile);
-    stream.setVersion(QDataStream::Version::Qt_6_5);
-    stream << file;
-    stream << static_cast<qint32>(items.size());
-    for (qint32 i = 0; i < items.size(); i++)
+    if (dataFile.open(QIODevice::WriteOnly))
     {
-        stream << items[i];
+        QDataStream stream(&dataFile);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
+        stream << file;
+        stream << static_cast<qint32>(items.size());
+        for (qint32 i = 0; i < items.size(); i++)
+        {
+            stream << items[i];
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + dataFile.fileName(), GameConsole::eERROR);
     }
 }
 
@@ -390,17 +402,23 @@ Filesupport::StringList Filesupport::readList(const QString & file)
     StringList ret;
     if (dataFile.exists())
     {
-        dataFile.open(QIODevice::ReadOnly);
-        QDataStream stream(&dataFile);
-        stream.setVersion(QDataStream::Version::Qt_6_5);
-        stream >> ret.name;
-        qint32 size = 0;
-        stream >> size;
-        for (qint32 i = 0; i < size; i++)
+        if (dataFile.open(QIODevice::ReadOnly))
         {
-            QString name;
-            stream >> name;
-            ret.items.append(name);
+            QDataStream stream(&dataFile);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
+            stream >> ret.name;
+            qint32 size = 0;
+            stream >> size;
+            for (qint32 i = 0; i < size; i++)
+            {
+                QString name;
+                stream >> name;
+                ret.items.append(name);
+            }
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + dataFile.fileName(), GameConsole::eERROR);
         }
     }
     else

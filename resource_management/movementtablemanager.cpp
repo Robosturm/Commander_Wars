@@ -30,18 +30,24 @@ void MovementTableManager::loadAll()
     QTemporaryDir tempDir = Settings::getInstance()->newTempDir();
     QStringList data;
     QFile file(VirtualPaths::find("resources/scripts/movementtables/movement_csv_import.txt"));
-    file.open(QIODevice::ReadOnly);
-    QTextStream stream(&file);
-    QString jsHeader = stream.readAll();
-    QStringList searchPaths = getSearchPaths();
-    for (auto & path : searchPaths)
+    if (file.open(QIODevice::ReadOnly))
     {
-        QString jsData = CsvTableImporter::ImportCsvTable(path + "/movementtables.csv", jsHeader, "movementpointsTable", data);
-        if (!jsData.isEmpty())
+        QTextStream stream(&file);
+        QString jsHeader = stream.readAll();
+        QStringList searchPaths = getSearchPaths();
+        for (auto & path : searchPaths)
         {
-            m_loadedRessources.append(data);
-            pInterpreter->loadScript(jsData, tempDir.path() + "/movementtable.js");
+            QString jsData = CsvTableImporter::ImportCsvTable(path + "/movementtables.csv", jsHeader, "movementpointsTable", data);
+            if (!jsData.isEmpty())
+            {
+                m_loadedRessources.append(data);
+                pInterpreter->loadScript(jsData, tempDir.path() + "/movementtable.js");
+            }
         }
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
     }
     m_loadedRessources.sort();
 }

@@ -1174,17 +1174,23 @@ void Settings::setActiveMods(const QStringList activeMods)
         QFile file(VirtualPaths::find(mod + "/mod.txt", false));
         if (file.exists())
         {
-            file.open(QFile::ReadOnly);
-            QTextStream stream(&file);
-            while (!stream.atEnd())
+            if (file.open(QFile::ReadOnly))
             {
-                QString line = stream.readLine();
-                if (line.startsWith("version="))
+                QTextStream stream(&file);
+                while (!stream.atEnd())
                 {
-                    m_activeModVersions.append(line.split("=")[1]);
-                    found = true;
-                    break;
+                    QString line = stream.readLine();
+                    if (line.startsWith("version="))
+                    {
+                        m_activeModVersions.append(line.split("=")[1]);
+                        found = true;
+                        break;
+                    }
                 }
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
             }
         }
         if (!found)
@@ -1537,7 +1543,7 @@ void Settings::setup()
 
         };
     QSettings settings(m_settingFile, QSettings::IniFormat);
-    for (auto setting : m_SettingValues)
+    for (const auto & setting : std::as_const(m_SettingValues))
     {
         if (QString(setting->getGroup()) == QString("Network") &&
             QString(setting->getName()) == QString("Server"))
@@ -1553,7 +1559,7 @@ void Settings::loadSettings()
     CONSOLE_PRINT("Settings::loadSettings()", GameConsole::eDEBUG);
     bool ok = false;
     QSettings settings(m_settingFile, QSettings::IniFormat);
-    for (auto setting : m_SettingValues)
+    for (auto & setting : std::as_const(m_SettingValues))
     {
         setting->readValue(settings);
     }
@@ -1587,7 +1593,7 @@ void Settings::loadSettings()
 
 void Settings::resetSettings()
 {
-    for (auto setting : m_SettingValues)
+    for (auto & setting : std::as_const(m_SettingValues))
     {
         setting->resetValue();
     }
@@ -1601,7 +1607,7 @@ void Settings::saveSettings()
     if (!pApp->getSlave() && !Settings::getAiSlave() && m_updateStep.isEmpty())
     {
         QSettings settings(m_settingFile, QSettings::IniFormat);
-        for (auto setting : m_SettingValues)
+        for (const auto & setting : std::as_const(m_SettingValues))
         {
             setting->saveValue(settings);
         }
@@ -2134,7 +2140,11 @@ void Settings::getModInfos(QString mod, QString & name, QString & description, Q
     isCosmetic = false;
     if (file.exists())
     {
-        file.open(QFile::ReadOnly);
+        if (!file.open(QFile::ReadOnly))
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            return;
+        }
         QTextStream stream(&file);
         while (!stream.atEnd())
         {
@@ -2187,7 +2197,7 @@ QStringList Settings::getAvailableMods()
 {
     QFileInfoList infoList;
     auto searchPath = VirtualPaths::findAllRev("mods", false);
-    for (const auto & entry : searchPath)
+    for (const auto & entry : std::as_const(searchPath))
     {
         if (QFile::exists(entry))
         {
@@ -2350,7 +2360,7 @@ void Settings::setLanguage(const QString language)
     m_language = language;
 
     QStringList searchPaths = VirtualPaths::findAll("resources/translation/lang_" + m_language + ".qm");
-    for (const auto & file : searchPaths)
+    for (const auto & file : std::as_const(searchPaths))
     {
         auto translator = MemoryManagement::createNamedQObject<QTranslator>("QTranslator");
         m_translators.append(translator);

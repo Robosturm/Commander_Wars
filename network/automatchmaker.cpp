@@ -474,14 +474,17 @@ QString AutoMatchMaker::readDataFromJson(const QString & filePath)
     if (QFile::exists(filePath))
     {
         QFile file(filePath);
-        file.open(QIODevice::ReadOnly);
-        QTextStream stream(&file);
-        return stream.readAll();
+        if (file.open(QIODevice::ReadOnly))
+        {
+            QTextStream stream(&file);
+            return stream.readAll();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
-    else
-    {
-        return "";
-    }
+    return "";
 }
 
 bool AutoMatchMaker::getRunning() const

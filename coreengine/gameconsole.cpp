@@ -488,11 +488,17 @@ void GameConsole::resetMapsGameRules(const QString & folder)
         spGameMap pMap = MemoryManagement::create<GameMap>(filePath, true, true, false);
         pMap->getGameRules()->reset();
         QFile file(filePath);
-        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        QDataStream stream(&file);
-        stream.setVersion(QDataStream::Version::Qt_6_5);
-        pMap->serializeObject(stream);
-        file.close();
+        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
+            pMap->serializeObject(stream);
+            file.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
 }
 
@@ -638,18 +644,27 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
         if (Settings::getInstance()->getAiSlave())
         {
             file.setFileName(Settings::getInstance()->getUserPath() + "consoleAiSlave.log");
-            file.open(QIODevice::WriteOnly);
+            if (!file.open(QIODevice::WriteOnly))
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            }
         }
         Mainapp* pApp = Mainapp::getInstance();
         if (pApp->getSlave() && pApp->getCreateSlaveLogs())
         {
             QString slaveName = Settings::getInstance()->getSlaveServerName();
             file.setFileName(Settings::getInstance()->getUserPath() + slaveName + "-" + date + ".log");
-            file.open(QIODevice::WriteOnly);
+            if (!file.open(QIODevice::WriteOnly))
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            }
         }
         else if (!pApp->getSlave())
         {
-            file.open(QIODevice::WriteOnly);
+            if (!file.open(QIODevice::WriteOnly))
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            }
         }
     }
     if (file.isOpen())

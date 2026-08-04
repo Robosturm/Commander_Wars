@@ -54,16 +54,22 @@ bool AwbwReplayDownloader::downLoadReplay(const QString & replay)
     if (!m_cookies.isNull())
     {
         m_file.setFileName(m_downloadPath + replay + ".zip");
-        m_file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        QString urlRequest = "https://awbw.amarriner.com/replay_download.php?games_id=" + replay;
-        QUrl requestUrl(urlRequest);
-        QNetworkRequest request(requestUrl);
-        request.setHeader(QNetworkRequest::CookieHeader, m_cookies);
-        m_downloading = true;
-        ret = true;
-        m_reply = m_webCtrl.get(request);
-        connect(m_reply, &QNetworkReply::downloadProgress, this, &AwbwReplayDownloader::downloadProgress);
-        connect(m_reply, &QNetworkReply::errorOccurred, this, &AwbwReplayDownloader::downloadErrorOccurred, Qt::QueuedConnection);
+        if (m_file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            QString urlRequest = "https://awbw.amarriner.com/replay_download.php?games_id=" + replay;
+            QUrl requestUrl(urlRequest);
+            QNetworkRequest request(requestUrl);
+            request.setHeader(QNetworkRequest::CookieHeader, m_cookies);
+            m_downloading = true;
+            ret = true;
+            m_reply = m_webCtrl.get(request);
+            connect(m_reply, &QNetworkReply::downloadProgress, this, &AwbwReplayDownloader::downloadProgress);
+            connect(m_reply, &QNetworkReply::errorOccurred, this, &AwbwReplayDownloader::downloadErrorOccurred, Qt::QueuedConnection);
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + m_file.fileName(), GameConsole::eERROR);
+        }
     }
     return ret;
 }

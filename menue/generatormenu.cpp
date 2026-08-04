@@ -56,10 +56,17 @@ bool GeneratorMenu::loadVariablesFromFile(const QString & file)
         QFile fileObj(Settings::getInstance()->getUserPath() + "/" + file);
         QDataStream stream(&fileObj);
         stream.setVersion(QDataStream::Version::Qt_6_5);
-        fileObj.open(QIODevice::ReadOnly);
-        m_Variables.deserializeObject(stream);
-        fileObj.close();
-        return true;
+        if (fileObj.open(QIODevice::ReadOnly))
+        {
+            m_Variables.deserializeObject(stream);
+            fileObj.close();
+            return true;
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + fileObj.fileName(), GameConsole::eERROR);
+            return false;
+        }
     }
     return false;
 }
@@ -70,9 +77,15 @@ void GeneratorMenu::writeVariablesToFile(const QString & file) const
     QFile fileObj(file);
     QDataStream stream(&fileObj);
     stream.setVersion(QDataStream::Version::Qt_6_5);
-    fileObj.open(QIODevice::WriteOnly);
-    m_Variables.serializeObject(stream);
-    fileObj.close();
+    if (fileObj.open(QIODevice::WriteOnly))
+    {
+        m_Variables.serializeObject(stream);
+        fileObj.close();
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + fileObj.fileName(), GameConsole::eERROR);
+    }
 }
 
 void GeneratorMenu::writeDataToFile(const QString & file, const QString & data) const
@@ -81,9 +94,15 @@ void GeneratorMenu::writeDataToFile(const QString & file, const QString & data) 
     QFile fileObj(file);
     QDataStream stream(&fileObj);
     stream.setVersion(QDataStream::Version::Qt_6_5);
-    fileObj.open(QIODevice::WriteOnly);
-    stream << data;
-    fileObj.close();
+    if (fileObj.open(QIODevice::WriteOnly))
+    {
+        stream << data;
+        fileObj.close();
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open file " + fileObj.fileName(), GameConsole::eERROR);
+    }
 }
 
 void GeneratorMenu::createDir(const QString & path) const

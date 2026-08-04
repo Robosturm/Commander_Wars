@@ -693,7 +693,7 @@ void LobbyMenu::onSearchedPlayersReceived(const QJsonObject &objData)
 {
     QStringList players;
     QJsonArray usernames = objData.value(JsonKeys::JSONKEY_USERNAMES).toArray();
-    for (const auto &username : usernames)
+    for (const auto &username : std::as_const(usernames))
     {
         QString user = username.toString();
         players.append(user);
@@ -707,7 +707,7 @@ void LobbyMenu::updateGameData(const QJsonObject &objData)
     m_games.clear();
     QJsonObject games = objData.value(JsonKeys::JSONKEY_GAMES).toObject();
     m_serverCurrentMatchCount = objData.value(JsonKeys::JSONKEY_MATCHCOUNT).toInt();
-    for (const auto &game : games)
+    for (const auto &game : std::as_const(games))
     {
         NetworkGameData gameData;
         gameData.fromJson(game.toObject());
@@ -1120,11 +1120,17 @@ void LobbyMenu::onDownloadResponse(const QJsonObject & objData)
         QString filePath = objData.value(JsonKeys::JSONKEY_MAPPATH).toString();
         QFile::remove(filePath);
         QFile file(filePath);
-        file.open(QIODevice::WriteOnly);
-        QDataStream stream(&file);
-        qint32 contentSize = mapArray.size();
-        stream.writeRawData(mapArray.constData(), contentSize);
-        file.close();
+        if (file.open(QIODevice::WriteOnly))
+        {
+            QDataStream stream(&file);
+            qint32 contentSize = mapArray.size();
+            stream.writeRawData(mapArray.constData(), contentSize);
+            file.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
     emit sigOnDownloadedResponse(success);
 }

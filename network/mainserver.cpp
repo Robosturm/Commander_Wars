@@ -135,7 +135,6 @@ MainServer::MainServer()
     QString javascriptName = "mainServer";
     Interpreter *pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(javascriptName, pInterpreter->newQObject(this));
-    Mainapp *pApp = Mainapp::getInstance();
     // connect signals for tcp server events
     connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     connect(m_pGameServer.get(), &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
@@ -258,8 +257,14 @@ void MainServer::restoreServer()
         QFile file(savefile);
         QDataStream stream(&file);
         stream.setVersion(QDataStream::Version::Qt_6_5);
-        file.open(QIODevice::ReadOnly);
-        deserializeObject(stream);
+        if (file.open(QIODevice::ReadOnly))
+        {
+            deserializeObject(stream);
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
 }
 
@@ -1793,10 +1798,16 @@ void MainServer::doDespawnServer()
         m_games.size() > 0)
     {
         QFile file(m_despawningSavefile);
-        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        QDataStream stream(&file);
-        stream.setVersion(QDataStream::Version::Qt_6_5);
-        serializeObject(stream);
+        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
+            serializeObject(stream);
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
 }
 
