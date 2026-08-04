@@ -181,6 +181,8 @@ void GameRules::reset()
 {
     CONSOLE_PRINT("GameRules::reset", GameConsole::eDEBUG);
     resetArrays();
+    m_invalidAiBehaviorLogged = false;
+    setAiBehaviorMode(GameEnums::AiBehavior_Standard);
     m_WeatherChances.clear();
     m_Weathers.clear();
 
@@ -924,6 +926,30 @@ GameEnums::Fog GameRules::getFogMode() const
     return m_FogMode;
 }
 
+GameEnums::AiBehavior GameRules::getAiBehaviorMode() const
+{
+    return m_aiBehaviorMode;
+}
+
+void GameRules::setAiBehaviorMode(GameEnums::AiBehavior aiBehaviorMode)
+{
+    switch (aiBehaviorMode)
+    {
+        case GameEnums::AiBehavior_Standard:
+        case GameEnums::AiBehavior_Counterpoint:
+            m_aiBehaviorMode = aiBehaviorMode;
+            break;
+        default:
+            if (!m_invalidAiBehaviorLogged)
+            {
+                CONSOLE_PRINT("Invalid AI behavior mode. Using Standard.", GameConsole::eWARNING);
+                m_invalidAiBehaviorLogged = true;
+            }
+            m_aiBehaviorMode = GameEnums::AiBehavior_Standard;
+            break;
+    }
+}
+
 void GameRules::setFogMode(const GameEnums::Fog FogMode)
 {
     if (FogMode >= GameEnums::Fog::Fog_Off &&
@@ -1594,6 +1620,7 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << m_buildingVision;
     pStream << m_gatewayHosting;
     pStream << m_coGlobalD2D;
+    pStream << static_cast<qint32>(m_aiBehaviorMode);
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1605,6 +1632,8 @@ void GameRules::deserializer(QDataStream& pStream, bool)
 {
     CONSOLE_PRINT("reading game rules", GameConsole::eDEBUG);
     resetArrays();
+    m_invalidAiBehaviorLogged = false;
+    setAiBehaviorMode(GameEnums::AiBehavior_Standard);
 
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     qint32 version = 0;
@@ -1958,6 +1987,12 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         pStream >> m_buildingVision;
         pStream >> m_gatewayHosting;
         pStream >> m_coGlobalD2D;
+    }
+    if (version >= AI_BEHAVIOR_SERIALIZATION_VERSION)
+    {
+        qint32 aiBehaviorMode = static_cast<qint32>(GameEnums::AiBehavior_Standard);
+        pStream >> aiBehaviorMode;
+        setAiBehaviorMode(static_cast<GameEnums::AiBehavior>(aiBehaviorMode));
     }
     CONSOLE_PRINT("Weather prediction for days after restoring " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
 }

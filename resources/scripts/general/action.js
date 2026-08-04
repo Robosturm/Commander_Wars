@@ -68,6 +68,21 @@ var ACTION =
     },
     getStepData : null,
 
+    // Optional. Define it to describe buildable units to the ai without opening a menu step; the
+    // production system falls back to getStepData when an action leaves this null.
+    getProductionMenuData : function(action, data, map)
+    {
+    },
+    getProductionMenuData : null,
+
+    // Optional. Return true when the action opens a unit build menu, so the ai production
+    // system queries it like the base factory actions.
+    getIsBaseProductionAction : function(map)
+    {
+        return false;
+    },
+    getIsBaseProductionAction : null,
+
     getDescription : function()
     {
         return "";

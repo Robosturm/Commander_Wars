@@ -1,10 +1,27 @@
 #include "ai/productionSystem/simpleproductionsystem.h"
 #include "ai/coreai.h"
 #include "game/gamemap.h"
+#include "game/player.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 #include "resource_management/unitspritemanager.h"
+
+#include <QCryptographicHash>
+
+namespace
+{
+constexpr quint32 PRODUCTION_QUERY_SEED = 0;
+// Pinned so a Qt upgrade cannot silently change every derived Counterpoint seed.
+constexpr QDataStream::Version COUNTERPOINT_SEED_STREAM_VERSION = QDataStream::Version::Qt_6_5;
+const QString BASE_PRODUCTION_MENU_FUNCTION = QStringLiteral("getStepData");
+const QString CUSTOM_PRODUCTION_MENU_FUNCTION = QStringLiteral("getProductionMenuData");
+const QString COUNTERPOINT_SEED_NAMESPACE = QStringLiteral("counterpoint-production");
+const QString PREPARE_PRODUCTION_FUNCTION = QStringLiteral("prepareProduction");
+const QString BASE_PRODUCTION_ACTION_FUNCTION = QStringLiteral("getIsBaseProductionAction");
+// Comfortably above any real roster, including large mods, and a hard ceiling on retained units.
+constexpr std::size_t COUNTERPOINT_UNIT_CACHE_LIMIT = 512;
+}
 
 SimpleProductionSystem::SimpleProductionSystem(CoreAI * owner)
     : m_owner(owner)
@@ -20,23 +37,10 @@ void SimpleProductionSystem::initialize()
 {
     if (!m_init)
     {
-        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({m_jsThis,
                            JsThis::getJsThis(m_owner),
                            GameMap::getMapJsThis(m_owner->getMap())});
-        QString function1 = "initializeSimpleProductionSystem";
-        QJSValue erg(false);
-        if (pInterpreter->exists(GameScript::m_scriptName, function1))
-        {
-            erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
-        }
-        if (erg.isBool() && !erg.toBool())
-        {
-            if (pInterpreter->exists(m_owner->getAiName(), function1))
-            {
-                erg = pInterpreter->doFunction(m_owner->getAiName(), function1, args);
-            }
-        }
+        QJSValue erg = dispatchScriptFunction(QStringLiteral("initializeSimpleProductionSystem"), args);
         if (erg.isBool())
         {
             m_init = erg.toBool();
@@ -62,8 +66,6 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
     executed = false;
     if (m_enabled && m_init)
     {
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        QString function1 = "buildUnitSimpleProductionSystem";
         QJSValueList args({m_jsThis,
                            JsThis::getJsThis(m_owner),
                            JsThis::getJsThis(pBuildings),
@@ -71,18 +73,7 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
                            JsThis::getJsThis(pEnemyUnits),
                            JsThis::getJsThis(pEnemyBuildings),
                            GameMap::getMapJsThis(m_owner->getMap())});
-        QJSValue erg(false);
-        if (pInterpreter->exists(GameScript::m_scriptName, function1))
-        {
-            erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
-        }
-        if (erg.isBool() && !erg.toBool())
-        {
-            if (pInterpreter->exists(m_owner->getAiName(), function1))
-            {
-                erg = pInterpreter->doFunction(m_owner->getAiName(), function1, args);
-            }
-        }
+        QJSValue erg = dispatchScriptFunction(QStringLiteral("buildUnitSimpleProductionSystem"), args);
         if (erg.isBool())
         {
             executed = erg.toBool();
@@ -91,11 +82,76 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorU
     return m_init && m_enabled;
 }
 
-void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, spQmlVectorUnit &pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
+QJSValue SimpleProductionSystem::dispatchScriptFunction(const QString & function, const QJSValueList & args) const
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg(false);
+    if (pInterpreter->exists(GameScript::m_scriptName, function))
+    {
+        erg = pInterpreter->doFunction(GameScript::m_scriptName, function, args);
+    }
+    if (erg.isBool() && !erg.toBool() && pInterpreter->exists(m_owner->getAiName(), function))
+    {
+        erg = pInterpreter->doFunction(m_owner->getAiName(), function, args);
+    }
+    return erg;
+}
+
+Building* SimpleProductionSystem::ownedBuildingAt(qint32 x, qint32 y) const
+{
+    if (m_owner == nullptr || m_owner->getPlayer() == nullptr)
+    {
+        return nullptr;
+    }
+    GameMap* pMap = m_owner->getMap();
+    if (pMap == nullptr || !pMap->onMap(x, y))
+    {
+        return nullptr;
+    }
+    Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+    if (pBuilding == nullptr || pBuilding->getOwner() != m_owner->getPlayer())
+    {
+        return nullptr;
+    }
+    return pBuilding;
+}
+
+void SimpleProductionSystem::resetProductionPreparation()
+{
+    m_productionPrepared = false;
+}
+
+void SimpleProductionSystem::prepareProduction(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits)
+{
+    if (!m_enabled || !m_init || m_productionPrepared)
+    {
+        return;
+    }
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    const bool gameScriptHandles = pInterpreter->exists(GameScript::m_scriptName, PREPARE_PRODUCTION_FUNCTION);
+    const bool aiHandles = pInterpreter->exists(m_owner->getAiName(), PREPARE_PRODUCTION_FUNCTION);
+    if (!gameScriptHandles && !aiHandles)
+    {
+        return;
+    }
+    m_productionPrepared = true;
+    // Deliberately unpruned, unlike the vector the ordinary build queue receives: production
+    // planning scores the whole enemy army.
+    spQmlVectorUnit pEnemyUnits = m_owner->getPlayer()->getSpEnemyUnits();
+    spQmlVectorBuilding pEnemyBuildings = m_owner->getPlayer()->getSpEnemyBuildings();
+    QJSValueList args({m_jsThis,
+                       JsThis::getJsThis(m_owner),
+                       JsThis::getJsThis(pBuildings),
+                       JsThis::getJsThis(pUnits),
+                       JsThis::getJsThis(pEnemyUnits.get()),
+                       JsThis::getJsThis(pEnemyBuildings.get()),
+                       GameMap::getMapJsThis(m_owner->getMap())});
+    dispatchScriptFunction(PREPARE_PRODUCTION_FUNCTION, args);
+}
+
+void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, spQmlVectorUnit &pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
+{
     m_pEnemyUnits = pEnemyUnits;
-    QString function1 = "onNewBuildQueue";
     QJSValueList args({m_jsThis,
                        JsThis::getJsThis(m_owner),
                        JsThis::getJsThis(pBuildings),
@@ -103,18 +159,7 @@ void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlV
                        JsThis::getJsThis(pEnemyUnits.get()),
                        JsThis::getJsThis(pEnemyBuildings),
                        GameMap::getMapJsThis(m_owner->getMap())});
-    QJSValue erg(false);
-    if (pInterpreter->exists(GameScript::m_scriptName, function1))
-    {
-        erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
-    }
-    if (erg.isBool() && !erg.toBool())
-    {
-        if (pInterpreter->exists(m_owner->getAiName(), function1))
-        {
-            erg = pInterpreter->doFunction(m_owner->getAiName(), function1, args);
-        }
-    }
+    dispatchScriptFunction(QStringLiteral("onNewBuildQueue"), args);
     updateActiveProductionSystem(pBuildings);
     updateIslandSizeForBuildings(pBuildings);
 }
@@ -163,6 +208,171 @@ qint32 SimpleProductionSystem::getMaxSingleDamage() const
 void SimpleProductionSystem::setMaxSingleDamage(qint32 newMaxSingleDamage)
 {
     m_maxSingleDamage = newMaxSingleDamage;
+}
+
+ProductionActionData* SimpleProductionSystem::getProductionActionData(Building* pBuilding, const QString & actionId) const
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    if (!pInterpreter->getInJsCall())
+    {
+        return nullptr;
+    }
+    spProductionActionData pData = queryProductionAction(pBuilding, actionId);
+    if (pData.get() != nullptr)
+    {
+        pInterpreter->trackJsObject(pData);
+    }
+    return pData.get();
+}
+
+quint32 SimpleProductionSystem::deriveCounterpointSeed(qint32 algorithmVersion, qint32 generation) const
+{
+    if (m_owner == nullptr || m_owner->getMap() == nullptr || m_owner->getPlayer() == nullptr)
+    {
+        // Zero is also a legal hash result, so the caller cannot tell these apart. Say so here
+        // rather than let every failing system share one silent stream.
+        CONSOLE_PRINT("Counterpoint seed unavailable, falling back to a shared stream", GameConsole::eERROR);
+        return 0;
+    }
+    GameMap* pMap = m_owner->getMap();
+    QByteArray seedData;
+    QDataStream seedStream(&seedData, QIODevice::WriteOnly);
+    seedStream.setVersion(COUNTERPOINT_SEED_STREAM_VERSION);
+    seedStream << COUNTERPOINT_SEED_NAMESPACE;
+    seedStream << algorithmVersion;
+    seedStream << m_owner->getPlayer()->getPlayerID();
+    seedStream << pMap->getCurrentDay();
+    seedStream << generation;
+    seedStream << pMap->getMapHash();
+    const QByteArray hash = QCryptographicHash::hash(seedData, QCryptographicHash::Sha256);
+    QDataStream hashStream(hash);
+    hashStream.setVersion(COUNTERPOINT_SEED_STREAM_VERSION);
+    quint32 seed = 0;
+    hashStream >> seed;
+    return seed;
+}
+
+spUnit SimpleProductionSystem::getCounterpointUnit(const QString & unitId)
+{
+    auto entry = m_counterpointUnits.find(unitId);
+    if (entry != m_counterpointUnits.end())
+    {
+        return entry->second;
+    }
+    spUnit pUnit = MemoryManagement::create<Unit>(unitId, m_owner->getPlayer(), false, m_owner->getMap());
+    // Past the cap callers still get a unit, it is just not retained, so an oversized roster
+    // degrades to the uncached cost instead of thrashing the cache.
+    if (m_counterpointUnits.size() < COUNTERPOINT_UNIT_CACHE_LIMIT)
+    {
+        m_counterpointUnits.emplace(unitId, pUnit);
+    }
+    else
+    {
+        CONSOLE_PRINT("Counterpoint unit cache limit reached, " + unitId + " stays uncached", GameConsole::eERROR);
+    }
+    return pUnit;
+}
+
+qreal SimpleProductionSystem::getCounterpointBaseDamage(const QString & attackerId, const QString & defenderId)
+{
+    if (m_owner == nullptr || m_owner->getMap() == nullptr || m_owner->getPlayer() == nullptr ||
+        !UnitSpriteManager::getInstance()->exists(attackerId) ||
+        !UnitSpriteManager::getInstance()->exists(defenderId))
+    {
+        return 0;
+    }
+    // Base damage is a weapon table lookup keyed by unit id, so the pair is stable for the
+    // whole match and the units can be reused.
+    spUnit pAttacker = getCounterpointUnit(attackerId);
+    spUnit pDefender = getCounterpointUnit(defenderId);
+    return pAttacker->getBaseDamage(pDefender.get());
+}
+
+bool SimpleProductionSystem::executeCounterpointBuild(qint32 x, qint32 y, const QString & unitId, qint32 ordinal, qint32 expectedCost)
+{
+    if (unitId.isEmpty() || ordinal < 0)
+    {
+        return false;
+    }
+    Building* pBuilding = ownedBuildingAt(x, y);
+    if (pBuilding == nullptr)
+    {
+        return false;
+    }
+    return executeBuildAction(pBuilding, unitId, ordinal, expectedCost, true);
+}
+
+bool SimpleProductionSystem::isBaseProductionAction(const QString & actionId) const
+{
+    auto entry = m_baseProductionActions.find(actionId);
+    if (entry != m_baseProductionActions.end())
+    {
+        return entry->second;
+    }
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    bool result = false;
+    if (pInterpreter->exists(actionId, BASE_PRODUCTION_ACTION_FUNCTION))
+    {
+        QJSValueList args({GameMap::getMapJsThis(m_owner->getMap())});
+        result = pInterpreter->doFunction(actionId, BASE_PRODUCTION_ACTION_FUNCTION, args).toBool();
+    }
+    else
+    {
+        // Keeps mods that replace a base action script without the new hook working.
+        result = actionId == CoreAI::ACTION_BUILD_UNITS ||
+                 actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1 ||
+                 actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2 ||
+                 actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3 ||
+                 actionId == CoreAI::ACTION_NEST_FACTORY_DOOR;
+    }
+    m_baseProductionActions.emplace(actionId, result);
+    return result;
+}
+
+spProductionActionData SimpleProductionSystem::queryProductionAction(Building* pBuilding, const QString & actionId) const
+{
+    GameMap* pMap = m_owner != nullptr ? m_owner->getMap() : nullptr;
+    if (pBuilding == nullptr ||
+        pMap == nullptr ||
+        pBuilding->getMap() != pMap ||
+        pBuilding->getOwner() == nullptr ||
+        pBuilding->getOwner() != m_owner->getPlayer() ||
+        !pMap->onMap(pBuilding->getX(), pBuilding->getY()) ||
+        pMap->getTerrain(pBuilding->getX(), pBuilding->getY())->getBuilding() != pBuilding ||
+        !pBuilding->getActionList().contains(actionId))
+    {
+        return nullptr;
+    }
+
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function;
+    if (pInterpreter->exists(actionId, CUSTOM_PRODUCTION_MENU_FUNCTION))
+    {
+        function = CUSTOM_PRODUCTION_MENU_FUNCTION;
+    }
+    else if (isBaseProductionAction(actionId))
+    {
+        function = BASE_PRODUCTION_MENU_FUNCTION;
+    }
+    else
+    {
+        return nullptr;
+    }
+
+    spGameAction pAction = MemoryManagement::create<GameAction>(actionId, pMap, PRODUCTION_QUERY_SEED);
+    pAction->setTarget(pBuilding->getPosition());
+    spProductionActionData pData = MemoryManagement::create<ProductionActionData>(pMap, pBuilding->getX(), pBuilding->getY(), actionId);
+    QJSValueList args({JsThis::getJsThis(pAction.get()),
+                       pInterpreter->newQObject(pData.get()),
+                       GameMap::getMapJsThis(pMap)});
+    QJSValue result = pInterpreter->doFunction(actionId, function, args);
+    if (result.isError() || !pData->validData())
+    {
+        return nullptr;
+    }
+    pData->setActionAvailable(pAction->canBePerformed(actionId, false, pBuilding->getOwner()));
+    return pData;
 }
 
 qint32 SimpleProductionSystem::getMaxDamageCheckRange() const
@@ -644,39 +854,76 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
 
 bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId, bool alwaysBuild)
 {
-    Building* pBuilding = m_owner->getMap()->getTerrain(x, y)->getBuilding();
-    if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS) &&
-        pBuilding->getTerrain()->getUnit() == nullptr &&
-        (alwaysBuild || reasonableBuildField(x, y, unitId, m_maxDamageCheckRange, m_maxSingleDamage)))
+    if (unitId.isEmpty())
     {
-        spGameAction pAction = MemoryManagement::create<GameAction>(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
-        pAction->setTarget(QPoint(x, y));
-        if (pAction->canBePerformed())
+        return false;
+    }
+    Building* pBuilding = ownedBuildingAt(x, y);
+    if (pBuilding == nullptr)
+    {
+        return false;
+    }
+    return executeBuildAction(pBuilding, unitId, DEFAULT_ACTION_ORDINAL, NO_EXPECTED_COST, alwaysBuild);
+}
+
+bool SimpleProductionSystem::executeBuildAction(Building* pBuilding, const QString & unitId, qint32 ordinal, qint32 expectedCost, bool alwaysBuild)
+{
+    if (pBuilding == nullptr || pBuilding->getOwner() != m_owner->getPlayer() ||
+        !pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS) ||
+        pBuilding->getTerrain()->getUnit() != nullptr)
+    {
+        return false;
+    }
+    if (!alwaysBuild &&
+        !reasonableBuildField(pBuilding->getX(), pBuilding->getY(), unitId, m_maxDamageCheckRange, m_maxSingleDamage))
+    {
+        return false;
+    }
+    spGameAction pAction = MemoryManagement::create<GameAction>(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
+    pAction->setTarget(pBuilding->getPosition());
+    if (!pAction->canBePerformed())
+    {
+        return false;
+    }
+    spMenuData pData = pAction->getMenuStepData();
+    if (!pData->validData())
+    {
+        return false;
+    }
+    const QStringList actionIds = pData->getActionIDs();
+    qint32 currentOrdinal = 0;
+    qint32 selectedIndex = -1;
+    for (qint32 index = 0; index < actionIds.size(); ++index)
+    {
+        if (actionIds[index] == unitId)
         {
-            // we're allowed to build units here
-            spMenuData pData = pAction->getMenuStepData();
-            if (pData->validData())
+            if (currentOrdinal == ordinal)
             {
-                auto indexOf = pData->getActionIDs().indexOf(unitId);
-                if (indexOf >= 0 && pData->getEnabledList()[indexOf])
-                {
-                    m_owner->addMenuItemData(pAction, unitId, pData->getCostList()[indexOf]);
-                    // produce the unit
-                    if (pAction->isFinalStep())
-                    {
-                        if (pAction->canBePerformed())
-                        {
-                            CONSOLE_PRINT("Building unit " + unitId + " at x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
-                            ++m_currentTurnProducedUnitsCounter;
-                            emit m_owner->sigPerformAction(pAction);
-                            return true;
-                        }
-                    }
-                }
+                selectedIndex = index;
+                break;
             }
+            ++currentOrdinal;
         }
     }
-    return false;
+    if (selectedIndex < 0 || !pData->getEnabledList()[selectedIndex])
+    {
+        return false;
+    }
+    const qint32 liveCost = pData->getCostList()[selectedIndex];
+    const bool hasExpectedCost = expectedCost > NO_EXPECTED_COST;
+    if (hasExpectedCost && liveCost != expectedCost)
+    {
+        return false;
+    }
+    m_owner->addMenuItemData(pAction, unitId, liveCost);
+    if (!pAction->isFinalStep() || !pAction->canBePerformed())
+    {
+        return false;
+    }
+    CONSOLE_PRINT("Building unit " + unitId + " at x=" + QString::number(pBuilding->getX()) + " y=" + QString::number(pBuilding->getY()), GameConsole::eDEBUG);
+    ++m_currentTurnProducedUnitsCounter;
+    emit m_owner->sigPerformAction(pAction);
+    return true;
 }
 
 bool SimpleProductionSystem::reasonableBuildField(qint32 x, qint32 y, QString unitId, qint32 maxDamageCheckRange, qint32 maxSingleDamage)

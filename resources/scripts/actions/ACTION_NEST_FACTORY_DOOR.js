@@ -124,6 +124,10 @@ var Constructor = function()
             ACHIEVEMENT_BUILD_UNIT.unitProduced(unitID);
         }
     };
+    this.getIsBaseProductionAction = function(map)
+    {
+        return true;
+    };
     this.getName = function(map)
     {
         return qsTr("Build unit with nest");

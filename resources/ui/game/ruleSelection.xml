@@ -51,6 +51,24 @@
                     <x>5</x>
                     <y>lastY + lastHeight + 10</y>
                     <width>300</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","AI behavior:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <DropDownMenu>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>400</width>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Select how the ai plans unit production.\n Counterpoint budgets across all of its factories at once and builds to answer the enemy army.")</tooltip>
+                    <startValue>RuleSelectionScript.getAiBehaviorValue()</startValue>
+                    <items>RuleSelectionScript.getAiBehaviorRule()</items>
+                    <onEvent>RuleSelectionScript.setAiBehaviorValue(input);</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </DropDownMenu>
+                <Label>
+                    <x>5</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
                     <text>QT_TRANSLATE_NOOP("GAME","CO specific units:")</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>

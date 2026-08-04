@@ -24,6 +24,11 @@
 #include <QSettings>
 #include <map>
 
+namespace
+{
+const QString BUILDING_MENU_RESULT_FUNCTION = QStringLiteral("onBuildingMenuItemResult");
+}
+
 const char* const CoreAI::ACTION_WAIT = "ACTION_WAIT";
 const char* const CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
 const char* const CoreAI::ACTION_SUPPORTSINGLE = "ACTION_SUPPORTSINGLE";
@@ -180,6 +185,23 @@ void CoreAI::loadIni(QString file)
     }
 }
 
+qint32 CoreAI::getLoadedIniCount(const QString & file) const
+{
+    return static_cast<qint32>(m_iniFiles.count(file));
+}
+
+double CoreAI::getIniValue(const QString & name, double fallback) const
+{
+    for (const auto & entry : std::as_const(m_iniData))
+    {
+        if (entry.m_name == name)
+        {
+            return *entry.m_value;
+        }
+    }
+    return fallback;
+}
+
 void CoreAI::readIni(QString name)
 {
     if (QFile::exists(name))
@@ -291,14 +313,7 @@ void CoreAI::setInitValue(QString name, double newValue)
 
 double CoreAI::getInitValue(QString name) const
 {
-    for (auto & entry : m_iniData)
-    {
-        if (entry.m_name == name)
-        {
-            return *entry.m_value;
-        }
-    }
-    return 0.0;
+    return getIniValue(name, 0.0);
 }
 
 void CoreAI::nextAction()
@@ -2266,6 +2281,7 @@ void CoreAI::finishTurn()
     m_usedTransportSystem = false;
     m_usedPredefinedAi = false;
     m_productionSystem.setCurrentTurnProducedUnitsCounter(0);
+    m_productionSystem.resetProductionPreparation();
     spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_NEXT_PLAYER, m_pMap);
     CO* pCO0 = m_pPlayer->getCO(0);
     CO* pCO1 = m_pPlayer->getCO(1);
@@ -2303,9 +2319,27 @@ void CoreAI::finishTurn()
 bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
 {
     AI_CONSOLE_PRINT("CoreAI::useBuilding", GameConsole::eDEBUG);
-    for (auto & pBuilding : pBuildings->getVector())
+    auto & buildingVector = pBuildings->getVector();
+    QVector<QStringList> buildingActions(buildingVector.size());
+    QVector<bool> buildingActionsLoaded(buildingVector.size(), false);
+    qint32 remainingBuildingScanRestarts = 0;
+    for (qint32 buildingIndex = 0; buildingIndex < buildingVector.size(); ++buildingIndex)
     {
-        QStringList actions = pBuilding->getActionList();
+        auto & pBuilding = buildingVector[buildingIndex];
+        bool restartBuildingScan = false;
+        if (!buildingActionsLoaded[buildingIndex])
+        {
+            buildingActions[buildingIndex] = pBuilding->getActionList();
+            buildingActionsLoaded[buildingIndex] = true;
+            for (const auto & action : buildingActions[buildingIndex])
+            {
+                if (action != ACTION_BUILD_UNITS)
+                {
+                    ++remainingBuildingScanRestarts;
+                }
+            }
+        }
+        const QStringList & actions = buildingActions[buildingIndex];
         if (actions.size() >= 1 &&
             !actions[0].isEmpty())
         {
@@ -2313,131 +2347,248 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
             {
                 if (action != ACTION_BUILD_UNITS)
                 {
-                    spGameAction pAction = MemoryManagement::create<GameAction>(action, m_pMap);
-                    pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
-                    if (pAction->canBePerformed())
+                    const BuildingActionResult result = tryBuildingAction(pBuilding.get(), action, pUnits, pBuildings, remainingBuildingScanRestarts);
+                    if (result == BuildingActionResult::Performed)
                     {
-                        if (pAction->isFinalStep())
-                        {
-                            emit sigPerformAction(pAction);
-                            return true;
-                        }
-                        else
-                        {
-                            while (!pAction->isFinalStep())
-                            {
-                                QString stepType = pAction->getStepInputType();
-                                if (stepType == GameAction::INPUTSTEP_FIELD)
-                                {
-                                    QPoint target(0, 0);
-                                    spMarkedFieldData pData = pAction->getMarkedFieldStepData();
-                                    if (!getBuildingTargetPointFromScript(pAction, pData, target))
-                                    {
-                                        qint32 maxValue = std::numeric_limits<qint32>::lowest();
-                                        if (pData->getAllFields())
-                                        {
-                                            qint32 width = m_pMap->getMapWidth();
-                                            qint32 height = m_pMap->getMapHeight();
-                                            for (qint32 x = 0; x < width; ++x)
-                                            {
-                                                for (qint32 y = 0; y < height; ++y)
-                                                {
-                                                    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-                                                    if (pUnit != nullptr)
-                                                    {
-                                                        qint32 unitValue = pUnit->getCoUnitValue();
-                                                        if (unitValue > maxValue)
-                                                        {
-                                                            maxValue = unitValue;
-                                                            target = QPoint(x, y);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            QVector<QPoint> & points = *pData->getPoints();
-                                            qint32 index = -1;
-                                            for (qint32 i2 = 0; i2 < points.size(); ++i2)
-                                            {
-                                                Unit* pUnit = m_pMap->getTerrain(points[i2].x(), points[i2].y())->getUnit();
-                                                qint32 unitValue = pUnit->getCoUnitValue();
-                                                if (pUnit != nullptr && unitValue > maxValue)
-                                                {
-                                                    maxValue = unitValue;
-                                                    index = i2;
-                                                }
-                                            }
-                                            if (index < 0)
-                                            {
-                                                target = points.at(GlobalUtils::randIntBase(0, points.size() -1));
-                                            }
-                                            else
-                                            {
-                                                target = points.at(index);
-                                            }
-                                        }
-                                    }
-                                    addSelectedFieldData(pAction, target);
-                                }
-                                else if (stepType == "MENU")
-                                {
-                                    spMenuData pData = pAction->getMenuStepData();
-                                    if (pData->validData())
-                                    {
-                                        qint32 selection = -1;
-                                        auto enable = pData->getEnabledList();
-                                        QStringList items = pData->getActionIDs();
-                                        auto costs = pData->getCostList();
-                                        if (!getBuildingMenuItemFromScript(pAction, pUnits, pBuildings, pData, selection))
-                                        {
-                                            qint32 i = 0;
-                                            while (i < enable.size())
-                                            {
-                                                if (enable[i])
-                                                {
-                                                    i++;
-                                                }
-                                                else
-                                                {
-                                                    items.removeAt(i);
-                                                    enable.removeAt(i);
-                                                }
-                                            }
-                                            selection = GlobalUtils::randIntBase(0, items.size() - 1);
-                                        }
-                                        if (selection >= 0 && selection < items.size() && enable[selection])
-                                        {
-                                            addMenuItemData(pAction, items[selection], costs[selection]);
-                                        }
-                                        else
-                                        {
-                                            CONSOLE_PRINT("Illegal menu selection skipping building action", GameConsole::eERROR);
-                                            break;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    CONSOLE_PRINT("Uknown action step type: " + stepType, GameConsole::eERROR);
-                                    break;
-                                }
-                            }
-                            if (pAction->isFinalStep())
-                            {
-                                if (pAction->canBePerformed())
-                                {
-                                    emit sigPerformAction(pAction);
-                                    return true;
-                                }
-                            }
-                        }
+                        return true;
+                    }
+                    else if (result == BuildingActionResult::RestartScan)
+                    {
+                        restartBuildingScan = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (restartBuildingScan)
+        {
+            buildingIndex = -1;
+        }
+    }
+    return false;
+}
+
+CoreAI::BuildingActionResult CoreAI::tryBuildingAction(Building* pBuilding, const QString & actionId, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, qint32 & remainingBuildingScanRestarts)
+{
+    BuildingActionState state;
+    do
+    {
+        ++state.actionAttempts;
+        state.retryAction = false;
+        state.pendingMenuScript.clear();
+        spGameAction pAction = MemoryManagement::create<GameAction>(actionId, m_pMap);
+        pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
+        if (pAction->canBePerformed())
+        {
+            if (pAction->isFinalStep())
+            {
+                emit sigPerformAction(pAction);
+                return BuildingActionResult::Performed;
+            }
+            walkBuildingActionSteps(pAction, pUnits, pBuildings, state, remainingBuildingScanRestarts);
+            if (state.restartBuildingScan)
+            {
+                break;
+            }
+            const bool actionReady = pAction->isFinalStep() && pAction->canBePerformed();
+            if (actionReady)
+            {
+                emit sigPerformAction(pAction);
+                sendBuildingMenuItemResultToScript(pAction, true, state.pendingMenuScript);
+                return BuildingActionResult::Performed;
+            }
+            applyBuildingMenuFailure(pAction, state.pendingMenuScript, state, remainingBuildingScanRestarts);
+        }
+    }
+    while (!state.restartBuildingScan && state.retryAction && state.actionAttempts < state.actionAttemptLimit);
+    if (state.restartBuildingScan)
+    {
+        return BuildingActionResult::RestartScan;
+    }
+    return BuildingActionResult::Skipped;
+}
+
+void CoreAI::walkBuildingActionSteps(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, BuildingActionState & state, qint32 & remainingBuildingScanRestarts)
+{
+    while (!pAction->isFinalStep())
+    {
+        QString stepType = pAction->getStepInputType();
+        if (stepType == GameAction::INPUTSTEP_FIELD)
+        {
+            addBuildingActionFieldStep(pAction);
+        }
+        else if (stepType == "MENU")
+        {
+            if (!handleBuildingActionMenuStep(pAction, pUnits, pBuildings, state, remainingBuildingScanRestarts))
+            {
+                break;
+            }
+        }
+        else
+        {
+            CONSOLE_PRINT("Uknown action step type: " + stepType, GameConsole::eERROR);
+            break;
+        }
+    }
+}
+
+void CoreAI::addBuildingActionFieldStep(spGameAction & pAction)
+{
+    QPoint target(0, 0);
+    spMarkedFieldData pData = pAction->getMarkedFieldStepData();
+    if (!getBuildingTargetPointFromScript(pAction, pData, target))
+    {
+        target = pickFallbackBuildingActionTarget(pData);
+    }
+    addSelectedFieldData(pAction, target);
+}
+
+QPoint CoreAI::pickFallbackBuildingActionTarget(const spMarkedFieldData & pData) const
+{
+    QPoint target(0, 0);
+    qint32 maxValue = std::numeric_limits<qint32>::lowest();
+    if (pData->getAllFields())
+    {
+        qint32 width = m_pMap->getMapWidth();
+        qint32 height = m_pMap->getMapHeight();
+        for (qint32 x = 0; x < width; ++x)
+        {
+            for (qint32 y = 0; y < height; ++y)
+            {
+                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                if (pUnit != nullptr)
+                {
+                    qint32 unitValue = pUnit->getCoUnitValue();
+                    if (unitValue > maxValue)
+                    {
+                        maxValue = unitValue;
+                        target = QPoint(x, y);
                     }
                 }
             }
         }
     }
+    else
+    {
+        QVector<QPoint> & points = *pData->getPoints();
+        qint32 index = -1;
+        for (qint32 i2 = 0; i2 < points.size(); ++i2)
+        {
+            Unit* pUnit = m_pMap->getTerrain(points[i2].x(), points[i2].y())->getUnit();
+            if (pUnit != nullptr)
+            {
+                qint32 unitValue = pUnit->getCoUnitValue();
+                if (unitValue > maxValue)
+                {
+                    maxValue = unitValue;
+                    index = i2;
+                }
+            }
+        }
+        if (index < 0)
+        {
+            target = points.at(GlobalUtils::randIntBase(0, points.size() -1));
+        }
+        else
+        {
+            target = points.at(index);
+        }
+    }
+    return target;
+}
+
+bool CoreAI::handleBuildingActionMenuStep(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, BuildingActionState & state, qint32 & remainingBuildingScanRestarts)
+{
+    spMenuData pData = pAction->getMenuStepData();
+    if (!pData->validData())
+    {
+        return true;
+    }
+    qint32 selection = -1;
+    auto enable = pData->getEnabledList();
+    QStringList items = pData->getActionIDs();
+    auto costs = pData->getCostList();
+    if (state.actionAttempts == 1)
+    {
+        state.actionAttemptLimit = std::max(
+            state.actionAttemptLimit,
+            static_cast<qint32>(items.size())
+        );
+    }
+    QString selectionScript;
+    if (!getBuildingMenuItemFromScript(
+            pAction,
+            pUnits,
+            pBuildings,
+            pData,
+            selection,
+            selectionScript
+        ))
+    {
+        if (applyBuildingMenuFailure(pAction, selectionScript, state, remainingBuildingScanRestarts))
+        {
+            return false;
+        }
+        selectionScript.clear();
+        qint32 i = 0;
+        while (i < enable.size())
+        {
+            if (enable[i])
+            {
+                i++;
+            }
+            else
+            {
+                items.removeAt(i);
+                costs.removeAt(i);
+                enable.removeAt(i);
+            }
+        }
+        if (items.isEmpty())
+        {
+            return false;
+        }
+        selection = GlobalUtils::randIntBase(0, items.size() - 1);
+    }
+    if (selection == GameEnums::MenuSelection_Restart)
+    {
+        state.restartBuildingScan = requestBuildingScanRestart(remainingBuildingScanRestarts);
+        return false;
+    }
+    else if (selection == GameEnums::MenuSelection_Skip)
+    {
+        return false;
+    }
+    else if (selection >= 0 && selection < items.size() && enable[selection])
+    {
+        addMenuItemData(pAction, items[selection], costs[selection]);
+        state.pendingMenuScript = selectionScript;
+        return true;
+    }
+    CONSOLE_PRINT("Illegal menu selection skipping building action", GameConsole::eERROR);
+    return false;
+}
+
+bool CoreAI::applyBuildingMenuFailure(spGameAction & pFailedAction, const QString & scriptName, BuildingActionState & state, qint32 & remainingBuildingScanRestarts)
+{
+    bool handled = false;
+    const BuildingMenuResult result = sendBuildingMenuItemResultToScript(pFailedAction, false, scriptName, &handled);
+    state.retryAction = state.retryAction || result == BuildingMenuResult::RetryAction;
+    if (result == BuildingMenuResult::RestartBuildingScan)
+    {
+        state.restartBuildingScan = requestBuildingScanRestart(remainingBuildingScanRestarts);
+    }
+    return handled;
+}
+
+bool CoreAI::requestBuildingScanRestart(qint32 & remainingBuildingScanRestarts) const
+{
+    if (remainingBuildingScanRestarts > 0)
+    {
+        --remainingBuildingScanRestarts;
+        return true;
+    }
+    CONSOLE_PRINT("Building menu restart limit reached", GameConsole::eWARNING);
     return false;
 }
 
@@ -2490,9 +2641,10 @@ bool CoreAI::getBuildingTargetPointFromScript(spGameAction & pAction, const spMa
     return ret;
 }
 
-bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, const spMenuData & pData, qint32 & index)
+bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, const spMenuData & pData, qint32 & index, QString & scriptName)
 {
     bool ret = false;
+    scriptName.clear();
     Interpreter* pInterpreter = Interpreter::getInstance();
     auto enable = pData->getEnabledList();
     QStringList items = pData->getActionIDs();
@@ -2514,6 +2666,7 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
         if (erg.isNumber())
         {
             index = erg.toInt();
+            scriptName = GameScript::m_scriptName;
         }
     }
     if (erg.isBool() && !erg.toBool())
@@ -2524,10 +2677,12 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
             if (erg.isNumber())
             {
                 index = erg.toInt();
+                scriptName = m_aiName;
             }
         }
     }
-    if (index >= 0 && index < enable.size())
+    if (index == GameEnums::MenuSelection_Skip || index == GameEnums::MenuSelection_Restart ||
+        (index >= 0 && index < enable.size()))
     {
         ret = true;
     }
@@ -2535,13 +2690,47 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
     {
         ret = erg.toBool();
     }
-    if (ret && !enable[index])
+    if (ret && index != GameEnums::MenuSelection_Skip && index != GameEnums::MenuSelection_Restart &&
+        (index < 0 || index >= enable.size() || !enable[index]))
     {
         CONSOLE_PRINT("Illegal menu selection skipping building action target item index=" + QString::number(index) +
                       " building x=" + QString::number(pAction->getTarget().x()) +  " building y=" + QString::number(pAction->getTarget().y()), GameConsole::eERROR);
         ret = false;
     }
     return ret;
+}
+
+CoreAI::BuildingMenuResult CoreAI::sendBuildingMenuItemResultToScript(spGameAction & pAction, bool succeeded, const QString & scriptName, bool * handled)
+{
+    if (handled != nullptr)
+    {
+        *handled = false;
+    }
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    if (!scriptName.isEmpty() && pInterpreter->exists(scriptName, BUILDING_MENU_RESULT_FUNCTION))
+    {
+        if (handled != nullptr)
+        {
+            *handled = true;
+        }
+        QJSValueList args({m_jsThis,
+                           JsThis::getJsThis(pAction.get()),
+                           QJSValue(succeeded),
+                           QJSValue(pAction->getTarget().x()),
+                           QJSValue(pAction->getTarget().y()),
+                           QJSValue(pAction->getActionID()),
+                           GameMap::getMapJsThis(m_pMap)});
+        QJSValue result = pInterpreter->doFunction(scriptName, BUILDING_MENU_RESULT_FUNCTION, args);
+        if (result.isNumber() && result.toInt() == GameEnums::MenuSelection_Restart)
+        {
+            return BuildingMenuResult::RestartBuildingScan;
+        }
+        if (result.isBool() && result.toBool())
+        {
+            return BuildingMenuResult::RetryAction;
+        }
+    }
+    return BuildingMenuResult::None;
 }
 
 float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)

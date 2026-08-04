@@ -92,6 +92,8 @@ void VeryEasyAI::process()
     else
     {
         m_turnMode = GameEnums::AiTurnMode_DuringDay;
+        // Special production actions are claimed inside useBuilding, so planning has to be ready first.
+        m_productionSystem.prepareProduction(pBuildings.get(), pUnits.get());
         if (useBuilding(pBuildings, pUnits)){}
         else if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
         else

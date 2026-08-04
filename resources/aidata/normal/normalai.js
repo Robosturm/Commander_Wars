@@ -16,24 +16,20 @@ var NORMALAI =
         return COREAI.getHighPrioBuildings(ai);
     },
 
-    buildingMenuFunctions : [["ZBLACKHOLE_FACTORY", COREAI.getFactoryMenuItem],
-                             ["ZBLACKHOLE_FACTORYWASTE", COREAI.getFactoryMenuItem],
-                             ["ZBLACKHOLE_FACTORYSNOW", COREAI.getFactoryMenuItem],
-                             ["ZBLACKHOLE_FACTORYDESERT", COREAI.getFactoryMenuItem],
-                             ["ZNEST_FACTORY", COREAI.getFactoryMenuItem],],
+    buildingMenuFunctions : [["ZBLACKHOLE_FACTORY", AI_BEHAVIOR_DISPATCH.getFactoryMenuItem],
+                             ["ZBLACKHOLE_FACTORYWASTE", AI_BEHAVIOR_DISPATCH.getFactoryMenuItem],
+                             ["ZBLACKHOLE_FACTORYSNOW", AI_BEHAVIOR_DISPATCH.getFactoryMenuItem],
+                             ["ZBLACKHOLE_FACTORYDESERT", AI_BEHAVIOR_DISPATCH.getFactoryMenuItem],
+                             ["ZNEST_FACTORY", AI_BEHAVIOR_DISPATCH.getFactoryMenuItem],],
 
     getBuildingMenuItem : function(ai, action, ids, costs, enabled, units, buildings, owner, map)
     {
-        var building = action.getTargetBuilding();
-        var buildingId = building.getBuildingID();
-        for (var i = 0; i < NORMALAI.buildingMenuFunctions.length; i++)
-        {
-            if (NORMALAI.buildingMenuFunctions[i][0] === buildingId)
-            {
-                return NORMALAI.buildingMenuFunctions[i][1](ai, action, ids, costs, enabled, units, buildings, owner, map);
-            }
-        }
-        return false;
+        return AI_BEHAVIOR_DISPATCH.getBuildingMenuItem(NORMALAI.buildingMenuFunctions, ai, action, ids, costs, enabled, units, buildings, owner, map);
+    },
+
+    onBuildingMenuItemResult : function(ai, action, succeeded, x, y, actionId, map)
+    {
+        return AI_BEHAVIOR_DISPATCH.onBuildingMenuItemResult(ai, action, succeeded, x, y, actionId, map);
     },
 
     groupDistribution : [1,      // infantry units
@@ -42,15 +38,19 @@ var NORMALAI =
                          1,],    // heavy units
     initializeSimpleProductionSystem : function(system, ai, map)
     {
-        return COREAI.initializeSimpleProductionSystem(system, ai, map, NORMALAI.groupDistribution);
+        return AI_BEHAVIOR_DISPATCH.initializeSimpleProductionSystem(system, ai, map, NORMALAI.groupDistribution);
+    },
+    prepareProduction : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
+    {
+        return AI_BEHAVIOR_DISPATCH.prepareProduction(system, ai, buildings, units, enemyUnits, enemyBuildings, map);
     },
     buildUnitSimpleProductionSystem : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
     {
-        return COREAI.buildUnitSimpleProductionSystem(system, ai, buildings, units, enemyUnits, enemyBuildings, map);
+        return AI_BEHAVIOR_DISPATCH.buildUnitSimpleProductionSystem(system, ai, buildings, units, enemyUnits, enemyBuildings, map);
     },
     onNewBuildQueue : function(system, ai, buildings, units, enemyUnits, enemyBuildings, map)
     {
-        return COREAI.onNewBuildQueue(system, ai, buildings, units, enemyUnits, enemyBuildings, map, NORMALAI.groupDistribution);
+        return AI_BEHAVIOR_DISPATCH.onNewBuildQueue(system, ai, buildings, units, enemyUnits, enemyBuildings, map, NORMALAI.groupDistribution);
     },
 
 

@@ -779,10 +779,15 @@ qint32 Unit::getCosts() const
 
 qint32 Unit::getBaseCosts() const
 {
+    return getBaseCosts(m_UnitID, m_pMap);
+}
+
+qint32 Unit::getBaseCosts(const QString & unitId, GameMap* pMap)
+{
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBaseCost";
-    QJSValueList args({GameMap::getMapJsThis(m_pMap)});
-    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
+    QJSValueList args({GameMap::getMapJsThis(pMap)});
+    QJSValue erg = pInterpreter->doFunction(unitId, function1, args);
     if (erg.isNumber())
     {
         return erg.toInt();
