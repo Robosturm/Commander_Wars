@@ -793,6 +793,29 @@ protected:
     bool getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, const spMenuData & pData, qint32 & index, QString & scriptName);
     // handled reports whether a script consumed the result, which None alone cannot express.
     BuildingMenuResult sendBuildingMenuItemResultToScript(spGameAction & pAction, bool succeeded, const QString & scriptName, bool * handled = nullptr);
+    enum class BuildingActionResult
+    {
+        Performed,
+        Skipped,
+        RestartScan,
+    };
+    struct BuildingActionState
+    {
+        qint32 actionAttempts{0};
+        qint32 actionAttemptLimit{1};
+        bool retryAction{false};
+        bool restartBuildingScan{false};
+        QString pendingMenuScript;
+    };
+    BuildingActionResult tryBuildingAction(Building* pBuilding, const QString & actionId, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, qint32 & remainingBuildingScanRestarts);
+    void walkBuildingActionSteps(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, BuildingActionState & state, qint32 & remainingBuildingScanRestarts);
+    void addBuildingActionFieldStep(spGameAction & pAction);
+    // Returns true when the step walk should continue with the next input step.
+    bool handleBuildingActionMenuStep(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, BuildingActionState & state, qint32 & remainingBuildingScanRestarts);
+    QPoint pickFallbackBuildingActionTarget(const spMarkedFieldData & pData) const;
+    // Returns whether the script consumed the failure, which also stops walking the action's steps.
+    bool applyBuildingMenuFailure(spGameAction & pFailedAction, const QString & scriptName, BuildingActionState & state, qint32 & remainingBuildingScanRestarts);
+    bool requestBuildingScanRestart(qint32 & remainingBuildingScanRestarts) const;
     /**
      * @brief deserializeObjectVersion
      * @param stream
