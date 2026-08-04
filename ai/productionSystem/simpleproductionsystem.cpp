@@ -450,14 +450,15 @@ void SimpleProductionSystem::addPriorityProduction(const QStringList & unitIds, 
         CONSOLE_PRINT("SimpleProductionSystem::addPriorityProduction ignoring entry with empty unitIds", GameConsole::eWARNING);
         return;
     }
-    for (const auto & existing : m_priorityProduction)
+    for (auto & existing : m_priorityProduction)
     {
-        // makes re-queueing every turn idempotent
+        // makes re-queueing every turn idempotent; a changed blocking flag
+        // updates the entry instead of duplicating it
         if (existing.x == x &&
             existing.y == y &&
-            existing.blocking == blocking &&
             existing.unitIds == unitIds)
         {
+            existing.blocking = blocking;
             return;
         }
     }
@@ -553,9 +554,11 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, c
     }
 }
 
-bool SimpleProductionSystem::buildPriorityProduction(QmlVectorBuilding* pBuildings, qreal minAverageIslandSize, bool & blocked)
+bool SimpleProductionSystem::buildPriorityProduction(QmlVectorBuilding* pBuildings, bool & blocked)
 {
     bool success = false;
+    // cleared up front so the token always describes this build pass, never a stale turn
+    m_lastPriorityBuildResult.clear();
     GameMap* pMap = m_owner->getMap();
     for (qint32 i = 0; i < m_priorityProduction.size(); ++i)
     {
@@ -630,7 +633,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
     }
     GameMap* pMap = m_owner->getMap();
     bool blocked = false;
-    bool success = buildPriorityProduction(pBuildings, minAverageIslandSize, blocked);
+    bool success = buildPriorityProduction(pBuildings, blocked);
     if (blocked)
     {
         return false;

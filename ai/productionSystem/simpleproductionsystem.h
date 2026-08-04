@@ -162,7 +162,7 @@ private:
     bool buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits, bool alwaysBuild);
     bool buildUnit(qint32 x, qint32 y, QString unitId, bool alwaysBuild, QString * failureReason = nullptr);
     static void setBuildFailure(QString * failureReason, const char * reason);
-    bool buildPriorityProduction(QmlVectorBuilding* pBuildings, qreal minAverageIslandSize, bool & blocked);
+    bool buildPriorityProduction(QmlVectorBuilding* pBuildings, bool & blocked);
     void getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits,
                               qint32 minBuildMode, qint32 maxBuildMode, qint32 minBaseCost, qint32 maxBaseCost);
     void updateActiveProductionSystem(QmlVectorBuilding* pBuildings);
