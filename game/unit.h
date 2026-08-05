@@ -91,7 +91,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 24;
+        return 25;
     }
 
 
@@ -393,6 +393,23 @@ public:
      * @param AiMode
      */
     Q_INVOKABLE void setAiMode(const GameEnums::GameAi AiMode);
+    /**
+     * @brief getAiPriority
+     * @return
+     */
+    Q_INVOKABLE qint32 getAiPriority() const
+    {
+        return m_aiPriority;
+    }
+    /**
+     * @brief setAiPriority higher priorities are moved first by the ai. Zero is the default and
+     * keeps the randomized or heuristic order, so only prioritized units become deterministic.
+     * @param aiPriority
+     */
+    Q_INVOKABLE void setAiPriority(qint32 aiPriority)
+    {
+        m_aiPriority = aiPriority;
+    }
     /**
      * @brief getTransportHidden
      * @param pPlayer
@@ -1236,6 +1253,7 @@ private:
     qint32 m_vision{1};
     qint32 m_UniqueID{0};
     GameEnums::GameAi m_AiMode{GameEnums::GameAi::GameAi_Normal};
+    qint32 m_aiPriority{0};
     QVector<QPoint> m_AiMovePath;
     ScriptVariables m_Variables;
     ModdingFlags m_ModdingFlags{ModdingFlags::None};

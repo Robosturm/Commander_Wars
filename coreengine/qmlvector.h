@@ -94,6 +94,11 @@ public:
     }
     Q_INVOKABLE void randomize();
     /**
+     * @brief sortAiPriority higher ai priority first, ties by lowest unique id. Units without a
+     * priority keep a randomized order behind them, so unscripted behavior stays unpredictable.
+     */
+    Q_INVOKABLE void sortAiPriority();
+    /**
      * @brief sortExpensive most expensive units are sorted in first
      */
     Q_INVOKABLE void sortExpensive();

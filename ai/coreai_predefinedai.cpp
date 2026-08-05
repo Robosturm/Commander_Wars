@@ -284,7 +284,8 @@ bool CoreAI::processPredefinedAi()
     {
         CONSOLE_PRINT("processPredefinedAi()", GameConsole::eDEBUG);
         spQmlVectorUnit pUnits = m_pPlayer->getSpUnits();
-        pUnits->randomize();
+        // deterministic order so map scripts can sequence their units via setAiPriority
+        pUnits->sortAiPriority();
         spQmlVectorUnit pEnemyUnits = m_pPlayer->getSpEnemyUnits();
         pEnemyUnits->randomize();
         spQmlVectorBuilding pEnemyBuildings = m_pPlayer->getSpEnemyBuildings();

@@ -40,6 +40,40 @@ void QmlVectorUnit::randomize()
     });
 }
 
+void QmlVectorUnit::sortAiPriority()
+{
+    // maps that never set a priority keep the legacy randomized order
+    bool hasPriority = false;
+    for (auto & unit : m_Vector)
+    {
+        if (unit->getAiPriority() != 0)
+        {
+            hasPriority = true;
+            break;
+        }
+    }
+    randomize();
+    if (!hasPriority)
+    {
+        return;
+    }
+    // prioritized units are fully deterministic, the zero-priority rest keeps the shuffled order
+    std::stable_sort(m_Vector.begin(), m_Vector.end(), [](const spUnit& lhs, const spUnit& rhs)
+    {
+        qint32 lhsPriority = lhs->getAiPriority();
+        qint32 rhsPriority = rhs->getAiPriority();
+        if (lhsPriority != rhsPriority)
+        {
+            return lhsPriority > rhsPriority;
+        }
+        if (lhsPriority != 0)
+        {
+            return lhs->getUniqueID() < rhs->getUniqueID();
+        }
+        return false;
+    });
+}
+
 void QmlVectorUnit::sortExpensive()
 {
     for (auto & unit : m_Vector)

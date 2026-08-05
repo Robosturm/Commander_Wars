@@ -3787,6 +3787,7 @@ void Unit::serializeObject(QDataStream& pStream, bool forHash) const
         {
             pStream << m_aiCache[i];
         }
+        pStream << m_aiPriority;
     }
 }
 
@@ -4166,6 +4167,10 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             m_aiCache.push_back(info);
         }
 
+    }
+    if (version > 24)
+    {
+        pStream >> m_aiPriority;
     }
     m_unitIdx = UnitSpriteManager::getInstance()->getIndex(m_UnitID);
 }
