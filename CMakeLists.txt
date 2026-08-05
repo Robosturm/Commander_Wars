@@ -33,6 +33,10 @@ option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or d
 option(UPDATESUPPORT "Enables the automatic updater for the game which updates to the latest github version should be turned off for local builds not supported for android" OFF)
 option(DEFAULTAIPIPE "If the system should use a separate process for the ai as default variant. Disable it for system that can't launch the same exe twice e.g. android." ON)
 option(PRECOMPILED_HEADERS "Whether to use precompiled headers to speed up compilation. This can make precompiled headers less effective." ON)
+option(ENABLE_UBSAN "Enable Undefined Behavior Sanitizer (Linux/GCC only)" OFF)
+option(ENABLE_ASAN "Enable Address Sanitizer for memory leak detection (Linux/GCC only)" OFF)
+option(ENABLE_VALGRIND "Enable Valgrind instrumentation for memory debugging (Linux/GCC only)" OFF)
+
 set(UPDATE_FILE "Commander_Wars-Win10_x64"  CACHE STRING "UPDATE File")
 ###################################################################################
 # show configuration
@@ -248,6 +252,35 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     set(CMAKE_C_FLAGS "-Wno-implicit-function-declaration ${CMAKE_C_FLAGS}")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     set(CMAKE_CXX_FLAGS "-rdynamic ${CMAKE_CXX_FLAGS}")
+
+    # Add sanitizers for Linux/GCC
+    if(ENABLE_UBSAN)
+        message("Enabling Undefined Behavior Sanitizer (UBSan)")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=undefined")
+        add_link_options("-fsanitize=undefined")
+    endif()
+
+    if(ENABLE_VALGRIND)
+        message("Enabling Valgrind instrumentation")
+        # Valgrind requires debug symbols and typically no optimization for better diagnostics
+        if(NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+            message(WARNING "Valgrind works best with Debug builds. Consider setting CMAKE_BUILD_TYPE=Debug")
+        endif()
+        set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
+        set(CMAKE_C_FLAGS "-g ${CMAKE_C_FLAGS}")
+        add_definitions(-DVALGRIND_ENABLED)
+        # Valgrind and ASAN conflict, so disable ASAN if Valgrind is enabled
+        if(ENABLE_ASAN)
+            message(STATUS "Disabling Address Sanitizer (ASAN) because Valgrind is enabled")
+            set(ENABLE_ASAN OFF)
+        endif()
+    elseif(ENABLE_ASAN)
+        message("Enabling Address Sanitizer (ASan)")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
+        add_link_options("-fsanitize=address")
+    endif()
 else()
     message(FATAL_ERROR "Unsupported OS found")
 endif()
