@@ -277,6 +277,21 @@
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor to the previous possible field unit etc.")</tooltip>
                 <startValue>settings.getKey_previous2()</startValue>
                 <onEvent>settings.setKey_previous2(input)</onEvent>
+            </SelectKey>            
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key quick action:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key for performing the quick wait action.")</tooltip>
+                <startValue>settings.getKey_QuickAction()</startValue>
+                <onEvent>settings.setKey_QuickAction(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>

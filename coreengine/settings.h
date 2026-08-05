@@ -702,6 +702,8 @@ public:
     Q_INVOKABLE void setKey_MapZoomIn(const Qt::Key key_MapZoomIn);
     Q_INVOKABLE Qt::Key getKey_Escape();
     Q_INVOKABLE void setKey_Escape(const Qt::Key key_Escape);
+    Q_INVOKABLE Qt::Key getKey_QuickAction();
+    Q_INVOKABLE void setKey_QuickAction(const Qt::Key key_QuickAction);
     /**
      * @brief getAvailableMods
      * @return
@@ -866,6 +868,7 @@ private:
     bool m_borderless{true};
     bool m_fullscreen{false};
 
+    Qt::Key m_key_quickAction{Qt::Key_Control};
     Qt::Key m_key_escape{Qt::Key_Escape};
     Qt::Key m_key_console{Qt::Key_F1};
     Qt::Key m_key_screenshot{Qt::Key_F5};

@@ -1446,6 +1446,7 @@ void Settings::setup()
             MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorSelectionRight", &m_key_EditorSelectionRight, Qt::Key_R, static_cast<Qt::Key>(0), Qt::Key_unknown),
             MemoryManagement::create<Value<Qt::Key>>("Keys", "key_EditorSelectionLeft", &m_key_EditorSelectionLeft, Qt::Key_T, static_cast<Qt::Key>(0), Qt::Key_unknown),
             MemoryManagement::create<Value<Qt::Key>>("Keys", "key_toggleGridLayout", &m_key_toggleGridLayout, Qt::Key_G, static_cast<Qt::Key>(0), Qt::Key_unknown),
+            MemoryManagement::create<Value<Qt::Key>>("Keys", "key_quickAction", &m_key_quickAction, Qt::Key_Control, static_cast<Qt::Key>(0), Qt::Key_unknown),
             // sound
             MemoryManagement::create<Value<qint32>>("Sound", "TotalVolume", &m_TotalVolume, 100, 0, 100),
             MemoryManagement::create<Value<qint32>>("Sound", "MusicVolume", &m_MusicVolume, 80, 0, 100),
@@ -1937,6 +1938,16 @@ Qt::Key Settings::getKey_Escape()
 void Settings::setKey_Escape(const Qt::Key key_Escape)
 {
     m_key_escape = key_Escape;
+}
+
+Qt::Key Settings::getKey_QuickAction()
+{
+    return m_key_quickAction;
+}
+
+void Settings::setKey_QuickAction(const Qt::Key key_QuickAction)
+{
+    m_key_quickAction = key_QuickAction;
 }
 
 qint32 Settings::getMenuItemCount()

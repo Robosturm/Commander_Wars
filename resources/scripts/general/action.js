@@ -137,4 +137,20 @@ var ACTION =
             return false;
         }
     },
+
+    getQuickAction : function(action, unit)
+    {
+        var WAIT = "ACTION_WAIT";
+        var OOZIUM_WAIT = "ACTION_HOELLIUM_WAIT";
+        var actionList = unit.getActionList();
+        if (actionList.includes(WAIT))
+        {
+            return WAIT;
+        }
+        else if (actionList.includes(OOZIUM_WAIT))
+        {
+            return OOZIUM_WAIT;
+        }
+        return "";
+    },
 };

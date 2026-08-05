@@ -58,6 +58,7 @@ void HumanPlayerInput::init(BaseGamemenu* pMenu)
             connect(m_pMenu, &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
             connect(m_pMap, &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
             connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
+            connect(pApp, &Mainapp::sigKeyUp, this, &HumanPlayerInput::keyUp, Qt::QueuedConnection);
             connect(m_pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
             connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
             m_Fields.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
@@ -588,7 +589,8 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                                 possibleActions.append(action);
                             }
                         }
-                        if (possibleActions.size() > 0)
+                        bool performQuickAction = doQuickAction();
+                        if (possibleActions.size() > 0 && !performQuickAction)
                         {
                             createActionMenu(possibleActions, x, y);
                         }
@@ -621,6 +623,39 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         m_lastClickPoint = QPoint(pCursor->getMapPointX(), pCursor->getMapPointY());
     }
     Mainapp::getInstance()->continueRendering();
+}
+
+bool HumanPlayerInput::doQuickAction()
+{
+    bool performQuickAction = false;
+    if (m_quickAction)
+    {
+        auto old = m_pGameAction->getActionID();
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "getQuickAction";
+        QJSValueList args({JsThis::getJsThis(m_pGameAction.get()),
+                           JsThis::getJsThis(m_pGameAction->getTargetUnit())
+        });
+        auto ret = pInterpreter->doFunction("ACTION", function1, args);
+        if (ret.isString())
+        {
+            auto action = ret.toString();
+            if (!action.isEmpty())
+            {
+                m_pGameAction->setActionID(action);
+                if (m_pGameAction->canBePerformed() && m_pGameAction->isFinalStep())
+                {
+                    finishAction();
+                    performQuickAction = true;
+                }
+                else
+                {
+                    m_pGameAction->setActionID(old);
+                }
+            }
+        }
+    }
+    return performQuickAction;
 }
 
 void HumanPlayerInput::showInfoMenu(qint32 x, qint32 y)
@@ -1553,6 +1588,24 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
                  cur == Settings::getInstance()->getKey_ShowIndirectAttackFields2())
         {
             showSelectedUnitAttackableFields(false);
+        }
+        else if (cur == Settings::getInstance()->getKey_QuickAction())
+        {
+            m_quickAction = true;
+        }
+    }
+}
+
+void HumanPlayerInput::keyUp(oxygine::KeyEvent event)
+{
+    if (!event.getContinousPress())
+    {
+        bool canInput = inputAllowed();
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if (cur == Settings::getInstance()->getKey_QuickAction())
+        {
+            m_quickAction = false;
         }
     }
 }

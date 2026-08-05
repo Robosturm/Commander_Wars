@@ -184,6 +184,7 @@ public slots:
     virtual void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
     void keyDown(oxygine::KeyEvent event);
+    void keyUp(oxygine::KeyEvent event);
     void menuItemSelected(const QString itemID, qint32 cost);
     virtual void autoEndTurn();
     void nextTurn();
@@ -215,6 +216,11 @@ protected:
      * @param pData
      */
     void createComplexZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData);
+    /**
+     * @brief tries to perform the quick action which usually means the wait command
+     * @return
+     */
+    bool doQuickAction();
 private:
     spGameAction m_pGameAction{nullptr};
     spUnitPathFindingSystem m_pUnitPathFindingSystem{nullptr};
@@ -238,6 +244,7 @@ private:
     QPoint m_lastCursorPosition;
     bool m_showVisionFields;
     bool m_leftClickEnabled{true};
+    bool m_quickAction{false};
 };
 
 #endif // HUMANPLAYERINPUT_H
