@@ -1,4 +1,5 @@
 #include <QFile>
+#include <QFileInfo>
 #include <QTextStream>
 
 #include "game/gamescript.h"
@@ -57,12 +58,38 @@ void GameScript::deserializeObject(QDataStream& pStream)
     }
 }
 
+QString GameScript::findScriptNextToMap() const
+{
+    QString mapPath = (m_pMap != nullptr) ? m_pMap->getMapPath() : QString();
+    if (mapPath.isEmpty() || m_scriptFile.isEmpty())
+    {
+        return QString();
+    }
+    QString candidate = QFileInfo(mapPath).path() + "/" + QFileInfo(m_scriptFile).fileName();
+    QString found = candidate;
+    if (!QFileInfo(found).isFile())
+    {
+        found = VirtualPaths::find(candidate);
+    }
+    if (!QFileInfo(found).isFile())
+    {
+        return QString();
+    }
+    CONSOLE_PRINT("Map script " + m_scriptFile + " not found. Using " + found + " instead.", GameConsole::eDEBUG);
+    return found;
+}
+
 void GameScript::init()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     if (!m_scriptFile.isEmpty())
     {
-        QFile file = QFile(VirtualPaths::find(m_scriptFile));
+        QString scriptPath = VirtualPaths::find(m_scriptFile);
+        if (!QFileInfo(scriptPath).isFile())
+        {
+            scriptPath = findScriptNextToMap();
+        }
+        QFile file = QFile(scriptPath);
         if (file.exists())
         {
             CONSOLE_PRINT("Loading map script " + file.fileName(), GameConsole::eDEBUG);
@@ -75,7 +102,7 @@ void GameScript::init()
         }
         else
         {
-            CONSOLE_PRINT("Unable to load map script " + file.fileName(), GameConsole::eWARNING);
+            CONSOLE_PRINT("Unable to load map script " + m_scriptFile, GameConsole::eWARNING);
             m_scriptFile = "";
             m_script = "";
             m_loaded = false;
