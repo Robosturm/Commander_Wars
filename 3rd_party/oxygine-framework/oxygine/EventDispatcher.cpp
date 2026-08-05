@@ -58,7 +58,7 @@ namespace oxygine
         if (requiresThreadChange())
         {
             EventUpdateInfo info;
-            info.action = EventUpdateAction::RemoveEventListenerId;
+            info.action = EventUpdateAction::AddEventListener;
             info.dispatcher = getSharedPtr<EventDispatcher>();
             info.et = et;
             info.cb = cb;
