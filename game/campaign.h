@@ -132,6 +132,20 @@ public:
     Q_INVOKABLE void onCampaignMapSelected(GameMap* pMap, const QString & filePath);
 
 private:
+    /**
+     * @brief getScriptDir the directory containing the campaign script or an empty string if unknown
+     * @return
+     */
+    QString getScriptDir() const;
+    /**
+     * @brief findMapNextToScript locates a campaign map relative to the campaign script when the declared folder is stale
+     * @param scriptDir
+     * @param folder
+     * @param file
+     * @return
+     */
+    QString findMapNextToScript(const QString & scriptDir, const QString & folder, const QString & file) const;
+
     QString m_script;
     QString m_scriptFile;
     ScriptVariables m_Variables;

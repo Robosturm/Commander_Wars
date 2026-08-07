@@ -1,4 +1,5 @@
 #include <QFile>
+#include <QFileInfo>
 #include <QTextStream>
 #include <QDir>
 #include <QDirIterator>
@@ -77,9 +78,14 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
     {
         folder = files[0];
         files.removeAt(0);
+        QString scriptDir = getScriptDir();
         for (qint32 i = 0; i < files.size(); ++i)
         {
             QString path = VirtualPaths::find(folder + files[i]);
+            if (!QFileInfo(path).isFile() && !scriptDir.isEmpty())
+            {
+                path = findMapNextToScript(scriptDir, folder, files[i]);
+            }
             if (QFile::exists(path))
             {
                 files[i] = path;
@@ -88,12 +94,44 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
         }
 
         QStringList searchPath = VirtualPaths::createSearchPath(folder, false);
+        if (!scriptDir.isEmpty())
+        {
+            searchPath.append(scriptDir);
+        }
         for (qint32 i = 0; i < searchPath.size(); i++)
         {
             addDeveloperMaps(searchPath[i], files);
         }
     }
     return CampaignMapInfo(folder, files);
+}
+
+QString Campaign::getScriptDir() const
+{
+    if (m_scriptFile.isEmpty())
+    {
+        return QString();
+    }
+    QString scriptDir = QFileInfo(m_scriptFile).path();
+    if (scriptDir == "." || scriptDir.isEmpty())
+    {
+        return QString();
+    }
+    return scriptDir + "/";
+}
+
+QString Campaign::findMapNextToScript(const QString & scriptDir, const QString & folder, const QString & file) const
+{
+    QString candidate = scriptDir + folder + file;
+    if (!QFileInfo(candidate).isFile())
+    {
+        candidate = scriptDir + file;
+    }
+    if (!QFileInfo(candidate).isFile())
+    {
+        return QString();
+    }
+    return candidate;
 }
 
 void Campaign::addDeveloperMaps(const QString & prefix, QStringList & files)
