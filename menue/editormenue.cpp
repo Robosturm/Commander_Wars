@@ -1064,6 +1064,10 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
 
 void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
+    if (!m_Focused)
+    {
+        return;
+    }
     CONSOLE_PRINT("EditorMenue::cursorMoved x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     m_Topbar->hide();
     if (m_xyTextInfo.get() != nullptr)
@@ -1196,6 +1200,10 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 {
+    if (!m_Focused)
+    {
+        return;
+    }
     CONSOLE_PRINT("EditorMenue::onMapClickedRight x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     // resolve click    
     switch (m_EditorMode)
@@ -1246,6 +1254,10 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
 {
+    if (!m_Focused)
+    {
+        return;
+    }
     CONSOLE_PRINT("EditorMenue::onMapClickedLeftDown x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     // resolve click
     m_placingState.active = true;
@@ -1278,6 +1290,10 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
 {
+    if (!m_Focused)
+    {
+        return;
+    }
     m_placingState.active = false;
     CONSOLE_PRINT("EditorMenue::onMapClickedLeftUp x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     // resolve click
@@ -1310,6 +1326,10 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
 {
+    if (!m_Focused)
+    {
+        return;
+    }
     if (m_placingState.x != x || m_placingState.y != y)
     {
         Mainapp::getInstance()->pauseRendering();

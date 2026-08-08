@@ -547,7 +547,7 @@ public:
      * @param pUnit
      * @return
      */
-    Q_INVOKABLE void setCOUnit(Unit* pUnit);
+    Q_INVOKABLE void setCOUnit(Unit* pUnit, bool swap = false);
     /**
      * @brief getActionModifierList
      * @param pUnit

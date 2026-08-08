@@ -98,11 +98,12 @@ GameMap *CO::getMap() const
     return m_pMap;
 }
 
-void CO::setCOUnit(Unit* pUnit)
+void CO::setCOUnit(Unit* pUnit, bool swap)
 {
     if (pUnit == nullptr &&
         m_pCOUnit.get() != nullptr &&
-        m_pMenu != nullptr)
+        m_pMenu != nullptr &&
+        !swap)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "onCOUnitLost";

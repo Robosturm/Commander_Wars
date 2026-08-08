@@ -2,27 +2,30 @@ var Constructor = function()
 {
     this.canBePerformed = function(action, map)
     {
-        var unit = action.getTargetUnit();
-        var actionTargetField = action.getActionTarget();
-        var targetField = action.getTarget();
-        var building = action.getTargetBuilding();
-        if ((unit.getHasMoved() === true))
+        if (map.getGameRules().getParallelCos())
         {
-            return false;
-        }
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) &&
-            (building !== null))
-        {
-            var constructionList = building.getConstructionList();
-            var co = unit.getOwner().getCO(1);
-            if (((constructionList.indexOf(unit.getUnitID()) >= 0) ||
-                 BUILDING.isHq(building)) &&
-                (unit.getUnitCosts() / 2 <= unit.getOwner().getFunds()) &&
-                (co !== null) && (co.getCOUnit() === null) &&
-                (unit.getUnitRank() >= GameEnums.UnitRank_None) &&
-                (unit.getOwner() === building.getOwner()))
+            var unit = action.getTargetUnit();
+            var actionTargetField = action.getActionTarget();
+            var targetField = action.getTarget();
+            var building = action.getTargetBuilding();
+            if ((unit.getHasMoved() === true))
             {
-                return true;
+                return false;
+            }
+            if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) &&
+                (building !== null))
+            {
+                var constructionList = building.getConstructionList();
+                var co = unit.getOwner().getCO(1);
+                if (((constructionList.indexOf(unit.getUnitID()) >= 0) ||
+                     BUILDING.isHq(building)) &&
+                    (unit.getUnitCosts() / 2 <= unit.getOwner().getFunds()) &&
+                    (co !== null) && (co.getCOUnit() === null) &&
+                    (unit.getUnitRank() >= GameEnums.UnitRank_None) &&
+                    (unit.getOwner() === building.getOwner()))
+                {
+                    return true;
+                }
             }
         }
         return false;

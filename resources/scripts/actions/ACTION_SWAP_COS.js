@@ -32,12 +32,19 @@ var Constructor = function()
         var player = map.getCurrentPlayer();
         var co0 = player.getCO(0);
         var co1 = player.getCO(1);
+        if (!map.getGameRules().getParallelCos())
+        {
+            var coUnit0 = co0.getCOUnit();
+            co0.setCOUnit(null, true);
+            co1.setCOUnit(coUnit0, true);
+        }
         if (co0.getPowerMode() === GameEnums.PowerMode_Tagpower &&
             co1.getPowerMode() === GameEnums.PowerMode_Off)
         {
             // start another movement turn by reenabling all units :)
             player.swapCOs();
             map.enableUnits(player);
+            player.getCO(0).activateSuperpower(GameEnums.PowerMode_Tagpower);
         }
         else
         {
