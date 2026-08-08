@@ -184,8 +184,9 @@ void GameMenue::loadingAiPipe()
         CONSOLE_PRINT("Creating seed " + QString::number(seed) + " and starting the ai pipe", GameConsole::eDEBUG);
         GlobalUtils::seed(seed);
         GlobalUtils::setUseSeed(true);
-        startAiPipeGame();
     }
+    // network games already have a seed, the ai pipe still needs to start
+    startAiPipeGame();
 }
 
 GameMenue::GameMenue(spGameMap pMap, bool clearPlayerlist)
