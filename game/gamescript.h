@@ -99,6 +99,12 @@ public:
     Q_INVOKABLE void setScriptFile(const QString & value);
 
 private:
+    /**
+     * @brief findScriptNextToMap locates the script in the map's own folder when the stored path is stale
+     * @return
+     */
+    QString findScriptNextToMap() const;
+
     bool m_victoryCalled{false};
     QString m_script;
     QString m_scriptFile;
