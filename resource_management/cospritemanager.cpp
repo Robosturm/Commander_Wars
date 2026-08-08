@@ -293,7 +293,7 @@ QVector<COSpriteManager::CoGroup> COSpriteManager::getCoGroups(QStringList & coi
             coID != CO::CO_RANDOM)
         {
             coids.append(coID);
-            unknownGroup.cos.append(coids);
+            unknownGroup.cos.append(coID);
         }
     }
     if (unknownGroup.cos.length() > 0)
