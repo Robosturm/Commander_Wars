@@ -45,7 +45,7 @@ namespace oxygine
         const Actor* pActor = dynamic_cast<const Actor*>(this);
         if (pActor != nullptr)
         {
-            return pActor->__getStage() == nullptr;
+            return pActor->isDetachedForThreading();
         }
         else
         {

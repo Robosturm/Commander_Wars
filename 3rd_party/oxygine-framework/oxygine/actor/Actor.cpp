@@ -16,88 +16,154 @@ namespace oxygine
     std::vector<Actor::UpdateInfo> Actor::m_updateActions;
     QMutex Actor::m_updateActionMutex;
 
+    QRecursiveMutex& Actor::treeMutex()
+    {
+        static QRecursiveMutex* mutex = new QRecursiveMutex();
+        return *mutex;
+    }
+
+    void Actor::finishPendingTreeChanges(UpdateInfo& info)
+    {
+        for (auto & actor : info.pendingTreeChanges)
+        {
+            actor->finishPendingTreeChange();
+        }
+        info.pendingTreeChanges.clear();
+    }
+
+    void Actor::queueUpdate(UpdateInfo&& info, std::initializer_list<spActor> guardedActors)
+    {
+        try
+        {
+            for (const auto & actor : guardedActors)
+            {
+                if (actor.get() == nullptr)
+                {
+                    continue;
+                }
+                bool found = false;
+                for (const auto & guarded : info.pendingTreeChanges)
+                {
+                    if (guarded.get() == actor.get())
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    info.pendingTreeChanges.push_back(actor);
+                    actor->beginPendingTreeChange();
+                }
+            }
+            QMutexLocker locker(&m_updateActionMutex);
+            m_updateActions.push_back(std::move(info));
+        }
+        catch (...)
+        {
+            finishPendingTreeChanges(info);
+            throw;
+        }
+    }
+
     void Actor::doUpdateInfos()
     {
-        QMutexLocker locker(&m_updateActionMutex);
-        for (auto & item : m_updateActions)
+        QMutexLocker treeLocker(&treeMutex());
+        std::vector<UpdateInfo> updateActions;
         {
-            switch (item.action)
+            QMutexLocker updateLocker(&m_updateActionMutex);
+            updateActions.swap(m_updateActions);
+        }
+        try
+        {
+            for (auto & item : updateActions)
             {
-                case UpdateAction::RestartAllTweens:
+                switch (item.action)
                 {
-                    item.parent->restartAllTweens();
-                    break;
+                    case UpdateAction::RestartAllTweens:
+                    {
+                        item.parent->restartAllTweens();
+                        break;
+                    }
+                    case UpdateAction::SyncTweens:
+                    {
+                        item.parent->syncAllTweens(item.syncTime);
+                        break;
+                    }
+                    case UpdateAction::AddChild:
+                    {
+                        item.parent->addChild(item.actor);
+                        break;
+                    }
+                    case UpdateAction::RemoveChild:
+                    {
+                        item.parent->removeChild(item.actor);
+                        break;
+                    }
+                    case UpdateAction::Priority:
+                    {
+                        item.parent->setPriority(item.zOrder);
+                        break;
+                    }
+                    case UpdateAction::AddTween:
+                    {
+                        item.parent->addTween(item.tween);
+                        break;
+                    }
+                    case UpdateAction::RemoveTween:
+                    {
+                        item.parent->removeTween(item.tween);
+                        break;
+                    }
+                    case UpdateAction::RemoveChildren:
+                    {
+                        item.parent->removeChildren();
+                        break;
+                    }
+                    case UpdateAction::RemoveTweens:
+                    {
+                        item.parent->removeTweens();
+                        break;
+                    }
+                    case UpdateAction::RebuildText:
+                    {
+                        oxygine::safeSpCast<oxygine::TextField>(item.parent)->rebuildText();
+                        break;
+                    }
+                    case UpdateAction::SetAddColor:
+                    {
+                        oxygine::safeSpCast<oxygine::VStyleActor>(item.parent)->setAddColor(item.color);
+                        break;
+                    }
+                    case UpdateAction::ChangeAnimFrame:
+                    {
+                        oxygine::safeSpCast<oxygine::Sprite>(item.parent)->changeAnimFrame(item.frame);
+                        break;
+                    }
+                    case UpdateAction::SetColorTable:
+                    {
+                        oxygine::safeSpCast<oxygine::Sprite>(item.parent)->setColorTable(item.pAnim, item.matrix);
+                        break;
+                    }
+                    case UpdateAction::DetachAndRemove:
+                    {
+                        item.parent->detach();
+                        break;
+                    }
+                    default:
+                        Q_ASSERT(false);
                 }
-                case UpdateAction::SyncTweens:
-                {
-                    item.parent->syncAllTweens(item.syncTime);
-                    break;
-                }
-                case UpdateAction::AddChild:
-                {
-                    item.parent->addChild(item.actor);
-                    break;
-                }
-                case UpdateAction::RemoveChild:
-                {
-                    item.parent->removeChild(item.actor);
-                    break;
-                }
-                case UpdateAction::Priority:
-                {
-                    item.parent->setPriority(item.zOrder);
-                    break;
-                }
-                case UpdateAction::AddTween:
-                {
-                    item.parent->addTween(item.tween);
-                    break;
-                }
-                case UpdateAction::RemoveTween:
-                {
-                    item.parent->removeTween(item.tween);
-                    break;
-                }
-                case UpdateAction::RemoveChildren:
-                {
-                    item.parent->removeChildren();
-                    break;
-                }
-                case UpdateAction::RemoveTweens:
-                {
-                    item.parent->removeTweens();
-                    break;
-                }
-                case UpdateAction::RebuildText:
-                {
-                    oxygine::safeSpCast<oxygine::TextField>(item.parent)->rebuildText();
-                    break;
-                }
-                case UpdateAction::SetAddColor:
-                {
-                    oxygine::safeSpCast<oxygine::VStyleActor>(item.parent)->setAddColor(item.color);
-                    break;
-                }
-                case UpdateAction::ChangeAnimFrame:
-                {
-                    oxygine::safeSpCast<oxygine::Sprite>(item.parent)->changeAnimFrame(item.frame);
-                    break;
-                }
-                case UpdateAction::SetColorTable:
-                {
-                    oxygine::safeSpCast<oxygine::Sprite>(item.parent)->setColorTable(item.pAnim, item.matrix);
-                    break;
-                }
-                case UpdateAction::DetachAndRemove:
-                {
-                    item.parent->detach();
-                    break;
-                }
-                default:
-                    Q_ASSERT(false);
+                finishPendingTreeChanges(item);
             }
         }
-        m_updateActions.clear();
+        catch (...)
+        {
+            for (auto & item : updateActions)
+            {
+                finishPendingTreeChanges(item);
+            }
+            throw;
+        }
     }
 
 #ifndef GRAPHICSUPPORT
@@ -115,6 +181,7 @@ namespace oxygine
 
     Actor::~Actor()
     {
+        QMutexLocker locker(&treeMutex());
         removeTweens();
         removeChildren();
     }
@@ -124,8 +191,46 @@ namespace oxygine
         return m_stage;
     }
 
+    bool Actor::isPendingTreeChangeUnlocked() const
+    {
+        const Actor* actor = this;
+        while (actor != nullptr)
+        {
+            if (actor->m_pendingTreeChangeCount.load(std::memory_order_acquire) != 0)
+            {
+                return true;
+            }
+            actor = actor->getParent();
+        }
+        return false;
+    }
+
+    bool Actor::isPendingTreeChange() const
+    {
+        QMutexLocker locker(&treeMutex());
+        return isPendingTreeChangeUnlocked();
+    }
+
+    bool Actor::isDetachedForThreading() const
+    {
+        QMutexLocker locker(&treeMutex());
+        return !isPendingTreeChangeUnlocked() && m_stage == nullptr;
+    }
+
+    void Actor::beginPendingTreeChange()
+    {
+        m_pendingTreeChangeCount.fetch_add(1, std::memory_order_acq_rel);
+    }
+
+    void Actor::finishPendingTreeChange()
+    {
+        const quint32 previous = m_pendingTreeChangeCount.fetch_sub(1, std::memory_order_acq_rel);
+        Q_ASSERT(previous != 0);
+    }
+
     void Actor::added2stage(Stage* stage)
     {
+        QMutexLocker locker(&treeMutex());
         Q_ASSERT(!requiresThreadChange());
         if (m_stage == nullptr)
         {
@@ -142,6 +247,7 @@ namespace oxygine
 
     void Actor::removedFromStage()
     {
+        QMutexLocker locker(&treeMutex());
         Q_ASSERT(!requiresThreadChange());
         if (m_stage != nullptr)
         {
@@ -455,6 +561,7 @@ namespace oxygine
     void Actor::setPriority(qint32 zorder)
     {
 #ifdef GRAPHICSUPPORT
+        QMutexLocker treeLocker(&treeMutex());
         if (m_zOrder == zorder)
         {
             return;
@@ -467,8 +574,9 @@ namespace oxygine
                 info.parent = getSharedPtr<Actor>();
                 info.zOrder = zorder;
                 info.action = Actor::UpdateAction::Priority;
-                QMutexLocker lock(&m_updateActionMutex);
-                m_updateActions.push_back(std::move(info));
+                spActor actorGuard = info.parent;
+                spActor parentGuard = m_parent->getSharedPtr<Actor>();
+                queueUpdate(std::move(info), {actorGuard, parentGuard});
             }
             else
             {
@@ -758,6 +866,7 @@ namespace oxygine
 
     bool Actor::isDescendant(const Actor* actor) const
     {
+        QMutexLocker locker(&treeMutex());
         const Actor* act = actor;
         while (act)
         {
@@ -772,6 +881,7 @@ namespace oxygine
 
     void Actor::setParent(Actor* actor, Actor* parent)
     {
+        QMutexLocker locker(&treeMutex());
         if (actor != nullptr)
         {
             actor->m_parent = parent;
@@ -792,6 +902,7 @@ namespace oxygine
 
     void Actor::insertActor(spActor & actor)
     {
+        QMutexLocker locker(&treeMutex());
         if (!actor.get())
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertActor trying to add empty actor");
@@ -817,16 +928,8 @@ namespace oxygine
 
     void Actor::addChild(spActor actor)
     {
-        if (requiresThreadChange())
-        {
-            UpdateInfo info;
-            info.parent = getSharedPtr<Actor>();
-            info.action = Actor::UpdateAction::AddChild;
-            info.actor = actor;
-            QMutexLocker lock(&m_updateActionMutex);
-            m_updateActions.push_back(std::move(info));
-        }
-        else if (actor.get() == nullptr)
+        QMutexLocker treeLocker(&treeMutex());
+        if (actor.get() == nullptr)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add empty actor");
             return;
@@ -834,6 +937,22 @@ namespace oxygine
         else if (actor.get() == this)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add self");
+            return;
+        }
+        else if (requiresThreadChange() || actor->requiresThreadChange())
+        {
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::AddChild;
+            info.actor = actor;
+            spActor parentGuard = info.parent;
+            spActor actorGuard = info.actor;
+            spActor sourceGuard;
+            if (actor->m_parent != nullptr)
+            {
+                sourceGuard = actor->m_parent->getSharedPtr<Actor>();
+            }
+            queueUpdate(std::move(info), {parentGuard, actorGuard, sourceGuard});
         }
         else
         {
@@ -845,59 +964,64 @@ namespace oxygine
 
     void Actor::removeChild(spActor actor)
     {
-        if (actor->m_parent == nullptr)
+        QMutexLocker treeLocker(&treeMutex());
+        if (actor.get() == nullptr)
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove a child without a parent");
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove empty actor");
             return;
         }
-        else if (requiresThreadChange())
+        if (requiresThreadChange() || actor->requiresThreadChange())
         {
             UpdateInfo info;
             info.parent = getSharedPtr<Actor>();
             info.action = Actor::UpdateAction::RemoveChild;
             info.actor = actor;
-            QMutexLocker lock(&m_updateActionMutex);
-            m_updateActions.push_back(std::move(info));
+            spActor parentGuard = info.parent;
+            spActor actorGuard = info.actor;
+            spActor sourceGuard;
+            if (actor->m_parent != nullptr)
+            {
+                sourceGuard = actor->m_parent->getSharedPtr<Actor>();
+            }
+            queueUpdate(std::move(info), {parentGuard, actorGuard, sourceGuard});
         }
-        else if (actor)
+        else if (actor->m_parent == nullptr)
         {
-            if (actor->m_parent != this)
-            {
-                oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild wrong parent while removing a child");
-            }
-            else
-            {
-#ifdef GRAPHICSUPPORT
-                Q_ASSERT(!m_internalUpdateRunning);
-#endif
-                setParent(actor.get(), nullptr);
-                auto iter = m_children.cbegin();
-                while (iter != m_children.cend())
-                {
-                    if (iter->get() == actor.get())
-                    {
-                        m_children.erase(iter);
-                        break;
-                    }
-                    ++iter;
-                }
-            }
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove a child without a parent");
+        }
+        else if (actor->m_parent != this)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild wrong parent while removing a child");
         }
         else
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove empty actor");
+#ifdef GRAPHICSUPPORT
+            Q_ASSERT(!m_internalUpdateRunning);
+#endif
+            setParent(actor.get(), nullptr);
+            auto iter = m_children.cbegin();
+            while (iter != m_children.cend())
+            {
+                if (iter->get() == actor.get())
+                {
+                    m_children.erase(iter);
+                    break;
+                }
+                ++iter;
+            }
         }
     }
 
     void Actor::removeChildren()
     {
+        QMutexLocker treeLocker(&treeMutex());
         if (requiresThreadChange())
         {
             UpdateInfo info;
             info.parent = getSharedPtr<Actor>();
             info.action = Actor::UpdateAction::RemoveChildren;
-            QMutexLocker lock(&m_updateActionMutex);
-            m_updateActions.push_back(std::move(info));
+            spActor parentGuard = info.parent;
+            queueUpdate(std::move(info), {parentGuard});
         }
         else
         {
@@ -914,16 +1038,26 @@ namespace oxygine
 
     void Actor::detach()
     {
+        QMutexLocker treeLocker(&treeMutex());
         Actor* parent = getParent();
         if (parent)
         {
             spActor pActor = getSharedPtr<Actor>();
             parent->removeChild(pActor);
         }
+        else if (requiresThreadChange())
+        {
+            UpdateInfo info;
+            info.parent = getSharedPtr<Actor>();
+            info.action = Actor::UpdateAction::DetachAndRemove;
+            spActor actorGuard = info.parent;
+            queueUpdate(std::move(info), {actorGuard});
+        }
     }
 
     void Actor::detachAndRemove()
     {
+        QMutexLocker treeLocker(&treeMutex());
         Actor* parent = getParent();
         if (parent)
         {
@@ -935,8 +1069,8 @@ namespace oxygine
             UpdateInfo info;
             info.parent = getSharedPtr<Actor>();
             info.action = Actor::UpdateAction::DetachAndRemove;
-            QMutexLocker lock(&m_updateActionMutex);
-            m_updateActions.push_back(std::move(info));
+            spActor actorGuard = info.parent;
+            queueUpdate(std::move(info), {actorGuard});
         }
 
     }
