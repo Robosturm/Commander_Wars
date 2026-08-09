@@ -237,10 +237,20 @@ public:
 
     bool isAudioThread() const
     {
-        return QThread::currentThread() == m_audioThread.get();
+        if (!m_useAudioThread)
+        {
+            return isMainThread();
+        }
+        else
+        {
+            return QThread::currentThread() == m_audioThread.get();
+        }
     }
     static bool getTrainingSession();
     static void setTrainingSession(bool newTrainingSession);
+
+    static bool getEnableAudioThread();
+    static void setEnableAudioThread(bool enable);
 
 public slots:
     void onActiveChanged();
@@ -316,6 +326,7 @@ private:
     static Mainapp* m_pMainapp;
     static bool m_slave;
     static bool m_trainingSession;
+    static bool m_useAudioThread;
     static QStringList m_restartArgv;
     static QString m_rejoinPassword;
     QMutex m_crashMutex;

@@ -178,5 +178,14 @@ protected:
     bool m_launched{false};
     bool m_workerLaunched{false};
     QThread* m_pMainThread{nullptr};
+    struct
+    {
+        QElapsedTimer leftDown;
+        QElapsedTimer rightDown;
+        QElapsedTimer middleDown;
+        QElapsedTimer leftUp;
+        QElapsedTimer rightUp;
+        QElapsedTimer middleUp;
+    } m_debounceTimer;
 };
 }

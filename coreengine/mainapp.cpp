@@ -60,6 +60,7 @@ Mainapp* Mainapp::m_pMainapp{nullptr};
 
 bool Mainapp::m_slave{false};
 bool Mainapp::m_trainingSession{false};
+bool Mainapp::m_useAudioThread{false};
 QStringList Mainapp::m_restartArgv;
 QString Mainapp::m_rejoinPassword;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
@@ -78,8 +79,12 @@ Mainapp::Mainapp()
     m_Networkthread = MemoryManagement::createNamedQObject<QThread>("QThread");
     m_aiSubProcess = MemoryManagement::createNamedQObject<QProcess>("QProcess");
 #ifdef AUDIOSUPPORT
-    m_audioThread = MemoryManagement::createNamedQObject<QThread>("QThread");
-    m_audioThread->setObjectName("Audiothread");
+    if (m_useAudioThread)
+    {
+        m_audioThread = MemoryManagement::createNamedQObject<QThread>("QThread");
+        m_audioThread->setObjectName("Audiothread");
+    }
+
 #endif
 #ifdef GRAPHICSUPPORT
     m_Workerthread->setObjectName("Workerthread");
@@ -236,22 +241,25 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         {
             CONSOLE_PRINT("Launching game with version: " + GameVersion().toString(), GameConsole::eDEBUG);
             QStringList mods = Settings::getInstance()->getMods();
-            for (const auto & mod : mods)
+            for (const auto & mod : std::as_const(mods))
             {
                 CONSOLE_PRINT("Launching game with mods: " + mod, GameConsole::eDEBUG);
             }
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
-            m_AudioManager = MemoryManagement::create<AudioManager>(m_noAudio);
+            m_AudioManager = MemoryManagement::create<AudioManager>(m_noAudio, m_useAudioThread);
             // start after ressource loading
 #ifdef GRAPHICSUPPORT
             m_Networkthread->setObjectName("NetworkThread");
             m_Workerthread->setObjectName("WorkerThread");
 #endif
 #ifdef AUDIOSUPPORT
-            m_audioThread->start(QThread::Priority::HighPriority);
-            m_AudioManager->moveToThread(m_audioThread.get());
+            if (m_useAudioThread)
+            {
+                m_audioThread->start(QThread::Priority::HighPriority);
+                m_AudioManager->moveToThread(m_audioThread.get());
+            }
             m_AudioManager->initAudio();
             m_AudioManager->clearPlayList();
             m_AudioManager->loadFolder("resources/music/hauptmenue");
@@ -917,7 +925,7 @@ void Mainapp::onQuit()
         m_AudioManager->stopAudio();
         m_AudioManager.reset();
     }
-    if (m_audioThread->isRunning())
+    if (m_audioThread && m_audioThread->isRunning())
     {
         auto curTimte = QDateTime::currentSecsSinceEpoch();
         m_audioThread->quit();
@@ -950,6 +958,16 @@ bool Mainapp::getTrainingSession()
 void Mainapp::setTrainingSession(bool newTrainingSession)
 {
     m_trainingSession = newTrainingSession;
+}
+
+bool Mainapp::getEnableAudioThread()
+{
+    return m_useAudioThread;
+}
+
+void Mainapp::setEnableAudioThread(bool enable)
+{
+    m_useAudioThread = enable;
 }
 
 AiProcessPipe & Mainapp::getAiProcessPipe()

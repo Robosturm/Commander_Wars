@@ -11,7 +11,6 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
 #include "coreengine/gameconsole.h"
-#include "coreengine/virtualpaths.h"
 
 #include "coreengine/metatyperegister.h"
 #include "coreengine/globalutils.h"
@@ -20,8 +19,6 @@
 #ifdef UPDATESUPPORT
 #include "updater/gameupdater.h"
 #endif
-
-#include "awbwReplayReader/awbwreplayerreader.h"
 
 int main(qint32 argc, char* argv[])
 {

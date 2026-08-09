@@ -839,6 +839,9 @@ public:
     Q_INVOKABLE bool getContinueCoMusic() const;
     Q_INVOKABLE void setContinueCoMusic(bool newContinueCoMusic);
 
+    Q_INVOKABLE qint32 getDebounceTime() const;
+    Q_INVOKABLE void setDebounceTimeMs(qint32 debounceTime);
+
 private:
     friend class MemoryManagement;
     explicit Settings();
@@ -1014,7 +1017,8 @@ private:
     bool m_simpleDeselect{false};
     bool m_showDetailedBattleForcast{true};
     bool m_autoMoveCursor{false};
-    float m_supplyWarning{0.33f};    
+    float m_supplyWarning{0.33f};
+    qint32 m_debounceTimeMs{100};
 
     qint32 m_pauseAfterAction{0};
     bool m_createAiTrainingData{false};
