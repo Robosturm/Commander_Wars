@@ -61,7 +61,7 @@ private:
     using spPlayer = std::shared_ptr<Player>;
 #endif
 public:
-    explicit AudioManager(bool noAudio);
+    explicit AudioManager(bool noAudio, bool useAudioThread);
     virtual ~AudioManager() = default;
     /**
      * @brief getLoadBaseGameFolders

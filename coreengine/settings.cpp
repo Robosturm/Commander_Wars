@@ -66,6 +66,16 @@ void Settings::setContinueCoMusic(bool newContinueCoMusic)
     m_continueCoMusic = newContinueCoMusic;
 }
 
+qint32 Settings::getDebounceTime() const
+{
+    return m_debounceTimeMs;
+}
+
+void Settings::setDebounceTimeMs(qint32 debounceTime)
+{
+    m_debounceTimeMs = debounceTime;
+}
+
 qint32 Settings::getHeavyAiTrainingStartDay() const
 {
     return m_heavyAiTrainingStartDay;
@@ -1497,7 +1507,7 @@ void Settings::setup()
             MemoryManagement::create<Value<qint32>>("Game", "PauseAfterAction", &m_pauseAfterAction, 0, 0, 100),
             MemoryManagement::create<Value<QString>>("Game", "AiPipeUuid", &m_pipeUuid, "", "", ""),
             MemoryManagement::create<Value<bool>>("Game", "UseAiProcess", &m_spawnAiProcess, false, false, true),
-
+            MemoryManagement::create<Value<qint32>>("Game", "DebounceTime", &m_debounceTimeMs, 100, 0, std::numeric_limits<qint32>::max()),
             // network
             MemoryManagement::create<Value<quint16>>("Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()),
             MemoryManagement::create<Value<QString>>("Network", "ServerAdress", &m_ServerAdress, "192.46.216.113", "", ""),

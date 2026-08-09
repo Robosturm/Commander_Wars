@@ -24,7 +24,7 @@ SoundData::SoundData()
     Interpreter::setCppOwnerShip(this);
 }
 
-AudioManager::AudioManager(bool noAudio)
+AudioManager::AudioManager(bool noAudio, bool useAudioThread)
     :
 #ifdef AUDIOSUPPORT
       m_audioOutput(this),
@@ -55,9 +55,15 @@ AudioManager::AudioManager(bool noAudio)
         connect(this, &AudioManager::sigClearMusicPositions,   this, &AudioManager::SlotClearMusicPositions, Qt::QueuedConnection);
 
         // sync startup and stop signals and slots
-        connect(this, &AudioManager::sigInitAudio,         this, &AudioManager::initAudio, Qt::BlockingQueuedConnection);
-        connect(this, &AudioManager::sigStopAudio,         this, &AudioManager::stopAudio, Qt::BlockingQueuedConnection);
-        connect(this, &AudioManager::sigCreateSoundCache,  this, &AudioManager::createSoundCache, Qt::BlockingQueuedConnection);
+        auto connectionType = Qt::AutoConnection;
+        if (useAudioThread)
+        {
+            connectionType = Qt::BlockingQueuedConnection;
+        }
+        connect(this, &AudioManager::sigInitAudio,         this, &AudioManager::initAudio, connectionType);
+        connect(this, &AudioManager::sigStopAudio,         this, &AudioManager::stopAudio, connectionType);
+        connect(this, &AudioManager::sigCreateSoundCache,  this, &AudioManager::createSoundCache, connectionType);
+
         for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
         {
             m_soundEffectData[i].timer.setObjectName("SoundEffect" + QString::number(i));
@@ -122,7 +128,6 @@ void AudioManager::initAudio()
         else
         {
             emit sigInitAudio();
-
         }
     }
 #endif

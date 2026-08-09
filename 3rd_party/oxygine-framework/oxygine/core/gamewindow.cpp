@@ -62,6 +62,13 @@ namespace oxygine
         QObject::connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
         QObject::connect(&m_timer, &QTimer::timeout, this, qOverload<>(&GameWindow::update));
         QObject::connect(this, &GameWindow::sigChangeUpdateTimerState, this, &GameWindow::changeUpdateTimerState, Qt::BlockingQueuedConnection);
+        // start debounce timer
+        m_debounceTimer.leftDown.start();
+        m_debounceTimer.rightDown.start();
+        m_debounceTimer.middleDown.start();
+        m_debounceTimer.leftUp.start();
+        m_debounceTimer.middleUp.start();
+        m_debounceTimer.rightUp.start();
     }
 
     void GameWindow::shutdown()
@@ -200,29 +207,55 @@ namespace oxygine
 
     void GameWindow::mousePressEvent(QMouseEvent *event)
     {
+        auto debounceTime = Settings::getInstance()->getDebounceTime();
         MouseButton b = MouseButton_Left;
         switch (event->button())
         {
-        case Qt::MouseButton::LeftButton:
-        {
-            b = MouseButton_Left;
-            break;
+            case Qt::MouseButton::LeftButton:
+            {
+                if (m_debounceTimer.leftDown.elapsed() >= debounceTime)
+                {
+                    b = MouseButton_Left;
+                    m_debounceTimer.leftDown.start();
+                }
+                else
+                {
+                    return;
+                }
+                break;
+            }
+            case Qt::MouseButton::MiddleButton:
+            {
+                if (m_debounceTimer.middleDown.elapsed() >= debounceTime)
+                {
+                    b = MouseButton_Middle;
+                    m_debounceTimer.middleDown.start();
+                }
+                else
+                {
+                    return;
+                }
+                break;
+            }
+            case Qt::MouseButton::RightButton:
+            {
+                if (m_debounceTimer.rightDown.elapsed() >= debounceTime)
+                {
+                    b = MouseButton_Right;
+                    m_debounceTimer.rightDown.start();
+                }
+                else
+                {
+                    return;
+                }
+                break;
+            }
+            default:
+            {
+                // do nothing
+            }
         }
-        case Qt::MouseButton::MiddleButton:
-        {
-            b = MouseButton_Middle;
-            break;
-        }
-        case Qt::MouseButton::RightButton:
-        {
-            b = MouseButton_Right;
-            break;
-        }
-        default:
-        {
-            // do nothing
-        }
-        }
+
         if (!m_workerLaunched)
         {
             oxygine::Input* input = &oxygine::Input::getInstance();
@@ -234,28 +267,53 @@ namespace oxygine
 
     void GameWindow::mouseReleaseEvent(QMouseEvent *event)
     {
+        auto debounceTime = Settings::getInstance()->getDebounceTime();
         MouseButton b = MouseButton_Left;
         switch (event->button())
         {
-        case Qt::MouseButton::LeftButton:
-        {
-            b = MouseButton_Left;
-            break;
-        }
-        case Qt::MouseButton::MiddleButton:
-        {
-            b = MouseButton_Middle;
-            break;
-        }
-        case Qt::MouseButton::RightButton:
-        {
-            b = MouseButton_Right;
-            break;
-        }
-        default:
-        {
-            // do nothing
-        }
+            case Qt::MouseButton::LeftButton:
+            {
+                if (m_debounceTimer.leftUp.elapsed() >= debounceTime)
+                {
+                    b = MouseButton_Left;
+                    m_debounceTimer.leftUp.start();
+                }
+                else
+                {
+                    return;
+                }
+                break;
+            }
+            case Qt::MouseButton::MiddleButton:
+            {
+                if (m_debounceTimer.middleUp.elapsed() >= debounceTime)
+                {
+                    b = MouseButton_Middle;
+                    m_debounceTimer.middleUp.start();
+                }
+                else
+                {
+                    return;
+                }
+                break;
+            }
+            case Qt::MouseButton::RightButton:
+            {
+                if (m_debounceTimer.rightUp.elapsed() >= debounceTime)
+                {
+                    b = MouseButton_Right;
+                    m_debounceTimer.rightUp.start();
+                }
+                else
+                {
+                    return;
+                }
+                break;
+            }
+            default:
+            {
+                // do nothing
+            }
         }
         if (!m_workerLaunched)
         {
