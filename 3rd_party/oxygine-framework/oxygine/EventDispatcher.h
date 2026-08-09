@@ -38,10 +38,10 @@ namespace oxygine
         {
             EventUpdateAction action;
             oxygine::spEventDispatcher dispatcher;
-            oxygine::eventType et;
+            oxygine::eventType et{0};
             oxygine::EventCallback cb;
-            qint32 id;
-            oxygine::IClosureOwner* callbackThis;
+            qint32 id{-1};
+            oxygine::IClosureOwner* callbackThis{nullptr};
         };
         static void doUpdateInfos();
 
