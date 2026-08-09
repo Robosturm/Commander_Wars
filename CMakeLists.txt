@@ -1233,6 +1233,22 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     objects/base/tabbedbox.h objects/base/tabbedbox.cpp
 )
 
+if (BUILD_TESTING AND GRAPHICSUPPORT)
+    target_sources(${PROJECT_NAME} PRIVATE
+        tests/oxygine_lifetime/oxyginelifetimetests.cpp
+        tests/oxygine_lifetime/oxyginelifetimetests.h
+    )
+    target_compile_definitions(${PROJECT_NAME} PRIVATE COW_BUILD_TESTING)
+    enable_testing()
+    add_test(
+        NAME OxygineLifetimeSelftest
+        COMMAND ${CMAKE_COMMAND} -E env
+            "COW_OXYGINE_SELFTEST=1"
+            $<TARGET_FILE:${PROJECT_NAME}> -noAudio
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+endif()
+
 if (PRECOMPILED_HEADERS)
     target_precompile_headers(${PROJECT_NAME}
         PRIVATE
