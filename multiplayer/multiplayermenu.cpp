@@ -856,7 +856,8 @@ void Multiplayermenu::connectToSlave(const QJsonObject & objData, quint64 socket
     quint16 port = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     bool isServer = m_pNetworkInterface->getIsServer();
-    bool isGateway = pMap->getGameRules()->getGatewayHosting();
+    // observers joining a running game have no map loaded yet
+    bool isGateway = pMap.get() != nullptr && pMap->getGameRules()->getGatewayHosting();
     disconnectNetworkSlots();
     m_pNetworkInterface = MemoryManagement::create<TCPClient>(nullptr);
     m_pNetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
