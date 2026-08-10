@@ -45,7 +45,7 @@ namespace oxygine
         const Actor* pActor = dynamic_cast<const Actor*>(this);
         if (pActor != nullptr)
         {
-            return pActor->__getStage() == nullptr;
+            return pActor->isDetachedForThreading();
         }
         else
         {
@@ -188,9 +188,15 @@ namespace oxygine
 
     bool EventDispatcher::requiresThreadChange() const
     {
+#ifdef GRAPHICSUPPORT
+        // Headless mode has no render pass to drain deferred updates.
         return !notInSharedUse() &&
                !GameWindow::getWindow()->isMainThread() &&
                !detached() &&
-               !GameWindow::getWindow()->renderingPaused();
+               !GameWindow::getWindow()->renderingPaused() &&
+               !GameWindow::getWindow()->getNoUi();
+#else
+        return false;
+#endif
     }
 }

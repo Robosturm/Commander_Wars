@@ -21,6 +21,10 @@ public:
 
     static GameWindow* getWindow();
     bool isReady2Render();
+    bool getNoUi() const
+    {
+        return m_noUi;
+    }
     /**
          * @brief quitGame quits this game
          */
