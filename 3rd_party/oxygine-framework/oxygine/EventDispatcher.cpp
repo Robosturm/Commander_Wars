@@ -45,7 +45,7 @@ namespace oxygine
         const Actor* pActor = dynamic_cast<const Actor*>(this);
         if (pActor != nullptr)
         {
-            return pActor->__getStage() == nullptr;
+            return pActor->isDetachedForThreading();
         }
         else
         {
@@ -101,7 +101,7 @@ namespace oxygine
         if (requiresThreadChange())
         {
             EventUpdateInfo info;
-            info.action = EventUpdateAction::RemoveEventListenerThis;
+            info.action = EventUpdateAction::RemoveEventListenerId;
             info.dispatcher = getSharedPtr<EventDispatcher>();
             info.id = id;
             QMutexLocker lock(&m_eventUpdateActionMutex);
@@ -127,7 +127,7 @@ namespace oxygine
         if (requiresThreadChange())
         {
             EventUpdateInfo info;
-            info.action = EventUpdateAction::RemoveEventListenerId;
+            info.action = EventUpdateAction::RemoveEventListenerThis;
             info.dispatcher = getSharedPtr<EventDispatcher>();
             info.callbackThis = callbackThis;
             QMutexLocker lock(&m_eventUpdateActionMutex);
@@ -188,9 +188,15 @@ namespace oxygine
 
     bool EventDispatcher::requiresThreadChange() const
     {
+#ifdef GRAPHICSUPPORT
+        // Headless mode has no render pass to drain deferred updates.
         return !notInSharedUse() &&
                !GameWindow::getWindow()->isMainThread() &&
                !detached() &&
-               !GameWindow::getWindow()->renderingPaused();
+               !GameWindow::getWindow()->renderingPaused() &&
+               !GameWindow::getWindow()->getNoUi();
+#else
+        return false;
+#endif
     }
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <QTransform>
 #include <QMutex>
+#include <QRecursiveMutex>
 
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
@@ -8,6 +9,9 @@
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
 #include "3rd_party/oxygine-framework/oxygine/Property.h"
+#include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
+#include <atomic>
+#include <initializer_list>
 #include <vector>
 
 namespace oxygine
@@ -106,12 +110,14 @@ namespace oxygine
             oxygine::spActor parent;
             oxygine::spActor actor;
             oxygine::spTween tween;
-            oxygine::timeMS syncTime;
-            qint32 zOrder;
+            oxygine::timeMS syncTime{0};
+            qint32 zOrder{0};
             QColor color;
-            const oxygine::AnimationFrame* frame;
+            // Deferred updates can outlive the caller and resource reloads.
+            oxygine::AnimationFrame frame;
             oxygine::spResAnim pAnim;
-            bool matrix;
+            std::vector<oxygine::spActor> pendingTreeChanges;
+            bool matrix{false};
         };
         static void doUpdateInfos();
 
@@ -402,6 +408,7 @@ namespace oxygine
 
         /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
         Stage* __getStage() const;
+        bool isDetachedForThreading() const;
 
         void setNotPressed(MouseButton b);
 
@@ -441,6 +448,13 @@ namespace oxygine
         void markTranformDirty();
         void updateTransform() const;
         void internalUpdate(const UpdateState& us);
+        bool isPendingTreeChange() const;
+        bool isPendingTreeChangeUnlocked() const;
+        void beginPendingTreeChange();
+        void finishPendingTreeChange();
+        static void queueUpdate(UpdateInfo&& info, std::initializer_list<spActor> guardedActors);
+        static void finishPendingTreeChanges(UpdateInfo& info);
+        static QRecursiveMutex& treeMutex();
         /**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
         virtual void doUpdate(const UpdateState& us);
         void dispatchToParent(Event* event);
@@ -486,6 +500,7 @@ namespace oxygine
         };
         static QMutex m_updateActionMutex;
         static std::vector<UpdateInfo> m_updateActions;
+        std::atomic<quint32> m_pendingTreeChangeCount{0};
     private:
 #ifdef GRAPHICSUPPORT
         unsigned char   m_alpha{255};

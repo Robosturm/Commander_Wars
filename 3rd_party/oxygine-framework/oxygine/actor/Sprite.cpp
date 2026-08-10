@@ -260,7 +260,7 @@ namespace oxygine
             UpdateInfo info;
             info.parent = getSharedPtr<Actor>();
             info.action = Actor::UpdateAction::ChangeAnimFrame;
-            info.frame = &frame;
+            info.frame = frame;
             QMutexLocker lock(&m_updateActionMutex);
             m_updateActions.push_back(std::move(info));
         }

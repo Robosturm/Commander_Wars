@@ -2598,6 +2598,8 @@ void Multiplayermenu::countdown()
         }
         if (m_counter == 0 && m_pNetworkInterface.get() != nullptr)
         {
+            // A retired menu can remain alive until queued actor removal drains.
+            m_GameStartTimer.stop();
             CONSOLE_PRINT("Starting game on server", GameConsole::eDEBUG);
             defeatClosedPlayers();
 
