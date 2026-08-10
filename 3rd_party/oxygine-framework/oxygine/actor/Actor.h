@@ -103,6 +103,7 @@ namespace oxygine
             ChangeAnimFrame,
             SetColorTable,
             DetachAndRemove,
+            Detach,
         };
         struct UpdateInfo
         {
@@ -113,9 +114,10 @@ namespace oxygine
             oxygine::timeMS syncTime{0};
             qint32 zOrder{0};
             QColor color;
-            const oxygine::AnimationFrame* frame;
+            oxygine::AnimationFrame frame;
             oxygine::spResAnim pAnim;
-            bool matrix;
+            std::vector<oxygine::spActor> pendingTreeChanges;
+            bool matrix{false};
         };
         static void doUpdateInfos();
 
@@ -394,6 +396,7 @@ namespace oxygine
         virtual void render(const RenderState& rs);
         void handleEvent(Event* event);
         virtual void doRender(const RenderState&) {}
+        bool requiresThreadChange() const;
 
         //converts position in parent space to local space
         QPoint parent2local(const QPoint& pos) const;
@@ -446,13 +449,11 @@ namespace oxygine
         void markTranformDirty();
         void updateTransform() const;
         void internalUpdate(const UpdateState& us);
-        bool isPendingTreeChange() const;
         bool isPendingTreeChangeUnlocked() const;
         void beginPendingTreeChange();
         void finishPendingTreeChange();
         static void queueUpdate(UpdateInfo&& info, std::initializer_list<spActor> guardedActors);
         static void finishPendingTreeChanges(UpdateInfo& info);
-        static QRecursiveMutex& treeMutex();
         /**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
         virtual void doUpdate(const UpdateState& us);
         void dispatchToParent(Event* event);
@@ -483,9 +484,9 @@ namespace oxygine
         static QSize m_dummySize;
         static QPointF m_dummyPointF;
 #endif
-        Stage* m_stage;
+        Stage* m_stage{nullptr};
         spClock m_clock;
-        Actor* m_parent;
+        Actor* m_parent{nullptr};
         children m_children;
         union
         {
@@ -497,8 +498,10 @@ namespace oxygine
             int32_t m_pressedOvered;
         };
         static QMutex m_updateActionMutex;
+        static QMutex m_treeMutex;
         static std::vector<UpdateInfo> m_updateActions;
         std::atomic<quint32> m_pendingTreeChangeCount{0};
+
     private:
 #ifdef GRAPHICSUPPORT
         unsigned char   m_alpha{255};

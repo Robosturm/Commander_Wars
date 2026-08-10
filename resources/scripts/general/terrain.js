@@ -627,5 +627,4 @@ var TERRAIN =
     {
         return true;
     },
-    getShowInWiki : null,
 };

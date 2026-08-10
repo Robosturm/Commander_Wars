@@ -54,7 +54,7 @@ void WikiDatabase::load()
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
     Interpreter* pInterpreter = Interpreter::getInstance();
-    for (const auto& terrainId : sortedTerrains)
+    for (const auto& terrainId : std::as_const(sortedTerrains))
     {
         auto value = pInterpreter->doFunction(terrainId, "getShowInWiki");
         if (value.isNull() || value.toBool())
@@ -69,14 +69,14 @@ void WikiDatabase::load()
     }
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
-    for (const auto& unitId : sortedUnits)
+    for (const auto& unitId : std::as_const(sortedUnits))
     {
         m_Entries.append(MemoryManagement::create<PageData>(pUnitSpriteManager->getName(unitId), unitId, QStringList({tr("Unit")})));
     }
 
     GameManager* pGameManager = GameManager::getInstance();
     QStringList  actions = pGameManager->getLoadedRessources();
-    for (const auto& action : actions)
+    for (const auto& action : std::as_const(actions))
     {
         m_Entries.append(MemoryManagement::create<PageData>(pGameManager->getName(action), action, QStringList({tr("Action")})));
         QJSValue count = pInterpreter->doFunction(action, "getSubWikiInfoCount");
@@ -104,7 +104,7 @@ void WikiDatabase::load()
 
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     QStringList perks = pCOPerkManager->getLoadedRessources();
-    for (const auto& perk : perks)
+    for (const auto& perk : std::as_const(perks))
     {
         m_Entries.append(MemoryManagement::create<PageData>(pCOPerkManager->getName(perk), perk, QStringList({tr("Perk")})));
     }

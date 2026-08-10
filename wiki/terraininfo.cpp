@@ -16,6 +16,8 @@
 TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     : m_pMap(pMap)
 {
+    auto* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
 #ifdef GRAPHICSUPPORT
     setObjectName("TerrainInfo");
 #endif
@@ -185,6 +187,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     y += pLabel->getTextRect().height() + 10;
     setHeight(y);
     connect(this, &TerrainInfo::sigShowLink, this, &TerrainInfo::showLink, Qt::QueuedConnection);
+    pApp->continueRendering();
 }
 
 void TerrainInfo::showLink(QString pageID)

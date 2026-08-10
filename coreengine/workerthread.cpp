@@ -125,6 +125,7 @@ void WorkerThread::start()
     GameConsole::print("Loading worker thread", GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     spConsole pConsole = GameConsole::getSpInstance();
     // create the initial menue no need to store the object
     // it will add itself to the current stage
@@ -132,6 +133,7 @@ void WorkerThread::start()
     Interpreter* pInterpreter = Interpreter::createInstance();
     Settings::getInstance()->setLanguage(Settings::getInstance()->getLanguage());
     pConsole->init();
+    pApp->continueRendering();
     UiFactory::getInstance();
     // load General-Base Scripts
     QStringList searchPaths = VirtualPaths::createSearchPath("resources/scripts/general");

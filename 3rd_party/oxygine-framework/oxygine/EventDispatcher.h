@@ -72,10 +72,7 @@ namespace oxygine
         }
         bool getEnabled() const;
         virtual void setEnabled(bool enabled);
-        bool requiresThreadChange() const;
-
-    protected:
-        bool detached() const;
+        bool isNotThreadsafe() const;
 
     protected:
         struct listener

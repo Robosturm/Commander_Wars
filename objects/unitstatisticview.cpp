@@ -31,8 +31,11 @@ UnitStatisticView::UnitStatisticView(const GameRecorder::PlayerData & data, qint
 
 void UnitStatisticView::showLink(QString pageID)
 {
+    auto* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
     oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
+    pApp->continueRendering();
 }
 
 void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const QVector<GameRecorder::UnitData> & view, Player* pPlayer, GameMap* pMap, qint32 & y, qint32 width, bool summary)

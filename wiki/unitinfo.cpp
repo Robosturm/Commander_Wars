@@ -27,6 +27,8 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     , m_pOwner(MemoryManagement::create<Player>(pUnit->getMap()))
     , m_width(width)
 {
+    auto* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
 #ifdef GRAPHICSUPPORT
     setObjectName("UnitInfo");
 #endif
@@ -408,6 +410,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     y += 60;
     setHeight(y);
     connect(this, &UnitInfo::sigShowLink, this, &UnitInfo::showLink, Qt::QueuedConnection);
+    pApp->continueRendering();
 }
 
 qint32 UnitInfo::showWeaponInfo(bool showAll)

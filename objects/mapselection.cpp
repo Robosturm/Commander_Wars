@@ -93,6 +93,8 @@ void MapSelection::refresh()
 
 void MapSelection::changeFolder(QString folder)
 {
+    auto* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     // before the early return, else a clicked map latches the flag for the pending timer
     m_itemClicked = false;
     if (folder.endsWith(".map"))
@@ -146,6 +148,7 @@ void MapSelection::changeFolder(QString folder)
         m_currentItem = m_Files[m_currentIdx];
         emit sigStartItemChangeTimer();
     }
+    pApp->continueRendering();
 }
 
 void MapSelection::addFiles(const QString & newFolder, const QStringList & searchPaths, QStringList filterList, QDir::Filter filter)
@@ -272,7 +275,9 @@ void MapSelection::addNewSelectionItem(qint32 i, qint32 & y)
 }
 
 void MapSelection::updateSelection()
-{    
+{
+    auto* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     m_itemClicked = false;
     m_ItemContainer->clearContent();
     m_Items.clear();
@@ -369,7 +374,7 @@ void MapSelection::updateSelection()
         m_currentItem = m_Files[m_currentIdx + m_currentStartIndex];
         emit sigStartItemChangeTimer();
     }
-    
+    pApp->continueRendering();
 }
 
 void MapSelection::itemChangeTimerExpired()

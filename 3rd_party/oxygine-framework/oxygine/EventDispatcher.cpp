@@ -40,22 +40,9 @@ namespace oxygine
         m_eventUpdateActions.clear();
     }
 
-    bool EventDispatcher::detached() const
-    {
-        const Actor* pActor = dynamic_cast<const Actor*>(this);
-        if (pActor != nullptr)
-        {
-            return pActor->isDetachedForThreading();
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     void EventDispatcher::addEventListener(eventType et, const EventCallback cb)
     {
-        if (requiresThreadChange())
+        if (isNotThreadsafe())
         {
             EventUpdateInfo info;
             info.action = EventUpdateAction::AddEventListener;
@@ -73,7 +60,7 @@ namespace oxygine
 
     qint32 EventDispatcher::addEventListenerWithId(eventType et, const EventCallback & cb)
     {
-        Q_ASSERT(!requiresThreadChange());
+        Q_ASSERT(!isNotThreadsafe());
         m_lastID++;
         listener ls;
         ls.type = et;
@@ -98,7 +85,7 @@ namespace oxygine
 
     void EventDispatcher::removeEventListener(qint32 id)
     {
-        if (requiresThreadChange())
+        if (isNotThreadsafe())
         {
             EventUpdateInfo info;
             info.action = EventUpdateAction::RemoveEventListenerId;
@@ -124,7 +111,7 @@ namespace oxygine
 
     void EventDispatcher::removeEventListeners(IClosureOwner* callbackThis)
     {
-        if (requiresThreadChange())
+        if (isNotThreadsafe())
         {
             EventUpdateInfo info;
             info.action = EventUpdateAction::RemoveEventListenerThis;
@@ -186,15 +173,14 @@ namespace oxygine
         m_enabled = enabled;
     }
 
-    bool EventDispatcher::requiresThreadChange() const
+    bool EventDispatcher::isNotThreadsafe() const
     {
 #ifdef GRAPHICSUPPORT
         // Headless mode has no render pass to drain deferred updates.
-        return !notInSharedUse() &&
-               !GameWindow::getWindow()->isMainThread() &&
-               !detached() &&
+        return !GameWindow::getWindow()->isMainThread() &&
                !GameWindow::getWindow()->renderingPaused() &&
-               !GameWindow::getWindow()->getNoUi();
+               !GameWindow::getWindow()->getNoUi() &&
+               !notInSharedUse();
 #else
         return false;
 #endif

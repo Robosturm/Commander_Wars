@@ -57,7 +57,9 @@ void CreatedGui::resetUi()
 
 void CreatedGui::loadXml(QString xmlFile)
 {
+    Mainapp::getInstance()->pauseRendering();
     UiFactory::getInstance().createUi(xmlFile, this);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void CreatedGui::reloadUi(QString xmlFile)

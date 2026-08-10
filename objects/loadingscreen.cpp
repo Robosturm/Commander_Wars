@@ -36,6 +36,8 @@ void LoadingScreen::show()
 {
     if (oxygine::Stage::getStage().get() != nullptr)
     {
+        auto* pApp = Mainapp::getInstance();
+        pApp->pauseRendering();
         CONSOLE_PRINT("LoadingScreen::show", GameConsole::eDEBUG);
         oxygine::Stage::getStage()->addChild(m_pLoadingScreen);
         removeChildren();
@@ -83,6 +85,7 @@ void LoadingScreen::show()
         m_loadingProgress->setHtmlText("0 %");
         m_LoadingBar->setWidth(1);
         setVisible(true);
+        pApp->continueRendering();
     }
 }
 

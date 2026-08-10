@@ -36,6 +36,7 @@ option(PRECOMPILED_HEADERS "Whether to use precompiled headers to speed up compi
 option(ENABLE_UBSAN "Enable Undefined Behavior Sanitizer (Linux/GCC only)" OFF)
 option(ENABLE_ASAN "Enable Address Sanitizer for memory leak detection (Linux/GCC only)" OFF)
 option(ENABLE_VALGRIND "Enable Valgrind instrumentation for memory debugging (Linux/GCC only)" OFF)
+option(BUILD_TESTING "Builds the game as test variant" OFF)
 
 set(UPDATE_FILE "Commander_Wars-Win10_x64"  CACHE STRING "UPDATE File")
 ###################################################################################
