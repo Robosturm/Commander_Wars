@@ -80,7 +80,7 @@ namespace oxygine
                 }
                 case UpdateAction::ChangeAnimFrame:
                 {
-                    oxygine::safeSpCast<oxygine::Sprite>(item.parent)->changeAnimFrame(*item.frame);
+                    oxygine::safeSpCast<oxygine::Sprite>(item.parent)->changeAnimFrame(item.frame);
                     break;
                 }
                 case UpdateAction::SetColorTable:

@@ -8,6 +8,7 @@
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
 #include "3rd_party/oxygine-framework/oxygine/Property.h"
+#include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
 #include <vector>
 
 namespace oxygine
@@ -106,12 +107,12 @@ namespace oxygine
             oxygine::spActor parent;
             oxygine::spActor actor;
             oxygine::spTween tween;
-            oxygine::timeMS syncTime;
-            qint32 zOrder;
+            oxygine::timeMS syncTime{0};
+            qint32 zOrder{0};
             QColor color;
-            const oxygine::AnimationFrame* frame;
+            oxygine::AnimationFrame frame;
             oxygine::spResAnim pAnim;
-            bool matrix;
+            bool matrix{false};
         };
         static void doUpdateInfos();
 
