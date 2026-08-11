@@ -70,6 +70,8 @@ public slots:
     void showLink(QString pageID);
     void showNewBattlesprite(QString newArmy);
     qint32 showWeaponInfo(bool showAll);
+    qint32 showWeaponTakenInfo(bool showAll);
+
 private:
     void loadBattleSprite(Unit* pUnit);
     void loadArmySelector(qint32 x, qint32 y);
@@ -81,7 +83,9 @@ private:
     spPlayer m_pOwner;
     qint32 m_width;
     qint32 m_weaponStartY;
+    qint32 m_weaponTakenStartY;
     oxygine::spActor m_weaponInfopActor;
+    oxygine::spActor m_weaponTakenInfoActor;
 };
 
 #endif // UNITINFO_H

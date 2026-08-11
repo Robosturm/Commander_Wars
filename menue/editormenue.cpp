@@ -957,7 +957,6 @@ void EditorMenue::optimizePlayers()
     createTempFile();
     m_pMap->optimizePlayers();
     m_EditorSelection->createPlayerSelection();
-    
 }
 
 void EditorMenue::keyInput(oxygine::KeyEvent event)

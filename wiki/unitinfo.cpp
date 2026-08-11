@@ -292,7 +292,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
     qint32 x = 0;
-    for (const auto& terrainId : sortedTerrains)
+    for (const auto& terrainId : std::as_const(sortedTerrains))
     {        
         spTerrain pTerrain = Terrain::createTerrain(terrainId, -1, -1, "", pUnit->getMap());
         if (pTerrain->getShowInWiki())
@@ -402,11 +402,14 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     showAllWeaponInfo->setPosition(pLabel->getX() + 10 + pLabel->getTextRect().width(), y);
     showAllWeaponInfo->setChecked(true);
     connect(showAllWeaponInfo.get(), &Checkbox::checkChanged, this, &UnitInfo::showWeaponInfo, Qt::QueuedConnection);
+    connect(showAllWeaponInfo.get(), &Checkbox::checkChanged, this, &UnitInfo::showWeaponTakenInfo, Qt::QueuedConnection);
     addChild(showAllWeaponInfo);
 
     y += 50;
     m_weaponStartY = y;
     y += showWeaponInfo(true);
+    y += 60;
+    y += showWeaponTakenInfo(true);
     y += 60;
     setHeight(y);
     connect(this, &UnitInfo::sigShowLink, this, &UnitInfo::showLink, Qt::QueuedConnection);
@@ -451,6 +454,88 @@ qint32 UnitInfo::showWeaponInfo(bool showAll)
         createWeaponTable(m_pUnit.get(), m_pUnit->getWeapon2ID(), y, m_width, showAll);
         y += 60;
     }
+    m_weaponTakenStartY = m_weaponStartY + y + 60;
+    Mainapp::getInstance()->continueRendering();
+    return y;
+}
+
+qint32 UnitInfo::showWeaponTakenInfo(bool showAll)
+{
+    Mainapp::getInstance()->pauseRendering();
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = true;
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = true;
+
+    if (m_weaponTakenInfoActor.get() != nullptr)
+    {
+        m_weaponTakenInfoActor->detachAndRemove();
+    }
+    m_weaponTakenInfoActor = MemoryManagement::create<oxygine::Actor>();
+    m_weaponTakenInfoActor->setY(m_weaponTakenStartY);
+    addChild(m_weaponTakenInfoActor);
+    qint32 y = 0;
+
+    auto pLabel = MemoryManagement::create<oxygine::TextField>();
+    pLabel->setStyle(headerStyle);
+    pLabel->setHtmlText(tr("Taken damage"));
+    pLabel->setPosition(m_width / 2 - pLabel->getTextRect().width() / 2, y);
+    m_weaponTakenInfoActor->addChild(pLabel);
+    y += pLabel->getTextRect().height() + 10;
+
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+    QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
+    qint32 x = 0;
+    for (const auto& unitID : std::as_const(sortedUnits))
+    {
+        spUnit pDummy = MemoryManagement::create<Unit>(unitID, m_pOwner.get(), false, m_pUnit->getMap());
+        float damage = -1.0f;
+        if (!pDummy->getWeapon1ID().isEmpty())
+        {
+            damage = pWeaponManager->getBaseDamage(pDummy->getWeapon1ID(), m_pUnit.get());
+        }
+        if (!pDummy->getWeapon2ID().isEmpty())
+        {
+            auto damage2 = pWeaponManager->getBaseDamage(pDummy->getWeapon2ID(), m_pUnit.get());
+            if (damage2 > damage)
+            {
+                damage = damage2;
+            }
+        }
+        if (damage > 0 || showAll)
+        {
+            QString unitId = unitID;
+            pDummy->addClickListener([this, unitId](oxygine::Event*)
+                                     {
+                                         emit sigShowLink(unitId);
+                                     });
+
+            pDummy->setPosition(x, y);
+            m_weaponTakenInfoActor->addChild(pDummy);
+            spLabel pLabel = MemoryManagement::create<Label>(m_width);
+            pLabel->setStyle(style);
+            if (damage > 0)
+            {
+                pLabel->setHtmlText((QString::number(static_cast<qint32>(damage))  + " %"));
+            }
+            else
+            {
+                pLabel->setHtmlText("-");
+            }
+            pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
+            m_weaponTakenInfoActor->addChild(pLabel);
+            x += 150;
+            if (x + 160 > m_width)
+            {
+                x = 0;
+                y += 40;
+            }
+        }
+    }
+    y += 60;
     Mainapp::getInstance()->continueRendering();
     return y;
 }
@@ -565,7 +650,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& 
 void UnitInfo::createLoadingTable(Unit* pUnit, const QStringList & loadables, qint32& y, qint32 width)
 {
     qint32 x = 0;
-    for (const auto& unitID : loadables)
+    for (const auto& unitID : std::as_const(loadables))
     {
         spUnit pDummy = MemoryManagement::create<Unit>(unitID, m_pOwner.get(), false, pUnit->getMap());
         pDummy->setPosition(x, y);
@@ -616,7 +701,7 @@ void UnitInfo::createTransportTable(Unit* pUnit, qint32& y, qint32 width)
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     qint32 x = 0;
-    for (const auto& unitID : sortedUnits)
+    for (const auto& unitID : std::as_const(sortedUnits))
     {
         spUnit pDummy = MemoryManagement::create<Unit>(unitID, m_pOwner.get(), false, pUnit->getMap());
         if (pDummy->canTransportUnit(pUnit, true))
@@ -648,7 +733,7 @@ void UnitInfo::createActionTable(Unit* pUnit, qint32& y, qint32 width)
         auto* pRules = pMap->getGameRules();
         allowedActions = pRules->getAllowedActions();
     }
-    for (const auto & action : actions)
+    for (const auto & action : std::as_const(actions))
     {
         if (allowedActions.isEmpty() ||
             allowedActions.contains(action))
