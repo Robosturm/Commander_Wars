@@ -515,6 +515,7 @@ namespace oxygine
         quint32 m_pendingTreeChangeCount{0};
 
     private:
+        qint32 m_zOrder{0};
 #ifdef GRAPHICSUPPORT
         unsigned char   m_alpha{255};
         QPoint m_pos;
@@ -522,7 +523,6 @@ namespace oxygine
         QSize m_size;
         QPointF m_anchor;
         float  m_rotation{0};
-        qint32 m_zOrder{0};
         qint32 m_onGlobalTouchUpEvent{-1};
         qint32 m_onGlobalTouchMoveEvent{-1};
         bool m_internalUpdateRunning{false};
