@@ -195,13 +195,20 @@ namespace oxygine
     {
         if (requiresThreadChange())
         {
-            UpdateInfo info;
-            info.parent = getSharedPtr<Actor>();
-            info.action = Actor::UpdateAction::SetColorTable;
-            info.pAnim = pAnim;
-            info.matrix = matrix;
-            QMutexLocker lock(&m_updateActionMutex);
-            m_updateActions.push_back(std::move(info));
+            if (m_syncEvents)
+            {
+                emit MemoryManagement::getInstance().sigSetColorTable(getSharedPtr<Sprite>(), pAnim, matrix);
+            }
+            else
+            {
+                QMutexLocker lock(&m_updateActionMutex);
+                UpdateInfo info;
+                info.parent = getSharedPtr<Actor>();
+                info.action = Actor::UpdateAction::SetColorTable;
+                info.pAnim = pAnim;
+                info.matrix = matrix;
+                m_updateActions.push_back(std::move(info));
+            }
         }
         else
         {
@@ -261,12 +268,19 @@ namespace oxygine
     {
         if (requiresThreadChange())
         {
-            UpdateInfo info;
-            info.parent = getSharedPtr<Actor>();
-            info.action = Actor::UpdateAction::ChangeAnimFrame;
-            info.frame = frame;
-            QMutexLocker lock(&m_updateActionMutex);
-            m_updateActions.push_back(std::move(info));
+            if (m_syncEvents)
+            {
+                emit MemoryManagement::getInstance().sigChangeAnimFrame(getSharedPtr<Sprite>(), frame);
+            }
+            else
+            {
+                QMutexLocker lock(&m_updateActionMutex);
+                UpdateInfo info;
+                info.parent = getSharedPtr<Actor>();
+                info.action = Actor::UpdateAction::ChangeAnimFrame;
+                info.frame = frame;
+                m_updateActions.push_back(std::move(info));
+            }
         }
         else
         {

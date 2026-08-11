@@ -436,6 +436,18 @@ namespace oxygine
         using TweenScaleY = Property<qreal, qreal, Actor, &Actor::getScaleY, &Actor::setScaleY>;
         using TweenAlpha = Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>;
 
+        void __setPriority(qint32 zorder);
+        void __restartAllTweens();
+        void __syncAllTweens(oxygine::timeMS syncTime);
+        void __removeChildren();
+        void __addTween(spTween tween);
+        void __removeTween(spTween pTween);
+        void __removeTweens();
+        void __addChild(spActor & actor);
+        void __removeChild(spActor & actor);
+        void __detach();
+        void __detachAndRemove();
+
     protected:
         virtual void handleEventImpl(Event* event);
         void added2stage(Stage*);
@@ -462,18 +474,6 @@ namespace oxygine
         static QPoint convert_global2local(spActor & child, spActor & parent, const QPoint& pos);
         static QPoint convert_local2global_(const Actor* child, const Actor* parent, QPoint pos);
         static QPoint convert_local2global(spActor & child, spActor & parent, const QPoint& pos);
-
-        void __setPriority(qint32 zorder);
-        void __restartAllTweens();
-        void __syncAllTweens(oxygine::timeMS syncTime);
-        void __removeChildren();
-        void __addTween(spTween tween);
-        void __removeTween(spTween pTween);
-        void __removeTweens();
-        void __addChild(spActor & actor);
-        void __removeChild(spActor & actor);
-        void __detach();
-        void __detachAndRemove();
 
     protected:
 #ifdef GRAPHICSUPPORT

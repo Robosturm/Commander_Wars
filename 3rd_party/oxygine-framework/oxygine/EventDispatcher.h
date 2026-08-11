@@ -44,6 +44,7 @@ namespace oxygine
             oxygine::IClosureOwner* callbackThis{nullptr};
         };
         static void doUpdateInfos();
+        static void setSyncEvents(bool sync);
 
         explicit EventDispatcher() = default;
         virtual ~EventDispatcher() = default;
@@ -94,5 +95,6 @@ namespace oxygine
 
         static QMutex m_eventUpdateActionMutex;
         static std::vector<EventUpdateInfo> m_eventUpdateActions;
+        static bool m_syncEvents;
     };
 }

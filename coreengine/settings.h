@@ -1018,7 +1018,7 @@ private:
     bool m_showDetailedBattleForcast{true};
     bool m_autoMoveCursor{false};
     float m_supplyWarning{0.33f};
-    qint32 m_debounceTimeMs{100};
+    qint32 m_debounceTimeMs{20};
 
     qint32 m_pauseAfterAction{0};
     bool m_createAiTrainingData{false};
@@ -1036,6 +1036,7 @@ private:
     QString m_pipeUuid;
     bool m_spawnAiProcess{DEFAULTAIPIPE};
     bool m_aiSlave{false};
+    bool m_syncEvents{true};
 
     QString m_heavyAiTrainingFile{""};
     QString m_heavyAiTrainingType{"heavy_ai"};

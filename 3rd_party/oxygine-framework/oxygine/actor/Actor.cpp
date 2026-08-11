@@ -199,8 +199,14 @@ namespace oxygine
 
     bool Actor::isDetachedForThreading() const
     {
-        return m_stage == nullptr &&
-               !isPendingTreeChangeUnlocked();
+        if (m_syncEvents)
+        {
+            return m_stage == nullptr;
+        }
+        else
+        {
+            return m_stage == nullptr &&!isPendingTreeChangeUnlocked();
+        }
     }
 
     void Actor::beginPendingTreeChange()
@@ -550,22 +556,36 @@ namespace oxygine
         }
         else
         {
-            m_updateActionMutex.lock();
-            if (requiresThreadChange())
+            if (m_syncEvents)
             {
-                UpdateInfo info;
-                info.parent = getSharedPtr<Actor>();
-                info.zOrder = zorder;
-                info.action = Actor::UpdateAction::Priority;
-                spActor actorGuard = info.parent;
-                spActor parentGuard = m_parent->getSharedPtr<Actor>();
-                queueUpdate(std::move(info), {actorGuard, parentGuard});
-                m_updateActionMutex.unlock();
+                if (requiresThreadChange())
+                {
+                    emit MemoryManagement::getInstance().sigSetPriority(getSharedPtr<Actor>(), zorder);
+                }
+                else
+                {
+                    __setPriority(zorder);
+                }
             }
             else
             {
-                m_updateActionMutex.unlock();
-                __setPriority(zorder);
+                m_updateActionMutex.lock();
+                if (requiresThreadChange())
+                {
+                    UpdateInfo info;
+                    info.parent = getSharedPtr<Actor>();
+                    info.zOrder = zorder;
+                    info.action = Actor::UpdateAction::Priority;
+                    spActor actorGuard = info.parent;
+                    spActor parentGuard = m_parent->getSharedPtr<Actor>();
+                    queueUpdate(std::move(info), {actorGuard, parentGuard});
+                    m_updateActionMutex.unlock();
+                }
+                else
+                {
+                    m_updateActionMutex.unlock();
+                    __setPriority(zorder);
+                }
             }
         }
     }
@@ -713,19 +733,33 @@ namespace oxygine
 
     void Actor::restartAllTweens()
     {
-        m_updateActionMutex.lock();
-        if (requiresThreadChange())
+        if (m_syncEvents)
         {
-            UpdateInfo info;
-            info.parent = getSharedPtr<Actor>();
-            info.action = Actor::UpdateAction::RestartAllTweens;
-            m_updateActions.push_back(std::move(info));
-            m_updateActionMutex.unlock();
+            if (requiresThreadChange())
+            {
+                emit MemoryManagement::getInstance().sigRestartAllTweens(getSharedPtr<Actor>());
+            }
+            else
+            {
+                __restartAllTweens();
+            }
         }
         else
         {
-            m_updateActionMutex.unlock();
-            __restartAllTweens();
+            m_updateActionMutex.lock();
+            if (requiresThreadChange())
+            {
+                UpdateInfo info;
+                info.parent = getSharedPtr<Actor>();
+                info.action = Actor::UpdateAction::RestartAllTweens;
+                m_updateActions.push_back(std::move(info));
+                m_updateActionMutex.unlock();
+            }
+            else
+            {
+                m_updateActionMutex.unlock();
+                __restartAllTweens();
+            }
         }
     }
 
@@ -742,20 +776,34 @@ namespace oxygine
 
     void Actor::syncAllTweens(oxygine::timeMS syncTime)
     {
-        m_updateActionMutex.lock();
-        if (requiresThreadChange())
+        if (m_syncEvents)
         {
-            UpdateInfo info;
-            info.parent = getSharedPtr<Actor>();
-            info.action = Actor::UpdateAction::SyncTweens;
-            info.syncTime = syncTime;            
-            m_updateActions.push_back(std::move(info));
-            m_updateActionMutex.unlock();
+            if (requiresThreadChange())
+            {
+                emit MemoryManagement::getInstance().sigSyncAllTweens(getSharedPtr<Actor>(), syncTime);
+            }
+            else
+            {
+                __syncAllTweens(syncTime);
+            }
         }
         else
         {
-            m_updateActionMutex.unlock();
-            __syncAllTweens(syncTime);
+            m_updateActionMutex.lock();
+            if (requiresThreadChange())
+            {
+                UpdateInfo info;
+                info.parent = getSharedPtr<Actor>();
+                info.action = Actor::UpdateAction::SyncTweens;
+                info.syncTime = syncTime;
+                m_updateActions.push_back(std::move(info));
+                m_updateActionMutex.unlock();
+            }
+            else
+            {
+                m_updateActionMutex.unlock();
+                __syncAllTweens(syncTime);
+            }
         }
     }
 
@@ -952,27 +1000,41 @@ namespace oxygine
         }
         else
         {
-            m_updateActionMutex.lock();
-            if (requiresThreadChange() || actor->requiresThreadChange())
+            if (m_syncEvents)
             {
-                UpdateInfo info;
-                info.parent = getSharedPtr<Actor>();
-                info.action = Actor::UpdateAction::AddChild;
-                info.actor = actor;
-                spActor parentGuard = info.parent;
-                spActor actorGuard = info.actor;
-                spActor sourceGuard;
-                if (actor->m_parent != nullptr)
+                if (requiresThreadChange() || actor->requiresThreadChange())
                 {
-                    sourceGuard = actor->m_parent->getSharedPtr<Actor>();
+                    emit MemoryManagement::getInstance().sigAddChild(getSharedPtr<Actor>(), actor);
                 }
-                queueUpdate(std::move(info), {parentGuard, actorGuard, sourceGuard});
-                m_updateActionMutex.unlock();
+                else
+                {
+                    __addChild(actor);
+                }
             }
             else
             {
-                m_updateActionMutex.unlock();
-                __addChild(actor);
+                m_updateActionMutex.lock();
+                if (requiresThreadChange() || actor->requiresThreadChange())
+                {
+                    UpdateInfo info;
+                    info.parent = getSharedPtr<Actor>();
+                    info.action = Actor::UpdateAction::AddChild;
+                    info.actor = actor;
+                    spActor parentGuard = info.parent;
+                    spActor actorGuard = info.actor;
+                    spActor sourceGuard;
+                    if (actor->m_parent != nullptr)
+                    {
+                        sourceGuard = actor->m_parent->getSharedPtr<Actor>();
+                    }
+                    queueUpdate(std::move(info), {parentGuard, actorGuard, sourceGuard});
+                    m_updateActionMutex.unlock();
+                }
+                else
+                {
+                    m_updateActionMutex.unlock();
+                    __addChild(actor);
+                }
             }
         }
     }
@@ -991,27 +1053,41 @@ namespace oxygine
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove empty actor");
             return;
         }
-        m_updateActionMutex.lock();
-        if (requiresThreadChange() || actor->requiresThreadChange())
+        if (m_syncEvents)
         {
-            UpdateInfo info;
-            info.parent = getSharedPtr<Actor>();
-            info.action = Actor::UpdateAction::RemoveChild;
-            info.actor = actor;
-            spActor parentGuard = info.parent;
-            spActor actorGuard = info.actor;
-            spActor sourceGuard;
-            if (actor->m_parent != nullptr)
+            if (requiresThreadChange() || actor->requiresThreadChange())
             {
-                sourceGuard = actor->m_parent->getSharedPtr<Actor>();
+                emit MemoryManagement::getInstance().sigRemoveChild(getSharedPtr<Actor>(), actor);
             }
-            queueUpdate(std::move(info), {parentGuard, actorGuard, sourceGuard});
-            m_updateActionMutex.unlock();
+            else
+            {
+                __removeChild(actor);
+            }
         }
         else
         {
-            m_updateActionMutex.unlock();
-            __removeChild(actor);
+            m_updateActionMutex.lock();
+            if (requiresThreadChange() || actor->requiresThreadChange())
+            {
+                UpdateInfo info;
+                info.parent = getSharedPtr<Actor>();
+                info.action = Actor::UpdateAction::RemoveChild;
+                info.actor = actor;
+                spActor parentGuard = info.parent;
+                spActor actorGuard = info.actor;
+                spActor sourceGuard;
+                if (actor->m_parent != nullptr)
+                {
+                    sourceGuard = actor->m_parent->getSharedPtr<Actor>();
+                }
+                queueUpdate(std::move(info), {parentGuard, actorGuard, sourceGuard});
+                m_updateActionMutex.unlock();
+            }
+            else
+            {
+                m_updateActionMutex.unlock();
+                __removeChild(actor);
+            }
         }
     }
 
@@ -1046,20 +1122,34 @@ namespace oxygine
 
     void Actor::removeChildren()
     {
-        m_updateActionMutex.lock();
-        if (requiresThreadChange())
+        if (m_syncEvents)
         {
-            UpdateInfo info;
-            info.parent = getSharedPtr<Actor>();
-            info.action = Actor::UpdateAction::RemoveChildren;
-            spActor parentGuard = info.parent;
-            queueUpdate(std::move(info), {parentGuard});
-            m_updateActionMutex.unlock();
+            if (requiresThreadChange())
+            {
+                emit MemoryManagement::getInstance().sigRemoveChildren(getSharedPtr<Actor>());
+            }
+            else
+            {
+                __removeChildren();
+            }
         }
         else
         {
-            m_updateActionMutex.unlock();
-            __removeChildren();
+            m_updateActionMutex.lock();
+            if (requiresThreadChange())
+            {
+                UpdateInfo info;
+                info.parent = getSharedPtr<Actor>();
+                info.action = Actor::UpdateAction::RemoveChildren;
+                spActor parentGuard = info.parent;
+                queueUpdate(std::move(info), {parentGuard});
+                m_updateActionMutex.unlock();
+            }
+            else
+            {
+                m_updateActionMutex.unlock();
+                __removeChildren();
+            }
         }
     }
 
@@ -1077,20 +1167,34 @@ namespace oxygine
 
     void Actor::detach()
     {
-        m_updateActionMutex.lock();
-        if (requiresThreadChange())
+        if (m_syncEvents)
         {
-            UpdateInfo info;
-            info.parent = getSharedPtr<Actor>();
-            info.action = Actor::UpdateAction::Detach;
-            spActor actorGuard = info.parent;
-            queueUpdate(std::move(info), {actorGuard});
-            m_updateActionMutex.unlock();
+            if (requiresThreadChange())
+            {
+                emit MemoryManagement::getInstance().sigDetach(getSharedPtr<Actor>());
+            }
+            else
+            {
+                __detach();
+            }
         }
         else
         {
-            m_updateActionMutex.unlock();
-            __detach();
+            m_updateActionMutex.lock();
+            if (requiresThreadChange())
+            {
+                UpdateInfo info;
+                info.parent = getSharedPtr<Actor>();
+                info.action = Actor::UpdateAction::Detach;
+                spActor actorGuard = info.parent;
+                queueUpdate(std::move(info), {actorGuard});
+                m_updateActionMutex.unlock();
+            }
+            else
+            {
+                m_updateActionMutex.unlock();
+                __detach();
+            }
         }
     }
 
@@ -1107,20 +1211,34 @@ namespace oxygine
 
     void Actor::detachAndRemove()
     {
-        m_updateActionMutex.lock();
-        if (requiresThreadChange())
+        if (m_syncEvents)
         {
-            UpdateInfo info;
-            info.parent = getSharedPtr<Actor>();
-            info.action = Actor::UpdateAction::DetachAndRemove;
-            spActor actorGuard = info.parent;
-            queueUpdate(std::move(info), {actorGuard});
-            m_updateActionMutex.unlock();
+            if (requiresThreadChange())
+            {
+                emit MemoryManagement::getInstance().sigDetachAndRemove(getSharedPtr<Actor>());
+            }
+            else
+            {
+                __detachAndRemove();
+            }
         }
         else
         {
-            m_updateActionMutex.unlock();
-            __detachAndRemove();
+            m_updateActionMutex.lock();
+            if (requiresThreadChange())
+            {
+                UpdateInfo info;
+                info.parent = getSharedPtr<Actor>();
+                info.action = Actor::UpdateAction::DetachAndRemove;
+                spActor actorGuard = info.parent;
+                queueUpdate(std::move(info), {actorGuard});
+                m_updateActionMutex.unlock();
+            }
+            else
+            {
+                m_updateActionMutex.unlock();
+                __detachAndRemove();
+            }
         }
     }
 
@@ -1298,20 +1416,34 @@ namespace oxygine
         }
         else
         {
-            m_updateActionMutex.lock();
-            if (requiresThreadChange())
+            if (m_syncEvents)
             {
-                UpdateInfo info;
-                info.parent = getSharedPtr<Actor>();
-                info.action = Actor::UpdateAction::AddTween;
-                info.tween = tween;
-                m_updateActions.push_back(std::move(info));
-                m_updateActionMutex.unlock();
+                if (requiresThreadChange())
+                {
+                    emit MemoryManagement::getInstance().sigAddTween(getSharedPtr<Actor>(), tween);
+                }
+                else
+                {
+                    __addTween(tween);
+                }
             }
             else
             {
-                m_updateActionMutex.unlock();
-                __addTween(tween);
+                m_updateActionMutex.lock();
+                if (requiresThreadChange())
+                {
+                    UpdateInfo info;
+                    info.parent = getSharedPtr<Actor>();
+                    info.action = Actor::UpdateAction::AddTween;
+                    info.tween = tween;
+                    m_updateActions.push_back(std::move(info));
+                    m_updateActionMutex.unlock();
+                }
+                else
+                {
+                    m_updateActionMutex.unlock();
+                    __addTween(tween);
+                }
             }
         }
 #endif
@@ -1334,20 +1466,34 @@ namespace oxygine
         }
         else
         {
-            m_updateActionMutex.lock();
-            if (requiresThreadChange())
+            if (m_syncEvents)
             {
-                UpdateInfo info;
-                info.parent = getSharedPtr<Actor>();
-                info.action = Actor::UpdateAction::RemoveTween;
-                info.tween = pTween;
-                m_updateActions.push_back(std::move(info));
-                m_updateActionMutex.unlock();
+                if (requiresThreadChange())
+                {
+                    emit MemoryManagement::getInstance().sigRemoveTween(getSharedPtr<Actor>(), pTween);
+                }
+                else
+                {
+                    __removeTween(pTween);
+                }
             }
             else
             {
-                m_updateActionMutex.unlock();
-                __removeTween(pTween);
+                m_updateActionMutex.lock();
+                if (requiresThreadChange())
+                {
+                    UpdateInfo info;
+                    info.parent = getSharedPtr<Actor>();
+                    info.action = Actor::UpdateAction::RemoveTween;
+                    info.tween = pTween;
+                    m_updateActions.push_back(std::move(info));
+                    m_updateActionMutex.unlock();
+                }
+                else
+                {
+                    m_updateActionMutex.unlock();
+                    __removeTween(pTween);
+                }
             }
         }
 #endif
@@ -1375,19 +1521,33 @@ namespace oxygine
     void Actor::removeTweens()
     {
 #ifdef GRAPHICSUPPORT
-        m_updateActionMutex.lock();
-        if (requiresThreadChange())
+        if (m_syncEvents)
         {
-            UpdateInfo info;
-            info.parent = getSharedPtr<Actor>();
-            info.action = Actor::UpdateAction::RemoveTweens;
-            m_updateActions.push_back(std::move(info));
-            m_updateActionMutex.unlock();
+            if (requiresThreadChange())
+            {
+                emit MemoryManagement::getInstance().sigRemoveTweens(getSharedPtr<Actor>());
+            }
+            else
+            {
+                __removeTweens();
+            }
         }
         else
         {
-            m_updateActionMutex.unlock();
-            __removeTweens();
+            m_updateActionMutex.lock();
+            if (requiresThreadChange())
+            {
+                UpdateInfo info;
+                info.parent = getSharedPtr<Actor>();
+                info.action = Actor::UpdateAction::RemoveTweens;
+                m_updateActions.push_back(std::move(info));
+                m_updateActionMutex.unlock();
+            }
+            else
+            {
+                m_updateActionMutex.unlock();
+                __removeTweens();
+            }
         }
 #endif
     }

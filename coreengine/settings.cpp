@@ -1404,6 +1404,7 @@ void Settings::setup()
             MemoryManagement::create<Value<float>>("General", "GamepadSensitivity", &m_gamepadSensitivity, 1.0f, 0.1f, 100),
             MemoryManagement::create<Value<qint32>>("General", "MaxFPS", &m_framesPerSecond, 60, 30, 60),
             MemoryManagement::create<Value<qint32>>("General", "MouseUpdateRate", &m_mouseUpdateRate, 33, 1, 200),
+            MemoryManagement::create<Value<bool>>("General", "SyncActorEvents", &m_syncEvents, true, false, true),
 
             // keys
             MemoryManagement::create<Value<Qt::Key>>("Keys", "key_escape", &m_key_escape, Qt::Key_Escape, static_cast<Qt::Key>(0), Qt::Key_unknown),
@@ -1507,7 +1508,8 @@ void Settings::setup()
             MemoryManagement::create<Value<qint32>>("Game", "PauseAfterAction", &m_pauseAfterAction, 0, 0, 100),
             MemoryManagement::create<Value<QString>>("Game", "AiPipeUuid", &m_pipeUuid, "", "", ""),
             MemoryManagement::create<Value<bool>>("Game", "UseAiProcess", &m_spawnAiProcess, false, false, true),
-            MemoryManagement::create<Value<qint32>>("Game", "DebounceTime", &m_debounceTimeMs, 100, 0, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<qint32>>("Game", "DebounceTime", &m_debounceTimeMs, 20, 0, std::numeric_limits<qint32>::max()),
+
             // network
             MemoryManagement::create<Value<quint16>>("Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()),
             MemoryManagement::create<Value<QString>>("Network", "ServerAdress", &m_ServerAdress, "192.46.216.113", "", ""),
@@ -1588,6 +1590,7 @@ void Settings::loadSettings()
     setActiveMods(m_activeMods);
     GameConsole::setLogLevel(m_defaultLogLevel);
     GameConsole::setActiveModules(m_defaultLogModuls);
+    oxygine::EventDispatcher::setSyncEvents(m_syncEvents);
     if (Settings::hasSmallScreen())
     {
         m_autoScrolling = false;

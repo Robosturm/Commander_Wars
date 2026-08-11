@@ -181,11 +181,18 @@ namespace oxygine
     {
         if (requiresThreadChange())
         {
-            QMutexLocker lock(&m_updateActionMutex);
-            UpdateInfo info;
-            info.parent = getSharedPtr<Actor>();
-            info.action = Actor::UpdateAction::RebuildText;
-            m_updateActions.push_back(info);
+            if (m_syncEvents)
+            {
+                emit MemoryManagement::getInstance().sigRebuildText(getSharedPtr<TextField>());
+            }
+            else
+            {
+                QMutexLocker lock(&m_updateActionMutex);
+                UpdateInfo info;
+                info.parent = getSharedPtr<Actor>();
+                info.action = Actor::UpdateAction::RebuildText;
+                m_updateActions.push_back(info);
+            }
         }
         else
         {
