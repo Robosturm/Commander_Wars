@@ -12,7 +12,7 @@
 DamageTablePage::DamageTablePage(const QString & pageId)
     : Wikipage(pageId)
 {
-        Interpreter::setCppOwnerShip(this);
+    Interpreter::setCppOwnerShip(this);
 #ifdef GRAPHICSUPPORT
     setObjectName("DamageTablePage");
 #endif

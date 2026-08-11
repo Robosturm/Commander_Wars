@@ -238,6 +238,8 @@ bool WikiDatabase::tagMatches(const QStringList & tags, const QString & searchTe
 
 spWikipage WikiDatabase::getPage(const PageData * data)
 {
+    auto* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     spWikipage ret;
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
@@ -297,6 +299,7 @@ spWikipage WikiDatabase::getPage(const PageData * data)
         ret = MemoryManagement::create<DefaultWikipage>(data->m_id);
     }
     ret->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
+    pApp->continueRendering();
     return ret;
 }
 
