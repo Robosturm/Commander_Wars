@@ -60,6 +60,8 @@ namespace oxygine
         text::Node* getRootNode();
         void rebuildText();
         using TweenColor = Property<QColor, const QColor&, TextField, &TextField::getStyleColor, &TextField::setStyleColor>;
+        void __rebuildText();
+
     protected:
         virtual void sizeChanged(const QSize& size) override;
         friend MemoryManagement;

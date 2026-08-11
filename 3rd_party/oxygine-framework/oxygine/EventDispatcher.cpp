@@ -1,7 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/Event.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #ifndef GRAPHICSUPPORT
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
@@ -20,17 +19,17 @@ namespace oxygine
             {
                 case EventUpdateAction::AddEventListener:
                 {
-                    item.dispatcher->addEventListener(item.et, item.cb);
+                    item.dispatcher->addEventListenerWithId(item.et, item.cb);
                     break;
                 }
                 case EventUpdateAction::RemoveEventListenerId:
                 {
-                    item.dispatcher->removeEventListener(item.id);
+                    item.dispatcher->__removeEventListener(item.id);
                     break;
                 }
                 case EventUpdateAction::RemoveEventListenerThis:
                 {
-                    item.dispatcher->removeEventListeners(item.callbackThis);
+                    item.dispatcher->__removeEventListeners(item.callbackThis);
                     break;
                 }
                 default:
@@ -96,15 +95,20 @@ namespace oxygine
         }
         else
         {
-            for (size_t size = m_listeners.size(), i = 0; i != size; ++i)
-            {
-                const listener& ls = m_listeners.at(i);
-                if (ls.id == id)
-                {
+            __removeEventListener(id);
+        }
+    }
 
-                    m_listeners.erase(m_listeners.cbegin() + i);
-                    break;
-                }
+    void EventDispatcher::__removeEventListener(qint32 id)
+    {
+        for (size_t size = m_listeners.size(), i = 0; i != size; ++i)
+        {
+            const listener& ls = m_listeners.at(i);
+            if (ls.id == id)
+            {
+
+                m_listeners.erase(m_listeners.cbegin() + i);
+                break;
             }
         }
     }
@@ -122,14 +126,19 @@ namespace oxygine
         }
         else
         {
-            for (qint32 i = 0; i < m_listeners.size(); ++i)
+            __removeEventListeners(callbackThis);
+        }
+    }
+
+    void EventDispatcher::__removeEventListeners(IClosureOwner* callbackThis)
+    {
+        for (qint32 i = 0; i < m_listeners.size(); ++i)
+        {
+            const listener& ls = m_listeners.at(i);
+            if (ls.cb.isOwner(callbackThis))
             {
-                const listener& ls = m_listeners.at(i);
-                if (ls.cb.isOwner(callbackThis))
-                {
-                    m_listeners.erase(m_listeners.cbegin() + i);
-                    --i;
-                }
+                m_listeners.erase(m_listeners.cbegin() + i);
+                --i;
             }
         }
     }
@@ -177,9 +186,10 @@ namespace oxygine
     {
 #ifdef GRAPHICSUPPORT
         // Headless mode has no render pass to drain deferred updates.
-        return !GameWindow::getWindow()->isMainThread() &&
-               !GameWindow::getWindow()->renderingPaused() &&
-               !GameWindow::getWindow()->getNoUi() &&
+        auto* window = GameWindow::getWindow();
+        return !window->isMainThread() &&
+               !window->renderingPaused() &&
+               !window->getNoUi() &&
                !notInSharedUse();
 #else
         return false;

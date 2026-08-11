@@ -111,6 +111,9 @@ public:
     virtual void doRender(const RenderState&) override;
     virtual void changeAnimFrame(const AnimationFrame& f);
 
+    void __setColorTable(const oxygine::spResAnim pAnim, bool matrix);
+    void __changeAnimFrame(const AnimationFrame& frame);
+
 protected:
     friend MemoryManagement;
 #ifdef GRAPHICSUPPORT

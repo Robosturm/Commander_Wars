@@ -462,6 +462,19 @@ namespace oxygine
         static QPoint convert_global2local(spActor & child, spActor & parent, const QPoint& pos);
         static QPoint convert_local2global_(const Actor* child, const Actor* parent, QPoint pos);
         static QPoint convert_local2global(spActor & child, spActor & parent, const QPoint& pos);
+
+        void __setPriority(qint32 zorder);
+        void __restartAllTweens();
+        void __syncAllTweens(oxygine::timeMS syncTime);
+        void __removeChildren();
+        void __addTween(spTween tween);
+        void __removeTween(spTween pTween);
+        void __removeTweens();
+        void __addChild(spActor & actor);
+        void __removeChild(spActor & actor);
+        void __detach();
+        void __detachAndRemove();
+
     protected:
 #ifdef GRAPHICSUPPORT
         enum flags
@@ -497,10 +510,9 @@ namespace oxygine
             };
             int32_t m_pressedOvered;
         };
-        static QMutex m_updateActionMutex;
-        static QMutex m_treeMutex;
+        static std::mutex m_updateActionMutex;
         static std::vector<UpdateInfo> m_updateActions;
-        std::atomic<quint32> m_pendingTreeChangeCount{0};
+        quint32 m_pendingTreeChangeCount{0};
 
     private:
 #ifdef GRAPHICSUPPORT

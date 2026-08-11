@@ -179,7 +179,6 @@ namespace oxygine
 
     void TextField::rebuildText()
     {
-#ifdef GRAPHICSUPPORT
         if (requiresThreadChange())
         {
             QMutexLocker lock(&m_updateActionMutex);
@@ -190,22 +189,29 @@ namespace oxygine
         }
         else
         {
-            m_root.reset();
-            if (m_htmlText)
-            {
-                text::TextBuilder b;
-                m_root = b.parse(m_text);
-            }
-            else
-            {
-                m_root = MemoryManagement::create<text::TextNode>(m_text);
-            }
-            text::Aligner rd(m_style, getSize());
-            rd.align(*m_root.get());
-            m_textRect = rd.getBounds();
+            __rebuildText();
         }
+    }
+
+    void TextField::__rebuildText()
+    {
+#ifdef GRAPHICSUPPORT
+        m_root.reset();
+        if (m_htmlText)
+        {
+            text::TextBuilder b;
+            m_root = b.parse(m_text);
+        }
+        else
+        {
+            m_root = MemoryManagement::create<text::TextNode>(m_text);
+        }
+        text::Aligner rd(m_style, getSize());
+        rd.align(*m_root.get());
+        m_textRect = rd.getBounds();
 #endif
     }
+
 
     void TextField::doRender(RenderState const& rs)
     {

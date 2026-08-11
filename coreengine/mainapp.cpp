@@ -806,6 +806,18 @@ void Mainapp::showCrashReport(const QString & log)
     }
 }
 
+void Mainapp::setRendering(bool render)
+{
+    if (render)
+    {
+        m_timer.start();
+    }
+    else
+    {
+        m_timer.stop();
+    }
+}
+
 void Mainapp::setNoUi()
 {
     m_noUi = true;

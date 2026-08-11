@@ -93,14 +93,14 @@ void MapSelection::refresh()
 
 void MapSelection::changeFolder(QString folder)
 {
-    auto* pApp = Mainapp::getInstance();
-    pApp->pauseRendering();
     // before the early return, else a clicked map latches the flag for the pending timer
     m_itemClicked = false;
     if (folder.endsWith(".map"))
     {
         return;
     }
+    auto* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     CONSOLE_PRINT("MapSelection::changeFolder " + folder, GameConsole::eDEBUG);
     QString newFolder =  folder;
     if (newFolder == "")
@@ -322,7 +322,7 @@ void MapSelection::updateSelection()
                 if (!file.open(QIODevice::ReadOnly))
                 {
                     CONSOLE_PRINT("Failed to open file " + fullFilename, GameConsole::eERROR);
-                    return;
+                    break;
                 }
                 QDataStream pStream(&file);
                 pStream.setVersion(QDataStream::Version::Qt_6_5);

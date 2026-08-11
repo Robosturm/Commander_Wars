@@ -74,6 +74,9 @@ namespace oxygine
         virtual void setEnabled(bool enabled);
         bool isNotThreadsafe() const;
 
+        void __removeEventListener(qint32 id);
+        void __removeEventListeners(IClosureOwner* callbackThis);
+
     protected:
         struct listener
         {

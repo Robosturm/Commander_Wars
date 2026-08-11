@@ -193,7 +193,6 @@ namespace oxygine
 
     void Sprite::setColorTable(const oxygine::spResAnim pAnim, bool matrix)
     {
-#ifdef GRAPHICSUPPORT
         if (requiresThreadChange())
         {
             UpdateInfo info;
@@ -206,27 +205,33 @@ namespace oxygine
         }
         else
         {
-            m_colorTable = pAnim;
-            if (pAnim.get() != nullptr)
-            {
-                const auto & frame = pAnim->getFrame(0, 0);
-                if (m_mat->m_table != frame.getTexture())
-                {
-                    m_mat = m_mat->clone();
-                    m_mat->m_table = frame.getTexture();
-                    m_mat->setMatrixMode(matrix);
-                    m_mat = MaterialCache::mc().cache(*m_mat.get());
-                    matChanged();
-                }
-            }
-            else if (m_mat->m_table.get() != nullptr)
+            __setColorTable(pAnim, matrix);
+        }
+    }
+
+    void Sprite::__setColorTable(const oxygine::spResAnim pAnim, bool matrix)
+    {
+#ifdef GRAPHICSUPPORT
+        m_colorTable = pAnim;
+        if (pAnim.get() != nullptr)
+        {
+            const auto & frame = pAnim->getFrame(0, 0);
+            if (m_mat->m_table != frame.getTexture())
             {
                 m_mat = m_mat->clone();
-                m_mat->m_table.reset();
+                m_mat->m_table = frame.getTexture();
                 m_mat->setMatrixMode(matrix);
                 m_mat = MaterialCache::mc().cache(*m_mat.get());
                 matChanged();
             }
+        }
+        else if (m_mat->m_table.get() != nullptr)
+        {
+            m_mat = m_mat->clone();
+            m_mat->m_table.reset();
+            m_mat->setMatrixMode(matrix);
+            m_mat = MaterialCache::mc().cache(*m_mat.get());
+            matChanged();
         }
 #endif
     }
@@ -254,7 +259,6 @@ namespace oxygine
 
     void Sprite::changeAnimFrame(const AnimationFrame& frame)
     {
-#ifdef GRAPHICSUPPORT
         if (requiresThreadChange())
         {
             UpdateInfo info;
@@ -266,44 +270,50 @@ namespace oxygine
         }
         else
         {
-            if (m_flags & flag_manageResAnim)
-            {
-                ResAnim* rs = m_frame.getResAnim();
-                if (rs)
-                {
-                    rs->getAtlas()->unload();
-                }
-
-                rs = frame.getResAnim();
-                if (rs)
-                {
-                    rs->getAtlas()->load();
-                }
-            }
-
-            bool flipX = (m_flags & flag_flipX) != 0;
-            bool flipY = (m_flags & flag_flipY) != 0;
-            if (flipX || flipY)
-            {
-                m_frame = frame.getFlipped(flipY, flipX);
-            }
-            else
-            {
-                m_frame = frame;
-            }
-            __setSize(m_frame.getSize());
-
-
-            const spTexture& texture = m_frame.getTexture();
-            if (texture != m_mat->m_base)
-            {
-                spMaterial mat = m_mat->clone();
-                mat->m_base  = texture;
-                auto newMat = MaterialCache::mc().cache(*mat.get());
-                setMaterial(newMat);
-            }
-            animFrameChanged(m_frame);
+            __changeAnimFrame(frame);
         }
+    }
+
+    void Sprite::__changeAnimFrame(const AnimationFrame& frame)
+    {
+#ifdef GRAPHICSUPPORT
+        if (m_flags & flag_manageResAnim)
+        {
+            ResAnim* rs = m_frame.getResAnim();
+            if (rs)
+            {
+                rs->getAtlas()->unload();
+            }
+
+            rs = frame.getResAnim();
+            if (rs)
+            {
+                rs->getAtlas()->load();
+            }
+        }
+
+        bool flipX = (m_flags & flag_flipX) != 0;
+        bool flipY = (m_flags & flag_flipY) != 0;
+        if (flipX || flipY)
+        {
+            m_frame = frame.getFlipped(flipY, flipX);
+        }
+        else
+        {
+            m_frame = frame;
+        }
+        __setSize(m_frame.getSize());
+
+
+        const spTexture& texture = m_frame.getTexture();
+        if (texture != m_mat->m_base)
+        {
+            spMaterial mat = m_mat->clone();
+            mat->m_base  = texture;
+            auto newMat = MaterialCache::mc().cache(*mat.get());
+            setMaterial(newMat);
+        }
+        animFrameChanged(m_frame);
 #endif
     }
 

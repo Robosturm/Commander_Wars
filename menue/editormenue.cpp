@@ -1290,11 +1290,11 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
 {
+    m_placingState.active = false;
     if (!m_Focused)
     {
         return;
     }
-    m_placingState.active = false;
     CONSOLE_PRINT("EditorMenue::onMapClickedLeftUp x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     // resolve click
     switch (m_EditorMode)

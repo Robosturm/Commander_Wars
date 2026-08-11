@@ -13,6 +13,7 @@
 namespace OxygineLifetimeTests
 {
     static qint32 s_failures = 0;
+    static qint32 s_totalTestsFailures = 0;
 
     static void check(bool ok, const char* what)
     {
@@ -65,14 +66,15 @@ namespace OxygineLifetimeTests
 
     static constexpr qint32 TEST_EVENT = oxygine::eventID('T', 'S', 'T', 'E');
 
-    qint32 runAll()
+    void test1()
     {
-        s_failures = 0;
-        auto stage = oxygine::Stage::getStage();
-
         oxygine::spActor detached = MemoryManagement::create<oxygine::Actor>();
         check(!detached->requiresThreadChange(), "detached actor permits direct construction");
+    }
 
+    void test2()
+    {
+        auto stage = oxygine::Stage::getStage();
         oxygine::spActor subtreeRoot = MemoryManagement::create<oxygine::Actor>();
         oxygine::spActor subtreeBranch = MemoryManagement::create<oxygine::Actor>();
         oxygine::spActor subtreeLeaf = MemoryManagement::create<oxygine::Actor>();
@@ -88,7 +90,11 @@ namespace OxygineLifetimeTests
         check(subtreeLeaf->getParent() == subtreeBranch.get(), "queued subtree relationship attaches after drain");
         subtreeRoot->detach();
         drainOnMain();
+    }
 
+    void test3()
+    {
+        auto stage = oxygine::Stage::getStage();
         oxygine::spActor pendingReparent = MemoryManagement::create<oxygine::Actor>();
         oxygine::spActor detachedParent = MemoryManagement::create<oxygine::Actor>();
         oxygine::spActor destinationBranch = MemoryManagement::create<oxygine::Actor>();
@@ -106,7 +112,11 @@ namespace OxygineLifetimeTests
         check(pendingReparent->getParent() == detachedParent.get(), "queued reparent order is preserved");
         check(destinationLeaf->getParent() == destinationBranch.get(), "queued destination mutation completes");
         check(!pendingReparent->requiresThreadChange(), "detached child is direct after queued transitions finish");
+    }
 
+    void test4()
+    {
+        auto stage = oxygine::Stage::getStage();
         oxygine::spActor sourceParent = MemoryManagement::create<oxygine::Actor>();
         oxygine::spActor sourceChild = MemoryManagement::create<oxygine::Actor>();
         oxygine::spActor sourceSibling = MemoryManagement::create<oxygine::Actor>();
@@ -121,7 +131,12 @@ namespace OxygineLifetimeTests
         drainOnMain();
         check(sourceChild->getParent() == attachedDestination.get(), "queued child leaves detached source");
         check(sourceSibling->getParent() == sourceParent.get(), "queued source mutation completes");
+        attachedDestination->detach();
+    }
 
+    void test5()
+    {
+        auto stage = oxygine::Stage::getStage();
         oxygine::spActor removalRoot = MemoryManagement::create<oxygine::Actor>();
         oxygine::spActor removalBranch = MemoryManagement::create<oxygine::Actor>();
         oxygine::spActor removalLeaf = MemoryManagement::create<oxygine::Actor>();
@@ -135,13 +150,21 @@ namespace OxygineLifetimeTests
         drainOnMain();
         check(removalRoot->getParent() == nullptr, "queued root removal completes");
         check(removalLeaf->getParent() == removalBranch.get(), "post-removal subtree mutation completes");
+    }
 
+    void test6()
+    {
+        auto stage = oxygine::Stage::getStage();
         oxygine::spActor pendingDetach = MemoryManagement::create<oxygine::Actor>();
         stage->addChild(pendingDetach);
         pendingDetach->detach();
         drainOnMain();
         check(pendingDetach->getParent() == nullptr, "plain detach cancels pending attachment");
+    }
 
+    void test7()
+    {
+        auto stage = oxygine::Stage::getStage();
         oxygine::spActor pending = MemoryManagement::create<oxygine::Actor>();
         stage->addChild(pending);
         check(pending->requiresThreadChange(), "pending attach defers off-main updates");
@@ -149,7 +172,11 @@ namespace OxygineLifetimeTests
         check(pending->getParent() == stage.get(), "pending actor attaches after drain");
         pending->detach();
         drainOnMain();
+    }
 
+    void test8()
+    {
+        auto stage = oxygine::Stage::getStage();
         oxygine::spActor parent = MemoryManagement::create<oxygine::Actor>();
         stage->addChild(parent);
         drainOnMain();
@@ -164,7 +191,12 @@ namespace OxygineLifetimeTests
         drainOnMain();
         check(child->getParent() == nullptr, "double detach leaves child detached");
         check(parent->getParent() == stage.get(), "parent survives duplicate remove");
+        parent->detach();
+    }
 
+    void test9()
+    {
+        auto stage = oxygine::Stage::getStage();
         oxygine::spActor ghost = MemoryManagement::create<oxygine::Actor>();
         stage->addChild(ghost);
         ghost->detachAndRemove();
@@ -174,7 +206,11 @@ namespace OxygineLifetimeTests
         ghost.reset();
         drainOnMain();
         check(watch.expired(), "no owner retains the removed actor");
+    }
 
+    void test10()
+    {
+        auto stage = oxygine::Stage::getStage();
 #ifdef GRAPHICSUPPORT
         oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
         stage->addChild(sprite);
@@ -189,7 +225,11 @@ namespace OxygineLifetimeTests
         check(sprite->getSize() == TEST_FRAME_SIZE, "queued anim frame survives caller stack frame");
         sprite->detach();
 #endif
+    }
 
+    void test11()
+    {
+        auto stage = oxygine::Stage::getStage();
         Owner owner;
         oxygine::spActor target = MemoryManagement::create<oxygine::Actor>();
         stage->addChild(target);
@@ -204,12 +244,41 @@ namespace OxygineLifetimeTests
         check(owner.m_hits == 1, "queued removeEventListeners removes the owner's listeners");
 
         target->detach();
-        parent->detach();
-        attachedDestination->detach();
         drainOnMain();
+    }
 
-        std::printf("[oxygine-selftest] finished with %d failure(s)\n", s_failures);
+    void runTest(std::function<void()> func, std::string name)
+    {
+        s_failures = 0;
+        func();
+        if (s_failures > 0)
+        {
+            s_totalTestsFailures++;
+            std::printf("[oxygine-selftest] Test %s failed with %d failures", name.c_str(), s_failures);
+        }
+        else
+        {
+            std::printf("[oxygine-selftest] Test %s passed", name.c_str());
+        }
+    }
+
+    qint32 runAll()
+    {
+        s_totalTestsFailures = 0;
+        runTest(test1, "test1");
+        runTest(test2, "test2");
+        runTest(test3, "test3");
+        runTest(test4, "test4");
+        runTest(test5, "test5");
+        runTest(test6, "test6");
+        runTest(test7, "test7");
+        runTest(test8, "test8");
+        runTest(test9, "test9");
+        runTest(test10, "test10");
+        runTest(test11, "test11");
+
+        std::printf("[oxygine-selftest] finished with %d failure(s)\n", s_totalTestsFailures);
         std::fflush(stdout);
-        return s_failures;
+        return s_totalTestsFailures;
     }
 }

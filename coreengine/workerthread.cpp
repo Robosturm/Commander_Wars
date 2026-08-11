@@ -233,7 +233,9 @@ void WorkerThread::showMainwindow()
 #ifdef COW_BUILD_TESTING
     if (qEnvironmentVariableIsSet("COW_OXYGINE_SELFTEST"))
     {
+        Mainapp::getInstance()->setRendering(false);
         qint32 failures = OxygineLifetimeTests::runAll();
+        Mainapp::getInstance()->setRendering(true);
         QMetaObject::invokeMethod(QCoreApplication::instance(), [failures]()
         {
             QCoreApplication::exit(failures == 0 ? 0 : 1);

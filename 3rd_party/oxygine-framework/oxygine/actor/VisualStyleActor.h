@@ -54,11 +54,11 @@ namespace oxygine
             return m_mat;
         }
 #endif
+        void changeAddColor(const QColor& color);
+
     protected:
         virtual void matChanged() {}
         void setMaterial(spMaterial & mat);
-    private:
-        void changeAddColor(const QColor& color);
     protected:
 #ifdef GRAPHICSUPPORT
         QColor m_color{Qt::white};
