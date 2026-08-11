@@ -177,6 +177,7 @@ void Multiplayermenu::init()
 
     connect(&m_GameStartTimer, &QTimer::timeout, this, &Multiplayermenu::countdown, Qt::QueuedConnection);
     connect(&m_slaveDespawnTimer, &QTimer::timeout, this, &Multiplayermenu::despawnSlave, Qt::QueuedConnection);
+    connect(m_pPlayerSelection.get(), &PlayerSelection::sigPlayerStateChanged, this, &Multiplayermenu::onPlayerStateChanged, Qt::QueuedConnection);
     startDespawnTimer();
 }
 
@@ -2540,14 +2541,29 @@ void Multiplayermenu::changeButtonText()
     Mainapp::getInstance()->continueRendering();
 }
 
+void Multiplayermenu::onPlayerStateChanged()
+{
+    // only the slave may recheck, the hosting client also reports getIsServer but must never run the countdown
+    if (Mainapp::getSlave() &&
+        !m_local &&
+        m_pNetworkInterface.get() != nullptr &&
+        m_pNetworkInterface->getIsServer())
+    {
+        // ready flags may have been backfilled on a rebound slot, recheck if the game can start
+        CONSOLE_PRINT("Checking if server game should start after player state change", GameConsole::eDEBUG);
+        startCountdown();
+    }
+}
+
 void Multiplayermenu::startCountdown()
 {
-    m_counter = 5;
     // can we start the game?
     if (getGameReady())
     {
         if (!m_GameStartTimer.isActive())
         {
+            // resetting the counter only here keeps repeated ready checks from extending a running countdown
+            m_counter = 5;
             CONSOLE_PRINT("Starting countdown", GameConsole::eDEBUG);
             sendServerReady(true);
             m_GameStartTimer.setInterval(std::chrono::seconds(1));
@@ -2560,10 +2576,8 @@ void Multiplayermenu::startCountdown()
     {
         CONSOLE_PRINT("Stopping countdown", GameConsole::eDEBUG);
         m_GameStartTimer.stop();
-        if (m_local)
-        {
-            sendServerReady(false);
-        }
+        // must also run on remote lobbies or an aborted countdown never resumes listening and the slave stays unjoinable
+        sendServerReady(false);
     }
 }
 

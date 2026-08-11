@@ -145,6 +145,10 @@ protected slots:
      */
     void countdown();
     /**
+     * @brief onPlayerStateChanged
+     */
+    void onPlayerStateChanged();
+    /**
      * @brief closeSlave
      */
     void closeSlave();

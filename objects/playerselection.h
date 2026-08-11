@@ -83,6 +83,11 @@ signals :
          * don't own a player
          */
     void sigDisconnect();
+    /**
+         * @brief sigPlayerStateChanged emitted when a player slot got bound to
+         * another owner so the server can recheck if the game can start
+         */
+    void sigPlayerStateChanged();
 public:
     /**
      * @brief getOpenPlayerCount
@@ -349,6 +354,11 @@ protected:
     void createInitialAi(DropDownmenu* pPlayerAi, qint32 ai, qint32 player);
 private:
     /**
+     * @brief applySocketReadyState applies the last ready state received from
+     * the given socket to the given player slot
+     */
+    void applySocketReadyState(qint32 player, quint64 socketID);
+    /**
      * @brief m_PlayerSockets holds which socket owns which player
      * For clients and local games this always contains 0
      * For the host this contains 0 for owned by the server or the socket id for client owned
@@ -356,6 +366,7 @@ private:
     QVector<quint64> m_playerSockets;
     QVector<bool> m_playerReadyFlags;
     QVector<bool> m_lockedInCaseOfDisconnect;
+    QMap<quint64, bool> m_socketReadyStates;
     QVector<bool> m_lockedAiControl;
 
     spNetworkInterface m_pNetworkInterface{nullptr};
