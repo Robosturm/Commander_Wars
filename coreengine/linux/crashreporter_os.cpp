@@ -14,6 +14,9 @@ void crashhandler(int sig)
         frameList.append(messages[i]);
     }
     CrashReporter::_writeLog(QString("Error: signal ") + QString::number(sig) + " received", frameList);
+    // returning from a SIGSEGV handler restarts the faulting instruction, terminate with the original signal instead
+    signal(sig, SIG_DFL);
+    raise(sig);
 }
 
 void CrashReporter::setOsSignalHandler()
