@@ -24,6 +24,7 @@
 #include "multiplayer/password.h"
 
 #include "network/tcpclient.h"
+#include "network/tcpserver.h"
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
 
@@ -514,9 +515,18 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             if (!m_pNetworkInterface->getIsServer() ||
                 !m_local)
             {
-                initClientGame(socketID, stream);
-                m_onEnterTimer.stop();
-                detachAndRemove();
+                if (m_pMapSelectionView->getCurrentMap() != nullptr)
+                {
+                    initClientGame(socketID, stream);
+                    m_onEnterTimer.stop();
+                    detachAndRemove();
+                }
+                else
+                {
+                    // the host started the game while this client was still joining, the map can never arrive now
+                    CONSOLE_PRINT("Received " + messageType + " before the map was received. Leaving the game.", GameConsole::eERROR);
+                    buttonBack();
+                }
             }
         }
         else if (messageType == NetworkCommands::STARTSERVERGAME ||
@@ -2644,6 +2654,34 @@ void Multiplayermenu::countdown()
             }
             bool applyRulesPalette = pMap->getGameRules()->getMapPalette() > 0;
             pMap->updateSprites(-1, -1, false, false, applyRulesPalette);
+            // sockets still in the join handshake can never finish it once this menu is gone, so they must not get INITGAME
+            // a gateway host has no own client sockets and must keep the old broadcast which the relay forwards
+            TCPServer* pTcpServer = dynamic_cast<TCPServer*>(m_pNetworkInterface.get());
+            QVector<quint64> syncedSockets = pMap->getGameRules()->getObserverList();
+            QVector<quint64> connectedSockets;
+            if (pTcpServer != nullptr)
+            {
+                for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+                {
+                    quint64 playerSocket = pMap->getPlayer(i)->getSocketId();
+                    if (playerSocket != 0 &&
+                        !syncedSockets.contains(playerSocket))
+                    {
+                        syncedSockets.append(playerSocket);
+                    }
+                }
+                connectedSockets = pTcpServer->getConnectedSockets();
+                for (const auto & socket : connectedSockets)
+                {
+                    if (!syncedSockets.contains(socket))
+                    {
+                        CONSOLE_PRINT("Disconnecting socket " + QString::number(socket) + " which hasn't finished joining before game start", GameConsole::eDEBUG);
+                        emit m_pNetworkInterface->sigDisconnectClient(socket);
+                    }
+                }
+            }
+            // a queued player change arriving during teardown must not restart the countdown on the retired menu
+            disconnect(m_pPlayerSelection.get(), &PlayerSelection::sigPlayerStateChanged, this, &Multiplayermenu::onPlayerStateChanged);
             // start game
             CONSOLE_PRINT("Leaving Map Selection Menue after countdown", GameConsole::eDEBUG);
             m_onEnterTimer.stop();
@@ -2652,7 +2690,20 @@ void Multiplayermenu::countdown()
             CONSOLE_PRINT("Suspending thread shortly before informing slaves to launch game.", GameConsole::eDEBUG);
             QThread::msleep(200);
             CONSOLE_PRINT("Sending init game to clients", GameConsole::eDEBUG);
-            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, true);
+            if (pTcpServer != nullptr)
+            {
+                for (const auto & socket : syncedSockets)
+                {
+                    if (connectedSockets.contains(socket))
+                    {
+                        emit m_pNetworkInterface->sig_sendData(socket, data, NetworkInterface::NetworkSerives::Multiplayer, true);
+                    }
+                }
+            }
+            else
+            {
+                emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, true);
+            }
             detachAndRemove();
         }
     }
