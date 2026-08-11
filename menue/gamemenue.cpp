@@ -384,7 +384,9 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
     }
     else if (service == NetworkInterface::NetworkSerives::GameChat)
     {
-        if (m_pChat->getVisible() == false)
+        // chat packets can still arrive after victory cleanup removed the chat
+        if (m_pChat.get() != nullptr &&
+            m_pChat->getVisible() == false)
         {
             if (m_chatButtonShineTween.get())
             {
@@ -1965,11 +1967,13 @@ void GameMenue::victory(qint32 team)
         m_terminated = 1;
     }
     bool exit = GameAnimationFactory::getAnimationCount() == 0;
-    if ((exit && !m_isReplay && m_terminated == 1) ||
-        Mainapp::getInstance()->getNoUi())
+    // noUi only skips the animation wait, the m_terminated guard must still hold or cleanup runs twice
+    if (((exit && !m_isReplay) || Mainapp::getInstance()->getNoUi()) &&
+        m_terminated == 1)
     {
         m_terminated = 2;
-        if (m_pNetworkInterface.get() != nullptr)
+        if (m_pNetworkInterface.get() != nullptr &&
+            m_pChat.get() != nullptr)
         {
             m_pChat->detachAndRemove();
             m_pChat.reset();
