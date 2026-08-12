@@ -119,7 +119,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
                 spDialogConnecting pDialogConnecting = MemoryManagement::create<DialogConnecting>(tr("Waiting for Players"), 1000 * 60 * 5);
                 addChild(pDialogConnecting);
                 connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
-                if (pNetworkInterface->getIsObserver() || rejoin)
+                if (rejoin)
                 {
                     CONSOLE_PRINT("Closing connection dialog on sync finished signal", GameConsole::eDEBUG);
                     connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
