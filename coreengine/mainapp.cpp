@@ -773,6 +773,16 @@ void Mainapp::setRejoinPassword(const QString & password)
 
 void Mainapp::showCrashReport(const QString & log)
 {
+#ifndef GRAPHICSUPPORT
+    // headless: the report is already on disk and creating a QWidget under QCoreApplication aborts
+    Q_UNUSED(log);
+    return;
+#else
+    if (m_pMainapp->m_noUi)
+    {
+        // report is already on disk and no dialog is wanted without ui
+        return;
+    }
     static qint32 counter = 0;
     if (QCoreApplication::instance()->thread() == QThread::currentThread())
     {
@@ -804,6 +814,7 @@ void Mainapp::showCrashReport(const QString & log)
         m_pMainapp->m_crashMutex.lock();
         m_pMainapp->m_crashMutex.unlock();
     }
+#endif
 }
 
 void Mainapp::setRendering(bool render)

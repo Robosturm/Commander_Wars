@@ -1759,15 +1759,8 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream &stream)
                 {
                     CONSOLE_PRINT("requestPlayer accepting player " + username + " for player " + QString::number(player) + " as ai " + QString::number(eAiType), GameConsole::eDEBUG);
                     remoteChangePlayerOwner(socketID, username, player, eAiType);
+                    denied = false;
                 }
-                else
-                {
-                    denied = true;
-                }
-            }
-            else
-            {
-                denied = true;
             }
             if (denied && !alreadyInGame)
             {                
@@ -2218,12 +2211,15 @@ void PlayerSelection::disconnected(quint64 socketID)
                     if (m_lockedInCaseOfDisconnect[i])
                     {
                         m_pMap->getPlayer(i)->setSocketId(0);
+                        m_playerSockets[i] = 0;
                     }
                     else
                     {
                         // reopen all players
                         m_pMap->getPlayer(i)->setControlType(GameEnums::AiTypes_Open);
                         m_pMap->getPlayer(i)->setPlayerNameId("");
+                        // stale socket ids block the rejoin match and joinAllowed for the same username
+                        m_pMap->getPlayer(i)->setSocketId(0);
                         DropDownmenu *pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
                         if (pDropDownmenu != nullptr)
                         {
