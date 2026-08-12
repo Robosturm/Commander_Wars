@@ -569,12 +569,22 @@
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY</y>
                     <width>400</width>
+                    <Id>"MAP_PALETTE"</Id>
                     <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the palette used for the map.")</tooltip>
                     <startValue>currentMenu.getMap().getGameRules().getMapPalette()</startValue>
                     <items>TERRAIN.getPaletteNamesArray()</items>
                     <onEvent>currentMenu.getMap().getGameRules().setMapPalette(input);</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
                 </DropDownMenu>
+                <Button>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>260</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Random")</text>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Random")</tooltip>
+                    <onEvent>RuleSelectionScript.selectRandomPalette()</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </Button>
                 <Label>
                     <x>5</x>
                     <y>lastY + lastHeight + 10</y>

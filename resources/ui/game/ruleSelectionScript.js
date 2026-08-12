@@ -277,7 +277,14 @@ var RuleSelectionScript =
         }
         else
         {
-            return currentMenu.getMap().getGameRules().getGatewayHosting()
+            return currentMenu.getMap().getGameRules().getGatewayHosting();
         }
+    },
+    selectRandomPalette : function()
+    {
+        var mapPalette = currentMenu.getObject("MAP_PALETTE");
+        var item = globals.randInt(0, mapPalette.getItemCount() - 1);
+        mapPalette.setCurrentItem(item);
+        currentMenu.getMap().getGameRules().setMapPalette(item);
     }
 };

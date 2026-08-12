@@ -1192,5 +1192,96 @@
         <image file="biome_palettes/palette_desert+sfw.png" />
         <image file="biome_palettes/palette_snow+sfw.png" />
         <image file="biome_palettes/palette_waste+sfw.png" />
+
+        <!-- ===== DAWN ===== -->
+        <!-- clear / rain -->
+        <image file="biome_palettes/palette_clear+dawn.png"/>
+        <image file="biome_palettes/palette_clear+aw1+dawn.png"/>
+        <image file="biome_palettes/palette_clear+aw2+dawn.png"/>
+        <image file="biome_palettes/palette_clear+awds+dawn.png"/>
+        <image file="biome_palettes/palette_clear+dor+dawn.png"/>
+        <image file="biome_palettes/palette_clear+sfw+dawn.png"/>
+        <image file="biome_palettes/palette_clear+wg+dawn.png"/>
+        <image file="biome_palettes/palette_rain+aw2+dawn.png"/>
+        <!-- desert -->
+        <image file="biome_palettes/palette_desert+dawn.png"/>
+        <image file="biome_palettes/palette_desert+awds+dawn.png"/>
+        <image file="biome_palettes/palette_desert+dor+dawn.png"/>
+        <image file="biome_palettes/palette_desert+sfw+dawn.png"/>
+        <image file="biome_palettes/palette_desert+wg+dawn.png"/>
+        <!-- snow -->
+        <image file="biome_palettes/palette_snow+dawn.png"/>
+        <image file="biome_palettes/palette_snow+aw1+dawn.png"/>
+        <image file="biome_palettes/palette_snow+aw2+dawn.png"/>
+        <image file="biome_palettes/palette_snow+awds+dawn.png"/>
+        <image file="biome_palettes/palette_snow+dor+dawn.png"/>
+        <image file="biome_palettes/palette_snow+sfw+dawn.png"/>
+        <image file="biome_palettes/palette_snow+wg+dawn.png"/>
+        <!-- waste -->
+        <image file="biome_palettes/palette_waste+dawn.png"/>
+        <image file="biome_palettes/palette_waste+awds+dawn.png"/>
+        <image file="biome_palettes/palette_waste+dor+dawn.png"/>
+        <image file="biome_palettes/palette_waste+sfw+dawn.png"/>
+        <image file="biome_palettes/palette_waste+wg+dawn.png"/>
+        <!-- ===== DUSK ===== -->
+        <!-- clear / rain -->
+        <image file="biome_palettes/palette_clear+dusk.png"/>
+        <image file="biome_palettes/palette_clear+aw1+dusk.png"/>
+        <image file="biome_palettes/palette_clear+aw2+dusk.png"/>
+        <image file="biome_palettes/palette_clear+awds+dusk.png"/>
+        <image file="biome_palettes/palette_clear+dor+dusk.png"/>
+        <image file="biome_palettes/palette_clear+sfw+dusk.png"/>
+        <image file="biome_palettes/palette_clear+wg+dusk.png"/>
+        <image file="biome_palettes/palette_rain+aw2+dusk.png"/>
+        <!-- desert -->
+        <image file="biome_palettes/palette_desert+dusk.png"/>
+        <image file="biome_palettes/palette_desert+awds+dusk.png"/>
+        <image file="biome_palettes/palette_desert+dor+dusk.png"/>
+        <image file="biome_palettes/palette_desert+sfw+dusk.png"/>
+        <image file="biome_palettes/palette_desert+wg+dusk.png"/>
+        <!-- snow -->
+        <image file="biome_palettes/palette_snow+dusk.png"/>
+        <image file="biome_palettes/palette_snow+aw1+dusk.png"/>
+        <image file="biome_palettes/palette_snow+aw2+dusk.png"/>
+        <image file="biome_palettes/palette_snow+awds+dusk.png"/>
+        <image file="biome_palettes/palette_snow+dor+dusk.png"/>
+        <image file="biome_palettes/palette_snow+sfw+dusk.png"/>
+        <image file="biome_palettes/palette_snow+wg+dusk.png"/>
+        <!-- waste -->
+        <image file="biome_palettes/palette_waste+dusk.png"/>
+        <image file="biome_palettes/palette_waste+awds+dusk.png"/>
+        <image file="biome_palettes/palette_waste+dor+dusk.png"/>
+        <image file="biome_palettes/palette_waste+sfw+dusk.png"/>
+        <image file="biome_palettes/palette_waste+wg+dusk.png"/>
+        <!-- ===== NIGHT ===== -->
+        <!-- clear / rain -->
+        <image file="biome_palettes/palette_clear+night.png"/>
+        <image file="biome_palettes/palette_clear+aw1+night.png"/>
+        <image file="biome_palettes/palette_clear+aw2+night.png"/>
+        <image file="biome_palettes/palette_clear+awds+night.png"/>
+        <image file="biome_palettes/palette_clear+dor+night.png"/>
+        <image file="biome_palettes/palette_clear+sfw+night.png"/>
+        <image file="biome_palettes/palette_clear+wg+night.png"/>
+        <image file="biome_palettes/palette_rain+aw2+night.png"/>
+        <!-- desert -->
+        <image file="biome_palettes/palette_desert+night.png"/>
+        <image file="biome_palettes/palette_desert+awds+night.png"/>
+        <image file="biome_palettes/palette_desert+dor+night.png"/>
+        <image file="biome_palettes/palette_desert+sfw+night.png"/>
+        <image file="biome_palettes/palette_desert+wg+night.png"/>
+        <!-- snow -->
+        <image file="biome_palettes/palette_snow+night.png"/>
+        <image file="biome_palettes/palette_snow+aw1+night.png"/>
+        <image file="biome_palettes/palette_snow+aw2+night.png"/>
+        <image file="biome_palettes/palette_snow+awds+night.png"/>
+        <image file="biome_palettes/palette_snow+dor+night.png"/>
+        <image file="biome_palettes/palette_snow+sfw+night.png"/>
+        <image file="biome_palettes/palette_snow+wg+night.png"/>
+        <!-- waste -->
+        <image file="biome_palettes/palette_waste+night.png"/>
+        <image file="biome_palettes/palette_waste+awds+night.png"/>
+        <image file="biome_palettes/palette_waste+dor+night.png"/>
+        <image file="biome_palettes/palette_waste+sfw+night.png"/>
+        <image file="biome_palettes/palette_waste+wg+night.png"/>
     </atlas>
 </resources>
