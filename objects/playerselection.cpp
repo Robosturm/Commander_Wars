@@ -347,6 +347,7 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
     m_lockedInCaseOfDisconnect.clear();
     m_lockedAiControl.clear();
     m_playerSockets.clear();
+    m_socketReadyStates.clear();
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_playerReadyFlags.append(false);
@@ -1241,6 +1242,8 @@ void PlayerSelection::selectAI(qint32 player, bool forced)
                 ai = type;
                 createAi(player, GameEnums::AiTypes_ProxyAi, name);
                 m_pMap->getPlayer(player)->setControlType(type);
+                // no client owns this slot yet, requestPlayer transfers it to the first joiner
+                m_playerSockets[player] = 0;
             }
             else if (Mainapp::getSlave())
             {
@@ -1561,6 +1564,7 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream &stream)
         stream >> fixed;
         stream >> value;
         CONSOLE_PRINT("PlayerSelection::recievePlayerReady for socket " + QString::number(socketID) + " is " + (value ? "ready" : "not ready"), GameConsole::eDEBUG);
+        m_socketReadyStates[socketID] = value;
         for (qint32 i = 0; i < m_playerSockets.size(); i++)
         {
             if (m_playerSockets[i] == socketID)
@@ -1607,6 +1611,18 @@ void PlayerSelection::sendPlayerReady(quint64 socketID)
             sendStream << m_playerReadyFlags[i];
         }
         emit m_pNetworkInterface.get()->sigForwardData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer);
+    }
+}
+
+void PlayerSelection::applySocketReadyState(qint32 player, quint64 socketID)
+{
+    bool ready = m_socketReadyStates.value(socketID, false);
+    m_playerReadyFlags[player] = ready;
+    m_lockedInCaseOfDisconnect[player] = ready;
+    Checkbox *pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(player));
+    if (pCheckbox != nullptr)
+    {
+        pCheckbox->setChecked(ready);
     }
 }
 
@@ -1714,8 +1730,14 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream &stream)
                         if (pPlayer != nullptr)
                         {
                             CONSOLE_PRINT("Player is " + QString::number(i) + " is currently owned by username " + pPlayer->getPlayerNameId() + " and socket " + QString::number(pPlayer->getSocketId()), GameConsole::eDEBUG);
-                            if (pPlayer->getSocketId() == socketID ||
-                                pPlayer->getPlayerNameId() == username)
+                            // an ai slot transferred to this socket must not block its own seat request
+                            bool ownAiSlot = pPlayer->getSocketId() == socketID &&
+                                             pPlayer->getControlType() > GameEnums::AiTypes::AiTypes_Human &&
+                                             pPlayer->getControlType() != GameEnums::AiTypes::AiTypes_Open &&
+                                             pPlayer->getControlType() != GameEnums::AiTypes::AiTypes_Closed;
+                            if (!ownAiSlot &&
+                                (pPlayer->getSocketId() == socketID ||
+                                 pPlayer->getPlayerNameId() == username))
                             {
                                 alreadyInGame = true;
                                 break;
@@ -1792,6 +1814,8 @@ void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString &u
         {
             pPlayer->setPlayerNameId(username);
             m_playerSockets[player] = socketID;
+            // the owning client may have pressed ready before this slot was bound to its socket
+            applySocketReadyState(player, socketID);
         }
         pPlayer->setSocketId(socketID);
         if (pDropDownmenu != nullptr)
@@ -1832,6 +1856,7 @@ void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString &u
     emit m_pNetworkInterface->sig_sendData(socketID, sendDataRequester, NetworkInterface::NetworkSerives::Multiplayer, false);
     emit m_pNetworkInterface.get()->sigForwardData(socketID, sendDataOtherClients, NetworkInterface::NetworkSerives::Multiplayer);
     sendPlayerReady(0);
+    emit sigPlayerStateChanged();
 }
 
 bool PlayerSelection::joinAllowed(quint64 socketId, QString username, GameEnums::AiTypes eAiType)
@@ -1964,6 +1989,13 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream &stream)
                 m_pMap->getPlayer(player)->setPlayerNameId(name);
                 m_pMap->getPlayer(player)->setControlType(originalAiType);
                 m_pMap->getPlayer(player)->setSocketId(socketId);
+                if (Mainapp::getSlave() &&
+                    m_playerSockets[player] != 0)
+                {
+                    // the owning client may have pressed ready before this slot was bound to its socket
+                    applySocketReadyState(player, m_playerSockets[player]);
+                    sendPlayerReady(0);
+                }
 
                 bool humanFound = false;
                 for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -2004,6 +2036,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream &stream)
             CONSOLE_PRINT("Update ignored", GameConsole::eDEBUG);
         }
         sendOpenPlayerCount();
+        emit sigPlayerStateChanged();
     }
     else
     {
@@ -2201,6 +2234,7 @@ void PlayerSelection::disconnected(quint64 socketID)
             auto *gameRules = m_pMap->getGameRules();
             auto &observer = gameRules->getObserverList();
             observer.removeAll(socketID);
+            m_socketReadyStates.remove(socketID);
         }
         sendOpenPlayerCount();
     }
