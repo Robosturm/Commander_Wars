@@ -19,8 +19,8 @@ public:
     explicit Minimap();
     virtual ~Minimap() = default;
 
-    void clear();    
-    void setMenu(GameMenue* pMenu);
+    Q_INVOKABLE void clear();
+    Q_INVOKABLE void setMenu(GameMenue* pMenu);
 
 signals:
     void clicked(qint32 x, qint32 y, bool updateMinimapPosition);

@@ -247,6 +247,19 @@ private:
      * </if>
      */
     bool ifCondition(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+     * Nodename: Minimap
+     * supported attributes are:
+     * mandatory: x, y
+     * optional: id, visible, onEvent
+     */
+    bool createMinimap(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+     * Nodename: SlidingBox
+     * supported attributes are:
+     * mandatory: x, y, width, height, content
+     */
+    bool createSlidingBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
 signals:
     void sigDoEvent(QString command, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
 private slots:
@@ -277,6 +290,7 @@ private:
     oxygine::TextStyle::HorizontalAlign getHAlignment(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
     void updateMenuSize(CreatedGui* pMenu);
     QDomNode addTabNode(QDomNode & tabNode, spTabbedBox & pTabbedBox, CreatedGui* pMenu, qint32 loopIdx, bool & success);
+
 
     template<typename TType>
     void onEvent(QString line, TType value, QString objectId, qint32 loopIdx, CreatedGui* pMenu)

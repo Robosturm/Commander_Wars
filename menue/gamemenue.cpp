@@ -1030,10 +1030,10 @@ void GameMenue::checkSendPlayerRequestControlInfo()
     auto sockets = m_pNetworkInterface->getConnectedSockets();
     if (m_userData.size() == sockets.size())
     {
-        for (const auto & entry : m_requestData)
+        for (const auto & entry : std::as_const(m_requestData))
         {
             bool unique = true;
-            for (const auto & user : m_userData)
+            for (const auto & user : std::as_const(m_userData))
             {
                 if (user.username == entry.username &&
                     user.socket != entry.socket)
