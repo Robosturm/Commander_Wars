@@ -100,7 +100,7 @@ QString VirtualPaths::find(const QString& pName, bool checkMods)
     auto name = processName(pName);
 
     QString newPath;
-    for (auto & path : m_searchPath)
+    for (const auto & path : std::as_const(m_searchPath))
     {
         if (!checkMods && path.isModPath)
         {
@@ -108,14 +108,14 @@ QString VirtualPaths::find(const QString& pName, bool checkMods)
         }
 
         newPath = path.root + name.path;
-        if (QFileInfo(newPath).exists())
+        if (QFileInfo::exists(newPath))
         {
             return newPath;
         }
         else if (name.isResources && path.isModPath)
         {
             newPath = path.root + name.resourcesPath;
-            if (QFileInfo(newPath).exists())
+            if (QFileInfo::exists(newPath))
             {
                 return newPath;
             }
@@ -160,7 +160,7 @@ QStringList VirtualPaths::findAllInternal(const QString& pName, bool checkMods, 
 
     QStringList list;
     QString newPath;
-    for (auto & path : m_searchPath)
+    for (const auto & path : std::as_const(m_searchPath))
     {
         if (!checkMods && path.isModPath)
         {
@@ -168,7 +168,7 @@ QStringList VirtualPaths::findAllInternal(const QString& pName, bool checkMods, 
         }
 
         newPath = path.root + name.path;
-        if (QFileInfo(newPath).exists())
+        if (QFileInfo::exists(newPath))
         {
             list.append(newPath);
         }
@@ -176,7 +176,7 @@ QStringList VirtualPaths::findAllInternal(const QString& pName, bool checkMods, 
         if (name.isResources && path.isModPath)
         {
             newPath = path.root + name.resourcesPath;
-            if (QFileInfo(newPath).exists())
+            if (QFileInfo::exists(newPath))
             {
                 list.append(newPath);
             }
@@ -200,7 +200,7 @@ QFileInfoList VirtualPaths::list(const QString& name, const QStringList& filters
         infoList.append(QFileInfo(upDir.filesystemAbsolutePath()));
     }
     auto paths = VirtualPaths::createSearchPathRev(name, checkMods);
-    for (auto & path : paths)
+    for (const auto & path : std::as_const(paths))
     {
         QFileInfo pathInfo(path);
         if (pathInfo.exists() && pathInfo.isDir())

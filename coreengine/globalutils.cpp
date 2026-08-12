@@ -374,7 +374,7 @@ void GlobalUtils::importFilesFromDirectory(QString folder, QString targetDirecto
         dirIter.next();
         QString file = dirIter.fileInfo().canonicalFilePath();
         bool exclude = false;
-        for (const auto & exlucePath : excludeFolders)
+        for (const auto & exlucePath : std::as_const(excludeFolders))
         {
             if (file.contains("/" + exlucePath + "/"))
             {
@@ -591,4 +591,11 @@ QJsonArray GlobalUtils::toJsonArray(const QByteArray & byteArray)
         array.append(byteArray[i]);
     }
     return array;
+}
+
+QString GlobalUtils::toHash512(const QString & input)
+{
+    QCryptographicHash myHash(QCryptographicHash::Sha512);
+    myHash.addData(input.toUtf8());
+    return myHash.result().toHex();
 }

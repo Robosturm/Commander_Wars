@@ -56,34 +56,35 @@ void MapFileServer::onMapUpload(quint64 socketID, const QJsonObject & objData)
                 buffer.open(QIODevice::ReadOnly);
                 image.load(&buffer, "PNG");
                 image.save(imagePath);
-                QString command =  QString("INSERT INTO ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + "(" +
-                                  MainServer::SQL_MAPNAME + ", " +
-                                  MainServer::SQL_MAPAUTHOR + ", " +
-                                  MainServer::SQL_MAPPATH + ", " +
-                                  MainServer::SQL_MAPIMAGEPATH + ", " +
-                                  MainServer::SQL_MAPPLAYERS + ", " +
-                                  MainServer::SQL_MAPWIDTH + ", " +
-                                  MainServer::SQL_MAPHEIGHT + ", " +
-                                  MainServer::SQL_MAPFLAGS + "," +
-                                  MainServer::SQL_MAPUPLOADER + ", " +
-                                  MainServer::SQL_MAPDOWNLOADCOUNT + ", " +
-                                  MainServer::SQL_MAPUPLOADDATE + ", " +
-                                  MainServer::SQL_MAPLASTDOWNLOADDATE +
-                                  ") VALUES (" +
-                                  "'" + objData.value(JsonKeys::JSONKEY_MAPNAME).toString() + "', " +
-                                  "'" + objData.value(JsonKeys::JSONKEY_MAPAUTHOR).toString() + "', " +
-                                  "'" + filePath + "', " +
-                                  "'" + imagePath + "', " +
-                                  QString::number(objData.value(JsonKeys::JSONKEY_MAPPLAYERS).toInt()) + ", " +
-                                  QString::number(objData.value(JsonKeys::JSONKEY_MAPWIDTH).toInt()) + ", " +
-                                  QString::number(objData.value(JsonKeys::JSONKEY_MAPHEIGHT).toInt()) + ", " +
-                                  QString::number(objData.value(JsonKeys::JSONKEY_MAPFLAGS).toInteger()) + "," +
-                                  "'" + objData.value(JsonKeys::JSONKEY_MAPUPLOADER).toString() + "', " +
-                                  "0, " +
-                                  "'" + QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + "', " +
-                                  "'" + QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + "')";
                 QSqlQuery query(m_mainServer->getDatabase());
-                query.exec(command);
+                query.prepare(QString("INSERT INTO ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + "(" +
+                              MainServer::SQL_MAPNAME + ", " +
+                              MainServer::SQL_MAPAUTHOR + ", " +
+                              MainServer::SQL_MAPPATH + ", " +
+                              MainServer::SQL_MAPIMAGEPATH + ", " +
+                              MainServer::SQL_MAPPLAYERS + ", " +
+                              MainServer::SQL_MAPWIDTH + ", " +
+                              MainServer::SQL_MAPHEIGHT + ", " +
+                              MainServer::SQL_MAPFLAGS + ", " +
+                              MainServer::SQL_MAPUPLOADER + ", " +
+                              MainServer::SQL_MAPDOWNLOADCOUNT + ", " +
+                              MainServer::SQL_MAPUPLOADDATE + ", " +
+                              MainServer::SQL_MAPLASTDOWNLOADDATE +
+                              ") VALUES (?, ?, ?, ?, ?, ?," +
+                                        "?, ?, ?, ?, ?, ?);");
+                query.addBindValue(objData.value(JsonKeys::JSONKEY_MAPNAME).toString());
+                query.addBindValue(objData.value(JsonKeys::JSONKEY_MAPAUTHOR).toString());
+                query.addBindValue(filePath);
+                query.addBindValue(imagePath);
+                query.addBindValue(objData.value(JsonKeys::JSONKEY_MAPPLAYERS).toInt());
+                query.addBindValue(objData.value(JsonKeys::JSONKEY_MAPWIDTH).toInt());
+                query.addBindValue(objData.value(JsonKeys::JSONKEY_MAPHEIGHT).toInt());
+                query.addBindValue(objData.value(JsonKeys::JSONKEY_MAPFLAGS).toInteger());
+                query.addBindValue(objData.value(JsonKeys::JSONKEY_MAPUPLOADER).toString());
+                query.addBindValue(0);
+                query.addBindValue(QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss"));
+                query.addBindValue(QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss"));
+                query.exec();
                 if (MainServer::sqlQueryFailed(query))
                 {
                     QFile::remove(filePath);
@@ -111,10 +112,11 @@ bool MapFileServer::sameUploader(const QJsonObject & objData)
     bool success = false;
     QString filePath = objData.value(JsonKeys::JSONKEY_MAPPATH).toString();
     QSqlQuery query(m_mainServer->getDatabase());
-    query.exec(QString("SELECT ") + MainServer::SQL_MAPUPLOADER +
-               " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
-               " WHERE " + MainServer::SQL_MAPPATH +
-               " = '" + filePath + "';");
+    query.prepare(QString("SELECT ") + MainServer::SQL_MAPUPLOADER +
+                  " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
+                  " WHERE " + MainServer::SQL_MAPPATH + " = ?;");
+    query.addBindValue(filePath);
+    query.exec();
     if (!MainServer::sqlQueryFailed(query) && query.first())
     {
         QString currentUploader = objData.value(JsonKeys::JSONKEY_MAPUPLOADER).toString();
@@ -122,10 +124,12 @@ bool MapFileServer::sameUploader(const QJsonObject & objData)
         success = oldUploader == currentUploader;
         if (success)
         {
-            QString command = QString("DELETE FROM ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " WHERE " +
-                              MainServer::SQL_MAPPATH + " = '" + filePath + "';";
-            query.exec(command);
-            MainServer::sqlQueryFailed(query);
+            QSqlQuery deleteQuery(m_mainServer->getDatabase());
+            deleteQuery.prepare(QString("DELETE FROM ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " WHERE " +
+                                MainServer::SQL_MAPPATH + " = ?;");
+            deleteQuery.addBindValue(filePath);
+            deleteQuery.exec();
+            MainServer::sqlQueryFailed(deleteQuery);
         }
     }
     return success;
@@ -149,28 +153,35 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
                             " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
                             " WHERE ";
     qint32 filterCount = 0;
+    QList<QVariant> filterValues;
     MapFilter mapFilter;
     mapFilter.fromJson(objData);
-    addFilterOption(filterCommand, mapFilter.getMinHeight(), filterCount, MainServer::SQL_MAPHEIGHT, ">=");
-    addFilterOption(filterCommand, mapFilter.getMaxHeight(), filterCount, MainServer::SQL_MAPHEIGHT, "<=");
-    addFilterOption(filterCommand, mapFilter.getMinWidth(), filterCount, MainServer::SQL_MAPWIDTH, ">=");
-    addFilterOption(filterCommand, mapFilter.getMaxWidth(), filterCount, MainServer::SQL_MAPWIDTH, "<=");
-    addFilterOption(filterCommand, mapFilter.getMinPlayer(), filterCount, MainServer::SQL_MAPPLAYERS, ">=");
-    addFilterOption(filterCommand, mapFilter.getMaxPlayer(), filterCount, MainServer::SQL_MAPPLAYERS, "<=");
-    addFilterOption(filterCommand, mapFilter.getMapName(), filterCount, MainServer::SQL_MAPNAME);
-    addFilterOption(filterCommand, mapFilter.getMapName(), filterCount, MainServer::SQL_MAPAUTHOR);
-    addFlagFilterOption(filterCommand, filterCount, mapFilter.getFlagFilter());
+    addFilterOption(filterCommand, filterValues, filterCount, mapFilter.getMinHeight(), MainServer::SQL_MAPHEIGHT, ">=");
+    addFilterOption(filterCommand, filterValues, filterCount, mapFilter.getMaxHeight(), MainServer::SQL_MAPHEIGHT, "<=");
+    addFilterOption(filterCommand, filterValues, filterCount, mapFilter.getMinWidth(), MainServer::SQL_MAPWIDTH, ">=");
+    addFilterOption(filterCommand, filterValues, filterCount, mapFilter.getMaxWidth(), MainServer::SQL_MAPWIDTH, "<=");
+    addFilterOption(filterCommand, filterValues, filterCount, mapFilter.getMinPlayer(), MainServer::SQL_MAPPLAYERS, ">=");
+    addFilterOption(filterCommand, filterValues, filterCount, mapFilter.getMaxPlayer(), MainServer::SQL_MAPPLAYERS, "<=");
+    addFilterOption(filterCommand, filterValues, filterCount, mapFilter.getMapName(), MainServer::SQL_MAPNAME);
+    addFilterOption(filterCommand, filterValues, filterCount, mapFilter.getMapName(), MainServer::SQL_MAPAUTHOR);
+    addFlagFilterOption(filterCommand, filterValues, filterCount, mapFilter.getFlagFilter());
 
     if (filterCount == 0)
     {
-        filterCommand += QString(MainServer::SQL_MAPPATH) + " LIKE '%';";
+        filterCommand += QString(MainServer::SQL_MAPPATH) + " LIKE ?;";
+        filterValues.append("%");
     }
     else
     {
         filterCommand +=  ";";
     }
     QSqlQuery query(m_mainServer->getDatabase());
-    query.exec(filterCommand);
+    query.prepare(filterCommand);
+    for (const auto &value : std::as_const(filterValues))
+    {
+        query.addBindValue(value);
+    }
+    query.exec();
     bool success = !MainServer::sqlQueryFailed(query);
     success = success && query.first();
     bool active = query.isActive() && query.isSelect();
@@ -225,9 +236,9 @@ void MapFileServer::onRequestFilteredMaps(quint64 socketID, const QJsonObject & 
 void MapFileServer::onRequestDeleteMap(quint64 socketID, const QJsonObject & objData)
 {
     spTCPServer pServer = m_mainServer->getGameServer();
-    QString filter = QString(MainServer::SQL_MAPPATH) + " = '" + objData.value(JsonKeys::JSONKEY_MAPPATH).toString() + "' AND " +
-                     MainServer::SQL_MAPUPLOADER + " = '" + objData.value(JsonKeys::JSONKEY_USERNAME).toString() + "'";
-    bool success = removeMapFromServer(filter);
+    QString mapPath = objData.value(JsonKeys::JSONKEY_MAPPATH).toString();
+    QString uploader = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
+    bool success = removeMapFromServer(mapPath, uploader);
     QString command = QString(NetworkCommands::SERVERDELETERESPONSE);
     QJsonObject response;
     response.insert(JsonKeys::JSONKEY_COMMAND, command);
@@ -248,22 +259,27 @@ void MapFileServer::onRequestDownloadMap(quint64 socketID, const QJsonObject & o
     if (QFile::exists(mapPath))
     {
         QSqlQuery query(m_mainServer->getDatabase());
-        query.exec(QString("SELECT ") +
+        query.prepare(QString("SELECT ") +
                    MainServer::SQL_MAPPATH + ", " +
                    MainServer::SQL_MAPDOWNLOADCOUNT + ", " +
                    MainServer::SQL_MAPLASTDOWNLOADDATE +
                    " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
-                   " WHERE " + MainServer::SQL_MAPPATH +
-                   " = '" + mapPath + "';");
+                   " WHERE " + MainServer::SQL_MAPPATH + " = ?;");
+        query.addBindValue(mapPath);
+        query.exec();
         if (!MainServer::sqlQueryFailed(query) && query.first())
         {
             // update internal data
             qint32 downloadCount = query.value(MainServer::SQL_MAPDOWNLOADCOUNT).toInt();
             QSqlQuery changeQuery(m_mainServer->getDatabase());
-            changeQuery.exec(QString("UPDATE ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " SET " +
-                             MainServer::SQL_MAPDOWNLOADCOUNT + " = '" + QString::number(downloadCount + 1) + ", " +
-                             MainServer::SQL_MAPLASTDOWNLOADDATE + " = '" + QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + "' WHERE " +
-                             MainServer::SQL_MAPPATH + " = '" + objData.value(JsonKeys::JSONKEY_MAPPATH).toString() + "';");
+            changeQuery.prepare(QString("UPDATE ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " SET " +
+                             MainServer::SQL_MAPDOWNLOADCOUNT + " = ?, " +
+                             MainServer::SQL_MAPLASTDOWNLOADDATE + " = ? WHERE " +
+                             MainServer::SQL_MAPPATH + " = ?;");
+            changeQuery.addBindValue(downloadCount + 1);
+            changeQuery.addBindValue(QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss"));
+            changeQuery.addBindValue(objData.value(JsonKeys::JSONKEY_MAPPATH).toString());
+            changeQuery.exec();
             MainServer::sqlQueryFailed(changeQuery);
             // load map data and send it to client
             QFile file(mapPath);
@@ -286,14 +302,17 @@ void MapFileServer::onRequestDownloadMap(quint64 socketID, const QJsonObject & o
     emit pServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-bool MapFileServer::removeMapFromServer(const QString & sqlFilter)
+bool MapFileServer::removeMapFromServer(const QString & mapPath, const QString & uploader)
 {
-    QString filterCommand = QString("SELECT ") + MainServer::SQL_MAPPATH + ", " +
-                            MainServer::SQL_MAPIMAGEPATH +
-                            " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
-                            " WHERE " + sqlFilter + ";";
     QSqlQuery query(m_mainServer->getDatabase());
-    query.exec(filterCommand);
+    query.prepare(QString("SELECT ") + MainServer::SQL_MAPPATH + ", " +
+                  MainServer::SQL_MAPIMAGEPATH +
+                  " from " + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
+                  " WHERE " + MainServer::SQL_MAPPATH + " = ? AND " +
+                  MainServer::SQL_MAPUPLOADER + " = ?;");
+    query.addBindValue(mapPath);
+    query.addBindValue(uploader);
+    query.exec();
     bool success = !MainServer::sqlQueryFailed(query);
     if (success && query.first())
     {
@@ -302,9 +321,14 @@ bool MapFileServer::removeMapFromServer(const QString & sqlFilter)
             QFile::remove(query.value(MainServer::SQL_MAPPATH).toString());
             QFile::remove(query.value(MainServer::SQL_MAPIMAGEPATH).toString());
         } while (query.next());
-        QString command = QString("DELETE FROM ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO + " WHERE " + sqlFilter + ";";
-        query.exec(command);
-        MainServer::sqlQueryFailed(query);
+        QSqlQuery deleteQuery(m_mainServer->getDatabase());
+        deleteQuery.prepare(QString("DELETE FROM ") + MainServer::SQL_TABLE_DOWNLOADMAPINFO +
+                            " WHERE " + MainServer::SQL_MAPPATH + " = ? AND " +
+                            MainServer::SQL_MAPUPLOADER + " = ?;");
+        deleteQuery.addBindValue(mapPath);
+        deleteQuery.addBindValue(uploader);
+        deleteQuery.exec();
+        MainServer::sqlQueryFailed(deleteQuery);
     }
     return success;
 }

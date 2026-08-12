@@ -17,7 +17,6 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/commandlineparser.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/workerthread.h"
 #include "multiplayer/password.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
@@ -503,16 +502,19 @@ void MainServer::onRequestPlayerStats(quint64 socketID, const QJsonObject &objDa
     QString command = QString(NetworkCommands::SERVERPLAYERSTATS);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QString safeTable = SQL_TABLE_PLAYERDATA + GlobalUtils::toHash512(username);
     QSqlQuery query(*m_serverData);
-    query.exec(QString("SELECT ") +
+    query.prepare(QString("SELECT ") +
                SQL_COID + ", " +
                SQL_GAMESMADE + ", " +
                SQL_GAMESLOST + ", " +
                SQL_GAMESWON + ", " +
                SQL_GAMESDRAW +
-               " from " + SQL_TABLE_PLAYERDATA + username +
+               " from " + safeTable +
                " WHERE " + SQL_COID +
-               " LIKE '%';");
+               " LIKE ?;");
+    query.addBindValue("%");
+    query.exec();
     bool success = !sqlQueryFailed(query);
     QJsonObject coStats;
     if (success && query.first())
@@ -544,11 +546,12 @@ void MainServer::onRequestPlayersFromServer(quint64 socketID, const QJsonObject 
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     QSqlQuery query(*m_serverData);
-    query.exec(QString("SELECT ") +
+    query.prepare(QString("SELECT ") +
                SQL_USERNAME +
                " from " + SQL_TABLE_PLAYERS +
-               " WHERE " + SQL_USERNAME +
-               " LIKE '" + searchFilter + "%';");
+               " WHERE " + SQL_USERNAME + " LIKE ?;");
+    query.addBindValue(searchFilter + "%");
+    query.exec();
     bool success = !sqlQueryFailed(query);
     QJsonArray usernames;
     if (success && query.first())
@@ -1404,24 +1407,24 @@ void MainServer::createAccount(qint64 socketId, const QJsonObject &objData)
     {
         auto hexPassword = password.toHex();
         QString dateTime = QDateTime::currentDateTimeUtc().toString();
-        QString command = QString("INSERT INTO ") + SQL_TABLE_PLAYERS + "(" +
+        QSqlQuery insertQuery(*m_serverData);
+        insertQuery.prepare(QString("INSERT INTO ") + SQL_TABLE_PLAYERS + "(" +
                           SQL_USERNAME + ", " +
                           SQL_PASSWORD + ", " +
                           SQL_MAILADRESS + ", " +
                           SQL_MMR + ", " +
                           SQL_VALIDPASSWORD + ", " +
                           SQL_LASTLOGIN +
-                          ") VALUES(" +
-                          "'" + username + "'," +
-                          "'" + hexPassword + "'," +
-                          "'" + mailAdress + "'," +
-                          "750," +
-                          "1," +
-                          "'" + dateTime + "'" +
-                          ")";
-        query.exec(command);
+                          ") VALUES(?, ?, ?, ?, ?, ?);");
+        insertQuery.addBindValue(username);
+        insertQuery.addBindValue(hexPassword);
+        insertQuery.addBindValue(mailAdress);
+        insertQuery.addBindValue(750);
+        insertQuery.addBindValue(1);
+        insertQuery.addBindValue(dateTime);
+        insertQuery.exec();
         createUserTable(username);
-        if (sqlQueryFailed(query))
+        if (sqlQueryFailed(insertQuery))
         {
             result = GameEnums::LoginError_AccountExists;
         }
@@ -1457,10 +1460,12 @@ void MainServer::deleteAccount(qint64 socketId, const QJsonObject &objData)
             result = checkPassword(*m_serverData, username, password);
             if (result == GameEnums::LoginError_None)
             {
-                QString command = QString("DELETE FROM ") + SQL_TABLE_PLAYERS + " WHERE " +
-                                  SQL_USERNAME + " = '" + username + "';";
-                query.exec(command);
-                if (sqlQueryFailed(query))
+                QSqlQuery deleteQuery(*m_serverData);
+                deleteQuery.prepare(QString("DELETE FROM ") + SQL_TABLE_PLAYERS + " WHERE " +
+                                    SQL_USERNAME + " = ?;");
+                deleteQuery.addBindValue(username);
+                deleteQuery.exec();
+                if (sqlQueryFailed(deleteQuery))
                 {
                     result = GameEnums::LoginError_DatabaseNotAccesible;
                 }
@@ -1508,7 +1513,8 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonObject &objData)
 void MainServer::createUserTable(const QString &username)
 {
     QSqlQuery query(*m_serverData);
-    query.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERDATA + username + " (" +
+    QString safeTable = SQL_TABLE_PLAYERDATA + GlobalUtils::toHash512(username);
+    query.exec(QString("CREATE TABLE if not exists ") + safeTable + " (" +
                SQL_COID + " TEXT PRIMARY KEY, " +
                SQL_GAMESMADE + " INTEGER, " +
                SQL_GAMESLOST + " INTEGER, " +
@@ -1524,7 +1530,8 @@ void MainServer::createUserTable(const QString &username)
 void MainServer::createMatchData(const QString &match)
 {
     QSqlQuery query(*m_serverData);
-    query.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_MATCH_DATA + match + " (" +
+    QString safeTable = SQL_TABLE_MATCH_DATA+ GlobalUtils::toHash512(match);
+    query.exec(QString("CREATE TABLE if not exists ") + safeTable + " (" +
                SQL_USERNAME + " TEXT PRIMARY KEY, " +
                SQL_MMR + " INTEGER, " +
                SQL_MINGAMES + " INTEGER, " +
@@ -1600,10 +1607,13 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonObject &objDat
                               "once you logged into the server again\n\n" +
                               "Kind regards\nThe server crew";
             QSqlQuery changeQuery(*m_serverData);
-            changeQuery.exec(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
-                             SQL_PASSWORD + " = " + "'" + password.getHash().toHex() + "', " +
+            changeQuery.prepare(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                             SQL_PASSWORD + " = ?, " +
                              SQL_VALIDPASSWORD + " = 0 WHERE " +
-                             SQL_USERNAME + " = '" + username + "';");
+                             SQL_USERNAME + " = ?;");
+            changeQuery.addBindValue(password.getHash().toHex());
+            changeQuery.addBindValue(username);
+            changeQuery.exec();
             if (!sqlQueryFailed(changeQuery))
             {
                 CONSOLE_PRINT("Try sending reset password mail", GameConsole::eDEBUG);
@@ -1720,10 +1730,13 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonObject &objDa
         else
         {
             QSqlQuery changeQuery(*m_serverData);
-            changeQuery.exec(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
-                             SQL_PASSWORD + " = " + "'" + password.toHex() + "', " +
+            changeQuery.prepare(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                             SQL_PASSWORD + " = ?, " +
                              SQL_VALIDPASSWORD + " = 1 WHERE " +
-                             SQL_USERNAME + " = '" + username + "';");
+                             SQL_USERNAME + " = ?;");
+            changeQuery.addBindValue(password.toHex());
+            changeQuery.addBindValue(username);
+            changeQuery.exec();
             if (sqlQueryFailed(changeQuery))
             {
                 result = GameEnums::LoginError_InvalidPasswordReset;
@@ -1754,7 +1767,7 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonObject &objDa
 QSqlQuery MainServer::getAccountInfo(QSqlDatabase &database, const QString &username, bool &success)
 {
     QSqlQuery query(database);
-    query.exec(QString("SELECT ") +
+    query.prepare(QString("SELECT ") +
                SQL_USERNAME + ", " +
                SQL_PASSWORD + ", " +
                SQL_MAILADRESS + ", " +
@@ -1762,8 +1775,9 @@ QSqlQuery MainServer::getAccountInfo(QSqlDatabase &database, const QString &user
                SQL_VALIDPASSWORD + ", " +
                SQL_LASTLOGIN +
                " from " + SQL_TABLE_PLAYERS +
-               " WHERE " + SQL_USERNAME +
-               " = '" + username + "';");
+               " WHERE " + SQL_USERNAME + " = ?;");
+    query.addBindValue(username);
+    query.exec();
     success = !sqlQueryFailed(query);
     return query;
 }

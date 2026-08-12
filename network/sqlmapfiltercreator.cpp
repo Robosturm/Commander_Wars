@@ -1,7 +1,7 @@
 #include "network/sqlmapfiltercreator.h"
 #include "network/mainserver.h"
 
-void SqlMapFilterCreator::addFlagFilterOption(QString & filterCommand, qint32 & filterCount, const QVector<MapFilter::FlagFilter> & filters)
+void SqlMapFilterCreator::addFlagFilterOption(QString & filterCommand, QList<QVariant> & filterValues, qint32 & filterCount, const QVector<MapFilter::FlagFilter> & filters)
 {
     bool requiresOptional = true;
     for (const auto & filter : filters)
@@ -13,7 +13,8 @@ void SqlMapFilterCreator::addFlagFilterOption(QString & filterCommand, qint32 & 
             {
                 filterCommand += " AND ";
             }
-            filterCommand += QString(MainServer::SQL_MAPFLAGS) + " & " + QString::number(filter.flag) + " > 0";
+            filterCommand += QString(MainServer::SQL_MAPFLAGS) + " & ? > 0";
+            filterValues.append(filter.flag);
             ++filterCount;
         }
     }
@@ -38,7 +39,8 @@ void SqlMapFilterCreator::addFlagFilterOption(QString & filterCommand, qint32 & 
                 {
                     filterCommand += " OR ";
                 }
-                filterCommand += QString(MainServer::SQL_MAPFLAGS) + " & " + QString::number(filter.flag) + " > 0";
+                filterCommand += QString(MainServer::SQL_MAPFLAGS) + " & ? > 0";
+                filterValues.append(filter.flag);
                 ++filterCount;
             }
         }
@@ -49,7 +51,7 @@ void SqlMapFilterCreator::addFlagFilterOption(QString & filterCommand, qint32 & 
     }
 }
 
-void SqlMapFilterCreator::addFilterOption(QString & filterCommand, qint32 value, qint32 & filterCount, const char* const item, const char* const opCommand)
+void SqlMapFilterCreator::addFilterOption(QString & filterCommand, QList<QVariant> & filterValues, qint32 & filterCount, qint32 value, const char* const item, const char* const opCommand)
 {
     if (value > 0)
     {
@@ -57,12 +59,13 @@ void SqlMapFilterCreator::addFilterOption(QString & filterCommand, qint32 value,
         {
             filterCommand += " AND ";
         }
-        filterCommand += QString(item) + " " + opCommand + " "  + QString::number(value);
+        filterCommand += QString(item) + " " + opCommand + " ?";
+        filterValues.append(value);
         ++filterCount;
     }
 }
 
-void SqlMapFilterCreator::addFilterOption(QString & filterCommand, QString value, qint32 & filterCount, const char* const item)
+void SqlMapFilterCreator::addFilterOption(QString & filterCommand, QList<QVariant> & filterValues, qint32 & filterCount, const QString &value, const char* const item)
 {
     if (!value.isEmpty())
     {
@@ -70,7 +73,8 @@ void SqlMapFilterCreator::addFilterOption(QString & filterCommand, QString value
         {
             filterCommand += " AND ";
         }
-        filterCommand += QString(item) + " LIKE '"  + value + "%'";
+        filterCommand += QString(item) + " LIKE ?";
+        filterValues.append(value + "%");
         ++filterCount;
     }
 }
