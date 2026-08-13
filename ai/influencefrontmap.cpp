@@ -180,9 +180,9 @@ void InfluenceFrontMap::addBuildingInfluence()
         for (qint32 y = 0; y < heigth; y++)
         {
             QPoint curPos(x, y);
+            pInterpreter->threadProcessEvents();
             for (qint32 building = 0; building < buildingPositions.size(); building++)
             {
-                pInterpreter->threadProcessEvents();
                 QPoint pos = buildingPositions[building];
                 float buildSize = static_cast<float>(buildLists[building].size());
                 qint32 owner = buildingOwners[building];
@@ -538,7 +538,6 @@ void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInf
 void InfluenceFrontMap::updateHighestInfluence()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::updateHighestInfluence()", GameConsole::eDEBUG);
-    spQmlVectorPoint circle = GlobalUtils::getSpCircle(1, 1);
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < width; ++x)

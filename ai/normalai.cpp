@@ -2258,7 +2258,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding &pBuildings, spQmlVectorUnit &pUni
                     auto actionIds = pData->getActionIDs();
                     qint32 index = getIndexInProductionData(pBuilding);
                     auto &buildingData = m_productionData[index];
-                    for (qint32 i2 = 0; i2 < pData->getActionIDs().size(); i2++)
+                    for (qint32 i2 = 0; i2 < actionIds.size(); i2++)
                     {
                         pInterpreter->threadProcessEvents();
                         if (enableList[i2])
