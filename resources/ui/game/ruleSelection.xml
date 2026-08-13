@@ -700,7 +700,7 @@
                 <Checkbox>
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY</y>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: units can by special actions like black bombs or Black Hole buildings.")</tooltip>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: units can be damage by special actions like black bombs or Black Hole buildings.")</tooltip>
                     <startValue>currentMenu.getMap().getGameRules().getSpecialDestruction()</startValue>
                     <onEvent>currentMenu.getMap().getGameRules().setSpecialDestruction(input);</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
