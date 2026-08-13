@@ -900,9 +900,6 @@ bool UiFactory::createTabbedBox(oxygine::spActor parent, QDomElement element, ox
             pTabbedBox->setObjectName(id);
         }
 
-        m_lastCoordinates = QRect(x, y, pTabbedBox->getScaledWidth(), pTabbedBox->getScaledHeight());
-        updateMenuSize(pMenu);
-
         // Store the parent size for processing tab contents
         QSize savedParentSize = m_parentSize;
         m_parentSize = QSize(width, height - tabBarHeight);
@@ -935,6 +932,8 @@ bool UiFactory::createTabbedBox(oxygine::spActor parent, QDomElement element, ox
 
         m_parentSize = savedParentSize;
         parent->addChild(pTabbedBox);
+        m_lastCoordinates = QRect(x, y, pTabbedBox->getScaledWidth(), pTabbedBox->getScaledHeight());
+        updateMenuSize(pMenu);
         item = pTabbedBox;
     }
     return success;
@@ -972,6 +971,8 @@ QDomNode UiFactory::addTabNode(QDomNode & tabNode, spTabbedBox & pTabbedBox, Cre
 
             // Add child elements to the tab panel
             auto childNode = tabElement.firstChild();
+            qint32 maxWidth = 0;
+            qint32 maxHeight = 0;
             while (!childNode.isNull())
             {
                 while (childNode.isComment())
@@ -993,12 +994,37 @@ QDomNode UiFactory::addTabNode(QDomNode & tabNode, spTabbedBox & pTabbedBox, Cre
                         {
                             tabPanel->addItem(tabItem);
                         }
+                        if (maxHeight < m_lastCoordinates.y() + m_lastCoordinates.height())
+                        {
+                            maxHeight = m_lastCoordinates.y() + m_lastCoordinates.height();
+                        }
+                        if (maxWidth < m_lastCoordinates.x() + m_lastCoordinates.width())
+                        {
+                            maxWidth = m_lastCoordinates.x() + m_lastCoordinates.width();
+                        }
                     }
                 }
                 childNode = childNode.nextSibling();
             }
-        }
+            if (maxHeight >= tabPanel->getScaledHeight() - 80)
+            {
+                tabPanel->setContentHeigth(maxHeight + 40);
+            }
+            else
+            {
+                tabPanel->setContentHeigth(tabPanel->getScaledHeight() - 80);
+            }
+            if (maxWidth >= tabPanel->getScaledWidth() - 80)
+            {
+                tabPanel->setContentWidth(maxWidth + 80);
+            }
+            else
+            {
+                tabPanel->setContentWidth(tabPanel->getScaledWidth() - 80);
+            }
+        }        
     }
+
     tabNode = tabNode.nextSibling();
     return tabNode;
 }
@@ -1451,7 +1477,7 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
         m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
         if (maxHeight >= pPanel->getScaledHeight() - 80)
         {
-            pPanel->setContentHeigth(maxHeight + 40);
+            pPanel->setContentHeigth(maxHeight + 80);
         }
         else
         {
@@ -1459,7 +1485,7 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
         }
         if (maxWidth >= pPanel->getScaledWidth() - 80)
         {
-            pPanel->setContentWidth(maxWidth + 40);
+            pPanel->setContentWidth(maxWidth + 80);
         }
         else
         {

@@ -367,8 +367,6 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pRuleSelectionView = MemoryManagement::create<RuleSelection>(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, RuleSelection::Mode::Singleplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &MapSelectionMapsMenue::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
-    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 60);
-    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getScaledWidth() + 60);
 }
 
 void MapSelectionMapsMenue::ruleSelectionSizeChanged()
