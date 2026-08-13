@@ -51,24 +51,6 @@
                     <x>5</x>
                     <y>lastY + lastHeight + 10</y>
                     <width>300</width>
-                    <text>QT_TRANSLATE_NOOP("GAME","AI behavior:")</text>
-                    <font>"main"</font>
-                    <fontSize>24</fontSize>
-                </Label>
-                <DropDownMenu>
-                    <x>lastX + lastWidth + 10</x>
-                    <y>lastY</y>
-                    <width>400</width>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","Select how the ai plans unit production.\n Counterpoint budgets across all of its factories at once and builds to answer the enemy army.")</tooltip>
-                    <startValue>RuleSelectionScript.getAiBehaviorValue()</startValue>
-                    <items>RuleSelectionScript.getAiBehaviorRule()</items>
-                    <onEvent>RuleSelectionScript.setAiBehaviorValue(input);</onEvent>
-                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                </DropDownMenu>
-                <Label>
-                    <x>5</x>
-                    <y>lastY + lastHeight + 10</y>
-                    <width>300</width>
                     <text>QT_TRANSLATE_NOOP("GAME","CO specific units:")</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
@@ -134,7 +116,75 @@
                     <startValue>currentMenu.getMap().getGameRules().getRoundTimeMs()</startValue>
                     <onEvent>currentMenu.getMap().getGameRules().setRoundTimeMs(input)</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                </TimeSpinbox>
+                </TimeSpinbox>                <Label>
+                <x>5</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Terrain defense:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+                </Label>
+                <Spinbox>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>400</width>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","The defense each terrain star grants a unit.")</tooltip>
+                    <startValue>currentMenu.getMap().getGameRules().getTerrainDefense()</startValue>
+                    <infinite>-1</infinite>
+                    <spinSpeed>1</spinSpeed>
+                    <min>0</min>
+                    <max>40</max>
+                    <onEvent>currentMenu.getMap().getGameRules().setTerrainDefense(input)</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </Spinbox>
+                <Label>
+                    <x>5</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","HP defense impact:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Checkbox>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: the impact of terrain defense stars is reduced the less hp a unit has.")</tooltip>
+                    <startValue>currentMenu.getMap().getGameRules().getHpDefenseReduction()</startValue>
+                    <onEvent>currentMenu.getMap().getGameRules().setHpDefenseReduction(input);</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </Checkbox>
+                <Label>
+                    <x>5</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Transporter refresh:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Checkbox>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: units can move after getting unloaded if the unit had remained in their transporter for more than one turn.")</tooltip>
+                    <startValue>currentMenu.getMap().getGameRules().getTransporterRefresh()</startValue>
+                    <onEvent>currentMenu.getMap().getGameRules().setTransporterRefresh(input);</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </Checkbox>
+                <Label>
+                    <x>5</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Special destruction:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Checkbox>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: units can be destroyed by special actions like black bombs or Black Hole buildings.")</tooltip>
+                    <startValue>currentMenu.getMap().getGameRules().getSpecialDestruction()</startValue>
+                    <onEvent>currentMenu.getMap().getGameRules().setSpecialDestruction(input);</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </Checkbox>
             </Tab>
             <Tab>
                 <name>"weather"</name>
@@ -199,7 +249,7 @@
                     <startValue>currentMenu.getMap().getGameRules().getWeatherPrediction()</startValue>
                     <onEvent>currentMenu.getMap().getGameRules().setWeatherPrediction(input);</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                </Checkbox>
+                </Checkbox>                
             </Tab>
             <Tab>
                 <name>"fog"</name>
@@ -555,8 +605,8 @@
                 </Checkbox>
             </Tab>
             <Tab>
-                <name>"advanced"</name>
-                <label>QT_TRANSLATE_NOOP("GAME","Advanced")</label>
+                <name>"misc"</name>
+                <label>QT_TRANSLATE_NOOP("GAME","Misc")</label>
                 <Label>
                     <x>5</x>
                     <y>5</y>
@@ -636,140 +686,6 @@
                     <onEvent>currentMenu.showActionBannlist()</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
                 </Button>
-                <Label>
-                    <x>5</x>
-                    <y>lastY + lastHeight + 10</y>
-                    <width>300</width>
-                    <text>QT_TRANSLATE_NOOP("GAME","Terrain defense:")</text>
-                    <font>"main"</font>
-                    <fontSize>24</fontSize>
-                </Label>
-                <Spinbox>
-                    <x>lastX + lastWidth + 10</x>
-                    <y>lastY</y>
-                    <width>400</width>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","The defense each terrain star grants a unit.")</tooltip>
-                    <startValue>currentMenu.getMap().getGameRules().getTerrainDefense()</startValue>
-                    <infinite>-1</infinite>
-                    <spinSpeed>1</spinSpeed>
-                    <min>0</min>
-                    <max>40</max>
-                    <onEvent>currentMenu.getMap().getGameRules().setTerrainDefense(input)</onEvent>
-                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                </Spinbox>
-                <Label>
-                    <x>5</x>
-                    <y>lastY + lastHeight + 10</y>
-                    <width>300</width>
-                    <text>QT_TRANSLATE_NOOP("GAME","HP defense impact:")</text>
-                    <font>"main"</font>
-                    <fontSize>24</fontSize>
-                </Label>
-                <Checkbox>
-                    <x>lastX + lastWidth + 10</x>
-                    <y>lastY</y>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: the impact of terrain defense stars is reduced the less hp a unit has.")</tooltip>
-                    <startValue>currentMenu.getMap().getGameRules().getHpDefenseReduction()</startValue>
-                    <onEvent>currentMenu.getMap().getGameRules().setHpDefenseReduction(input);</onEvent>
-                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                </Checkbox>
-                <Label>
-                    <x>5</x>
-                    <y>lastY + lastHeight + 10</y>
-                    <width>300</width>
-                    <text>QT_TRANSLATE_NOOP("GAME","Transporter refresh:")</text>
-                    <font>"main"</font>
-                    <fontSize>24</fontSize>
-                </Label>
-                <Checkbox>
-                    <x>lastX + lastWidth + 10</x>
-                    <y>lastY</y>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: units can move after getting unloaded if the unit had remained in their transporter for more than one turn.")</tooltip>
-                    <startValue>currentMenu.getMap().getGameRules().getTransporterRefresh()</startValue>
-                    <onEvent>currentMenu.getMap().getGameRules().setTransporterRefresh(input);</onEvent>
-                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                </Checkbox>
-                <Label>
-                    <x>5</x>
-                    <y>lastY + lastHeight + 10</y>
-                    <width>300</width>
-                    <text>QT_TRANSLATE_NOOP("GAME","Special destruction:")</text>
-                    <font>"main"</font>
-                    <fontSize>24</fontSize>
-                </Label>
-                <Checkbox>
-                    <x>lastX + lastWidth + 10</x>
-                    <y>lastY</y>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: units can be damage by special actions like black bombs or Black Hole buildings.")</tooltip>
-                    <startValue>currentMenu.getMap().getGameRules().getSpecialDestruction()</startValue>
-                    <onEvent>currentMenu.getMap().getGameRules().setSpecialDestruction(input);</onEvent>
-                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                </Checkbox>
-            </Tab>
-            <Tab>
-                <name>"victory"</name>
-                <label>QT_TRANSLATE_NOOP("GAME","Victory")</label>
-                <loop count="gameRuleManager.getVictoryRuleCount()">
-                    <if condition="currentMenu.getMap().getGameRules().hasVictoryRule(gameRuleManager.getVictoryRuleID(loopIdx))">
-                        <loop count="RuleSelectionScript.getVictoryRuleElementCount(loopIdx)">
-                            <Label>
-                                <x>RuleSelectionScript.getVictoryRuleX(loopIdx)</x>
-                                <y>RuleSelectionScript.getVictoryRuleY(loopIdx)</y>
-                                <width>220</width>
-                                <text>RuleSelectionScript.getVictoryRulename(loopIdx)</text>
-                                <font>"main"</font>
-                                <fontSize>24</fontSize>
-                            </Label>
-                            <if condition="RuleSelectionScript.getIsVictoryRuleCheckboxType(loopIdx)">
-                                <Checkbox>
-                                    <x>lastX + lastWidth + 10</x>
-                                    <y>lastY</y>
-                                    <Id>gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex)</Id>
-                                    <tooltip>RuleSelectionScript.getVictoryRuleDescription(loopIdx)</tooltip>
-                                    <startValue>RuleSelectionScript.getVictoryRuleValue(loopIdx)</startValue>
-                                    <onEvent>RuleSelectionScript.setVictoryRuleValue(input, loopIdx)</onEvent>
-                                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                                </Checkbox>
-                            </if>
-                            <if condition="RuleSelectionScript.getIsVictoryRuleSpinboxType(loopIdx)">
-                                <Spinbox>
-                                    <x>lastX + lastWidth + 10</x>
-                                    <y>lastY</y>
-                                    <Id>gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex)</Id>
-                                    <width>200</width>
-                                    <tooltip>RuleSelectionScript.getVictoryRuleDescription(loopIdx)</tooltip>
-                                    <startValue>RuleSelectionScript.getVictoryRuleValue(loopIdx)</startValue>
-                                    <infinite>RuleSelectionScript.getVictoryRuleInfiniteValue(loopIdx)</infinite>
-                                    <spinSpeed>1</spinSpeed>
-                                    <min>RuleSelectionScript.getVictoryRuleInfiniteValue(loopIdx)</min>
-                                    <max>RuleSelectionScript.getVictoryRuleMaxValue(loopIdx)</max>
-                                    <onEvent>RuleSelectionScript.setVictoryRuleValue(input, loopIdx)</onEvent>
-                                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                                </Spinbox>
-                            </if>
-                        </loop>
-                    </if>
-                </loop>
-            </Tab>
-            <Tab>
-                <name>"misc"</name>
-                <label>QT_TRANSLATE_NOOP("GAME","Misc")</label>
-                <Label>
-                    <x>5</x>
-                    <y>5</y>
-                    <width>300</width>
-                    <text>QT_TRANSLATE_NOOP("GAME","AI attack terrain:")</text>
-                    <font>"main"</font>
-                    <fontSize>24</fontSize>
-                </Label>
-                <Checkbox>
-                    <x>lastX + lastWidth + 10</x>
-                    <y>lastY</y>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","If checked the ai attacks pipe seams and walls etc.")</tooltip>
-                    <startValue>currentMenu.getMap().getGameRules().getAiAttackTerrain()</startValue>
-                    <onEvent>currentMenu.getMap().getGameRules().setAiAttackTerrain(input);</onEvent>
-                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                </Checkbox>
                 <if condition="RuleSelectionScript.showScriptSelection()">
                     <Label>
                         <x>5</x>
@@ -799,7 +715,6 @@
                         <enabled>currentMenu.getRuleChangeEabled()</enabled>
                     </Button>
                 </if>
-
                 <Label>
                     <x>5</x>
                     <y>lastY + lastHeight + 10</y>
@@ -881,6 +796,89 @@
                         </loop>
                     </if>
                 </loop>
+            </Tab>
+            <Tab>
+                <name>"victory"</name>
+                <label>QT_TRANSLATE_NOOP("GAME","Victory")</label>
+                <loop count="gameRuleManager.getVictoryRuleCount()">
+                    <if condition="currentMenu.getMap().getGameRules().hasVictoryRule(gameRuleManager.getVictoryRuleID(loopIdx))">
+                        <loop count="RuleSelectionScript.getVictoryRuleElementCount(loopIdx)">
+                            <Label>
+                                <x>RuleSelectionScript.getVictoryRuleX(loopIdx)</x>
+                                <y>RuleSelectionScript.getVictoryRuleY(loopIdx)</y>
+                                <width>220</width>
+                                <text>RuleSelectionScript.getVictoryRulename(loopIdx)</text>
+                                <font>"main"</font>
+                                <fontSize>24</fontSize>
+                            </Label>
+                            <if condition="RuleSelectionScript.getIsVictoryRuleCheckboxType(loopIdx)">
+                                <Checkbox>
+                                    <x>lastX + lastWidth + 10</x>
+                                    <y>lastY</y>
+                                    <Id>gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex)</Id>
+                                    <tooltip>RuleSelectionScript.getVictoryRuleDescription(loopIdx)</tooltip>
+                                    <startValue>RuleSelectionScript.getVictoryRuleValue(loopIdx)</startValue>
+                                    <onEvent>RuleSelectionScript.setVictoryRuleValue(input, loopIdx)</onEvent>
+                                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                </Checkbox>
+                            </if>
+                            <if condition="RuleSelectionScript.getIsVictoryRuleSpinboxType(loopIdx)">
+                                <Spinbox>
+                                    <x>lastX + lastWidth + 10</x>
+                                    <y>lastY</y>
+                                    <Id>gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex)</Id>
+                                    <width>200</width>
+                                    <tooltip>RuleSelectionScript.getVictoryRuleDescription(loopIdx)</tooltip>
+                                    <startValue>RuleSelectionScript.getVictoryRuleValue(loopIdx)</startValue>
+                                    <infinite>RuleSelectionScript.getVictoryRuleInfiniteValue(loopIdx)</infinite>
+                                    <spinSpeed>1</spinSpeed>
+                                    <min>RuleSelectionScript.getVictoryRuleInfiniteValue(loopIdx)</min>
+                                    <max>RuleSelectionScript.getVictoryRuleMaxValue(loopIdx)</max>
+                                    <onEvent>RuleSelectionScript.setVictoryRuleValue(input, loopIdx)</onEvent>
+                                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                </Spinbox>
+                            </if>
+                        </loop>
+                    </if>
+                </loop>
+            </Tab>
+            <Tab>
+                <name>"ai"</name>
+                <label>QT_TRANSLATE_NOOP("GAME","AI")</label>
+                <Label>
+                    <x>5</x>
+                    <y>5</y>
+                    <width>300</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","AI behavior:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <DropDownMenu>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>400</width>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Select how the ai plans unit production.\n Counterpoint budgets across all of its factories at once and builds to answer the enemy army.")</tooltip>
+                    <startValue>RuleSelectionScript.getAiBehaviorValue()</startValue>
+                    <items>RuleSelectionScript.getAiBehaviorRule()</items>
+                    <onEvent>RuleSelectionScript.setAiBehaviorValue(input);</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </DropDownMenu>
+                <Label>
+                    <x>5</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","AI attack terrain:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Checkbox>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","If checked the ai attacks pipe seams and walls etc.")</tooltip>
+                    <startValue>currentMenu.getMap().getGameRules().getAiAttackTerrain()</startValue>
+                    <onEvent>currentMenu.getMap().getGameRules().setAiAttackTerrain(input);</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </Checkbox>
             </Tab>
             <if condition="currentMenu.getIsMultiplayerMode()">
             <Tab>
