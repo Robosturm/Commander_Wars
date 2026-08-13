@@ -2870,7 +2870,7 @@ void GameMenue::unhideGameMenue()
     }
     if (m_XYButtonBox.get())
     {
-        m_XYButtonBox->setVisible(true);
+        m_XYButtonBox->setVisible(Settings::getInstance()->getShowIngameCoordinates() && !Settings::getInstance()->getSmallScreenDevice());
     }
     if (m_pButtonBox.get())
     {
