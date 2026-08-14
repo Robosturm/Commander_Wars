@@ -180,9 +180,9 @@ void InfluenceFrontMap::addBuildingInfluence()
         for (qint32 y = 0; y < heigth; y++)
         {
             QPoint curPos(x, y);
-            pInterpreter->threadProcessEvents();
             for (qint32 building = 0; building < buildingPositions.size(); building++)
             {
+                pInterpreter->threadProcessEvents();
                 QPoint pos = buildingPositions[building];
                 float buildSize = static_cast<float>(buildLists[building].size());
                 qint32 owner = buildingOwners[building];

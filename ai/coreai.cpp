@@ -134,9 +134,7 @@ void CoreAI::init(BaseGamemenu* pMenu)
 
 void CoreAI::resetMoveMap()
 {
-    // script pins set via setMoveCostMapValue persist across turns, so keep existing
-    // entries and only build the map once instead of appending a fresh one every turn
-    if (m_pMap != nullptr && m_MoveCostMap.empty())
+    if (m_pMap != nullptr)
     {
         qint32 heigth = m_pMap->getMapHeight();
         qint32 width = m_pMap->getMapWidth();
