@@ -306,6 +306,10 @@ spWikipage WikiDatabase::getPage(const PageData * data)
 oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size, Player* pIconPlayer)
 {
     oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    Player* pFinalIconPlayer = pIconPlayer;
     oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     if (pAnim == nullptr)
     {
@@ -327,6 +331,10 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
     {
         pAnim = ShopLoader::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     }
+    if (pAnim == nullptr && !pUnitSpriteManager->exists(file))
+    {
+        pAnim = pUnitSpriteManager->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
     if (pAnim != nullptr && pAnim->getWidth() > 0)
     {
         pSprite->setResAnim(pAnim);
@@ -334,10 +342,6 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
     }
     else
     {
-        UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-        BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-        TerrainManager* pTerrainManager = TerrainManager::getInstance();
-        Player* pFinalIconPlayer = pIconPlayer;
         spPlayer pPlayer;
         if (pUnitSpriteManager->exists(file))
         {

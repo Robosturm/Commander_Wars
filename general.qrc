@@ -2089,5 +2089,7 @@
         <file>resources/scripts/building/zgrand_bolt_eye_left_destroyed.js</file>
         <file>resources/scripts/building/zgrand_bolt_eye_middle_destroyed.js</file>
         <file>resources/scripts/building/zgrand_bolt_eye_right_destroyed.js</file>
+        <file>resources/scripts/wiki/luck.js</file>
+        <file>resources/scripts/wiki/unitranks.js</file>
     </qresource>
 </RCC>
