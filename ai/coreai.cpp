@@ -1428,12 +1428,12 @@ void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std
 void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     
+    qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
+    spQmlVectorPoint pTargetFields = GlobalUtils::getSpCircle(firerange, firerange);
     for (auto & pEnemy : pEnemyUnits->getVector())
     {
         if (pUnit->isAttackable(pEnemy.get(), true))
         {
-            qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
-            spQmlVectorPoint pTargetFields = GlobalUtils::getSpCircle(firerange, firerange);
             for (auto & target : pTargetFields->getVector())
             {
                 qint32 x = target.x() + pEnemy->Unit::getX();
@@ -3116,9 +3116,10 @@ QPointF CoreAI::getBaseDamage(Unit* pAttacker, Unit* pDefender)
     if (pAttacker->hasAmmo1())
     {
         QString key = pAttacker->getWeapon1ID() + pDefender->getUnitID();
-        if (m_baseDamageTable.contains(key))
+        auto iter = m_baseDamageTable.find(key);
+        if (iter != m_baseDamageTable.end())
         {
-            damage1 = m_baseDamageTable[key];
+            damage1 = iter->second;
         }
         else
         {
@@ -3130,9 +3131,10 @@ QPointF CoreAI::getBaseDamage(Unit* pAttacker, Unit* pDefender)
     if (pAttacker->hasAmmo2())
     {
         QString key = pAttacker->getWeapon2ID() + pDefender->getUnitID();
-        if (m_baseDamageTable.contains(key))
+        auto iter = m_baseDamageTable.find(key);
+        if (iter != m_baseDamageTable.end())
         {
-            damage2 = m_baseDamageTable[key];
+            damage2 = iter->second;
         }
         else
         {

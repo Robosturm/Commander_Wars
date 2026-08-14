@@ -85,17 +85,15 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
                     }
                 }
             }
-            bool found = false;
             if (m_fast &&
                 m_supportsShortCuts &&
                 pTerrain->getBuilding() != nullptr)
             {
                 QString id = m_pMap->getTerrain(curX, curY)->getID() + m_pMap->getTerrain(x, y)->getID();
-                found = m_costInfo.contains(id);
-                if (found)
+                auto iter = m_costInfo.constFind(id);
+                if (iter != m_costInfo.constEnd())
                 {
-                    qint32 cost = m_costInfo[id];
-                    m_movecosts[index][direction] = cost;
+                    m_movecosts[index][direction] = iter.value();
                 }
                 else
                 {

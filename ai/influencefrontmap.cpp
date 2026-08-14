@@ -538,7 +538,6 @@ void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInf
 void InfluenceFrontMap::updateHighestInfluence()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::updateHighestInfluence()", GameConsole::eDEBUG);
-    spQmlVectorPoint circle = GlobalUtils::getSpCircle(1, 1);
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < width; ++x)

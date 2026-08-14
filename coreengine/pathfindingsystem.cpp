@@ -212,7 +212,8 @@ std::vector<QPoint> PathFindingSystem::getAllNodePointsFast(qint32 maxRange)
     {
         for (qint32 y = 0; y < m_heigth; y++)
         {
-            if (m_costs[getIndex(x, y)] >= 0 && m_costs[getIndex(x, y)] < maxRange)
+            qint32 cost = m_costs[getIndex(x, y)];
+            if (cost >= 0 && cost < maxRange)
             {
                 points.push_back(QPoint(x, y));
             }
@@ -228,7 +229,8 @@ QmlVectorPoint* PathFindingSystem::getAllQmlVectorPoints()
     {
         for (qint32 y = 0; y < m_heigth; y++)
         {
-            if (m_costs[getIndex(x, y)] >= 0 && m_costs[getIndex(x, y)] < infinite)
+            qint32 cost = m_costs[getIndex(x, y)];
+            if (cost >= 0 && cost < infinite)
             {
                 ret->append(QPoint(x, y));
             }
