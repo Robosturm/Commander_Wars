@@ -16,7 +16,7 @@ public:
     void onRequestFilteredMaps(quint64 socketID, const QJsonObject & objData);
     void onRequestDownloadMap(quint64 socketID, const QJsonObject & objData);
     void onRequestDeleteMap(quint64 socketID, const QJsonObject & objData);
-    Q_INVOKABLE bool removeMapFromServer(const QString & sqlFilter);
+    Q_INVOKABLE bool removeMapFromServer(const QString & mapPath, const QString & uploader);
 private:
     bool sameUploader(const QJsonObject & objData);
 private:

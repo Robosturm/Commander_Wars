@@ -55,6 +55,12 @@ public:
      * @return
      */
     static QJsonArray toJsonArray(const QByteArray & byteArray);
+    /**
+     * @brief toHash1024
+     * @param input
+     * @return
+     */
+    static QString toHash512(const QString & input);
 public slots:
     static QString makePathRelative(QString file, bool full = true);
     /**

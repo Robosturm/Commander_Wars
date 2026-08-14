@@ -67,17 +67,20 @@ void MatchMakingCoordinator::onSlaveInfoGameResult(quint64 socketID, const QJson
 void MatchMakingCoordinator::fixPlayerTable(const QString &player)
 {
     auto &database = m_mainServer->getDatabase();
+    QString safeTable = MainServer::SQL_TABLE_PLAYERDATA + GlobalUtils::toHash512(player);
     QString command = QString("SELECT ") +
                       MainServer::SQL_METADATA +
-                      " from " + MainServer::SQL_TABLE_PLAYERDATA + player +
+                      " from " + safeTable +
                       " WHERE " + MainServer::SQL_COID +
-                      " = '%';";
+                      " = ?;";
     QSqlQuery query(database);
-    query.exec(command);
+    query.prepare(command);
+    query.addBindValue("%");
+    query.exec();
     if (MainServer::sqlQueryFailed(query))
     {
          CONSOLE_PRINT("Fixing user table for player " + player, GameConsole::eDEBUG);
-        command = QString("DROP TABLE ") + MainServer::SQL_TABLE_PLAYERDATA + player;
+        command = QString("DROP TABLE ") + safeTable;
         query.exec(command);
         if (!MainServer::sqlQueryFailed(query))
         {
@@ -90,7 +93,7 @@ void MatchMakingCoordinator::updatePlayerMatchData(const QJsonObject &objData)
 {
     auto &database = m_mainServer->getDatabase();
     QJsonArray resultInfo = objData.value(JsonKeys::JSONKEY_GAMERESULTARRAY).toArray();
-    for (const auto &entry : resultInfo)
+    for (const auto & entry : std::as_const(resultInfo))
     {
         QJsonObject data = entry.toObject();
         QString player = data.value(JsonKeys::JSONKEY_PLAYER).toString();
@@ -99,7 +102,7 @@ void MatchMakingCoordinator::updatePlayerMatchData(const QJsonObject &objData)
             fixPlayerTable(player);
             GameEnums::GameResult result = static_cast<GameEnums::GameResult>(data.value(JsonKeys::JSONKEY_GAMERESULT).toInt());
             QJsonArray coInfo = data.value(JsonKeys::JSONKEY_COS).toArray();
-            for (auto co : coInfo)
+            for (const auto & co : std::as_const(coInfo))
             {
                 QString coId = co.toString();
                 if (!coId.isEmpty())
@@ -125,44 +128,43 @@ void MatchMakingCoordinator::updatePlayerMatchData(const QJsonObject &objData)
                     }
                     if (!entryKey.isEmpty())
                     {
-                        QString selectCommand = QString("SELECT ") +
+                        QString safeTable = MainServer::SQL_TABLE_PLAYERDATA + GlobalUtils::toHash512(player);
+                        QSqlQuery selectQuery(database);
+                        selectQuery.prepare(QString("SELECT ") +
                                                 MainServer::SQL_GAMESLOST + ", " +
                                                 MainServer::SQL_GAMESWON + ", " +
                                                 MainServer::SQL_GAMESMADE + ", " +
                                                 MainServer::SQL_GAMESDRAW +
-                                                " from " + MainServer::SQL_TABLE_PLAYERDATA + player +
-                                                " WHERE " + MainServer::SQL_COID +
-                                                " = '" + coId + "';";
-                        QSqlQuery query(database);
-                        query.exec(selectCommand);
-                        if (MainServer::sqlQueryFailed(query) || !query.first())
+                                                " from " + safeTable +
+                                                " WHERE " + MainServer::SQL_COID + " = ?;");
+                        selectQuery.addBindValue(coId);
+                        selectQuery.exec();
+                        if (MainServer::sqlQueryFailed(selectQuery) || !selectQuery.first())
                         {
 
-                            QString command = QString("INSERT INTO ") + MainServer::SQL_TABLE_PLAYERDATA + player + "(" +
+                            QSqlQuery insertQuery(database);
+                            insertQuery.prepare(QString("INSERT INTO ") + safeTable + "(" +
                                               MainServer::SQL_COID + ", " +
                                               MainServer::SQL_GAMESMADE + ", " +
                                               MainServer::SQL_GAMESLOST + ", " +
                                               MainServer::SQL_GAMESWON + ", " +
                                               MainServer::SQL_GAMESDRAW + ", " +
                                               MainServer::SQL_METADATA +
-                                              ") VALUES(" +
-                                              "'" + coId + "'," +
-                                              "0," +
-                                              "0," +
-                                              "0," +
-                                              "0," +
-                                              "''" +
-                                              ")";
-                            query.exec(command);
-                            MainServer::sqlQueryFailed(query);
+                                              ") VALUES(?, 0, 0, 0, 0, '');");
+                            insertQuery.addBindValue(coId);
+                            insertQuery.exec();
+                            MainServer::sqlQueryFailed(insertQuery);
                         }
-                        query.exec(selectCommand);
-                        if (!MainServer::sqlQueryFailed(query) && query.first())
+                        selectQuery.exec();
+                        if (!MainServer::sqlQueryFailed(selectQuery) && selectQuery.first())
                         {
-
-                            query.exec(QString("UPDATE ") + MainServer::SQL_TABLE_PLAYERDATA + player + " SET " +
-                                       entryKey + " = " + QString::number(query.value(entryKey).toInt() + 1) + "  WHERE " +
-                                       MainServer::SQL_COID + " = '" + coId + "';");
+                            QSqlQuery updateQuery(database);
+                            updateQuery.prepare(QString("UPDATE ") + safeTable + " SET " +
+                                       entryKey + " = ? WHERE " +
+                                       MainServer::SQL_COID + " = ?;");
+                            updateQuery.addBindValue(selectQuery.value(entryKey).toInt() + 1);
+                            updateQuery.addBindValue(coId);
+                            updateQuery.exec();
                         }
                     }
                 }
