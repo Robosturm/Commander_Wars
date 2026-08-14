@@ -240,5 +240,17 @@
         <image file="nest_center_laser_right+destroyed.png" />
         <image file="nest_laser+destroyed.png" />
 
+        <!-- grand bolt -->
+        <image file="grand_bolt+middle1+mask.png" cols = "4" />
+        <image file="grand_bolt+middle2+mask.png" cols = "4" />
+        <image file="grand_bolt+middle3+mask.png" cols = "4" />
+        <image file="grand_bolt+middle4+mask.png" cols = "4" />
+        <image file="grand_bolt+middle5+mask.png" cols = "4" />
+        <image file="grand_bolt+eye+left+mask.png" cols = "4" />
+        <image file="grand_bolt+eye+middle+mask.png" cols = "4" />
+        <image file="grand_bolt+eye+right+mask.png" cols = "4" />
+        <image file="grand_bolt+eye+left+destroyed+mask.png" cols = "4" />
+        <image file="grand_bolt+eye+middle+destroyed+mask.png" cols = "4" />
+        <image file="grand_bolt+eye+right+destroyed+mask.png" cols = "4" />
     </atlas>
 </resources>

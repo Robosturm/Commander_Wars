@@ -1232,7 +1232,8 @@ bool Building::isProductionBuilding()
         actionList.contains(CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1) ||
         actionList.contains(CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2) ||
         actionList.contains(CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3) ||
-        actionList.contains(CoreAI::ACTION_NEST_FACTORY_DOOR))
+        actionList.contains(CoreAI::ACTION_NEST_FACTORY_DOOR) ||
+        actionList.contains(CoreAI::ACTION_PRODUCE_OOZIUM_FREE))
     {
         return true;
     }

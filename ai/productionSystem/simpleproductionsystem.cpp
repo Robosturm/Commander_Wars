@@ -324,7 +324,8 @@ bool SimpleProductionSystem::isBaseProductionAction(const QString & actionId) co
                  actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1 ||
                  actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2 ||
                  actionId == CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3 ||
-                 actionId == CoreAI::ACTION_NEST_FACTORY_DOOR;
+                 actionId == CoreAI::ACTION_NEST_FACTORY_DOOR ||
+                 actionId == CoreAI::ACTION_PRODUCE_OOZIUM_FREE;
     }
     m_baseProductionActions.emplace(actionId, result);
     return result;

@@ -178,6 +178,7 @@ public:
     static const char* const ACTION_BLACKHOLEFACTORY_DOOR2;
     static const char* const ACTION_BLACKHOLEFACTORY_DOOR3;
     static const char* const ACTION_NEST_FACTORY_DOOR;
+    static const char* const ACTION_PRODUCE_OOZIUM_FREE;
 
     static const char* const BUILDING_HQ;
     static const char* const UNIT_INFANTRY;

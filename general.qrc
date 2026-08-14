@@ -2077,5 +2077,17 @@
         <file>resources/scripts/gamerules/victory/victoryrule_domination.js</file>
         <file>maps/commander_wars.camp/hurricaneInTheHarbor.js</file>
         <file>maps/commander_wars.camp/hurricaneInTheHarbor.map</file>
+        <file>resources/scripts/building/zgrand_bolt_middle1.js</file>
+        <file>resources/scripts/building/zgrand_bolt_middle2.js</file>
+        <file>resources/scripts/building/zgrand_bolt_middle3.js</file>
+        <file>resources/scripts/building/zgrand_bolt_middle4.js</file>
+        <file>resources/scripts/building/zgrand_bolt_middle5.js</file>
+        <file>resources/scripts/building/zgrand_bolt_eye_left.js</file>
+        <file>resources/scripts/building/zgrand_bolt_eye_middle.js</file>
+        <file>resources/scripts/building/zgrand_bolt_eye_right.js</file>
+        <file>resources/scripts/actions/ACTION_PRODUCE_OOZIUM_FREE.js</file>
+        <file>resources/scripts/building/zgrand_bolt_eye_left_destroyed.js</file>
+        <file>resources/scripts/building/zgrand_bolt_eye_middle_destroyed.js</file>
+        <file>resources/scripts/building/zgrand_bolt_eye_right_destroyed.js</file>
     </qresource>
 </RCC>

@@ -5073,5 +5073,17 @@
         <file>resources/images/terrain/biome_palettes/palette_waste+wg+dawn.png</file>
         <file>resources/images/terrain/biome_palettes/palette_waste+wg+dusk.png</file>
         <file>resources/images/terrain/biome_palettes/palette_waste+wg+night.png</file>
+        <file>resources/images/building/omega+base+neutral.PNG</file>
+        <file>resources/images/building/grand_bolt+eye+left+mask.png</file>
+        <file>resources/images/building/grand_bolt+eye+middle+mask.png</file>
+        <file>resources/images/building/grand_bolt+eye+right+mask.png</file>
+        <file>resources/images/building/grand_bolt+middle1+mask.png</file>
+        <file>resources/images/building/grand_bolt+middle2+mask.png</file>
+        <file>resources/images/building/grand_bolt+middle3+mask.png</file>
+        <file>resources/images/building/grand_bolt+middle4+mask.png</file>
+        <file>resources/images/building/grand_bolt+middle5+mask.png</file>
+        <file>resources/images/building/grand_bolt+eye+left+destroyed+mask.png</file>
+        <file>resources/images/building/grand_bolt+eye+middle+destroyed+mask.png</file>
+        <file>resources/images/building/grand_bolt+eye+right+destroyed+mask.png</file>
     </qresource>
 </RCC>
