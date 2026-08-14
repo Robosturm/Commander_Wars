@@ -9,11 +9,16 @@
 
 #include <QCryptographicHash>
 
+#include <limits>
+
 namespace
 {
 constexpr quint32 PRODUCTION_QUERY_SEED = 0;
 // Pinned so a Qt upgrade cannot silently change every derived Counterpoint seed.
 constexpr QDataStream::Version COUNTERPOINT_SEED_STREAM_VERSION = QDataStream::Version::Qt_6_5;
+constexpr qint32 COUNTERPOINT_SEED_HALF_BITS = std::numeric_limits<quint16>::digits;
+constexpr qint32 COUNTERPOINT_SEED_HALF_MAX =
+    static_cast<qint32>(std::numeric_limits<quint16>::max());
 const QString BASE_PRODUCTION_MENU_FUNCTION = QStringLiteral("getStepData");
 const QString CUSTOM_PRODUCTION_MENU_FUNCTION = QStringLiteral("getProductionMenuData");
 const QString COUNTERPOINT_SEED_NAMESPACE = QStringLiteral("counterpoint-production");
@@ -251,6 +256,15 @@ quint32 SimpleProductionSystem::deriveCounterpointSeed(qint32 algorithmVersion, 
     quint32 seed = 0;
     hashStream >> seed;
     return seed;
+}
+
+quint32 SimpleProductionSystem::randomCounterpointSeed() const
+{
+    const auto high = static_cast<quint32>(
+        GlobalUtils::randIntBase(0, COUNTERPOINT_SEED_HALF_MAX));
+    const auto low = static_cast<quint32>(
+        GlobalUtils::randIntBase(0, COUNTERPOINT_SEED_HALF_MAX));
+    return (high << COUNTERPOINT_SEED_HALF_BITS) | low;
 }
 
 spUnit SimpleProductionSystem::getCounterpointUnit(const QString & unitId)

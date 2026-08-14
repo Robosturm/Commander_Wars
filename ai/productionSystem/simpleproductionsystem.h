@@ -161,6 +161,7 @@ public:
 
     Q_INVOKABLE ProductionActionData* getProductionActionData(Building* pBuilding, const QString & actionId) const;
     Q_INVOKABLE quint32 deriveCounterpointSeed(qint32 algorithmVersion, qint32 generation) const;
+    Q_INVOKABLE quint32 randomCounterpointSeed() const;
     Q_INVOKABLE qreal getCounterpointBaseDamage(const QString & attackerId, const QString & defenderId);
     Q_INVOKABLE bool executeCounterpointBuild(qint32 x, qint32 y, const QString & unitId, qint32 ordinal = DEFAULT_ACTION_ORDINAL, qint32 expectedCost = NO_EXPECTED_COST);
 private:
