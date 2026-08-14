@@ -1,0 +1,8 @@
+name=Debug Menu
+description=Adds a "Debug..." entry to the in-game menu, directly above End Turn, with categorized debug tools for modders and map makers: inspect hidden script variables on any tile, player, CO, AI production system or victory rule; set CO charge to exact star thresholds; set or add funds; heal, refresh, promote, kill, re-own or spawn units; pick weather directly; toggle fog without losing the map's fog mode; grant or revoke CO perks mid-game; flip engine log modules and mod debug flags at runtime. Other mods can register their own commands, variables and flags through the DEBUG_MENU registry. Every command is a real game action, so keep it out of ranked or multiplayer matches; it is meant for testing maps, COs, perks and AI behavior.
+version=2.0.0
+compatible_mods=
+incompatible_mods=
+required_mods=
+cosmetic=false
+tags=Debug;Tool
