@@ -66,6 +66,8 @@
     strategy.FLOOR_ALL_DOMAINS = false;
     // Randomly choose which factories receive surplus instead of value ordering.
     strategy.RANDOM_SURPLUS_FUNDING = false;
+    // Turns of income a surplus target may cost beyond what is spare now; 0 means this turn only.
+    strategy.VALUE_TARGET_MAX_TURNS = 1;
     // Lower values fund more factories with surplus.
     strategy.SURPLUS_FUNDED_DIVISOR = 3;
     strategy.SURPLUS_FUNDED_MIN = 1;

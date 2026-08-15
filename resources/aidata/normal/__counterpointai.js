@@ -1,7 +1,7 @@
 ;var COUNTERPOINTAI =
 {
     // Reject persisted state from earlier strategy revisions.
-    STRATEGY_VERSION : 11,
+    STRATEGY_VERSION : 13,
     DOMAIN_GROUND : "ground",
     DOMAIN_AIR : "air",
     DOMAIN_NAVAL : "naval",
@@ -48,6 +48,7 @@
     SURPLUS_FUNDED_DIVISOR_DEFAULT : 3,
     SURPLUS_FUNDED_MIN_DEFAULT : 1,
     SURPLUS_FUNDED_JITTER_DEFAULT : 1,
+    VALUE_TARGET_MAX_TURNS_DEFAULT : 1,
     AA_SHARE_FLOOR : 0.1,
     MAX_INDIRECT_UNITS_DEFAULT : -1,
     MOBILITY_AIR_REACH_BONUS_DEFAULT : 1.25,
@@ -360,7 +361,7 @@
                     canCapture : unit.canCapture === true,
                     isTransporter : unit.isTransporter === true,
                     canTransportTank : unit.canTransportTank === true,
-                    maxDamageVsArmored : unit.maxDamageVsArmored,
+                    armoredDamage : unit.armoredDamage,
                     maxDamageVsAir : unit.maxDamageVsAir,
                     hasAttackWeapon : COUNTERPOINTAI._hasAttackCapability(unit),
                     hasAttackAction : COUNTERPOINTAI._hasAttackAction(unit),
@@ -805,7 +806,8 @@
         {
             return false;
         }
-        return mapContext.shareIsland === false ||
+        // No ground vehicle means shareIslandWithEnemy answered false for want of a probe, not water.
+        return (mapContext.groundProbe === true && mapContext.shareIsland === false) ||
                COUNTERPOINTAI._readNumber(mapContext, "enemyIslandBuildings", 0) > 0;
     },
 
@@ -822,7 +824,7 @@
             return unit.isAASpecialist === true;
         }
         var airDamage = COUNTERPOINTAI._readNumber(unit, "maxDamageVsAir", 0);
-        var armoredDamage = COUNTERPOINTAI._readNumber(unit, "maxDamageVsArmored", 0);
+        var armoredDamage = COUNTERPOINTAI._readNumber(unit, "armoredDamage", 0);
         var qualityDamage = Math.max(
             1,
             COUNTERPOINTAI._tunable("COVERAGE_QUALITY_DAMAGE")
@@ -830,6 +832,14 @@
         return airDamage >= qualityDamage &&
             (armoredDamage < COUNTERPOINTAI.TANK_AA_ARMORED_THRESHOLD ||
              airDamage - armoredDamage >= qualityDamage);
+    },
+
+    // Answers air without being air, so a gunship cannot stand in for the ground answer. Scoring
+    // still treats it as anti-air; this gates only the build target.
+    _countsAsAntiAir : function(unit)
+    {
+        return COUNTERPOINTAI._isAASpecialist(unit) &&
+               unit.domain !== COUNTERPOINTAI.DOMAIN_AIR;
     },
 
     _isTankClass : function(unit)
@@ -2311,7 +2321,7 @@
         return targets !== null && typeof targets === "object" &&
             COUNTERPOINTAI._validPlannerInteger(
                 targets.aaPerTurn,
-                0,
+                -1,
                 COUNTERPOINTAI.PLANNER_VALUE_MAX
             ) &&
             COUNTERPOINTAI._validPlannerInteger(
@@ -2603,7 +2613,7 @@
             ordinaryPrepared : false,
             specialRandomFundingJitter : null,
             ordinaryRandomFundingJitter : null,
-            turnTargets : { aaPerTurn : 0, indirectRemaining : -1 },
+            turnTargets : { aaPerTurn : -1, indirectRemaining : -1 },
             plans : []
         };
     },
@@ -2954,9 +2964,11 @@
         return ids;
     },
 
+    // Price alone let an expensive mod foot unit in, and its MECH damage id skewed every reading.
     _isArmoredProbeUnit : function(unit, strategicValue)
     {
         return unit !== null && unit !== undefined &&
+               unit.getUnitType() !== GameEnums.UnitType_Infantry &&
                COUNTERPOINTAI._domainFromUnitType(unit.getUnitType()) ===
                    COUNTERPOINTAI.DOMAIN_GROUND &&
                unit.canCapture() !== true &&
@@ -3049,25 +3061,30 @@
         return maximum;
     },
 
-    _maxArmoredDamage : function(system, attackerId, armoredIds)
+    // Median, not max: the probe set is heuristic, and one soft member skewed every unit's reading.
+    _typicalArmoredDamage : function(system, attackerId, armoredIds)
     {
-        // Own chassis is not an armored yardstick.
-        var maximum = -1;
+        var readings = [];
         for (var index = 0; index < armoredIds.length; ++index)
         {
             if (armoredIds[index] === attackerId)
             {
                 continue;
             }
-            maximum = Math.max(
-                maximum,
-                COUNTERPOINTAI._finiteNumber(
-                    system.getCounterpointBaseDamage(attackerId, armoredIds[index]),
-                    0
-                )
-            );
+            readings.push(COUNTERPOINTAI._finiteNumber(
+                system.getCounterpointBaseDamage(attackerId, armoredIds[index]),
+                0
+            ));
         }
-        return Math.max(0, maximum);
+        if (readings.length === 0)
+        {
+            return 0;
+        }
+        readings.sort(function(left, right)
+        {
+            return left - right;
+        });
+        return Math.max(0, readings[Math.floor((readings.length - 1) / 2)]);
     },
 
     _transportCanCarryTank : function(system, transportIds, armoredIds, airIds)
@@ -3088,7 +3105,7 @@
                 minRange : dummy.getBaseMinRange(),
                 canCapture : dummy.canCapture() === true,
                 isTransporter : dummy.isTransporter() === true,
-                maxDamageVsArmored : COUNTERPOINTAI._maxArmoredDamage(
+                armoredDamage : COUNTERPOINTAI._typicalArmoredDamage(
                     system,
                     id,
                     armoredIds
@@ -3375,7 +3392,7 @@
             isTransporter : isTransporter,
             cargoIds : transportIds,
             loadingPlace : loadingPlace,
-            maxDamageVsArmored : COUNTERPOINTAI._maxArmoredDamage(
+            armoredDamage : COUNTERPOINTAI._typicalArmoredDamage(
                 system,
                 id,
                 armoredIds
@@ -3656,9 +3673,27 @@
         return deltas;
     },
 
+    // The unit kinds shareIslandWithEnemy actually walks; without one its answer carries no meaning.
+    _hasGroundVehicle : function(units)
+    {
+        var found = false;
+        COUNTERPOINTAI._visitNonNullCollectionItems(units, function(unit)
+        {
+            if (unit.getUnitType() === GameEnums.UnitType_Ground)
+            {
+                found = true;
+            }
+        });
+        return found;
+    },
+
     _mapPlanningContext : function(ai, buildings, enemyBuildings, units)
     {
-        var context = { shareIsland : true, enemyIslandBuildings : 0 };
+        var context = {
+            shareIsland : true,
+            enemyIslandBuildings : 0,
+            groundProbe : COUNTERPOINTAI._hasGroundVehicle(units)
+        };
         try
         {
             context.shareIsland = ai.shareIslandWithEnemy(
@@ -4329,12 +4364,25 @@
         return Math.max(floor, COUNTERPOINTAI._wholeCount(COUNTERPOINTAI.FACTORY_FLOOR));
     },
 
-    _planValueTarget : function(plan)
+    // Ceiling a saving target may cost, so an unreachable bomber stops outranking every factory.
+    _planValueReach : function(ai, roster, funds)
+    {
+        var spare = COUNTERPOINTAI._spareThisTurn(ai, roster, funds);
+        var horizon = Math.max(0, Math.floor(COUNTERPOINTAI._finiteNumber(
+            COUNTERPOINTAI._tunable("VALUE_TARGET_MAX_TURNS"),
+            0
+        )));
+        return Math.max(0, spare.surplus) + Math.max(0, spare.perTurn) * horizon;
+    },
+
+    _planValueTarget : function(plan, reach)
     {
         if (COUNTERPOINTAI.DYNAMIC_FLOOR === false)
         {
             return { value : 0, target : 0 };
         }
+        // A negative reach turns the horizon off, which is what callers without one pass.
+        var affordable = COUNTERPOINTAI._finiteNumber(reach, -1);
         var valuedCost = -1;
         var valuedScore = 0;
         for (var index = 0; plan.candidates && index < plan.candidates.length; ++index)
@@ -4343,6 +4391,7 @@
             if (candidate.isTransporter === true ||
                 typeof candidate.transactionCost !== "number" ||
                 candidate.transactionCost < 0 ||
+                (affordable >= 0 && candidate.transactionCost > affordable) ||
                 COUNTERPOINTAI._candidateRejected(plan, index))
             {
                 continue;
@@ -5537,7 +5586,7 @@
         }
     },
 
-    _allocatePhaseBudgets : function(state, plans, funds, ferry)
+    _allocatePhaseBudgets : function(state, plans, funds, ferry, reach)
     {
         var paidPlans = [];
         var safeFunds = COUNTERPOINTAI._wholeCount(funds);
@@ -5586,7 +5635,7 @@
         for (var totalIndex = 0; totalIndex < paidPlans.length; ++totalIndex)
         {
             floors.push(COUNTERPOINTAI._planFloor(paidPlans[totalIndex]));
-            var valueTarget = COUNTERPOINTAI._planValueTarget(paidPlans[totalIndex]);
+            var valueTarget = COUNTERPOINTAI._planValueTarget(paidPlans[totalIndex], reach);
             values.push(valueTarget.value);
             targets.push(valueTarget.target);
             totalFloor += floors[totalIndex];
@@ -5624,9 +5673,20 @@
                     {
                         continue;
                     }
+                    var reserved = paidPlans[valuePlanIndex].reservedBudget;
+                    var wanted = targets[valuePlanIndex];
+                    // Settle for the best pick the money covers rather than funding nothing at all,
+                    // which used to leave every factory at its floor and the whole surplus on one.
+                    if (wanted - reserved > remaining)
+                    {
+                        wanted = COUNTERPOINTAI._planValueTarget(
+                            paidPlans[valuePlanIndex],
+                            reserved + remaining
+                        ).target;
+                    }
                     var toTarget = Math.min(
                         dynamicCap,
-                        Math.max(0, targets[valuePlanIndex] - paidPlans[valuePlanIndex].reservedBudget)
+                        Math.max(0, wanted - reserved)
                     );
                     if (toTarget <= 0 || toTarget > remaining)
                     {
@@ -5635,18 +5695,26 @@
                     paidPlans[valuePlanIndex].reservedBudget += toTarget;
                     remaining -= toTarget;
                 }
-                for (var capIndex = 0;
-                     capIndex < order.length && remaining > 0;
-                     ++capIndex)
+                // Leftovers reach plans with something to spend them on first, then everyone else.
+                for (var capPass = 0; capPass < 2 && remaining > 0; ++capPass)
                 {
-                    var planIndex = order[capIndex];
-                    var capacity = Math.max(
-                        0,
-                        dynamicCap - paidPlans[planIndex].reservedBudget
-                    );
-                    var addition = Math.min(remaining, capacity);
-                    paidPlans[planIndex].reservedBudget += addition;
-                    remaining -= addition;
+                    for (var capIndex = 0;
+                         capIndex < order.length && remaining > 0;
+                         ++capIndex)
+                    {
+                        var planIndex = order[capIndex];
+                        if (capPass === 0 && values[planIndex] <= 0)
+                        {
+                            continue;
+                        }
+                        var capacity = Math.max(
+                            0,
+                            dynamicCap - paidPlans[planIndex].reservedBudget
+                        );
+                        var addition = Math.min(remaining, capacity);
+                        paidPlans[planIndex].reservedBudget += addition;
+                        remaining -= addition;
+                    }
                 }
                 if (remaining > 0)
                 {
@@ -5868,7 +5936,7 @@
                 }
                 var candidate = plan.candidates[index];
                 var data = candidate.scoreData;
-                candidate.isAA = data !== undefined && data !== null && COUNTERPOINTAI._isAASpecialist(data);
+                candidate.isAA = data !== undefined && data !== null && COUNTERPOINTAI._countsAsAntiAir(data);
                 candidate.isIndirect = data !== undefined && data !== null && COUNTERPOINTAI._isPureIndirect(data);
                 if (dynamic && !(turn <= 1 && candidate.canCapture === true))
                 {
@@ -5893,6 +5961,21 @@
         return total;
     },
 
+    _ownAACount : function(ownComposition)
+    {
+        var length = COUNTERPOINTAI._collectionLength(ownComposition);
+        var total = 0;
+        for (var index = 0; index < length; ++index)
+        {
+            var own = COUNTERPOINTAI._collectionAt(ownComposition, index);
+            if (COUNTERPOINTAI._countsAsAntiAir(own))
+            {
+                total += Math.max(0, COUNTERPOINTAI._readNumber(own, "count", 0));
+            }
+        }
+        return total;
+    },
+
     _computeTurnTargets : function(context)
     {
         var airUnits = COUNTERPOINTAI._enemyAirThreatCount(context.enemyComposition);
@@ -5900,7 +5983,17 @@
             COUNTERPOINTAI.AA_TARGET_RATIO_FLOOR,
             COUNTERPOINTAI._tunable("AA_ENEMY_AIR_PER_UNIT")
         );
-        var aaPerTurn = airUnits > 0 ? Math.max(1, Math.round(airUnits / ratio)) : 0;
+        // A fleet ratio net of anti-air already owned, not a fresh allowance every turn. Negative
+        // means uncapped, matching indirectRemaining; no enemy air is the scoring discount's job.
+        var aaPerTurn = -1;
+        if (airUnits > 0)
+        {
+            aaPerTurn = Math.max(
+                0,
+                Math.max(1, Math.round(airUnits / ratio)) -
+                    COUNTERPOINTAI._ownAACount(context.ownComposition)
+            );
+        }
         var cap = COUNTERPOINTAI._tunable("MAX_INDIRECT_UNITS");
         var indirectExempt = COUNTERPOINTAI.MAX_INDIRECT_IGNORE_INDIRECT_CO !== false &&
             context.indirectCo === true;
@@ -5931,7 +6024,7 @@
         {
             return false;
         }
-        if (candidate.isAA === true && turnTargets.aaPerTurn > 0 &&
+        if (candidate.isAA === true && turnTargets.aaPerTurn >= 0 &&
             COUNTERPOINTAI._countCompletedBuilds(plans, "isAA") >= turnTargets.aaPerTurn)
         {
             return true;
@@ -6815,12 +6908,14 @@
         {
             state.turnTargets = COUNTERPOINTAI._computeTurnTargets(context);
         }
+        var spendable = Math.max(0, available -
+            Math.max(0, COUNTERPOINTAI._finiteNumber(state.heldFunds, 0)));
         COUNTERPOINTAI._allocatePhaseBudgets(
             state,
             plans,
-            Math.max(0, available -
-                Math.max(0, COUNTERPOINTAI._finiteNumber(state.heldFunds, 0))),
-            context.ferry
+            spendable,
+            context.ferry,
+            COUNTERPOINTAI._planValueReach(ai, context.roster, spendable)
         );
         for (var planIndex = 0; planIndex < plans.length; ++planIndex)
         {
