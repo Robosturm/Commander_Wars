@@ -2937,6 +2937,42 @@
         }
     },
 
+    // getAllUnitIDs is every unit the mods loaded; the match's bans live on each player's build list.
+    _matchUnitIds : function(map, fallback)
+    {
+        var ids = [];
+        var seen = Object.create(null);
+        if (map !== null && map !== undefined && typeof map.getPlayerCount === "function")
+        {
+            var playerCount = COUNTERPOINTAI._finiteNumber(map.getPlayerCount(), 0);
+            for (var playerIndex = 0; playerIndex < playerCount; ++playerIndex)
+            {
+                var player = map.getPlayer(playerIndex);
+                if (player === null || player === undefined ||
+                    typeof player.getBuildList !== "function")
+                {
+                    continue;
+                }
+                var buildList = player.getBuildList();
+                var listLength = COUNTERPOINTAI._collectionLength(buildList);
+                for (var listIndex = 0; listIndex < listLength; ++listIndex)
+                {
+                    COUNTERPOINTAI._appendUniqueId(
+                        ids,
+                        seen,
+                        String(COUNTERPOINTAI._collectionAt(buildList, listIndex))
+                    );
+                }
+            }
+        }
+        if (ids.length === 0)
+        {
+            return fallback;
+        }
+        ids.sort();
+        return ids;
+    },
+
     _visitPlanCandidates : function(plans, visitor)
     {
         for (var planIndex = 0; planIndex < plans.length; ++planIndex)
@@ -3767,8 +3803,7 @@
         // Every facility's roster, not just this batch's, so an enemy snapshot carries the same
         // damage table whichever factories happened to be planned first.
         var candidateIds = roster.unitIds;
-        var allUnitIds = map !== null && map !== undefined &&
-            typeof map.getAllUnitIDs === "function" ? map.getAllUnitIDs() : candidateIds;
+        var allUnitIds = COUNTERPOINTAI._matchUnitIds(map, candidateIds);
         var armoredIds = COUNTERPOINTAI._armoredProbeIds(
             system,
             allUnitIds,
