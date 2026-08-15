@@ -48,6 +48,7 @@
     SURPLUS_FUNDED_DIVISOR_DEFAULT : 3,
     SURPLUS_FUNDED_MIN_DEFAULT : 1,
     SURPLUS_FUNDED_JITTER_DEFAULT : 1,
+    SURPLUS_ROTATION_SLOTS_DEFAULT : 3,
     VALUE_TARGET_MAX_TURNS_DEFAULT : 1,
     AA_SHARE_FLOOR : 0.1,
     MAX_INDIRECT_UNITS_DEFAULT : -1,
@@ -5312,7 +5313,33 @@
         }
     },
 
-    _surplusOrder : function(paidPlans, ferry, values)
+    _threatDistance : function(plan)
+    {
+        return Math.max(0, COUNTERPOINTAI._finiteNumber(
+            plan.enemyDistance,
+            COUNTERPOINTAI.PLANNER_VALUE_MAX
+        ));
+    },
+
+    // Threat alone would keep one factory at the head all match, so the closest few take turns.
+    _rotateFrontSlots : function(order, day)
+    {
+        var slots = Math.min(
+            order.length,
+            Math.max(1, Math.floor(COUNTERPOINTAI._tunable("SURPLUS_ROTATION_SLOTS")))
+        );
+        if (slots < 2)
+        {
+            return order;
+        }
+        var offset = COUNTERPOINTAI._wholeCount(day) % slots;
+        return order.slice(offset, slots).concat(
+            order.slice(0, offset),
+            order.slice(slots)
+        );
+    },
+
+    _surplusOrder : function(paidPlans, ferry, values, day)
     {
         var first = [];
         var holders = [];
@@ -5335,11 +5362,19 @@
         }
         if (values !== null && values !== undefined)
         {
+            // Identical roster scores leave the distance key as the only real separator here.
             rest.sort(function(left, right)
             {
-                return values[left] !== values[right] ?
-                    values[right] - values[left] : left - right;
+                if (values[left] !== values[right])
+                {
+                    return values[right] - values[left];
+                }
+                var leftDistance = COUNTERPOINTAI._threatDistance(paidPlans[left]);
+                var rightDistance = COUNTERPOINTAI._threatDistance(paidPlans[right]);
+                return leftDistance !== rightDistance ?
+                    leftDistance - rightDistance : left - right;
             });
+            rest = COUNTERPOINTAI._rotateFrontSlots(rest, day);
         }
         return first.concat(rest, holders);
     },
@@ -5693,7 +5728,12 @@
             }
             else
             {
-                var order = COUNTERPOINTAI._surplusOrder(paidPlans, ferry, values);
+                var order = COUNTERPOINTAI._surplusOrder(
+                    paidPlans,
+                    ferry,
+                    values,
+                    state === null || state === undefined ? 0 : state.day
+                );
                 remaining = COUNTERPOINTAI._fundUrgentFerry(
                     paidPlans,
                     remaining,
@@ -5731,6 +5771,7 @@
                     remaining -= toTarget;
                 }
                 // Leftovers reach plans with something to spend them on first, then everyone else.
+                // Skipping plans already at target stops the head padding past what it was funded for.
                 for (var capPass = 0; capPass < 2 && remaining > 0; ++capPass)
                 {
                     for (var capIndex = 0;
@@ -5738,7 +5779,9 @@
                          ++capIndex)
                     {
                         var planIndex = order[capIndex];
-                        if (capPass === 0 && values[planIndex] <= 0)
+                        if (capPass === 0 &&
+                            (values[planIndex] <= 0 ||
+                             paidPlans[planIndex].reservedBudget >= targets[planIndex]))
                         {
                             continue;
                         }
@@ -6529,6 +6572,11 @@
         for (var planIndex = 0; planIndex < plans.length; ++planIndex)
         {
             plans[planIndex].strategicHoldEligible = false;
+            // Measured once per turn here because the surplus order reads it too.
+            plans[planIndex].enemyDistance = COUNTERPOINTAI._nearestEnemyDistance(
+                plans[planIndex],
+                enemyUnits
+            );
             if (plans[planIndex].hasPaid && !plans[planIndex].complete)
             {
                 indexes.push(planIndex);
@@ -6538,11 +6586,9 @@
         {
             var left = plans[leftIndex];
             var right = plans[rightIndex];
-            var leftDistance = COUNTERPOINTAI._nearestEnemyDistance(left, enemyUnits);
-            var rightDistance = COUNTERPOINTAI._nearestEnemyDistance(right, enemyUnits);
-            if (leftDistance !== rightDistance)
+            if (left.enemyDistance !== right.enemyDistance)
             {
-                return rightDistance - leftDistance;
+                return right.enemyDistance - left.enemyDistance;
             }
             if (left.x !== right.x)
             {
@@ -6767,10 +6813,12 @@
         return false;
     },
 
-    _stripTransientCandidateData : function(plans)
+    _stripTransientPlanData : function(plans)
     {
         for (var planIndex = 0; planIndex < plans.length; ++planIndex)
         {
+            // Planner state is serialized under a length cap, so per-turn scratch is dropped here.
+            delete plans[planIndex].enemyDistance;
             for (var candidateIndex = 0;
                  candidateIndex < plans[planIndex].candidates.length;
                  ++candidateIndex)
@@ -6965,7 +7013,7 @@
                 map.getCurrentDay()
             );
         }
-        COUNTERPOINTAI._stripTransientCandidateData(plans);
+        COUNTERPOINTAI._stripTransientPlanData(plans);
         state.plans = state.plans.concat(plans);
         COUNTERPOINTAI._sortPlans(state.plans);
     },

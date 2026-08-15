@@ -73,6 +73,8 @@
     strategy.SURPLUS_FUNDED_MIN = 1;
     // Zero removes turn-to-turn variation in the funded count.
     strategy.SURPLUS_FUNDED_JITTER = 1;
+    // How many factories nearest the fighting take turns holding the surplus; 1 always funds the closest.
+    strategy.SURPLUS_ROTATION_SLOTS = 3;
     // Score multiplier for tank class units, meaning ground, direct, no capture, no cargo, and
     // past both TANK_MIN_BASE_COST and TANK_MIN_MOVEMENT.
     strategy.TANK_BONUS = 1.5;
