@@ -34,6 +34,17 @@ namespace
 {
     // QSettings group and key of the active mod list ([Mods]/Mods=).
     const char* const kModsSettingsGroup = "Mods";
+
+    // Mod paths are stored and compared as "mods/<name>"; VFS roots can yield "./mods/x" or "/mods/x" for the same folder.
+    QString normalizeModPath(const QString & modPath)
+    {
+        QString mod = GlobalUtils::stripStartPath(modPath);
+        while (mod.startsWith(QChar('/')))
+        {
+            mod.remove(0, 1);
+        }
+        return mod;
+    }
 }
 
 // this Object
@@ -1155,26 +1166,24 @@ void Settings::restoreActiveModsRaw(const QString & rawValue)
 
 void Settings::setActiveMods(const QStringList activeMods)
 {
-    m_activeMods = activeMods;
+    m_activeMods.clear();
     // Rebuild versions so repeated setActiveMods calls stay aligned.
     m_activeModVersions.clear();
-    qint32 i = 0;
-    while (i < m_activeMods.size())
+    for (const auto & activeMod : activeMods)
     {
-        QDir dir(VirtualPaths::find(m_activeMods[i], false));
-        if (!dir.exists())
+        const QString mod = normalizeModPath(activeMod);
+        if (m_activeMods.contains(mod))
         {
-            CONSOLE_PRINT("Removing mod from active list: " + m_activeMods[i] + " because it wasn't found.", GameConsole::eWARNING);
-            m_activeMods.removeAt(i);
+            continue;
         }
-        else
+        // Test find() for emptiness first; QDir("") resolves to the working directory and reports it as existing.
+        const QString resolved = VirtualPaths::find(mod, false);
+        if (resolved.isEmpty() || !QDir(resolved).exists())
         {
-            ++i;
+            CONSOLE_PRINT("Removing mod from active list: " + activeMod + " because it wasn't found.", GameConsole::eWARNING);
+            continue;
         }
-    }
-    for (auto & mod : m_activeMods)
-    {
-        mod = GlobalUtils::stripStartPath(mod);
+        m_activeMods.append(mod);
     }
     m_activeMods.sort();
     for (const auto & mod : std::as_const(m_activeMods))
@@ -2234,8 +2243,7 @@ QStringList Settings::getAvailableMods()
         QString folder = GlobalUtils::makePathRelative(info.filePath());
         if (!folder.endsWith("."))
         {
-            QString mod = GlobalUtils::makePathRelative(info.filePath());
-            mod = GlobalUtils::stripStartPath(mod);
+            const QString mod = normalizeModPath(GlobalUtils::makePathRelative(info.filePath()));
             if (!mods.contains(mod))
             {
                 mods.append(mod);
