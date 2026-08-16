@@ -69,6 +69,10 @@ void GameAnimation::start()
         setVisible(true);
         m_previousAnimation.reset();
         doPreAnimationCall();
+        if (m_missingResource && !m_finishQueued)
+        {
+            addTweenWait(MISSING_RESOURCE_FINISH_DELAY_MS);
+        }
         AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         for (auto & data : m_SoundData)
         {
@@ -237,6 +241,7 @@ void GameAnimation::addSpriteAnimTable(QString spriteID, float offsetX, float of
     else
     {
         CONSOLE_PRINT_MODULE("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
+        m_missingResource = true;
     }
 }
 
@@ -259,6 +264,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
         else
         {
             CONSOLE_PRINT_MODULE("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
+            m_missingResource = true;
             return;
         }
         oxygine::spSingleResAnim pAnim = MemoryManagement::create<oxygine::SingleResAnim>();

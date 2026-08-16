@@ -379,6 +379,8 @@ protected:
     virtual void update(const oxygine::UpdateState& us) override;
     void doPreAnimationCall();
 protected:
+    // an animation that lost its only sprite has no tween to finish it, so it needs a token one
+    static constexpr qint32 MISSING_RESOURCE_FINISH_DELAY_MS = 1;
     quint32 m_frameTime{1};
     bool m_stopped{false};
     bool m_finishQueued{false};
@@ -407,6 +409,7 @@ private:
     bool m_stopSoundAtAnimationEnd{false};
     bool m_global{false};
     bool m_finished{false};
+    bool m_missingResource{false};
 
     QVector<oxygine::spSingleResAnim> m_resAnims;
     /**
