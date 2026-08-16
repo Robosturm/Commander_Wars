@@ -32,7 +32,7 @@ class EditorMenue;
 class BaseGamemenu;
 using spBaseGamemenu = std::shared_ptr<BaseGamemenu>;
 
-class GameMap : public QObject, public FileSerializable, public oxygine::Actor, protected JsThis
+class GameMap : public QObject, public FileSerializable, public oxygine::Actor, public JsThis
 {
     Q_OBJECT
 public:

@@ -104,6 +104,7 @@
 #include "objects/base/textinput.h"
 #include "objects/base/timespinbox.h"
 #include "objects/base/tooltip.h"
+#include "objects/base/box9object.h"
 
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"
@@ -252,6 +253,9 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<ReplayRecordFileserver>("ReplayRecordFileserver", 1);
     qmlRegisterInterface<DialogSelectDownloadRecord>("DialogSelectDownloadRecord", 1);
     qmlRegisterInterface<DialogSelectDownloadMap>("DialogSelectDownloadMap", 1);
+    qmlRegisterInterface<IngameInfoBar>("IngameInfoBar", 1);
+    qmlRegisterInterface<SpriteObject>("SpriteObject", 1);
+    qmlRegisterInterface<Box9Object>("Box9Object", 1);
 
     qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
     qmlRegisterInterface<MainServer>("MainServer", 1);

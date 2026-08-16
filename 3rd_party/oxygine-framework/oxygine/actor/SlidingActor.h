@@ -3,13 +3,15 @@
 #include "3rd_party/oxygine-framework/oxygine/Draggable.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+#include <QObject>
 
 namespace oxygine
 {
     class SlidingActor;
     using spSlidingActor = std::shared_ptr<SlidingActor>;
-    class SlidingActor final : public Actor
+    class SlidingActor final : public QObject, public Actor
     {
+        Q_OBJECT
     public:
         static void setDefaultTouchThreshold(float val);
 

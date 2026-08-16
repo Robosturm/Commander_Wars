@@ -1,0 +1,567 @@
+<?xml version="1.0"?>
+<ui>
+    <Box>
+        <x>IngameInfoBar.BoxOffset</x>
+        <y>0</y>
+        <width>IngameInfoBar.Width</width>
+        <height>IngameInfoBar.getMinimapHeight()</height>
+        <sprite>"panel"</sprite>
+        <childs>
+            <SlidingBox>
+                <x>10</x>
+                <y>10</y>
+                <Id>"MINIMAP_BOX"</Id>
+                <width>IngameInfoBar.Width - 20</width>
+                <height>IngameInfoBar.getMinimapHeight() - 20</height>
+                <content>
+                    <Minimap>
+                        <x>0</x>
+                        <y>0</y>
+                        <Id>"MINIMAP"</Id>
+                    </Minimap>
+                </content>
+            </SlidingBox>
+        </childs>
+    </Box>
+    <Box>
+        <x>IngameInfoBar.BoxOffset</x>
+        <y>lastY + lastHeight</y>
+        <width>IngameInfoBar.Width</width>
+        <height>IngameInfoBar.GameInfoHeigth</height>
+        <sprite>"panel"</sprite>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>12</y>
+                <width>95</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Day:")</text>
+                <font>"infoBar"</font>
+                <fontSize>16</fontSize>
+            </Label>
+            <Label>
+                <x>110</x>
+                <y>lastY</y>
+                <width>95</width>
+                <text>"-"</text>
+                <font>"infoBar"</font>
+                <fontSize>16</fontSize>
+                <Id>IngameInfoBar.DayLabelId</Id>
+            </Label>
+            <loop count="IngameInfoBar.ShownPlayerCount">
+                <Label>
+                    <x>10</x>
+                    <y>lastY + 15</y>
+                    <width>260</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","-")</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                    <hAlign>"Middle"</hAlign>
+                    <Id>IngameInfoBar.PlayerNameLabelId + loopIdx</Id>
+                </Label>
+                <Sprite>
+                    <x>12</x>
+                    <y>lastY + lastHeight + 5</y>
+                    <Id>IngameInfoBar.PlayerCoSpriteId + "0_" + loopIdx</Id>
+                    <sprite></sprite>
+                    <scale>1</scale>
+                </Sprite>
+                <Sprite>
+                    <x>103</x>
+                    <y>lastY</y>
+                    <Id>IngameInfoBar.PlayerCoSpriteId + "1_" + loopIdx</Id>
+                    <sprite></sprite>
+                    <scale>1</scale>
+                </Sprite>
+                <Sprite>
+                    <x>202</x>
+                    <y>lastY</y>
+                    <Id>IngameInfoBar.PlayerWeatherSpriteId + loopIdx</Id>
+                    <sprite></sprite>
+                    <scale>1</scale>
+                </Sprite>
+                <Box>
+                    <x>10</x>
+                    <y>lastY - 4</y>
+                    <Id>IngameInfoBar.PlayerCoBoxId + "0_" + loopIdx</Id>
+                    <width>91</width>
+                    <height>95</height>
+                    <sprite>"panel_transparent+mask"</sprite>
+                </Box>
+                <Box>
+                    <x>101</x>
+                    <y>lastY</y>
+                    <Id>IngameInfoBar.PlayerCoBoxId + "1_" + loopIdx</Id>
+                    <width>91</width>
+                    <height>95</height>
+                    <sprite>"panel_transparent+mask"</sprite>
+                </Box>
+                <Box>
+                    <x>198</x>
+                    <y>lastY</y>
+                    <Id>IngameInfoBar.PlayerWeatherBoxId + loopIdx</Id>
+                    <width>91</width>
+                    <height>95</height>
+                    <sprite>"panel_transparent+mask"</sprite>
+                </Box>
+                <Box>
+                    <x>198</x>
+                    <y>lastY + 95</y>
+                    <Id>IngameInfoBar.PlayerWeatherBoxId + loopIdx + "_0"</Id>
+                    <width>45</width>
+                    <height>47</height>
+                    <sprite>"panel_transparent+mask"</sprite>
+                    <childs>
+                        <Sprite>
+                            <x>4</x>
+                            <y>4</y>
+                            <Id>IngameInfoBar.PlayerWeatherSpriteId + loopIdx + "_0"</Id>
+                            <sprite></sprite>
+                            <scale>1</scale>
+                        </Sprite>
+                    </childs>
+                </Box>
+                <Box>
+                    <x>243</x>
+                    <y>lastY</y>
+                    <Id>IngameInfoBar.PlayerWeatherBoxId + loopIdx + "_1"</Id>
+                    <width>45</width>
+                    <height>47</height>
+                    <sprite>"panel_transparent+mask"</sprite>
+                    <childs>
+                        <Sprite>
+                            <x>4</x>
+                            <y>4</y>
+                            <Id>IngameInfoBar.PlayerWeatherSpriteId + loopIdx + "_1"</Id>
+                            <sprite></sprite>
+                            <scale>1</scale>
+                        </Sprite>
+                    </childs>
+                </Box>
+                <Label>
+                    <x>10</x>
+                    <y>lastY</y>
+                    <width>95</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Buildings:")</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                </Label>
+                <Label>
+                    <x>110</x>
+                    <y>lastY</y>
+                    <width>95</width>
+                    <text>"?"</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                    <Id>IngameInfoBar.PlayerBuildingLabelId + loopIdx</Id>
+                </Label>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 2</y>
+                    <width>95</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Units:")</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                </Label>
+                <Label>
+                    <x>110</x>
+                    <y>lastY</y>
+                    <width>95</width>
+                    <text>"?"</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                    <Id>IngameInfoBar.PlayerUnitLabelId + loopIdx</Id>
+                </Label>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 2</y>
+                    <width>95</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Funds:")</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                </Label>
+                <Label>
+                    <x>110</x>
+                    <y>lastY</y>
+                    <width>95</width>
+                    <text>"?"</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                    <Id>IngameInfoBar.PlayerFundsLabelId + loopIdx</Id>
+                </Label>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 2</y>
+                    <width>95</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Army value:")</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                </Label>
+                <Label>
+                    <x>110</x>
+                    <y>lastY</y>
+                    <width>95</width>
+                    <text>"?"</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                    <Id>IngameInfoBar.PlayerArmyLabelId + loopIdx</Id>
+                </Label>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 2</y>
+                    <width>95</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Income:")</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                </Label>
+                <Label>
+                    <x>110</x>
+                    <y>lastY</y>
+                    <width>95</width>
+                    <text>"?"</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                    <Id>IngameInfoBar.PlayerIncomeLabelId + loopIdx</Id>
+                </Label>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 2</y>
+                    <width>95</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Player:")</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                </Label>
+                <Label>
+                    <x>110</x>
+                    <y>lastY</y>
+                    <width>95</width>
+                    <text>"?"</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                    <Id>IngameInfoBar.PlayerPlayerLabelId + loopIdx</Id>
+                </Label>
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 2</y>
+                    <width>95</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Team:")</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                </Label>
+                <Label>
+                    <x>110</x>
+                    <y>lastY</y>
+                    <width>95</width>
+                    <text>"?"</text>
+                    <font>"infoBar"</font>
+                    <fontSize>16</fontSize>
+                    <Id>IngameInfoBar.PlayerTeamLabelId + loopIdx</Id>
+                </Label>
+            </loop>
+        </childs>
+    </Box>
+    <Box>
+        <x>IngameInfoBar.BoxOffset</x>
+        <y>lastY + lastHeight</y>
+        <width>IngameInfoBar.Width</width>
+        <height>IngameInfoBar.CursorInfoHeigth</height>
+        <sprite>"panel"</sprite>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>5</y>
+                <width>260</width>
+                <text>QT_TRANSLATE_NOOP("GAME","-")</text>
+                <font>"infoBar"</font>
+                <fontSize>16</fontSize>
+                <hAlign>"Middle"</hAlign>
+                <Id>IngameInfoBar.TerrainNameLabelId</Id>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 5</y>
+                <width>95</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Owner:")</text>
+                <font>"infoBar"</font>
+                <fontSize>16</fontSize>
+            </Label>
+            <Label>
+                <x>110</x>
+                <y>lastY</y>
+                <width>95</width>
+                <text>"-"</text>
+                <font>"infoBar"</font>
+                <fontSize>16</fontSize>
+                <Id>IngameInfoBar.TerrainOwnerLabelId</Id>
+            </Label>
+            <ColoredBar>
+                <x>10</x>
+                <y>lastY + lastHeight + 2</y>
+                <width>136</width>
+                <height>20</height>
+                <sprite></sprite>
+                <foreSprite>"barforeground"</foreSprite>
+                <Id>IngameInfoBar.TerrainHealthId</Id>
+                <font>"infoBar"</font>
+                <fontColor>"ffffff"</fontColor>
+                <fontSize>16</fontSize>
+                <hAlign>"Middle"</hAlign>
+            </ColoredBar>
+            <ColoredBar>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>136</width>
+                <height>20</height>
+                <sprite></sprite>
+                <foreSprite>"barforeground"</foreSprite>
+                <Id>IngameInfoBar.TerrainResistanceId</Id>
+                <font>"infoBar"</font>
+                <fontColor>"ffffff"</fontColor>
+                <fontSize>16</fontSize>
+                <hAlign>"Middle"</hAlign>
+            </ColoredBar>
+            <Box>
+                <x>0</x>
+                <y>lastY + lastHeight</y>
+                <width>IngameInfoBar.Width</width>
+                <height>IngameInfoBar.CursorInfoHeigth</height>
+                <visible>false</visible>
+                <Id>IngameInfoBar.UnitInfoBoxId</Id>
+                <sprite></sprite>
+                <childs>
+                    <Label>
+                        <x>10</x>
+                        <y>5</y>
+                        <width>260</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","-")</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                        <hAlign>"Middle"</hAlign>
+                        <Id>IngameInfoBar.UnitNameLabelId</Id>
+                    </Label>
+                    <ColoredBar>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 2</y>
+                        <width>136</width>
+                        <height>20</height>
+                        <sprite></sprite>
+                        <foreSprite>"barforeground"</foreSprite>
+                        <Id>IngameInfoBar.UnitHpId</Id>
+                        <font>"infoBar"</font>
+                        <fontColor>"ffffff"</fontColor>
+                        <fontSize>16</fontSize>
+                        <hAlign>"Middle"</hAlign>
+                    </ColoredBar>
+                    <ColoredBar>
+                        <x>lastX + lastWidth + 2</x>
+                        <y>lastY</y>
+                        <width>136</width>
+                        <height>20</height>
+                        <sprite></sprite>
+                        <foreSprite>"barforeground"</foreSprite>
+                        <Id>IngameInfoBar.UnitFuelId</Id>
+                        <font>"infoBar"</font>
+                        <fontColor>"ffffff"</fontColor>
+                        <fontSize>16</fontSize>
+                        <hAlign>"Middle"</hAlign>
+                    </ColoredBar>
+                    <ColoredBar>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 2</y>
+                        <width>136</width>
+                        <height>20</height>
+                        <sprite></sprite>
+                        <foreSprite>"barforeground"</foreSprite>
+                        <Id>IngameInfoBar.UnitAmmo1Id</Id>
+                        <font>"infoBar"</font>
+                        <fontColor>"ffffff"</fontColor>
+                        <fontSize>16</fontSize>
+                        <hAlign>"Middle"</hAlign>
+                    </ColoredBar>
+                    <ColoredBar>
+                        <x>lastX + lastWidth + 2</x>
+                        <y>lastY</y>
+                        <width>136</width>
+                        <height>20</height>
+                        <sprite></sprite>
+                        <foreSprite>"barforeground"</foreSprite>
+                        <Id>IngameInfoBar.UnitAmmo2Id</Id>
+                        <font>"infoBar"</font>
+                        <fontColor>"ffffff"</fontColor>
+                        <fontSize>16</fontSize>
+                        <hAlign>"Middle"</hAlign>
+                    </ColoredBar>
+                    <Label>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 1</y>
+                        <width>95</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Owner:")</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                    </Label>
+                    <Label>
+                        <x>110</x>
+                        <y>lastY</y>
+                        <width>95</width>
+                        <text>"-"</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                        <Id>IngameInfoBar.UnitOwnerLabelId</Id>
+                    </Label>
+                    <Label>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 1</y>
+                        <width>95</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Weapon 1:")</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                    </Label>
+                    <Label>
+                        <x>110</x>
+                        <y>lastY</y>
+                        <width>95</width>
+                        <text>"-"</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                        <Id>IngameInfoBar.UnitWeapon1LabelId</Id>
+                    </Label>
+                    <Label>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 1</y>
+                        <width>95</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Weapon 2:")</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                    </Label>
+                    <Label>
+                        <x>110</x>
+                        <y>lastY</y>
+                        <width>95</width>
+                        <text>"-"</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                        <Id>IngameInfoBar.UnitWeapon2LabelId</Id>
+                    </Label>
+                    <Label>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 1</y>
+                        <width>95</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Move:")</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                    </Label>
+                    <Label>
+                        <x>110</x>
+                        <y>lastY</y>
+                        <width>95</width>
+                        <text>"-"</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                        <Id>IngameInfoBar.UnitMovetypeLabelId</Id>
+                    </Label>
+                    <Label>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 1</y>
+                        <width>95</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Movepoints:")</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                    </Label>
+                    <Label>
+                        <x>110</x>
+                        <y>lastY</y>
+                        <width>95</width>
+                        <text>"-"</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                        <Id>IngameInfoBar.UnitMovepointsLabelId</Id>
+                    </Label>
+                    <Label>
+                        <x>10</x>
+                        <y>lastY + lastHeight + 1</y>
+                        <width>95</width>
+                        <text>QT_TRANSLATE_NOOP("GAME","Vision:")</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                    </Label>
+                    <Label>
+                        <x>110</x>
+                        <y>lastY</y>
+                        <width>95</width>
+                        <text>"-"</text>
+                        <font>"infoBar"</font>
+                        <fontSize>16</fontSize>
+                        <Id>IngameInfoBar.UnitVisionLabelId</Id>
+                    </Label>
+                    <loop count="IngameInfoBar.MaxShownLoadedUnits">
+                        <Box>
+                            <x>IngameInfoBar.getLoadedUnitPosX(loopIdx)</x>
+                            <y>IngameInfoBar.getLoadedUnitPosY(loopIdx)</y>
+                            <Id>IngameInfoBar.UnitLoadedUnitBoxId + loopIdx</Id>
+                            <width>currentMenu.getMap().getImageSize() + 11</width>
+                            <height>currentMenu.getMap().getImageSize() + 12</height>
+                            <sprite>"panel_transparent+mask"</sprite>
+                            <childs>
+                                <Sprite>
+                                    <x>6</x>
+                                    <y>5</y>
+                                    <Id>IngameInfoBar.UnitLoadedUnitId + loopIdx</Id>
+                                    <sprite></sprite>
+                                    <scale>1</scale>
+                                </Sprite>
+                            </childs>
+                        </Box>
+                    </loop>
+                </childs>
+            </Box>
+            <Box>
+                <x>0</x>
+                <y>100</y>
+                <width>IngameInfoBar.Width</width>
+                <height>IngameInfoBar.CursorInfoHeigth</height>
+                <visible>false</visible>
+                <Id>IngameInfoBar.MovementInfoBoxId</Id>
+                <sprite></sprite>
+                <childs>
+                    <loop count="IngameInfoBar.MaxShownMovementInfos">
+                        <Label>
+                            <x>10</x>
+                            <y>IngameInfoBar.getMovementInfoY(loopIdx)</y>
+                            <width>95</width>
+                            <text>QT_TRANSLATE_NOOP("GAME","-")</text>
+                            <font>"infoBar"</font>
+                            <fontSize>16</fontSize>
+                            <Id>IngameInfoBar.MovementInfoLabelName0Id + loopIdx</Id>
+                        </Label>
+                        <Label>
+                            <x>lastX + lastWidth + 5</x>
+                            <y>lastY</y>
+                            <width>40</width>
+                            <text>"-"</text>
+                            <font>"infoBar"</font>
+                            <fontSize>16</fontSize>
+                            <Id>IngameInfoBar.MovementInfoLabelValue0Id + loopIdx</Id>
+                        </Label>
+                        <Label>
+                            <x>lastX + lastWidth + 5</x>
+                            <y>lastY</y>
+                            <width>95</width>
+                            <text>QT_TRANSLATE_NOOP("GAME","-")</text>
+                            <font>"infoBar"</font>
+                            <fontSize>16</fontSize>
+                            <Id>IngameInfoBar.MovementInfoLabelName1Id + loopIdx</Id>
+                        </Label>
+                        <Label>
+                            <x>lastX + lastWidth + 5</x>
+                            <y>lastY</y>
+                            <width>40</width>
+                            <text>"-"</text>
+                            <font>"infoBar"</font>
+                            <fontSize>16</fontSize>
+                            <Id>IngameInfoBar.MovementInfoLabelValue1Id + loopIdx</Id>
+                        </Label>
+                    </loop>
+                </childs>
+            </Box>
+        </childs>
+    </Box>
+</ui>

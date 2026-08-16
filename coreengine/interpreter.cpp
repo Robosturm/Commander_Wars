@@ -118,6 +118,10 @@ void Interpreter::init()
     globalObject().setProperty("coPerkSpriteManager", coPerkSpriteManager);
     QJSValue gameRuleManager = newQObject(GameRuleManager::getInstance());
     globalObject().setProperty("gameRuleManager", gameRuleManager);
+    QJSValue weaponManager = newQObject(WeaponManager::getInstance());
+    globalObject().setProperty("weaponManager", weaponManager);
+    QJSValue movementTableManager = newQObject(MovementTableManager::getInstance());
+    globalObject().setProperty("movementTableManager", movementTableManager);
 
     GameEnums::registerEnums();
 

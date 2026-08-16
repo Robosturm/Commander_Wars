@@ -2091,5 +2091,7 @@
         <file>resources/scripts/building/zgrand_bolt_eye_right_destroyed.js</file>
         <file>resources/scripts/wiki/luck.js</file>
         <file>resources/scripts/wiki/unitranks.js</file>
+        <file>resources/ui/game/ingameInfoBar.js</file>
+        <file>resources/ui/game/ingameInfoBar.xml</file>
     </qresource>
 </RCC>

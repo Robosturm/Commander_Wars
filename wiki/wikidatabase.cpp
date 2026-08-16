@@ -310,31 +310,7 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     Player* pFinalIconPlayer = pIconPlayer;
-    oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
-    if (pAnim == nullptr)
-    {
-        pAnim = COSpriteManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
-    }
-    if (pAnim == nullptr)
-    {
-        pAnim = GameManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
-    }
-    if (pAnim == nullptr)
-    {
-        pAnim = COPerkManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
-    }
-    if (pAnim == nullptr)
-    {
-        pAnim = AchievementManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
-    }
-    if (pAnim == nullptr)
-    {
-        pAnim = ShopLoader::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
-    }
-    if (pAnim == nullptr && !pUnitSpriteManager->exists(file))
-    {
-        pAnim = pUnitSpriteManager->getResAnim(file, oxygine::error_policy::ep_ignore_error);
-    }
+    auto* pAnim = getGlobalResAnim(file);
     if (pAnim != nullptr && pAnim->getWidth() > 0)
     {
         pSprite->setResAnim(pAnim);
@@ -387,4 +363,35 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
         }
     }
     return pSprite;
+}
+
+oxygine::ResAnim* WikiDatabase::getGlobalResAnim(QString file)
+{
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    if (pAnim == nullptr)
+    {
+        pAnim = COSpriteManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim == nullptr)
+    {
+        pAnim = GameManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim == nullptr)
+    {
+        pAnim = COPerkManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim == nullptr)
+    {
+        pAnim = AchievementManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim == nullptr)
+    {
+        pAnim = ShopLoader::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim == nullptr && !pUnitSpriteManager->exists(file))
+    {
+        pAnim = pUnitSpriteManager->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    return pAnim;
 }

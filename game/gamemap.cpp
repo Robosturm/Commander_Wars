@@ -1992,7 +1992,7 @@ void GameMap::startGame()
         else if (pHuman != nullptr)
         {
             auto buildList = m_players[i]->getBuildList();
-            for (const auto & unitId : lockedUnits)
+            for (const auto & unitId : std::as_const(lockedUnits))
             {
                 buildList.removeAll(unitId);
             }
@@ -2002,7 +2002,7 @@ void GameMap::startGame()
     }
     QStringList mods = Settings::getInstance()->getMods();
     Interpreter* pInterpreter = Interpreter::getInstance();
-    for (const auto& mod : mods)
+    for (const auto& mod : std::as_const(mods))
     {
         if (QFile::exists(Settings::getInstance()->getUserPath() + mod + "/scripts/mapstart.js"))
         {
@@ -2256,9 +2256,9 @@ void GameMap::endOfTurnPlayer(Player* pPlayer)
     auto xValues = GlobalUtils::getRandomizedArray(0, width - 1);
     auto yValues = GlobalUtils::getRandomizedArray(0, heigth - 1);
     // update start of turn
-    for (auto y : yValues)
+    for (const auto y : std::as_const(yValues))
     {
-        for (auto x : xValues)
+        for (const auto x : std::as_const(xValues))
         {
             spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
@@ -2308,9 +2308,9 @@ void GameMap::startOfTurnNeutral()
     qint32 width = getMapWidth();
     auto xValues = GlobalUtils::getRandomizedArray(0, width - 1);
     auto yValues = GlobalUtils::getRandomizedArray(0, heigth - 1);
-    for (auto y : yValues)
+    for (const auto y : std::as_const(yValues))
     {
-        for (auto x : xValues)
+        for (const auto x : std::as_const(xValues))
         {
             spTerrain pTerrain = m_fields[y][x];
             pTerrain->startOfTurn();
@@ -2337,9 +2337,9 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
     auto xValues = GlobalUtils::getRandomizedArray(0, width - 1);
     auto yValues = GlobalUtils::getRandomizedArray(0, heigth - 1);
     // update icons
-    for (auto y : yValues)
+    for (const auto y : std::as_const(yValues))
     {
-        for (auto x : xValues)
+        for (const auto x : std::as_const(xValues))
         {
             spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
@@ -2354,9 +2354,9 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
         }
     }
     // update start of turn
-    for (auto y : yValues)
+    for (const auto y : std::as_const(yValues))
     {
-        for (auto x : xValues)
+        for (const auto x : std::as_const(xValues))
         {
             spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
@@ -2741,7 +2741,7 @@ void GameMap::initPlayersAndSelectCOs()
     }
     Userdata* pUserdata = Userdata::getInstance();
     auto items = pUserdata->getShopItemsList(GameEnums::ShopItemType_CO, false);
-    for (const auto & item : items)
+    for (const auto & item : std::as_const(items))
     {
         bannList.removeAll(item);
     }

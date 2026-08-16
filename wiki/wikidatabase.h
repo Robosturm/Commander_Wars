@@ -101,6 +101,7 @@ public:
      * @return
      */
     oxygine::spSprite getIcon(GameMap* pMap, QString file, qint32 size, Player* pIconPlayer = nullptr);
+    oxygine::ResAnim* getGlobalResAnim(QString file);
 
 private:
     friend RessourceManagement<WikiDatabase>;

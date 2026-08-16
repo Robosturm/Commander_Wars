@@ -26,6 +26,7 @@ public:
     Q_INVOKABLE bool getSubComponent() const;
     Q_INVOKABLE void setSubComponent(bool subComponent);
     Q_INVOKABLE bool getFocused() const;
+    Q_INVOKABLE void setIsVisible(bool vis);
 signals:
     void sigFocusedLost();
     void sigFocused();

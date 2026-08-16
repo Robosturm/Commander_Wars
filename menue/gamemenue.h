@@ -57,7 +57,7 @@ public:
      * @brief getCurrentViewPlayer
      * @return
      */
-    virtual Player* getCurrentViewPlayer() const override;
+    Q_INVOKABLE virtual Player* getCurrentViewPlayer() const override;
     /**
      * @brief getSyncCounter
      * @return

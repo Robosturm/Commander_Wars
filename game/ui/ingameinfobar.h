@@ -14,7 +14,7 @@ class Player;
 class IngameInfoBar;
 using spIngameInfoBar = std::shared_ptr<IngameInfoBar>;
 
-class IngameInfoBar final : public QObject, public oxygine::Actor
+class IngameInfoBar final : public CreatedGui
 {
     Q_OBJECT
 public:
@@ -25,36 +25,38 @@ public:
     virtual ~IngameInfoBar() = default;
     Minimap* getMinimap()
     {
-        return m_pMinimap.get();
+        return m_pMinimap;
     }
     void updateTerrainInfo(qint32 x, qint32 y, bool update);
     oxygine::spBox9Sprite getDetailedViewBox() const;
-    void setMap(GameMap *newMap);
-    Q_INVOKABLE GameMap *getMap() const;
+    Q_INVOKABLE GameMap* getMap() const;
+    Q_INVOKABLE GameMenue* getGameMenu();
     Q_INVOKABLE void updateMinimap();
     Q_INVOKABLE void updatePlayerInfo();
+
 public slots:
     void updateCursorInfo(qint32 x, qint32 y);
     void syncMinimapPosition();
-private:
-    void addColorbar(float divider, qint32 posX, qint32 posY, QColor color);
-    void createTerrainInfo(qint32 x, qint32 y);
-    void createMovementInfo(qint32 x, qint32 y);
-    bool createUnitInfo(qint32 x, qint32 y);
-    void updateDetailedView(qint32 x, qint32 y);
-    void updateInfoForPlayer(Player* pPlayer, qint32 & y, qint32 x1, qint32 x2, qint32 yAdvance, qint32 width);
+
+private slots:
+    void updateTerrainInfoInternal();
 
 private:
-    spMinimap m_pMinimap;
-    oxygine::spSlidingActor m_pMinimapSlider;
-    oxygine::spBox9Sprite m_pGameInfoBox;
-    oxygine::spBox9Sprite m_pCursorInfoBox;
+    void updateDetailedView(qint32 x, qint32 y);
+
+private:
+    Minimap* m_pMinimap{nullptr};
+    oxygine::SlidingActor* m_pMinimapSlider{nullptr};
     oxygine::spBox9Sprite m_pDetailedViewBox;
     qint32 m_LastX{-1};
     qint32 m_LastY{-1};
+    qint32 m_newX{-1};
+    qint32 m_newY{-1};
     GameMap* m_pMap{nullptr};
     GameMenue* m_pMenu{nullptr};
-    qint32 m_shownPlayerCount{1};
+    QTimer m_debounceTimer;
 };
+
+Q_DECLARE_INTERFACE(IngameInfoBar, "IngameInfoBar");
 
 #endif // INGAMEINFOBAR_H

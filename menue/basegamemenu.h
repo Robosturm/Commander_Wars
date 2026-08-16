@@ -39,7 +39,7 @@ public:
      * @brief getCurrentViewPlayer
      * @return
      */
-    virtual Player* getCurrentViewPlayer() const;
+    Q_INVOKABLE virtual Player* getCurrentViewPlayer() const;
     virtual ActionPerformer* getActionPerformer()
     {
         return nullptr;

@@ -139,6 +139,11 @@ void FocusableObject::setSubComponent(bool subComponent)
     m_subComponent = subComponent;
 }
 
+void FocusableObject::setIsVisible(bool vis)
+{
+    setVisible(vis);
+}
+
 bool FocusableObject::getFocused() const
 {
     return m_focused;

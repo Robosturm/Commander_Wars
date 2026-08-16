@@ -31,6 +31,8 @@
 #include "objects/base/passwordbox.h"
 #include "objects/base/selectkey.h"
 #include "objects/base/topbar.h"
+#include "objects/base/box9object.h"
+#include "objects/base/coloredbar.h"
 #include "objects/minimap.h"
 
 #include "game/gamemap.h"
@@ -67,6 +69,7 @@ static const char* const itemTabbedBox = "TabbedBox";
 static const char* const itemTab = "Tab";
 static const char* const itemMinimap = "Minimap";
 static const char* const itemSlidingBox = "SlidingBox";
+static const char* const itemColoredBar = "ColoredBar";
 
 static const char* const attrX = "x";
 static const char* const attrY = "y";
@@ -90,6 +93,7 @@ static const char* const attrMax = "max";
 static const char* const attrChilds = "childs";
 static const char* const attrContent = "content";
 static const char* const attrSprite = "sprite";
+static const char* const attrForeSprite = "foreSprite";
 static const char* const attrUnit = "unit";
 static const char* const attrId = "Id";
 static const char* const attrEnabled = "enabled";
@@ -164,7 +168,7 @@ UiFactory::UiFactory()
     m_factoryItems.push_back({QString(itemTabbedBox), std::bind(&UiFactory::createTabbedBox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemMinimap), std::bind(&UiFactory::createMinimap, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemSlidingBox), std::bind(&UiFactory::createSlidingBox, this, _1, _2, _3, _4, _5)});
-
+    m_factoryItems.push_back({QString(itemColoredBar), std::bind(&UiFactory::createColoredBar, this, _1, _2, _3, _4, _5)});
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
 
@@ -251,6 +255,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                         if (success)
                         {
                             pMenu->addFactoryUiItem(root);
+                            pMenu->addChild(root);
                         }
                         else
                         {
@@ -737,6 +742,10 @@ bool UiFactory::createMinimap(oxygine::spActor parent, QDomElement element, oxyg
         pMinimap->setPosition(x, y);
         pMinimap->setVisible(visible);
         pMinimap->setEnabled(enabled);
+        if (!id.isEmpty())
+        {
+            pMinimap->setObjectName(id);
+        }
         if (!onEventLine.isEmpty())
         {
             connect(pMinimap.get(), &Minimap::clicked, pMenu, [this, onEventLine, id, loopIdx, pMenu](qint32 x, qint32 y, bool updateMinimapPosition)
@@ -766,7 +775,11 @@ bool UiFactory::createSlidingBox(oxygine::spActor parent, QDomElement element, o
         auto pSlidingbox = MemoryManagement::create<oxygine::SlidingActor>();
         pSlidingbox->setPosition(x, y);
         pSlidingbox->setSize(width, height);
-        auto node = getNode(childs, attrChilds).firstChild();
+        if (!id.isEmpty())
+        {
+            pSlidingbox->setObjectName(id);
+        }
+        auto node = getNode(childs, attrContent).firstChild();
         while (!node.isNull())
         {
             while (node.isComment())
@@ -779,7 +792,7 @@ bool UiFactory::createSlidingBox(oxygine::spActor parent, QDomElement element, o
                 success = success && createItem(pSlidingbox, node.toElement(), panelItem, pMenu, loopIdx);
                 if (panelItem.get() != nullptr)
                 {
-                    pSlidingbox->setContent(pSlidingbox);
+                    pSlidingbox->setContent(panelItem);
                 }
             }
             node = node.nextSibling();
@@ -787,6 +800,40 @@ bool UiFactory::createSlidingBox(oxygine::spActor parent, QDomElement element, o
         parent->addChild(pSlidingbox);
         item = pSlidingbox;
         m_lastCoordinates = QRect(x, y, width, height);
+        updateMenuSize(pMenu);
+    }
+    return success;
+}
+
+bool UiFactory::createColoredBar(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight, attrSprite, attrForeSprite});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
+        qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
+        qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
+        qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
+        qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
+        QString backSpriteId = getStringValue(getAttribute(childs, attrSprite), id, loopIdx, pMenu);
+        QString foreSpriteId = getStringValue(getAttribute(childs, attrForeSprite), id, loopIdx, pMenu);
+        QString fontColor = getStringValue(getAttribute(childs, attrFontColor), id, loopIdx, pMenu);
+        auto hAlign = getHAlignment(getAttribute(childs, attrHAlign), id, loopIdx, pMenu);
+        auto style = getStyle(getStringValue(getAttribute(childs, attrFont), id, loopIdx, pMenu),
+                              fontColor,
+                              getIntValue(getAttribute(childs, attrFontSize), id, loopIdx, pMenu, 24),
+                              hAlign);
+        spColoredbar pBar = MemoryManagement::create<ColoredBar>(width, height, backSpriteId, foreSpriteId);
+        pBar->setPosition(x, y);
+        pBar->getLabel()->setStyle(style);
+        if (!id.isEmpty())
+        {
+            pBar->setObjectName(id);
+        }
+        parent->addChild(pBar);
+        item = pBar;
+        m_lastCoordinates = QRect(x, y, pBar->getScaledWidth(), pBar->getScaledHeight());
         updateMenuSize(pMenu);
     }
     return success;
@@ -1745,7 +1792,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
 bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
     auto childs = element.childNodes();
-    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight, attrSprite, attrChilds});
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight, attrSprite});
     if (success)
     {
         QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
@@ -1757,7 +1804,11 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         ObjectManager* pObjectManager = ObjectManager::getInstance();
-        oxygine::spBox9Sprite pPanel = MemoryManagement::create<oxygine::Box9Sprite>();
+        spBox9Object pPanel = MemoryManagement::create<Box9Object>();
+        if (!id.isEmpty())
+        {
+            pPanel->setObjectName(id);
+        }
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteId);
         pPanel->setResAnim(pAnim);
         pPanel->setX(x);
@@ -1779,7 +1830,7 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
             if (!node.isNull())
             {
                 oxygine::spActor panelItem;
-                success = success && createItem(pPanel, node.toElement(), panelItem, pMenu);
+                success = success && createItem(pPanel, node.toElement(), panelItem, pMenu, loopIdx);
                 if (panelItem.get() != nullptr)
                 {
                     pPanel->addChild(panelItem);
@@ -1789,6 +1840,7 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
         }
         parent->addChild(pPanel);
         m_parentSize = QSize(0, 0);
+        m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
         item = pPanel;
     }
     return success;

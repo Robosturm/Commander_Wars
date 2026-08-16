@@ -47,6 +47,11 @@ float WeaponManager::getEnviromentDamage(const QString & weaponID, const QString
     }
 }
 
+QString WeaponManager::getWeaponName(const QString & id)
+{
+    return getName(id);
+}
+
 void WeaponManager::loadAll()
 {
     RessourceManagement<WeaponManager>::loadAll();

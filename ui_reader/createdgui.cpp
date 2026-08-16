@@ -31,7 +31,6 @@ void CreatedGui::addFactoryUiItem(oxygine::spActor pItem)
 {
     pItem->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_factoryUiItem.append(pItem);
-    addChild(pItem);
 }
 
 void CreatedGui::setEnabled(bool value)

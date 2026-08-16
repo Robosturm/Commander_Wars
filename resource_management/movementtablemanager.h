@@ -13,7 +13,14 @@ public:
     /**
      * @brief loadAll
      */
-    virtual void loadAll() override;
+    virtual void loadAll() override;    /**
+     * @brief getMovementName
+     * @param id
+     * @return
+     */
+    Q_INVOKABLE QString getMovementName(const QString & id);
+
+    Q_INVOKABLE QStringList getMovementTypes();
 public slots:
     qint32 getBaseMovementPoints(const QString & movementID, Terrain* pTerrain, Terrain* pCurrentTerrain, Unit* pUnit, bool trapChecking = false);
     bool getSupportsFastPfs(const QString & movementID);

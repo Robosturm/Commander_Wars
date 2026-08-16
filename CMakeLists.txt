@@ -568,6 +568,8 @@ set(${PROJECT_NAME}_SRCS
     objects/base/closeablepopup.cpp objects/base/closeablepopup.h
     objects/base/moveinbutton.cpp objects/base/moveinbutton.h
     objects/base/spriteobject.cpp objects/base/spriteobject.h
+    objects/base/tabbedbox.h objects/base/tabbedbox.cpp
+    objects/base/box9object.h objects/base/box9object.cpp
     # objects dialogs
     objects/dialogs/colorselectiondialog.cpp objects/dialogs/colorselectiondialog.h
     objects/dialogs/dialogconnecting.cpp objects/dialogs/dialogconnecting.h
@@ -1231,7 +1233,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_OpenNN_SRCS}
     ${${PROJECT_NAME}_UPDATE_SRCS}
     ${WIN_ICON}
-    objects/base/tabbedbox.h objects/base/tabbedbox.cpp
+    objects/base/coloredbar.h objects/base/coloredbar.cpp
 )
 
 if (BUILD_TESTING AND GRAPHICSUPPORT)
