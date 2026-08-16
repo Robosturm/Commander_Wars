@@ -28,16 +28,26 @@
     // Lets the capper roll consider cappers this factory cannot afford, paid for out of another
     // factory's reserve. Does nothing unless RECYCLE_UNUSED_BUDGET is on.
     strategy.CAPPER_BORROW_FROM_RESERVE = true;
-    // Percent chance a factory deliberately builds nothing and banks the money.
-    strategy.BASE_SKIP_CHANCE = 0;
-    // No skipping before this day.
-    strategy.BASE_SKIP_MIN_DAY = 2;
-    // No skipping unless the treasury is at least this large.
-    strategy.BASE_SKIP_MIN_FUNDS = 15000;
+    // Percent chance a factory randomly builds nothing. Strategic holds are configured below.
+    strategy.RANDOM_BASE_SKIP_CHANCE = 0;
+    // No random skipping before this day.
+    strategy.RANDOM_BASE_SKIP_MIN_DAY = 2;
+    // No random skipping unless the treasury is at least this large.
+    strategy.RANDOM_BASE_SKIP_MIN_FUNDS = 15000;
     // Lets a factory spend funds no one reserved instead of passing when its own budget is short.
     strategy.AVOID_BUDGET_BASE_SKIPS = false;
     // Hands a finished factory's unspent budget to the factories that have not built yet.
     strategy.RECYCLE_UNUSED_BUDGET = true;
+    // Minimum affordable-to-missed score ratio, 0 disables strategic holding.
+    strategy.HOLD_FOR_BETTER_RATIO = 0.25;
+    // Limits factories that bank surplus while still buying their cheapest candidate.
+    strategy.MAX_STRATEGIC_HOLDS_PER_TURN = 3;
+    // Weight on the worst affordable next-turn reinforcement retaliation.
+    strategy.PHANTOM_RETAL_WEIGHT = 0.5;
+    // Weight on the best hit against an affordable next-turn reinforcement.
+    strategy.PHANTOM_OFFENSE_WEIGHT = 0.5;
+    // True derives reproducible daily seeds, false draws fresh daily seeds.
+    strategy.PLANNER_DETERMINISTIC_SEED = false;
     // Looks for factories again once the planned ones are done. Without this, a factory that had a
     // unit parked on it when the turn's plan was drawn up sits idle even after the unit moves off.
     strategy.LATE_FACTORY_RESCAN = true;
@@ -45,18 +55,48 @@
     // parked on it, so the factories that can build right now cannot spend its money first. Turning
     // this off lets an expensive transport be bought sooner at the cost of idling those factories.
     strategy.RESERVE_BLOCKED_FACTORIES = true;
+    // Prioritize surplus for higher-value builds without idling factories.
+    strategy.DYNAMIC_FLOOR = true;
     // Raises the reservation of a factory that can build a capturer; it never lowers it below that
     // capturer's own cost, so anything under the cheapest capturer price does nothing. 0 means
     // reserve exactly the cheapest capturer, which keeps ground factories from sitting idle without
     // hardcoding a price. Factories with no capturer reserve nothing and stay skippable.
     strategy.FACTORY_FLOOR = 0;
+    // Include known air, naval, and hover factories in cheapest-unit floors.
+    strategy.FLOOR_ALL_DOMAINS = false;
+    // Randomly choose which factories receive surplus instead of value ordering.
+    strategy.RANDOM_SURPLUS_FUNDING = false;
+    // Turns of income a surplus target may cost beyond what is spare now; 0 means this turn only.
+    strategy.VALUE_TARGET_MAX_TURNS = 1;
+    // Lower values fund more factories with surplus.
+    strategy.SURPLUS_FUNDED_DIVISOR = 3;
+    strategy.SURPLUS_FUNDED_MIN = 1;
+    // Zero removes turn-to-turn variation in the funded count.
+    strategy.SURPLUS_FUNDED_JITTER = 1;
+    // How many factories nearest the fighting take turns holding the surplus; 1 always funds the closest.
+    strategy.SURPLUS_ROTATION_SLOTS = 3;
     // Score multiplier for tank class units, meaning ground, direct, no capture, no cargo, and
     // past both TANK_MIN_BASE_COST and TANK_MIN_MOVEMENT.
     strategy.TANK_BONUS = 1.5;
+    // Raise to answer uncovered enemy air more aggressively; zero disables the boost.
+    strategy.AA_COVERAGE_URGENCY = 4;
+    // Lower values demote anti-air when no attack-capable enemy air exists.
+    strategy.AA_NO_AIR_DISCOUNT = 0.35;
+    // Cap the boost when a small air share creates a large coverage ratio.
+    strategy.AA_COVERAGE_BOOST_MAX = 25;
+    // Higher values permit fewer anti-air builds per turn.
+    strategy.AA_ENEMY_AIR_PER_UNIT = 2.5;
     // Score multiplier for indirects, applied unless a CO is granting them extra range.
     strategy.INDIRECT_TAX = 0.70;
     // Extra multiplier per indirect of that type already owned, compounding with each one.
     strategy.INDIRECT_STACK_PENALTY = 0.5;
+    strategy.INDIRECT_SATURATION_FREE_COUNT = 2;
+    // Let saturated indirect scores cross below competing negative scores.
+    strategy.INDIRECT_SATURATION_COST_WEIGHT = 60;
+    // Negative disables the fielded indirect cap.
+    strategy.MAX_INDIRECT_UNITS = -1;
+    // Ignore the indirect cap for COs with a positive range bonus.
+    strategy.MAX_INDIRECT_IGNORE_INDIRECT_CO = true;
     // Island maps: score multiplier for air units that are not transports.
     strategy.ISLAND_AIR_BONUS = 1.5;
     // Island maps: score multiplier for warships.
@@ -71,6 +111,10 @@
     // Randomness of the final pick. Above 1 flattens the odds across candidates, below 1 favours
     // the top scorer. Clamped to TEMPERATURE_MIN..TEMPERATURE_MAX.
     strategy.TEMPERATURE = 1.0;
+    // Reject negative combat picks when an affordable alternative exists.
+    strategy.SKIP_NEGATIVE_SCORERS = true;
+    // Reject fallback transports when an affordable alternative exists.
+    strategy.SKIP_UNWANTED_TRANSPORTERS = true;
     // Starting ceiling on how much surplus a single factory may absorb. Raised automatically to
     // the priciest unit any factory can see, so it never blocks a build outright.
     strategy.FACTORY_BUDGET_CAP_FLOOR = 30000;
@@ -87,6 +131,10 @@
     strategy.CAPPER_POOL_NARROW = 3;
     strategy.CAPPER_POOL_WIDE = 6;
     strategy.CAPPER_POOL_VERY_WIDE = 10;
+    // Demote slower, costlier capper alternatives without changing the cheapest capper's bias.
+    strategy.CAPPER_VARIETY_MOVE_WEIGHT = 1.0;
+    // Preserve a minimum draw share for dominated capper alternatives.
+    strategy.CAPPER_VARIETY_MIN_SHARE = 0.1;
     // Weights for a unit's best, second best and third best matchup. Further matchups are ignored,
     // so a unit is judged on what it beats, not on averaging over the whole enemy army.
     strategy.TOP_N_WEIGHTS = [1.0, 0.7, 0.4];
@@ -106,8 +154,10 @@
     // Enemy capture unit HP above this is compressed logarithmically, so a wall of infantry does
     // not drown out every other threat.
     strategy.CAP_HP_SOFT_CAP = 4;
-    // Total enemy direct attacker HP above this scales the retaliation estimate down.
+    // Damage weighted enemy direct attacker HP above this scales the retaliation estimate down.
     strategy.ADJACENCY_RETAL_CAP = 4;
+    // Damage percent at which an attacker counts its full HP toward retaliation.
+    strategy.ADJACENCY_DAMAGE_NORM = 100;
     // Island maps: score multiplier for ground units that neither capture, carry, nor count as tanks.
     strategy.ISLAND_GROUND_SUPPORT_PENALTY = 0.05;
     // Island maps: multiplier per transport already owned, compounding with each one.
@@ -210,6 +260,8 @@
     // Converts enemy HP into the damage needed to cover it. Raising it makes existing coverage
     // look thinner, so the AI keeps building answers for longer.
     strategy.COVERAGE_DAMAGE_SCALE = 100;
+    // Lower-damage counters contribute quadratically less coverage.
+    strategy.COVERAGE_QUALITY_DAMAGE = 55;
     // Score a candidate keeps even when its target is already fully covered.
     strategy.GAP_FLOOR_BASE = 0.2;
     // Added to that floor per cost unit, so expensive units retain more score when saturated.
@@ -228,14 +280,16 @@
     strategy.MOBILITY_BASE_FACTOR = 0.5;
     // How much of the movement ratio is added on top of that floor.
     strategy.MOBILITY_RATIO_FACTOR = 0.5;
-    // Movement at which a candidate starts earning the fast movement bonus.
-    strategy.FAST_MOVEMENT_THRESHOLD = 6;
-    // Movement subtracted before the bonus is scaled. Raising it shrinks the bonus.
-    strategy.FAST_MOVEMENT_BASE = 5;
-    // Bonus gained per movement point above that base.
-    strategy.FAST_MOVEMENT_BONUS_STEP = 0.05;
-    // Cap on the total fast movement bonus.
-    strategy.FAST_MOVEMENT_BONUS_MAX = 0.25;
+    // Fallback movement reference when no candidate roster is available.
+    strategy.MOBILITY_VALUE_REFERENCE = 5;
+    // Higher values reward above-median movement more sharply.
+    strategy.MOBILITY_VALUE_SLOPE = 0.5;
+    // Prevent slow units from losing all intrinsic value.
+    strategy.MOBILITY_VALUE_FLOOR = 0.5;
+    // Limit reach bonuses for unusually fast units.
+    strategy.MOBILITY_VALUE_CEIL = 1.5;
+    // Credit air movement for ignoring terrain; one disables the bonus.
+    strategy.MOBILITY_AIR_REACH_BONUS = 1.25;
     // Per duplicate score multiplier applied to every unit type, keeping armies mixed.
     strategy.UNIT_DIVERSITY_FACTOR = 0.85;
     // Exponent on cost in the cost biased ordering. Raising it favours expensive units harder.
