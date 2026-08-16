@@ -124,6 +124,7 @@ void WorkerThread::start()
 {
     GameConsole::print("Loading worker thread", GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+    Q_ASSERT(pLoadingScreen->moveToThread(QThread::currentThread()));
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     spConsole pConsole = GameConsole::getSpInstance();

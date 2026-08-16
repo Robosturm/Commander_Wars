@@ -5,7 +5,6 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
 
-#include "resource_management/backgroundmanager.h"
 #include "resource_management/fontmanager.h"
 
 spLoadingScreen LoadingScreen::m_pLoadingScreen{nullptr};
@@ -41,22 +40,9 @@ void LoadingScreen::show()
         CONSOLE_PRINT("LoadingScreen::show", GameConsole::eDEBUG);
         oxygine::Stage::getStage()->addChild(m_pLoadingScreen);
         removeChildren();
-        oxygine::ResAnim* pBackground;
-        BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-        pBackground = pBackgroundManager->getResAnim("loadingscreen");
-        // load background
-        oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
-        addChild(sprite);
-        if (pBackground != nullptr &&
-            pBackground->getWidth() > 0 &&
-            pBackground->getHeight() > 0)
-        {
-            sprite->setResAnim(pBackground);
-            // background should be last to draw
-            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-            sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
-            sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
-        }
+
+        changeBackground("loadingscreen");
+
         m_BackgroundBar = MemoryManagement::create<oxygine::ColorRectSprite>();
         m_BackgroundBar->setSize(oxygine::Stage::getStage()->getWidth(), 60);
         m_BackgroundBar->setY(oxygine::Stage::getStage()->getHeight() - 60);

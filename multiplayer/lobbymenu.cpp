@@ -22,7 +22,6 @@
 
 #include "game/gamemap.h"
 
-#include "resource_management/backgroundmanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
@@ -40,8 +39,11 @@
 LobbyMenu::LobbyMenu()
 {
     Mainapp *pApp = Mainapp::getInstance();
-    CONSOLE_PRINT("Entering Lobby Menue", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Entering Lobby Menu", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
+#ifdef GRAPHICSUPPORT
+    setObjectName("LobbyMenu");
+#endif
 
     if (!Settings::getInstance()->getServer())
     {
@@ -53,17 +55,7 @@ LobbyMenu::LobbyMenu()
         emit m_pTCPClient->sig_connect(Settings::getInstance()->getServerAdress(), Settings::getInstance()->getServerPort(), Settings::getInstance()->getSecondaryServerAdress());
     }
 
-    BackgroundManager *pBackgroundManager = BackgroundManager::getInstance();
-    // load background
-    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
-    addChild(sprite);
-    oxygine::ResAnim *pBackground = pBackgroundManager->getResAnim("lobbymenu");
-    sprite->setResAnim(pBackground);
-    sprite->setPosition(-1, -1);
-    // background should be last to draw
-    sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
-    sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
+    changeBackground("lobbymenu");
 
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/multiplayer");

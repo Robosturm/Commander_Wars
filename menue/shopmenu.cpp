@@ -7,7 +7,6 @@
 
 #include "wiki/wikidatabase.h"
 
-#include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/shoploader.h"
 
@@ -26,19 +25,7 @@ Shopmenu::Shopmenu()
     Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Entering Shop Menue", GameConsole::eDEBUG);
 
-    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-    // load background
-    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
-    addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("shopmenu");
-    if (pBackground != nullptr)
-    {
-        sprite->setResAnim(pBackground);
-        // background should be last to draw
-        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
-    }
+    changeBackground("shopmenu");
 
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/shop");
@@ -64,7 +51,7 @@ Shopmenu::Shopmenu()
 
     ShopLoader* pShopLoader = ShopLoader::getInstance();
     oxygine::ResAnim* pHachi = pShopLoader->getResAnim("hachi_shop");
-    sprite = MemoryManagement::create<oxygine::Sprite>();
+    auto sprite = MemoryManagement::create<oxygine::Sprite>();
     sprite->setResAnim(pHachi);
     sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth() * 0.5f) / static_cast<float>(pHachi->getWidth()));
     sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight() - 60) / static_cast<float>(pHachi->getWidth()));
@@ -161,7 +148,7 @@ void Shopmenu::filterChanged(qint32 item)
     qint32 y = 10;
     m_pPanel->clearContent();
     m_shoppingList.clear();
-    for (const auto & item : items)
+    for (const auto & item : std::as_const(items))
     {
         m_shoppingList.append(false);
         spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();

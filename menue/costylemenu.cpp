@@ -13,7 +13,6 @@
 #include "menue/mainwindow.h"
 #include "menue/costylemenu.h"
 
-#include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/cospritemanager.h"
 
@@ -34,19 +33,7 @@ COStyleMenu::COStyleMenu()
     m_pPlayer->init();
 
     CONSOLE_PRINT("Entering Co Style Menue", GameConsole::eDEBUG);
-    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-    // load background
-    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
-    addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("costylemenu");
-    if (pBackground != nullptr)
-    {
-        sprite->setResAnim(pBackground);
-        // background should be last to draw
-        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
-    }
+    changeBackground("costylemenu");
 
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/hauptmenue");
@@ -85,7 +72,7 @@ COStyleMenu::COStyleMenu()
     Userdata* pUserdata = Userdata::getInstance();
     auto items = pUserdata->getShopItemsList(GameEnums::ShopItemType_CO_Skin, false);
     QStringList bannList = COSpriteManager::getInstance()->getLoadedRessources();
-    for (const auto & item : items)
+    for (const auto & item : std::as_const(items))
     {
         bannList.removeAll(item);
     }
@@ -151,13 +138,13 @@ void COStyleMenu::showCOInfo()
     QStringList inCoids = pCOSpriteManager->getLoadedRessources();
     Userdata* pUserdata = Userdata::getInstance();
     auto items = pUserdata->getShopItemsList(GameEnums::ShopItemType_CO_Skin, false);
-    for (const auto & item : items)
+    for (const auto & item : std::as_const(items))
     {
         inCoids.removeAll(item);
     }
     QStringList armies = pCOSpriteManager->getArmyList(inCoids);
     QStringList outCoids;
-    for (const auto & army : armies)
+    for (const auto & army : std::as_const(armies))
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue ret = pInterpreter->doFunction("PLAYER", "getArmyCOs" + army);

@@ -56,12 +56,18 @@ public:
     {
         return &m_Variables;
     }
+    /**
+     * @brief loadBackground
+     * @param background
+     */
+    Q_INVOKABLE void changeBackground(QString background);
 private slots:
     void remove();
 protected:
     QVector<oxygine::spActor> m_factoryUiItem;
     CreatedGui* m_pBaseUi{nullptr};
     ScriptVariables m_Variables;
+    oxygine::spSprite m_backgroundSprite;
 };
 
 Q_DECLARE_INTERFACE(CreatedGui, "CreatedGui");

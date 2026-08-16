@@ -30,6 +30,10 @@ public:
         Q_ASSERT(m_pOwner == QThread::currentThread());
         return m_pInstance.get();
     }
+    static bool exists()
+    {
+        return m_pInstance.get() != nullptr;
+    }
     static Interpreter* createInstance();
     virtual ~Interpreter();
     static void release();

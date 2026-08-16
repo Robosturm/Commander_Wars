@@ -12,7 +12,6 @@
 #include "coreengine/audiomanager.h"
 #include "coreengine/virtualpaths.h"
 
-#include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -22,26 +21,15 @@ CreditsMenue::CreditsMenue()
     : Basemenu()
 {
 #ifdef GRAPHICSUPPORT
-    setObjectName("CreditsMenue");
+    setObjectName("CreditsMenu");
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     CONSOLE_PRINT("Entering Credits Menue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
-    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-    // load background
-    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
-    addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("creditsmenu");
-    if (pBackground != nullptr)
-    {
-        sprite->setResAnim(pBackground);
-        // background should be last to draw
-        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
-    }
+    changeBackground("creditsmenu");
+
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/credits_options");
     pApp->getAudioManager()->playRandom();

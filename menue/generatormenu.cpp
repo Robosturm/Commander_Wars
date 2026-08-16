@@ -18,7 +18,7 @@ GeneratorMenu::GeneratorMenu(const QString & generatorUi, bool load)
     setObjectName("GeneratorMenu");
 #endif
     Mainapp* pApp = Mainapp::getInstance();
-    pApp->pauseRendering();
+    pApp->pauseRendering();    
     if (load)
     {
         pApp->getAudioManager()->clearPlayList();

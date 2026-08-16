@@ -232,7 +232,6 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     GameConsole::setModuleMode(GameConsole::eResources, false);
 #endif
     GameConsole::print("Loading startup phase: " + QString::number(step), GameConsole::eDEBUG);
-    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     m_startUpStep = step;
     bool automaticNextStep = true;
     switch (step)
@@ -247,7 +246,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             }
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
-            pLoadingScreen->moveToThread(m_Workerthread.get());
+            LoadingScreen::getInstance()->moveToThread(m_Workerthread.get());
             m_AudioManager = MemoryManagement::create<AudioManager>(m_noAudio, m_useAudioThread);
             // start after ressource loading
 #ifdef GRAPHICSUPPORT
@@ -298,7 +297,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_gameUpdater.reset();
 #endif
             ObjectManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Building Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Building Textures ..."), step  * stepProgress);
             redrawUi();
             break;
         }
@@ -310,28 +309,28 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             }
             redrawUi();
             BuildingSpriteManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
             break;
         }
         case StartupPhase::COSprites:
         {
             redrawUi();
             COSpriteManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Animation Textures..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Animation Textures..."), step  * stepProgress);
             break;
         }
         case StartupPhase::GameAnimations:
         {
             redrawUi();
             GameAnimationManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Game Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Game Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::GameManager:
         {
             redrawUi();
             GameManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Rule Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Rule Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::GameRuleManager:
@@ -340,77 +339,77 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             GameRuleManager::getInstance();
             WeaponManager::getInstance();
             MovementTableManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Terrain Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Terrain Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::TerrainManager:
         {
             redrawUi();
             TerrainManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Units Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Units Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::UnitSpriteManager:
         {
             redrawUi();
             UnitSpriteManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Battleanimation Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Battleanimation Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::BattleAnimationManager:
         {
 
             BattleAnimationManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading CO-Perk Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading CO-Perk Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::COPerkManager:
         {
             redrawUi();
             COPerkManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Wiki Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Wiki Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::WikiDatabase:
         {
             redrawUi();
             WikiDatabase::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Userdata ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Userdata ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::Userdata:
         {
             redrawUi();
             Userdata::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Achievement Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Achievement Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::Achievementmanager:
         {
             redrawUi();
             AchievementManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Shop Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Shop Textures ..."), step  * stepProgress);
             break;
         }
         case MovementPlannerAddInManager:
         {
             redrawUi();
             MovementPlannerAddInManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Movement planner addin Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Movement planner addin Textures ..."), step  * stepProgress);
             break;
         }
         case UiManager:
         {
             redrawUi();
             UiManager::getInstance();
-            pLoadingScreen->setProgress(tr("Loading Ui Textures ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Ui Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::ShopLoader:
         {
             redrawUi();
             ShopLoader::getInstance();
-            pLoadingScreen->setProgress(tr("Loading sounds ..."), step  * stepProgress);
+            LoadingScreen::getInstance()->setProgress(tr("Loading sounds ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::Sound:
@@ -420,7 +419,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             {
                 m_AudioManager->createSoundCache();
             }
-            pLoadingScreen->setProgress(tr("Loading Scripts ..."), SCRIPT_PROCESS);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Scripts ..."), SCRIPT_PROCESS);
             break;
         }
         case StartupPhase::LoadingScripts:

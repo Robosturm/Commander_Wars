@@ -174,3 +174,66 @@ void CreatedGui::remove()
 {
     detachAndRemove();
 }
+
+void CreatedGui::changeBackground(QString background)
+{
+    if (m_backgroundSprite.get() == nullptr)
+    {
+        m_backgroundSprite= MemoryManagement::create<oxygine::Sprite>();
+        m_backgroundSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
+    }
+    addChild(m_backgroundSprite);
+
+    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
+    // load background
+    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim(background);
+    if (Interpreter::exists())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValueList args({pInterpreter->newQObject(this),
+                           background});
+        QJSValue erg;
+        if (pInterpreter->exists("BACKGROUNDSELECTOR", "getBackgroundSprites" + objectName()))
+        {
+            erg = pInterpreter->doFunction("BACKGROUNDSELECTOR", "getBackgroundSprites" + objectName(), args);
+        }
+        else
+        {
+            erg = pInterpreter->doFunction("BACKGROUNDSELECTOR", "getBackgroundSprites", args);
+        }
+        if (erg.isString())
+        {
+            background = erg.toString();
+            pBackground = pBackgroundManager->getResAnim(background);
+        }
+        else if (erg.isArray())
+        {
+            float targetRatio = static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(oxygine::Stage::getStage()->getHeight());
+            float minDiff = std::numeric_limits<float>::max();
+            auto sprites = erg.toVariant().toStringList();
+            for (const auto & sprite : std::as_const(sprites))
+            {
+                auto* pAnim = pBackgroundManager->getResAnim(sprite);
+                if (pAnim != nullptr && pAnim->getHeight() > 0)
+                {
+                    float ratio = static_cast<float>(pAnim->getWidth()) / static_cast<float>(pAnim->getHeight());
+                    auto diff = qAbs(ratio - targetRatio);
+                    if (diff < minDiff)
+                    {
+                        minDiff = diff;
+                        pBackground = pAnim;
+                    }
+                }
+            }
+        }
+    }
+    if (pBackground != nullptr &&
+        pBackground->getWidth() > 0 &&
+        pBackground->getHeight() > 0)
+    {
+        m_backgroundSprite->setResAnim(pBackground);
+        // background should be last to draw
+        m_backgroundSprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
+        m_backgroundSprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
+    }
+}

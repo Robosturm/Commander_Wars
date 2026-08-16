@@ -16,7 +16,6 @@
 #include "game/co.h"
 
 #include "resource_management/gamemanager.h"
-#include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -31,7 +30,6 @@
 #include "objects/base/checkbox.h"
 
 #include "network/JsonKeys.h"
-#include "network/tcpclient.h"
 
 #include "multiplayer/networkcommands.h"
 
@@ -43,7 +41,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
       m_isReplay(isReplay)
 {
 #ifdef GRAPHICSUPPORT
-    setObjectName("VictoryMenue");
+    setObjectName("VictoryMenu");
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
@@ -71,19 +69,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-    // load background
-    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
-    addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("victorymenu");
-    if (pBackground != nullptr)
-    {
-        sprite->setResAnim(pBackground);
-        // background should be last to draw
-        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
-    }
+    changeBackground("victorymenu");
 
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/victorymenue");

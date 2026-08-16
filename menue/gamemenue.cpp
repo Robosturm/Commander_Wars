@@ -70,7 +70,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
       m_actionPerformer(m_pMap.get(), this)
 {
 #ifdef GRAPHICSUPPORT
-    setObjectName("GameMenue");
+    setObjectName("GameMenu");
 #endif
     CONSOLE_PRINT("Creating game menu", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);

@@ -5,16 +5,10 @@
 #include "coreengine/audiomanager.h"
 #include "coreengine/memorymanagement.h"
 
-#include "resource_management/backgroundmanager.h"
-
-#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
-
 #include "ui_reader/uifactory.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/dropdownmenu.h"
-
-#include "menue/mainwindow.h"
 
 const char* const CoGeneratorMenu::CO_GENERATOR_MENU_JSNAME = "COGENERATORMENU";
 const char* const CoGeneratorMenu::CO_GENERATOR_MENU_BASEPATH = "ui/coGenerator/";
@@ -29,21 +23,7 @@ CoGeneratorMenu::CoGeneratorMenu()
     pApp->pauseRendering();
     CONSOLE_PRINT("Entering CoGeneratorMenu", GameConsole::eDEBUG);
 
-    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-    // load background
-    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
-    addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("cogeneratormenu");
-    if (pBackground != nullptr &&
-        pBackground->getWidth() > 0 &&
-        pBackground->getHeight() > 0)
-    {
-        sprite->setResAnim(pBackground);
-        // background should be last to draw
-        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
-    }
+    changeBackground("cogeneratormenu");
 
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/coGenerator");

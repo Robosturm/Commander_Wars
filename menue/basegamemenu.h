@@ -57,7 +57,6 @@ public:
     void setGameStarted(bool newGameStarted);
     Q_INVOKABLE GameMap* getMap() const;
     Q_INVOKABLE void centerMapOnCursor();
-    Q_INVOKABLE void changeBackground(QString background);
     Q_INVOKABLE void autoFocus();
 signals:
     void sigMouseWheel(qint32 direction);
@@ -84,7 +83,6 @@ protected:
     spCursor m_Cursor;
     QRect m_autoScrollBorder{50, 50, 300, 50};
     spMapMover m_MapMover;
-    oxygine::spSprite m_backgroundSprite;
     oxygine::spSlidingActorNoClipRect m_mapSliding;
     oxygine::spActor m_mapSlidingActor;
     QPoint m_lastMapPoint{-1, -1};

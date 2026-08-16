@@ -50,7 +50,7 @@ EditorMenue::EditorMenue()
       m_autosaveTimer(this)
 {
 #ifdef GRAPHICSUPPORT
-    setObjectName("EditorMenue");
+    setObjectName("EditorMenu");
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();

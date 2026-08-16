@@ -12,8 +12,6 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/audiomanager.h"
 
-#include "resource_management/backgroundmanager.h"
-
 #include "game/gamemap.h"
 
 BaseGamemenu::BaseGamemenu(spGameMap pMap, bool clearPlayerlist)
@@ -102,25 +100,7 @@ void BaseGamemenu::loadBackground()
 {
     CONSOLE_PRINT("Entering In Game Menue", GameConsole::eDEBUG);
     // load background
-    m_backgroundSprite = MemoryManagement::create<oxygine::Sprite>();
-    oxygine::Actor::addChild(m_backgroundSprite);
     changeBackground("gamemenu");
-}
-
-void BaseGamemenu::changeBackground(QString background)
-{
-    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim(background);
-    if (pBackground != nullptr &&
-        pBackground->getHeight() > 0 &&
-        pBackground->getWidth() > 0)
-    {
-        m_backgroundSprite->setResAnim(pBackground);
-        // background should be last to draw
-        m_backgroundSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        m_backgroundSprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
-        m_backgroundSprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
-    }
 }
 
 void BaseGamemenu::loadHandling()

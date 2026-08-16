@@ -4,16 +4,15 @@
 #include <QObject>
 #include <QSemaphore>
 
-
-#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include "objects/base/label.h"
+#include "ui_reader/createdgui.h"
 
 class LoadingScreen;
 using spLoadingScreen = std::shared_ptr<LoadingScreen>;
 
-class LoadingScreen final : public QObject, public oxygine::Actor
+class LoadingScreen final : public CreatedGui
 {
     Q_OBJECT
 public:

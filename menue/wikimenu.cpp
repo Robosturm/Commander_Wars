@@ -1,7 +1,6 @@
 #include "menue/wikimenu.h"
 #include "menue/mainwindow.h"
 
-#include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/mainapp.h"
@@ -20,23 +19,7 @@ Wikimenu::Wikimenu()
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Entering Wiki Menue", GameConsole::eDEBUG);
-
-    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-    // load background
-    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
-    addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("wikimenu");
-    if (pBackground != nullptr &&
-        pBackground->getWidth() > 0 &&
-        pBackground->getHeight() > 0)
-    {
-        sprite->setResAnim(pBackground);
-        // background should be last to draw
-        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
-    }
-
+    changeBackground("wikimenu");
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioManager()->playRandom();

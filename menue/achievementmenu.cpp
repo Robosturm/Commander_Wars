@@ -8,7 +8,6 @@
 #include "coreengine/audiomanager.h"
 #include "coreengine/userdata.h"
 
-#include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -30,19 +29,8 @@ Achievementmenu::Achievementmenu()
     pApp->pauseRendering();
     CONSOLE_PRINT("Entering Achievement Menue", GameConsole::eDEBUG);
 
-    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-    // load background
-    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
-    addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("achievementmenu");
-    if (pBackground != nullptr)
-    {
-        sprite->setResAnim(pBackground);
-        // background should be last to draw
-        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
-    }
+    changeBackground("achievementmenu");
+
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/credits_options");
     pApp->getAudioManager()->playRandom();
