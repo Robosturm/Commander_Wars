@@ -2925,7 +2925,9 @@ void Multiplayermenu::handleModSyncRequest(QDataStream & stream, quint64 socketI
         const QString resolvedAbs = VirtualPaths::find(mod, false);
         if (resolvedAbs.isEmpty())
         {
-            sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncUnknownMod, mod, tr("Mod folder not found in install search paths."));
+            // Advertised but absent on disk: this host cannot be joined by anyone until its mod list is repaired.
+            CONSOLE_PRINT("Host advertises " + mod + " but its folder is missing from this install; no client can join until it is restored or deactivated.", GameConsole::eERROR);
+            sendModSyncReject(socketID, NetworkCommands::ModSyncRejectReason::ModSyncUnknownMod, mod, tr("The host is missing the folder for mod %1 and cannot send it. The host needs to restore or deactivate that mod.").arg(mod));
             return;
         }
         QString resolvedRoot;
