@@ -60,7 +60,6 @@ IngameInfoBar::IngameInfoBar(GameMenue *pMenu, GameMap *pMap)
     m_pDetailedViewBox = MemoryManagement::create<oxygine::Box9Sprite>();
     auto* pAnim = ObjectManager::getInstance()->getResAnim("panel_transparent+mask");
     m_pDetailedViewBox->setResAnim(pAnim);
-    addChild(m_pDetailedViewBox);
     if (getScaleX() < 0.75f)
     {
         m_pDetailedViewBox->setScale(1.0f / getScaleX() * 0.5f);
@@ -72,6 +71,7 @@ IngameInfoBar::IngameInfoBar(GameMenue *pMenu, GameMap *pMap)
     m_pDetailedViewBox->setSize(130, 199);
     m_pDetailedViewBox->setPosition(-(m_pDetailedViewBox->getScaledWidth() - m_pDetailedViewBox->getWidth()),
                                     getHeight() - m_pDetailedViewBox->getScaledHeight());
+    addChild(m_pDetailedViewBox);
     setX(oxygine::Stage::getStage()->getWidth() - getScaledWidth());
     connect(&m_debounceTimer, &QTimer::timeout, this, &IngameInfoBar::updateTerrainInfoInternal, Qt::QueuedConnection);
     updateTerrainInfo(0, 0, false);

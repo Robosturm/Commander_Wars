@@ -29,6 +29,7 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
     if (pAnim != nullptr)
     {
         m_pButton->setSize(pAnim->getSize());
+        setSize(pAnim->getSize());
     }
     m_pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = m_pButton.get();

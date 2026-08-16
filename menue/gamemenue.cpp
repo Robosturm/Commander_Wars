@@ -1525,8 +1525,11 @@ void GameMenue::loadGameMenue()
     addChild(m_IngameInfoBar);
     if (Settings::getInstance()->getSmallScreenDevice())
     {
-        m_IngameInfoBar->setX(oxygine::Stage::getStage()->getWidth() - 1);
-        auto moveButton = MemoryManagement::create<MoveInButton>(m_IngameInfoBar.get(), m_IngameInfoBar->getScaledWidth());
+        qint32 offsetX = m_IngameInfoBar->getDetailedViewBox()->getScaledWidth() + m_IngameInfoBar->getDetailedViewBox()->getX();
+        qint32 moveWidth = m_IngameInfoBar->getDetailedViewBox()->getWidth() * m_IngameInfoBar->getScaleX();
+        m_IngameInfoBar->setX(oxygine::Stage::getStage()->getWidth() - moveWidth);
+        auto moveButton = MemoryManagement::create<MoveInButton>(m_IngameInfoBar.get(), m_IngameInfoBar->getScaledWidth() - moveWidth);
+        moveButton->setX(offsetX - moveButton->getScaledWidth() - 20 * m_IngameInfoBar->getScaleX());
         m_IngameInfoBar->addChild(moveButton);
 
         connect(moveButton.get(), &MoveInButton::sigMoved, this, &GameMenue::doPlayerInfoFlipping, Qt::QueuedConnection);

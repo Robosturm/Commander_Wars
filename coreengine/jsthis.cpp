@@ -18,5 +18,8 @@ void JsThis::setupJsThis(QObject * me)
 
 JsThis::~JsThis()
 {
-    Interpreter::getInstance()->deleteQJsObject(this);
+    if (Interpreter::exists())
+    {
+        Interpreter::getInstance()->deleteQJsObject(this);
+    }
 }
