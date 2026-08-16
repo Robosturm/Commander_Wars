@@ -87,6 +87,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
             asyncMatch = m_syncCounter + 1 != pGameAction->getSyncCounter();
             invalidHash = pGameAction->getMapHash() != mapHash;
         }
+        const bool abortedByAsync = (asyncMatch || invalidHash) && multiplayer;
         if (asyncMatch || invalidHash)
         {
             if (asyncMatch)
@@ -104,8 +105,8 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
                 m_pMenu->doResyncGame();
             }
         }
-        if ((!asyncMatch && !invalidHash) || !multiplayer)
-        {            
+        if (!abortedByAsync)
+        {
             // perform action
             GlobalUtils::seed(pGameAction->getSeed());
             GlobalUtils::setUseSeed(true);
@@ -175,6 +176,15 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
             m_pCurrentAction = pGameAction;
             pGameAction.reset();
             skipAnimations(false);
+        }
+        else
+        {
+            // a dropped action must still release the gate
+            m_actionRunning = false;
+            if (m_pMenu != nullptr)
+            {
+                m_pMenu->setSaveAllowed(true);
+            }
         }
         if (pCurrentPlayer != m_pMap->getCurrentPlayer() &&
             m_pMenu != nullptr &&
