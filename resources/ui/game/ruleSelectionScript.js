@@ -285,6 +285,12 @@ var RuleSelectionScript =
         var mapPalette = currentMenu.getObject("MAP_PALETTE");
         var item = globals.randInt(0, mapPalette.getItemCount() - 1);
         mapPalette.setCurrentItem(item);
+        RuleSelectionScript.applyPalette(item);
+    },
+    applyPalette : function(item)
+    {
         currentMenu.getMap().getGameRules().setMapPalette(item);
-    }
+        var paletteId = TERRAIN.getPaletteId(item, 0);
+        currentMenu.getObject("PalettePreview").applyPalette(paletteId);
+    },
 };

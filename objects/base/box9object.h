@@ -15,6 +15,8 @@ public:
     Box9Object();
     Q_INVOKABLE void setColorTableFromPlayer(Player* pPlayer, bool matrix);
     Q_INVOKABLE void setIsVisible(bool vis);
+    Q_INVOKABLE void setPosX(qint32 x);
+    Q_INVOKABLE void setPosY(qint32 y);
 };
 
 Q_DECLARE_INTERFACE(Box9Object, "Box9Object");

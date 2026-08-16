@@ -34,6 +34,7 @@
 #include "objects/base/box9object.h"
 #include "objects/base/coloredbar.h"
 #include "objects/minimap.h"
+#include "objects/boxterrainpalettepreview.h"
 
 #include "game/gamemap.h"
 
@@ -70,6 +71,7 @@ static const char* const itemTab = "Tab";
 static const char* const itemMinimap = "Minimap";
 static const char* const itemSlidingBox = "SlidingBox";
 static const char* const itemColoredBar = "ColoredBar";
+static const char* const itemBoxTerrainPalette = "BoxTerrainPalette";
 
 static const char* const attrX = "x";
 static const char* const attrY = "y";
@@ -129,6 +131,7 @@ static const char* const attrTabLabel = "label";
 static const char* const attrInactiveResAnim = "inactiveResAnim";
 static const char* const attrActiveResAnim = "activeResAnim";
 static const char* const attrTabs = "tabs";
+static const char* const attrTerrain = "terrain";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -169,6 +172,8 @@ UiFactory::UiFactory()
     m_factoryItems.push_back({QString(itemMinimap), std::bind(&UiFactory::createMinimap, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemSlidingBox), std::bind(&UiFactory::createSlidingBox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemColoredBar), std::bind(&UiFactory::createColoredBar, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.push_back({QString(itemBoxTerrainPalette), std::bind(&UiFactory::createBoxTerrainPalette, this, _1, _2, _3, _4, _5)});
+
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
 
@@ -1846,6 +1851,65 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
     return success;
 }
 
+bool UiFactory::createBoxTerrainPalette(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight, attrSprite});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
+        qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
+        qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
+        qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
+        qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
+        QString spriteId = getStringValue(getAttribute(childs, attrSprite), id, loopIdx, pMenu);
+        bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
+        bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
+        ObjectManager* pObjectManager = ObjectManager::getInstance();
+        spBoxTerrainPalettePreview pPanel = MemoryManagement::create<BoxTerrainPalettePreview>();
+        if (!id.isEmpty())
+        {
+            pPanel->setObjectName(id);
+        }
+        oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteId);
+        pPanel->setResAnim(pAnim);
+        pPanel->setX(x);
+        pPanel->setY(y);
+        pPanel->setSize(width, height);
+        pPanel->setScale(1);
+        pPanel->setVisible(visible);
+        pPanel->setEnabled(enabled);
+        m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
+        updateMenuSize(pMenu);
+        m_parentSize = QSize(pPanel->getScaledWidth(), pPanel->getScaledHeight());
+        auto node = getNode(childs, attrChilds).firstChild();
+        while (!node.isNull())
+        {
+            while (node.isComment())
+            {
+                node = node.nextSibling();
+            }
+            if (!node.isNull())
+            {
+                auto terrainElement = node.toElement();
+                if (terrainElement.nodeName() == attrTerrain)
+                {
+                    auto terrainChilds = terrainElement.childNodes();
+                    auto terrainX = getIntValue(getAttribute(terrainChilds, attrX), id, loopIdx, pMenu);
+                    auto terrainY = getIntValue(getAttribute(terrainChilds, attrY), id, loopIdx, pMenu);
+                    auto terrainId = getStringValue(getAttribute(terrainChilds, attrId), id, loopIdx, pMenu);
+                    pPanel->addTerrain(terrainId, terrainX, terrainY);
+                }
+            }
+            node = node.nextSibling();
+        }
+        parent->addChild(pPanel);
+        m_parentSize = QSize(0, 0);
+        m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
+        item = pPanel;
+    }
+    return success;
+}
 QString UiFactory::getAttribute(const QDomNodeList & childs, const QString & attribute)
 {
     qint32 childCount = childs.count();

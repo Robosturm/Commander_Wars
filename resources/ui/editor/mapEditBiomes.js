@@ -43,6 +43,11 @@ var MapEditBiomes =
         var newBiome = MapEditBiomes.getSelectedNewBiome();
         var rect = Qt.rect(x, y, width, height);
         currentMenu.getBaseMenu().getMap().applyBiomeToArea(rect, TERRAIN.terrainBiomeGroups[newBiome]);
-    }
-
+    },
+    onPaletteChanged : function()
+    {
+        var newPalette = MapEditBiomes.getSelectedNewPalette();
+        var paletteId = TERRAIN.getPaletteId(newPalette, 0);
+        currentMenu.getObject("PalettePreview").applyPalette(paletteId);
+    },
 }

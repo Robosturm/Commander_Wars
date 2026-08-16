@@ -623,7 +623,7 @@
                     <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the palette used for the map.")</tooltip>
                     <startValue>currentMenu.getMap().getGameRules().getMapPalette()</startValue>
                     <items>TERRAIN.getPaletteNamesArray()</items>
-                    <onEvent>currentMenu.getMap().getGameRules().setMapPalette(input);</onEvent>
+                    <onEvent>RuleSelectionScript.applyPalette(input);</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
                 </DropDownMenu>
                 <Button>
@@ -635,6 +635,46 @@
                     <onEvent>RuleSelectionScript.selectRandomPalette()</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
                 </Button>
+                <BoxTerrainPalette>
+                    <x>lastX + lastWidth + 5</x>
+                    <y>lastY + 2</y>
+                    <width>32 * 6</width>
+                    <height>32</height>
+                    <sprite></sprite>
+                    <Id>PalettePreview</Id>
+                    <childs>
+                        <terrain>
+                            <x>0</x>
+                            <y>0</y>
+                            <Id>"MOUNTAIN"</Id>
+                        </terrain>
+                        <terrain>
+                            <x>32</x>
+                            <y>0</y>
+                            <Id>"FOREST"</Id>
+                        </terrain>
+                        <terrain>
+                            <x>64</x>
+                            <y>0</y>
+                            <Id>"PLAINS"</Id>
+                        </terrain>
+                        <terrain>
+                            <x>96</x>
+                            <y>0</y>
+                            <Id>"STREET"</Id>
+                        </terrain>
+                        <terrain>
+                            <x>128</x>
+                            <y>0</y>
+                            <Id>"BEACH"</Id>
+                        </terrain>
+                        <terrain>
+                            <x>160</x>
+                            <y>0</y>
+                            <Id>"SEA"</Id>
+                        </terrain>
+                    </childs>
+                </BoxTerrainPalette>
                 <Label>
                     <x>5</x>
                     <y>lastY + lastHeight + 10</y>

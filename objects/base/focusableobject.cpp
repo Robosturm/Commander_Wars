@@ -144,6 +144,16 @@ void FocusableObject::setIsVisible(bool vis)
     setVisible(vis);
 }
 
+void FocusableObject::setPosX(qint32 x)
+{
+    setX(x);
+}
+
+void FocusableObject::setPosY(qint32 y)
+{
+    setY(y);
+}
+
 bool FocusableObject::getFocused() const
 {
     return m_focused;

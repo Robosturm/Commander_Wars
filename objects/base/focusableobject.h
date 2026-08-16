@@ -27,6 +27,8 @@ public:
     Q_INVOKABLE void setSubComponent(bool subComponent);
     Q_INVOKABLE bool getFocused() const;
     Q_INVOKABLE void setIsVisible(bool vis);
+    Q_INVOKABLE void setPosX(qint32 x);
+    Q_INVOKABLE void setPosY(qint32 y);
 signals:
     void sigFocusedLost();
     void sigFocused();

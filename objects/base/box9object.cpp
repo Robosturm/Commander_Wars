@@ -14,3 +14,13 @@ void Box9Object::setIsVisible(bool vis)
 {
     setVisible(vis);
 }
+
+void Box9Object::setPosX(qint32 x)
+{
+    setX(x);
+}
+
+void Box9Object::setPosY(qint32 y)
+{
+    setY(y);
+}

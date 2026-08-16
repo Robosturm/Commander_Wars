@@ -19,6 +19,8 @@ public:
     Q_INVOKABLE void setText(const QString & text);
     Q_INVOKABLE Label* getLabel();
     Q_INVOKABLE void setIsVisible(bool vis);
+    Q_INVOKABLE void setPosX(qint32 x);
+    Q_INVOKABLE void setPosY(qint32 y);
 private:
     oxygine::spSprite m_background;
     oxygine::spColorRectSprite m_leftBar;

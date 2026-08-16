@@ -137,8 +137,48 @@
                 <tooltip>QT_TRANSLATE_NOOP("GAME","New palette for the terrains in the area.")</tooltip>
                 <startValue>0</startValue>
                 <items>TERRAIN.getPaletteNamesArray()</items>
-                <onEvent></onEvent>
+                <onEvent>MapEditBiomes.onPaletteChanged()</onEvent>
             </DropDownMenu>
+            <BoxTerrainPalette>
+                <x>lastX + lastWidth + 5</x>
+                <y>lastY + 2</y>
+                <width>32 * 6</width>
+                <height>32</height>
+                <sprite></sprite>
+                <Id>PalettePreview</Id>
+                <childs>
+                    <terrain>
+                        <x>0</x>
+                        <y>0</y>
+                        <Id>"MOUNTAIN"</Id>
+                    </terrain>
+                    <terrain>
+                        <x>32</x>
+                        <y>0</y>
+                        <Id>"FOREST"</Id>
+                    </terrain>
+                    <terrain>
+                        <x>64</x>
+                        <y>0</y>
+                        <Id>"PLAINS"</Id>
+                    </terrain>
+                    <terrain>
+                        <x>96</x>
+                        <y>0</y>
+                        <Id>"STREET"</Id>
+                    </terrain>
+                    <terrain>
+                        <x>128</x>
+                        <y>0</y>
+                        <Id>"BEACH"</Id>
+                    </terrain>
+                    <terrain>
+                        <x>160</x>
+                        <y>0</y>
+                        <Id>"SEA"</Id>
+                    </terrain>
+                </childs>
+            </BoxTerrainPalette>
             <Button>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>

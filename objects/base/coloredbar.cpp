@@ -59,3 +59,13 @@ void ColoredBar::setText(const QString & text)
 {
     m_label->setHtmlText(text);
 }
+
+void ColoredBar::setPosX(qint32 x)
+{
+    setX(x);
+}
+
+void ColoredBar::setPosY(qint32 y)
+{
+    setY(y);
+}

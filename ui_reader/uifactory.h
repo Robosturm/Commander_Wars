@@ -267,6 +267,13 @@ private:
      * optional: Id,
      */
     bool createColoredBar(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+      * Nodename: BoxTerrainPalette
+      * supported attributes are:
+      * mandatory: x, y, width, height, sprite, childs
+      * optional: id, visible
+     */
+    bool createBoxTerrainPalette(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
 signals:
     void sigDoEvent(QString command, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
 private slots:
