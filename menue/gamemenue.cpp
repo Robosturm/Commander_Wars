@@ -1306,7 +1306,7 @@ void GameMenue::disconnected(quint64 socketID)
                 {
                     CONSOLE_PRINT("Connection to host lost", GameConsole::eDEBUG);
                     m_gameStarted = false;
-                    spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
+                    spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("The connection to the host was lost. The game will now be stopped. You can save the game and reload the game to continue playing this map."));
                     addChild(pDialogMessageBox);
                 }
             }
