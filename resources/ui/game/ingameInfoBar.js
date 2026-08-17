@@ -280,7 +280,7 @@ var IngameInfoBar =
             IngameInfoBar.PlayerInfoObjects[objIdx][IngameInfoBar.PlayerInfoWeatherPred0BoxIdx].setIsVisible(false);
             IngameInfoBar.PlayerInfoObjects[objIdx][IngameInfoBar.PlayerInfoWeatherPred1BoxIdx].setIsVisible(false);
         }
-        var foggy = fogMode !== GameEnums.Fog_Off || fogMode !== GameEnums.Fog_OfMist;
+        var foggy = fogMode !== GameEnums.Fog_Off && fogMode !== GameEnums.Fog_OfMist;
         var fogInfo = (viewPlayer === null || (foggy && viewPlayer.getTeam() !== player.getTeam()));
         if (fogInfo)
         {
