@@ -41,9 +41,9 @@ var IngameInfoBar =
     PlayerIncomeLabelIdx : 15,
     PlayerPlayerLabelIdx : 16,
     PlayerTeamLabelIdx : 17,
-    PlayerInfoObjectCount = 18,
+    PlayerInfoObjectCount : 18,
     // Terrain constants
-    Gray : Qt.rgba(127, 127, 127, 255),
+    Gray : "#7F7F7F",
     MaxTerrainHp : 100,
     MaxResistance : 20,
     TerrainNameLabelId : "TERRAIN_NAME_ID",
@@ -366,7 +366,7 @@ var IngameInfoBar =
                 resistance = IngameInfoBar.MaxResistance - unit.getCapturePoints();
             }
             var divider = resistance / IngameInfoBar.MaxResistance;
-            IngameInfoBar.TerrainInfoObjects[IngameInfoBar.TerrainResistanceIdx].changeBar(divider, Qt.rgba(0, 255, 255, 255), IngameInfoBar.Gray);
+            IngameInfoBar.TerrainInfoObjects[IngameInfoBar.TerrainResistanceIdx].changeBar(divider, "#00FFFF", IngameInfoBar.Gray);
             IngameInfoBar.TerrainInfoObjects[IngameInfoBar.TerrainResistanceIdx].setText(qsTr("Resistance: ") + resistance);
         }
         else
@@ -426,7 +426,7 @@ var IngameInfoBar =
                 divider = 0;
                 IngameInfoBar.UnitInfoObjects[IngameInfoBar.UnitFuelIdx].setText(qsTr("Fuel: ") + "-/-");
             }
-            IngameInfoBar.UnitInfoObjects[IngameInfoBar.UnitFuelIdx].changeBar(divider, Qt.rgba(0, 0, 255, 255), IngameInfoBar.Gray);
+            IngameInfoBar.UnitInfoObjects[IngameInfoBar.UnitFuelIdx].changeBar(divider, "#0000FF", IngameInfoBar.Gray);
 
             var ammo1 = unit.getAmmo1();
             var maxAmmo1 = unit.getMaxAmmo1();
@@ -440,7 +440,7 @@ var IngameInfoBar =
                 divider = 0;
                 IngameInfoBar.UnitInfoObjects[IngameInfoBar.UnitAmmo1Idx].setText(qsTr("Ammo 1: ") + "-/-");
             }
-            IngameInfoBar.UnitInfoObjects[IngameInfoBar.UnitAmmo1Idx].changeBar(divider, Qt.rgba(255, 165, 0, 255), IngameInfoBar.Gray);
+            IngameInfoBar.UnitInfoObjects[IngameInfoBar.UnitAmmo1Idx].changeBar(divider, "#FFA500", IngameInfoBar.Gray);
 
             var ammo2 = unit.getAmmo2();
             var maxAmmo2 = unit.getMaxAmmo2();
@@ -454,7 +454,7 @@ var IngameInfoBar =
                 divider = 0;
                 IngameInfoBar.UnitInfoObjects[IngameInfoBar.UnitAmmo2Idx].setText(qsTr("Ammo 2: ") + "-/-");
             }
-            IngameInfoBar.UnitInfoObjects[IngameInfoBar.UnitAmmo2Idx].changeBar(divider, Qt.rgba(255, 165, 0, 255), IngameInfoBar.Gray);
+            IngameInfoBar.UnitInfoObjects[IngameInfoBar.UnitAmmo2Idx].changeBar(divider, "#FFA500", IngameInfoBar.Gray);
             IngameInfoBar.UnitInfoObjects[IngameInfoBar.UnitOwnerLabelIdx].setHtmlText(qsTr("Player ") + (owner.getPlayerID() + 1));
             var weaponId = unit.getWeapon1ID();
             if (weaponId !== "")
@@ -551,14 +551,14 @@ var IngameInfoBar =
 
     getHealthColor : function(divider)
     {
-        var color = Qt.rgba(255, 0, 0, 255);
+        var color = "#FF0000";
         if (divider > 2.0 / 3.0)
         {
-            color = Qt.rgba(0, 128, 0, 255);
+            color = "#008000";
         }
         else if (divider > 1.0 / 3.0)
         {
-            color = Qt.rgba(255, 128, 0, 255);
+            color = "#FF8000";
         }
         return color;
     },
