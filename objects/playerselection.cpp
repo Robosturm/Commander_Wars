@@ -1359,6 +1359,12 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         QString messageType;
         stream >> messageType;
         CONSOLE_PRINT("Network Command PlayerSelection::recieveData: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
+        // Host broadcasts reach sockets that have no map yet.
+        if (m_pMap == nullptr)
+        {
+            CONSOLE_PRINT("Ignoring " + messageType + " received before a map was attached", GameConsole::eDEBUG);
+            return;
+        }
         if (messageType == NetworkCommands::REQUESTPLAYER)
         {
             requestPlayer(socketID, stream);
