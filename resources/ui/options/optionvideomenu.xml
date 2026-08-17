@@ -220,6 +220,23 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Map folder color:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getStageWidth() - 90 - lastWidth - lastX</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the color used for folders while browsing maps. Off shows them in the same color as maps.")</tooltip>
+                <startValue>settings.getMapFolderColor()</startValue>
+                <items>OptionMenu.getMapFolderColors()</items>
+                <onEvent>settings.setMapFolderColor(input)</onEvent>
+            </DropDownMenu>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Automatic updates:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

@@ -164,6 +164,10 @@ var OptionMenu =
     {
         return [qsTr("Window"), qsTr("Borderless"), qsTr("Fullscreen")];
     },
+    getMapFolderColors : function()
+    {
+        return [qsTr("Off"), qsTr("Blue"), qsTr("Purple"), qsTr("White")];
+    },
     getBattleAnimationModes : function()
     {
         return [qsTr("None"), qsTr("All"), qsTr("Own"), qsTr("Ally"), qsTr("Enemy")];

@@ -346,6 +346,8 @@ public:
     Q_INVOKABLE bool getSpawnAiProcess();
     Q_INVOKABLE bool getAutomaticUpdates();
     Q_INVOKABLE void setAutomaticUpdates(bool newAutomaticUpdates);
+    Q_INVOKABLE qint32 getMapFolderColor();
+    Q_INVOKABLE void setMapFolderColor(qint32 value);
     Q_INVOKABLE QString getServerAdress();
     Q_INVOKABLE void setServerAdress(const QString ServerAdress);
     Q_INVOKABLE QString getSecondaryServerAdress();
@@ -864,6 +866,7 @@ private:
     qint32 m_framesPerSecond{60};
     float m_ingameMenuScaling{1.0f};
     bool m_automaticUpdates{true};
+    GameEnums::MapFolderColor m_mapFolderColor{GameEnums::MapFolderColor_White};
     float m_gameScale{1.0f};
     float m_zoomModifier{2.0f};
     qint32 m_mouseUpdateRate{33};

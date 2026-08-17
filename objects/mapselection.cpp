@@ -11,6 +11,10 @@
 
 #include "game/gamemap.h"
 
+const QColor MapSelection::FOLDER_COLOR_BLUE{170, 235, 255};
+const QColor MapSelection::FOLDER_COLOR_PURPLE{230, 195, 255};
+const QColor MapSelection::FOLDER_COLOR_WHITE{255, 255, 255};
+
 MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QStringList & filter)
     : m_filter(filter),
       m_currentFolder(Settings::getInstance()->getUserPath() + "maps"),
@@ -221,7 +225,23 @@ void MapSelection::addFiles(const QString & newFolder, const QStringList & searc
     m_Files.append(files);
 }
 
-void MapSelection::addNewSelectionItem(qint32 i, qint32 & y)
+QColor MapSelection::getFolderTextColor()
+{
+    switch (static_cast<GameEnums::MapFolderColor>(Settings::getInstance()->getMapFolderColor()))
+    {
+        case GameEnums::MapFolderColor_Blue:
+            return FOLDER_COLOR_BLUE;
+        case GameEnums::MapFolderColor_Purple:
+            return FOLDER_COLOR_PURPLE;
+        case GameEnums::MapFolderColor_White:
+            return FOLDER_COLOR_WHITE;
+        case GameEnums::MapFolderColor_Off:
+            break;
+    }
+    return QColor();
+}
+
+void MapSelection::addNewSelectionItem(qint32 i, qint32 & y, bool isFolder)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     const qint32 width = m_ItemContainer->getContentWidth() - 50;
@@ -234,6 +254,14 @@ void MapSelection::addNewSelectionItem(qint32 i, qint32 & y)
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
+    if (isFolder)
+    {
+        const QColor folderColor = getFolderTextColor();
+        if (folderColor.isValid())
+        {
+            style.color = folderColor;
+        }
+    }
     pLabel->setStyle(style);
     pLabel->setHtmlText("");
     pLabel->setY(2);
@@ -285,19 +313,19 @@ void MapSelection::updateSelection()
     qint32 y = 5;
     for (qint32 i = 0; i < m_Files.size() || i < m_itemCount; ++i)
     {
-        addNewSelectionItem(i, y);
+        const bool isFolder = (i < m_Files.size()) && (m_Files[i] == ".." || QDir(m_Files[i]).exists());
+        addNewSelectionItem(i, y, isFolder);
         if (i >= m_Files.size())
         {
             m_Items[i]->setHtmlText("");
         }
         else
         {
-            QDir dir(m_Files[i]);
             if (m_Files[i] == "..")
             {
                 m_Items[i]->setHtmlText(m_Files[i]);
             }
-            else if (dir.exists())
+            else if (isFolder)
             {
                 QStringList data = m_Files[i].split("/");
                 QStringList data2 = data[data.size() - 1].split(".");
