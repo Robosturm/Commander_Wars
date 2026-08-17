@@ -1,6 +1,7 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/settings.h"
 #include "coreengine/gameconsole.h"
+#include "coreengine/virtualpaths.h"
 
 #include <QDirIterator>
 #include <QCoreApplication>
@@ -21,15 +22,10 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
     QCryptographicHash myHash(QCryptographicHash::Sha512);
     QStringList fullList;
 
-    QString userPath = Settings::getInstance()->getUserPath();
+    // A hand-rolled list added the working directory that VirtualPaths omits, hashing a mod in both places twice.
     for (const auto & folder : std::as_const(folders))
     {
-        fullList.append(oxygine::Resource::RCC_PREFIX_PATH + folder);
-        fullList.append(userPath + folder);
-        if (!userPath.isEmpty())
-        {
-            fullList.append(folder);
-        }
+        fullList.append(VirtualPaths::createSearchPath(folder, false));
     }
     for (const auto & folder : std::as_const(fullList))
     {

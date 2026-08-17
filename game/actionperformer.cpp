@@ -60,6 +60,13 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
     Mainapp::getInstance()->pauseRendering();
     if (m_multiplayerSyncData.m_waitingForSyncFinished && m_pMenu != nullptr)
     {
+        // a parked action must release the gate for the resubmit
+        m_actionRunning = false;
+        m_pMenu->setSaveAllowed(true);
+        if (m_multiplayerSyncData.m_postSyncAction.get() != nullptr)
+        {
+            CONSOLE_PRINT("Replacing an already parked action while waiting for the join sync.", GameConsole::eWARNING);
+        }
         m_multiplayerSyncData.m_postSyncAction = pGameAction;
         spDialogConnecting pDialogConnecting = MemoryManagement::create<DialogConnecting>(tr("Waiting for Players/Observers to join..."), 1000 * 60 * 5);
         m_pMenu->addChild(pDialogConnecting);
