@@ -127,9 +127,10 @@ QString GameScript::getVictoryInfo()
     if (m_loaded)
     {
         Mainapp::getInstance()->pauseRendering();
-        Interpreter* pInterpreter = Interpreter::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();        
         QString function1 = "getVictoryInfo";
-        QJSValue ret = pInterpreter->doFunction(m_scriptName, function1);
+        QJSValueList args({GameMap::getMapJsThis(m_pMap)});
+        QJSValue ret = pInterpreter->doFunction(m_scriptName, function1, args);
         Mainapp::getInstance()->continueRendering();
         if (ret.isString())
         {

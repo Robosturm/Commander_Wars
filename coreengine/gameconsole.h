@@ -46,6 +46,7 @@ public:
         eJavaScript  = 1 << 5,
         eAudio       = 1 << 6,
         eUiFactory   = 1 << 7,
+        eKeepAlive   = 1 << 8,
     };
     Q_ENUM(eModules)
 

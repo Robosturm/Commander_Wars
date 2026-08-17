@@ -3,6 +3,7 @@
 
 #include <QSslError>
 #include <QList>
+#include <QTimer>
 
 #include "network/networkInterface.h"
 #include "network/rxtask.h"
@@ -29,6 +30,7 @@ public:
     spRxTask getRXTask() const;
     spTxTask getTXTask() const;
     virtual void setSocketID(const quint64 &socketID) override;
+    void startKeepAliveHandling();
 
 public slots:
     virtual void connectTCP(QString address, quint16 port, QString /* secondaryAdress */, bool gatewayClient = false) override;
@@ -39,6 +41,10 @@ protected slots:
     void connected();
 private slots:
     void sslErrors(const QList<QSslError> &errors);
+    void sendKeepAliveMessage();
+    void keepAlive();
+    void keepAliveTimeout();
+
 protected:
     void displayDetailedError() override;
 private:
@@ -49,6 +55,8 @@ private:
     QString m_secondaryAdress;
     quint16 m_port{0};
     bool m_testedSecondaryAddress{false};
+    QTimer m_keepAliveTimer{this};
+    QTimer m_keepAliveTimeoutTimer{this};
 };
 
 #endif // TCPCLIENT_H

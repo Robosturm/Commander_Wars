@@ -2,6 +2,9 @@
 #include "network/txtask.h"
 #include "network/tcpclient.h"
 
+static constexpr std::chrono::seconds KEEP_ALIVE_TIMEOUT(30);
+static constexpr std::chrono::seconds KEEP_SEND_TIMEOUT(5);
+
 TCPClient::TCPClient(QObject* pParent)
     : NetworkInterface(pParent),
       m_pRXTask(nullptr),
@@ -28,6 +31,7 @@ TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, spQSs
     m_pRXTask->setSocketID(socketId);
     m_pTXTask->setSocketID(socketId);
     connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
+    startKeepAliveHandling();
 }
 
 TCPClient::~TCPClient()
@@ -135,6 +139,7 @@ void TCPClient::connected()
         CONSOLE_PRINT("Client is connected and encrypted ready using socket id " + QString::number(m_socketID), GameConsole::eLogLevels::eDEBUG);
         m_isConnected = true;
         m_testedSecondaryAddress = true; // no need to test the secondary address
+        startKeepAliveHandling();
         emit sigConnected(m_socketID);
     }
 }
@@ -168,4 +173,33 @@ void TCPClient::sslErrors(const QList<QSslError> &errors)
 void TCPClient::displayDetailedError()
 {
     CONSOLE_PRINT("Socket error: " + m_pSocket->errorString(), GameConsole::eDEBUG);
+}
+
+void TCPClient::startKeepAliveHandling()
+{
+    connect(&m_keepAliveTimer, &QTimer::timeout, this, &TCPClient::sendKeepAliveMessage, Qt::QueuedConnection);
+    connect(&m_keepAliveTimeoutTimer, &QTimer::timeout, this, &TCPClient::keepAliveTimeout, Qt::QueuedConnection);
+    connect(m_pRXTask.get(), &RxTask::sigKeepAliveReceived, this, &TCPClient::keepAlive, Qt::QueuedConnection);
+    m_keepAliveTimer.setSingleShot(false);
+    m_keepAliveTimer.start(KEEP_SEND_TIMEOUT);
+    keepAlive();
+}
+
+void TCPClient::keepAliveTimeout()
+{
+    CONSOLE_PRINT_MODULE("Keep alive timeout. Disconnecting" + QString::number(m_socketID), GameConsole::eLogLevels::eDEBUG, GameConsole::eKeepAlive);
+    disconnectTCP();
+}
+
+void TCPClient::keepAlive()
+{
+    CONSOLE_PRINT_MODULE("Received keep alive" + QString::number(m_socketID), GameConsole::eLogLevels::eDEBUG, GameConsole::eKeepAlive);
+    m_keepAliveTimeoutTimer.setSingleShot(true);
+    m_keepAliveTimeoutTimer.start(KEEP_ALIVE_TIMEOUT);
+}
+
+void TCPClient::sendKeepAliveMessage()
+{
+    CONSOLE_PRINT_MODULE("Sending keep alive" + QString::number(m_socketID), GameConsole::eLogLevels::eDEBUG, GameConsole::eKeepAlive);
+    emit sig_sendData(m_socketID, QByteArray(), NetworkSerives::KeepAlive, false);
 }

@@ -55,7 +55,11 @@ void RxTask::recieveData()
             {
                 return;
             }
-            if (eService == NetworkInterface::NetworkSerives::Gateway)
+            if (eService == NetworkInterface::NetworkSerives::KeepAlive)
+            {
+                emit sigKeepAliveReceived();
+            }
+            else if (eService == NetworkInterface::NetworkSerives::Gateway)
             {
                 handleGatewayData(socketId, data);
             }

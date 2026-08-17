@@ -23,6 +23,8 @@ public:
     quint64 getSocketID() const;
     void setSocketID(const quint64 &SocketID);
     void close();
+signals:
+    void sigKeepAliveReceived();
 public slots:
     void recieveData();
 private:

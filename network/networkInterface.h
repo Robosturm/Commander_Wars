@@ -39,6 +39,7 @@ public:
         CryptedMessage,
         AiPipe,                 /**< internal pipe for computing what the ai does */
         Gateway,
+        KeepAlive,
         Max,
     };
 

@@ -158,10 +158,10 @@ bool Interpreter::openScript(const QString & script, bool setup)
         QString contents = stream.readAll();
         if (setup)
         {
-            stream.seek(0);
-            while (!stream.atEnd())
+            QTextStream runtimeStream(&contents, QIODevice::ReadOnly);
+            while (!runtimeStream.atEnd())
             {
-                QString line = stream.readLine().simplified();
+                QString line = runtimeStream.readLine().simplified();
                 m_runtimeData += line + "\n";
             }
         }
