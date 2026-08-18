@@ -255,6 +255,15 @@ public:
     };
     Q_ENUM(AutoFocusing)
 
+    enum MapFolderColor
+    {
+        MapFolderColor_Off,
+        MapFolderColor_Blue,
+        MapFolderColor_Purple,
+        MapFolderColor_White,
+    };
+    Q_ENUM(MapFolderColor)
+
     enum WeaponType
     {
         WeaponType_Both,

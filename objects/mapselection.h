@@ -1,6 +1,7 @@
 #ifndef MAPSELECTION_H
 #define MAPSELECTION_H
 
+#include <QColor>
 #include <QObject>
 #include <QTimer>
 #include <QVector>
@@ -22,6 +23,9 @@ class MapSelection final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
     static const qint32 m_itemHeigth{35};
+    static const QColor FOLDER_COLOR_BLUE;
+    static const QColor FOLDER_COLOR_PURPLE;
+    static const QColor FOLDER_COLOR_WHITE;
 public:
     explicit MapSelection(qint32 heigth, qint32 width, QString folder, const QStringList & filter);
     virtual ~MapSelection() = default;
@@ -67,7 +71,8 @@ public slots:
     void filterChanged();
     void refresh();
 private:
-    void addNewSelectionItem(qint32 i, qint32 & y);
+    void addNewSelectionItem(qint32 i, qint32 & y, bool isFolder);
+    static QColor getFolderTextColor();
     void addFiles(const QString & newFolder, const QStringList & searchPaths, QStringList filterList, QDir::Filter filter);
 private:
     QStringList m_filter;

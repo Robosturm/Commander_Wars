@@ -247,6 +247,16 @@ void Settings::setAutomaticUpdates(bool newAutomaticUpdates)
     m_automaticUpdates = newAutomaticUpdates;
 }
 
+qint32 Settings::getMapFolderColor()
+{
+    return static_cast<qint32>(m_mapFolderColor);
+}
+
+void Settings::setMapFolderColor(qint32 value)
+{
+    m_mapFolderColor = static_cast<GameEnums::MapFolderColor>(value);
+}
+
 QString Settings::getUpdateStep()
 {
     return m_updateStep;
@@ -1410,6 +1420,7 @@ void Settings::setup()
             MemoryManagement::create<Value<qint32>>("General", "TouchPointSensitivity", &m_touchPointSensitivity, 15, 0, size.width()),
             MemoryManagement::create<Value<bool>>("General", "GamepadEnabled", &m_gamepadEnabled, false, false, true),
             MemoryManagement::create<Value<bool>>("General", "AutomaticUpdates", &m_automaticUpdates, true, false, true),
+            MemoryManagement::create<Value<GameEnums::MapFolderColor>>("General", "MapFolderColor", &m_mapFolderColor, GameEnums::MapFolderColor_White, GameEnums::MapFolderColor_Off, GameEnums::MapFolderColor_White),
             MemoryManagement::create<Value<float>>("General", "GamepadSensitivity", &m_gamepadSensitivity, 1.0f, 0.1f, 100),
             MemoryManagement::create<Value<qint32>>("General", "MaxFPS", &m_framesPerSecond, 60, 30, 60),
             MemoryManagement::create<Value<qint32>>("General", "MouseUpdateRate", &m_mouseUpdateRate, 33, 1, 200),
