@@ -107,18 +107,26 @@ void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
 
 void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 {
-    if (m_pMap != nullptr && m_pMap->onMap(x, y) && (m_LastX != x || m_LastY != y || update))
+    if (m_pMap != nullptr && m_pMap->onMap(x, y))
     {
-        m_newX = x;
-        m_newY = y;
-        if (!m_pMap->onMap(m_LastX, m_LastY))
+        if (m_LastX != x || m_LastY != y || update)
         {
-            updateTerrainInfoInternal();
+            m_newX = x;
+            m_newY = y;
+            if (!m_pMap->onMap(m_LastX, m_LastY))
+            {
+                updateTerrainInfoInternal();
+            }
+            else
+            {
+                m_debounceTimer.setSingleShot(true);
+                m_debounceTimer.start(250);
+            }
         }
         else
         {
-            m_debounceTimer.setSingleShot(true);
-            m_debounceTimer.start(250);
+            // cursor returned to the shown tile, drop the pending stale update
+            m_debounceTimer.stop();
         }
     }
 }
