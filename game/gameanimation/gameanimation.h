@@ -387,6 +387,7 @@ protected:
     bool m_started{false};
     bool m_startEmitted{false};
     bool m_skipping{false};
+    bool m_missingResource{false};
     spGameAnimation m_previousAnimation{nullptr};
     struct SoundData
     {
@@ -409,7 +410,6 @@ private:
     bool m_stopSoundAtAnimationEnd{false};
     bool m_global{false};
     bool m_finished{false};
-    bool m_missingResource{false};
 
     QVector<oxygine::spSingleResAnim> m_resAnims;
     /**
