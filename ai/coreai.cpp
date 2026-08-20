@@ -129,6 +129,7 @@ void CoreAI::init(BaseGamemenu* pMenu)
         m_pMenu = pMenu;
         connect(m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
         connect(this, &CoreAI::sigPerformAction, m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
+        connect(&m_pauseTimer, &QTimer::timeout, this, &CoreAI::nextAction, Qt::QueuedConnection);
         resetMoveMap();
     }
 }
@@ -301,6 +302,11 @@ void CoreAI::randomizeIni(QString name, float chance, float mutationRate)
     saveIni(name);
 }
 
+void CoreAI::toggleAiPause()
+{
+    m_pause = !m_pause;
+}
+
 void CoreAI::setInitValue(QString name, double newValue)
 {
     for (auto & entry : m_iniData)
@@ -319,6 +325,16 @@ double CoreAI::getInitValue(QString name) const
 
 void CoreAI::nextAction()
 {
+    if (m_pause)
+    {
+        m_pauseTimer.setSingleShot(true);
+        m_pauseTimer.start(1000);
+        return;
+    }
+    else
+    {
+        m_pauseTimer.stop();
+    }
     // check if it's our turn
     if (!m_processing)
     {

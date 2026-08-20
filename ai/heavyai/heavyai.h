@@ -31,10 +31,6 @@ public:
     // debugging section
     /*******************************************************************/
     /**
-     * @brief toggleAiPause for debugging
-     */
-    Q_INVOKABLE void toggleAiPause();
-    /**
      * @brief showIslandMap
      * @param unitId
      */
@@ -68,8 +64,6 @@ protected:
     spSituationEvaluator m_evaluator;
 private:
     double m_minSiloDamage{7000};
-    QTimer m_timer;
-    bool m_pause{false};
 };
 
 Q_DECLARE_INTERFACE(HeavyAi, "HeavyAi");

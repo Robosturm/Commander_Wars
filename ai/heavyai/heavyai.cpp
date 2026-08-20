@@ -40,11 +40,6 @@ void HeavyAi::init(BaseGamemenu* pMenu)
 
 }
 
-void HeavyAi::toggleAiPause()
-{
-    m_pause = !m_pause;
-}
-
 void HeavyAi::showIslandMap(QString unitId)
 {
     Unit unit(unitId, m_pPlayer, false, m_pMap);
@@ -67,16 +62,7 @@ void HeavyAi::hideIslandMap(QString unitId)
 
 void HeavyAi::process()
 {
-    AI_CONSOLE_PRINT("NormalAi::process()", GameConsole::eDEBUG);
-    if (m_pause)
-    {
-        m_timer.start(1000);
-        return;
-    }
-    else
-    {
-        m_timer.stop();
-    }
+    AI_CONSOLE_PRINT("HeavyAi::process()", GameConsole::eDEBUG);
 
     spQmlVectorBuilding pBuildings = m_pPlayer->getSpBuildings();
     pBuildings->randomize();

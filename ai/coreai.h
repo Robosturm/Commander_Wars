@@ -208,6 +208,10 @@ public:
      */
     static qint32 index(std::vector<QVector3D>& points, const QPoint & point);
     /**
+     * @brief toggleAiPause for debugging
+     */
+    Q_INVOKABLE void toggleAiPause();
+    /**
      * @brief serialize stores the object
      * @param pStream
      */
@@ -893,6 +897,8 @@ protected:
     QString m_aiName{"CoreAI"};
     ScriptVariables m_Variables;
     SimpleProductionSystem m_productionSystem;
+    bool m_pause{false};
+    QTimer m_pauseTimer;
     static std::map<QString, float> m_baseDamageTable;
 
 private:
