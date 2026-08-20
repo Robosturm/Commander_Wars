@@ -189,7 +189,7 @@ var Constructor = function()
                     return CO_MEIYO.powerElite;
                 }
             default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     switch (attacker.getUnitRank())
                     {
