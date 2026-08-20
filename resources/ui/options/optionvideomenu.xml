@@ -224,15 +224,16 @@
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
-            <DropDownMenu>
+            <DropDownMenuColor>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>settings.getStageWidth() - 90 - lastWidth - lastX</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the color used for folders while browsing maps. Off shows them in the same color as maps.")</tooltip>
-                <startValue>settings.getMapFolderColor()</startValue>
+                <startValue>settings.getMapFolderColorName()</startValue>
                 <items>OptionMenu.getMapFolderColors()</items>
                 <onEvent>settings.setMapFolderColor(input)</onEvent>
-            </DropDownMenu>
+                <colorPicker>false</colorPicker>
+            </DropDownMenuColor>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>

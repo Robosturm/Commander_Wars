@@ -166,7 +166,7 @@ var OptionMenu =
     },
     getMapFolderColors : function()
     {
-        return [qsTr("Off"), qsTr("Blue"), qsTr("Purple"), qsTr("White")];
+        return ["#fad200", "#aaebff", "#e6c3ff", "#ffffff"];
     },
     getBattleAnimationModes : function()
     {

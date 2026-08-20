@@ -5,7 +5,7 @@
 
 #include "coreengine/settings.h"
 
-DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
+DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool enableColorPicker)
     : DropDownmenuBase(width, items.size()),
       m_ItemColors(items)
 {
@@ -22,7 +22,7 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     m_pClipActor->addChild(colorField);
 
     m_Colorfield = MemoryManagement::create<oxygine::ColorRectSprite>();
-    if (!Settings::getInstance()->getSmallScreenDevice())
+    if (!Settings::getInstance()->getSmallScreenDevice() && enableColorPicker)
     {
         m_Colorfield->addClickListener([this](oxygine::Event* event)
         {

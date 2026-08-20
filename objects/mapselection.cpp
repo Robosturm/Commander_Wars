@@ -11,10 +11,6 @@
 
 #include "game/gamemap.h"
 
-const QColor MapSelection::FOLDER_COLOR_BLUE{170, 235, 255};
-const QColor MapSelection::FOLDER_COLOR_PURPLE{230, 195, 255};
-const QColor MapSelection::FOLDER_COLOR_WHITE{255, 255, 255};
-
 MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QStringList & filter)
     : m_filter(filter),
       m_currentFolder(Settings::getInstance()->getUserPath() + "maps"),
@@ -227,18 +223,7 @@ void MapSelection::addFiles(const QString & newFolder, const QStringList & searc
 
 QColor MapSelection::getFolderTextColor()
 {
-    switch (static_cast<GameEnums::MapFolderColor>(Settings::getInstance()->getMapFolderColor()))
-    {
-        case GameEnums::MapFolderColor_Blue:
-            return FOLDER_COLOR_BLUE;
-        case GameEnums::MapFolderColor_Purple:
-            return FOLDER_COLOR_PURPLE;
-        case GameEnums::MapFolderColor_White:
-            return FOLDER_COLOR_WHITE;
-        case GameEnums::MapFolderColor_Off:
-            break;
-    }
-    return QColor();
+    return Settings::getInstance()->getMapFolderColor();
 }
 
 void MapSelection::addNewSelectionItem(qint32 i, qint32 & y, bool isFolder)

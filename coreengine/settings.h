@@ -186,6 +186,11 @@ private:
                     *m_value = m_defaultValue;
                 }
             }
+            else if constexpr (std::is_same<TType, QColor>::value)
+            {
+                bool ok = false;
+                *m_value = QColor(settings.value(m_name, m_defaultValue).toString());
+            }
             else
             {
                 // not implemented data type
@@ -204,6 +209,10 @@ private:
             else if constexpr (std::is_same<TType, QStringList>::value)
             {
                 settings.setValue(m_name, Settings::getInstance()->getConfigString(*m_value));
+            }
+            else if constexpr (std::is_same<TType, QColor>::value)
+            {
+                settings.setValue(m_name, (*m_value).name());
             }
             else
             {
@@ -346,8 +355,9 @@ public:
     Q_INVOKABLE bool getSpawnAiProcess();
     Q_INVOKABLE bool getAutomaticUpdates();
     Q_INVOKABLE void setAutomaticUpdates(bool newAutomaticUpdates);
-    Q_INVOKABLE qint32 getMapFolderColor();
-    Q_INVOKABLE void setMapFolderColor(qint32 value);
+    Q_INVOKABLE QColor getMapFolderColor();
+    Q_INVOKABLE QString getMapFolderColorName();
+    Q_INVOKABLE void setMapFolderColor(QColor value);
     Q_INVOKABLE QString getServerAdress();
     Q_INVOKABLE void setServerAdress(const QString ServerAdress);
     Q_INVOKABLE QString getSecondaryServerAdress();
@@ -866,7 +876,7 @@ private:
     qint32 m_framesPerSecond{60};
     float m_ingameMenuScaling{1.0f};
     bool m_automaticUpdates{true};
-    GameEnums::MapFolderColor m_mapFolderColor{GameEnums::MapFolderColor_White};
+    QColor m_mapFolderColor{Qt::white};
     float m_gameScale{1.0f};
     float m_zoomModifier{2.0f};
     qint32 m_mouseUpdateRate{33};

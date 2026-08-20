@@ -132,6 +132,7 @@ static const char* const attrInactiveResAnim = "inactiveResAnim";
 static const char* const attrActiveResAnim = "activeResAnim";
 static const char* const attrTabs = "tabs";
 static const char* const attrTerrain = "terrain";
+static const char* const attrColorPicker = "colorPicker";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -1624,13 +1625,14 @@ bool UiFactory::createDropDownMenuColor(oxygine::spActor parent, QDomElement ele
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         bool showUnitPreview = getBoolValue(getAttribute(childs, attrShowUnitPreview), id, loopIdx, pMenu, false);
+        bool colorPicker = getBoolValue(getAttribute(childs, attrColorPicker), id, loopIdx, pMenu, true);
         QVector<QColor> colorItems;
         colorItems.reserve(items.size());
         for (auto & item : items)
         {
             colorItems.append(QColor(item));
         }
-        spDropDownmenuColor pDropDownmenu = MemoryManagement::create<DropDownmenuColor>(width, colorItems);
+        spDropDownmenuColor pDropDownmenu = MemoryManagement::create<DropDownmenuColor>(width, colorItems, colorPicker);
         pDropDownmenu->setPosition(x, y);
         pDropDownmenu->setTooltipText(tooltip);
         pDropDownmenu->setVisible(visible);

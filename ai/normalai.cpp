@@ -124,7 +124,7 @@ NormalAi::NormalAi(GameMap *pMap, const QString &configurationFile, GameEnums::A
         {"LowIndirectUnitBonus", "Production", &m_lowIndirectUnitBonus, 30.0f, 0.0f, 100.0f},
         {"LowIndirectMalus", "Production", &m_lowIndirectMalus, 30.0f, 0.0f, 100.0f},
         {"HighIndirectMalus", "Production", &m_highIndirectMalus, 40.0f, 0.0f, 100.0f},
-        {"LowDirectUnitBonus", "Production", &m_highIndirectMalus, 35.0f, 0.0f, 100.0f},
+        {"LowDirectUnitBonus", "Production", &m_lowDirectUnitBonus, 35.0f, 0.0f, 100.0f},
         {"LowDirectMalus", "Production", &m_lowDirectMalus, 20.0f, 0.0f, 100.0f},
         {"HighDirectMalus", "Production", &m_highDirectMalus, 40.0f, 0.0f, 100.0f},
         {"MinUnitCountForDamageBonus", "Production", &m_minUnitCountForDamageBonus, 3.0f, 0.0f, 20.0f},

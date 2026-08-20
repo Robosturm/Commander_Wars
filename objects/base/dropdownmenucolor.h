@@ -15,7 +15,7 @@ class DropDownmenuColor final : public DropDownmenuBase
 {
     Q_OBJECT
 public:
-    explicit DropDownmenuColor(qint32 width, QVector<QColor> items);
+    explicit DropDownmenuColor(qint32 width, QVector<QColor> items, bool enableColorPicker = true);
     virtual ~DropDownmenuColor() = default;
     /**
      * @brief getCurrentItem color of the current item
