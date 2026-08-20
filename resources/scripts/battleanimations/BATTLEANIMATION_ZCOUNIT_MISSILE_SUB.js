@@ -5,26 +5,16 @@ var Constructor = function()
         return 1;
     };
 
-    this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
-    {
-        return true;
-    };
-
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         var startPos = Qt.point(10, 20);
-        var movement = Qt.point(-142, 0);
+        var movement = Qt.point(-202, 0);
         var moveTime = 1420;
         sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         sprite.loadMovingSpriteV2("missile_sub+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
         sprite.loadMovingSprite("missile_sub",  false,
                                    BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
-    };
-
-    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
-    {
-        return 1420;
     };
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
@@ -39,10 +29,20 @@ var Constructor = function()
 
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
     {
-        sprite.loadMovingSprite("missile_sub",  false,
-                                BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(-132, 20), movement, moveTime, false, -1);
-        sprite.loadMovingSpriteV2("missile_sub+mask", GameEnums.Recoloring_Matrix,
-                                  BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(-132, 20), movement, moveTime, false, -1);
+        if(unit.getHidden() === true)
+        {
+            sprite.loadMovingSpriteV2("submarine+hidden+os+mask", GameEnums.Recoloring_Matrix,
+                                      BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 30), movement, moveTime, false, -1);
+            sprite.loadMovingSprite("submarine+hidden+os",  false,
+                                    BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 30), movement, moveTime, false, -1);
+        }
+        else
+        {
+        	sprite.loadMovingSprite("missile_sub",  false,
+        	                        BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(-192, 20), movement, moveTime, false, -1);
+        	sprite.loadMovingSpriteV2("missile_sub+mask", GameEnums.Recoloring_Matrix,
+          	                        BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(-192, 20), movement, moveTime, false, -1);
+   	}
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -52,8 +52,8 @@ var Constructor = function()
         var count = sprite.getUnitCount(5);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSingleMovingSprite("rocket_up", false, Qt.point(50, 75),
-                                          Qt.point(128, 64), 400, false,
+            sprite.loadSingleMovingSprite("rocket_up", false, Qt.point(-20, 75),
+                                          Qt.point(148, 64), 400, false,
                                           -1, 1, -1, i * 150);
             sprite.loadSound("rocket_launch.wav", 1, i * 150);
         }
@@ -61,7 +61,7 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 500 + 150 * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount());
+        return 600 + 150 * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount());
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
@@ -88,6 +88,22 @@ var Constructor = function()
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
         return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+    };
+
+    this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
+        if(unit.getHidden() === true)
+        {
+            return false;
+        }
+        return true;
+    };
+
+    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 1420;
     };
 
     this.hasDyingAnimation = function()
