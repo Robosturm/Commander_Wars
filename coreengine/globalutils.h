@@ -5,9 +5,11 @@
 
 #include <QObject>
 #include <QJsonArray>
+#include <QJSValue>
 #include <QByteArray>
 #include <QDir>
 #include <QRandomGenerator>
+#include <QVariantMap>
 
 class QmlVectorPoint;
 using spQmlVectorPoint = std::shared_ptr<QmlVectorPoint>;
@@ -33,6 +35,7 @@ public:
     static float randFloatBase(float low, float high);
     static qreal randDoubleBase(qreal low, qreal high);
     static QUrl getUrlForFile(QString file);
+    static QString collapseDoubleSlashes(QString path);
     static QString stripStartPath(QString path);
     static QString getByteArrayString(const QByteArray & bytes);
     static QByteArray getStringByteArray(const QString & bytes);
@@ -189,6 +192,9 @@ public slots:
      * @return
      */
     static QString getKeycodeText(Qt::Key code);
+    static QVariantMap getScriptFunctionInfo(const QJSValue & function);
+    static QString getScriptFunctionSource(const QJSValue & function);
+    static QString getScriptText(const QString & script, qint32 offset, qint32 length);
 private:
     explicit GlobalUtils();
 private:
