@@ -139,6 +139,7 @@ QString Interpreter::getRuntimeData()
 
 void Interpreter::storeScriptText(const QString & script, const QString & contents)
 {
+#ifdef SCRIPTSOURCESUPPORT
     m_scriptTexts.insert(script, contents);
     const QUrl url = GlobalUtils::getUrlForFile(script);
     const QString urlText = url.toString();
@@ -151,10 +152,18 @@ void Interpreter::storeScriptText(const QString & script, const QString & conten
     {
         m_scriptTexts.insert(encodedUrlText, contents);
     }
+#else
+    Q_UNUSED(script)
+    Q_UNUSED(contents)
+#endif
 }
 
 QString Interpreter::getScriptText(const QString & script) const
 {
+#ifndef SCRIPTSOURCESUPPORT
+    Q_UNUSED(script)
+    return QString();
+#else
     auto iter = m_scriptTexts.find(script);
     if (iter == m_scriptTexts.cend())
     {
@@ -171,6 +180,7 @@ QString Interpreter::getScriptText(const QString & script) const
         return QString();
     }
     return iter.value();
+#endif
 }
 
 bool Interpreter::openScript(const QString & script, bool setup)
