@@ -401,6 +401,7 @@ public:
         EditorModes_EditUnits,
         EditorModes_EditTerrain,
         EditorModes_CopySelection,
+        EditorModes_Last,
     };
     Q_ENUM(EditorModes)
 

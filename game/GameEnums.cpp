@@ -268,6 +268,7 @@ void GameEnums::registerEnums()
     value.setProperty("EditorModes_EditUnits", EditorModes_EditUnits);
     value.setProperty("EditorModes_EditTerrain", EditorModes_EditTerrain);
     value.setProperty("EditorModes_CopySelection", EditorModes_CopySelection);
+    value.setProperty("EditorModes_Last", EditorModes_Last);
 
     value.setProperty("EditorPlaceMode_All", EditorPlaceMode_All);
     value.setProperty("EditorPlaceMode_Terrain", EditorPlaceMode_Terrain);

@@ -176,6 +176,11 @@
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Removes all players with no units or buildings from the map")</tooltip>
                         <itemID>OPTIMIZEPLAYERS</itemID>
                     </item>
+                    <item>
+                        <text>QT_TRANSLATE_NOOP("GAME","Place line")</text>
+                        <tooltip>QT_TRANSLATE_NOOP("GAME","Creates a line between two clicked points and places based on the current placement mode.")</tooltip>
+                        <itemID>PLACELINE</itemID>
+                    </item>
                     <if condition="!settings.getSmallScreenDevice()">
                         <item>
                             <text>QT_TRANSLATE_NOOP("GAME","Copy ") + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_C)</text>

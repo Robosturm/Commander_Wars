@@ -923,6 +923,8 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
             auto pInterpreter = Interpreter::getInstance();
 
             QJSValueList args({m_jsThis,
+                               m_EditorMode,
+                               JsThis::getJsThis(m_pMap.get()),
                                event.getModifiers().toInt(),
                                cur
                                });
@@ -1025,6 +1027,11 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
     BaseGamemenu::keyInput(event);
 }
 
+void EditorMenue::changeCursor(const QString & cursor, qint32 xOffset, qint32 yOffset, float scale)
+{
+    m_Cursor->changeCursor(cursor);
+}
+
 void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
     if (!m_Focused)
@@ -1050,9 +1057,21 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
         m_pMap->addChild(m_cursorActor);
         m_cursorActor->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
     }
-
-    switch (m_EditorMode)
+    auto pInterpreter = Interpreter::getInstance();
+    QJSValueList args({m_jsThis,
+                       m_EditorMode,
+        JsThis::getJsThis(m_pMap.get()),
+        x,
+        y
+    });
+    auto result = pInterpreter->doFunction("EditorMenu", "cursorMoved", args);
+    if (result.isBool() && result.toBool())
     {
+    }
+    else
+    {
+        switch (m_EditorMode)
+        {
         case GameEnums::EditorModes_RemoveUnits:
         {
             m_Cursor->changeCursor("cursor+delete");
@@ -1073,70 +1092,70 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
             // resolve cursor move
             switch (m_EditorSelection->getCurrentMode())
             {
-                case GameEnums::EditorPlaceMode_Terrain:
+            case GameEnums::EditorPlaceMode_Terrain:
+            {
+                if (canTerrainBePlaced(x, y))
                 {
-                    if (canTerrainBePlaced(x, y))
+                    if (m_EditorSelection->getSizeMode() == GameEnums::EditorPlacementSize_Fill)
                     {
-                        if (m_EditorSelection->getSizeMode() == GameEnums::EditorPlacementSize_Fill)
-                        {
-                            m_Cursor->changeCursor("cursor+fill");
-                        }
-                        else
-                        {
-                            m_Cursor->changeCursor("cursor+default");
-                        }
+                        m_Cursor->changeCursor("cursor+fill");
                     }
                     else
                     {
-                        m_Cursor->changeCursor("cursor+unable");
+                        m_Cursor->changeCursor("cursor+default");
                     }
-                    break;
                 }
-                case GameEnums::EditorPlaceMode_Building:
+                else
                 {
-                    spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
-                    if (canBuildingBePlaced(x, y) ||
-                        (pCurrentBuilding->getBuildingWidth() == 1 &&
-                         pCurrentBuilding->getBuildingHeigth() == 1))
+                    m_Cursor->changeCursor("cursor+unable");
+                }
+                break;
+            }
+            case GameEnums::EditorPlaceMode_Building:
+            {
+                spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
+                if (canBuildingBePlaced(x, y) ||
+                    (pCurrentBuilding->getBuildingWidth() == 1 &&
+                     pCurrentBuilding->getBuildingHeigth() == 1))
+                {
+                    if (m_EditorSelection->getSizeMode() == GameEnums::EditorPlacementSize_Fill)
                     {
-                        if (m_EditorSelection->getSizeMode() == GameEnums::EditorPlacementSize_Fill)
-                        {
-                            m_Cursor->changeCursor("cursor+fill");
-                        }
-                        else
-                        {
-                            m_Cursor->changeCursor("cursor+default");
-                        }
+                        m_Cursor->changeCursor("cursor+fill");
                     }
                     else
                     {
-                        m_Cursor->changeCursor("cursor+unable");
+                        m_Cursor->changeCursor("cursor+default");
                     }
-                    break;
                 }
-                case GameEnums::EditorPlaceMode_Unit:
+                else
                 {
-                    if (canUnitBePlaced(x, y))
+                    m_Cursor->changeCursor("cursor+unable");
+                }
+                break;
+            }
+            case GameEnums::EditorPlaceMode_Unit:
+            {
+                if (canUnitBePlaced(x, y))
+                {
+                    if (m_EditorSelection->getSizeMode() == GameEnums::EditorPlacementSize_Fill)
                     {
-                        if (m_EditorSelection->getSizeMode() == GameEnums::EditorPlacementSize_Fill)
-                        {
-                            m_Cursor->changeCursor("cursor+fill");
-                        }
-                        else
-                        {
-                            m_Cursor->changeCursor("cursor+default");
-                        }
+                        m_Cursor->changeCursor("cursor+fill");
                     }
                     else
                     {
-                        m_Cursor->changeCursor("cursor+unable");
+                        m_Cursor->changeCursor("cursor+default");
                     }
-                    break;
                 }
-                case GameEnums::EditorPlaceMode_All:
+                else
                 {
-                    break;
+                    m_Cursor->changeCursor("cursor+unable");
                 }
+                break;
+            }
+            case GameEnums::EditorPlaceMode_All:
+            {
+                break;
+            }
             }
             break;
         }
@@ -1153,6 +1172,9 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
             {
                 m_copyRectActor->removeChildren();
             }
+            break;
+        }
+        default:
             break;
         }
     }
@@ -1173,6 +1195,8 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
     CONSOLE_PRINT("EditorMenue::onMapClickedRight x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     auto pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
+                       m_EditorMode,
+                       JsThis::getJsThis(m_pMap.get()),
         x,
         y
     });
@@ -1223,6 +1247,8 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
                 break;
             }
             }
+        default:
+            break;
         }
         }
         m_EditorMode = GameEnums::EditorModes_PlaceEditorSelection;
@@ -1241,6 +1267,8 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
     m_placingState.active = true;
     auto pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
+                       m_EditorMode,
+                       JsThis::getJsThis(m_pMap.get()),
         x,
         y
     });
@@ -1287,6 +1315,8 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
     CONSOLE_PRINT("EditorMenue::onMapClickedLeftUp x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     auto pInterpreter = Interpreter::getInstance();
     QJSValueList args({m_jsThis,
+                       m_EditorMode,
+                       JsThis::getJsThis(m_pMap.get()),
         x,
         y
     });
@@ -1336,6 +1366,8 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
         CONSOLE_PRINT("EditorMenue::onMapClickedLeft x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
         auto pInterpreter = Interpreter::getInstance();
         QJSValueList args({m_jsThis,
+                           m_EditorMode,
+                           JsThis::getJsThis(m_pMap.get()),
             x,
             y
         });
@@ -1521,12 +1553,39 @@ GameEnums::EditorModes EditorMenue::getEditorMode()
     return m_EditorMode;
 }
 
+void EditorMenue::placeBasedOnMode(QVector<QPoint> points)
+{
+    switch (m_EditorSelection->getCurrentMode())
+    {
+    case GameEnums::EditorPlaceMode_All:
+    {
+        placeTerrains(points);
+        placeBuildings(points);
+        placeUnits(points);
+        break;
+    }
+    case GameEnums::EditorPlaceMode_Terrain:
+    {
+        placeTerrains(points);
+        break;
+    }
+    case GameEnums::EditorPlaceMode_Building:
+    {
+        placeBuildings(points);
+        break;
+    }
+    case GameEnums::EditorPlaceMode_Unit:
+    {
+        placeUnits(points);
+        break;
+    }
+    }
+}
+
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeTerrain", GameConsole::eDEBUG);
     QVector<QPoint> points;
-    Mainapp* pApp = Mainapp::getInstance();
-    QString terrainID = m_EditorSelection->getCurrentTerrainID();
     switch (m_EditorSelection->getSizeMode())
     {
         case GameEnums::EditorPlacementSize_None:
@@ -1561,6 +1620,13 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             break;
         }
     }
+    placeTerrains(points);
+}
+
+void EditorMenue::placeTerrains(QVector<QPoint> points)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString terrainID = m_EditorSelection->getCurrentTerrainID();
     pApp->pauseRendering();
     bool placed = false;
     const QString palette = Terrain::getPaletteId(m_EditorSelection->getActivePalette(), terrainID);
@@ -1569,17 +1635,9 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     {
         if (m_pMap->onMap(point.x(), point.y()))
         {
-            // nice we can place the terrain
-            if (canTerrainBePlaced(point.x(), point.y()) &&
-                       terrainID != m_pMap->getTerrain(point.x(), point.y())->getID())
+            if (placeSingleTerrain(point.x(), point.y()))
             {
                 placedPoints.append(point);
-                spUnit pUnit;
-                m_pMap->getTerrain(point.x(), point.y())->setUnit(pUnit);
-                Interpreter* pInterpreter = Interpreter::getInstance();
-                QString function1 = "useTerrainAsBaseTerrain";
-                QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
-                m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false, true, palette, true, false);
                 placed = true;
             }
         }
@@ -1612,11 +1670,29 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     pApp->continueRendering();
 }
 
+bool EditorMenue::placeSingleTerrain(qint32 curX, qint32 curY)
+{
+    bool placed = false;
+    QString terrainID = m_EditorSelection->getCurrentTerrainID();
+    const QString palette = Terrain::getPaletteId(m_EditorSelection->getActivePalette(), terrainID);
+    // nice we can place the terrain
+    if (canTerrainBePlaced(curX, curY) &&
+        terrainID != m_pMap->getTerrain(curX, curY)->getID())
+    {
+        spUnit pUnit;
+        m_pMap->getTerrain(curX, curY)->setUnit(pUnit);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "useTerrainAsBaseTerrain";
+        QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
+        m_pMap->replaceTerrain(terrainID, curX, curY, useTerrainAsBaseTerrain.toBool(), false, true, palette, true, false);
+        placed = true;
+    }
+    return placed;
+}
+
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::placeBuilding", GameConsole::eDEBUG);    
-    Mainapp* pApp = Mainapp::getInstance();
-    spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
+    CONSOLE_PRINT("EditorMenue::placeBuilding", GameConsole::eDEBUG);
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1652,35 +1728,32 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             break;
         }
     }
+    placeBuildings(points);
+}
+
+void EditorMenue::placeBuildings(QVector<QPoint> points)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
     pApp->pauseRendering();
     QVector<QPoint> placedPoints;
     if (pCurrentBuilding->getBuildingWidth() > 1 ||
         pCurrentBuilding->getBuildingHeigth() > 1)
     {
-        points = PathFindingSystem::getFields(x, y, 0, 0);
+        if (points.length() > 0)
+        {
+            points = PathFindingSystem::getFields(points[0].x(), points[0].y(), 0, 0);
+        }
     }
     bool placed = false;
     for (qint32 i = 0; i < points.size(); i++)
     {
         // point still on the map great :)
         QPoint pos = points.at(i);
-        if (!canBuildingBePlaced(pos.x(), pos.y()) &&
-            pCurrentBuilding->getBuildingWidth() == 1 &&
-            pCurrentBuilding->getBuildingHeigth() == 1)
+        if (placeSingleBuilding(pos.x(), pos.y()))
         {
-            QString baseTerrain = pCurrentBuilding->getBaseTerrain()[0];
-            m_pMap->replaceTerrain(baseTerrain, pos.x(), pos.y(), false, false);
-        }
-        if (canBuildingBePlaced(pos.x(), pos.y()))
-        {
-            if (pCurrentBuilding->getBuildingID() != m_pMap->getTerrain(pos.x(), pos.y())->getTerrainID())
-            {
-                placedPoints.append(pos);
-                spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), m_pMap.get());
-                pBuilding->setOwner(pCurrentBuilding->getOwner());
-                m_pMap->getTerrain(pos.x(), pos.y())->setBuilding(pBuilding);
-                placed = true;
-            }
+            placedPoints.append(pos);
+            placed = true;
         }
     }
     if (placed)
@@ -1715,11 +1788,33 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     pApp->continueRendering();
 }
 
+bool EditorMenue::placeSingleBuilding(qint32 curX, qint32 curY)
+{
+    bool placed = false;
+    spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
+    if (!canBuildingBePlaced(curX, curY) &&
+        pCurrentBuilding->getBuildingWidth() == 1 &&
+        pCurrentBuilding->getBuildingHeigth() == 1)
+    {
+        QString baseTerrain = pCurrentBuilding->getBaseTerrain()[0];
+        m_pMap->replaceTerrain(baseTerrain, curX, curY, false, false);
+    }
+    if (canBuildingBePlaced(curX, curY))
+    {
+        if (pCurrentBuilding->getBuildingID() != m_pMap->getTerrain(curX, curY)->getTerrainID())
+        {
+            spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), m_pMap.get());
+            pBuilding->setOwner(pCurrentBuilding->getOwner());
+            m_pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
+            placed = true;
+        }
+    }
+    return placed;
+}
+
 void EditorMenue::placeUnit(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeUnit", GameConsole::eDEBUG);
-    Mainapp* pApp = Mainapp::getInstance();
-    spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1753,17 +1848,21 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
             break;
         }
     }
+    placeUnits(points);
+}
+
+void EditorMenue::placeUnits(QVector<QPoint> points)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
     bool placed = false;
     for (auto & point : points)
     {
         // point still on the map great :)
         qint32 curX = point.x();
         qint32 curY = point.y();
-        if (canUnitBePlaced(curX, curY))
+        if (placeSingleUnit(curX, curY))
         {
-            spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, m_pMap.get());
-            pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
-            m_pMap->getTerrain(curX, curY)->setUnit(pUnit);
             placed = true;
         }
     }
@@ -1788,6 +1887,20 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
     {
         m_pMap->syncUnitsAndBuildingAnimations();
     }
+}
+
+bool EditorMenue::placeSingleUnit(qint32 curX, qint32 curY)
+{
+    bool placed = false;
+    if (canUnitBePlaced(curX, curY))
+    {
+        spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
+        spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, m_pMap.get());
+        pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
+        m_pMap->getTerrain(curX, curY)->setUnit(pUnit);
+        placed = true;
+    }
+    return placed;
 }
 
 void EditorMenue::saveMap(QString filename)
@@ -2170,6 +2283,16 @@ void EditorMenue::createMarkedField(QPoint point, QColor color)
         m_makredFieldPoints.push_back(QPoint(point.x(), point.y()));
         m_markedFields.push_back(pSprite);
     }
+}
+
+void EditorMenue::createMarkedFields(QVector<QPoint> points, QColor color)
+{
+    Mainapp::getInstance()->pauseRendering();
+    for (auto & point : std::as_const(points))
+    {
+        createMarkedField(point, color);
+    }
+    Mainapp::getInstance()->continueRendering();
 }
 
 oxygine::spSprite EditorMenue::createMarkedFieldActor(QPoint point, QColor color)

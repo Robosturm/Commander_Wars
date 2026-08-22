@@ -1,8 +1,13 @@
 EditorMenu =
              {
+    // constants
+    PLACELINE_MODE : GameEnums.EditorModes_Last,
+
+    // state variables
+    startPoint : Qt.point(-1, -1),
+
     topBarEvent : function(input)
-    {        
-        currentMenu.autoFocus();
+    {
         if (input === "EXIT")
         {
             currentMenu.showExit();
@@ -161,25 +166,100 @@ EditorMenu =
         {
             currentMenu.updateSprites();
         }
+        else if (input === "PLACELINE")
+        {
+            currentMenu.changeCursor("cursor+default");
+            currentMenu.setEditorMode(EditorMenu.PLACELINE_MODE);
+        }
     },
-    keyEvent : function(menu, modifiers, key)
+    keyEvent : function(menu, mode, map, modifiers, key)
     {
         return false;
     },
-    mapClickLeft : function(menu, x, y)
+    mapClickLeft : function(menu, mode, map, x, y)
+    {
+        if (mode === EditorMenu.PLACELINE_MODE)
+        {
+            if (EditorMenu.startPoint.x < 0)
+            {
+                EditorMenu.startPoint = Qt.point(x, y);
+                menu.clearMarkedFields();
+                menu.createMarkedField(EditorMenu.startPoint, "#0000FF");
+            }
+            else
+            {
+                EditorMenu.placeLine(menu, x, y);
+            }
+            return true;
+        }
+        return false;
+    },
+    mapClickLeftUp : function(menu, mode, map, x, y)
     {
         return false;
     },
-    mapClickLeftUp : function(menu, x, y)
+    mapClickLeftDown : function(menu, mode, map, x, y)
     {
         return false;
     },
-    mapClickLeftDown : function(menu, x, y)
+    mapClickRight : function(menu, mode, map, x, y)
     {
+        if (mode === EditorMenu.PLACELINE_MODE)
+        {
+            menu.clearMarkedFields();
+        }
         return false;
     },
-    mapClickRight : function(menu, x, y)
+    cursorMoved : function(menu, mode, map, x, y)
     {
+        if (mode === EditorMenu.PLACELINE_MODE)
+        {
+            if (EditorMenu.startPoint.x >= 0)
+            {
+                menu.clearMarkedFields();
+                menu.createMarkedFields(EditorMenu.getLineVector(EditorMenu.startPoint.x, EditorMenu.startPoint.y, x, y), "#0000FF")
+            }
+            return true;
+        }
         return false;
-    }
+    },
+    getLineVector : function (x1, y1, x2, y2)
+    {
+        var points = [Qt.point(x1, y1)];
+        while (x1 !== x2 || y1 !== y2)
+        {
+            var xDiff = Math.abs(x1 - x2);
+            var yDiff = Math.abs(y1 - y2);
+            if (xDiff > yDiff)
+            {
+                if (x1 < x2)
+                {
+                    x1++;
+                }
+                else
+                {
+                    x1--;
+                }
+            }
+            else
+            {
+                if (y1 < y2)
+                {
+                    y1++;
+                }
+                else
+                {
+                    y1--;
+                }
+            }
+            points.push(Qt.point(x1, y1));
+        }
+        return points;
+    },
+    placeLine : function(menu, x, y)
+    {
+        menu.placeBasedOnMode(EditorMenu.getLineVector(EditorMenu.startPoint.x, EditorMenu.startPoint.y, x, y));
+        menu.clearMarkedFields();
+        EditorMenu.startPoint = Qt.point(-1, -1);
+    },
 };

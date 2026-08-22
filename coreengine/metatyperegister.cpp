@@ -168,6 +168,7 @@ void MetaTypeRegister::registerInterfaceData()
     qRegisterMetaType<oxygine::MouseButton>("oxygine::MouseButton");
     qRegisterMetaType<QVector<float>>("QVector<float>");
     qRegisterMetaType<QVector<qint32>>("QVector<qint32>");
+    qRegisterMetaType<QVector<QPoint>>("QVector<QPoint>");
     qRegisterMetaType<QLocalSocket::LocalSocketError>("QLocalSocket::LocalSocketError");
     qRegisterMetaType<QAbstractSocket::SocketError>("QAbstractSocket::SocketError");
     qRegisterMetaType<QAbstractSocket::SocketState>("QAbstractSocket::SocketState");

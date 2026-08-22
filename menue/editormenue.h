@@ -48,8 +48,22 @@ public:
      * @param color of the marked field
      */
     Q_INVOKABLE void createMarkedField(QPoint point, QColor color);
+    Q_INVOKABLE void createMarkedFields(QVector<QPoint> points, QColor color);
     Q_INVOKABLE QVector<QPoint> getMakredFieldPoints();
     Q_INVOKABLE void clearMarkedFields();
+    Q_INVOKABLE void setEditorMode(GameEnums::EditorModes editorMode);
+    Q_INVOKABLE GameEnums::EditorModes getEditorMode();
+    Q_INVOKABLE void changeCursor(const QString & cursor, qint32 xOffset = 0, qint32 yOffset = 0, float scale = 1.0f);
+
+    Q_INVOKABLE void placeBasedOnMode(QVector<QPoint> points);
+    Q_INVOKABLE void placeTerrains(QVector<QPoint> points);
+    Q_INVOKABLE void placeBuildings(QVector<QPoint> points);
+    Q_INVOKABLE void placeUnits(QVector<QPoint> points);
+
+
+    Q_INVOKABLE bool placeSingleUnit(qint32 curX, qint32 curY);
+    Q_INVOKABLE bool placeSingleBuilding(qint32 curX, qint32 curY);
+    Q_INVOKABLE bool placeSingleTerrain(qint32 curX, qint32 curY);
 signals:
     void sigOnMapClickedLeft();
     void sigOnMapClickedRight();
@@ -426,8 +440,6 @@ public slots:
                          bool mirrored);
     void updateGrids();
     void getSquareTiles(QVector<QPoint> & points, QPoint start, QPoint end, QPoint currentPos);
-    void setEditorMode(GameEnums::EditorModes editorMode);
-    GameEnums::EditorModes getEditorMode();
 
 protected slots:
     /**
