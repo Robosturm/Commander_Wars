@@ -183,6 +183,12 @@ public slots:
      * @return
      */
     static QString getNextAutosavePath(const QString path, const QString ending, qint32 max);
+    /**
+     * @brief getKeycodeText
+     * @param code
+     * @return
+     */
+    static QString getKeycodeText(Qt::Key code);
 private:
     explicit GlobalUtils();
 private:

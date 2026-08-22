@@ -30,7 +30,6 @@
 
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/label.h"
-#include "objects/base/selectkey.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/campaigneditor.h"
@@ -57,7 +56,11 @@ EditorMenue::EditorMenue()
     qint32 selectionWidth = oxygine::Stage::getStage()->getWidth() / 4;
     bool smallScreen = Settings::getInstance()->getSmallScreenDevice();
     Interpreter::setCppOwnerShip(this);
+    setupJsThis(this);
     registerAtInterpreter();
+    UiFactory::getInstance().createUi("ui/editor/editorTopbar.xml", this);
+    m_Topbar =  oxygine::safeCast<Topbar*>(getObject("EDITORTOPBAR"));
+
     if (smallScreen)
     {
         selectionWidth = oxygine::Stage::getStage()->getWidth() * 3 / 4;
@@ -78,72 +81,16 @@ EditorMenue::EditorMenue()
     }
     m_mapSlidingActor->addChild(m_pMap);
     m_mapSliding->setLocked(true);
-    loadHandling();
+    loadHandling();    
     changeBackground("editormenu");
 
     m_EditorSelection = MemoryManagement::create<EditorSelection>(selectionWidth, smallScreen, m_pMap.get());
     addChild(m_EditorSelection);
 
-    m_Topbar = MemoryManagement::create<Topbar>(0, oxygine::Stage::getStage()->getWidth());
-
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/mapeditor");
     pApp->getAudioManager()->playRandom();
 
-    m_Topbar->addGroup(tr("Menu"));
-    m_Topbar->addItem(tr("View map stats"),     "VIEWMAPSTATS", 0, tr("Shows the general information about the map."));
-    m_Topbar->addItem(tr("Save map"),           "SAVEMAP",      0, tr("Saves a map to a give file."));
-    m_Topbar->addItem(tr("Load map"),           "LOADMAP",      0, tr("Loads a map to a give file."));
-    if (!Settings::getInstance()->getSmallScreenDevice())
-    {
-        m_Topbar->addItem(tr("Edit script"),    "EDITSCRIPT",   0, tr("Edit and create a script for any map."));
-        m_Topbar->addItem(tr("Edit campaign"),  "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
-    }
-    m_Topbar->addItem(tr("Undo Ctrl+Z"),        "UNDO",         0, tr("Undo the last map modification."));
-    m_Topbar->addItem(tr("Redo Ctrl+Y"),        "REDO",         0, tr("Redo the last undo command."));
-    m_Topbar->addItem(tr("Exit editor"),        "EXIT",         0, tr("Exits the editor"));
-
-    m_Topbar->addGroup(tr("Map info"));
-    m_Topbar->addItem(tr("New map"),            "NEWMAP",       1, tr("Create a new map"));
-    m_Topbar->addItem(tr("Edit map"),           "EDITMAP",      1, tr("Edit the information for a map"));
-    m_Topbar->addItem(tr("Resize map"),         "RESIZEMAP",    1, tr("Resizes the map using left, top, right and bottom size changes."));
-    m_Topbar->addItem(tr("Extend map"),         "EXTENDMAP",    1, tr("Extends this map with another map"));
-    m_Topbar->addItem(tr("Flip map X"),         "FLIPX",        1, tr("Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed."));
-    m_Topbar->addItem(tr("Flip map Y"),         "FLIPY",        1, tr("Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed."));
-    m_Topbar->addItem(tr("Rotate map X 180°"),  "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
-    m_Topbar->addItem(tr("Rotate map X 90°"),   "ROTATEX90",    1, tr("Rotates the upper left quarter into the upper right quarter of the map and rotates the lower right quarter into the lower left quarter of the map "));
-    m_Topbar->addItem(tr("Rotate map Y 180°"),  "ROTATEY",      1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
-    m_Topbar->addItem(tr("Rotate map Y 90°"),   "ROTATEY90",    1, tr("Rotates the upper left quarter into the lower left quarter of the map and rotates the lower right quarter into the upper right quarter of the map "));
-    m_Topbar->addItem(tr("Rotate map 90°"),     "ROTATE90",    1, tr("Rotates the upper left quarter into all other quarters."));
-    m_Topbar->addItem(tr("Random map"),         "RANDOMMAP",    1, tr("Creates a new random map."));
-    m_Topbar->addItem(tr("Toggle grid ") + SelectKey::getKeycodeText(Settings::getInstance()->getKey_toggleGridLayout()), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
-    m_Topbar->addItem(tr("Toggle cross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
-    m_Topbar->addItem(tr("Update sprites"),     "UPDATESPRITES", 1, tr("Reloads the map sprites in case something didn't load correctly."));
-
-    m_Topbar->addGroup(tr("Commands"));
-    m_Topbar->addItem(tr("Place selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));
-    m_Topbar->addItem(tr("Delete units") + " - " + SelectKey::getKeycodeText(Settings::getInstance()->getKey_cancel()), "DELETEUNITS", 2, tr("Selects the editor mode deleting units"));
-    m_Topbar->addItem(tr("Edit units"), "EDITUNITS", 2, tr("Selects the editor mode modifying the stats of a unit"));
-    m_Topbar->addItem(tr("Edit terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain or building"));
-    m_Topbar->addItem(tr("Edit players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
-    m_Topbar->addItem(tr("Edit rules"), "EDITRULES", 2, tr("Selects the editor rules for the map."));
-    m_Topbar->addItem(tr("Mass edit terrain"), "EDITBIOMES", 2, tr("Changes the biome or palettes of an area."));
-
-    m_Topbar->addItem(tr("Optimize players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
-    if (!Settings::getInstance()->getSmallScreenDevice())
-    {
-        m_Topbar->addItem(tr("Copy Ctrl+C"), "COPY", 2, tr("Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode"));
-        m_Topbar->addItem(tr("Paste Ctrl+V"), "PASTE", 2, tr("Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec."));
-        m_Topbar->addItem(tr("Paste Ctrl+Shift+V"), "PASTEALL", 2, tr("Paste the current selected area with all terrain, buildings, units. The copy and paste selection are not allowed to intersec."));
-    }
-
-    m_Topbar->addGroup(tr("Import/Export"));
-    m_Topbar->addItem(tr("Import CoW Txt"), "IMPORTCOWTXT", 3, tr("Deletes the current map and imports an old Commander Wars Map from a file."));
-    m_Topbar->addItem(tr("Import AWDS Aws"), "IMPORTAWDSAWS", 3, tr("Deletes the current map and imports an AWS Map Editor from a file."));
-    m_Topbar->addItem(tr("Export AWDS Aws"), "EXPORTAWDSAWS", 3, tr("Exports the map to an AWS Map Editor file"));
-    m_Topbar->addItem(tr("Import AW4 Aw4"), "IMPORTAW4AW4", 3, tr("Deletes the current map and imports an AW 4 map editor file."));
-    m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWBYWEB", 3, tr("Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/"));
-    m_Topbar->addItem(tr("Import AW by Web ID"), "IMPORTAWBYWEBBYMAPID", 3, tr("Deletes the current map and imports an Advance Wars by Web Map from https://awbw.amarriner.com/ via the map id"));
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
@@ -160,7 +107,12 @@ EditorMenue::EditorMenue()
         m_xyTextInfo->setPosition(8, 8);
         pButtonBox->addChild(m_xyTextInfo);
         pButtonBox->setSize(200, 50);
-        pButtonBox->setPosition((oxygine::Stage::getStage()->getWidth() - m_EditorSelection->getScaledWidth()) - pButtonBox->getScaledWidth(), -4 + m_Topbar->getScaledHeight());
+        auto topBarHeight = 0;
+        if (m_Topbar)
+        {
+            topBarHeight = m_Topbar->getScaledHeight();
+        }
+        pButtonBox->setPosition((oxygine::Stage::getStage()->getWidth() - m_EditorSelection->getScaledWidth()) - pButtonBox->getScaledWidth(), -4 + topBarHeight);
         pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         addChild(pButtonBox);
     }
@@ -192,19 +144,16 @@ EditorMenue::EditorMenue()
         }
     });
 
-    m_Topbar->finishCreation();
-    addChild(m_Topbar);
-
     // connecting stuff
     connect(this, &EditorMenue::sigLeftClick, this, &EditorMenue::onMapClickedLeft, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigLeftClickDown, this, &EditorMenue::onMapClickedLeftDown, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigLeftClickUp, this, &EditorMenue::onMapClickedLeftUp, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigRightClick, this, &EditorMenue::onMapClickedRight, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &EditorMenue::cursorMoved, Qt::QueuedConnection);
-    connect(m_Topbar.get(), &Topbar::sigItemClicked, this, &EditorMenue::clickedTopbar, Qt::QueuedConnection);
     connect(m_EditorSelection.get(), &EditorSelection::sigSelectionChanged, this, &EditorMenue::selectionChanged, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigResizeMap, this, &EditorMenue::resizeMap, Qt::QueuedConnection);
     connect(&m_awbwMapDownloader, &AwbwMapDownloader::sigDownloadResult, this, &EditorMenue::onAwbwMapDownloadResult, Qt::QueuedConnection);
+    connect(GameConsole::getInstance(), &GameConsole::sigExecuteCommand, this, &EditorMenue::executeCommand, Qt::QueuedConnection);
 
     m_HumanInput = MemoryManagement::create<HumanPlayerInput>(m_pMap.get());
     m_HumanInput->init(this);
@@ -966,7 +915,17 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
     {
         if (!event.getContinousPress())
         {
-            if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+            auto pInterpreter = Interpreter::getInstance();
+
+            QJSValueList args({m_jsThis,
+                               event.getModifiers().toInt(),
+                               cur
+                               });
+            auto result = pInterpreter->doFunction("EditorMenu", "keyEvent", args);
+            if (result.isBool() && result.toBool())
+            {
+            }
+            else if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
             {
                 switch (cur)
                 {
@@ -1068,7 +1027,10 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
         return;
     }
     CONSOLE_PRINT("EditorMenue::cursorMoved x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
-    m_Topbar->hide();
+    if (m_Topbar)
+    {
+        m_Topbar->hide();
+    }
     if (m_xyTextInfo.get() != nullptr)
     {
         m_xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
@@ -1204,9 +1166,20 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
         return;
     }
     CONSOLE_PRINT("EditorMenue::onMapClickedRight x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
-    // resolve click    
-    switch (m_EditorMode)
+    auto pInterpreter = Interpreter::getInstance();
+    QJSValueList args({m_jsThis,
+        x,
+        y
+    });
+    auto result = pInterpreter->doFunction("EditorMenu", "mapClickRight", args);
+    if (result.isBool() && result.toBool())
     {
+    }
+    else
+    {
+        // resolve click
+        switch (m_EditorMode)
+        {
         case EditorModes::CopySelection:
         case EditorModes::EditUnits:
         case EditorModes::EditTerrain:
@@ -1221,34 +1194,35 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
         {
             switch (m_EditorSelection->getCurrentMode())
             {
-                case EditorSelection::EditorMode::All:
-                case EditorSelection::EditorMode::Unit:
-                case EditorSelection::EditorMode::Terrain:
-                case EditorSelection::EditorMode::Building:
+            case EditorSelection::EditorMode::All:
+            case EditorSelection::EditorMode::Unit:
+            case EditorSelection::EditorMode::Terrain:
+            case EditorSelection::EditorMode::Building:
+            {
+                Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
+                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                if (pUnit != nullptr)
                 {
-                    Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
-                    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-                    if (pUnit != nullptr)
-                    {
-                        m_EditorSelection->selectUnit(pUnit->getUnitID());
-                    }
-                    else if (pBuilding != nullptr)
-                    {
-                        m_EditorSelection->selectBuilding(pBuilding->getBuildingID());
-                    }
-                    else
-                    {
-                        QString terrainID = m_pMap->getTerrain(x, y)->getTerrainID();
-                        m_EditorSelection->selectTerrain(terrainID);
-                    }
-                    selectionChanged();
-                    break;
+                    m_EditorSelection->selectUnit(pUnit->getUnitID());
                 }
+                else if (pBuilding != nullptr)
+                {
+                    m_EditorSelection->selectBuilding(pBuilding->getBuildingID());
+                }
+                else
+                {
+                    QString terrainID = m_pMap->getTerrain(x, y)->getTerrainID();
+                    m_EditorSelection->selectTerrain(terrainID);
+                }
+                selectionChanged();
+                break;
+            }
             }
         }
+        }
+        m_EditorMode = EditorModes::PlaceEditorSelection;
+
     }
-    m_EditorMode = EditorModes::PlaceEditorSelection;
-    
 }
 
 void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
@@ -1260,8 +1234,19 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
     CONSOLE_PRINT("EditorMenue::onMapClickedLeftDown x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     // resolve click
     m_placingState.active = true;
-    switch (m_EditorMode)
+    auto pInterpreter = Interpreter::getInstance();
+    QJSValueList args({m_jsThis,
+        x,
+        y
+    });
+    auto result = pInterpreter->doFunction("EditorMenu", "mapClickLeftDown", args);
+    if (result.isBool() && result.toBool())
     {
+    }
+    else
+    {
+        switch (m_EditorMode)
+        {
         case EditorModes::CopySelection:
         {
             if (m_copyRect.x() < 0)
@@ -1283,8 +1268,8 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
         {
             break;
         }
+        }
     }
-    
 }
 
 void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
@@ -1295,9 +1280,20 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
         return;
     }
     CONSOLE_PRINT("EditorMenue::onMapClickedLeftUp x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
-    // resolve click
-    switch (m_EditorMode)
+    auto pInterpreter = Interpreter::getInstance();
+    QJSValueList args({m_jsThis,
+        x,
+        y
+    });
+    auto result = pInterpreter->doFunction("EditorMenu", "mapClickLeftUp", args);
+    if (result.isBool() && result.toBool())
     {
+    }
+    else
+    {
+        // resolve click
+        switch (m_EditorMode)
+        {
         case EditorModes::CopySelection:
         {
             if (m_copyRect.x() >= 0)
@@ -1319,8 +1315,8 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
         {
             break;
         }
+        }
     }
-    
 }
 
 void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
@@ -1333,9 +1329,20 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
     {
         Mainapp::getInstance()->pauseRendering();
         CONSOLE_PRINT("EditorMenue::onMapClickedLeft x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
-        // resolve click
-        switch (m_EditorMode)
+        auto pInterpreter = Interpreter::getInstance();
+        QJSValueList args({m_jsThis,
+            x,
+            y
+        });
+        auto result = pInterpreter->doFunction("EditorMenu", "mapClickLeft", args);
+        if (result.isBool() && result.toBool())
         {
+        }
+        else
+        {
+            // resolve click
+            switch (m_EditorMode)
+            {
             case EditorModes::RemoveUnits:
             {
                 Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
@@ -1384,34 +1391,35 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             {
                 switch (m_EditorSelection->getCurrentMode())
                 {
-                    case EditorSelection::EditorMode::Terrain:
-                    {
-                        createTempFile();
-                        placeTerrain(x, y);
-                        break;
-                    }
-                    case EditorSelection::EditorMode::Building:
-                    {
-                        createTempFile();
-                        placeBuilding(x, y);
-                        break;
-                    }
-                    case EditorSelection::EditorMode::Unit:
-                    {
-                        createTempFile();
-                        placeUnit(x, y);
-                        break;
-                    }
-                    case EditorSelection::EditorMode::All:
-                    {
-                        break;
-                    }
+                case EditorSelection::EditorMode::Terrain:
+                {
+                    createTempFile();
+                    placeTerrain(x, y);
+                    break;
+                }
+                case EditorSelection::EditorMode::Building:
+                {
+                    createTempFile();
+                    placeBuilding(x, y);
+                    break;
+                }
+                case EditorSelection::EditorMode::Unit:
+                {
+                    createTempFile();
+                    placeUnit(x, y);
+                    break;
+                }
+                case EditorSelection::EditorMode::All:
+                {
+                    break;
+                }
                 }
                 break;
             }
             case EditorModes::CopySelection:
             {
                 break;
+            }
             }
         }
         Mainapp::getInstance()->continueRendering();

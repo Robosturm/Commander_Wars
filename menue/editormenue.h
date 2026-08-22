@@ -1,6 +1,6 @@
-#pragma once
+#ifndef EDITORMENUE_H
+#define EDITORMENUE_H
 
-#include <QObject>
 #include <QTemporaryDir>
 
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
@@ -25,7 +25,7 @@ class EditorMenue final : public BaseGamemenu
 {
     Q_OBJECT
 public:
-    enum class EditorModes
+    enum EditorModes
     {
         PlaceEditorSelection,
         RemoveUnits,
@@ -34,7 +34,7 @@ public:
         CopySelection,
     };
 
-    enum class CursorModes
+    enum CursorModes
     {
         Rect,
         Circle,
@@ -49,6 +49,11 @@ public:
 
     explicit EditorMenue();
     virtual ~EditorMenue();
+signals:
+    void sigOnMapClickedLeft();
+    void sigOnMapClickedRight();
+    void sigResizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom);
+public slots:
     /**
      * @brief cleanTemp clean ups undo and redo steps
      * @param step
@@ -66,11 +71,6 @@ public:
      * @brief redo
      */
     void editorRedo();
-signals:
-    void sigOnMapClickedLeft();
-    void sigOnMapClickedRight();
-    void sigResizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom);
-public slots:
     /**
      * @brief focusEditor
      */
@@ -359,7 +359,7 @@ public slots:
     /**
      * @brief showExit
      */
-    void showExit();
+    Q_INVOKABLE void showExit();
     /**
      * @brief copy
      */
@@ -373,12 +373,6 @@ public slots:
      * @param mapId
      */
     void downloadAwbwMapById(quint32 mapId);
-protected slots:
-    /**
-     * @brief KeyInput called on any key input
-     * @param event
-     */
-    virtual void keyInput(oxygine::KeyEvent event) override;
     /**
      * @brief newMap
      * @param info
@@ -429,6 +423,14 @@ protected slots:
                          QVector<float> unitDistribution,
                          bool unitsDistributed,
                          bool mirrored);
+    void updateGrids();
+    void getSquareTiles(QVector<QPoint> & points, QPoint start, QPoint end, QPoint currentPos);
+protected slots:
+    /**
+     * @brief KeyInput called on any key input
+     * @param event
+     */
+    virtual void keyInput(oxygine::KeyEvent event) override;
     /**
      * @brief onEnter
      */
@@ -439,14 +441,11 @@ protected slots:
     void onAwbwMapDownloadResult(bool success);
 
 private:
-    void updateGrids();
-    void getSquareTiles(QVector<QPoint> & points, QPoint start, QPoint end, QPoint currentPos);
-private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
-    spTopbar m_Topbar;
     spLabel m_xyTextInfo;
     PlacingState m_placingState;
+    Topbar* m_Topbar{nullptr};
 
     qint32 m_tempCounter{0};
 
@@ -463,3 +462,5 @@ private:
 };
 
 Q_DECLARE_INTERFACE(EditorMenue, "EditorMenue");
+
+#endif // OPTIONMENUE_H

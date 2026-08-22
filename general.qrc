@@ -2094,5 +2094,7 @@
         <file>resources/ui/game/ingameInfoBar.js</file>
         <file>resources/ui/game/ingameInfoBar.xml</file>
         <file>resources/scripts/general/backgroundSelector.js</file>
+        <file>resources/ui/editor/editorMenu.js</file>
+        <file>resources/ui/editor/editorTopbar.xml</file>
     </qresource>
 </RCC>

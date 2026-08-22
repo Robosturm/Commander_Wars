@@ -1501,6 +1501,9 @@ void GameMenue::loadGameMenue()
     pApp->pauseRendering();
     CONSOLE_PRINT("GameMenue::loadGameMenue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
+    // load background
+    changeBackground("gamemenu");
+
     if (m_pNetworkInterface.get() != nullptr)
     {
         m_Multiplayer = true;
@@ -2933,14 +2936,6 @@ void GameMenue::loadSaveGame(const QString savefile)
     else
     {
         setFocused(true);
-    }
-}
-
-void GameMenue::executeCommand(QString command)
-{
-    if (GameConsole::getDeveloperMode())
-    {
-        Interpreter::getInstance()->doString(command);
     }
 }
 

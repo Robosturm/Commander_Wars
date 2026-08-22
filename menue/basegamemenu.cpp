@@ -31,7 +31,6 @@ BaseGamemenu::BaseGamemenu(spGameMap pMap, bool clearPlayerlist)
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
     m_Cursor = MemoryManagement::create<Cursor>(m_pMap.get());
-    loadBackground();
 }
 
 BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savegame)
@@ -43,7 +42,7 @@ BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savega
     m_MapMover = MemoryManagement::create<MapMover>(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
-    loadBackground();
+
     // check for map creation
     if ((width > 0) && (heigth > 0))
     {
@@ -96,11 +95,12 @@ Player* BaseGamemenu::getCurrentViewPlayer() const
     return nullptr;
 }
 
-void BaseGamemenu::loadBackground()
+void BaseGamemenu::executeCommand(QString command)
 {
-    CONSOLE_PRINT("Entering In Game Menue", GameConsole::eDEBUG);
-    // load background
-    changeBackground("gamemenu");
+    if (GameConsole::getDeveloperMode())
+    {
+        Interpreter::getInstance()->doString(command);
+    }
 }
 
 void BaseGamemenu::loadHandling()

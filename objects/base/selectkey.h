@@ -18,7 +18,6 @@ public:
     explicit SelectKey(Qt::Key code);
     virtual ~SelectKey() = default;
 
-    static QString getKeycodeText(Qt::Key code);
 signals:
     void sigKeyChanged(Qt::Key key);
 

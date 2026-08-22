@@ -891,18 +891,25 @@ bool UiFactory::createTopbar(oxygine::spActor parent, QDomElement element, oxygi
                         {
                             itemNode = itemNode.nextSibling();
                         }
-                        if (!itemNode.isNull())
+                        QDomElement itemElement = itemNode.toElement();
+                        if (!itemElement.isNull() && itemElement.toElement().nodeName() == itemIf)
                         {
-                            QDomElement itemElement = itemNode.toElement();
-                            QString itemText = getStringValue(getAttribute(itemElement.childNodes(), attrText), "", loopIdx, pMenu);
-                            QString itemID = getAttribute(itemElement.childNodes(), attrItemID);
-                            QString itemTooltip = getStringValue(getAttribute(itemElement.childNodes(), attrTooltip), "", loopIdx, pMenu);
-                            if (!itemText.isEmpty() && !itemID.isEmpty())
+                            auto ifNode = itemElement.toElement();
+                            bool create = getBoolValue(ifNode.attribute("condition"), "", loopIdx, pMenu);
+                            if (create)
                             {
-                                pTopbar->addItem(itemText, itemID, groupId, itemTooltip);
+                                auto node = itemNode.firstChild();
+                                while (!node.isNull())
+                                {
+                                    addItemNode(node, pTopbar, groupId, pMenu, loopIdx);
+                                }
                             }
+                            itemNode = itemNode.nextSibling();
                         }
-                        itemNode = itemNode.nextSibling();
+                        else
+                        {
+                            itemNode = addItemNode(itemNode, pTopbar, groupId, pMenu, loopIdx);
+                        }
                     }
                     ++groupId;
                 }
@@ -925,6 +932,28 @@ bool UiFactory::createTopbar(oxygine::spActor parent, QDomElement element, oxygi
     }
     return success;
 }
+
+QDomNode UiFactory::addItemNode(QDomNode & itemNode, spTopbar & pTopbar, qint32 groupId, CreatedGui* pMenu, qint32 loopIdx)
+{
+    while (itemNode.isComment())
+    {
+        itemNode = itemNode.nextSibling();
+    }
+    if (!itemNode.isNull())
+    {
+        QDomElement itemElement = itemNode.toElement();
+        QString itemText = getStringValue(getAttribute(itemElement.childNodes(), attrText), "", loopIdx, pMenu);
+        QString itemID = getAttribute(itemElement.childNodes(), attrItemID);
+        QString itemTooltip = getStringValue(getAttribute(itemElement.childNodes(), attrTooltip), "", loopIdx, pMenu);
+        if (!itemText.isEmpty() && !itemID.isEmpty())
+        {
+            pTopbar->addItem(itemText, itemID, groupId, itemTooltip);
+        }
+        itemNode = itemNode.nextSibling();
+    }
+    return itemNode;
+}
+
 
 bool UiFactory::createTabbedBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
@@ -973,7 +1002,10 @@ bool UiFactory::createTabbedBox(oxygine::spActor parent, QDomElement element, ox
                 if (create)
                 {
                     auto node = tabNode.firstChild();
-                    addTabNode(node, pTabbedBox, pMenu, loopIdx, success);
+                    while (!node.isNull())
+                    {
+                        addTabNode(node, pTabbedBox, pMenu, loopIdx, success);
+                    }
                 }
                 tabNode = tabNode.nextSibling();
             }

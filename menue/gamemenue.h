@@ -480,10 +480,6 @@ protected slots:
      */
     virtual void onEnter() override;
     /**
-     * @brief executeCommand
-     */
-    void executeCommand(QString command);
-    /**
      * @brief closeSlave
      */
     void closeSlave();

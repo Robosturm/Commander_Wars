@@ -72,8 +72,11 @@ public slots:
 protected slots:
     virtual void keyInput(oxygine::KeyEvent event);
     virtual void keyUp(oxygine::KeyEvent event);
+    /**
+     * @brief executeCommand
+     */
+    virtual void executeCommand(QString command);
 protected:
-    void loadBackground();
     void loadHandling();
     void connectMapCursor();
 protected:
