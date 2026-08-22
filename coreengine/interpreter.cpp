@@ -137,6 +137,52 @@ QString Interpreter::getRuntimeData()
     return m_runtimeData;
 }
 
+void Interpreter::storeScriptText(const QString & script, const QString & contents)
+{
+#ifdef SCRIPTSOURCESUPPORT
+    m_scriptTexts.insert(script, contents);
+    const QUrl url = GlobalUtils::getUrlForFile(script);
+    const QString urlText = url.toString();
+    if (urlText != script)
+    {
+        m_scriptTexts.insert(urlText, contents);
+    }
+    const QString encodedUrlText = url.toString(QUrl::FullyEncoded);
+    if (encodedUrlText != script && encodedUrlText != urlText)
+    {
+        m_scriptTexts.insert(encodedUrlText, contents);
+    }
+#else
+    Q_UNUSED(script)
+    Q_UNUSED(contents)
+#endif
+}
+
+QString Interpreter::getScriptText(const QString & script) const
+{
+#ifndef SCRIPTSOURCESUPPORT
+    Q_UNUSED(script)
+    return QString();
+#else
+    auto iter = m_scriptTexts.find(script);
+    if (iter == m_scriptTexts.cend())
+    {
+        const QUrl url = GlobalUtils::getUrlForFile(script);
+        iter = m_scriptTexts.find(url.toString());
+        if (iter == m_scriptTexts.cend())
+        {
+            iter = m_scriptTexts.find(url.toString(QUrl::FullyEncoded));
+        }
+    }
+    if (iter == m_scriptTexts.cend())
+    {
+        CONSOLE_PRINT_MODULE("Interpreter::getScriptText: no captured text for script " + script, GameConsole::eWARNING, GameConsole::eJavaScript);
+        return QString();
+    }
+    return iter.value();
+#endif
+}
+
 bool Interpreter::openScript(const QString & script, bool setup)
 {
     bool success = false;
@@ -166,7 +212,10 @@ bool Interpreter::openScript(const QString & script, bool setup)
             }
         }
         scriptFile.close();
-        QJSValue value = evaluate(contents, script);
+        // QJSEngine drops the name of a qrc script when the path starts with a doubled slash
+        const QString scriptName = GlobalUtils::collapseDoubleSlashes(script);
+        storeScriptText(scriptName, contents);
+        QJSValue value = evaluate(contents, scriptName);
         if (value.isError())
         {
             QString error = value.toString() + " in File:" + script + " in File: " +
@@ -186,7 +235,9 @@ bool Interpreter::loadScript(const QString & content, const QString & script)
 {
     bool success = false;
     CONSOLE_PRINT_MODULE("Interpreter::loadScript: " + script, GameConsole::eDEBUG, GameConsole::eJavaScript);
-    QJSValue value = evaluate(content, script);
+    const QString scriptName = GlobalUtils::collapseDoubleSlashes(script);
+    storeScriptText(scriptName, content);
+    QJSValue value = evaluate(content, scriptName);
     if (value.isError())
     {
         QString error = value.toString() + " in script " + script + " in File: " +
