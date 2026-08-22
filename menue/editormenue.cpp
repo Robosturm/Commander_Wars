@@ -190,6 +190,11 @@ EditorMenue::~EditorMenue()
 
 }
 
+EditorSelection* EditorMenue::getEditorSelection()
+{
+    return m_EditorSelection.get();
+}
+
 void EditorMenue::cleanTemp(qint32 step)
 {
     QDir dir = m_tempDir.path();
@@ -788,25 +793,25 @@ void EditorMenue::showRandomMap()
 
 void EditorMenue::changePlaceSelection()
 {
-    m_EditorMode = EditorModes::PlaceEditorSelection;
+    m_EditorMode = GameEnums::EditorModes_PlaceEditorSelection;
     selectionChanged();
 }
 
 void EditorMenue::deleteUnits()
 {
-    m_EditorMode = EditorModes::RemoveUnits;
+    m_EditorMode = GameEnums::EditorModes_RemoveUnits;
     createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
 }
 
 void EditorMenue::editUnits()
 {
-    m_EditorMode = EditorModes::EditUnits;
+    m_EditorMode = GameEnums::EditorModes_EditUnits;
     createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
 }
 
 void EditorMenue::editTerrains()
 {
-    m_EditorMode = EditorModes::EditTerrain;
+    m_EditorMode = GameEnums::EditorModes_EditTerrain;
     createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
 }
 
@@ -840,7 +845,7 @@ void EditorMenue::showExit()
 
 void EditorMenue::copy()
 {
-    m_EditorMode = EditorModes::CopySelection;
+    m_EditorMode = GameEnums::EditorModes_CopySelection;
     m_copyRect = QRect(-1, -1, 0, 0);
 }
 
@@ -941,7 +946,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                     }
                     case Qt::Key_C:
                     {
-                        m_EditorMode = EditorModes::CopySelection;
+                        m_EditorMode = GameEnums::EditorModes_CopySelection;
                         m_copyRect = QRect(-1, -1, 0, 0);
                         createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
                         createMarkedArea(m_copyRectActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
@@ -954,7 +959,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                         {
                             if ((event.getModifiers() & Qt::KeyboardModifier::ShiftModifier) > 0)
                             {
-                                pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false, EditorSelection::EditorMode::All);
+                                pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false, GameEnums::EditorPlaceMode_All);
                             }
                             else
                             {
@@ -993,13 +998,13 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getInstance()->getKey_cancel() ||
                      cur == Settings::getInstance()->getKey_cancel2())
             {
-                if (m_EditorMode == EditorModes::RemoveUnits)
+                if (m_EditorMode == GameEnums::EditorModes_RemoveUnits)
                 {
-                    m_EditorMode = EditorModes::PlaceEditorSelection;
+                    m_EditorMode = GameEnums::EditorModes_PlaceEditorSelection;
                 }
                 else
                 {
-                    m_EditorMode = EditorModes::RemoveUnits;
+                    m_EditorMode = GameEnums::EditorModes_RemoveUnits;
                 }
             }
             else if (cur == Settings::getInstance()->getKey_confirm() ||
@@ -1048,31 +1053,31 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
 
     switch (m_EditorMode)
     {
-        case EditorModes::RemoveUnits:
+        case GameEnums::EditorModes_RemoveUnits:
         {
             m_Cursor->changeCursor("cursor+delete");
             break;
         }
-        case EditorModes::EditUnits:
+        case GameEnums::EditorModes_EditUnits:
         {
             m_Cursor->changeCursor("cursor+edit", 0, 0, 1.0f);
             break;
         }
-        case EditorModes::EditTerrain:
+        case GameEnums::EditorModes_EditTerrain:
         {
             m_Cursor->changeCursor("cursor+edit", 0, 0, 1.0f);
             break;
         }
-        case EditorModes::PlaceEditorSelection:
+        case GameEnums::EditorModes_PlaceEditorSelection:
         {
             // resolve cursor move
             switch (m_EditorSelection->getCurrentMode())
             {
-                case EditorSelection::EditorMode::Terrain:
+                case GameEnums::EditorPlaceMode_Terrain:
                 {
                     if (canTerrainBePlaced(x, y))
                     {
-                        if (m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Fill)
+                        if (m_EditorSelection->getSizeMode() == GameEnums::EditorPlacementSize_Fill)
                         {
                             m_Cursor->changeCursor("cursor+fill");
                         }
@@ -1087,14 +1092,14 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
                     }
                     break;
                 }
-                case EditorSelection::EditorMode::Building:
+                case GameEnums::EditorPlaceMode_Building:
                 {
                     spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
                     if (canBuildingBePlaced(x, y) ||
                         (pCurrentBuilding->getBuildingWidth() == 1 &&
                          pCurrentBuilding->getBuildingHeigth() == 1))
                     {
-                        if (m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Fill)
+                        if (m_EditorSelection->getSizeMode() == GameEnums::EditorPlacementSize_Fill)
                         {
                             m_Cursor->changeCursor("cursor+fill");
                         }
@@ -1109,11 +1114,11 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
                     }
                     break;
                 }
-                case EditorSelection::EditorMode::Unit:
+                case GameEnums::EditorPlaceMode_Unit:
                 {
                     if (canUnitBePlaced(x, y))
                     {
-                        if (m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Fill)
+                        if (m_EditorSelection->getSizeMode() == GameEnums::EditorPlacementSize_Fill)
                         {
                             m_Cursor->changeCursor("cursor+fill");
                         }
@@ -1128,14 +1133,14 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
                     }
                     break;
                 }
-                case EditorSelection::EditorMode::All:
+                case GameEnums::EditorPlaceMode_All:
                 {
                     break;
                 }
             }
             break;
         }
-        case EditorModes::CopySelection:
+        case GameEnums::EditorModes_CopySelection:
         {
             m_Cursor->changeCursor("cursor+default");
             m_pMap->addChild(m_copyRectActor);
@@ -1180,24 +1185,24 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
         // resolve click
         switch (m_EditorMode)
         {
-        case EditorModes::CopySelection:
-        case EditorModes::EditUnits:
-        case EditorModes::EditTerrain:
-        case EditorModes::RemoveUnits:
+        case GameEnums::EditorModes_CopySelection:
+        case GameEnums::EditorModes_EditUnits:
+        case GameEnums::EditorModes_EditTerrain:
+        case GameEnums::EditorModes_RemoveUnits:
         {
             m_copyRectActor->detach();
-            m_EditorMode = EditorModes::PlaceEditorSelection;
+            m_EditorMode = GameEnums::EditorModes_PlaceEditorSelection;
             selectionChanged();
             break;
         }
-        case EditorModes::PlaceEditorSelection:
+        case GameEnums::EditorModes_PlaceEditorSelection:
         {
             switch (m_EditorSelection->getCurrentMode())
             {
-            case EditorSelection::EditorMode::All:
-            case EditorSelection::EditorMode::Unit:
-            case EditorSelection::EditorMode::Terrain:
-            case EditorSelection::EditorMode::Building:
+            case GameEnums::EditorPlaceMode_All:
+            case GameEnums::EditorPlaceMode_Unit:
+            case GameEnums::EditorPlaceMode_Terrain:
+            case GameEnums::EditorPlaceMode_Building:
             {
                 Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
                 Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
@@ -1220,7 +1225,7 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
             }
         }
         }
-        m_EditorMode = EditorModes::PlaceEditorSelection;
+        m_EditorMode = GameEnums::EditorModes_PlaceEditorSelection;
 
     }
 }
@@ -1247,7 +1252,7 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
     {
         switch (m_EditorMode)
         {
-        case EditorModes::CopySelection:
+        case GameEnums::EditorModes_CopySelection:
         {
             if (m_copyRect.x() < 0)
             {
@@ -1294,7 +1299,7 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
         // resolve click
         switch (m_EditorMode)
         {
-        case EditorModes::CopySelection:
+        case GameEnums::EditorModes_CopySelection:
         {
             if (m_copyRect.x() >= 0)
             {
@@ -1343,7 +1348,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             // resolve click
             switch (m_EditorMode)
             {
-            case EditorModes::RemoveUnits:
+            case GameEnums::EditorModes_RemoveUnits:
             {
                 Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
                 if (pUnit != nullptr)
@@ -1353,7 +1358,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
                 }
                 break;
             }
-            case EditorModes::EditUnits:
+            case GameEnums::EditorModes_EditUnits:
             {
                 Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
                 if (pUnit != nullptr)
@@ -1366,7 +1371,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
                 }
                 break;
             }
-            case EditorModes::EditTerrain:
+            case GameEnums::EditorModes_EditTerrain:
             {
                 Terrain* pTerrain  = m_pMap->getTerrain(x, y);
                 if (pTerrain->getBuilding() == nullptr)
@@ -1387,36 +1392,36 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
                 }
                 break;
             }
-            case EditorModes::PlaceEditorSelection:
+            case GameEnums::EditorModes_PlaceEditorSelection:
             {
                 switch (m_EditorSelection->getCurrentMode())
                 {
-                case EditorSelection::EditorMode::Terrain:
+                case GameEnums::EditorPlaceMode_Terrain:
                 {
                     createTempFile();
                     placeTerrain(x, y);
                     break;
                 }
-                case EditorSelection::EditorMode::Building:
+                case GameEnums::EditorPlaceMode_Building:
                 {
                     createTempFile();
                     placeBuilding(x, y);
                     break;
                 }
-                case EditorSelection::EditorMode::Unit:
+                case GameEnums::EditorPlaceMode_Unit:
                 {
                     createTempFile();
                     placeUnit(x, y);
                     break;
                 }
-                case EditorSelection::EditorMode::All:
+                case GameEnums::EditorPlaceMode_All:
                 {
                     break;
                 }
                 }
                 break;
             }
-            case EditorModes::CopySelection:
+            case GameEnums::EditorModes_CopySelection:
             {
                 break;
             }
@@ -1458,7 +1463,7 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
             if (pTerrain->getTerrainID() != terrainID ||
                 pTerrain->getPalette() != Terrain::getPaletteId(m_EditorSelection->getActivePalette(), pTerrain->getTerrainID()) ||
                 pTerrain->getBuilding() != nullptr ||
-                m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Small)
+                m_EditorSelection->getSizeMode() == GameEnums::EditorPlacementSize_Small)
             {
                 ret = true;
             }
@@ -1506,6 +1511,16 @@ void EditorMenue::getSquareTiles(QVector<QPoint> & points, QPoint start, QPoint 
     }
 }
 
+void EditorMenue::setEditorMode(GameEnums::EditorModes editorMode)
+{
+    m_EditorMode = editorMode;
+}
+
+GameEnums::EditorModes EditorMenue::getEditorMode()
+{
+    return m_EditorMode;
+}
+
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeTerrain", GameConsole::eDEBUG);
@@ -1514,31 +1529,31 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     QString terrainID = m_EditorSelection->getCurrentTerrainID();
     switch (m_EditorSelection->getSizeMode())
     {
-        case EditorSelection::PlacementSize::None:
+        case GameEnums::EditorPlacementSize_None:
         {
             return;
         }
-        case EditorSelection::PlacementSize::Small:
+        case GameEnums::EditorPlacementSize_Small:
         {
             points = PathFindingSystem::getFields(x, y, 0, 0);
             break;
         }
-        case EditorSelection::PlacementSize::Medium:
+        case GameEnums::EditorPlacementSize_Medium:
         {
             points = PathFindingSystem::getFields(x, y, 0, 1);
             break;
         }
-        case EditorSelection::PlacementSize::BigSquare:
+        case GameEnums::EditorPlacementSize_BigSquare:
         {
             getSquareTiles(points, QPoint(-1, -1), QPoint(1, 1), QPoint(x, y));
             break;
         }
-        case EditorSelection::PlacementSize::Big:
+        case GameEnums::EditorPlacementSize_Big:
         {
             points = PathFindingSystem::getFields(x, y, 0, 2);
             break;
         }
-        case EditorSelection::PlacementSize::Fill:
+        case GameEnums::EditorPlacementSize_Fill:
         {
             TerrainFindingSystem Pfs(m_pMap.get(), m_pMap->getTerrain(x, y)->getID(),x , y);
             Pfs.explore();
@@ -1605,31 +1620,31 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
-        case EditorSelection::PlacementSize::None:
+        case GameEnums::EditorPlacementSize_None:
         {
             return;
         }
-        case EditorSelection::PlacementSize::Small:
+        case GameEnums::EditorPlacementSize_Small:
         {
             points = PathFindingSystem::getFields(x, y, 0, 0);
             break;
         }
-        case EditorSelection::PlacementSize::Medium:
+        case GameEnums::EditorPlacementSize_Medium:
         {
             points = PathFindingSystem::getFields(x, y, 0, 1);
             break;
         }
-        case EditorSelection::PlacementSize::BigSquare:
+        case GameEnums::EditorPlacementSize_BigSquare:
         {
             getSquareTiles(points, QPoint(-1, -1), QPoint(1, 1), QPoint(x, y));
             break;
         }
-        case EditorSelection::PlacementSize::Big:
+        case GameEnums::EditorPlacementSize_Big:
         {
             points = PathFindingSystem::getFields(x, y, 0, 2);
             break;
         }
-        case EditorSelection::PlacementSize::Fill:
+        case GameEnums::EditorPlacementSize_Fill:
         {
             TerrainFindingSystem Pfs(m_pMap.get(), m_pMap->getTerrain(x, y)->getID(),x , y);
             Pfs.explore();
@@ -1708,31 +1723,31 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
-        case EditorSelection::PlacementSize::None:
+        case GameEnums::EditorPlacementSize_None:
         {
             return;
         }
-        case EditorSelection::PlacementSize::Small:
+        case GameEnums::EditorPlacementSize_Small:
         {
             points = PathFindingSystem::getFields(x, y, 0, 0);
             break;
         }
-        case EditorSelection::PlacementSize::Medium:
+        case GameEnums::EditorPlacementSize_Medium:
         {
             points = PathFindingSystem::getFields(x, y, 0, 1);
             break;
         }
-        case EditorSelection::PlacementSize::BigSquare:
+        case GameEnums::EditorPlacementSize_BigSquare:
         {
             getSquareTiles(points, QPoint(-1, -1), QPoint(1, 1), QPoint(x, y));
             break;
         }
-        case EditorSelection::PlacementSize::Big:
+        case GameEnums::EditorPlacementSize_Big:
         {
             points = PathFindingSystem::getFields(x, y, 0, 2);
             break;
         }
-        case EditorSelection::PlacementSize::Fill:
+        case GameEnums::EditorPlacementSize_Fill:
         {
             points = PathFindingSystem::getFields(x, y, 0, 0);
             break;
@@ -1948,10 +1963,10 @@ void EditorMenue::changeMap(MapEditDialog::MapEditInfo info)
 void EditorMenue::selectionChanged()
 {
     CONSOLE_PRINT("EditorMenue::selectionChanged", GameConsole::eDEBUG);
-    if (m_EditorMode == EditorModes::PlaceEditorSelection)
+    if (m_EditorMode == GameEnums::EditorModes_PlaceEditorSelection)
     {
         m_mapSliding->setLocked(true);
-        if (m_EditorSelection->getCurrentMode() == EditorSelection::EditorMode::Building)
+        if (m_EditorSelection->getCurrentMode() == GameEnums::EditorPlaceMode_Building)
         {
             spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
             if (pCurrentBuilding->getBuildingWidth() > 1 ||
@@ -1963,36 +1978,36 @@ void EditorMenue::selectionChanged()
         }
         switch (m_EditorSelection->getSizeMode())
         {
-            case EditorSelection::PlacementSize::None:
+            case GameEnums::EditorPlacementSize_None:
             {
                 m_mapSliding->setLocked(false);
                 createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(-1, -1), CursorModes::Circle);
                 break;
             }
-            case EditorSelection::PlacementSize::Medium:
+            case GameEnums::EditorPlacementSize_Medium:
             {
                 createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(1, -1), CursorModes::Circle);
                 break;
             }
-            case EditorSelection::PlacementSize::BigSquare:
+            case GameEnums::EditorPlacementSize_BigSquare:
             {
                 createMarkedArea(m_cursorActor, QPoint(-1, -1), QPoint(1, 1), CursorModes::Rect);
                 break;
             }
-            case EditorSelection::PlacementSize::Big:
+            case GameEnums::EditorPlacementSize_Big:
             {
                 createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(2, -1), CursorModes::Circle);
                 break;
             }
-            case EditorSelection::PlacementSize::Small:
-            case EditorSelection::PlacementSize::Fill:
+            case GameEnums::EditorPlacementSize_Small:
+            case GameEnums::EditorPlacementSize_Fill:
             {
                 createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(-1, -1), CursorModes::Circle);
                 break;
             }
         }
     }
-    else if (m_EditorMode == EditorModes::CopySelection)
+    else if (m_EditorMode == GameEnums::EditorModes_CopySelection)
     {
         m_mapSliding->setLocked(false);
         createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(m_copyRect.width() - 1, m_copyRect.height() - 1), CursorModes::Rect);
@@ -2130,7 +2145,59 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
     }
 }
 
-void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection::EditorMode selection)
+void EditorMenue::clearMarkedFields()
+{
+    Mainapp::getInstance()->pauseRendering();
+    for (auto & field : m_markedFields)
+    {
+        field->detachAndRemove();
+    }
+    m_makredFieldPoints.clear();
+    m_markedFields.clear();
+    Mainapp::getInstance()->continueRendering();
+}
+
+QVector<QPoint> EditorMenue::getMakredFieldPoints()
+{
+    return m_makredFieldPoints;
+}
+
+void EditorMenue::createMarkedField(QPoint point, QColor color)
+{
+    if (m_pMap->onMap(point.x(), point.y()))
+    {
+        oxygine::spSprite pSprite = createMarkedFieldActor(point, color);
+        m_makredFieldPoints.push_back(QPoint(point.x(), point.y()));
+        m_markedFields.push_back(pSprite);
+    }
+}
+
+oxygine::spSprite EditorMenue::createMarkedFieldActor(QPoint point, QColor color)
+{
+    GameManager* pGameManager = GameManager::getInstance();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");
+    if (pAnim != nullptr)
+    {
+        if (pAnim->getTotalFrames() > 1 && !Settings::getInstance()->getStaticMarkedFields())
+        {
+            float initFrame = 0;
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), oxygine::timeMS(static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime)), -1);
+            pSprite->addTween(tween);
+        }
+        else
+        {
+            pSprite->setResAnim(pAnim);
+        }
+        pSprite->setColor(color);
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
+        pSprite->setPosition(point.x() * GameMap::getImageSize(), point.y() * GameMap::getImageSize());
+        m_pMap->getMarkedFieldsLayer()->addChild(pSprite);
+    }
+    return pSprite;
+}
+
+void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, GameEnums::EditorPlaceMode selection)
 {
     CONSOLE_PRINT("EditorMenue::pasteSelection", GameConsole::eDEBUG);
     
@@ -2185,8 +2252,8 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                     {
                         switch (selection)
                         {
-                            case EditorSelection::EditorMode::All:
-                            case EditorSelection::EditorMode::Terrain:
+                            case GameEnums::EditorPlaceMode_All:
+                            case GameEnums::EditorPlaceMode_Terrain:
                             {
                                 Terrain* pCopyTerrain = m_pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos);
                                 m_pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(1), x + xPos, y + yPos, false, false);
@@ -2198,12 +2265,12 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                 pTerrain->setFixedOverlaySprites(pCopyTerrain->getFixedOverlaySprites());
                                 pTerrain->setCustomOverlays(pCopyTerrain->getCustomOverlays());
                                 pTerrain->setHp(pCopyTerrain->getHp());
-                                if (selection != EditorSelection::EditorMode::All)
+                                if (selection != GameEnums::EditorPlaceMode_All)
                                 {
                                     break;
                                 }
                             }
-                            case EditorSelection::EditorMode::Building:
+                            case GameEnums::EditorPlaceMode_Building:
                             {
                                 Building* pBuilding = m_pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos)->getBuilding();
                                 if (pBuilding != nullptr &&
@@ -2221,12 +2288,12 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                     pCopyBuilding->setHp(pBuilding->getHp());
                                     m_pMap->getTerrain(x + xPos, y + yPos)->setBuilding(pCopyBuilding);
                                 }
-                                if (selection != EditorSelection::EditorMode::All)
+                                if (selection != GameEnums::EditorPlaceMode_All)
                                 {
                                     break;
                                 }
                             }
-                            case EditorSelection::EditorMode::Unit:
+                            case GameEnums::EditorPlaceMode_Unit:
                             {
                                 Unit* pUnit = m_pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos)->getUnit();
                                 if (pUnit != nullptr)
@@ -2247,7 +2314,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                         pCopyUnit->setModdingFlags(pUnit->getModdingFlags());
                                     }
                                 }
-                                if (selection != EditorSelection::EditorMode::All)
+                                if (selection != GameEnums::EditorPlaceMode_All)
                                 {
                                     break;
                                 }

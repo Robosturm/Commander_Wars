@@ -394,6 +394,36 @@ public:
     };
     Q_ENUM(DrawVoting)
 
+    enum EditorModes
+    {
+        EditorModes_PlaceEditorSelection,
+        EditorModes_RemoveUnits,
+        EditorModes_EditUnits,
+        EditorModes_EditTerrain,
+        EditorModes_CopySelection,
+    };
+    Q_ENUM(EditorModes)
+
+    enum EditorPlaceMode
+    {
+        EditorPlaceMode_All = -1,
+        EditorPlaceMode_Terrain = 0,
+        EditorPlaceMode_Building,
+        EditorPlaceMode_Unit,
+    };
+    Q_ENUM(EditorPlaceMode)
+
+    enum EditorPlacementSize
+    {
+        EditorPlacementSize_None = 0,
+        EditorPlacementSize_Small,
+        EditorPlacementSize_Medium,
+        EditorPlacementSize_BigSquare,
+        EditorPlacementSize_Big,
+        EditorPlacementSize_Fill
+    };
+    Q_ENUM(EditorPlacementSize)
+
     static void registerEnums();
 private:
     GameEnums();

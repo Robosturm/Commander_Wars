@@ -19,32 +19,10 @@ class EditorSelection final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    /**
-     * @brief The EditorMode enum describes what we want to place at the moment
-     */
-    enum class EditorMode
-    {
-        All = -1,
-        Terrain = 0,
-        Building,
-        Unit,
-    };
-    /**
-     * @brief The PlacementSize enum describes how terrain is placed
-     */
-    enum class PlacementSize
-    {
-        None = 0,
-        Small,
-        Medium,
-        BigSquare,
-        Big,
-        Fill
-    };
 
     explicit EditorSelection(qint32 width, bool smallScreen, GameMap* pMap);
     virtual ~EditorSelection() = default;
-    inline EditorMode getCurrentMode() const
+    Q_INVOKABLE inline GameEnums::EditorPlaceMode getCurrentMode() const
     {
         return m_Mode;
     }
@@ -70,7 +48,7 @@ public:
      * @brief getSizeMode
      * @return
      */
-    PlacementSize getSizeMode() const;
+    Q_INVOKABLE GameEnums::EditorPlacementSize getSizeMode() const;
     /**
      * @brief createPlayerSelection
      */
@@ -88,7 +66,8 @@ public:
     Q_INVOKABLE void selectTerrain(QString terrainID);
     Q_INVOKABLE void selectBuilding(QString buildingID);
     Q_INVOKABLE void selectUnit(QString unitID);
-
+    Q_INVOKABLE Building* getCurrentBuilding();
+    Q_INVOKABLE Unit* getCurrentUnit();
 signals:
     void sigUpdateSelectedPlayer();
     void sigSelectionChanged();
@@ -199,8 +178,8 @@ private:
     const qint32 m_startH = GameMap::getImageSize() * 2;
     static const float m_xFactor;
     static const float m_yFactor;
-    EditorMode m_Mode{EditorMode::Terrain};
-    PlacementSize m_SizeMode{PlacementSize::Small};
+    GameEnums::EditorPlaceMode m_Mode{GameEnums::EditorPlaceMode_Terrain};
+    GameEnums::EditorPlacementSize m_SizeMode{GameEnums::EditorPlacementSize_Small};
     qint32 m_StartIndex{0};
     qint32 m_xCount{0};
     qint32 m_labelWidth{0};
@@ -240,6 +219,8 @@ private:
     QVector<spBuilding> m_Players;
     GameMap* m_pMap{nullptr};
 };
+
+Q_DECLARE_INTERFACE(EditorSelection, "EditorSelection");
 
 #endif // EDITORSELECTION_H
 

@@ -25,15 +25,6 @@ class EditorMenue final : public BaseGamemenu
 {
     Q_OBJECT
 public:
-    enum EditorModes
-    {
-        PlaceEditorSelection,
-        RemoveUnits,
-        EditUnits,
-        EditTerrain,
-        CopySelection,
-    };
-
     enum CursorModes
     {
         Rect,
@@ -49,6 +40,16 @@ public:
 
     explicit EditorMenue();
     virtual ~EditorMenue();
+    Q_INVOKABLE EditorSelection* getEditorSelection();
+    /**
+     * @brief createMarkedField
+     * @param x field
+     * @param y field
+     * @param color of the marked field
+     */
+    Q_INVOKABLE void createMarkedField(QPoint point, QColor color);
+    Q_INVOKABLE QVector<QPoint> getMakredFieldPoints();
+    Q_INVOKABLE void clearMarkedFields();
 signals:
     void sigOnMapClickedLeft();
     void sigOnMapClickedRight();
@@ -386,7 +387,7 @@ public slots:
     /**
      * @brief pasteSelection
      */
-    void pasteSelection(qint32 x, qint32 y, bool click, EditorSelection::EditorMode selection);
+    void pasteSelection(qint32 x, qint32 y, bool click, GameEnums::EditorPlaceMode selection);
     /**
      * @brief createMarkedArea
      * @param pActor
@@ -425,6 +426,9 @@ public slots:
                          bool mirrored);
     void updateGrids();
     void getSquareTiles(QVector<QPoint> & points, QPoint start, QPoint end, QPoint currentPos);
+    void setEditorMode(GameEnums::EditorModes editorMode);
+    GameEnums::EditorModes getEditorMode();
+
 protected slots:
     /**
      * @brief KeyInput called on any key input
@@ -439,10 +443,12 @@ protected slots:
      * @brief onAwbwMapDownloadResult
      */
     void onAwbwMapDownloadResult(bool success);
+private:
+    oxygine::spSprite createMarkedFieldActor(QPoint point, QColor color);
 
 private:
     spEditorSelection m_EditorSelection{nullptr};
-    EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
+    GameEnums::EditorModes m_EditorMode{GameEnums::EditorModes_PlaceEditorSelection};
     spLabel m_xyTextInfo;
     PlacingState m_placingState;
     Topbar* m_Topbar{nullptr};
@@ -459,6 +465,9 @@ private:
     AwbwMapDownloader m_awbwMapDownloader;
 
     QTemporaryDir m_tempDir = Settings::getInstance()->newTempDir();
+
+    QVector<oxygine::spActor> m_markedFields;
+    QVector<QPoint> m_makredFieldPoints;
 };
 
 Q_DECLARE_INTERFACE(EditorMenue, "EditorMenue");

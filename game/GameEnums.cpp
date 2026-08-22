@@ -262,7 +262,26 @@ void GameEnums::registerEnums()
     value.setProperty("DrawVoting_MissingVote", DrawVoting_MissingVote);
     value.setProperty("DrawVoting_Yes", DrawVoting_Yes);
     value.setProperty("DrawVoting_No", DrawVoting_No);
-        
+
+    value.setProperty("EditorModes_PlaceEditorSelection", EditorModes_PlaceEditorSelection);
+    value.setProperty("EditorModes_RemoveUnits", EditorModes_RemoveUnits);
+    value.setProperty("EditorModes_EditUnits", EditorModes_EditUnits);
+    value.setProperty("EditorModes_EditTerrain", EditorModes_EditTerrain);
+    value.setProperty("EditorModes_CopySelection", EditorModes_CopySelection);
+
+    value.setProperty("EditorPlaceMode_All", EditorPlaceMode_All);
+    value.setProperty("EditorPlaceMode_Terrain", EditorPlaceMode_Terrain);
+    value.setProperty("EditorPlaceMode_Building", EditorPlaceMode_Building);
+    value.setProperty("EditorPlaceMode_Unit", EditorPlaceMode_Unit);
+
+    value.setProperty("EditorPlacementSize_None", EditorPlacementSize_None);
+    value.setProperty("EditorPlacementSize_Small", EditorPlacementSize_Small);
+    value.setProperty("EditorPlacementSize_Medium", EditorPlacementSize_Medium);
+    value.setProperty("EditorPlacementSize_BigSquare", EditorPlacementSize_BigSquare);
+    value.setProperty("EditorPlacementSize_Big", EditorPlacementSize_Big);
+    value.setProperty("EditorPlacementSize_Fill", EditorPlacementSize_Fill);
+
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

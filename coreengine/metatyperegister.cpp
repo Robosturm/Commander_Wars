@@ -156,6 +156,7 @@ void MetaTypeRegister::registerInterfaceData()
     qRegisterMetaType<GameEnums::PowerGainZone>("GameEnums::PowerGainZone");
     qRegisterMetaType<GameEnums::PowerGainMode>("GameEnums::PowerGainMode");
     qRegisterMetaType<GameEnums::DamageFormula>("GameEnums::DamageFormula");
+    qRegisterMetaType<GameEnums::EditorModes>("GameEnums::EditorModes");
     qRegisterMetaType<QEasingCurve::Type>("QEasingCurve::Type");
     qRegisterMetaType<GameConsole::eLogLevels>("Console::eLogLevels");
     qRegisterMetaType<Mainapp::StartupPhase>("Mainapp::StartupPhase");
@@ -256,6 +257,7 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<IngameInfoBar>("IngameInfoBar", 1);
     qmlRegisterInterface<SpriteObject>("SpriteObject", 1);
     qmlRegisterInterface<Box9Object>("Box9Object", 1);
+    qmlRegisterInterface<EditorSelection>("EditorSelection", 1);
 
     qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
     qmlRegisterInterface<MainServer>("MainServer", 1);

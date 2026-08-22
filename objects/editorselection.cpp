@@ -203,7 +203,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     spTerrain sea = Terrain::createTerrain("SEA", -1, -1, "", m_pMap);
 
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
-    for (const auto& unitId : sortedUnits)
+    for (const auto& unitId : std::as_const(sortedUnits))
     {
         if (Unit::getShowInEditor(unitId))
         {
@@ -296,7 +296,7 @@ void EditorSelection::createBoxPlacementSize()
     auto* pCurrentSelectorSize = m_CurrentSelectorSize.get();
     pSpriteNone->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos](oxygine::Event *)
     {
-        m_SizeMode = PlacementSize::None;
+        m_SizeMode = GameEnums::EditorPlacementSize_None;
         pCurrentSelectorSize->setPosition(m_frameSize, yStartPos);
         emit sigSelectionChanged();
     });
@@ -310,7 +310,7 @@ void EditorSelection::createBoxPlacementSize()
     m_BoxPlacementSize->addChild(pSpriteSmall);
     pSpriteSmall->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos, xChange](oxygine::Event *)
     {
-        m_SizeMode = PlacementSize::Small;
+        m_SizeMode = GameEnums::EditorPlacementSize_Small;
         pCurrentSelectorSize->setPosition(m_frameSize + xChange, yStartPos);
         emit sigSelectionChanged();
     });
@@ -322,7 +322,7 @@ void EditorSelection::createBoxPlacementSize()
     m_BoxPlacementSize->addChild(pSpriteMedium);
     pSpriteMedium->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos, xChange](oxygine::Event *)
     {
-        m_SizeMode = PlacementSize::Medium;
+        m_SizeMode = GameEnums::EditorPlacementSize_Medium;
         pCurrentSelectorSize->setPosition(m_frameSize + xChange * 2, yStartPos);
         emit sigSelectionChanged();
     });
@@ -334,7 +334,7 @@ void EditorSelection::createBoxPlacementSize()
     m_BoxPlacementSize->addChild(pSpriteBigSquare);
     pSpriteBigSquare->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos, xChange](oxygine::Event *)
     {
-        m_SizeMode = PlacementSize::BigSquare;
+        m_SizeMode = GameEnums::EditorPlacementSize_BigSquare;
         pCurrentSelectorSize->setPosition(m_frameSize + xChange * 3, yStartPos);
         emit sigSelectionChanged();
     });
@@ -346,7 +346,7 @@ void EditorSelection::createBoxPlacementSize()
     m_BoxPlacementSize->addChild(pSpriteBig);
     pSpriteBig->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos, xChange](oxygine::Event *)
     {
-        m_SizeMode = PlacementSize::Big;
+        m_SizeMode = GameEnums::EditorPlacementSize_Big;
         pCurrentSelectorSize->setPosition(m_frameSize + xChange * 4, yStartPos);
         emit sigSelectionChanged();
     });
@@ -358,7 +358,7 @@ void EditorSelection::createBoxPlacementSize()
     m_BoxPlacementSize->addChild(pSpriteFill);
     pSpriteFill->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorSize, yStartPos, xChange](oxygine::Event *)
     {
-        m_SizeMode = PlacementSize::Fill;
+        m_SizeMode = GameEnums::EditorPlacementSize_Fill;
         pCurrentSelectorSize->setPosition(m_frameSize + xChange * 5, yStartPos);
         emit sigSelectionChanged();
     });
@@ -555,7 +555,7 @@ void EditorSelection::createBoxSelectionMode()
     auto* pCurrentSelectorMode = m_CurrentSelectorMode.get();
     m_pSpriteTerrainMode->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorMode, yStartPos](oxygine::Event *)
     {
-        m_Mode = EditorMode::Terrain;
+        m_Mode = GameEnums::EditorPlaceMode_Terrain;
         pCurrentSelectorMode->setPosition(m_frameSize, yStartPos);
         emit sigSelectTerrain(0);
         emit sigUpdateTerrainView();
@@ -570,7 +570,7 @@ void EditorSelection::createBoxSelectionMode()
     m_BoxSelectionType->addChild(m_pSpriteBuildingMode);
     m_pSpriteBuildingMode->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorMode, xChange, yStartPos](oxygine::Event *)
     {
-        m_Mode = EditorMode::Building;
+        m_Mode = GameEnums::EditorPlaceMode_Building;
         pCurrentSelectorMode->setPosition(m_frameSize + xChange, yStartPos);
         emit sigSelectBuilding(0);
         emit sigUpdateBuildingView();
@@ -583,7 +583,7 @@ void EditorSelection::createBoxSelectionMode()
     m_BoxSelectionType->addChild(m_pSpriteUnitMode);
     m_pSpriteUnitMode->addEventListener(oxygine::TouchEvent::CLICK, [this, pCurrentSelectorMode, xChange, yStartPos](oxygine::Event *)
     {
-        m_Mode = EditorMode::Unit;
+        m_Mode = GameEnums::EditorPlaceMode_Unit;
         pCurrentSelectorMode->setPosition(m_frameSize + xChange * 2, yStartPos);
         emit sigSelectUnit(0);
         emit sigUpdateUnitView();
@@ -935,7 +935,7 @@ void EditorSelection::slotSelectTerrain(qint32 terrain)
 void EditorSelection::selectTerrain(QString terrainID)
 {
     
-    m_Mode = EditorMode::Terrain;
+    m_Mode = GameEnums::EditorPlaceMode_Terrain;
     m_CurrentSelectorMode->setPosition(m_pSpriteTerrainMode->getPosition());
     updateTerrainView();
     for (qint32 i = 0; i < m_Terrains.size(); i++)
@@ -951,7 +951,7 @@ void EditorSelection::selectTerrain(QString terrainID)
 void EditorSelection::selectBuilding(QString buildingID)
 {
     
-    m_Mode = EditorMode::Building;
+    m_Mode = GameEnums::EditorPlaceMode_Building;
     m_CurrentSelectorMode->setPosition(m_pSpriteBuildingMode->getPosition());
     updateBuildingView();
     for (qint32 i = 0; i < m_Buildings.size(); i++)
@@ -967,7 +967,7 @@ void EditorSelection::selectBuilding(QString buildingID)
 void EditorSelection::selectUnit(QString unitID)
 {
     
-    m_Mode = EditorMode::Unit;
+    m_Mode = GameEnums::EditorPlaceMode_Unit;
     m_CurrentSelectorMode->setPosition(m_pSpriteUnitMode->getPosition());
     updateUnitView();
     for (qint32 i = 0; i < m_Units.size(); i++)
@@ -976,8 +976,17 @@ void EditorSelection::selectUnit(QString unitID)
         {
             slotSelectUnit(i);
         }
-    }
-    
+    }    
+}
+
+Building* EditorSelection::getCurrentBuilding()
+{
+    return getCurrentSpBuilding().get();
+}
+
+Unit* EditorSelection::getCurrentUnit()
+{
+    return getCurrentSpUnit().get();
 }
 
 void EditorSelection::KeyInput(Qt::Key cur)
@@ -1055,7 +1064,7 @@ void EditorSelection::changeSelection(qint32 item)
     }
     switch (m_Mode)
     {
-        case EditorMode::Unit:
+        case GameEnums::EditorPlaceMode_Unit:
         {
             if (item >= m_Units.size())
             {
@@ -1064,7 +1073,7 @@ void EditorSelection::changeSelection(qint32 item)
             slotSelectUnit(item);
             break;
         }
-        case EditorMode::Terrain:
+        case GameEnums::EditorPlaceMode_Terrain:
         {
             if (item >= m_Terrains.size())
             {
@@ -1073,7 +1082,7 @@ void EditorSelection::changeSelection(qint32 item)
             slotSelectTerrain(item);
             break;
         }
-        case EditorMode::Building:
+        case GameEnums::EditorPlaceMode_Building:
         {
             if (item >= m_Buildings.size())
             {
@@ -1082,14 +1091,14 @@ void EditorSelection::changeSelection(qint32 item)
             slotSelectBuilding(item);
             break;
         }
-        case EditorMode::All:
+        case GameEnums::EditorPlaceMode_All:
         {
             break;
         }
     }
 }
 
-EditorSelection::PlacementSize EditorSelection::getSizeMode() const
+GameEnums::EditorPlacementSize EditorSelection::getSizeMode() const
 {
     return m_SizeMode;
 }
