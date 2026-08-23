@@ -546,16 +546,24 @@ void CampaignMenu::saveCampaign(QString filename)
     if (filename.endsWith(".camp"))
     {
         QFile file(filename);
-        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        auto path = QFileInfo(filename).absolutePath();
+        if (QDir().exists(path) || QDir().mkdir(path))
         {
-            QDataStream stream(&file);
-            stream.setVersion(QDataStream::Version::Qt_6_5);
-            m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
-            file.close();
+            if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+            {
+                QDataStream stream(&file);
+                stream.setVersion(QDataStream::Version::Qt_6_5);
+                m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
+                file.close();
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            }
         }
         else
         {
-            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            CONSOLE_PRINT("Failed to create folder for savefile: " + filename, GameConsole::eERROR);
         }
     }   
 }
@@ -565,7 +573,7 @@ void CampaignMenu::autosave()
     if (Settings::getInstance()->getAutoSavingCycle() > 0)
     {
         CONSOLE_PRINT("CampaignMenu::autosave()", GameConsole::eDEBUG);
-        QString path = GlobalUtils::getNextAutosavePath(Settings::getInstance()->getUserPath() + "savegames/" + m_pMapSelectionView->getCurrentCampaign()->getName() + "_autosave_", ".camp", Settings::getInstance()->getAutoSavingCycle());
+        QString path = GlobalUtils::getNextAutosavePath(Settings::getInstance()->getUserPath() + "savegames/" + tr("Campaign") + "_" + m_pMapSelectionView->getCurrentCampaign()->getName() + "/autosave_", ".camp", Settings::getInstance()->getAutoSavingCycle());
         saveCampaign(path);
     }
 }

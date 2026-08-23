@@ -2308,7 +2308,7 @@ void GameMenue::autoSaveMap()
     if (Settings::getInstance()->getAutoSavingCycle() > 0)
     {
         CONSOLE_PRINT("GameMenue::autoSaveMap()", GameConsole::eDEBUG);
-        QString path = GlobalUtils::getNextAutosavePath(Settings::getInstance()->getUserPath() + "savegames/" + m_pMap->getMapName() + "_autosave_", getSaveFileEnding(), Settings::getInstance()->getAutoSavingCycle());
+        QString path = GlobalUtils::getNextAutosavePath(Settings::getInstance()->getUserPath() + "savegames/" + tr("Map") + "_" + m_pMap->getMapName() + "/autosave_", getSaveFileEnding(), Settings::getInstance()->getAutoSavingCycle());
         saveMap(path, false);
     }
 }
@@ -2357,14 +2357,22 @@ void GameMenue::doSaveMap()
             if (m_saveFile.endsWith(".sav") || m_saveFile.endsWith(".msav"))
             {
                 QFile file(m_saveFile);
-                if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+                auto path = QFileInfo(m_saveFile).absolutePath();
+                if (QDir().exists(path) || QDir().mkdir(path))
                 {
-                    QDataStream stream(&file);
-                    stream.setVersion(QDataStream::Version::Qt_6_5);
-                    m_pMap->setReplayActionCount(m_ReplayRecorder.getCount());
-                    m_pMap->serializeObject(stream);
-                    file.close();
-                    Settings::getInstance()->setLastSaveGame(m_saveFile);
+                    if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+                    {
+                        QDataStream stream(&file);
+                        stream.setVersion(QDataStream::Version::Qt_6_5);
+                        m_pMap->setReplayActionCount(m_ReplayRecorder.getCount());
+                        m_pMap->serializeObject(stream);
+                        file.close();
+                        Settings::getInstance()->setLastSaveGame(m_saveFile);
+                    }
+                }
+                else
+                {
+                    CONSOLE_PRINT("Failed to create folder for savefile: " + m_saveFile, GameConsole::eERROR);
                 }
             }
             m_saveMap = false;
