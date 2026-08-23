@@ -283,6 +283,12 @@ var UNIT =
     },
     getBonusDefensive : null,
 
+    getCaptureBonus : function(unit, posX, posY, map)
+    {
+        return 0;
+    },
+    getCaptureBonus : null,
+
     getWeatherImmune(unit, map)
     {
         return false;

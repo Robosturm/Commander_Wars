@@ -3068,6 +3068,15 @@ void Unit::increaseCapturePoints(QPoint position)
 qint32 Unit::getCaptureRate(QPoint position)
 {
     qint32 modifier = 0;
+    QJSValueList args({m_jsThis,
+                       position.x(),
+                       position.y(),
+                       GameMap::getMapJsThis(m_pMap)});
+    QJSValue captureBonus = Interpreter::getInstance()->doFunction(m_UnitID, "getCaptureBonus", args);
+    if (captureBonus.isNumber())
+    {
+        modifier += captureBonus.toInt();
+    }
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
