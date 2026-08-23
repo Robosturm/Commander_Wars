@@ -169,19 +169,112 @@ EditorMenu =
         }
         else if (input === "PLACELINE")
         {
-            EditorMenu.startPoint = Qt.point(-1, -1);
-            currentMenu.changeCursor("cursor+default");
-            currentMenu.setEditorMode(EditorMenu.PLACE_LINE_MODE);
+            EditorMenu.startPlaceLine(currentMenu);
         }
         else if (input === "PLACEELLIPSE")
         {
-            EditorMenu.startPoint = Qt.point(-1, -1);
-            currentMenu.changeCursor("cursor+default");
-            currentMenu.setEditorMode(EditorMenu.PLACE_ELLIPSE_MODE);
+            EditorMenu.startPlaceEllipse(currentMenu);
         }
     },
-    keyEvent : function(menu, mode, map, modifiers, key)
+    startPlaceLine : function(menu)
     {
+        EditorMenu.startPoint = Qt.point(-1, -1);
+        menu.changeCursor("cursor+default");
+        menu.setEditorMode(EditorMenu.PLACE_LINE_MODE);
+    },
+    startPlaceEllipse : function(menu)
+    {
+        EditorMenu.startPoint = Qt.point(-1, -1);
+        menu.changeCursor("cursor+default");
+        menu.setEditorMode(EditorMenu.PLACE_ELLIPSE_MODE);
+    },
+    keyEvent : function(menu, mode, map, key, controlPressed, shiftPressed, altPressed)
+    {
+        if (controlPressed)
+        {
+            if (shiftPressed)
+            {
+                switch (key)
+                {
+                case Qt.Key_P:
+                {
+                    menu.showEditPlayers();
+                    return true;
+                }
+                case Qt.Key_R:
+                {
+                    menu.showEditRules();
+                    return true;
+                }
+                case Qt.Key_O:
+                {
+                    menu.optimizePlayers();
+                    return true;
+                }
+                case Qt.Key_L:
+                {
+                    EditorMenu.startPlaceLine(menu);
+                    return true;
+                }
+                case Qt.Key_E:
+                {
+                    EditorMenu.startPlaceEllipse(menu);
+                    return true;
+                }
+                case Qt.Key_U:
+                {
+                    menu.updateSprites();
+                    return true;
+                }
+                }
+            }
+            else
+            {
+                switch (key)
+                {
+                case Qt.Key_L:
+                {
+                    menu.showLoadMap();
+                    return true;
+                }
+                case Qt.Key_S:
+                {
+                    menu.showSaveMap();
+                    return true;
+                }
+                case Qt.Key_N:
+                {
+                    menu.showNewMap();
+                    return true;
+                }
+                case Qt.Key_E:
+                {
+                    menu.showEditMap();
+                    return true;
+                }
+                case Qt.Key_R:
+                {
+                    menu.showResizeMap();
+                    return true;
+                }
+                case Qt.Key_P:
+                {
+                    menu.changePlaceSelection();
+                    return true;
+                }
+                case Qt.Key_U:
+                {
+                    menu.editUnits();
+                    return true;
+                }
+                case Qt.Key_T:
+                {
+                    menu.editTerrains();
+                    return true;
+                }
+                }
+            }
+        }
         return false;
     },
     mapClickLeft : function(menu, mode, map, x, y)

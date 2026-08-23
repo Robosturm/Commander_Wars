@@ -15,12 +15,12 @@
                         <itemID>VIEWMAPSTATS</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Save map")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Save map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_S)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Saves a map to a give file.")</tooltip>
                         <itemID>SAVEMAP</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Load map")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Load map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_L)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Loads a map to a give file.")</tooltip>
                         <itemID>LOADMAP</itemID>
                     </item>
@@ -57,17 +57,17 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Map info")</text>
                 <childs>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","New map")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","New map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_N)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Create a new map.")</tooltip>
                         <itemID>NEWMAP</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Edit map")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Edit map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_E)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Edit the information for a map.")</tooltip>
                         <itemID>EDITMAP</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Resize map")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Resize map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_R)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Resizes the map using left, top, right and bottom size changes.")</tooltip>
                         <itemID>RESIZEMAP</itemID>
                     </item>
@@ -127,7 +127,7 @@
                         <itemID>TOGGLEMIDDLECROSS</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Update sprites")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Update sprites") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_U)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Reloads the map sprites in case something didn't load correctly.")</tooltip>
                         <itemID>UPDATESPRITES</itemID>
                     </item>
@@ -137,7 +137,7 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Commands")</text>
                 <childs>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Place selection")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Place selection") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_P)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the editor mode placing the current tile.")</tooltip>
                         <itemID>PLACESELECTION</itemID>
                     </item>
@@ -147,22 +147,22 @@
                         <itemID>DELETEUNITS</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Edit units")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Edit units") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_U)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the editor mode modifying the stats of a unit.")</tooltip>
                         <itemID>EDITUNITS</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Edit terrain")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Edit terrain") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_T)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the editor mode editing the style of a terrain or building.")</tooltip>
                         <itemID>EDITTERRAIN</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Edit players")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Edit players") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_B)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Edit the CO's and player start setup.")</tooltip>
                         <itemID>EDITPLAYERS</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Edit rules")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Edit rules") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_R)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the editor rules for the map.")</tooltip>
                         <itemID>EDITRULES</itemID>
                     </item>
@@ -172,17 +172,17 @@
                         <itemID>EDITBIOMES</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Optimize players")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Opt. players") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_O)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Removes all players with no units or buildings from the map")</tooltip>
                         <itemID>OPTIMIZEPLAYERS</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Place line")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Place line") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_L)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Creates a line between two clicked points and places based on the current placement mode.")</tooltip>
                         <itemID>PLACELINE</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Place ellipse")</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Place ellipse") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_E)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Creates a ellipse in the sqaure created by two clicked points and places based on the current placement mode.")</tooltip>
                         <itemID>PLACEELLIPSE</itemID>
                     </item>

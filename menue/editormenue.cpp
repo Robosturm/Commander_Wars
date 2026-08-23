@@ -921,18 +921,19 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
         if (!event.getContinousPress())
         {
             auto pInterpreter = Interpreter::getInstance();
-
             QJSValueList args({m_jsThis,
                                m_EditorMode,
                                JsThis::getJsThis(m_pMap.get()),
-                               event.getModifiers().toInt(),
-                               cur
+                               cur,
+                               event.getModifiers().testFlag(Qt::KeyboardModifier::ControlModifier),
+                               event.getModifiers().testFlag(Qt::KeyboardModifier::ShiftModifier),
+                               event.getModifiers().testFlag(Qt::KeyboardModifier::AltModifier),
                                });
             auto result = pInterpreter->doFunction("EditorMenu", "keyEvent", args);
             if (result.isBool() && result.toBool())
             {
             }
-            else if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+            else if (event.getModifiers().testFlag(Qt::KeyboardModifier::ControlModifier))
             {
                 switch (cur)
                 {
@@ -1457,6 +1458,8 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             {
                 break;
             }
+            default:
+                break;
             }
         }
         Mainapp::getInstance()->continueRendering();

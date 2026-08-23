@@ -50,19 +50,14 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     pTooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pBox->setResAnim(pAnim);
-    oxygine::spClipRectActor clipRect = MemoryManagement::create<oxygine::ClipRectActor>();
-    clipRect->setSize(280, 40);
-    oxygine::spTextField textField = MemoryManagement::create<oxygine::TextField>();
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
-    style.multiline = false;
-    textField->setStyle(style);
-    textField->setHtmlText(text);
-    clipRect->addChild(textField);
-    pBox->addChild(clipRect);
-    textField->setY(5);
-    pBox->setSize(300, 40);
-    textField->setSize(pBox->getSize());
+
+    spLabel pLabel = MemoryManagement::create<Label>(370);
+    pLabel->setHtmlText(text);
+    pLabel->setY(5);
+    pLabel->setX(5);
+
+    pBox->addChild(pLabel);
+    pBox->setSize(380, 40);
     pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     pTooltip->addChild(pBox);
     pTooltip->setPosition(0, 40 * m_Items.at(group).size());
