@@ -24,6 +24,9 @@ static const quint8 MAP_MAGIC_DATA[MAGIC_HEADER_SIZE] = {0xFF, 0xFF, 0xFF, 0xFF,
                                                          0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
 const QByteArray GlobalUtils::MAP_MAGIC(reinterpret_cast<const char*>(MAP_MAGIC_DATA), MAGIC_HEADER_SIZE);
 
+static const QString DOUBLE_SLASH = QStringLiteral("//");
+static const QString SINGLE_SLASH = QStringLiteral("/");
+
 spGlobalUtils GlobalUtils::m_pInstace;
 
 GlobalUtils::GlobalUtils()
@@ -496,9 +499,14 @@ QString GlobalUtils::makePathRelative(QString file, bool full)
     return file;
 }
 
+QString GlobalUtils::collapseDoubleSlashes(QString path)
+{
+    return path.replace(DOUBLE_SLASH, SINGLE_SLASH);
+}
+
 QUrl GlobalUtils::getUrlForFile(QString file)
 {
-    file = file.replace("//", "/");
+    file = collapseDoubleSlashes(file);
     QUrl url;
     if (file.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
     {
