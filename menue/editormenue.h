@@ -112,6 +112,8 @@ public slots:
     void toggleGridLayout();
     // lets the editor place any terrain, building or unit anywhere, overriding mod placement and movement rules
     void toggleIgnorePlacementRestrictions();
+    void setIgnorePlacementRestrictions(bool ignorePlacementRestrictions);
+    bool getIgnorePlacementRestrictions() const;
     /**
      * @brief optimizePlayers
      */
@@ -473,6 +475,7 @@ private:
     oxygine::spActor m_copyRectActor{MemoryManagement::create<oxygine::Actor>()};
     oxygine::spActor m_cursorActor{MemoryManagement::create<oxygine::Actor>()};
     bool m_gridVisible{false};
+    bool m_ignorePlacementRestrictions{false};
     bool m_middleCrossGridVisible{false};
     QTimer m_autosaveTimer;
     spHumanPlayerInput m_HumanInput;

@@ -465,13 +465,19 @@ void EditorMenue::toggleMiddleCrossGrid()
 
 void EditorMenue::toggleIgnorePlacementRestrictions()
 {
-    if (m_pMap.get() != nullptr)
-    {
-        const bool ignoreRestrictions = !m_pMap->getIgnorePlacementRestrictions();
-        m_pMap->setIgnorePlacementRestrictions(ignoreRestrictions);
-        // the topbar can't show toggle state, so the log is the only way to confirm it
-        CONSOLE_PRINT("EditorMenue::toggleIgnorePlacementRestrictions ignoring placement restrictions " + QString(ignoreRestrictions ? "on" : "off"), GameConsole::eINFO);
-    }
+    setIgnorePlacementRestrictions(!m_ignorePlacementRestrictions);
+}
+
+void EditorMenue::setIgnorePlacementRestrictions(bool ignorePlacementRestrictions)
+{
+    m_ignorePlacementRestrictions = ignorePlacementRestrictions;
+    // the topbar can't show toggle state, so the log is the only way to confirm it
+    CONSOLE_PRINT("EditorMenue::setIgnorePlacementRestrictions ignoring placement restrictions " + QString(m_ignorePlacementRestrictions ? "on" : "off"), GameConsole::eINFO);
+}
+
+bool EditorMenue::getIgnorePlacementRestrictions() const
+{
+    return m_ignorePlacementRestrictions;
 }
 
 void EditorMenue::updateGrids()
@@ -1503,7 +1509,8 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
     
     if (m_pMap->onMap(x, y))
     {
-        if (m_pMap->canBePlaced(terrainID, x, y))
+        if (m_ignorePlacementRestrictions ||
+            m_pMap->canBePlaced(terrainID, x, y))
         {
             Terrain* pTerrain = m_pMap->getTerrain(x, y);
             if (pTerrain->getTerrainID() != terrainID ||
@@ -1525,7 +1532,7 @@ bool EditorMenue::canBuildingBePlaced(qint32 x, qint32 y)
     if (m_pMap->onMap(x, y))
     {
         spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
-        ret = m_pMap->getIgnorePlacementRestrictions() ||
+        ret = m_ignorePlacementRestrictions ||
               pCurrentBuilding->canBuildingBePlaced(m_pMap->getTerrain(x, y));
     }
     return ret;
@@ -1539,7 +1546,7 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
     {
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
         QString movementType = m_EditorSelection->getCurrentSpUnit()->getMovementType();
-        if (m_pMap->getIgnorePlacementRestrictions() ||
+        if (m_ignorePlacementRestrictions ||
             pMovementTableManager->getBaseMovementPoints(movementType, m_pMap->getTerrain(x, y), m_pMap->getTerrain(x, y), m_EditorSelection->getCurrentSpUnit().get()) > 0)
         {
             ret = true;
@@ -1700,7 +1707,7 @@ bool EditorMenue::placeSingleTerrain(qint32 curX, qint32 curY)
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "useTerrainAsBaseTerrain";
         QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
-        m_pMap->replaceTerrain(terrainID, curX, curY, useTerrainAsBaseTerrain.toBool(), false, true, palette, true, false);
+        m_pMap->replaceTerrain(terrainID, curX, curY, useTerrainAsBaseTerrain.toBool(), false, true, palette, true, false, m_ignorePlacementRestrictions);
         placed = true;
     }
     return placed;
@@ -2395,8 +2402,8 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, GameEnums::Edit
                             case GameEnums::EditorPlaceMode_Terrain:
                             {
                                 Terrain* pCopyTerrain = m_pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos);
-                                m_pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(1), x + xPos, y + yPos, false, false);
-                                m_pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(0), x + xPos, y + yPos, true, false);
+                                m_pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(1), x + xPos, y + yPos, false, false, true, "", false, true, m_ignorePlacementRestrictions);
+                                m_pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(0), x + xPos, y + yPos, true, false, true, "", false, true, m_ignorePlacementRestrictions);
                                 Terrain* pTerrain = m_pMap->getTerrain(x + xPos, y + yPos);
                                 QString id = pCopyTerrain->getTerrainSpriteName();
                                 pTerrain->setFixedSprite(pCopyTerrain->getFixedSprite());
@@ -2420,7 +2427,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, GameEnums::Edit
                                     {
                                         auto baseTerrains = pBuilding->getBaseTerrain();
                                         QString baseTerrain = baseTerrains[0];
-                                        m_pMap->replaceTerrain(baseTerrain, x + xPos, y + yPos, false, false);
+                                        m_pMap->replaceTerrain(baseTerrain, x + xPos, y + yPos, false, false, true, "", false, true, m_ignorePlacementRestrictions);
                                     }
                                     spBuilding pCopyBuilding = MemoryManagement::create<Building>(pBuilding->getBuildingID(), m_pMap.get());
                                     pCopyBuilding->setOwner(pBuilding->getOwner());
@@ -2439,7 +2446,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, GameEnums::Edit
                                 {
                                     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
                                     QString movementType = pUnit->getMovementType();
-                                    if (m_pMap->getIgnorePlacementRestrictions() ||
+                                    if (m_ignorePlacementRestrictions ||
                                         pMovementTableManager->getBaseMovementPoints(movementType, m_pMap->getTerrain(x + xPos, y + yPos), m_pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
                                         spUnit pCopyUnit = MemoryManagement::create<Unit>(pUnit->getUnitID(), pUnit->getOwner(), false, m_pMap.get());

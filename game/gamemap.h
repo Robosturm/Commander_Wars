@@ -745,9 +745,6 @@ public:
      * @return true if this terrain can be placed
      */
     Q_INVOKABLE bool canBePlaced(const QString terrainID, qint32 x, qint32 y);
-    // map editor only. Runtime state, deliberately not serialized, so it can never reach a saved map or a match.
-    void setIgnorePlacementRestrictions(bool ignorePlacementRestrictions);
-    bool getIgnorePlacementRestrictions() const;
     /**
      * @brief updateTerrain updates the given fields around. So all terrains are placeable.
      * @param x
@@ -759,16 +756,18 @@ public:
      * @param terrainID
      * @param x
      * @param y
+     * @param force places the terrain even when its placement check fails
      */
-    Q_INVOKABLE void replaceTerrain(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true);
+    Q_INVOKABLE void replaceTerrain(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true, bool force = false);
     /**
      * @brief replaceTerrainOnly
      * @param terrainID
      * @param x
      * @param y
      * @param useTerrainAsBaseTerrain
+     * @param force keeps the old terrain as base terrain even when the placement check fails
      */
-    Q_INVOKABLE void replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true);
+    Q_INVOKABLE void replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true, bool force = false);
     /**
      * @brief replaceBuilding
      * @param buildingID
@@ -1049,7 +1048,6 @@ private:
     qint32 m_endLoopMs{-1};
     bool m_savegame{false};
     bool m_isHumanMatch{false};
-    bool m_ignorePlacementRestrictions{false};
     BaseGamemenu* m_pMenu{nullptr};
     QString m_recordFile;
     qint32 m_replayActionCount{0};

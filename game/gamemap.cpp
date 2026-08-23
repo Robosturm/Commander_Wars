@@ -1334,7 +1334,7 @@ void GameMap::zoomChanged()
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
 }
 
-void GameMap::replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit, const QString palette, bool changePalette, bool includeBaseTerrain)
+void GameMap::replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit, const QString palette, bool changePalette, bool includeBaseTerrain, bool force)
 {
     if (onMap(x, y))
     {
@@ -1351,7 +1351,7 @@ void GameMap::replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bo
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValue terrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
 
-            if (useTerrainAsBaseTerrain && terrainAsBaseTerrain.toBool() && canBePlaced(terrainID, x, y))
+            if (useTerrainAsBaseTerrain && terrainAsBaseTerrain.toBool() && (force || canBePlaced(terrainID, x, y)))
             {
                 pTerrainOld->detachAndRemove();
                 pTerrain->setBaseTerrain(pTerrainOld);
@@ -1397,10 +1397,10 @@ void GameMap::replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bo
     }
 }
 
-void GameMap::replaceTerrain(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement, const QString palette, bool changePalette, bool includeBaseTerrain)
+void GameMap::replaceTerrain(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement, const QString palette, bool changePalette, bool includeBaseTerrain, bool force)
 {
-    replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain, true, palette, changePalette, includeBaseTerrain);
-    if (checkPlacement)
+    replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain, true, palette, changePalette, includeBaseTerrain, force);
+    if (checkPlacement && !force)
     {
         updateTerrain(x, y);
     }
@@ -1445,22 +1445,8 @@ void GameMap::updateTerrain(qint32 x, qint32 y)
     }
 }
 
-void GameMap::setIgnorePlacementRestrictions(bool ignorePlacementRestrictions)
-{
-    m_ignorePlacementRestrictions = ignorePlacementRestrictions;
-}
-
-bool GameMap::getIgnorePlacementRestrictions() const
-{
-    return m_ignorePlacementRestrictions;
-}
-
 bool GameMap::canBePlaced(const QString terrainID, qint32 x, qint32 y)
 {
-    if (m_ignorePlacementRestrictions)
-    {
-        return true;
-    }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "canBePlaced";
     QJSValueList args({x,
