@@ -110,6 +110,8 @@ public slots:
      * @brief toggleGridLayout
      */
     void toggleGridLayout();
+    // lets the editor place any terrain, building or unit anywhere, overriding mod placement and movement rules
+    void toggleIgnorePlacementRestrictions();
     /**
      * @brief optimizePlayers
      */

@@ -463,8 +463,19 @@ void EditorMenue::toggleMiddleCrossGrid()
     }
 }
 
+void EditorMenue::toggleIgnorePlacementRestrictions()
+{
+    if (m_pMap.get() != nullptr)
+    {
+        const bool ignoreRestrictions = !m_pMap->getIgnorePlacementRestrictions();
+        m_pMap->setIgnorePlacementRestrictions(ignoreRestrictions);
+        // the topbar can't show toggle state, so the log is the only way to confirm it
+        CONSOLE_PRINT("EditorMenue::toggleIgnorePlacementRestrictions ignoring placement restrictions " + QString(ignoreRestrictions ? "on" : "off"), GameConsole::eINFO);
+    }
+}
+
 void EditorMenue::updateGrids()
-{    
+{
     if (m_pMap.get() != nullptr)
     {
         m_pMap->showMiddleCrossGrid(m_middleCrossGridVisible);
@@ -1514,7 +1525,8 @@ bool EditorMenue::canBuildingBePlaced(qint32 x, qint32 y)
     if (m_pMap->onMap(x, y))
     {
         spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
-        ret = pCurrentBuilding->canBuildingBePlaced(m_pMap->getTerrain(x, y));
+        ret = m_pMap->getIgnorePlacementRestrictions() ||
+              pCurrentBuilding->canBuildingBePlaced(m_pMap->getTerrain(x, y));
     }
     return ret;
 }
@@ -1527,7 +1539,8 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
     {
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
         QString movementType = m_EditorSelection->getCurrentSpUnit()->getMovementType();
-        if (pMovementTableManager->getBaseMovementPoints(movementType, m_pMap->getTerrain(x, y), m_pMap->getTerrain(x, y), m_EditorSelection->getCurrentSpUnit().get()) > 0)
+        if (m_pMap->getIgnorePlacementRestrictions() ||
+            pMovementTableManager->getBaseMovementPoints(movementType, m_pMap->getTerrain(x, y), m_pMap->getTerrain(x, y), m_EditorSelection->getCurrentSpUnit().get()) > 0)
         {
             ret = true;
         }
@@ -2426,7 +2439,8 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, GameEnums::Edit
                                 {
                                     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
                                     QString movementType = pUnit->getMovementType();
-                                    if (pMovementTableManager->getBaseMovementPoints(movementType, m_pMap->getTerrain(x + xPos, y + yPos), m_pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
+                                    if (m_pMap->getIgnorePlacementRestrictions() ||
+                                        pMovementTableManager->getBaseMovementPoints(movementType, m_pMap->getTerrain(x + xPos, y + yPos), m_pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
                                         spUnit pCopyUnit = MemoryManagement::create<Unit>(pUnit->getUnitID(), pUnit->getOwner(), false, m_pMap.get());
                                         m_pMap->getTerrain(x + xPos, y + yPos)->setUnit(spUnit());

@@ -1445,8 +1445,22 @@ void GameMap::updateTerrain(qint32 x, qint32 y)
     }
 }
 
+void GameMap::setIgnorePlacementRestrictions(bool ignorePlacementRestrictions)
+{
+    m_ignorePlacementRestrictions = ignorePlacementRestrictions;
+}
+
+bool GameMap::getIgnorePlacementRestrictions() const
+{
+    return m_ignorePlacementRestrictions;
+}
+
 bool GameMap::canBePlaced(const QString terrainID, qint32 x, qint32 y)
 {
+    if (m_ignorePlacementRestrictions)
+    {
+        return true;
+    }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "canBePlaced";
     QJSValueList args({x,
