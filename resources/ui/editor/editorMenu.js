@@ -1,7 +1,8 @@
 EditorMenu =
              {
     // constants
-    PLACELINE_MODE : GameEnums.EditorModes_Last,
+    PLACE_LINE_MODE : GameEnums.EditorModes_Last,
+    PLACE_ELLIPSE_MODE : GameEnums.EditorModes_Last + 1,
 
     // state variables
     startPoint : Qt.point(-1, -1),
@@ -168,8 +169,15 @@ EditorMenu =
         }
         else if (input === "PLACELINE")
         {
+            EditorMenu.startPoint = Qt.point(-1, -1);
             currentMenu.changeCursor("cursor+default");
-            currentMenu.setEditorMode(EditorMenu.PLACELINE_MODE);
+            currentMenu.setEditorMode(EditorMenu.PLACE_LINE_MODE);
+        }
+        else if (input === "PLACEELLIPSE")
+        {
+            EditorMenu.startPoint = Qt.point(-1, -1);
+            currentMenu.changeCursor("cursor+default");
+            currentMenu.setEditorMode(EditorMenu.PLACE_ELLIPSE_MODE);
         }
     },
     keyEvent : function(menu, mode, map, modifiers, key)
@@ -178,7 +186,7 @@ EditorMenu =
     },
     mapClickLeft : function(menu, mode, map, x, y)
     {
-        if (mode === EditorMenu.PLACELINE_MODE)
+        if (mode === EditorMenu.PLACE_LINE_MODE)
         {
             if (EditorMenu.startPoint.x < 0)
             {
@@ -189,6 +197,18 @@ EditorMenu =
             else
             {
                 EditorMenu.placeLine(menu, x, y);
+            }
+            return true;
+        }
+        else if (mode === EditorMenu.PLACE_ELLIPSE_MODE)
+        {
+            if (EditorMenu.startPoint.x < 0)
+            {
+                EditorMenu.startPoint = Qt.point(x, y);
+            }
+            else
+            {
+                EditorMenu.placeEllipse(menu, x, y);
             }
             return true;
         }
@@ -204,20 +224,31 @@ EditorMenu =
     },
     mapClickRight : function(menu, mode, map, x, y)
     {
-        if (mode === EditorMenu.PLACELINE_MODE)
+        if (mode === EditorMenu.PLACE_LINE_MODE ||
+            mode === EditorMenu.PLACE_ELLIPSE_MODE)
         {
+            EditorMenu.startPoint = Qt.point(-1, -1);
             menu.clearMarkedFields();
         }
         return false;
     },
     cursorMoved : function(menu, mode, map, x, y)
     {
-        if (mode === EditorMenu.PLACELINE_MODE)
+        if (mode === EditorMenu.PLACE_LINE_MODE)
         {
             if (EditorMenu.startPoint.x >= 0)
             {
                 menu.clearMarkedFields();
                 menu.createMarkedFields(EditorMenu.getLineVector(EditorMenu.startPoint.x, EditorMenu.startPoint.y, x, y), "#0000FF")
+            }
+            return true;
+        }
+        else if (mode === EditorMenu.PLACE_ELLIPSE_MODE)
+        {
+            if (EditorMenu.startPoint.x >= 0)
+            {
+                menu.clearMarkedFields();
+                menu.createMarkedFields(EditorMenu.getEllipseVector(EditorMenu.startPoint.x, EditorMenu.startPoint.y, x, y), "#0000FF")
             }
             return true;
         }
@@ -262,4 +293,57 @@ EditorMenu =
         menu.clearMarkedFields();
         EditorMenu.startPoint = Qt.point(-1, -1);
     },
+    getEllipseVector : function (x1, y1, x2, y2)
+    {
+        var points = [];
+        var minX = Math.min(x1, x2);
+        var maxX = Math.max(x1, x2);
+        var minY = Math.min(y1, y2);
+        var maxY = Math.max(y1, y2);
+        var width = maxX - minX;
+        var height = maxY - minY;
+        var centerX = (minX + maxX) / 2;
+        var centerY = (minY + maxY) / 2;
+        var firstX = Math.ceil(minX);
+        var lastX = Math.ceil(maxX);
+        var firstY = Math.ceil(minY);
+        var lastY = Math.ceil(maxY);
+
+        for (var y = firstY; y <= lastY; y++)
+        {
+            for (var x = firstX; x <= lastX; x++)
+            {
+                var insideEllipse = false;
+                if (width === 0)
+                {
+                    insideEllipse = x === centerX;
+                }
+                else if (height === 0)
+                {
+                    insideEllipse = y === centerY;
+                }
+                else
+                {
+                    var xRadius = (width / 2);
+                    var yRadius = (height / 2);
+                    var xDistance = (x - centerX) / xRadius;
+                    var yDistance = (y - centerY) / yRadius;
+                    insideEllipse = xDistance * xDistance + yDistance * yDistance <= 1;
+                }
+
+                if (insideEllipse)
+                {
+                    points.push(Qt.point(x, y));
+                }
+            }
+        }
+        return points;
+    },
+    placeEllipse : function(menu, x, y)
+    {
+        menu.placeBasedOnMode(EditorMenu.getEllipseVector(EditorMenu.startPoint.x, EditorMenu.startPoint.y, x, y));
+        menu.clearMarkedFields();
+        EditorMenu.startPoint = Qt.point(-1, -1);
+    },
+
 };

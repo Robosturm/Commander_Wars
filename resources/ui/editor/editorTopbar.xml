@@ -181,6 +181,11 @@
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Creates a line between two clicked points and places based on the current placement mode.")</tooltip>
                         <itemID>PLACELINE</itemID>
                     </item>
+                    <item>
+                        <text>QT_TRANSLATE_NOOP("GAME","Place ellipse")</text>
+                        <tooltip>QT_TRANSLATE_NOOP("GAME","Creates a ellipse in the sqaure created by two clicked points and places based on the current placement mode.")</tooltip>
+                        <itemID>PLACEELLIPSE</itemID>
+                    </item>
                     <if condition="!settings.getSmallScreenDevice()">
                         <item>
                             <text>QT_TRANSLATE_NOOP("GAME","Copy ") + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_C)</text>
