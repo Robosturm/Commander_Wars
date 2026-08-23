@@ -24,12 +24,19 @@ class FileDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
+    enum Sorting
+    {
+        Ascending,
+        Descending,
+        OldestModified,
+        NewestModified,
+    };
     /**
      * @brief FileDialog
      * @param startFolder initial folder of the file dialog
      * @param wildcards wildcard items will be split at ;
      */
-    explicit FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
+    explicit FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"), QColor folderColor = Settings::getInstance()->getMapFolderColor());
     virtual ~FileDialog() = default;
 
     bool getPreview() const;
@@ -51,14 +58,19 @@ public slots:
     void remove();
     void onFileSelected();
     void showOverwriteWarning();
+    void onSortingChanged(qint32 item);
+private:
+    bool compareFileInfo(const QFileInfo & lhs, const QFileInfo & rhs);
 private:
     spTextbox m_CurrentFolder;
     spTextbox m_CurrentFile;
     spPanel m_MainPanel;
     oxygine::spButton m_OkButton;
     spDropDownmenu m_DropDownmenu;
+    spDropDownmenu m_modifiedDropDownmenu;
     oxygine::spButton m_CancelButton;
     QString m_pathPrefix;
+    QString m_currentInputFolder;
     /**
           * @brief m_Items items directories or folders
         */
@@ -67,6 +79,8 @@ private:
     bool m_focused{true};
     QVector<oxygine::spResAnim> m_ResAnims;
     bool m_isSaveDialog{false};
+    QColor m_folderColor;
+    Sorting m_sorting{Sorting::NewestModified};
 };
 
 #endif // FILEDIALOG_H

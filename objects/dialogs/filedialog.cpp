@@ -15,10 +15,11 @@
 
 const char* const ROOT = "::::";
 
-FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile, bool preview, QString acceptButtonName)
+FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile, bool preview, QString acceptButtonName, QColor folderColor)
     : m_preview(preview),
       m_pathPrefix(Settings::getInstance()->getUserPath()),
-      m_isSaveDialog(isSaveDialog)
+      m_isSaveDialog(isSaveDialog),
+      m_folderColor(folderColor)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("FileDialog");
@@ -63,6 +64,17 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
         emit sigShowDeleteQuestion();
     });
     pSpriteBox->addChild(pDeleteButton);
+    // sorting drop down
+    QStringList sorting = {tr("Ascending"),
+                           tr("Descending"),
+                           tr("Oldest"),
+                           tr("Newest")};
+    m_modifiedDropDownmenu  = MemoryManagement::create<DropDownmenu>(m_CurrentFile->getScaledWidth(), sorting);
+    pSpriteBox->addChild(m_modifiedDropDownmenu);
+    m_modifiedDropDownmenu->setCurrentItem(static_cast<qint32>(Sorting::NewestModified));
+    m_modifiedDropDownmenu->setPosition(30, pDeleteButton->getY());
+    connect(m_modifiedDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &FileDialog::onSortingChanged, Qt::QueuedConnection);
+
     // drop down menu
     m_DropDownmenu = MemoryManagement::create<DropDownmenu>(m_CurrentFile->getScaledWidth(), wildcards);
     pSpriteBox->addChild(m_DropDownmenu);
@@ -179,6 +191,7 @@ void FileDialog::showFolder(QString inputFolder)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
+    m_currentInputFolder = inputFolder;
     // clean up current panel items
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
@@ -215,6 +228,8 @@ void FileDialog::showFolder(QString inputFolder)
         QStringList list = m_DropDownmenu->getCurrentItemText().split(";");
         infoList = VirtualPaths::list(folder, list);
     }
+    auto func = std::bind(&FileDialog::compareFileInfo, this, std::placeholders::_1, std::placeholders::_2);
+    std::sort(infoList.begin(), infoList.end(), func);
     qint32 itemCount = 0;
     for (qint32 i = 0; i < infoList.size(); i++)
     {
@@ -273,6 +288,9 @@ void FileDialog::showFolder(QString inputFolder)
                 QString path = GlobalUtils::makePathRelative(folderPath).replace(folder, "");
                 textField->setHtmlText(path);
             }
+            auto style = textField->getStyle();
+            style.color = m_folderColor;
+            textField->setStyle(style);
             pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, folderPath](oxygine::Event*)
             {
                 emit sigShowFolder(folderPath);
@@ -354,6 +372,58 @@ void FileDialog::showDeleteQuestion()
     }
 }
 
+bool FileDialog::compareFileInfo(const QFileInfo & lhs, const QFileInfo & rhs)
+{
+    switch (m_sorting)
+    {
+    case Sorting::Ascending:
+    {
+        if (lhs.baseName() < rhs.baseName())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    case Sorting::Descending:
+    {
+        if (lhs.baseName() < rhs.baseName())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    case Sorting::NewestModified:
+    {
+        if (lhs.lastModified() > rhs.lastModified())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    case Sorting::OldestModified:
+    {
+        if (lhs.lastModified() > rhs.lastModified())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    }
+    return false;
+}
+
 void FileDialog::deleteItem()
 {
     if (QFile::exists(m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText()))
@@ -366,6 +436,12 @@ void FileDialog::deleteItem()
     }
     showFolder(m_CurrentFolder->getCurrentText());
     m_focused = true;
+}
+
+void FileDialog::onSortingChanged(qint32 item)
+{
+    m_sorting = static_cast<Sorting>(item);
+    showFolder(m_currentInputFolder);
 }
 
 void FileDialog::KeyInput(oxygine::KeyEvent event)
