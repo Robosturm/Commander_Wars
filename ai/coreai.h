@@ -212,6 +212,11 @@ public:
      */
     Q_INVOKABLE void toggleAiPause();
     /**
+     * @brief getisAiPaused
+     * @return if this ai is currently in pause mode
+     */
+    Q_INVOKABLE bool getisAiPaused();
+    /**
      * @brief serialize stores the object
      * @param pStream
      */

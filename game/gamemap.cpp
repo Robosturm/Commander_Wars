@@ -1939,6 +1939,11 @@ void GameMap::showWiki()
     emit sigShowWiki();
 }
 
+void GameMap::toggleAiPause()
+{
+    emit sigToggleAiPause();
+}
+
 void GameMap::showRules()
 {
     emit sigShowRules();

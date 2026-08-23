@@ -307,6 +307,11 @@ void CoreAI::toggleAiPause()
     m_pause = !m_pause;
 }
 
+bool CoreAI::getisAiPaused()
+{
+    return m_pause;
+}
+
 void CoreAI::setInitValue(QString name, double newValue)
 {
     for (auto & entry : m_iniData)
@@ -324,17 +329,7 @@ double CoreAI::getInitValue(QString name) const
 }
 
 void CoreAI::nextAction()
-{
-    if (m_pause)
-    {
-        m_pauseTimer.setSingleShot(true);
-        m_pauseTimer.start(1000);
-        return;
-    }
-    else
-    {
-        m_pauseTimer.stop();
-    }
+{    
     // check if it's our turn
     if (!m_processing)
     {
@@ -344,12 +339,21 @@ void CoreAI::nextAction()
             m_pPlayer == m_pMap->getCurrentPlayer() &&
             m_pMenu->getGameStarted())
         {
-            CONSOLE_PRINT("CoreAI::nextAction for player " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) + " for ai " + m_aiName, GameConsole::eDEBUG);
-            if (!processPredefinedAi())
+            if (m_pause)
             {
-                AI_CONSOLE_PRINT("Processing ai specific behaviour", GameConsole::eDEBUG);
-                // if so execute next action
-                process();
+                m_pauseTimer.setSingleShot(true);
+                m_pauseTimer.start(1000);
+            }
+            else
+            {
+                m_pauseTimer.stop();
+                CONSOLE_PRINT("CoreAI::nextAction for player " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) + " for ai " + m_aiName, GameConsole::eDEBUG);
+                if (!processPredefinedAi())
+                {
+                    AI_CONSOLE_PRINT("Processing ai specific behaviour", GameConsole::eDEBUG);
+                    // if so execute next action
+                    process();
+                }
             }
         }
         m_processing = false;

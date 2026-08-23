@@ -59,7 +59,7 @@ EditorMenue::EditorMenue()
     setupJsThis(this);
     registerAtInterpreter();
     UiFactory::getInstance().createUi("ui/editor/editorTopbar.xml", this);
-    m_Topbar =  oxygine::safeCast<Topbar*>(getObject("EDITORTOPBAR"));
+    m_Topbar =  dynamic_cast<Topbar*>(getObject("EDITORTOPBAR"));
 
     if (smallScreen)
     {

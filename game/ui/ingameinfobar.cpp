@@ -38,13 +38,13 @@ IngameInfoBar::IngameInfoBar(GameMenue *pMenu, GameMap *pMap)
     QJSValue erg = pInterpreter->doFunction("IngameInfoBar", "preInitValues", args);
 
     UiFactory::getInstance().createUi("ui/game/ingameInfoBar.xml", this);
-    m_pMinimap = oxygine::safeCast<Minimap*>(getObject("MINIMAP"));
+    m_pMinimap = dynamic_cast<Minimap*>(getObject("MINIMAP"));
     if (m_pMinimap)
     {
         m_pMinimap->setMenu(pMenu);
     }
     updateMinimap();
-    m_pMinimapSlider = oxygine::safeCast<oxygine::SlidingActor*>(getObject("MINIMAP_BOX"));
+    m_pMinimapSlider = dynamic_cast<oxygine::SlidingActor*>(getObject("MINIMAP_BOX"));
     if (m_pMinimapSlider)
     {
         m_pMinimapSlider->updateDragBounds();

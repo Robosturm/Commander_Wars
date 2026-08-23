@@ -415,6 +415,7 @@ signals:
     void sigShowDamageCalculator();
     void sigShowMovementPlanner();
     void sigShowLoadSaveGame();
+    void sigToggleAiPause();
 public:
     /**
      * 
@@ -605,6 +606,10 @@ public:
      * @brief showWiki
      */
     Q_INVOKABLE void showWiki();
+    /**
+     * @brief toggleAiPause
+     */
+    Q_INVOKABLE void toggleAiPause();
     /**
      * @brief showRules
      */

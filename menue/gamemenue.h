@@ -370,6 +370,11 @@ public slots:
      * @brief toggleGridLayout
      */
     void toggleGridLayout();
+    /**
+     * @brief toggleAiPause
+     * Pauses / Unpauses all ai's
+     */
+    void toggleAiPause();
 protected slots:
     /**
      * @brief keyInput

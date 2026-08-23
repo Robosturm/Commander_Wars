@@ -833,7 +833,7 @@ Player* GameMenue::getCurrentViewPlayer() const
                 return m_pMap->getPlayer(i);
             }
         }
-        return pCurrentPlayer.get();
+        return  pCurrentPlayer.get();
     }
     return nullptr;
 }
@@ -1584,6 +1584,7 @@ void GameMenue::connectMap()
     connect(m_pMap.get(), &GameMap::sigShowNicknameUnit, this, &GameMenue::showNicknameUnit, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowXmlFileDialog, this, &GameMenue::showXmlFileDialog, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowWiki, this, &GameMenue::showWiki, Qt::QueuedConnection);
+    connect(m_pMap.get(), &GameMap::sigToggleAiPause, this, &GameMenue::toggleAiPause, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowRules, this, &GameMenue::showRules, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowUnitStatistics, this, &GameMenue::showUnitStatistics, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowDamageCalculator, this, &GameMenue::showDamageCalculator, Qt::QueuedConnection);
@@ -2597,7 +2598,11 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
         Qt::Key cur = event.getKey();
         if (m_Focused && m_pNetworkInterface.get() == nullptr)
         {
-            if (cur == Settings::getInstance()->getKey_quicksave1())
+            if (cur == Qt::Key_Pause)
+            {
+                toggleAiPause();
+            }
+            else if (cur == Settings::getInstance()->getKey_quicksave1())
             {
                 saveMap(Settings::getInstance()->getUserPath() + "savegames/quicksave1.sav");
             }
@@ -2624,6 +2629,21 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
         }
     }
     BaseGamemenu::keyInput(event);
+}
+
+void GameMenue::toggleAiPause()
+{
+    auto count = m_pMap->getPlayerCount();
+    for (qint32 i = 0; i < count; ++i)
+    {
+        auto* player = m_pMap->getPlayer(i);
+        auto controller = player->getControlType();
+        if (controller >= GameEnums::AiTypes_VeryEasy && controller < GameEnums::AiTypes_Closed)
+        {
+            oxygine::safeCast<CoreAI*>(player->getBaseGameInput())->toggleAiPause();
+        }
+    }
+
 }
 
 void GameMenue::keyInputAll(Qt::Key cur)
