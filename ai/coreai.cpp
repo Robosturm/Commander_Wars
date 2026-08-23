@@ -1223,14 +1223,18 @@ bool CoreAI::shareIslandWithEnemy(QmlVectorUnit* pUnits, QmlVectorBuilding * pBu
             unit->getUnitType() != static_cast<qint32>(GameEnums::UnitType::UnitType_Air) &&
             unit->getUnitType() != static_cast<qint32>(GameEnums::UnitType::UnitType_Naval))
         {
+            // The const onSameIsland overloads read a movement type with no island map as unreachable.
+            const qint32 islandIdx = getIslandIndex(unit.get());
+            const qint32 unitX = unit->Unit::getX();
+            const qint32 unitY = unit->Unit::getY();
             for (auto & pBuilding : pBuildings->getVector())
             {
-                if (onSameIsland(unit.get(), pBuilding.get()) &&
+                if (onSameIsland(islandIdx, unitX, unitY, pBuilding->Building::getX(), pBuilding->Building::getY()) &&
                     pBuilding->isProductionBuilding())
                 {
                     for (auto & pEnemyBuilding : pEnemyBuildings->getVector())
                     {
-                        if (onSameIsland(unit.get(), pEnemyBuilding.get()) &&
+                        if (onSameIsland(islandIdx, unitX, unitY, pEnemyBuilding->Building::getX(), pEnemyBuilding->Building::getY()) &&
                             pEnemyBuilding->isProductionBuilding())
                         {
                             return true;
