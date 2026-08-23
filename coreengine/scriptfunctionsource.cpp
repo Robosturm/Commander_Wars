@@ -1,6 +1,14 @@
 #include "coreengine/scriptfunctionsource.h"
 
+#include <algorithm>
+
+#include <QJSEngine>
+#include <QTextStream>
+#include <QUrl>
 #include <QVector>
+
+#include "coreengine/gameconsole.h"
+#include "coreengine/globalutils.h"
 
 #ifdef SCRIPTSOURCESUPPORT
 #include <private/qjsvalue_p.h>
@@ -43,6 +51,25 @@ static constexpr qint32 FIRST_LINE = 1;
 static constexpr qint32 FIRST_COLUMN = 1;
 static const QString FUNCTION_KEYWORD = QStringLiteral("function");
 static const QString REGEXP_PRECEDERS = QStringLiteral("(,=:[!&|?{};+-*%~^<>");
+static const QString SCRIPT_FUNCTION_KEY_SCRIPT = QStringLiteral("script");
+static const QString SCRIPT_FUNCTION_KEY_LINE = QStringLiteral("line");
+static const QString SCRIPT_FUNCTION_KEY_COLUMN = QStringLiteral("column");
+static const QString SCRIPT_FUNCTION_KEY_FORMALS = QStringLiteral("formals");
+static const QString SCRIPT_FUNCTION_KEY_KIND = QStringLiteral("kind");
+static const QString SCRIPT_FUNCTION_KEY_STATUS = QStringLiteral("status");
+static const QString FUNCTION_KIND_UNAVAILABLE = QStringLiteral("unavailable");
+static const QString FUNCTION_KIND_SCRIPT = QStringLiteral("script");
+static const QString FUNCTION_KIND_ARROW = QStringLiteral("arrow");
+static const QString FUNCTION_KIND_EVAL = QStringLiteral("eval");
+static const QString FUNCTION_KIND_NATIVE = QStringLiteral("native");
+static const QString SOURCE_STATUS_OK = QStringLiteral("ok");
+static const QString SOURCE_STATUS_UNSUPPORTED = QStringLiteral("unsupported");
+static const QString SOURCE_STATUS_NOT_CALLABLE = QStringLiteral("notcallable");
+static const QString SOURCE_STATUS_NATIVE_FUNCTION = QStringLiteral("nativefunction");
+static const QString SOURCE_STATUS_UNSUPPORTED_KIND = QStringLiteral("unsupportedkind");
+static const QString SOURCE_STATUS_NO_SCRIPT_TEXT = QStringLiteral("noscripttext");
+static const QString SOURCE_STATUS_NOT_AT_FUNCTION_KEYWORD = QStringLiteral("notatfunctionkeyword");
+static const QString SOURCE_STATUS_NO_FUNCTION_END = QStringLiteral("nofunctionend");
 
 static ScanState popState(QVector<ScanState> & resumeStates)
 {
@@ -300,14 +327,175 @@ static qint32 findFunctionEnd(const QString & text, qint32 start)
     return -1;
 }
 
-namespace ScriptFunctionSource
+static QString getFunctionKindName(ScriptFunctionSource::FunctionKind kind)
 {
+    switch (kind)
+    {
+        case ScriptFunctionSource::FunctionKind::Script:
+        {
+            return FUNCTION_KIND_SCRIPT;
+        }
+        case ScriptFunctionSource::FunctionKind::Arrow:
+        {
+            return FUNCTION_KIND_ARROW;
+        }
+        case ScriptFunctionSource::FunctionKind::Eval:
+        {
+            return FUNCTION_KIND_EVAL;
+        }
+        case ScriptFunctionSource::FunctionKind::Native:
+        {
+            return FUNCTION_KIND_NATIVE;
+        }
+        case ScriptFunctionSource::FunctionKind::Unavailable:
+        {
+            break;
+        }
+    }
+    return FUNCTION_KIND_UNAVAILABLE;
+}
 
-Location locate(QJSEngine & engine, const QJSValue & function)
+static QString getSourceStatusName(ScriptFunctionSource::SourceStatus status)
+{
+    switch (status)
+    {
+        case ScriptFunctionSource::SourceStatus::Ok:
+        {
+            return SOURCE_STATUS_OK;
+        }
+        case ScriptFunctionSource::SourceStatus::NotCallable:
+        {
+            return SOURCE_STATUS_NOT_CALLABLE;
+        }
+        case ScriptFunctionSource::SourceStatus::NativeFunction:
+        {
+            return SOURCE_STATUS_NATIVE_FUNCTION;
+        }
+        case ScriptFunctionSource::SourceStatus::UnsupportedKind:
+        {
+            return SOURCE_STATUS_UNSUPPORTED_KIND;
+        }
+        case ScriptFunctionSource::SourceStatus::NoScriptText:
+        {
+            return SOURCE_STATUS_NO_SCRIPT_TEXT;
+        }
+        case ScriptFunctionSource::SourceStatus::NotAtFunctionKeyword:
+        {
+            return SOURCE_STATUS_NOT_AT_FUNCTION_KEYWORD;
+        }
+        case ScriptFunctionSource::SourceStatus::NoFunctionEnd:
+        {
+            return SOURCE_STATUS_NO_FUNCTION_END;
+        }
+        case ScriptFunctionSource::SourceStatus::Unsupported:
+        {
+            break;
+        }
+    }
+    return SOURCE_STATUS_UNSUPPORTED;
+}
+
+ScriptFunctionSource::ScriptFunctionSource(QJSEngine* pEngine)
+    : m_pEngine(pEngine)
+{
+#ifdef GRAPHICSUPPORT
+    setObjectName("ScriptFunctionSource");
+#endif
+    QJSEngine::setObjectOwnership(this, QJSEngine::ObjectOwnership::CppOwnership);
+}
+
+QString ScriptFunctionSource::simplifyLines(const QString & text)
+{
+    QString result;
+    QString input = text;
+    QTextStream stream(&input, QIODevice::ReadOnly);
+    while (!stream.atEnd())
+    {
+        result += stream.readLine().simplified() + CHAR_LINE_FEED;
+    }
+    return result;
+}
+
+void ScriptFunctionSource::storeScriptText(const QString & script, const QString & contents)
+{
+#ifdef SCRIPTSOURCESUPPORT
+    m_scriptTexts.insert(script, contents);
+    const QUrl url = GlobalUtils::getUrlForFile(script);
+    const QString urlText = url.toString();
+    if (urlText != script)
+    {
+        m_scriptTexts.insert(urlText, contents);
+    }
+    const QString encodedUrlText = url.toString(QUrl::FullyEncoded);
+    if (encodedUrlText != script && encodedUrlText != urlText)
+    {
+        m_scriptTexts.insert(encodedUrlText, contents);
+    }
+#else
+    Q_UNUSED(script)
+    Q_UNUSED(contents)
+#endif
+}
+
+QString ScriptFunctionSource::findScriptText(const QString & script) const
+{
+    auto iter = m_scriptTexts.find(script);
+    if (iter == m_scriptTexts.cend())
+    {
+        const QUrl url = GlobalUtils::getUrlForFile(script);
+        iter = m_scriptTexts.find(url.toString());
+        if (iter == m_scriptTexts.cend())
+        {
+            iter = m_scriptTexts.find(url.toString(QUrl::FullyEncoded));
+        }
+    }
+    if (iter == m_scriptTexts.cend())
+    {
+        CONSOLE_PRINT_MODULE("ScriptFunctionSource::findScriptText: no captured text for script " + script, GameConsole::eWARNING, GameConsole::eJavaScript);
+        return QString();
+    }
+    return iter.value();
+}
+
+QVariantMap ScriptFunctionSource::getScriptFunctionInfo(const QJSValue & function)
+{
+    const Location location = locate(function);
+    SourceStatus status = SourceStatus::Unsupported;
+    extract(location, status);
+    QVariantMap info;
+    info.insert(SCRIPT_FUNCTION_KEY_SCRIPT, location.script);
+    info.insert(SCRIPT_FUNCTION_KEY_LINE, location.line);
+    info.insert(SCRIPT_FUNCTION_KEY_COLUMN, location.column);
+    info.insert(SCRIPT_FUNCTION_KEY_FORMALS, location.formalCount);
+    info.insert(SCRIPT_FUNCTION_KEY_KIND, getFunctionKindName(location.kind));
+    info.insert(SCRIPT_FUNCTION_KEY_STATUS, getSourceStatusName(status));
+    return info;
+}
+
+QString ScriptFunctionSource::getScriptFunctionSource(const QJSValue & function)
+{
+    SourceStatus status = SourceStatus::Unsupported;
+    return extract(locate(function), status);
+}
+
+QString ScriptFunctionSource::getScriptText(const QString & script, qint32 offset, qint32 length)
+{
+    if (length <= 0)
+    {
+        return QString();
+    }
+    const QString text = findScriptText(script);
+    const qint32 textSize = static_cast<qint32>(text.size());
+    const qint32 start = std::clamp(offset, 0, textSize);
+    const qint32 count = std::min(length, textSize - start);
+    return text.mid(start, count);
+}
+
+ScriptFunctionSource::Location ScriptFunctionSource::locate(const QJSValue & function) const
 {
     Location location;
 #ifdef SCRIPTSOURCESUPPORT
-    QV4::ExecutionEngine * pV4Engine = engine.handle();
+    QV4::ExecutionEngine * pV4Engine = m_pEngine == nullptr ? nullptr : m_pEngine->handle();
     if (pV4Engine == nullptr)
     {
         return location;
@@ -351,19 +539,19 @@ Location locate(QJSEngine & engine, const QJSValue & function)
     }
     location.status = SourceStatus::Ok;
 #else
-    Q_UNUSED(engine)
     Q_UNUSED(function)
 #endif
     return location;
 }
 
-QString extract(const QString & scriptText, const Location & location, SourceStatus & status)
+QString ScriptFunctionSource::extract(const Location & location, SourceStatus & status) const
 {
     if (location.status != SourceStatus::Ok)
     {
         status = location.status;
         return QString();
     }
+    const QString scriptText = findScriptText(location.script);
     if (scriptText.isEmpty())
     {
         status = SourceStatus::NoScriptText;
@@ -388,7 +576,7 @@ QString extract(const QString & scriptText, const Location & location, SourceSta
         return QString();
     }
     status = SourceStatus::Ok;
-    return scriptText.mid(start, end - start + 1);
-}
-
+    QString source = simplifyLines(scriptText.mid(start, end - start + 1));
+    source.chop(1);
+    return source;
 }

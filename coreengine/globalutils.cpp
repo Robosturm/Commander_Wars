@@ -4,14 +4,12 @@
 #include <QDateTime>
 #include <QSet>
 
-#include <algorithm>
 #include <cmath>
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/scriptfunctionsource.h"
 #include "coreengine/settings.h"
 #include "coreengine/virtualpaths.h"
 
@@ -28,25 +26,6 @@ const QByteArray GlobalUtils::MAP_MAGIC(reinterpret_cast<const char*>(MAP_MAGIC_
 
 static const QString DOUBLE_SLASH = QStringLiteral("//");
 static const QString SINGLE_SLASH = QStringLiteral("/");
-static const QString SCRIPT_FUNCTION_KEY_SCRIPT = QStringLiteral("script");
-static const QString SCRIPT_FUNCTION_KEY_LINE = QStringLiteral("line");
-static const QString SCRIPT_FUNCTION_KEY_COLUMN = QStringLiteral("column");
-static const QString SCRIPT_FUNCTION_KEY_FORMALS = QStringLiteral("formals");
-static const QString SCRIPT_FUNCTION_KEY_KIND = QStringLiteral("kind");
-static const QString SCRIPT_FUNCTION_KEY_STATUS = QStringLiteral("status");
-static const QString FUNCTION_KIND_UNAVAILABLE = QStringLiteral("unavailable");
-static const QString FUNCTION_KIND_SCRIPT = QStringLiteral("script");
-static const QString FUNCTION_KIND_ARROW = QStringLiteral("arrow");
-static const QString FUNCTION_KIND_EVAL = QStringLiteral("eval");
-static const QString FUNCTION_KIND_NATIVE = QStringLiteral("native");
-static const QString SOURCE_STATUS_OK = QStringLiteral("ok");
-static const QString SOURCE_STATUS_UNSUPPORTED = QStringLiteral("unsupported");
-static const QString SOURCE_STATUS_NOT_CALLABLE = QStringLiteral("notcallable");
-static const QString SOURCE_STATUS_NATIVE_FUNCTION = QStringLiteral("nativefunction");
-static const QString SOURCE_STATUS_UNSUPPORTED_KIND = QStringLiteral("unsupportedkind");
-static const QString SOURCE_STATUS_NO_SCRIPT_TEXT = QStringLiteral("noscripttext");
-static const QString SOURCE_STATUS_NOT_AT_FUNCTION_KEYWORD = QStringLiteral("notatfunctionkeyword");
-static const QString SOURCE_STATUS_NO_FUNCTION_END = QStringLiteral("nofunctionend");
 
 spGlobalUtils GlobalUtils::m_pInstace;
 
@@ -762,126 +741,4 @@ QString GlobalUtils::getKeycodeText(Qt::Key code)
         codeText = tr("Unknown");
     }
     return codeText;
-}
-
-static QString getFunctionKindName(ScriptFunctionSource::FunctionKind kind)
-{
-    switch (kind)
-    {
-        case ScriptFunctionSource::FunctionKind::Script:
-        {
-            return FUNCTION_KIND_SCRIPT;
-        }
-        case ScriptFunctionSource::FunctionKind::Arrow:
-        {
-            return FUNCTION_KIND_ARROW;
-        }
-        case ScriptFunctionSource::FunctionKind::Eval:
-        {
-            return FUNCTION_KIND_EVAL;
-        }
-        case ScriptFunctionSource::FunctionKind::Native:
-        {
-            return FUNCTION_KIND_NATIVE;
-        }
-        case ScriptFunctionSource::FunctionKind::Unavailable:
-        {
-            break;
-        }
-    }
-    return FUNCTION_KIND_UNAVAILABLE;
-}
-
-static QString getSourceStatusName(ScriptFunctionSource::SourceStatus status)
-{
-    switch (status)
-    {
-        case ScriptFunctionSource::SourceStatus::Ok:
-        {
-            return SOURCE_STATUS_OK;
-        }
-        case ScriptFunctionSource::SourceStatus::NotCallable:
-        {
-            return SOURCE_STATUS_NOT_CALLABLE;
-        }
-        case ScriptFunctionSource::SourceStatus::NativeFunction:
-        {
-            return SOURCE_STATUS_NATIVE_FUNCTION;
-        }
-        case ScriptFunctionSource::SourceStatus::UnsupportedKind:
-        {
-            return SOURCE_STATUS_UNSUPPORTED_KIND;
-        }
-        case ScriptFunctionSource::SourceStatus::NoScriptText:
-        {
-            return SOURCE_STATUS_NO_SCRIPT_TEXT;
-        }
-        case ScriptFunctionSource::SourceStatus::NotAtFunctionKeyword:
-        {
-            return SOURCE_STATUS_NOT_AT_FUNCTION_KEYWORD;
-        }
-        case ScriptFunctionSource::SourceStatus::NoFunctionEnd:
-        {
-            return SOURCE_STATUS_NO_FUNCTION_END;
-        }
-        case ScriptFunctionSource::SourceStatus::Unsupported:
-        {
-            break;
-        }
-    }
-    return SOURCE_STATUS_UNSUPPORTED;
-}
-
-static ScriptFunctionSource::SourceStatus resolveScriptFunction(const QJSValue & function, ScriptFunctionSource::Location & location, QString & source)
-{
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    if (pInterpreter == nullptr)
-    {
-        return ScriptFunctionSource::SourceStatus::Unsupported;
-    }
-    location = ScriptFunctionSource::locate(*pInterpreter, function);
-    if (location.status != ScriptFunctionSource::SourceStatus::Ok)
-    {
-        return location.status;
-    }
-    ScriptFunctionSource::SourceStatus status = ScriptFunctionSource::SourceStatus::Unsupported;
-    source = ScriptFunctionSource::extract(pInterpreter->getScriptText(location.script), location, status);
-    return status;
-}
-
-QVariantMap GlobalUtils::getScriptFunctionInfo(const QJSValue & function)
-{
-    ScriptFunctionSource::Location location;
-    QString source;
-    const ScriptFunctionSource::SourceStatus status = resolveScriptFunction(function, location, source);
-    QVariantMap info;
-    info.insert(SCRIPT_FUNCTION_KEY_SCRIPT, location.script);
-    info.insert(SCRIPT_FUNCTION_KEY_LINE, location.line);
-    info.insert(SCRIPT_FUNCTION_KEY_COLUMN, location.column);
-    info.insert(SCRIPT_FUNCTION_KEY_FORMALS, location.formalCount);
-    info.insert(SCRIPT_FUNCTION_KEY_KIND, getFunctionKindName(location.kind));
-    info.insert(SCRIPT_FUNCTION_KEY_STATUS, getSourceStatusName(status));
-    return info;
-}
-
-QString GlobalUtils::getScriptFunctionSource(const QJSValue & function)
-{
-    ScriptFunctionSource::Location location;
-    QString source;
-    resolveScriptFunction(function, location, source);
-    return source;
-}
-
-QString GlobalUtils::getScriptText(const QString & script, qint32 offset, qint32 length)
-{
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    if (pInterpreter == nullptr || length <= 0)
-    {
-        return QString();
-    }
-    const QString text = pInterpreter->getScriptText(script);
-    const qint32 textSize = static_cast<qint32>(text.size());
-    const qint32 start = std::clamp(offset, 0, textSize);
-    const qint32 count = std::min(length, textSize - start);
-    return text.mid(start, count);
 }

@@ -5,11 +5,9 @@
 
 #include <QObject>
 #include <QJsonArray>
-#include <QJSValue>
 #include <QByteArray>
 #include <QDir>
 #include <QRandomGenerator>
-#include <QVariantMap>
 
 class QmlVectorPoint;
 using spQmlVectorPoint = std::shared_ptr<QmlVectorPoint>;
@@ -192,9 +190,6 @@ public slots:
      * @return
      */
     static QString getKeycodeText(Qt::Key code);
-    static QVariantMap getScriptFunctionInfo(const QJSValue & function);
-    static QString getScriptFunctionSource(const QJSValue & function);
-    static QString getScriptText(const QString & script, qint32 offset, qint32 length);
 private:
     explicit GlobalUtils();
 private:

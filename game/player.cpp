@@ -1636,46 +1636,8 @@ QmlVectorUnit* Player::getUnits()
     auto ret = getSpUnits();
     Interpreter* pInterpreter = Interpreter::getInstance();
     Q_ASSERT(pInterpreter->getInJsCall());
-    applyUnitFilter(*ret);
     pInterpreter->trackJsObject(ret);
     return ret.get();
-}
-
-void Player::setUnitFilter(const QString & object, const QString & function)
-{
-    m_unitFilterObject = object;
-    m_unitFilterFunction = function;
-}
-
-void Player::clearUnitFilter()
-{
-    m_unitFilterObject.clear();
-    m_unitFilterFunction.clear();
-}
-
-void Player::applyUnitFilter(QmlVectorUnit & units)
-{
-    // a predicate calling getUnits itself sees the unfiltered list
-    if (m_unitFilterRunning ||
-        m_unitFilterObject.isEmpty() ||
-        m_unitFilterFunction.isEmpty())
-    {
-        return;
-    }
-    m_unitFilterRunning = true;
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    for (qint32 i = units.size() - 1; i >= 0; --i)
-    {
-        QJSValueList args({m_jsThis,
-                           JsThis::getJsThis(units.at(i)),
-                           GameMap::getMapJsThis(m_pMap)});
-        QJSValue erg = pInterpreter->doFunction(m_unitFilterObject, m_unitFilterFunction, args);
-        if (erg.isBool() && !erg.toBool())
-        {
-            units.removeAt(i);
-        }
-    }
-    m_unitFilterRunning = false;
 }
 
 qint32 Player::getEnemyCount()

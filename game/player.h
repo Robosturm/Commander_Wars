@@ -430,9 +430,6 @@ public:
      * @return
      */
     Q_INVOKABLE QmlVectorUnit* getUnits();
-    // script predicate (player, unit, map) applied by getUnits, a false result drops the unit
-    Q_INVOKABLE void setUnitFilter(const QString & object, const QString & function);
-    Q_INVOKABLE void clearUnitFilter();
     /**
      * @brief getEnemyUnits
      * @return
@@ -791,7 +788,6 @@ private:
      * @param pUnit
      */
     qint32 calculatePlayerStrength(Unit* pUnit) const;
-    void applyUnitFilter(QmlVectorUnit & units);
 protected:
     GameMap* m_pMap{nullptr};
 
@@ -847,9 +843,6 @@ private:
     QString m_uniqueIdentifier;
     QString m_playerNameId;
     bool m_isOnline{true};
-    QString m_unitFilterObject;
-    QString m_unitFilterFunction;
-    bool m_unitFilterRunning{false};
     static oxygine::spResAnim m_neutralTableAnim;
     static QImage m_neutralTableImage;
 };

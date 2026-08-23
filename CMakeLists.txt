@@ -37,7 +37,7 @@ option(ENABLE_UBSAN "Enable Undefined Behavior Sanitizer (Linux/GCC only)" OFF)
 option(ENABLE_ASAN "Enable Address Sanitizer for memory leak detection (Linux/GCC only)" OFF)
 option(ENABLE_VALGRIND "Enable Valgrind instrumentation for memory debugging (Linux/GCC only)" OFF)
 option(BUILD_TESTING "Builds the game as test variant" OFF)
-option(SCRIPTSOURCESUPPORT "Exposes script function source text to JS through globals. Needs the Qt private headers" OFF)
+option(SCRIPTSOURCESUPPORT "Exposes script function source text to JS. Needs the QtQml private headers and is disabled when they are missing" ON)
 
 set(UPDATE_FILE "Commander_Wars-Win10_x64"  CACHE STRING "UPDATE File")
 ###################################################################################
@@ -184,10 +184,21 @@ else()
 endif()
 
 if (SCRIPTSOURCESUPPORT)
-    message("Building with script source support")
-    add_definitions(
-        -DSCRIPTSOURCESUPPORT
+    # distro packages may ship Qt6::QmlPrivate without the headers it points at
+    find_file(QTQML_PRIVATE_HEADER qv4function_p.h
+        PATHS ${Qt6Qml_INCLUDE_DIRS}
+        PATH_SUFFIXES "${Qt6Qml_VERSION}/QtQml/private"
+        NO_DEFAULT_PATH
     )
+    if (QTQML_PRIVATE_HEADER)
+        message("Building with script source support")
+        add_definitions(
+            -DSCRIPTSOURCESUPPORT
+        )
+    else()
+        message(WARNING "QtQml private headers not found, building without script source support")
+        set(SCRIPTSOURCESUPPORT OFF)
+    endif()
 endif()
 
 if(GRAPHICSUPPORT)

@@ -3,13 +3,12 @@
 
 #include <QObject>
 #include <QQmlEngine>
-#include <QHash>
-#include <QUrl>
 #include <QVector>
 #include <QThread>
 #include <list>
 #include <QCoreApplication>
 #include "coreengine/jsthis.h"
+#include "coreengine/scriptfunctionsource.h"
 
 using spQObject = std::shared_ptr<QObject>;
 
@@ -46,8 +45,6 @@ public:
      * @return
      */
     QString getRuntimeData();
-    // js thread only
-    QString getScriptText(const QString & script) const;
     /**
      * @brief reloadInterpreter
      * @param runtime
@@ -222,11 +219,10 @@ private:
         }
     }
     void printError(const QString & msg);
-    void storeScriptText(const QString & script, const QString & contents);
 private:
     static spInterpreter m_pInstance;
     static QString m_runtimeData;
-    QHash<QString, QString> m_scriptTexts;
+    spScriptFunctionSource m_scriptFunctionSource;
     qint32 m_inJsCall{0};
     std::vector<spQObject> m_jsObjects;
     std::list<JsThisData> m_ownedObjects;
