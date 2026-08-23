@@ -1,5 +1,6 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/scriptfunctionsource.h"
 #include "coreengine/audiomanager.h"
 #include "coreengine/userdata.h"
 #include "coreengine/workerthread.h"

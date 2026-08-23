@@ -8,9 +8,11 @@
 #include <list>
 #include <QCoreApplication>
 #include "coreengine/jsthis.h"
-#include "coreengine/scriptfunctionsource.h"
 
 using spQObject = std::shared_ptr<QObject>;
+
+class ScriptFunctionSource;
+using spScriptFunctionSource = std::shared_ptr<ScriptFunctionSource>;
 
 class Interpreter;
 using spInterpreter = std::shared_ptr<Interpreter>;
