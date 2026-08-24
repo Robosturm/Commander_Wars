@@ -1,4 +1,3 @@
-#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include <QSettings>
@@ -1641,14 +1640,37 @@ void Settings::resetSettings()
 
 void Settings::saveSettings()
 {
-    CONSOLE_PRINT("Settings::saveSettings()", GameConsole::eDEBUG);
-    Mainapp* pApp = Mainapp::getInstance();
-    if (!pApp->getSlave() && !Settings::getAiSlave() && m_updateStep.isEmpty())
+    if (m_customSettingsLoaded)
     {
-        QSettings settings(m_settingFile, QSettings::IniFormat);
-        for (const auto & setting : std::as_const(m_SettingValues))
+        CONSOLE_PRINT("Settings::saveSettings()", GameConsole::eDEBUG);
+        Mainapp* pApp = Mainapp::getInstance();
+        if (!pApp->getSlave() && !Settings::getAiSlave() && m_updateStep.isEmpty())
         {
-            setting->saveValue(settings);
+            {
+                QSettings settings(m_settingFile, QSettings::IniFormat);
+                for (const auto & setting : std::as_const(m_SettingValues))
+                {
+                    setting->saveValue(settings);
+                }
+                auto groupIter = m_customSettings.cbegin();
+                while (groupIter != m_customSettings.cend())
+                {
+                    auto groupKey = groupIter.key();
+                    auto valueIter = groupIter.value().cbegin();
+                    const auto valueEnd = groupIter.value().cend();
+                    while (valueIter != valueEnd)
+                    {
+                        settings.beginGroup(groupKey);
+                        auto valueKey = valueIter.key();
+                        settings.setValue(valueKey, valueIter.value());
+                        settings.endGroup();
+                        valueIter++;
+                    }
+                    groupIter++;
+                }
+                settings.sync();
+            }
+            QThread::sleep(std::chrono::milliseconds(100));
         }
     }
 }
@@ -2496,4 +2518,75 @@ qint32 Settings::getCurrentLanguageIndex()
         }
     }
     return current;
+}
+
+void Settings::loadJsSettings()
+{
+    auto * pInterpreter = Interpreter::getInstance();
+    auto result = pInterpreter->doFunction("SETTINGSLOADER", "loadSettings");
+    if (result.isError() || (result.isBool() && !result.toBool()))
+    {
+        GameConsole::print("Failed to load settings " + result.toString(), GameConsole::eERROR);
+    }
+    QSettings settings(m_settingFile, QSettings::IniFormat);
+
+    auto groupIter = m_customSettings.begin();
+    while (groupIter != m_customSettings.end())
+    {
+        auto groupKey = groupIter.key();
+        auto valueIter = groupIter.value().begin();
+        const auto valueEnd = groupIter.value().end();
+        while (valueIter != valueEnd)
+        {
+            auto valueKey = valueIter.key();
+            settings.beginGroup(groupKey);
+            valueIter->setValue(settings.value(valueKey, valueIter.value()));
+            settings.endGroup();
+            valueIter++;
+        }
+        groupIter++;
+    }
+    m_customSettingsLoaded = true;
+}
+
+void Settings::addSetting(const QString & group, const QString & name, QVariant value)
+{
+    if (!m_customSettings.contains(group))
+    {
+        m_customSettings.insert(group, QHash<QString, QVariant>());
+    }
+    m_customSettings[group].insertOrAssign(name, value);
+}
+
+QVariant Settings::getSetting(const QString & group, const QString & name) const
+{
+    if (m_customSettings.contains(group))
+    {
+        const auto & groupValues = m_customSettings[group];
+        if (groupValues.contains(name))
+        {
+            return groupValues[name];
+        }
+    }
+    return QVariant();
+}
+
+qint32 Settings::getSettingInt(const QString & group, const QString & name) const
+{
+    return getSetting(group, name).toInt();
+}
+
+float Settings::getSettingFloat(const QString & group, const QString & name) const
+{
+    return getSetting(group, name).toFloat();
+}
+
+QString Settings::getSettingString(const QString & group, const QString & name) const
+{
+    return getSetting(group, name).toString();
+}
+
+bool Settings::getSettingBool(const QString & group, const QString & name) const
+{
+    return getSetting(group, name).toBool();
 }

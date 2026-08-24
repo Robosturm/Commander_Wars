@@ -150,6 +150,7 @@ void WorkerThread::start()
             pInterpreter->openScript(file, true);
         }
     }
+    Settings::getInstance()->loadJsSettings();
     pLoadingScreen->setProgress(tr("Loading Buildings..."), Mainapp::SCRIPT_PROCESS);
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     pBuildingSpriteManager->loadAll();

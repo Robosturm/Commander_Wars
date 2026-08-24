@@ -337,7 +337,7 @@ public:
     void setSlaveDespawnTime(const std::chrono::seconds newSlaveDespawnTime);
     const std::chrono::seconds getSuspendedDespawnTime();
     void setSuspendedDespawnTime(const std::chrono::seconds newSlaveDespawnTime);
-
+    void loadJsSettings();
     Q_INVOKABLE void loadSettings();
     Q_INVOKABLE void resetSettings();
     Q_INVOKABLE void saveSettings();
@@ -854,6 +854,13 @@ public:
     Q_INVOKABLE qint32 getDebounceTime() const;
     Q_INVOKABLE void setDebounceTimeMs(qint32 debounceTime);
 
+    Q_INVOKABLE void addSetting(const QString & group, const QString & name, QVariant value);
+    Q_INVOKABLE QVariant getSetting(const QString & group, const QString & name) const;
+    Q_INVOKABLE bool getSettingBool(const QString & group, const QString & name) const;
+    Q_INVOKABLE QString getSettingString(const QString & group, const QString & name) const;
+    Q_INVOKABLE float getSettingFloat(const QString & group, const QString & name) const;
+    Q_INVOKABLE qint32 getSettingInt(const QString & group, const QString & name) const;
+
 private:
     friend class MemoryManagement;
     explicit Settings();
@@ -1059,6 +1066,9 @@ private:
     bool m_LogActions{false};
     GameConsole::eLogLevels m_defaultLogLevel{static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL)};
     quint64 m_defaultLogModuls{GameConsole::eGeneral | GameConsole::eJavaScript};
+
+    QHash<QString, QHash<QString, QVariant>> m_customSettings;
+    bool m_customSettingsLoaded{false};
 };
 
 Q_DECLARE_INTERFACE(Settings, "Settings");

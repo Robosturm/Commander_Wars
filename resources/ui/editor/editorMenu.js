@@ -3,175 +3,217 @@ EditorMenu =
     // constants
     PLACE_LINE_MODE : GameEnums.EditorModes_Last,
     PLACE_ELLIPSE_MODE : GameEnums.EditorModes_Last + 1,
+    EXIT : "EXIT",
+    SAVEMAP: "SAVEMAP",
+    LOADMAP: "LOADMAP",
+    UNDO: "UNDO",
+    REDO: "REDO",
+    EDITSCRIPT: "EDITSCRIPT",
+    EDITCAMPAIGN: "EDITCAMPAIGN",
+    IMPORTCOWTXT: "IMPORTCOWTXT",
+    IMPORTAWDSAWS: "IMPORTAWDSAWS",
+    EXPORTAWDSAWS: "EXPORTAWDSAWS",
+    IMPORTAW4AW4: "IMPORTAW4AW4",
+    IMPORTAWBYWEB: "IMPORTAWBYWEB",
+    IMPORTAWBYWEBBYMAPID: "IMPORTAWBYWEBBYMAPID",
+    NEWMAP: "NEWMAP",
+    EDITMAP: "EDITMAP",
+    EXTENDMAP: "EXTENDMAP",
+    FLIPX: "FLIPX",
+    FLIPY: "FLIPY",
+    ROTATEX: "ROTATEX",
+    ROTATEY: "ROTATEY",
+    ROTATEX90: "ROTATEX90",
+    ROTATEY90: "ROTATEY90",
+    ROTATE90: "ROTATE90",
+    RANDOMMAP: "RANDOMMAP",
+    PLACESELECTION: "PLACESELECTION",
+    DELETEUNITS: "DELETEUNITS",
+    EDITUNITS: "EDITUNITS",
+    EDITTERRAIN: "EDITTERRAIN",
+    OPTIMIZEPLAYERS: "OPTIMIZEPLAYERS",
+    EDITPLAYERS: "EDITPLAYERS",
+    EDITRULES: "EDITRULES",
+    COPY: "COPY",
+    PASTE: "PASTE",
+    PASTEALL: "PASTEALL",
+    RESIZEMAP: "RESIZEMAP",
+    TOGGLEGRID: "TOGGLEGRID",
+    TOGGLEMIDDLECROSS: "TOGGLEMIDDLECROSS",
+    VIEWMAPSTATS: "VIEWMAPSTATS",
+    EDITBIOMES: "EDITBIOMES",
+    UPDATESPRITES: "UPDATESPRITES",
+    PLACELINE: "PLACELINE",
+    PLACEELLIPSE: "PLACEELLIPSE",
 
     // state variables
     startPoint : Qt.point(-1, -1),
 
     topBarEvent : function(input)
     {
-        if (input === "EXIT")
+        if (input === EditorMenu.EXIT)
         {
             currentMenu.showExit();
         }
-        else if (input === "SAVEMAP")
+        else if (input === EditorMenu.SAVEMAP)
         {
             currentMenu.showSaveMap();
         }
-        else if (input === "LOADMAP")
+        else if (input === EditorMenu.LOADMAP)
         {
             currentMenu.showLoadMap();
         }
-        else if (input === "UNDO")
+        else if (input === EditorMenu.UNDO)
         {
             currentMenu.editorUndo();
         }
-        else if (input === "REDO")
+        else if (input === EditorMenu.REDO)
         {
             currentMenu.editorRedo();
         }
-        else if (input === "EDITSCRIPT")
+        else if (input === EditorMenu.EDITSCRIPT)
         {
             currentMenu.showEditScript();
         }
-        else if (input === "EDITCAMPAIGN")
+        else if (input === EditorMenu.EDITCAMPAIGN)
         {
             currentMenu.showEditCampaign();
         }
-        else if (input === "IMPORTCOWTXT")
+        else if (input === EditorMenu.IMPORTCOWTXT)
         {
             currentMenu.showImportCoWTxTMap();
         }
-        else if (input === "IMPORTAWDSAWS")
+        else if (input === EditorMenu.IMPORTAWDSAWS)
         {
             currentMenu.showImportAwdsAws();
         }
-        else if (input === "EXPORTAWDSAWS")
+        else if (input === EditorMenu.EXPORTAWDSAWS)
         {
             currentMenu.showExportAwdsAws();
         }
-        else if (input === "IMPORTAW4AW4")
+        else if (input === EditorMenu.IMPORTAW4AW4)
         {
             currentMenu.showImportAwdsAw4();
         }
-        else if (input === "IMPORTAWBYWEB")
+        else if (input === EditorMenu.IMPORTAWBYWEB)
         {
             currentMenu.showImportAwByWeb();
         }
-        else if (input === "IMPORTAWBYWEBBYMAPID")
+        else if (input === EditorMenu.IMPORTAWBYWEBBYMAPID)
         {
             currentMenu.showImportAwByWebByMapId();
         }
-        else if (input === "NEWMAP")
+        else if (input === EditorMenu.NEWMAP)
         {
             currentMenu.showNewMap();
         }
-        else if (input === "EDITMAP")
+        else if (input === EditorMenu.EDITMAP)
         {
             currentMenu.showEditMap();
         }
-        else if (input === "EXTENDMAP")
+        else if (input === EditorMenu.EXTENDMAP)
         {
             currentMenu.showExtendMap();
         }
-        else if (input === "FLIPX")
+        else if (input === EditorMenu.FLIPX)
         {
             currentMenu.flipX();
         }
-        else if (input === "FLIPY")
+        else if (input === EditorMenu.FLIPY)
         {
             currentMenu.flipY();
         }
-        else if (input === "ROTATEX")
+        else if (input === EditorMenu.ROTATEX)
         {
             currentMenu.rotateX();
         }
-        else if (input === "ROTATEY")
+        else if (input === EditorMenu.ROTATEY)
         {
             currentMenu.rotateY();
         }
-        else if (input === "ROTATEX90")
+        else if (input === EditorMenu.ROTATEX90)
         {
             currentMenu.rotateX90();
         }
-        else if (input === "ROTATEY90")
+        else if (input === EditorMenu.ROTATEY90)
         {
             currentMenu.rotateY90();
         }
-        else if (input === "ROTATE90")
+        else if (input === EditorMenu.ROTATE90)
         {
             currentMenu.rotate90();
         }
-        else if (input === "RANDOMMAP")
+        else if (input === EditorMenu.RANDOMMAP)
         {
             currentMenu.showRandomMap();
         }
-        else if (input === "PLACESELECTION")
+        else if (input === EditorMenu.PLACESELECTION)
         {
             currentMenu.changePlaceSelection();
         }
-        else if (input === "DELETEUNITS")
+        else if (input === EditorMenu.DELETEUNITS)
         {
             currentMenu.deleteUnits();
         }
-        else if (input === "EDITUNITS")
+        else if (input === EditorMenu.EDITUNITS)
         {
             currentMenu.editUnits();
         }
-        else if (input === "EDITTERRAIN")
+        else if (input === EditorMenu.EDITTERRAIN)
         {
             currentMenu.editTerrains();
         }
-        else if (input === "OPTIMIZEPLAYERS")
+        else if (input === EditorMenu.OPTIMIZEPLAYERS)
         {
             currentMenu.optimizePlayers();
         }
-        else if (input === "EDITPLAYERS")
+        else if (input === EditorMenu.EDITPLAYERS)
         {
             currentMenu.showEditPlayers();
         }
-        else if (input === "EDITRULES")
+        else if (input === EditorMenu.EDITRULES)
         {
             currentMenu.showEditRules();
         }
-        else if (input === "COPY")
+        else if (input === EditorMenu.COPY)
         {
             currentMenu.copy();
         }
-        else if (input === "PASTE")
+        else if (input === EditorMenu.PASTE)
         {
         }
-        else if (input === "PASTEALL")
+        else if (input === EditorMenu.PASTEALL)
         {
         }
-        else  if (input === "RESIZEMAP")
+        else  if (input === EditorMenu.RESIZEMAP)
         {
             currentMenu.showResizeMap();
         }
-        else if (input === "TOGGLEGRID")
+        else if (input === EditorMenu.TOGGLEGRID)
         {
             currentMenu.toggleGridLayout();
         }
-        else if (input === "TOGGLEMIDDLECROSS")
+        else if (input === EditorMenu.TOGGLEMIDDLECROSS)
         {
             currentMenu.toggleMiddleCrossGrid();
         }
-        else  if (input === "VIEWMAPSTATS")
+        else  if (input === EditorMenu.VIEWMAPSTATS)
         {
             currentMenu.viewMapStats();
         }
-        else if (input === "EDITBIOMES")
+        else if (input === EditorMenu.EDITBIOMES)
         {
             currentMenu.showEditBiomes();
         }
-        else if (input === "UPDATESPRITES")
+        else if (input === EditorMenu.UPDATESPRITES)
         {
             currentMenu.updateSprites();
         }
-        else if (input === "PLACELINE")
+        else if (input === EditorMenu.PLACELINE)
         {
             EditorMenu.startPlaceLine(currentMenu);
         }
-        else if (input === "PLACEELLIPSE")
+        else if (input === EditorMenu.PLACEELLIPSE)
         {
             EditorMenu.startPlaceEllipse(currentMenu);
         }
@@ -194,84 +236,78 @@ EditorMenu =
         {
             if (shiftPressed)
             {
-                switch (key)
-                {
-                case Qt.Key_P:
+                if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditPlayersKey))
                 {
                     menu.showEditPlayers();
                     return true;
                 }
-                case Qt.Key_R:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditRulesKey))
                 {
                     menu.showEditRules();
                     return true;
                 }
-                case Qt.Key_O:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorOptimizePlayersKey))
                 {
                     menu.optimizePlayers();
                     return true;
                 }
-                case Qt.Key_L:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceLineKey))
                 {
                     EditorMenu.startPlaceLine(menu);
                     return true;
                 }
-                case Qt.Key_E:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceEllipseKey))
                 {
                     EditorMenu.startPlaceEllipse(menu);
                     return true;
                 }
-                case Qt.Key_U:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorUpdateSpritesKey))
                 {
                     menu.updateSprites();
                     return true;
                 }
-                }
             }
             else
             {
-                switch (key)
-                {
-                case Qt.Key_L:
+                if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorLoadKey))
                 {
                     menu.showLoadMap();
                     return true;
                 }
-                case Qt.Key_S:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorSaveKey))
                 {
                     menu.showSaveMap();
                     return true;
                 }
-                case Qt.Key_N:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorNewMapKey))
                 {
                     menu.showNewMap();
                     return true;
                 }
-                case Qt.Key_E:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditMapKey))
                 {
                     menu.showEditMap();
                     return true;
                 }
-                case Qt.Key_R:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorResizeMapKey))
                 {
                     menu.showResizeMap();
                     return true;
                 }
-                case Qt.Key_P:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorChangePlaceSelectionKey))
                 {
                     menu.changePlaceSelection();
                     return true;
                 }
-                case Qt.Key_U:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditUnitsKey))
                 {
                     menu.editUnits();
                     return true;
                 }
-                case Qt.Key_T:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditTerrainsKey))
                 {
                     menu.editTerrains();
                     return true;
-                }
                 }
             }
         }

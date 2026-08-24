@@ -12,44 +12,44 @@
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","View map stats")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Shows the general information about the map.")</tooltip>
-                        <itemID>VIEWMAPSTATS</itemID>
+                        <itemID>EditorMenu.VIEWMAPSTATS</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Save map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_S)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Save map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorSaveKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Saves a map to a give file.")</tooltip>
-                        <itemID>SAVEMAP</itemID>
+                        <itemID>EditorMenu.SAVEMAP</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Load map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_L)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Load map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorLoadKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Loads a map to a give file.")</tooltip>
-                        <itemID>LOADMAP</itemID>
+                        <itemID>EditorMenu.LOADMAP</itemID>
                     </item>
                     <if condition="!settings.getSmallScreenDevice()">
                         <item>
                             <text>QT_TRANSLATE_NOOP("GAME","Edit script")</text>
                             <tooltip>QT_TRANSLATE_NOOP("GAME","Edit and create a script for any map.")</tooltip>
-                            <itemID>EDITSCRIPT</itemID>
+                            <itemID>EditorMenu.EDITSCRIPT</itemID>
                         </item>
                         <item>
                             <text>QT_TRANSLATE_NOOP("GAME","Edit campaign")</text>
                             <tooltip>QT_TRANSLATE_NOOP("GAME","Edit and create a campaign.")</tooltip>
-                            <itemID>EDITCAMPAIGN</itemID>
+                            <itemID>EditorMenu.EDITCAMPAIGN</itemID>
                         </item>
                     </if>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Undo ") + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Z)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Undo the last map modification.")</tooltip>
-                        <itemID>UNDO</itemID>
+                        <itemID>EditorMenu.UNDO</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Redo ") + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Y)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Redo the last undo command.")</tooltip>
-                        <itemID>REDO</itemID>
+                        <itemID>EditorMenu.REDO</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Exit editor")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Exits the editor")</tooltip>
-                        <itemID>EXIT</itemID>
+                        <itemID>EditorMenu.EXIT</itemID>
                     </item>
                 </childs>
             </group>
@@ -57,79 +57,79 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Map info")</text>
                 <childs>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","New map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_N)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","New map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorNewMapKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Create a new map.")</tooltip>
-                        <itemID>NEWMAP</itemID>
+                        <itemID>EditorMenu.NEWMAP</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Edit map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_E)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Edit map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditMapKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Edit the information for a map.")</tooltip>
-                        <itemID>EDITMAP</itemID>
+                        <itemID>EditorMenu.EDITMAP</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Resize map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_R)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Resize map") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorResizeMapKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Resizes the map using left, top, right and bottom size changes.")</tooltip>
-                        <itemID>RESIZEMAP</itemID>
+                        <itemID>EditorMenu.RESIZEMAP</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Extend map")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Extends this map with another map.")</tooltip>
-                        <itemID>EXTENDMAP</itemID>
+                        <itemID>EditorMenu.EXTENDMAP</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Flip map X")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed.")</tooltip>
-                        <itemID>FLIPX</itemID>
+                        <itemID>EditorMenu.FLIPX</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Flip map Y")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed.")</tooltip>
-                        <itemID>FLIPY</itemID>
+                        <itemID>EditorMenu.FLIPY</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Rotate map X 180°")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed.")</tooltip>
-                        <itemID>ROTATEX</itemID>
+                        <itemID>EditorMenu.ROTATEX</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Rotate map X 90°")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Rotates the upper left quarter into the upper right quarter of the map and rotates the lower right quarter into the lower left quarter of the map.")</tooltip>
-                        <itemID>ROTATEX90</itemID>
+                        <itemID>EditorMenu.ROTATEX90</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Rotate map Y 180°")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed.")</tooltip>
-                        <itemID>ROTATEY</itemID>
+                        <itemID>EditorMenu.ROTATEY</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Rotate map Y 90°")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Rotates the upper left quarter into the lower left quarter of the map and rotates the lower right quarter into the upper right quarter of the map.")</tooltip>
-                        <itemID>ROTATEY90</itemID>
+                        <itemID>EditorMenu.ROTATEY90</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Rotate map 90°")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Rotates the upper left quarter into all other quarters.")</tooltip>
-                        <itemID>ROTATE90</itemID>
+                        <itemID>EditorMenu.ROTATE90</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Random map")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Creates a new random map.")</tooltip>
-                        <itemID>RANDOMMAP</itemID>
+                        <itemID>EditorMenu.RANDOMMAP</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Toggle grid ") + globals.getKeycodeText(settings.getKey_toggleGridLayout())</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Shows or hides a grid layout.")</tooltip>
-                        <itemID>TOGGLEGRID</itemID>
+                        <itemID>EditorMenu.TOGGLEGRID</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Toggle cross ") + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_M)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Shows or hides the cross marking the middle of the map.")</tooltip>
-                        <itemID>TOGGLEMIDDLECROSS</itemID>
+                        <itemID>EditorMenu.TOGGLEMIDDLECROSS</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Update sprites") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_U)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Update sprites") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorUpdateSpritesKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Reloads the map sprites in case something didn't load correctly.")</tooltip>
-                        <itemID>UPDATESPRITES</itemID>
+                        <itemID>EditorMenu.UPDATESPRITES</itemID>
                     </item>
                 </childs>
             </group>
@@ -137,70 +137,70 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Commands")</text>
                 <childs>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Place selection") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_P)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Place selection") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorChangePlaceSelectionKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the editor mode placing the current tile.")</tooltip>
-                        <itemID>PLACESELECTION</itemID>
+                        <itemID>EditorMenu.PLACESELECTION</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Delete units ") + globals.getKeycodeText(settings.getKey_cancel())</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the editor mode deleting units")</tooltip>
-                        <itemID>DELETEUNITS</itemID>
+                        <itemID>EditorMenu.DELETEUNITS</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Edit units") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_U)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Edit units") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditUnitsKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the editor mode modifying the stats of a unit.")</tooltip>
-                        <itemID>EDITUNITS</itemID>
+                        <itemID>EditorMenu.EDITUNITS</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Edit terrain") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_T)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Edit terrain") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditTerrainsKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the editor mode editing the style of a terrain or building.")</tooltip>
-                        <itemID>EDITTERRAIN</itemID>
+                        <itemID>EditorMenu.EDITTERRAIN</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Edit players") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_B)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Edit the CO's and player start setup.")</tooltip>
-                        <itemID>EDITPLAYERS</itemID>
+                        <itemID>EditorMenu.EDITPLAYERS</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Edit rules") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_R)</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the editor rules for the map.")</tooltip>
-                        <itemID>EDITRULES</itemID>
+                        <itemID>EditorMenu.EDITRULES</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Mass edit terrain")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Changes the biome or palettes of an area.")</tooltip>
-                        <itemID>EDITBIOMES</itemID>
+                        <itemID>EditorMenu.EDITBIOMES</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Opt. players") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_O)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Opt. players") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorOptimizePlayersKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Removes all players with no units or buildings from the map")</tooltip>
-                        <itemID>OPTIMIZEPLAYERS</itemID>
+                        <itemID>EditorMenu.OPTIMIZEPLAYERS</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Place line") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_L)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Place line") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceLineKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Creates a line between two clicked points and places based on the current placement mode.")</tooltip>
-                        <itemID>PLACELINE</itemID>
+                        <itemID>EditorMenu.PLACELINE</itemID>
                     </item>
                     <item>
-                        <text>QT_TRANSLATE_NOOP("GAME","Place ellipse") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_E)</text>
+                        <text>QT_TRANSLATE_NOOP("GAME","Place ellipse") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceEllipseKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Creates a ellipse in the sqaure created by two clicked points and places based on the current placement mode.")</tooltip>
-                        <itemID>PLACEELLIPSE</itemID>
+                        <itemID>EditorMenu.PLACEELLIPSE</itemID>
                     </item>
                     <if condition="!settings.getSmallScreenDevice()">
                         <item>
                             <text>QT_TRANSLATE_NOOP("GAME","Copy ") + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_C)</text>
                             <tooltip>QT_TRANSLATE_NOOP("GAME","Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode.")</tooltip>
-                            <itemID>COPY</itemID>
+                            <itemID>EditorMenu.COPY</itemID>
                         </item>
                         <item>
                             <text>QT_TRANSLATE_NOOP("GAME","Paste ") + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_V)</text>
                             <tooltip>QT_TRANSLATE_NOOP("GAME","Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.")</tooltip>
-                            <itemID>PASTE</itemID>
+                            <itemID>EditorMenu.PASTE</itemID>
                         </item>
                         <item>
                             <text>QT_TRANSLATE_NOOP("GAME","Paste ") + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_V)</text>
                             <tooltip>QT_TRANSLATE_NOOP("GAME","Paste the current selected area with all terrain, buildings, units. The copy and paste selection are not allowed to intersec.")</tooltip>
-                            <itemID>PASTEALL</itemID>
+                            <itemID>EditorMenu.PASTEALL</itemID>
                         </item>
                     </if>
                 </childs>
@@ -211,32 +211,32 @@
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Import CoW Txt")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Deletes the current map and imports an old Commander Wars Map from a file.")</tooltip>
-                        <itemID>IMPORTCOWTXT</itemID>
+                        <itemID>EditorMenu.IMPORTCOWTXT</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Import AWDS Aws")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Deletes the current map and imports an AWS Map Editor from a file.")</tooltip>
-                        <itemID>IMPORTAWDSAWS</itemID>
+                        <itemID>EditorMenu.IMPORTAWDSAWS</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Export AWDS Aws")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Exports the map to an AWS Map Editor file.")</tooltip>
-                        <itemID>EXPORTAWDSAWS</itemID>
+                        <itemID>EditorMenu.EXPORTAWDSAWS</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Import AW4 Aw4")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Deletes the current map and imports an AW 4 map editor file.")</tooltip>
-                        <itemID>IMPORTAW4AW4</itemID>
+                        <itemID>EditorMenu.IMPORTAW4AW4</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Import AW by Web")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/")</tooltip>
-                        <itemID>IMPORTAWBYWEB</itemID>
+                        <itemID>EditorMenu.IMPORTAWBYWEB</itemID>
                     </item>
                     <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Import AW by Web ID")</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Deletes the current map and imports an Advance Wars by Web Map from https://awbw.amarriner.com/ via the map id")</tooltip>
-                        <itemID>IMPORTAWBYWEBBYMAPID</itemID>
+                        <itemID>EditorMenu.IMPORTAWBYWEBBYMAPID</itemID>
                     </item>
                 </childs>
             </group>

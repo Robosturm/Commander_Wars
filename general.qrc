@@ -2097,5 +2097,6 @@
         <file>resources/ui/editor/editorMenu.js</file>
         <file>resources/ui/editor/editorTopbar.xml</file>
         <file>resources/scripts/actions/ACTION_TOGGLE_AI_PAUSE.js</file>
+        <file>resources/scripts/general/settingsLoader.js</file>
     </qresource>
 </RCC>

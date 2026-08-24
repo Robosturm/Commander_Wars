@@ -924,7 +924,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
             QJSValueList args({m_jsThis,
                                m_EditorMode,
                                JsThis::getJsThis(m_pMap.get()),
-                               cur,
+                               static_cast<qint32>(cur),
                                event.getModifiers().testFlag(Qt::KeyboardModifier::ControlModifier),
                                event.getModifiers().testFlag(Qt::KeyboardModifier::ShiftModifier),
                                event.getModifiers().testFlag(Qt::KeyboardModifier::AltModifier),
