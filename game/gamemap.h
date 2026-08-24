@@ -756,16 +756,18 @@ public:
      * @param terrainID
      * @param x
      * @param y
+     * @param force places the terrain even when its placement check fails
      */
-    Q_INVOKABLE void replaceTerrain(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true);
+    Q_INVOKABLE void replaceTerrain(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true, bool force = false);
     /**
      * @brief replaceTerrainOnly
      * @param terrainID
      * @param x
      * @param y
      * @param useTerrainAsBaseTerrain
+     * @param force keeps the old terrain as base terrain even when the placement check fails
      */
-    Q_INVOKABLE void replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true);
+    Q_INVOKABLE void replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true, bool force = false);
     /**
      * @brief replaceBuilding
      * @param buildingID

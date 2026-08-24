@@ -155,6 +155,10 @@ EditorMenu =
         {
             currentMenu.toggleMiddleCrossGrid();
         }
+        else if (input === "IGNOREPLACEMENTRULES")
+        {
+            currentMenu.toggleIgnorePlacementRestrictions();
+        }
         else  if (input === "VIEWMAPSTATS")
         {
             currentMenu.viewMapStats();
@@ -224,6 +228,11 @@ EditorMenu =
                 case Qt.Key_U:
                 {
                     menu.updateSprites();
+                    return true;
+                }
+                case Qt.Key_I:
+                {
+                    menu.toggleIgnorePlacementRestrictions();
                     return true;
                 }
                 }
