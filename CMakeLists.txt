@@ -37,6 +37,7 @@ option(ENABLE_UBSAN "Enable Undefined Behavior Sanitizer (Linux/GCC only)" OFF)
 option(ENABLE_ASAN "Enable Address Sanitizer for memory leak detection (Linux/GCC only)" OFF)
 option(ENABLE_VALGRIND "Enable Valgrind instrumentation for memory debugging (Linux/GCC only)" OFF)
 option(BUILD_TESTING "Builds the game as test variant" OFF)
+option(SCRIPTSOURCESUPPORT "Exposes script function source text to JS. Needs the QtQml private headers and is disabled when they are missing" ON)
 
 set(UPDATE_FILE "Commander_Wars-Win10_x64"  CACHE STRING "UPDATE File")
 ###################################################################################
@@ -180,6 +181,24 @@ if (AUDIOSUPPORT)
     )
 else()
     message("Building without Audio")
+endif()
+
+if (SCRIPTSOURCESUPPORT)
+    # distro packages may ship Qt6::QmlPrivate without the headers it points at
+    find_file(QTQML_PRIVATE_HEADER qv4function_p.h
+        PATHS ${Qt6Qml_INCLUDE_DIRS}
+        PATH_SUFFIXES "${Qt6Qml_VERSION}/QtQml/private"
+        NO_DEFAULT_PATH
+    )
+    if (QTQML_PRIVATE_HEADER)
+        message("Building with script source support")
+        add_definitions(
+            -DSCRIPTSOURCESUPPORT
+        )
+    else()
+        message(WARNING "QtQml private headers not found, building without script source support")
+        set(SCRIPTSOURCESUPPORT OFF)
+    endif()
 endif()
 
 if(GRAPHICSUPPORT)
@@ -669,6 +688,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/crashreporter.cpp coreengine/crashreporter.h
     coreengine/filesupport.cpp coreengine/filesupport.h
     coreengine/globalutils.cpp coreengine/globalutils.h
+    coreengine/scriptfunctionsource.cpp coreengine/scriptfunctionsource.h
     coreengine/scriptvariablefile.cpp coreengine/scriptvariablefile.h
     coreengine/metatyperegister.cpp coreengine/metatyperegister.h
     coreengine/GamepadShared.cpp coreengine/Gamepad.h
@@ -1028,6 +1048,13 @@ if (AUDIOSUPPORT)
     )
 endif()
 
+if (SCRIPTSOURCESUPPORT)
+    set(QT_LIBRARIES
+        ${QT_LIBRARIES}
+        Qt6::QmlPrivate
+    )
+endif()
+
 if (GRAPHICSUPPORT)
     if (USEVULKAN)
     else()
@@ -1259,6 +1286,11 @@ if (PRECOMPILED_HEADERS)
         $<$<COMPILE_LANGUAGE:CXX>:${AllPrecompiledHeaders}>
         $<$<COMPILE_LANGUAGE:CXX>:${SystemHeaderSources}>
     )
+endif()
+
+if (SCRIPTSOURCESUPPORT AND PRECOMPILED_HEADERS)
+    # The QV4 private headers compile without the shared precompiled header.
+    set_source_files_properties(coreengine/scriptfunctionsource.cpp PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
 endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES

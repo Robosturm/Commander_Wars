@@ -127,6 +127,16 @@
                         <itemID>EditorMenu.TOGGLEMIDDLECROSS</itemID>
                     </item>
                     <item>
+                        <text>QT_TRANSLATE_NOOP("GAME","Toggle placement rules") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_I)</text>
+                        <tooltip>QT_TRANSLATE_NOOP("GAME","Allows placing any terrain, building or unit on any tile, ignoring the normal placement rules. Affects the map editor only, overrides any mod that changes placement or movement rules, and stays on until you switch it off or leave the editor.")</tooltip>
+                        <itemID>IGNOREPLACEMENTRULES</itemID>
+                    </item>
+                    <item>
+                        <text>QT_TRANSLATE_NOOP("GAME","Toggle placement rules") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(Qt.Key_I)</text>
+                        <tooltip>QT_TRANSLATE_NOOP("GAME","Allows placing any terrain, building or unit on any tile, ignoring the normal placement rules. Affects the map editor only, overrides any mod that changes placement or movement rules, and stays on until you switch it off or leave the editor.")</tooltip>
+                        <itemID>IGNOREPLACEMENTRULES</itemID>
+                    </item>
+                    <item>
                         <text>QT_TRANSLATE_NOOP("GAME","Update sprites") + " " + globals.getKeycodeText(Qt.Key_Control) + "+" + globals.getKeycodeText(Qt.Key_Shift) + "+" + globals.getKeycodeText(settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorUpdateSpritesKey))</text>
                         <tooltip>QT_TRANSLATE_NOOP("GAME","Reloads the map sprites in case something didn't load correctly.")</tooltip>
                         <itemID>EditorMenu.UPDATESPRITES</itemID>

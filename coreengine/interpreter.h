@@ -11,6 +11,9 @@
 
 using spQObject = std::shared_ptr<QObject>;
 
+class ScriptFunctionSource;
+using spScriptFunctionSource = std::shared_ptr<ScriptFunctionSource>;
+
 class Interpreter;
 using spInterpreter = std::shared_ptr<Interpreter>;
 /**
@@ -221,6 +224,7 @@ private:
 private:
     static spInterpreter m_pInstance;
     static QString m_runtimeData;
+    spScriptFunctionSource m_scriptFunctionSource;
     qint32 m_inJsCall{0};
     std::vector<spQObject> m_jsObjects;
     std::list<JsThisData> m_ownedObjects;

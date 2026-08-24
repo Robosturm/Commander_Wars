@@ -1,5 +1,6 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/scriptfunctionsource.h"
 #include "coreengine/audiomanager.h"
 #include "coreengine/userdata.h"
 #include "coreengine/workerthread.h"
@@ -95,6 +96,9 @@ void Interpreter::init()
 
     QJSValue globals = newQObject(GlobalUtils::getInstance());
     globalObject().setProperty("globals", globals);
+    m_scriptFunctionSource = MemoryManagement::create<ScriptFunctionSource>(this);
+    QJSValue scriptFunctionSource = newQObject(m_scriptFunctionSource.get());
+    globalObject().setProperty("scriptFunctionSource", scriptFunctionSource);
     QJSValue audio = newQObject(pApp->getAudioManager());
     globalObject().setProperty("audio", audio);
     QJSValue console = newQObject(GameConsole::getInstance());
@@ -158,15 +162,13 @@ bool Interpreter::openScript(const QString & script, bool setup)
         QString contents = stream.readAll();
         if (setup)
         {
-            QTextStream runtimeStream(&contents, QIODevice::ReadOnly);
-            while (!runtimeStream.atEnd())
-            {
-                QString line = runtimeStream.readLine().simplified();
-                m_runtimeData += line + "\n";
-            }
+            m_runtimeData += ScriptFunctionSource::simplifyLines(contents);
         }
         scriptFile.close();
-        QJSValue value = evaluate(contents, script);
+        // QJSEngine drops the name of a qrc script when the path starts with a doubled slash
+        const QString scriptName = GlobalUtils::collapseDoubleSlashes(script);
+        m_scriptFunctionSource->storeScriptText(scriptName, contents);
+        QJSValue value = evaluate(contents, scriptName);
         if (value.isError())
         {
             QString error = value.toString() + " in File:" + script + " in File: " +
@@ -186,7 +188,9 @@ bool Interpreter::loadScript(const QString & content, const QString & script)
 {
     bool success = false;
     CONSOLE_PRINT_MODULE("Interpreter::loadScript: " + script, GameConsole::eDEBUG, GameConsole::eJavaScript);
-    QJSValue value = evaluate(content, script);
+    const QString scriptName = GlobalUtils::collapseDoubleSlashes(script);
+    m_scriptFunctionSource->storeScriptText(scriptName, content);
+    QJSValue value = evaluate(content, scriptName);
     if (value.isError())
     {
         QString error = value.toString() + " in script " + script + " in File: " +
