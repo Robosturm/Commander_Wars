@@ -45,6 +45,7 @@ EditorMenu =
     UPDATESPRITES: "UPDATESPRITES",
     PLACELINE: "PLACELINE",
     PLACEELLIPSE: "PLACEELLIPSE",
+    IGNOREPLACEMENTRULES: "IGNOREPLACEMENTRULES",
 
     // state variables
     startPoint : Qt.point(-1, -1),
@@ -197,7 +198,7 @@ EditorMenu =
         {
             currentMenu.toggleMiddleCrossGrid();
         }
-        else if (input === "IGNOREPLACEMENTRULES")
+        else if (input === EditorMenu.IGNOREPLACEMENTRULES)
         {
             currentMenu.toggleIgnorePlacementRestrictions();
         }
@@ -270,7 +271,7 @@ EditorMenu =
                     menu.updateSprites();
                     return true;
                 }
-                case Qt.Key_I:
+                else if (key === settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorToggleIgnorePlacementKey))
                 {
                     menu.toggleIgnorePlacementRestrictions();
                     return true;

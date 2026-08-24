@@ -15,6 +15,7 @@ var SETTINGSLOADER =
     EditorPlaceLineKey : "EDITOR_PLACE_LINE_KEY",
     EditorPlaceEllipseKey : "EDITOR_PLACE_ELLIPSE_KEY",
     EditorUpdateSpritesKey : "EDITOR_UPDATE_SPRITES_KEY",
+    EditorToggleIgnorePlacementKey : "EDITOR_TOGGLE_IGNORE_PLACEMENT_KEY",
     loadSettings : function()
     {
         settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorSaveKey, Qt.Key_S);
@@ -31,6 +32,7 @@ var SETTINGSLOADER =
         settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceLineKey, Qt.Key_L);
         settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceEllipseKey, Qt.Key_E);
         settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorUpdateSpritesKey, Qt.Key_U);
+        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorToggleIgnorePlacementKey, Qt.Key_I);
         return true;
     }
 }

@@ -943,7 +943,7 @@ QDomNode UiFactory::addItemNode(QDomNode & itemNode, spTopbar & pTopbar, qint32 
     {
         QDomElement itemElement = itemNode.toElement();
         QString itemText = getStringValue(getAttribute(itemElement.childNodes(), attrText), "", loopIdx, pMenu);
-        QString itemID = getAttribute(itemElement.childNodes(), attrItemID);
+        QString itemID = getStringValue(getAttribute(itemElement.childNodes(), attrItemID), "", loopIdx, pMenu);
         QString itemTooltip = getStringValue(getAttribute(itemElement.childNodes(), attrTooltip), "", loopIdx, pMenu);
         if (!itemText.isEmpty() && !itemID.isEmpty())
         {
