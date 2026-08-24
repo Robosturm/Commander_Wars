@@ -28,7 +28,7 @@ var SETTINGSLOADER =
         settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditTerrainsKey, Qt.Key_T);
         settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditPlayersKey, Qt.Key_P);
         settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditRulesKey, Qt.Key_R);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorOptimizePlayersKey, Qt.Key_R);
+        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorOptimizePlayersKey, Qt.Key_O);
         settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceLineKey, Qt.Key_L);
         settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceEllipseKey, Qt.Key_E);
         settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorUpdateSpritesKey, Qt.Key_U);

@@ -724,6 +724,231 @@
                 <startValue>settings.getKey_toggleGridLayout()</startValue>
                 <onEvent>settings.setKey_toggleGridLayout(input)</onEvent>
             </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Save:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to save map in the map editor.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorSaveKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorSaveKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Load:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to load a map in the map editor.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorLoadKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorLoadKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key new map:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to open the new map dialog.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorNewMapKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorNewMapKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key edit map:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to open the edit map dialog.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditMapKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditMapKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key resize map:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to open the resize map dialog.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorResizeMapKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorResizeMapKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key place selection:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to enter the place selection mode.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorChangePlaceSelectionKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorChangePlaceSelectionKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Edit units:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to enter the edit units mode.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditUnitsKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditUnitsKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Edit terrain:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to enter the edit terrain mode.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditTerrainsKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditTerrainsKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Edit players:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to enter the edit players dialog.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditPlayersKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditPlayersKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Edit rules:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to enter the edit rules dialog.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditRulesKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditRulesKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key optimize:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to optimize the player count on the map.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorOptimizePlayersKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorOptimizePlayersKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Place line:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to enter the place line mode.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceLineKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceLineKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Place ellipse:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to enter the place ellipse mode.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceEllipseKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceEllipseKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Update sprites:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to update all sprites on the map.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorUpdateSpritesKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorUpdateSpritesKey, input)</onEvent>
+            </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Ignore placement:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key to toggle ignore placement rules.")</tooltip>
+                <startValue>settings.getSettingInt(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorToggleIgnorePlacementKey)</startValue>
+                <onEvent>settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorToggleIgnorePlacementKey, input)</onEvent>
+            </SelectKey>
         </childs>
     </Panel>
 </ui>
