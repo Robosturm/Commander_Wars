@@ -46,6 +46,7 @@ void GameAnimationFactory::queueAnimation(GameAnimation* pGameAnimation)
 
 void GameAnimationFactory::startQueuedAnimation(GameAnimation* pGameAnimation)
 {
+    Mainapp::getInstance()->pauseRendering();
     for (qint32 i = 0; i < m_Animations.size(); i++)
     {
         if (m_Animations[i].get() == pGameAnimation)
@@ -54,6 +55,7 @@ void GameAnimationFactory::startQueuedAnimation(GameAnimation* pGameAnimation)
             break;
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 GameAnimationFactory* GameAnimationFactory::getInstance()
@@ -145,6 +147,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap,
 {
     if (pUnit != nullptr)
     {
+        Mainapp::getInstance()->pauseRendering();
         CONSOLE_PRINT("Creating walking animation", GameConsole::eDEBUG);
         spGameAnimationWalk pGameAnimationWalk = MemoryManagement::create<GameAnimationWalk>(pUnit->getSharedPtrFromWeak<Unit>(), movePath, pMap);
         pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
@@ -153,6 +156,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap,
             pMap->addChild(pGameAnimationWalk);
         }
         m_Animations.append(pGameAnimationWalk);
+        Mainapp::getInstance()->continueRendering();
         return pGameAnimationWalk.get();
     }
     else
@@ -162,7 +166,8 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap,
 }
 
 GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime)
-{    
+{
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Creating power animation", GameConsole::eDEBUG);
     spGameAnimationPower pGameAnimationPower = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO, pMap);
     pGameAnimationPower->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -175,11 +180,14 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QC
         }
     }
     m_Animations.append(pGameAnimationPower);
+
+    Mainapp::getInstance()->continueRendering();
     return pGameAnimationPower.get();
 }
 
 GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pMap, const QString text, const QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Creating dialog animation", GameConsole::eDEBUG);
     spGameAnimationDialog pGameAnimationDialog = MemoryManagement::create<GameAnimationDialog>(frameTime, pMap);
     pGameAnimationDialog->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
@@ -188,6 +196,7 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pM
     pGameAnimationDialog->setColor(color);
     oxygine::Stage::getStage()->addChild(pGameAnimationDialog);
     m_Animations.append(pGameAnimationDialog);
+    Mainapp::getInstance()->continueRendering();
     return pGameAnimationDialog.get();
 }
 
@@ -199,9 +208,11 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* 
         auto* pMenu = pMap->getMenu();
         if (pMenu != nullptr)
         {
+            Mainapp::getInstance()->pauseRendering();
             spGameAnimationNextDay pAnim = MemoryManagement::create<GameAnimationNextDay>(pMap, pPlayer, frameTime, false, uptimeMs);
             pMenu->addChild(pAnim);
             m_Animations.append(pAnim);
+            Mainapp::getInstance()->continueRendering();
             return pAnim.get();
         }
     }
@@ -210,19 +221,21 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* 
 
 GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(GameMap* pMap, qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints)
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Creating capture animation", GameConsole::eDEBUG);
     spGameAnimationCapture pGameAnimationCapture = MemoryManagement::create<GameAnimationCapture>(startPoints, endPoints, maxPoints, pMap);
     pGameAnimationCapture->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     pGameAnimationCapture->setPosition(x, y);
     pMap->addChild(pGameAnimationCapture);
     m_Animations.append(pGameAnimationCapture);
-    
+    Mainapp::getInstance()->continueRendering();
     return pGameAnimationCapture.get();
 }
 
 GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                            Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
-{    
+{
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Creating battle animation", GameConsole::eDEBUG);
     spGameAnimation pRet;
     if (pDefUnit != nullptr && pMap != nullptr)
@@ -335,13 +348,14 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
         pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 2.0f);
         pRet->setSound("talongunhit.wav", 1);
     }
-
+    Mainapp::getInstance()->continueRendering();
     return pRet.get();
 }
 
 GameAnimation* GameAnimationFactory::createOverworldBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                                     Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Creating overworld battle animation", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({JsThis::getJsThis(pAtkTerrain),
@@ -357,6 +371,7 @@ GameAnimation* GameAnimationFactory::createOverworldBattleAnimation(GameMap* pMa
                        defenderDamage,
                        GameMap::getMapJsThis(pMap)});
     QJSValue ret = pInterpreter->doFunction("ACTION_FIRE", "createOverworldBattleAnimation", args);
+    Mainapp::getInstance()->continueRendering();
     return dynamic_cast<GameAnimation*>(ret.toQObject());
 }
 
