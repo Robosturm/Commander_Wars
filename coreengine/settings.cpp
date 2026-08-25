@@ -2555,7 +2555,7 @@ void Settings::addSetting(const QString & group, const QString & name, QVariant 
     {
         m_customSettings.insert(group, QHash<QString, QVariant>());
     }
-    m_customSettings[group].insertOrAssign(name, value);
+    m_customSettings[group].insert(name, value);
 }
 
 QVariant Settings::getSetting(const QString & group, const QString & name) const

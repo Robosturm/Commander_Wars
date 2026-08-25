@@ -188,10 +188,11 @@ void UiFactory::shutdown()
     m_pUiFactory = nullptr;
 }
 
-void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
+void UiFactory::createUi(QString uiXml, CreatedGui* pMenu, oxygine::spActor root)
 {
     if (!Mainapp::getInstance()->getNoUi())
     {
+        Mainapp::getInstance()->pauseRendering();
         CONSOLE_PRINT_MODULE("Loading ui " + uiXml, GameConsole::eDEBUG, GameConsole::eUiFactory);
         if (m_dropDownPlayer.get() == nullptr)
         {
@@ -224,8 +225,12 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
 #endif
                     if (loaded)
                     {
+                        bool predefinedRoot = (root != nullptr);
                         success = true;
-                        oxygine::spActor root = MemoryManagement::create<oxygine::Actor>();
+                        if (!predefinedRoot)
+                        {
+                            root = MemoryManagement::create<oxygine::Actor>();
+                        }
                         auto rootElement = document.documentElement();
 
                         bool overwrite = false;
@@ -260,8 +265,11 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                         }
                         if (success)
                         {
-                            pMenu->addFactoryUiItem(root);
-                            pMenu->addChild(root);
+                            if (!predefinedRoot)
+                            {
+                                pMenu->addFactoryUiItem(root);
+                                pMenu->addChild(root);
+                            }
                         }
                         else
                         {
@@ -288,8 +296,11 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                 }
             }
         }
+        Mainapp::getInstance()->continueRendering();
     }
 }
+
+
 
 bool UiFactory::loop(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {

@@ -16,23 +16,35 @@ var SETTINGSLOADER =
     EditorPlaceEllipseKey : "EDITOR_PLACE_ELLIPSE_KEY",
     EditorUpdateSpritesKey : "EDITOR_UPDATE_SPRITES_KEY",
     EditorToggleIgnorePlacementKey : "EDITOR_TOGGLE_IGNORE_PLACEMENT_KEY",
+
+    settingMapping : [
+    ],
+
     loadSettings : function()
     {
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorSaveKey, Qt.Key_S);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorLoadKey, Qt.Key_L);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorNewMapKey, Qt.Key_N);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditMapKey, Qt.Key_E);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorResizeMapKey, Qt.Key_R);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorChangePlaceSelectionKey, Qt.Key_P);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditUnitsKey, Qt.Key_U);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditTerrainsKey, Qt.Key_T);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditPlayersKey, Qt.Key_P);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditRulesKey, Qt.Key_R);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorOptimizePlayersKey, Qt.Key_O);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceLineKey, Qt.Key_L);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceEllipseKey, Qt.Key_E);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorUpdateSpritesKey, Qt.Key_U);
-        settings.addSetting(SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorToggleIgnorePlacementKey, Qt.Key_I);
+        for (var i = 0; i < SETTINGSLOADER.settingMapping.length; ++i)
+        {
+            var setting = SETTINGSLOADER.settingMapping[i];
+            settings.addSetting(setting[0], setting[1], setting[2]);
+        }
         return true;
     }
 }
+
+SETTINGSLOADER.settingMapping.push(
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorSaveKey, Qt.Key_S],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorLoadKey, Qt.Key_L],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorNewMapKey, Qt.Key_N],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditMapKey, Qt.Key_E],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorResizeMapKey, Qt.Key_R],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorChangePlaceSelectionKey, Qt.Key_P],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditUnitsKey, Qt.Key_U],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditTerrainsKey, Qt.Key_T],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditPlayersKey, Qt.Key_P],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorEditRulesKey, Qt.Key_R],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorOptimizePlayersKey, Qt.Key_O],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceLineKey, Qt.Key_L],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorPlaceEllipseKey, Qt.Key_E],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorUpdateSpritesKey, Qt.Key_U],
+    [SETTINGSLOADER.EditorGroup, SETTINGSLOADER.EditorToggleIgnorePlacementKey, Qt.Key_I]
+);

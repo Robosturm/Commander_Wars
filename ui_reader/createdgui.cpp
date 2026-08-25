@@ -175,6 +175,22 @@ void CreatedGui::remove()
     detachAndRemove();
 }
 
+void CreatedGui::deleteObject(const QString & id)
+{
+    auto iter = m_factoryUiItem.begin();
+    while (iter != m_factoryUiItem.end())
+    {
+        QObject* pObj = dynamic_cast<QObject*>(iter->get());
+        if (pObj!= nullptr &&
+            pObj->objectName() == id)
+        {
+            iter->get()->detach();
+            iter = m_factoryUiItem.erase(iter);
+            break;
+        }
+    }
+}
+
 void CreatedGui::changeBackground(QString background)
 {
     if (m_backgroundSprite.get() == nullptr)

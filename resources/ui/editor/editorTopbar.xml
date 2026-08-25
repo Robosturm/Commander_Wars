@@ -248,4 +248,15 @@
         </groups>
         <onEvent>EditorMenu.topBarEvent(input)</onEvent>
     </Topbar>
+    <!--
+    <Panel>
+        <x>0</x>
+        <y>lastY + lastHeight</y>
+        <width>400</width>
+        <height>50</height>
+        <Id>ICON_PANEL</Id>
+        <childs>
+        </childs>
+    </Panel>
+    -->
 </ui>

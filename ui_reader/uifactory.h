@@ -39,7 +39,7 @@ public:
      * @brief createUi
      * @param uiXmlFile
      */
-    void createUi(QString uiXml, CreatedGui* pMenu);
+    void createUi(QString uiXml, CreatedGui* pMenu, oxygine::spActor root = nullptr);
     /**
      * @brief getFactoryItems
      * @return

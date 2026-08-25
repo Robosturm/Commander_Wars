@@ -61,6 +61,11 @@ public:
      * @param background
      */
     Q_INVOKABLE void changeBackground(QString background);
+    /**
+     * @brief deleteObject may lead to stale child items if
+     * @param id
+     */
+    Q_INVOKABLE void deleteObject(const QString & id);
 private slots:
     void remove();
 protected:
