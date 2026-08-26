@@ -10,6 +10,7 @@
 
 #include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/precisiongrid.h"
 
 #include "game/gamemap.h"
 #include "game/gameaction.h"
@@ -2378,7 +2379,7 @@ qint32 Unit::getHpRounded() const
 
 void Unit::setHp(const qreal value, bool updateVisuals)
 {
-    m_hp = GlobalUtils::roundFloor(value, FLOAT_PRECISION);
+    m_hp = PrecisionGrid::floor(value, FLOAT_PRECISION);
     if (m_hp > MAX_UNIT_HP)
     {
         m_hp = MAX_UNIT_HP;
@@ -2391,7 +2392,7 @@ void Unit::setHp(const qreal value, bool updateVisuals)
 
 void Unit::setVirtualHpValue(const qreal value)
 {
-    m_virtualHp = GlobalUtils::roundFloor(value, FLOAT_PRECISION);
+    m_virtualHp = PrecisionGrid::floor(value, FLOAT_PRECISION);
 }
 
 
@@ -3673,7 +3674,7 @@ void Unit::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << m_UnitID;
     if (forHash)
     {
-        pStream << GlobalUtils::roundFloorToInt(m_hp, FLOAT_PRECISION);
+        pStream << PrecisionGrid::floorToInt(m_hp, FLOAT_PRECISION);
     }
     else
     {
