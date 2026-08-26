@@ -1,6 +1,10 @@
 #pragma once
 
-#include <QVulkanFunctions>
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+
+#include <QVulkanDeviceFunctions>
+#include <QVulkanWindow>
 
 namespace oxygine
 {
@@ -14,11 +18,13 @@ namespace oxygine
             return "ShaderProgram";
         }
         explicit ShaderProgram(const QString & vsShader, const QString & fsShader);
-        virtual ~ShaderProgram() = default;
+        virtual ~ShaderProgram();
     private:
         VkShaderModule createShader(const QString &name);
     private:
-        VkShaderModule m_vertexShaderModule;
-        VkShaderModule m_fracmentShaderModule;
+        QVulkanDeviceFunctions* m_devFuncs{nullptr};
+        QVulkanWindow* m_window{nullptr};
+        VkShaderModule m_vertexShaderModule{VK_NULL_HANDLE};
+        VkShaderModule m_fracmentShaderModule{VK_NULL_HANDLE};
     };
 }

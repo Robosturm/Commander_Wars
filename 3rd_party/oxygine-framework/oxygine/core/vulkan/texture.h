@@ -4,6 +4,7 @@
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
 #include <QImage>
+#include <QVulkanFunctions>
 
 namespace oxygine
 {
@@ -24,9 +25,9 @@ namespace oxygine
         {
             return m_image.height();
         }
-        quint32 getHandle() const
+        VkImageView getHandle() const
         {
-            return 0;
+            return m_view;
         }
         /**Disabled/Enables bilinear texture filter*/
         void setLinearFilter(quint32 filter);
@@ -54,5 +55,11 @@ namespace oxygine
     private:
         QImage m_image;
         timeMS m_CreationTime;
+        VkImage m_imageHandle{VK_NULL_HANDLE};
+        VkDeviceMemory m_memory{VK_NULL_HANDLE};
+        VkImageView m_view{VK_NULL_HANDLE};
+        VkSampler m_sampler{VK_NULL_HANDLE};
+        VkImageLayout m_layout{VK_IMAGE_LAYOUT_UNDEFINED};
+        static quint32 m_highestTextureCount;
     };
 }

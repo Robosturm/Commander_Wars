@@ -111,5 +111,10 @@ namespace oxygine
         VertexDeclaration m_VertexDeclaration;
         qint32 m_programID{0};
         ShaderProgram* m_pShaderProgram{nullptr};
+        QRect m_viewport;
+        QRect m_scissorRect;
+        bool m_scissorEnabled{false};
+        bool m_blendEnabled{false};
+        BLEND_MODE m_blendMode{BLEND_MODE::NONE};
     };
 }

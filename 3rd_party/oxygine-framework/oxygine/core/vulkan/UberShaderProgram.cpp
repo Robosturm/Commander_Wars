@@ -1,6 +1,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
+#include "coreengine/memorymanagement.h"
+
 namespace oxygine
 {
 
@@ -23,7 +25,9 @@ namespace oxygine
         {
             s.fracShader = fracShader;
             VideoDriver* driver = VideoDriver::instance.get();
-            spShaderProgram pgl = spShaderProgram::create();
+            spShaderProgram pgl = MemoryManagement::create<ShaderProgram>(
+                QStringLiteral(":/system/vertex_shader.spv"),
+                QStringLiteral(":/system/frac_shader.spv"));
             driver->setShaderProgram(pgl.get());
             driver->setUniformInt("base_texture", UberShaderProgram::SAMPLER_BASE);
             driver->setUniformInt("colorTable", UberShaderProgram::SAMPLER_TABLE);

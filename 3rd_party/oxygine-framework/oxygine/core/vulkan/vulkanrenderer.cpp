@@ -39,33 +39,39 @@ namespace oxygine
 
     void VulkanRenderer::startNextFrame()
     {
-        m_pWindow->updateData();
-        if (m_pWindow->m_pauseMutex.tryLock())
+        if (!m_pWindow->m_quit && !m_pWindow->m_terminating)
         {
-            oxygine::Stage::getStage()->updateStage();
-            if (m_pWindow->beginRendering())
+            m_pWindow->updateData();
+            if (m_pWindow->m_renderSync.tryLock())
             {
-                QColor clearColor(0, 255, 0, 255);
-                QSize windowSize = m_pWindow->size();
-                oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(windowSize.width(), windowSize.height()));
-                // Render all actors inside the stage. Actor::render will also be called for all its children
-                oxygine::Stage::getStage()->renderStage(clearColor, viewport);
-                swapDisplayBuffers();
-                m_pWindow->m_repeatedFramesDropped = 0;
+                if (oxygine::Stage::getStage().get() != nullptr)
+                {
+                    oxygine::Stage::getStage()->updateStage();
+                    if (m_pWindow->beginRendering())
+                    {
+                        QColor clearColor(0, 0, 0, 255);
+                        QSize windowSize = m_pWindow->size();
+                        oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(windowSize.width(), windowSize.height()));
+                        oxygine::Stage::getStage()->renderStage(clearColor, viewport);
+                        swapDisplayBuffers();
+                        m_pWindow->m_repeatedFramesDropped = 0;
+                    }
+                }
+                m_pWindow->m_renderSync.unlock();
             }
-            m_pWindow->m_pauseMutex.unlock();
-        }
-        else
-        {
-            ++m_pWindow->m_repeatedFramesDropped;
-            if (m_pWindow->m_repeatedFramesDropped > 10)
+            else
             {
-                m_pWindow->requestUpdate();
+                ++m_pWindow->m_repeatedFramesDropped;
+                if (m_pWindow->m_repeatedFramesDropped > 10)
+                {
+                    m_pWindow->requestUpdate();
+                }
             }
         }
         // check for termination
-        if (m_pWindow->m_quit)
+        if (m_pWindow->m_quit && !m_pWindow->m_terminating)
         {
+            m_pWindow->m_terminating = true;
             CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
             QCoreApplication::exit();
         }

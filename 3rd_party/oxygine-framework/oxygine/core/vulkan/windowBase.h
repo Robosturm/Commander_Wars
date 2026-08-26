@@ -32,9 +32,10 @@ namespace oxygine
         friend class VulkanRenderer;
         bool m_renderEnabled{true};
         qint32 m_repeatedFramesDropped{0};
-        QMutex m_pauseMutex;
+        QMutex m_renderSync;
         qint32 m_pausedCounter{0};
         bool m_quit{false};
+        bool m_terminating{false};
         bool m_noUi{false};
     private:
         static QVulkanInstance m_vulkanInstance;

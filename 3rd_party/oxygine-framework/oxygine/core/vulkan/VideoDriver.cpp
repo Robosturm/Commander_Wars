@@ -1,6 +1,11 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/core/vulkan/vulkanrenderer.h"
+
 #include "coreengine/memorymanagement.h"
+
+#include <cstring>
 
 namespace oxygine
 {
@@ -31,7 +36,17 @@ namespace oxygine
 
     quint32 VideoDriver::getPT(VideoDriver::PRIMITIVE_TYPE pt)
     {
-        return 0;
+        switch (pt)
+        {
+        case PRIMITIVE_TYPE::POINTS: return VK_PRIMITIVE_TOPOLOGY_POINT_LIST;
+        case PRIMITIVE_TYPE::LINES: return VK_PRIMITIVE_TOPOLOGY_LINE_LIST;
+        case PRIMITIVE_TYPE::LINE_STRIP: return VK_PRIMITIVE_TOPOLOGY_LINE_STRIP;
+        case PRIMITIVE_TYPE::TRIANGLES: return VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+        case PRIMITIVE_TYPE::TRIANGLE_STRIP: return VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP;
+        case PRIMITIVE_TYPE::TRIANGLE_FAN: return VK_PRIMITIVE_TOPOLOGY_TRIANGLE_FAN;
+        case PRIMITIVE_TYPE::LINE_LOOP: return VK_PRIMITIVE_TOPOLOGY_LINE_STRIP;
+        default: return VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+        }
     }
 
     spTexture VideoDriver::getRenderTarget() const
@@ -46,17 +61,29 @@ namespace oxygine
 
     void VideoDriver::getViewport(QRect& r) const
     {
+        r = m_viewport;
     }
 
     void VideoDriver::setScissorRect(const QRect* rect)
     {
-
+        VkCommandBuffer commandBuffer = GameWindow::getWindow()->currentCommandBuffer();
+        if (rect == nullptr)
+        {
+            m_scissorEnabled = false;
+            return;
+        }
+        m_scissorRect = *rect;
+        m_scissorEnabled = true;
+        VkRect2D scissor{};
+        scissor.offset = { rect->x(), rect->y() };
+        scissor.extent = { static_cast<quint32>(qMax(0, rect->width())), static_cast<quint32>(qMax(0, rect->height())) };
+        VulkanRenderer::getDeviceFunctions()->vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
     }
 
     QRect VideoDriver::getScissorRect(bool& r) const
     {
-        r = false;
-        return QRect();
+        r = m_scissorEnabled;
+        return m_scissorRect;
     }
 
     void VideoDriver::setRenderTarget(spTexture & rt)
@@ -66,6 +93,8 @@ namespace oxygine
 
     void VideoDriver::_begin(const QRect& viewport, const QColor* clearColor)
     {
+        setViewport(viewport);
+        m_scissorEnabled = false;
         if (clearColor)
         {
             clear(*clearColor);
@@ -74,10 +103,15 @@ namespace oxygine
 
     void VideoDriver::setBlendFunc(BLEND_MODE func)
     {
+        m_blendMode = func;
     }
 
     void VideoDriver::setState(STATE state, bool value)
     {
+        if (state == STATE::BLEND)
+        {
+            m_blendEnabled = value;
+        }
     }
 
     void VideoDriver::restore()
@@ -87,7 +121,7 @@ namespace oxygine
 
     bool VideoDriver::isReady() const
     {
-        return true;
+        return GameWindow::getWindow() != nullptr && VulkanRenderer::getDeviceFunctions() != nullptr;
     }
 
     spTexture VideoDriver::createTexture()
@@ -130,6 +164,16 @@ namespace oxygine
 
     void VideoDriver::setViewport(const QRectF& viewport)
     {
+        m_viewport = viewport.toRect();
+        VkViewport vulkanViewport{};
+        vulkanViewport.x = viewport.x();
+        vulkanViewport.y = viewport.y();
+        vulkanViewport.width = viewport.width();
+        vulkanViewport.height = viewport.height();
+        vulkanViewport.minDepth = 0.0f;
+        vulkanViewport.maxDepth = 1.0f;
+        VulkanRenderer::getDeviceFunctions()->vkCmdSetViewport(
+            GameWindow::getWindow()->currentCommandBuffer(), 0, 1, &vulkanViewport);
     }
 
     void VideoDriver::setShaderProgram(ShaderProgram* prog_)
@@ -151,6 +195,9 @@ namespace oxygine
 
     void VideoDriver::setDefaultSettings()
     {
+        m_scissorEnabled = false;
+        m_blendEnabled = false;
+        m_blendMode = BLEND_MODE::NONE;
     }
 
     void VideoDriver::setUniformInt(const char* id, qint32 v)

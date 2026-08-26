@@ -13,7 +13,7 @@ namespace oxygine
 
     QSurfaceFormat::RenderableType WindowBase::getRenderableType()
     {
-        return QSurfaceFormat::RenderableType::OpenVG;
+        return QSurfaceFormat::RenderableType::DefaultRenderableType;
     }
 
     WindowBase::WindowBase()
@@ -24,7 +24,10 @@ namespace oxygine
 
     void WindowBase::setup()
     {
-        m_vulkanInstance.setLayers({ "VK_LAYER_KHRONOS_validation" });
+        if (m_vulkanInstance.supportedLayers().contains(QByteArrayLiteral("VK_LAYER_KHRONOS_validation")))
+        {
+            m_vulkanInstance.setLayers({ "VK_LAYER_KHRONOS_validation" });
+        }
         if (!m_vulkanInstance.create())
         {
             CONSOLE_PRINT("Failed to create Vulkan instance: " + QString::number(m_vulkanInstance.errorCode()), GameConsole::eFATAL);
