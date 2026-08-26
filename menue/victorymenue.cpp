@@ -927,6 +927,7 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
 
 void VictoryMenue::updateGraph()
 {
+    Mainapp::getInstance()->pauseRendering();
     if (m_pMap.get() != nullptr)
     {
         if (m_CurrentGraphMode < GraphModes::Max)
@@ -973,6 +974,7 @@ void VictoryMenue::updateGraph()
             }
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void VictoryMenue::finishGraph()

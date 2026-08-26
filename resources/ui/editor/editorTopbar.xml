@@ -1,5 +1,16 @@
 <?xml version="1.0"?>
 <ui>
+<!--
+    <Panel>
+        <x>0</x>
+        <y>80</y>
+        <width>400</width>
+        <height>80</height>
+        <Id>ICON_PANEL</Id>
+        <childs>
+        </childs>
+    </Panel>
+    -->
     <Topbar>
         <x>0</x>
         <y>0</y>
@@ -248,15 +259,4 @@
         </groups>
         <onEvent>EditorMenu.topBarEvent(input)</onEvent>
     </Topbar>
-    <!--
-    <Panel>
-        <x>0</x>
-        <y>lastY + lastHeight</y>
-        <width>400</width>
-        <height>50</height>
-        <Id>ICON_PANEL</Id>
-        <childs>
-        </childs>
-    </Panel>
-    -->
 </ui>
