@@ -68,7 +68,7 @@ private:
     void updateMinFirerange(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);
     void updateMaxFirerange(qint32 basePosition, const HeavyAiSharedData::spUnitInfo & unitInfo);
 private:
-    opennn::Tensor<opennn::type, 2> m_inputVector;
+    Tensor3 m_inputVector;
     opennn::NeuralNetwork m_neuralNetwork;
     std::array<HeavyAiSharedData::spUnitInfo, HeavyAiSharedData::UNIT_COUNT> m_unitsInfo;
     spQmlVectorPoint m_searchRange;

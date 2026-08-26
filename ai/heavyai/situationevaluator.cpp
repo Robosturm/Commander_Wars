@@ -11,7 +11,7 @@
 #include "game/unit.h"
 
 SituationEvaluator::SituationEvaluator(Player* pOwner)
-    : m_inputVector(1, HeavyAiSharedData::INPUT_VECTOR_SIZE),
+    : m_inputVector(1, 1, HeavyAiSharedData::INPUT_VECTOR_SIZE),
     m_searchRange(GlobalUtils::getSpCircle(0, HeavyAiSharedData::UNIT_SEARCH_RANGE)),
     m_pOwner(pOwner)
 {
@@ -56,7 +56,7 @@ void SituationEvaluator::updateInputVector(GameMap* pMap, const QPoint & searchP
     }
     for (qint32 i = 0; i < HeavyAiSharedData::INPUT_VECTOR_SIZE; ++i)
     {
-        m_inputVector(0, i) = 0;
+        m_inputVector(0, 0, i) = 0;
     }
     for (qint32 i = 0; i < HeavyAiSharedData::UNIT_COUNT; ++i)
     {
@@ -73,15 +73,14 @@ QString SituationEvaluator::getInputVector() const
     QString input;
     for (qint32 i = 0; i < HeavyAiSharedData::INPUT_VECTOR_SIZE; ++i)
     {
-        input += QString::number(m_inputVector(0, i)) + ";";
+        input += QString::number(m_inputVector(0, 0, i)) + ";";
     }
     return input;
 }
 
 float SituationEvaluator::getOutput()
 {
-    auto inputDimension = opennn::get_dimensions(m_inputVector);
-    Tensor<opennn::type, 2> outputs = m_neuralNetwork.calculate_outputs(m_inputVector.data(), inputDimension);
+    auto outputs = m_neuralNetwork.calculate_outputs(m_inputVector); //, inputDimension);
     return outputs(0);
 }
 
@@ -92,7 +91,7 @@ void SituationEvaluator::clearUnitInput(qint32 index)
         qint32 basePosition = HeavyAiSharedData::UNIT_COUNT * HeavyAiSharedData::UNIT_COUNT * feature + index * HeavyAiSharedData::UNIT_COUNT;
         for (qint32 enemyUnit = 0; enemyUnit < HeavyAiSharedData::UNIT_COUNT; ++enemyUnit)
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -129,11 +128,11 @@ void SituationEvaluator::updateHp(qint32 basePosition, const HeavyAiSharedData::
     {
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::CoBonus];
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::CoBonus];
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -144,11 +143,11 @@ void SituationEvaluator::updateCoBonus(qint32 basePosition, const HeavyAiSharedD
     {
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getHpRounded();
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getHpRounded();
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -176,11 +175,11 @@ void SituationEvaluator::updateHpDamage(qint32 basePosition, const HeavyAiShared
                                QJSValue(static_cast<qint32>(GameEnums::AttackRangeCheck_None))});
             QJSValue jsErg = pInterpreter->doFunction(CoreAI::ACTION_FIRE, func, args);
             erg = jsErg.toVariant().toRectF();
-            m_inputVector(0, basePosition + enemyUnit) = erg.x() * Unit::MAX_UNIT_HP / Unit::DAMAGE_100;
+            m_inputVector(0, 0, basePosition + enemyUnit) = erg.x() * Unit::MAX_UNIT_HP / Unit::DAMAGE_100;
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -194,12 +193,12 @@ void SituationEvaluator::updateFundsDamage(qint32 basePosition, const HeavyAiSha
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
 
-            auto hpDamage = m_inputVector(0, basePosition + enemyUnit - hpOffset);
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::BaseCost] * hpDamage / Unit::MAX_UNIT_HP;
+            auto hpDamage = m_inputVector(0, 0, basePosition + enemyUnit - hpOffset);
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::BaseCost] * hpDamage / Unit::MAX_UNIT_HP;
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -210,11 +209,11 @@ void SituationEvaluator::updateMovementPoints(qint32 basePosition, const HeavyAi
     {
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::UnitMovementPoints];
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::UnitMovementPoints];
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -225,12 +224,12 @@ void SituationEvaluator::updateDistance(qint32 basePosition, const HeavyAiShared
     {
         if (m_unitsInfo[enemyUnit]->pUnit != nullptr)
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->multiplier * GlobalUtils::getDistance(unitInfo->pUnit->getX(), unitInfo->pUnit->getY(),
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->multiplier * GlobalUtils::getDistance(unitInfo->pUnit->getX(), unitInfo->pUnit->getY(),
                                                                                   m_unitsInfo[enemyUnit]->pUnit->getX(), m_unitsInfo[enemyUnit]->pUnit->getY());
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -241,11 +240,11 @@ void SituationEvaluator::updateHasMoved(qint32 basePosition, const HeavyAiShared
     {
         if (unitInfo->reachable[enemyUnit])
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getHasMoved();
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getHasMoved();
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -256,11 +255,11 @@ void SituationEvaluator::updateDefense(qint32 basePosition, const HeavyAiSharedD
     {
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->terrainDefense;
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->terrainDefense;
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -271,11 +270,11 @@ void SituationEvaluator::updateRepairsOnPosition(qint32 basePosition, const Heav
     {
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::CurrentRepair];
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::CurrentRepair];
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -286,11 +285,11 @@ void SituationEvaluator::updateMinFirerange(qint32 basePosition, const HeavyAiSh
     {
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::MinFirerange];
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::MinFirerange];
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -301,11 +300,11 @@ void SituationEvaluator::updateMaxFirerange(qint32 basePosition, const HeavyAiSh
     {
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::MaxFirerange];
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getAiCache()[HeavyAiSharedData::AiCache::MaxFirerange];
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -326,11 +325,11 @@ void SituationEvaluator::updateCapturePoints(qint32 basePosition, const HeavyAiS
     {
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getCapturePoints();
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->pUnit->getCapturePoints();
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }
@@ -341,11 +340,11 @@ void SituationEvaluator::updateBuildingImportance(qint32 basePosition, const Hea
     {
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->buildingImportance;
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->buildingImportance;
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 
@@ -358,11 +357,11 @@ void SituationEvaluator::updateStealthed(qint32 basePosition, const HeavyAiShare
         if (shouldFillInfo(unitInfo, enemyUnit))
         {
 
-            m_inputVector(0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->stealthed[unitInfo->pUnit->getOwner()->getPlayerID()];
+            m_inputVector(0, 0, basePosition + enemyUnit) = m_unitsInfo[enemyUnit]->stealthed[unitInfo->pUnit->getOwner()->getPlayerID()];
         }
         else
         {
-            m_inputVector(0, basePosition + enemyUnit) = 0;
+            m_inputVector(0, 0, basePosition + enemyUnit) = 0;
         }
     }
 }

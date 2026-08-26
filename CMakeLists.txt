@@ -418,65 +418,59 @@ include_directories("3rd_party/opennn/eigen")
 set(${PROJECT_NAME}_OpenNN_SRCS
     3rd_party/opennn/opennn/adaptive_moment_estimation.cpp 3rd_party/opennn/opennn/adaptive_moment_estimation.h
     3rd_party/opennn/opennn/addition_layer.cpp 3rd_party/opennn/opennn/addition_layer.h
-    3rd_party/opennn/opennn/bounding_box_regressor_layer.cpp 3rd_party/opennn/opennn/bounding_box_regressor_layer.h
     3rd_party/opennn/opennn/bounding_layer.cpp 3rd_party/opennn/opennn/bounding_layer.h
-    3rd_party/opennn/opennn/codification.cpp 3rd_party/opennn/opennn/codification.h
-    3rd_party/opennn/opennn/conjugate_gradient.cpp 3rd_party/opennn/opennn/conjugate_gradient.h
     3rd_party/opennn/opennn/convolutional_layer.cpp 3rd_party/opennn/opennn/convolutional_layer.h
     3rd_party/opennn/opennn/correlations.cpp 3rd_party/opennn/opennn/correlations.h
     3rd_party/opennn/opennn/cross_entropy_error.cpp 3rd_party/opennn/opennn/cross_entropy_error.h
-    3rd_party/opennn/opennn/data_set.cpp 3rd_party/opennn/opennn/data_set.h
+    3rd_party/opennn/opennn/cross_entropy_error_3d.cpp 3rd_party/opennn/opennn/cross_entropy_error_3d.h
+    3rd_party/opennn/opennn/dataset.cpp 3rd_party/opennn/opennn/dataset.h
+    3rd_party/opennn/opennn/dense_layer.cpp 3rd_party/opennn/opennn/dense_layer.h
+    3rd_party/opennn/opennn/embedding_layer.cpp 3rd_party/opennn/opennn/embedding_layer.h
     3rd_party/opennn/opennn/flatten_layer.cpp 3rd_party/opennn/opennn/flatten_layer.h
+    3rd_party/opennn/opennn/formula_expression.cpp 3rd_party/opennn/opennn/formula_expression.h
     3rd_party/opennn/opennn/genetic_algorithm.cpp 3rd_party/opennn/opennn/genetic_algorithm.h
-    3rd_party/opennn/opennn/gradient_descent.cpp 3rd_party/opennn/opennn/gradient_descent.h
     3rd_party/opennn/opennn/growing_inputs.cpp 3rd_party/opennn/opennn/growing_inputs.h
     3rd_party/opennn/opennn/growing_neurons.cpp 3rd_party/opennn/opennn/growing_neurons.h
+    3rd_party/opennn/opennn/image_dataset.cpp 3rd_party/opennn/opennn/image_dataset.h
+    3rd_party/opennn/opennn/image_utilities.cpp 3rd_party/opennn/opennn/image_utilities.h
     3rd_party/opennn/opennn/inputs_selection.cpp 3rd_party/opennn/opennn/inputs_selection.h
-    3rd_party/opennn/opennn/json_to_xml.cpp 3rd_party/opennn/opennn/json_to_xml.h
+    3rd_party/opennn/opennn/kmeans.cpp 3rd_party/opennn/opennn/kmeans.h
+    # 3rd_party/opennn/opennn/language_dataset.cpp 3rd_party/opennn/opennn/language_dataset.h
     3rd_party/opennn/opennn/layer.cpp 3rd_party/opennn/opennn/layer.h
-    3rd_party/opennn/opennn/learning_rate_algorithm.cpp 3rd_party/opennn/opennn/learning_rate_algorithm.h
-    3rd_party/opennn/opennn/levenberg_marquardt_algorithm.cpp 3rd_party/opennn/opennn/levenberg_marquardt_algorithm.h
-    3rd_party/opennn/opennn/long_short_term_memory_layer.cpp 3rd_party/opennn/opennn/long_short_term_memory_layer.h
-    3rd_party/opennn/opennn/mean_squared_error.cpp 3rd_party/opennn/opennn/mean_squared_error.h
+    3rd_party/opennn/opennn/levenberg_marquardt_algorithm.cpp 3rd_party/opennn/opennn/levenberg_marquardt_algorithm.h    
+    3rd_party/opennn/opennn/loss.cpp 3rd_party/opennn/opennn/loss.h
+    3rd_party/opennn/opennn/mean_squared_error.cpp 3rd_party/opennn/opennn/mean_squared_error.h    
     3rd_party/opennn/opennn/minkowski_error.cpp 3rd_party/opennn/opennn/minkowski_error.h
+    3rd_party/opennn/opennn/model_expression.cpp 3rd_party/opennn/opennn/model_expression.h
     3rd_party/opennn/opennn/model_selection.cpp 3rd_party/opennn/opennn/model_selection.h
+    3rd_party/opennn/opennn/multihead_attention_layer.cpp 3rd_party/opennn/opennn/multihead_attention_layer.h
     3rd_party/opennn/opennn/neural_network.cpp 3rd_party/opennn/opennn/neural_network.h
-    3rd_party/opennn/opennn/neurons_selection.cpp 3rd_party/opennn/opennn/neurons_selection.h
-    3rd_party/opennn/opennn/non_max_suppression_layer.cpp 3rd_party/opennn/opennn/non_max_suppression_layer.h
+    3rd_party/opennn/opennn/neuron_selection.cpp 3rd_party/opennn/opennn/neuron_selection.h
+    3rd_party/opennn/opennn/normalization_layer_3d.cpp 3rd_party/opennn/opennn/normalization_layer_3d.h
     3rd_party/opennn/opennn/normalized_squared_error.cpp 3rd_party/opennn/opennn/normalized_squared_error.h
-    3rd_party/opennn/opennn/numerical_differentiation.cpp 3rd_party/opennn/opennn/numerical_differentiation.h
-    3rd_party/opennn/opennn/opennn_images.cpp 3rd_party/opennn/opennn/opennn_images.h
-    3rd_party/opennn/opennn/opennn_strings.cpp 3rd_party/opennn/opennn/opennn_strings.h
-    3rd_party/opennn/opennn/optimization_algorithm.cpp 3rd_party/opennn/opennn/optimization_algorithm.h
-    3rd_party/opennn/opennn/perceptron_layer.cpp 3rd_party/opennn/opennn/perceptron_layer.h
+    3rd_party/opennn/opennn/optimizer.cpp 3rd_party/opennn/opennn/optimizer.h
+    3rd_party/opennn/opennn/pch.cpp 3rd_party/opennn/opennn/pch.h
     3rd_party/opennn/opennn/pooling_layer.cpp 3rd_party/opennn/opennn/pooling_layer.h
-    3rd_party/opennn/opennn/probabilistic_layer.cpp 3rd_party/opennn/opennn/probabilistic_layer.h
-    3rd_party/opennn/opennn/pruning_inputs.cpp 3rd_party/opennn/opennn/pruning_inputs.h
+    3rd_party/opennn/opennn/pooling_layer_3d.cpp 3rd_party/opennn/opennn/pooling_layer_3d.h
     3rd_party/opennn/opennn/quasi_newton_method.cpp 3rd_party/opennn/opennn/quasi_newton_method.h
+    3rd_party/opennn/opennn/random_utilities.cpp 3rd_party/opennn/opennn/random_utilities.h
     3rd_party/opennn/opennn/recurrent_layer.cpp 3rd_party/opennn/opennn/recurrent_layer.h
-    3rd_party/opennn/opennn/region_based_object_detector.cpp 3rd_party/opennn/opennn/region_based_object_detector.h
-    3rd_party/opennn/opennn/region_proposal_layer.cpp 3rd_party/opennn/opennn/region_proposal_layer.h
-    3rd_party/opennn/opennn/response_optimization.cpp 3rd_party/opennn/opennn/response_optimization.h
+    3rd_party/opennn/opennn/registry.cpp 3rd_party/opennn/opennn/registry.h
+    3rd_party/opennn/opennn/response_optimization.cpp 3rd_party/opennn/opennn/response_optimization.h    
     3rd_party/opennn/opennn/scaling.cpp 3rd_party/opennn/opennn/scaling.h
-    3rd_party/opennn/opennn/scaling_layer.cpp 3rd_party/opennn/opennn/scaling_layer.h
+    3rd_party/opennn/opennn/scaling_layer.cpp 3rd_party/opennn/opennn/scaling_layer.h    
+    3rd_party/opennn/opennn/standard_networks.cpp 3rd_party/opennn/opennn/standard_networks.h
     3rd_party/opennn/opennn/statistics.cpp 3rd_party/opennn/opennn/statistics.h
-    3rd_party/opennn/opennn/stochastic_gradient_descent.cpp 3rd_party/opennn/opennn/stochastic_gradient_descent.h
-    3rd_party/opennn/opennn/sum_squared_error.cpp 3rd_party/opennn/opennn/sum_squared_error.h
+    3rd_party/opennn/opennn/stochastic_gradient_descent.cpp 3rd_party/opennn/opennn/stochastic_gradient_descent.h    
+    3rd_party/opennn/opennn/string_utilities.cpp 3rd_party/opennn/opennn/string_utilities.h
     3rd_party/opennn/opennn/tensor_utilities.cpp 3rd_party/opennn/opennn/tensor_utilities.h
     3rd_party/opennn/opennn/testing_analysis.cpp 3rd_party/opennn/opennn/testing_analysis.h
-    3rd_party/opennn/opennn/text_analytics.cpp 3rd_party/opennn/opennn/text_analytics.h
+    3rd_party/opennn/opennn/time_series_dataset.cpp 3rd_party/opennn/opennn/time_series_dataset.h
     3rd_party/opennn/opennn/tinyxml2.cpp 3rd_party/opennn/opennn/tinyxml2.h
     3rd_party/opennn/opennn/training_strategy.cpp 3rd_party/opennn/opennn/training_strategy.h
-    3rd_party/opennn/opennn/unit_testing.cpp 3rd_party/opennn/opennn/unit_testing.h
-    3rd_party/opennn/opennn/unscaling_layer.cpp 3rd_party/opennn/opennn/unscaling_layer.h
+    3rd_party/opennn/opennn/unscaling_layer.cpp 3rd_party/opennn/opennn/unscaling_layer.h    
+    3rd_party/opennn/opennn/variable.cpp 3rd_party/opennn/opennn/variable.h
     3rd_party/opennn/opennn/weighted_squared_error.cpp 3rd_party/opennn/opennn/weighted_squared_error.h
-    3rd_party/opennn/opennn/loss_index.cpp 3rd_party/opennn/opennn/loss_index.h
-    3rd_party/opennn/opennn/concatenation_layer.cpp 3rd_party/opennn/opennn/concatenation_layer.h
-    3rd_party/opennn/opennn/embedding_layer.cpp 3rd_party/opennn/opennn/embedding_layer.h
-    3rd_party/opennn/opennn/kmeans.cpp 3rd_party/opennn/opennn/kmeans.h
-    #3rd_party/opennn/opennn/multihead_attention_layer.cpp 3rd_party/opennn/opennn/multihead_attention_layer.h
-    3rd_party/opennn/opennn/resnet50.cpp 3rd_party/opennn/opennn/resnet50.h
-    3rd_party/opennn/opennn/vgg16.cpp 3rd_party/opennn/opennn/vgg16.h
 )
 
 set(${PROJECT_NAME}_OpenNN_SRCS_ONLY ${${PROJECT_NAME}_OpenNN_SRCS})
