@@ -60,7 +60,7 @@ QStringList VictoryRule::getRuleType()
 QJSValue VictoryRule::getRuleUiValue(const QString & functionName)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        GameMap::getMapJsThis(m_pMap)});
     return pInterpreter->doFunction(m_RuleID, functionName, args);
 }
