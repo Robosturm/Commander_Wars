@@ -840,46 +840,56 @@
             <Tab>
                 <name>"victory"</name>
                 <label>QT_TRANSLATE_NOOP("GAME","Victory")</label>
-                <loop count="gameRuleManager.getVictoryRuleCount()">
-                    <if condition="currentMenu.getMap().getGameRules().hasVictoryRule(gameRuleManager.getVictoryRuleID(loopIdx))">
-                        <loop count="RuleSelectionScript.getVictoryRuleElementCount(loopIdx)">
+                <loop count="RuleSelectionScript.getVictoryRuleCount()">
+                    <loop count="RuleSelectionScript.getVictoryRuleElementCount(loopIdx)">
+                        <if condition="RuleSelectionScript.showVictoryRuleCategory(loopIdx)">
                             <Label>
-                                <x>RuleSelectionScript.getVictoryRuleX(loopIdx)</x>
-                                <y>RuleSelectionScript.getVictoryRuleY(loopIdx)</y>
-                                <width>220</width>
-                                <text>RuleSelectionScript.getVictoryRulename(loopIdx)</text>
+                                <x>5</x>
+                                <y>RuleSelectionScript.getVictoryRuleCategoryY()</y>
+                                <width>settings.getStageWidth() - 100</width>
+                                <text>RuleSelectionScript.getVictoryRuleCategory()</text>
+                                <tooltip>RuleSelectionScript.getVictoryRuleCategoryTooltip()</tooltip>
                                 <font>"main"</font>
-                                <fontSize>24</fontSize>
+                                <fontColor>RuleSelectionScript.getVictoryRuleCategoryColor()</fontColor>
+                                <fontSize>32</fontSize>
                             </Label>
-                            <if condition="RuleSelectionScript.getIsVictoryRuleCheckboxType(loopIdx)">
-                                <Checkbox>
-                                    <x>lastX + lastWidth + 10</x>
-                                    <y>lastY</y>
-                                    <Id>gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex)</Id>
-                                    <tooltip>RuleSelectionScript.getVictoryRuleDescription(loopIdx)</tooltip>
-                                    <startValue>RuleSelectionScript.getVictoryRuleValue(loopIdx)</startValue>
-                                    <onEvent>RuleSelectionScript.setVictoryRuleValue(input, loopIdx)</onEvent>
-                                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                                </Checkbox>
-                            </if>
-                            <if condition="RuleSelectionScript.getIsVictoryRuleSpinboxType(loopIdx)">
-                                <Spinbox>
-                                    <x>lastX + lastWidth + 10</x>
-                                    <y>lastY</y>
-                                    <Id>gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex)</Id>
-                                    <width>200</width>
-                                    <tooltip>RuleSelectionScript.getVictoryRuleDescription(loopIdx)</tooltip>
-                                    <startValue>RuleSelectionScript.getVictoryRuleValue(loopIdx)</startValue>
-                                    <infinite>RuleSelectionScript.getVictoryRuleInfiniteValue(loopIdx)</infinite>
-                                    <spinSpeed>1</spinSpeed>
-                                    <min>RuleSelectionScript.getVictoryRuleInfiniteValue(loopIdx)</min>
-                                    <max>RuleSelectionScript.getVictoryRuleMaxValue(loopIdx)</max>
-                                    <onEvent>RuleSelectionScript.setVictoryRuleValue(input, loopIdx)</onEvent>
-                                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                                </Spinbox>
-                            </if>
-                        </loop>
-                    </if>
+                        </if>
+                        <Label>
+                            <x>RuleSelectionScript.getVictoryRuleX(loopIdx)</x>
+                            <y>RuleSelectionScript.getVictoryRuleY(loopIdx)</y>
+                            <width>220</width>
+                            <text>RuleSelectionScript.getVictoryRulename(loopIdx)</text>
+                            <font>"main"</font>
+                            <fontSize>24</fontSize>
+                        </Label>
+                        <if condition="RuleSelectionScript.getIsVictoryRuleCheckboxType(loopIdx)">
+                            <Checkbox>
+                                <x>lastX + lastWidth + 10</x>
+                                <y>lastY</y>
+                                <Id>gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex)</Id>
+                                <tooltip>RuleSelectionScript.getVictoryRuleDescription(loopIdx)</tooltip>
+                                <startValue>RuleSelectionScript.getVictoryRuleValue(loopIdx)</startValue>
+                                <onEvent>RuleSelectionScript.setVictoryRuleValue(input, loopIdx)</onEvent>
+                                <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                            </Checkbox>
+                        </if>
+                        <if condition="RuleSelectionScript.getIsVictoryRuleSpinboxType(loopIdx)">
+                            <Spinbox>
+                                <x>lastX + lastWidth + 10</x>
+                                <y>lastY</y>
+                                <Id>gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex)</Id>
+                                <width>200</width>
+                                <tooltip>RuleSelectionScript.getVictoryRuleDescription(loopIdx)</tooltip>
+                                <startValue>RuleSelectionScript.getVictoryRuleValue(loopIdx)</startValue>
+                                <infinite>RuleSelectionScript.getVictoryRuleInfiniteValue(loopIdx)</infinite>
+                                <spinSpeed>1</spinSpeed>
+                                <min>RuleSelectionScript.getVictoryRuleInfiniteValue(loopIdx)</min>
+                                <max>RuleSelectionScript.getVictoryRuleMaxValue(loopIdx)</max>
+                                <onEvent>RuleSelectionScript.setVictoryRuleValue(input, loopIdx)</onEvent>
+                                <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                            </Spinbox>
+                        </if>
+                    </loop>
                 </loop>
             </Tab>
             <Tab>

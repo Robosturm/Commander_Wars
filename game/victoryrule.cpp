@@ -1,6 +1,8 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
 
+#include <QColor>
+
 #include "game/victoryrule.h"
 #include "game/gamemap.h"
 #include "game/player.h"
@@ -53,6 +55,83 @@ QStringList VictoryRule::getRuleType()
     {
         return ret.toVariant().toStringList();
     }
+}
+
+QJSValue VictoryRule::getRuleUiValue(const QString & functionName)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args({pInterpreter->newQObject(this),
+                       GameMap::getMapJsThis(m_pMap)});
+    return pInterpreter->doFunction(m_RuleID, functionName, args);
+}
+
+QString VictoryRule::getRuleCategory()
+{
+    QJSValue ret = getRuleUiValue("getRuleCategory");
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    return "";
+}
+
+QString VictoryRule::getRuleCategoryId()
+{
+    QJSValue ret = getRuleUiValue("getRuleCategoryId");
+    if (ret.isString() && !ret.toString().isEmpty())
+    {
+        return ret.toString();
+    }
+    return getRuleCategory();
+}
+
+QString VictoryRule::getRuleCategoryColor()
+{
+    QJSValue ret = getRuleUiValue("getRuleCategoryColor");
+    if (ret.isString())
+    {
+        const QString color = ret.toString();
+        if (color.isEmpty())
+        {
+            return "";
+        }
+        if (QColor::isValidColorName(color))
+        {
+            return color;
+        }
+        CONSOLE_PRINT("Invalid category color " + color + " for victory rule " + m_RuleID, GameConsole::eWARNING);
+    }
+    return "";
+}
+
+QString VictoryRule::getRuleCategoryTooltip()
+{
+    QJSValue ret = getRuleUiValue("getRuleCategoryTooltip");
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    return "";
+}
+
+qint32 VictoryRule::getRuleCategoryOrder()
+{
+    QJSValue ret = getRuleUiValue("getRuleCategoryOrder");
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    return 0;
+}
+
+qint32 VictoryRule::getRuleOrder()
+{
+    QJSValue ret = getRuleUiValue("getRuleOrder");
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    return 0;
 }
 
 QString VictoryRule::getRuleName(qint32 itemNumber)

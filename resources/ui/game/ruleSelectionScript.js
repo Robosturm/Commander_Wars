@@ -112,15 +112,81 @@ var RuleSelectionScript =
         return !currentMenu.getIsEditorMode() && currentMenu.getRuleChangeEabled();
     },
     currentVictoryRuleIndex : 0,
+    currentVictoryRuleDisplayIndex : 0,
+    victoryRuleEntries : null,
 
+    compareVictoryRuleEntries : function(left, right)
+    {
+        if (left.categoryOrder !== right.categoryOrder)
+        {
+            return left.categoryOrder - right.categoryOrder;
+        }
+        if (left.categoryId !== right.categoryId)
+        {
+            if (left.categoryId < right.categoryId)
+            {
+                return -1;
+            }
+            return 1;
+        }
+        if (left.ruleOrder !== right.ruleOrder)
+        {
+            return left.ruleOrder - right.ruleOrder;
+        }
+        return left.managerIndex - right.managerIndex;
+    },
+    getVictoryRuleEntries : function()
+    {
+        if (RuleSelectionScript.victoryRuleEntries === null)
+        {
+            var rules = currentMenu.getMap().getGameRules();
+            var entries = [];
+            for (var index = 0; index < gameRuleManager.getVictoryRuleCount(); ++index)
+            {
+                var rule = rules.getVictoryRule(gameRuleManager.getVictoryRuleID(index));
+                if (rule !== null)
+                {
+                    entries.push({
+                        managerIndex: index,
+                        rule: rule,
+                        categoryId: rule.getRuleCategoryId(),
+                        categoryOrder: rule.getRuleCategoryOrder(),
+                        ruleOrder: rule.getRuleOrder()
+                    });
+                }
+            }
+            entries.sort(RuleSelectionScript.compareVictoryRuleEntries);
+            RuleSelectionScript.victoryRuleEntries = entries;
+        }
+        return RuleSelectionScript.victoryRuleEntries;
+    },
+    getVictoryRuleCount : function()
+    {
+        return RuleSelectionScript.getVictoryRuleEntries().length;
+    },
+    getVictoryRuleId : function(loopIdx)
+    {
+        var entries = RuleSelectionScript.getVictoryRuleEntries();
+        if (loopIdx >= 0 && loopIdx < entries.length)
+        {
+            return gameRuleManager.getVictoryRuleID(entries[loopIdx].managerIndex);
+        }
+        return "";
+    },
     getVictoryRule : function()
     {
         return currentMenu.getMap().getGameRules().getVictoryRule(gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex))
     },
     getVictoryRuleElementCount : function(loopIdx)
     {
-        RuleSelectionScript.currentVictoryRuleIndex = loopIdx;
-        return RuleSelectionScript.getVictoryRule().getRuleType().length;
+        var entries = RuleSelectionScript.getVictoryRuleEntries();
+        RuleSelectionScript.currentVictoryRuleDisplayIndex = loopIdx;
+        if (loopIdx < 0 || loopIdx >= entries.length)
+        {
+            return 0;
+        }
+        RuleSelectionScript.currentVictoryRuleIndex = entries[loopIdx].managerIndex;
+        return entries[loopIdx].rule.getRuleType().length;
     },
     getVictoryRuleElementType : function(loopIdx)
     {
@@ -133,6 +199,54 @@ var RuleSelectionScript =
     getIsVictoryRuleSpinboxType : function(loopIdx)
     {
         return RuleSelectionScript.getVictoryRuleElementType(loopIdx) === "spinbox";
+    },
+    getVictoryRuleCategory : function()
+    {
+        return RuleSelectionScript.getVictoryRule().getRuleCategory();
+    },
+    getVictoryRuleCategoryId : function()
+    {
+        return RuleSelectionScript.getVictoryRule().getRuleCategoryId();
+    },
+    getVictoryRuleCategoryColor : function()
+    {
+        return RuleSelectionScript.getVictoryRule().getRuleCategoryColor();
+    },
+    getVictoryRuleCategoryTooltip : function()
+    {
+        return RuleSelectionScript.getVictoryRule().getRuleCategoryTooltip();
+    },
+    getPreviousVictoryRule : function()
+    {
+        var displayIndex = RuleSelectionScript.currentVictoryRuleDisplayIndex - 1;
+        var entries = RuleSelectionScript.getVictoryRuleEntries();
+        if (displayIndex >= 0 && displayIndex < entries.length)
+        {
+            return entries[displayIndex].rule;
+        }
+        return null;
+    },
+    showVictoryRuleCategory : function(loopIdx)
+    {
+        if (loopIdx !== 0)
+        {
+            return false;
+        }
+        if (RuleSelectionScript.getVictoryRuleCategory().length === 0)
+        {
+            return false;
+        }
+        var categoryId = RuleSelectionScript.getVictoryRuleCategoryId();
+        var previousRule = RuleSelectionScript.getPreviousVictoryRule();
+        return previousRule === null || previousRule.getRuleCategoryId() !== categoryId;
+    },
+    getVictoryRuleCategoryY : function()
+    {
+        if (RuleSelectionScript.getPreviousVictoryRule() === null)
+        {
+            return 5;
+        }
+        return lastY + lastHeight + 20;
     },
     getVictoryRulename : function(loopIdx)
     {
@@ -179,7 +293,8 @@ var RuleSelectionScript =
     {
         if (loopIdx === 0)
         {
-            if (RuleSelectionScript.currentVictoryRuleIndex === 0)
+            if (RuleSelectionScript.currentVictoryRuleDisplayIndex === 0 &&
+                !RuleSelectionScript.showVictoryRuleCategory(loopIdx))
             {
                 return 5;
             }
