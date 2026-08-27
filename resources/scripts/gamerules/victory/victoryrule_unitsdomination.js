@@ -2,13 +2,13 @@ var Constructor = function()
 {
     this.getRuleDescription = function(rule, itemNumber, map)
     {
-        return qsTr("A player loses when he loses his last unit.")
+        return qsTr("A player loses when he has less than the given units after surpassing that amount in case he has less at the start of the match.")
     };
     this.getRuleName = function(rule, itemNumber, map)
     {
         if (itemNumber === 0)
         {
-            return qsTr("No units");
+            return qsTr("Unit domination");
         }
         else
         {
@@ -19,26 +19,31 @@ var Constructor = function()
     this.getRuleType = function()
     {
         // for now checkbox or spinbox
-        return ["checkbox", "checkbox"]
+        return ["spinbox", "checkbox"]
     };
     // defines the default value during map selection for this rule
     this.getDefaultRuleValue = function(itemNumber)
     {
         if (itemNumber === 0)
         {
-            return 1;
+            return 0;
         }
         else
         {
             return 0;
         }
     };
+    this.getInfiniteValue = function(itemNumber)
+    {
+        // disable value of the rule for spinboxes. :)
+        return 0;
+    };
     // create and initialize the variables for this rule
     this.init = function(rule, map)
     {
         var playerCount = map.getPlayerCount();
         var variables = rule.getVariables();
-        var noWatermines = VICTORYRULE_NOUNITS.getRuleValue(rule, 1, map);
+        var noWatermines = VICTORYRULE_UNITSDOMINATION.getRuleValue(rule, 1, map);
         for (var i = 0; i < playerCount; i++)
         {
             var player = map.getPlayer(i);
@@ -50,15 +55,7 @@ var Constructor = function()
             {
                 unitCount -= player.getUnitCount("WATERMINE");
             }
-
-            if (unitCount > 0)
-            {
-                variable.writeDataBool(true);
-            }
-            else
-            {
-                variable.writeDataBool(false);
-            }
+            variable.writeDataInt32(unitCount);
         }
     };
     this.checkUnitCount = function(rule, player, map)
@@ -67,38 +64,27 @@ var Constructor = function()
         var variableName = "Active" + playerID.toString();
         var variables = rule.getVariables();
         var variable = variables.getVariable(variableName);
-        var value = variable.readDataBool();
-        var noWatermines = VICTORYRULE_NOUNITS.getRuleValue(rule, 1, map);
-        if (value === false)
+        var oldUnitCount = variable.readDataInt32();
+        var noWatermines = VICTORYRULE_UNITSDOMINATION.getRuleValue(rule, 1, map);
+        var targetUnitCount = VICTORYRULE_UNITSDOMINATION.getRuleValue(rule, 0, map);
+        var newUnitCount = player.getUnitCount();
+        if (noWatermines)
         {
-            var unitCount = player.getUnitCount();
-            if (noWatermines)
-            {
-                unitCount -= player.getUnitCount("WATERMINE");
-            }
-            if (unitCount > 0)
-            {
-                variable.writeDataBool(true);
-                value = true;
-            }
+            newUnitCount -= player.getUnitCount("WATERMINE");
+        }
+        var value = false
+        if (oldUnitCount >= targetUnitCount && newUnitCount < targetUnitCount)
+        {
+            value = true;
         }
         return value;
     };
     // checks if the selected player is declared defeated by this rule
     this.checkDefeat = function(rule, player, map)
     {
-        if (VICTORYRULE_NOUNITS.checkUnitCount(rule, player, map))
+        if (VICTORYRULE_UNITSDOMINATION.checkUnitCount(rule, player, map))
         {
-            var noWatermines = VICTORYRULE_NOUNITS.getRuleValue(rule, 1, map);
-            var unitCount = player.getUnitCount();
-            if (noWatermines)
-            {
-                unitCount -= player.getUnitCount("WATERMINE");
-            }
-            if (unitCount <= 0)
-            {
-                return GameEnums.DefeatType_Defeated;
-            }
+            return GameEnums.DefeatType_Defeated;
         }
         return GameEnums.DefeatType_Alive;
     };
@@ -115,4 +101,5 @@ var Constructor = function()
 };
 
 Constructor.prototype = VICTORYRULE;
-var VICTORYRULE_NOUNITS = new Constructor();
+var VICTORYRULE_UNITSDOMINATION = new Constructor();
+

@@ -35,7 +35,7 @@ void VictoryRule::init()
     Interpreter* pInterpreter = Interpreter::getInstance();
     Interpreter::setCppOwnerShip(this);
     QString function1 = "init";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        GameMap::getMapJsThis(m_pMap)});
     pInterpreter->doFunction(m_RuleID, function1, args);
 }
@@ -59,7 +59,7 @@ QString VictoryRule::getRuleName(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleName";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        itemNumber,
                        GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
@@ -77,7 +77,7 @@ qint32 VictoryRule::getRuleTargetValue(qint32 itemNumber, Player* pPlayer)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleTargetValue";
-    QJSValueList args({pInterpreter->newQObject(this),                       
+    QJSValueList args({m_jsThis,
                        GameMap::getMapJsThis(m_pMap),
                        itemNumber,
                        JsThis::getJsThis(pPlayer)});
@@ -96,7 +96,7 @@ qint32 VictoryRule::getRuleTargetCount()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleTargetCount";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isNumber())
@@ -159,7 +159,7 @@ qint32 VictoryRule::getRuleValue(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleValue";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                       itemNumber,
                       GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
@@ -177,7 +177,7 @@ qint32 VictoryRule::getMaxValue(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMaxValue";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        itemNumber,
                        GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
@@ -195,7 +195,7 @@ QString VictoryRule::getRuleDescription(qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleDescription";
-    QJSValueList args({pInterpreter->newQObject(this),
+    QJSValueList args({m_jsThis,
                        itemNumber,
                        GameMap::getMapJsThis(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
@@ -213,7 +213,7 @@ qint32 VictoryRule::getRuleProgress(qint32 itemNumber, Player* pPlayer)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleProgress";
-    QJSValueList args({JsThis::getJsThis(this),
+    QJSValueList args({m_jsThis,
                        JsThis::getJsThis(pPlayer),
                        GameMap::getMapJsThis(m_pMap),
                        itemNumber});
