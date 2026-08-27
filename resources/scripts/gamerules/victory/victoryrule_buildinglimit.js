@@ -130,6 +130,14 @@ var Constructor = function()
     {
         return VICTORYRULE_BUILDINGLIMIT.getBuildings(rule, player, map);
     };
+    this.getRuleCategoryOrder = function(rule, map)
+    {
+        return 3;
+    };
+    this.getRuleOrder = function(rule, map)
+    {
+        return 0;
+    };
 };
 
 Constructor.prototype = VICTORYRULE;

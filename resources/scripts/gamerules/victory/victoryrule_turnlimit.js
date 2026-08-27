@@ -78,6 +78,14 @@ var Constructor = function()
     {
         return map.getCurrentDay();
     };
+    this.getRuleCategoryId = function(rule, map)
+    {
+        return "TURNS";
+    };
+    this.getRuleOrder = function(rule, map)
+    {
+        return 0;
+    };
 };
 
 Constructor.prototype = VICTORYRULE;

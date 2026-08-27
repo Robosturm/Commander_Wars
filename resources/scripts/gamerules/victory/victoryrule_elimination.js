@@ -111,6 +111,14 @@ var Constructor = function()
     {
         return VICTORYRULE_ELIMINATION.getKilledUnits(rule, player, map);
     };
+    this.getRuleCategoryId = function(rule, map)
+    {
+        return "UNITS";
+    };
+    this.getRuleOrder = function(rule, map)
+    {
+        return 1;
+    };
 };
 
 Constructor.prototype = VICTORYRULE;

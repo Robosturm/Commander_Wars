@@ -124,6 +124,14 @@ var Constructor = function()
     {
         return VICTORYRULE_TURNLIMIT_SCORE_RACE.getScore(rule, player, map);
     };
+    this.getRuleCategoryId = function(rule, map)
+    {
+        return "TURNS";
+    };
+    this.getRuleOrder = function(rule, map)
+    {
+        return 2;
+    };
 };
 
 Constructor.prototype = VICTORYRULE;

@@ -128,6 +128,14 @@ var Constructor = function()
         // return co unit count
         return VICTORYRULE_COUNITLOST.checkCOUnitCount(rule, player, map);
     };
+    this.getRuleCategoryId = function(rule, map)
+    {
+        return "UNITS";
+    };
+    this.getRuleOrder = function(rule, map)
+    {
+        return 2;
+    };
 };
 
 Constructor.prototype = VICTORYRULE;

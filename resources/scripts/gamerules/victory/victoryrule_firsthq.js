@@ -65,6 +65,14 @@ var Constructor = function()
     {
         return player.getBuildingListCount(BUILDING.hqIds);
     };
+    this.getRuleCategoryId = function(rule, map)
+    {
+        return "HQ";
+    };
+    this.getRuleOrder = function(rule, map)
+    {
+        return 2;
+    };
 };
 
 Constructor.prototype = VICTORYRULE;

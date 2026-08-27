@@ -272,6 +272,14 @@ var Constructor = function()
         var ownValues = VICTORYRULE_DOMINATION.getCurrentValues(player, map, team);
         return ownValues[item];
     };
+    this.getRuleCategoryId = function(rule, map)
+    {
+        return "MAP_CONTROL";
+    };
+    this.getRuleOrder = function(rule, map)
+    {
+        return 1;
+    };
 };
 
 Constructor.prototype = VICTORYRULE;

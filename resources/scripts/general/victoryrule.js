@@ -12,9 +12,40 @@ var VICTORYRULE =
     },
     getRuleProgress : null,
 
+    ruleCategoryIdValue : 0,
+    ruleCategoryNameValue : 1,
+    ruleCategoryTooltipValue : 2,
+    ruleCategoryOrderValue : 3,
+    ruleCategoryColorValue : 4,
+    ruleCategoryInformation :
+    [
+        // ID -         name -                  tooltip -                                                                   order - color
+        ["HQ",          qsTr("HQ"),             qsTr("Victory rules that are primarly affected by capturing enemies HQ's."),    0, "#FFA500"],
+        ["UNITS",       qsTr("Units"),          qsTr("Victory rules that are primarly affected by eliminating enemy units."),   1, "#FFA500"],
+        ["TURNS",       qsTr("Turn"),           qsTr("Victory rules that are primarly affected by turn limits."),               2, "#FFA500"],
+        ["MAP_CONTROL", qsTr("Map Control"),    qsTr("Victory rules that are primarly affected by map control limits."),        3, "#FFA500"],
+    ],
+
+    getRuleCategoryInfo : function(id)
+    {
+        for (var i = 0; i < VICTORYRULE.ruleCategoryInformation.length; ++i)
+        {
+            if (VICTORYRULE.ruleCategoryInformation[i][VICTORYRULE.ruleCategoryIdValue] === id)
+            {
+                return VICTORYRULE.ruleCategoryInformation[i];
+            }
+        }
+        return null;
+    },
+
     // optional victory rule menu metadata
     getRuleCategory : function(rule, map)
     {
+        var info = VICTORYRULE.getRuleCategoryInfo(rule.getRuleCategoryId());
+        if (info !== null)
+        {
+            return info[VICTORYRULE.ruleCategoryNameValue];
+        }
         return "";
     },
     getRuleCategoryId : function(rule, map)
@@ -23,14 +54,29 @@ var VICTORYRULE =
     },
     getRuleCategoryColor : function(rule, map)
     {
+        var info = VICTORYRULE.getRuleCategoryInfo(rule.getRuleCategoryId());
+        if (info !== null)
+        {
+            return info[VICTORYRULE.ruleCategoryColorValue];
+        }
         return "";
     },
     getRuleCategoryTooltip : function(rule, map)
     {
+        var info = VICTORYRULE.getRuleCategoryInfo(rule.getRuleCategoryId());
+        if (info !== null)
+        {
+            return info[VICTORYRULE.ruleCategoryTooltipValue];
+        }
         return "";
     },
     getRuleCategoryOrder : function(rule, map)
     {
+        var info = VICTORYRULE.getRuleCategoryInfo(rule.getRuleCategoryId());
+        if (info !== null)
+        {
+            return info[VICTORYRULE.ruleCategoryOrderValue];
+        }
         return 0;
     },
     getRuleOrder : function(rule, map)

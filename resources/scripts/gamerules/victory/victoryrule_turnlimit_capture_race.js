@@ -132,6 +132,14 @@ var Constructor = function()
     {
         return VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getBuildingCount(rule, player, map);
     };
+    this.getRuleCategoryId = function(rule, map)
+    {
+        return "TURNS";
+    };
+    this.getRuleOrder = function(rule, map)
+    {
+        return 1;
+    };
 };
 
 Constructor.prototype = VICTORYRULE;

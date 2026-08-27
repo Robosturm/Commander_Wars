@@ -112,6 +112,14 @@ var Constructor = function()
         }
         return unitCount;
     };
+    this.getRuleCategoryId = function(rule, map)
+    {
+        return "UNITS";
+    };
+    this.getRuleOrder = function(rule, map)
+    {
+        return 0;
+    };
 };
 
 Constructor.prototype = VICTORYRULE;
