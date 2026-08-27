@@ -159,4 +159,4 @@ var VICTORYRULE =
     {
         return GameEnums.DefeatType_Alive;
     },
-}
+};
