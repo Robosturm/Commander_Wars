@@ -12,6 +12,32 @@ var VICTORYRULE =
     },
     getRuleProgress : null,
 
+    // optional victory rule menu metadata
+    getRuleCategory : function(rule, map)
+    {
+        return "";
+    },
+    getRuleCategoryId : function(rule, map)
+    {
+        return "";
+    },
+    getRuleCategoryColor : function(rule, map)
+    {
+        return "";
+    },
+    getRuleCategoryTooltip : function(rule, map)
+    {
+        return "";
+    },
+    getRuleCategoryOrder : function(rule, map)
+    {
+        return 0;
+    },
+    getRuleOrder : function(rule, map)
+    {
+        return 0;
+    },
+
     // shown name in the game
     getRuleName : function(itemNumber, map)
     {

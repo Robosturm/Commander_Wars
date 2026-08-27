@@ -60,6 +60,12 @@ public:
     Q_INVOKABLE qint32 getInfiniteValue(qint32 itemNumber = 0);
     Q_INVOKABLE qint32 getDefaultValue(qint32 itemNumber = 0);
     Q_INVOKABLE QStringList getRuleType();
+    Q_INVOKABLE QString getRuleCategory();
+    Q_INVOKABLE QString getRuleCategoryId();
+    Q_INVOKABLE QString getRuleCategoryColor();
+    Q_INVOKABLE QString getRuleCategoryTooltip();
+    Q_INVOKABLE qint32 getRuleCategoryOrder();
+    Q_INVOKABLE qint32 getRuleOrder();
     Q_INVOKABLE QString getRuleName(qint32 itemNumber = 0);
     Q_INVOKABLE qint32 getRuleValue(qint32 itemNumber);
     Q_INVOKABLE qint32 getRuleTargetValue(qint32 itemNumber, Player* pPlayer);
@@ -74,6 +80,8 @@ public:
     }
     Q_INVOKABLE void checkDefeat();
 private:
+    QJSValue getRuleUiValue(const QString & functionName);
+
     QString m_RuleID;
     ScriptVariables m_Variables;
     GameMap* m_pMap{nullptr};
