@@ -37,13 +37,31 @@ CoGeneratorMenu::CoGeneratorMenu()
 
 void CoGeneratorMenu::generateCo(const QString & modDir, const QString & coid)
 {
-    QFile file(Settings::getInstance()->getUserPath() + "/" + modDir + "/" + coid + ".js");
-    if (file.open(QIODevice::WriteOnly))
+    QString filename = Settings::getInstance()->getUserPath() + "/" + modDir + "/" + coid + ".js";
+    filename.replace("\\", "/");
+    while (filename.startsWith("/"))
     {
-        QTextStream stream(&file);
-        writeCoPrologue(stream);
-        writeCoContent(stream);
-        writeCoEpilogue(stream);
+        filename.removeFirst();
+    }
+    QFile file(filename);
+    auto path = QFileInfo(filename).absolutePath();
+    if (QDir().exists(path) || QDir().mkdir(path))
+    {
+        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            QTextStream stream(&file);
+            writeCoPrologue(stream);
+            writeCoContent(stream);
+            writeCoEpilogue(stream);
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to create folder for co file: " + filename, GameConsole::eERROR);
     }
 }
 
@@ -329,8 +347,14 @@ void CoGeneratorMenu::setCoDefeatSentence(const QString & newCoDefeatSentence, q
 
 void CoGeneratorMenu::storeCoData(const QString & filename) const
 {
-    QFile file(filename);
-    if (file.open(QIODevice::WriteOnly))
+    QString filepath = filename;
+    filepath.replace("\\", "/");
+    while (filepath.startsWith("/"))
+    {
+        filepath.removeFirst();
+    }
+    QFile file(filepath);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
         QDataStream stream(&file);
         serializeObject(stream);
@@ -339,7 +363,13 @@ void CoGeneratorMenu::storeCoData(const QString & filename) const
 
 void CoGeneratorMenu::loadCoData(const QString & filename)
 {
-    QFile file(filename);
+    QString filepath = filename;
+    filepath.replace("\\", "/");
+    while (filepath.startsWith("/"))
+    {
+        filepath.removeFirst();
+    }
+    QFile file(filepath);
     if (file.open(QIODevice::ReadOnly))
     {
         QDataStream stream(&file);
