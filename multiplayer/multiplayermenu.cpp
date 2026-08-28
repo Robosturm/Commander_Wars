@@ -2122,11 +2122,9 @@ bool Multiplayermenu::findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, b
 }
 
 void Multiplayermenu::showRuleSelection()
-{    
-    m_pRuleSelection->setVisible(true);
+{
     m_pButtonSaveRules->setVisible(true);
     m_pButtonLoadRules->setVisible(true);
-    m_pRuleSelection->clearContent();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     RuleSelection::Mode ruleMode = RuleSelection::Mode::Multiplayer;
     if (m_local)
@@ -2137,11 +2135,15 @@ void Multiplayermenu::showRuleSelection()
     {
         ruleMode = RuleSelection::Mode::MultiplayerOnlyGateway;
     }
-    m_pRuleSelectionView = MemoryManagement::create<RuleSelection>(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, ruleMode);
-    connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &Multiplayermenu::ruleSelectionSizeChanged, Qt::QueuedConnection);
-    m_pRuleSelection->addItem(m_pRuleSelectionView);
-    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 40);
-    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getScaledWidth());
+    if (m_pRuleSelectionView == nullptr)
+    {
+        m_pRuleSelectionView = MemoryManagement::create<RuleSelection>(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, ruleMode);
+        addChild(m_pRuleSelectionView);
+    }
+    else
+    {
+        m_pRuleSelectionView->setVisible(true);
+    }
 }
 
 void Multiplayermenu::showPlayerSelection(bool relaunchedLobby)

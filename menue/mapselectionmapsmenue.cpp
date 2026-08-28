@@ -143,9 +143,6 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
     addChild(m_pPlayerSelection);
 
     QSize size(oxygine::Stage::getStage()->getWidth() - 20, oxygine::Stage::getStage()->getHeight() - 40 * 2);
-    m_pRuleSelection = MemoryManagement::create<Panel>(true,  size, size);
-    m_pRuleSelection->setPosition(10, 20);
-    addChild(m_pRuleSelection);
     if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
     {
         hidePlayerSelection();
@@ -337,30 +334,29 @@ void MapSelectionMapsMenue::showMapSelection()
 }
 
 void MapSelectionMapsMenue::hideRuleSelection()
-{    
-    m_pRuleSelection->setVisible(false);
+{
     m_pButtonSaveRules->setVisible(false);
     m_pButtonLoadRules->setVisible(false);
-    m_pRuleSelectionView.reset();
-    m_pRuleSelection->clearContent();    
+    if (m_pRuleSelectionView)
+    {
+        m_pRuleSelectionView->setVisible(false);
+    }
 }
 
 void MapSelectionMapsMenue::showRuleSelection()
-{    
-    m_pRuleSelection->setVisible(true);
+{
     m_pButtonSaveRules->setVisible(true);
     m_pButtonLoadRules->setVisible(true);
-    m_pRuleSelection->clearContent();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    m_pRuleSelectionView = MemoryManagement::create<RuleSelection>(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, RuleSelection::Mode::Singleplayer);
-    connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &MapSelectionMapsMenue::ruleSelectionSizeChanged, Qt::QueuedConnection);
-    m_pRuleSelection->addItem(m_pRuleSelectionView);
-}
-
-void MapSelectionMapsMenue::ruleSelectionSizeChanged()
-{
-    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 60);
-    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getScaledWidth() + 60);
+    if (m_pRuleSelectionView == nullptr)
+    {
+        m_pRuleSelectionView = MemoryManagement::create<RuleSelection>(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, RuleSelection::Mode::Singleplayer);
+        addChild(m_pRuleSelectionView);
+    }
+    else
+    {
+        m_pRuleSelectionView->setVisible(true);
+    }
 }
 
 void MapSelectionMapsMenue::showPlayerSelection(bool relaunchedLobby)

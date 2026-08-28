@@ -305,7 +305,7 @@ private:
     void updateMenuSize(CreatedGui* pMenu);
     QDomNode addTabNode(QDomNode & tabNode, spTabbedBox & pTabbedBox, CreatedGui* pMenu, qint32 loopIdx, bool & success);
     QDomNode addItemNode(QDomNode & itemNode, spTopbar & pTopbar, qint32 groupId, CreatedGui* pMenu, qint32 loopIdx);
-    bool loadPanelContent(QDomNode node, spPanel & pPanel, CreatedGui* pMenu, qint32 loopIdx);
+    bool loadPanelContent(QDomNode node, spPanel & pPanel, CreatedGui* pMenu, qint32 loopIdx, qint32 sliderWidth = 40, qint32 sliderHeight = 40);
 
     template<typename TType>
     void onEvent(QString line, TType value, QString objectId, qint32 loopIdx, CreatedGui* pMenu)

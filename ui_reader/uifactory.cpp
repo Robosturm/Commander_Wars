@@ -133,6 +133,8 @@ static const char* const attrActiveResAnim = "activeResAnim";
 static const char* const attrTabs = "tabs";
 static const char* const attrTerrain = "terrain";
 static const char* const attrColorPicker = "colorPicker";
+static const char* const attrSliderWidth = "sliderwWdth";
+static const char* const attrSliderHeight = "sliderHeight";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -1533,6 +1535,9 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
         qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
         qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
+        qint32 sliderHeight = getIntValue(getAttribute(childs, attrSliderHeight), id, loopIdx, pMenu, 40);
+        qint32 sliderWidth = getIntValue(getAttribute(childs, attrSliderWidth), id, loopIdx, pMenu, 40);
+
         qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
@@ -1550,7 +1555,7 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
         updateMenuSize(pMenu);
         m_parentSize = QSize(pPanel->getScaledWidth(), pPanel->getScaledHeight());
         auto node = getNode(childs, attrChilds).firstChild();
-        loadPanelContent(node, pPanel, pMenu, loopIdx);
+        loadPanelContent(node, pPanel, pMenu, loopIdx, sliderWidth, sliderHeight);
         m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
         parent->addChild(pPanel);
         m_parentSize = QSize(0, 0);
@@ -1559,7 +1564,7 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
     return success;
 }
 
-bool UiFactory::loadPanelContent(QDomNode node, spPanel & pPanel, CreatedGui* pMenu, qint32 loopIdx)
+bool UiFactory::loadPanelContent(QDomNode node, spPanel & pPanel, CreatedGui* pMenu, qint32 loopIdx, qint32 sliderWidth, qint32 sliderHeight)
 {
     bool success = true;
     qint32 maxWidth = 0;
@@ -1590,21 +1595,21 @@ bool UiFactory::loadPanelContent(QDomNode node, spPanel & pPanel, CreatedGui* pM
         node = node.nextSibling();
     }
     // restore last coordinates after iterating over child elements
-    if (maxHeight >= pPanel->getScaledHeight() - 80)
+    if (maxHeight >= pPanel->getScaledHeight() - sliderHeight)
     {
-        pPanel->setContentHeigth(maxHeight + 80);
+        pPanel->setContentHeigth(maxHeight + sliderHeight);
     }
     else
     {
-        pPanel->setContentHeigth(pPanel->getScaledHeight() - 80);
+        pPanel->setContentHeigth(pPanel->getScaledHeight() - sliderHeight);
     }
-    if (maxWidth >= pPanel->getScaledWidth() - 80)
+    if (maxWidth >= pPanel->getScaledWidth() - sliderWidth)
     {
-        pPanel->setContentWidth(maxWidth + 80);
+        pPanel->setContentWidth(maxWidth + sliderWidth);
     }
     else
     {
-        pPanel->setContentWidth(pPanel->getScaledWidth() - 80);
+        pPanel->setContentWidth(pPanel->getScaledWidth() - sliderWidth);
     }
     return success;
 }

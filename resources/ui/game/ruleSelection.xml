@@ -4,8 +4,8 @@
         <Id>"tabbedBox"</Id>
         <x>10</x>
         <y>10</y>
-        <width>settings.getStageWidth() - 90</width>
-        <height>settings.getStageHeight() - 150</height>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 100</height>
         <tabBarHeight>100</tabBarHeight>
         <tabBarButtonHeight>45</tabBarButtonHeight>
         <tabButtonWidth>150</tabButtonWidth>

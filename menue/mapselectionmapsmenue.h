@@ -76,7 +76,6 @@ public slots:
     void showMapFilter();
 protected slots:
     virtual void onEnter() override;
-    void ruleSelectionSizeChanged();
     /**
      * @brief selectRandomMap
      */
@@ -107,7 +106,6 @@ protected:
 
     spMapSelectionView m_pMapSelectionView;
     // rule selection
-    spPanel m_pRuleSelection;
     spRuleSelection m_pRuleSelectionView;
 
     spPlayerSelection m_pPlayerSelection;
