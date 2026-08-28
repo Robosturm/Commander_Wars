@@ -299,6 +299,7 @@ public slots:
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
+    void sigFocusLost();
     /**
      * @brief sigWindowLayoutChanged
      */

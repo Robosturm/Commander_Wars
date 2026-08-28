@@ -864,6 +864,7 @@ void Mainapp::onActiveChanged()
     {
         emit m_AudioManager->sigSetMuteInternal(!isActive());
     }
+    emit sigFocusLost();
 }
 
 QString Mainapp::qsTr(QString text)

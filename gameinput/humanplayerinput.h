@@ -188,9 +188,11 @@ public slots:
     void menuItemSelected(const QString itemID, qint32 cost);
     virtual void autoEndTurn();
     void nextTurn();
+    void onFocusLost();
 
 protected slots:
     void zoomChanged(float zoom);
+
 protected:
     void nextMarkedField();
     void previousMarkedField();

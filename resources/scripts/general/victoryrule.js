@@ -24,6 +24,7 @@ var VICTORYRULE =
         ["UNITS",       qsTr("Units"),          qsTr("Victory rules that are primarly affected by eliminating enemy units."),   1, "#FFA500"],
         ["TURNS",       qsTr("Turn"),           qsTr("Victory rules that are primarly affected by turn limits."),               2, "#FFA500"],
         ["MAP_CONTROL", qsTr("Map Control"),    qsTr("Victory rules that are primarly affected by map control limits."),        3, "#FFA500"],
+        ["OTHER",       qsTr("Other"),          qsTr("Victory rules with no primarly focus."),                                  4, "#FFA500"],
     ],
 
     getRuleCategoryInfo : function(id)
@@ -50,7 +51,7 @@ var VICTORYRULE =
     },
     getRuleCategoryId : function(rule, map)
     {
-        return "";
+        return "OTHER";
     },
     getRuleCategoryColor : function(rule, map)
     {

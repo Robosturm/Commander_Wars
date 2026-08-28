@@ -59,6 +59,7 @@ void HumanPlayerInput::init(BaseGamemenu* pMenu)
             connect(m_pMap, &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
             connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
             connect(pApp, &Mainapp::sigKeyUp, this, &HumanPlayerInput::keyUp, Qt::QueuedConnection);
+            connect(pApp, &Mainapp::sigFocusLost, this, &HumanPlayerInput::onFocusLost, Qt::QueuedConnection);
             connect(m_pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
             connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
             m_Fields.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
@@ -1598,16 +1599,17 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 
 void HumanPlayerInput::keyUp(oxygine::KeyEvent event)
 {
-    if (!event.getContinousPress())
+    // for debugging
+    Qt::Key cur = event.getKey();
+    if (cur == Settings::getInstance()->getKey_QuickAction())
     {
-        bool canInput = inputAllowed();
-        // for debugging
-        Qt::Key cur = event.getKey();
-        if (cur == Settings::getInstance()->getKey_QuickAction())
-        {
-            m_quickAction = false;
-        }
+        m_quickAction = false;
     }
+}
+
+void HumanPlayerInput::onFocusLost()
+{
+    m_quickAction = false;
 }
 
 void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
