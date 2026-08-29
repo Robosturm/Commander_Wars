@@ -59,6 +59,8 @@ public:
     Q_INVOKABLE qint32 getRuleValue(qint32 itemNumber);
     Q_INVOKABLE QString getRuleDescription(qint32 itemNumber = 0);
     Q_INVOKABLE QString getRuleID() const;
+    Q_INVOKABLE QString getRuleCategory(qint32 itemNumber = 0);
+
     Q_INVOKABLE ScriptVariables* getVariables()
     {
         return &m_Variables;

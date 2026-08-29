@@ -53,4 +53,16 @@ var GAMERULE =
         var variable = variables.createVariable(variableName);
         return variable.readDataInt32();
     },
+
+    ruleCategoryGamePlay :  0,
+    ruleCategoryWeather:    1,
+    ruleCategoryFog:        2,
+    ruleCategoryCo :        3,
+    ruleCategoryMisc :      4,
+    ruleCategoryAi :        5,
+    ruleCategories : ["GAMEPLAY", "WEATHER", "FOG", "CO", "MISC", "AI"],
+    getRuleCategory : function(rule, itemNumber)
+    {
+        return GAMERULE.ruleCategories[GAMERULE.ruleCategoryMisc];
+    },
 }

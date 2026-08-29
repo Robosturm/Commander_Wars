@@ -185,6 +185,50 @@
                     <onEvent>currentMenu.getMap().getGameRules().setSpecialDestruction(input);</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
                 </Checkbox>
+                <loop count="gameRuleManager.getGameRuleCount()">
+                    <if condition="currentMenu.getMap().getGameRules().hasGameRule(gameRuleManager.getGameRuleID(loopIdx))">
+                        <loop count="RuleSelectionScript.getGameRuleElementCount(loopIdx)">
+                            <if condition="RuleSelectionScript.getSameCategory(GAMERULE.ruleCategoryGamePlay)">
+                                <Label>
+                                    <x>RuleSelectionScript.getGameRuleX(loopIdx)</x>
+                                    <y>RuleSelectionScript.getGameRuleY(loopIdx)</y>
+                                    <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                    <width>300</width>
+                                    <text>RuleSelectionScript.getGameRulename(loopIdx)</text>
+                                    <font>"main"</font>
+                                    <fontSize>24</fontSize>
+                                </Label>
+                                <if condition="RuleSelectionScript.getIsGameRuleCheckboxType(loopIdx)">
+                                    <Checkbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Checkbox>
+                                </if>
+                                <if condition="RuleSelectionScript.getIsGameRuleSpinboxType(loopIdx)">
+                                    <Spinbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <width>280</width>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <infinite>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</infinite>
+                                        <spinSpeed>1</spinSpeed>
+                                        <min>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</min>
+                                        <max>9999</max>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Spinbox>
+                                </if>
+                            </if>
+                        </loop>
+                    </if>
+                </loop>
             </Tab>
             <Tab>
                 <name>"weather"</name>
@@ -249,7 +293,51 @@
                     <startValue>currentMenu.getMap().getGameRules().getWeatherPrediction()</startValue>
                     <onEvent>currentMenu.getMap().getGameRules().setWeatherPrediction(input);</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                </Checkbox>                
+                </Checkbox>
+                <loop count="gameRuleManager.getGameRuleCount()">
+                    <if condition="currentMenu.getMap().getGameRules().hasGameRule(gameRuleManager.getGameRuleID(loopIdx))">
+                        <loop count="RuleSelectionScript.getGameRuleElementCount(loopIdx)">
+                            <if condition="RuleSelectionScript.getSameCategory(GAMERULE.ruleCategoryWeather)">
+                                <Label>
+                                    <x>RuleSelectionScript.getGameRuleX(loopIdx)</x>
+                                    <y>RuleSelectionScript.getGameRuleY(loopIdx)</y>
+                                    <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                    <width>300</width>
+                                    <text>RuleSelectionScript.getGameRulename(loopIdx)</text>
+                                    <font>"main"</font>
+                                    <fontSize>24</fontSize>
+                                </Label>
+                                <if condition="RuleSelectionScript.getIsGameRuleCheckboxType(loopIdx)">
+                                    <Checkbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Checkbox>
+                                </if>
+                                <if condition="RuleSelectionScript.getIsGameRuleSpinboxType(loopIdx)">
+                                    <Spinbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <width>280</width>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <infinite>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</infinite>
+                                        <spinSpeed>1</spinSpeed>
+                                        <min>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</min>
+                                        <max>9999</max>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Spinbox>
+                                </if>
+                            </if>
+                        </loop>
+                    </if>
+                </loop>
             </Tab>
             <Tab>
                 <name>"fog"</name>
@@ -359,6 +447,50 @@
                     <onEvent>RuleSelectionScript.setDayToDayScreen(input);</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
                 </DropDownMenu>
+                <loop count="gameRuleManager.getGameRuleCount()">
+                    <if condition="currentMenu.getMap().getGameRules().hasGameRule(gameRuleManager.getGameRuleID(loopIdx))">
+                        <loop count="RuleSelectionScript.getGameRuleElementCount(loopIdx)">
+                            <if condition="RuleSelectionScript.getSameCategory(GAMERULE.ruleCategoryFog)">
+                                <Label>
+                                    <x>RuleSelectionScript.getGameRuleX(loopIdx)</x>
+                                    <y>RuleSelectionScript.getGameRuleY(loopIdx)</y>
+                                    <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                    <width>300</width>
+                                    <text>RuleSelectionScript.getGameRulename(loopIdx)</text>
+                                    <font>"main"</font>
+                                    <fontSize>24</fontSize>
+                                </Label>
+                                <if condition="RuleSelectionScript.getIsGameRuleCheckboxType(loopIdx)">
+                                    <Checkbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Checkbox>
+                                </if>
+                                <if condition="RuleSelectionScript.getIsGameRuleSpinboxType(loopIdx)">
+                                    <Spinbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <width>280</width>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <infinite>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</infinite>
+                                        <spinSpeed>1</spinSpeed>
+                                        <min>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</min>
+                                        <max>9999</max>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Spinbox>
+                                </if>
+                            </if>
+                        </loop>
+                    </if>
+                </loop>
             </Tab>
             <Tab>
                 <name>"co"</name>
@@ -603,6 +735,50 @@
                     <onEvent>currentMenu.getMap().getGameRules().setSingleRandomCO(input);</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
                 </Checkbox>
+                <loop count="gameRuleManager.getGameRuleCount()">
+                    <if condition="currentMenu.getMap().getGameRules().hasGameRule(gameRuleManager.getGameRuleID(loopIdx))">
+                        <loop count="RuleSelectionScript.getGameRuleElementCount(loopIdx)">
+                            <if condition="RuleSelectionScript.getSameCategory(GAMERULE.ruleCategoryCo)">
+                                <Label>
+                                    <x>RuleSelectionScript.getGameRuleX(loopIdx)</x>
+                                    <y>RuleSelectionScript.getGameRuleY(loopIdx)</y>
+                                    <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                    <width>300</width>
+                                    <text>RuleSelectionScript.getGameRulename(loopIdx)</text>
+                                    <font>"main"</font>
+                                    <fontSize>24</fontSize>
+                                </Label>
+                                <if condition="RuleSelectionScript.getIsGameRuleCheckboxType(loopIdx)">
+                                    <Checkbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Checkbox>
+                                </if>
+                                <if condition="RuleSelectionScript.getIsGameRuleSpinboxType(loopIdx)">
+                                    <Spinbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <width>280</width>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <infinite>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</infinite>
+                                        <spinSpeed>1</spinSpeed>
+                                        <min>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</min>
+                                        <max>9999</max>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Spinbox>
+                                </if>
+                            </if>
+                        </loop>
+                    </if>
+                </loop>
             </Tab>
             <Tab>
                 <name>"misc"</name>
@@ -797,41 +973,43 @@
                 <loop count="gameRuleManager.getGameRuleCount()">
                     <if condition="currentMenu.getMap().getGameRules().hasGameRule(gameRuleManager.getGameRuleID(loopIdx))">
                         <loop count="RuleSelectionScript.getGameRuleElementCount(loopIdx)">
-                            <Label>
-                                <x>RuleSelectionScript.getGameRuleX(loopIdx)</x>
-                                <y>RuleSelectionScript.getGameRuleY(loopIdx)</y>
-                                <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
-                                <width>300</width>
-                                <text>RuleSelectionScript.getGameRulename(loopIdx)</text>
-                                <font>"main"</font>
-                                <fontSize>24</fontSize>
-                            </Label>
-                            <if condition="RuleSelectionScript.getIsGameRuleCheckboxType(loopIdx)">
-                                <Checkbox>
-                                    <x>lastX + lastWidth + 10</x>
-                                    <y>lastY</y>
+                            <if condition="RuleSelectionScript.getSameCategory(GAMERULE.ruleCategoryMisc)">
+                                <Label>
+                                    <x>RuleSelectionScript.getGameRuleX(loopIdx)</x>
+                                    <y>RuleSelectionScript.getGameRuleY(loopIdx)</y>
                                     <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
-                                    <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
-                                    <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
-                                    <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
-                                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                                </Checkbox>
-                            </if>
-                            <if condition="RuleSelectionScript.getIsGameRuleSpinboxType(loopIdx)">
-                                <Spinbox>
-                                    <x>lastX + lastWidth + 10</x>
-                                    <y>lastY</y>
-                                    <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
-                                    <width>280</width>
-                                    <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
-                                    <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
-                                    <infinite>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</infinite>
-                                    <spinSpeed>1</spinSpeed>
-                                    <min>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</min>
-                                    <max>9999</max>
-                                    <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
-                                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                                </Spinbox>
+                                    <width>300</width>
+                                    <text>RuleSelectionScript.getGameRulename(loopIdx)</text>
+                                    <font>"main"</font>
+                                    <fontSize>24</fontSize>
+                                </Label>
+                                <if condition="RuleSelectionScript.getIsGameRuleCheckboxType(loopIdx)">
+                                    <Checkbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Checkbox>
+                                </if>
+                                <if condition="RuleSelectionScript.getIsGameRuleSpinboxType(loopIdx)">
+                                    <Spinbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <width>280</width>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <infinite>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</infinite>
+                                        <spinSpeed>1</spinSpeed>
+                                        <min>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</min>
+                                        <max>9999</max>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Spinbox>
+                                </if>
                             </if>
                         </loop>
                     </if>
@@ -929,6 +1107,50 @@
                     <onEvent>currentMenu.getMap().getGameRules().setAiAttackTerrain(input);</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
                 </Checkbox>
+                <loop count="gameRuleManager.getGameRuleCount()">
+                    <if condition="currentMenu.getMap().getGameRules().hasGameRule(gameRuleManager.getGameRuleID(loopIdx))">
+                        <loop count="RuleSelectionScript.getGameRuleElementCount(loopIdx)">
+                            <if condition="RuleSelectionScript.getSameCategory(GAMERULE.ruleCategoryAi)">
+                                <Label>
+                                    <x>RuleSelectionScript.getGameRuleX(loopIdx)</x>
+                                    <y>RuleSelectionScript.getGameRuleY(loopIdx)</y>
+                                    <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                    <width>300</width>
+                                    <text>RuleSelectionScript.getGameRulename(loopIdx)</text>
+                                    <font>"main"</font>
+                                    <fontSize>24</fontSize>
+                                </Label>
+                                <if condition="RuleSelectionScript.getIsGameRuleCheckboxType(loopIdx)">
+                                    <Checkbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Checkbox>
+                                </if>
+                                <if condition="RuleSelectionScript.getIsGameRuleSpinboxType(loopIdx)">
+                                    <Spinbox>
+                                        <x>lastX + lastWidth + 10</x>
+                                        <y>lastY</y>
+                                        <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
+                                        <width>280</width>
+                                        <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
+                                        <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
+                                        <infinite>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</infinite>
+                                        <spinSpeed>1</spinSpeed>
+                                        <min>RuleSelectionScript.getGameRuleInfiniteValue(loopIdx)</min>
+                                        <max>9999</max>
+                                        <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
+                                        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                                    </Spinbox>
+                                </if>
+                            </if>
+                        </loop>
+                    </if>
+                </loop>
             </Tab>
             <if condition="currentMenu.getIsMultiplayerMode()">
             <Tab>
@@ -1022,6 +1244,7 @@
                     <onEvent>currentMenu.getMap().getGameRules().setMultiplayerObserver(input)</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
                 </Spinbox>
+
             </Tab>
             </if>
         </tabs>

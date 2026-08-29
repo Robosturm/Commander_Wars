@@ -8,6 +8,10 @@ var Constructor = function()
     {
         return qsTr("Material refill");
     };
+    this.getRuleCategory = function(rule, itemNumber)
+    {
+        return GAMERULE.ruleCategories[GAMERULE.ruleCategoryGamePlay];
+    };
 };
 
 Constructor.prototype = GAMERULE;

@@ -356,8 +356,14 @@ var RuleSelectionScript =
     setGameRuleValue : function(input, loopIdx)
     {
         var rule = currentMenu.getMap().getGameRules().getGameRule(objectId);
-        return rule.setRuleValue(input, loopIdx);
+        return rule.getRuleCategory(input, loopIdx);
     },
+    getRuleCategory : function(loopIdx)
+    {
+        var rule = RuleSelectionScript.getGameRule();
+        return rule.getRuleCategory(loopIdx);
+    },
+
     getGameRuleX : function(loopIdx)
     {
         if (loopIdx === 0)
@@ -407,5 +413,9 @@ var RuleSelectionScript =
         currentMenu.getMap().getGameRules().setMapPalette(item);
         var paletteId = TERRAIN.getPaletteId(item, 0);
         currentMenu.getObject("PalettePreview").applyPalette(paletteId);
+    },
+    getSameCategory : function(category)
+    {
+        return RuleSelectionScript.getRuleCategory(loopIdx) === GAMERULE.ruleCategories[category];
     },
 };

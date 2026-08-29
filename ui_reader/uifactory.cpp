@@ -343,7 +343,8 @@ bool UiFactory::loop(oxygine::spActor parent, QDomElement element, oxygine::spAc
 
 bool UiFactory::ifCondition(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
-    bool create = getBoolValue(element.attribute("condition"), "", loopIdx, pMenu);
+    auto condition = element.attribute("condition");
+    bool create = getBoolValue(condition, "", loopIdx, pMenu);
     bool success = true;
     if (create)
     {
