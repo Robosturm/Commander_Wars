@@ -118,6 +118,16 @@ public:
      * @brief writeFuncEpilogue
      */
     void writeCoEpilogue(QTextStream & stream);
+    /**
+     * @brief writeModDescription
+     * @param stream
+     */
+    void writeModDescription(QTextStream & stream);
+    /**
+     * @brief writeResXml
+     * @param stream
+     */
+    void writeResXml(QTextStream & stream);
 
 private:
     QVector<spCoAbility> m_coAbilities;

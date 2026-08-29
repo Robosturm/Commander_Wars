@@ -80,12 +80,19 @@ namespace oxygine
         m_finger = 0;
         m_speed = QPoint(0, 0);
 
-        m_content = content;
-        m_drag.init(content.get());
+        if (content.get() != this)
+        {
+            m_content = content;
+            m_drag.init(content.get());
 
-        m_clip->addChild(m_content);
+            m_clip->addChild(m_content);
 
-        updateDragBounds();
+            updateDragBounds();
+        }
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "SlidingActor::setContent trying to add self");
+        }
     }
 
     void SlidingActor::setLocked(bool locked)

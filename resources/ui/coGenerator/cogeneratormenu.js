@@ -581,6 +581,37 @@ var COGENERATORMENU =
         return data;
     },
 
+    writeResXml  : function(coGeneratorMenu)
+    {
+        var coName = coGeneratorMenu.getCoName()
+        var coId = "CO_" + coName.toUpperCase();
+        xmlContent = "<?xml version=\"1.0\"?>\n" +
+                     "<resources>\n" +
+                     "    <atlas linearFilter=\"false\">\n" +
+                     "        <set path = \"" + "mods/" + coId +  "/resources/images/co/\" />\n" +
+                     "        <image file=\"" + coId + "+nrm.png\" />\n" +
+                     "        <image file=\"" + coId + "+info.png\" />\n" +
+                     "        <image file=\"" + coId + "+face.png\" cols = \"3\" />\n" +
+                     "    </atlas>" +
+                     "</resources>";
+
+        return xmlContent;
+    },
+
+    writeModDescription  : function(coGeneratorMenu)
+    {
+        var coName = coGeneratorMenu.getCoName();
+        var desc =
+               "name=" + coName + "\n" +
+               "description=" + qsTr("Auto Generated CO with desctiption:") + " " + coGeneratorMenu.getCoDescription() + "\n" +
+               "version=1.0.0\n" +
+               "compatible_mods=\n" +
+               "required_mods=\n" +
+               "cosmetic=false\n" +
+               "tags=COs\n";
+        return desc;
+    },
+
     loadCoDataCallback : function(menu, file)
     {
         menu.loadCoData(file);
@@ -615,5 +646,3 @@ var COGENERATORMENU =
         return ret;
     }
 };
-
-

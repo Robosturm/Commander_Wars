@@ -63,9 +63,6 @@ namespace oxygine
             m_drag.destroy();
             m_content->detachAndRemove();
         }
-        m_touchDownId = content->addEventListenerWithId(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
-        m_touchUpId = content->addEventListenerWithId(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
-        m_touchMoveId = content->addEventListenerWithId(TouchEvent::MOVE, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
 
         m_current = 0;
         m_lastIterTime = timeMS(0);
@@ -78,11 +75,20 @@ namespace oxygine
         m_holded.reset();
         m_finger = 0;
         m_speed = QPoint(0, 0);
-
-        m_content = content;
-        m_drag.init(m_content.get());
-        addChild(m_content);
-        updateDragBounds();
+        if (content.get() != this)
+        {
+            m_touchDownId = content->addEventListenerWithId(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
+            m_touchUpId = content->addEventListenerWithId(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
+            m_touchMoveId = content->addEventListenerWithId(TouchEvent::MOVE, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
+            m_content = content;
+            m_drag.init(m_content.get());
+            addChild(m_content);
+            updateDragBounds();
+        }
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "SlidingActor::setContent trying to add self");
+        }
     }
 
     void SlidingActorNoClipRect::setLocked(bool locked)

@@ -37,32 +37,92 @@ CoGeneratorMenu::CoGeneratorMenu()
 
 void CoGeneratorMenu::generateCo(const QString & modDir, const QString & coid)
 {
-    QString filename = Settings::getInstance()->getUserPath() + "/" + modDir + "/" + coid + ".js";
-    filename.replace("\\", "/");
-    while (filename.startsWith("/"))
+    QString modPath = Settings::getInstance()->getUserPath() + "/" + modDir + "/" + coid + "/";
+    modPath.replace("\\", "/");
+    while (modPath.startsWith("/"))
     {
-        filename.removeFirst();
+        modPath.removeFirst();
     }
-    QFile file(filename);
+    QString filename = modPath + "scripts/cos/" + coid + ".js";
+    QFile coFile(filename);
     auto path = QFileInfo(filename).absolutePath();
-    if (QDir().exists(path) || QDir().mkdir(path))
+
+    if (QDir().exists(path) || QDir().mkpath(path))
     {
-        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        if (coFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
         {
-            QTextStream stream(&file);
+            QTextStream stream(&coFile);
             writeCoPrologue(stream);
             writeCoContent(stream);
             writeCoEpilogue(stream);
         }
         else
         {
-            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            CONSOLE_PRINT("Failed to open file " + coFile.fileName(), GameConsole::eERROR);
         }
     }
     else
     {
-        CONSOLE_PRINT("Failed to create folder for co file: " + filename, GameConsole::eERROR);
+        CONSOLE_PRINT("Failed to create folder for co file: " + path, GameConsole::eERROR);
     }
+
+    filename = modPath + "mod.txt";
+    QFile modDescFile(filename);
+    path = QFileInfo(filename).absolutePath();
+    if (QDir().exists(path) || QDir().mkpath(path))
+    {
+        if (modDescFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            QTextStream stream(&modDescFile);
+            writeModDescription(stream);
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + modDescFile.fileName(), GameConsole::eERROR);
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to create folder for co file: " + path, GameConsole::eERROR);
+    }
+
+    filename = modPath + "resources/images/co/res.xml";
+    QFile resXmlFile(filename);
+    path = QFileInfo(filename).absolutePath();
+    if (QDir().exists(path) || QDir().mkpath(path))
+    {
+        if (resXmlFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            QTextStream stream(&resXmlFile);
+            writeResXml(stream);
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + resXmlFile.fileName(), GameConsole::eERROR);
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to create folder for co file: " + path, GameConsole::eERROR);
+    }
+}
+
+void CoGeneratorMenu::writeModDescription(QTextStream & stream)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "writeModDescription";
+    QJSValueList args({m_jsThis});
+    QJSValue erg = pInterpreter->doFunction(CO_GENERATOR_MENU_JSNAME, function1, args);
+    stream << erg.toString();
+}
+
+void CoGeneratorMenu::writeResXml(QTextStream & stream)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "writeResXml";
+    QJSValueList args({m_jsThis});
+    QJSValue erg = pInterpreter->doFunction(CO_GENERATOR_MENU_JSNAME, function1, args);
+    stream << erg.toString();
 }
 
 void CoGeneratorMenu::writeCoPrologue(QTextStream & stream)
