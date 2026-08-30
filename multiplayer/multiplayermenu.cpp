@@ -2606,7 +2606,11 @@ void Multiplayermenu::sendServerReady(bool value)
             emit m_pNetworkInterface->sigContinueListening();
         }
         CONSOLE_PRINT("Setting player ready information to local players with value "  + QString::number(value), GameConsole::eDEBUG);
-        m_pPlayerSelection->setPlayerReady(value);
+        // Don't clear individual ready states when aborting a remote countdown.
+        if (value || m_local)
+        {
+            m_pPlayerSelection->setPlayerReady(value);
+        }
         CONSOLE_PRINT("Sending ready information to all players with value " + QString::number(value), GameConsole::eDEBUG);
         m_pPlayerSelection->sendPlayerReady(0);
     }
