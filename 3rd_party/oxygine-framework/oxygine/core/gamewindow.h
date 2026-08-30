@@ -6,7 +6,6 @@
 
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
-#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 
 #include "windowBase.h"
 
@@ -55,15 +54,8 @@ public:
         {
             if (m_pausedCounter == 0)
             {
-                if (m_renderSync.tryLock())
-                {
-                    ++m_pausedCounter;
-                    m_renderSync.unlock();
-                }
-                else
-                {
-                    emit sigChangeUpdateTimerState(true);
-                }
+                QMutexLocker lock(&m_renderSync);
+                ++m_pausedCounter;
             }
             else
             {
@@ -78,14 +70,7 @@ public:
     {
         if (!isMainThread())
         {
-            if (m_pausedCounter == 1)
-            {
-                emit sigChangeUpdateTimerState(false);
-            }
-            else
-            {
-                --m_pausedCounter;
-            }
+            Q_ASSERT((--m_pausedCounter) >= 0);
         }
     }
     bool renderingPaused() const
@@ -138,7 +123,6 @@ signals:
     void sigStartUpdateTimer();
     void sigQuit(qint32 exitCode);
     void sigShowKeyboard(bool visible);
-    void sigChangeUpdateTimerState(bool stop);
 
 protected slots:
     void loadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor);
@@ -148,7 +132,6 @@ protected slots:
     virtual void onQuit() = 0;
     void quit(qint32 exitCode);
     void showKeyboard(bool visible);
-    void changeUpdateTimerState(bool stop);
 
 protected:
     virtual void registerResourceTypes();

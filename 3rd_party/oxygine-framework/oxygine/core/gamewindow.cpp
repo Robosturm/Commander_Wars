@@ -61,7 +61,6 @@ namespace oxygine
         QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &GameWindow::quitApp);
         QObject::connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
         QObject::connect(&m_timer, &QTimer::timeout, this, qOverload<>(&GameWindow::update));
-        QObject::connect(this, &GameWindow::sigChangeUpdateTimerState, this, &GameWindow::changeUpdateTimerState, Qt::BlockingQueuedConnection);
         // start debounce timer
         m_debounceTimer.leftDown.start();
         m_debounceTimer.rightDown.start();
@@ -102,20 +101,6 @@ namespace oxygine
     {
         m_shuttingDown = true;
         onQuit();
-    }
-
-    void GameWindow::changeUpdateTimerState(bool stop)
-    {
-        if (stop)
-        {
-            Q_ASSERT(m_pausedCounter == 0);
-            ++m_pausedCounter;
-        }
-        else
-        {
-            --m_pausedCounter;
-            Q_ASSERT(m_pausedCounter == 0);
-        }
     }
 
     void GameWindow::quit(qint32 exitCode)

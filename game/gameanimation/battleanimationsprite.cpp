@@ -72,6 +72,7 @@ void BattleAnimationSprite::clear()
 
 void BattleAnimationSprite::flipActorsX(bool flippedX)
 {
+    Mainapp::getInstance()->pauseRendering();
     if (m_nextFrames.length() > 0)
     {
         for (auto & frame : m_nextFrames[m_nextFrames.length() - 1])
@@ -83,6 +84,7 @@ void BattleAnimationSprite::flipActorsX(bool flippedX)
         }
     }
     oxygine::Sprite::flipActorsX(flippedX);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void BattleAnimationSprite::loadAnimation(QString animationType)
@@ -92,6 +94,7 @@ void BattleAnimationSprite::loadAnimation(QString animationType)
 
 void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Unit* pDefender, qint32 attackerWeapon, bool clearSprite, bool start)
 {
+    Mainapp::getInstance()->pauseRendering();
     QVector<QVector<oxygine::spSprite>> buffer;
     if (!clearSprite && m_nextFrames.length() > 0)
     {
@@ -170,10 +173,12 @@ void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Un
     {
         startNextUnitFrames();
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 qint32 BattleAnimationSprite::loadDyingFadeOutAnimation(qint32 fadeoutTime)
 {
+    Mainapp::getInstance()->pauseRendering();
     qint32 maxUnitCount = getMaxUnitCount();
     qint32 startCount = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingStartHp));
     qint32 endCount = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingEndHp));
@@ -205,6 +210,7 @@ qint32 BattleAnimationSprite::loadDyingFadeOutAnimation(qint32 fadeoutTime)
             ++count;
         }
     }
+    Mainapp::getInstance()->continueRendering();
     return count * frameDelay;
 }
 
@@ -474,6 +480,7 @@ void BattleAnimationSprite::loadMovingSpriteV2(QString spriteID, GameEnums::Reco
                                                qint32 loops, float scale, short priority, qint32 showDelay,
                                                bool _invertFlipX, qint32 frameTime, qint32 frames, qint32 startFrame)
 {
+    Mainapp::getInstance()->pauseRendering();
     qint32 value = getUnitCount(maxUnitCount);
 
     while (m_nextFrames[m_nextFrames.length() - 1].length() < value)
@@ -492,11 +499,13 @@ void BattleAnimationSprite::loadMovingSpriteV2(QString spriteID, GameEnums::Reco
             m_lastLoadedSprite->detachAndRemove();
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void BattleAnimationSprite::loadDyingMovingSprite(QString livingSpriteId, QString dyingSpriteId, GameEnums::Recoloring mode, QPoint offset,
                            QPoint movement, float rotation, qint32 moveTime, short priority, qint32 firedFrame, qint32 maxUnitCount, qint32 showDelay)
 {
+    Mainapp::getInstance()->pauseRendering();
     qint32 startUnits = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingStartHp));
     qint32 endUnits = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingEndHp));
     while (m_nextFrames[m_nextFrames.length() - 1].length() < startUnits)
@@ -522,6 +531,7 @@ void BattleAnimationSprite::loadDyingMovingSprite(QString livingSpriteId, QStrin
             m_lastLoadedSprite->detachAndRemove();
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 
@@ -529,6 +539,7 @@ void BattleAnimationSprite::loadOnlyDyingMovingSprite(QString dyingSpriteId, Gam
                                                       QPoint movement, float rotation, qint32 moveTime, short priority,
                                                       qint32 firedFrame, qint32 maxUnitCount, qint32 showDelay)
 {
+    Mainapp::getInstance()->pauseRendering();
     qint32 startUnits = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingStartHp));
     qint32 endUnits = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingEndHp));
     while (m_nextFrames[m_nextFrames.length() - 1].length() < startUnits)
@@ -549,6 +560,7 @@ void BattleAnimationSprite::loadOnlyDyingMovingSprite(QString dyingSpriteId, Gam
             }
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 QPoint BattleAnimationSprite::getUnitBasePosition(qint32 unit, qint32 maxUnitCount, qint32 unitsAlive)
@@ -576,7 +588,8 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
                                                      qint32 loops, float scale, short priority, qint32 showDelay,
                                                      bool _invertFlipX, qint32 frameTime, qint32 frames, qint32 startFrame,
                                                      float rotation, quint8 alpha)
-{    
+{
+    Mainapp::getInstance()->pauseRendering();
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
@@ -588,6 +601,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
     {
         CONSOLE_PRINT_MODULE("Unable to load battle sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnums::Recoloring mode, QPoint offset,
@@ -931,6 +945,7 @@ void BattleAnimationSprite::startNextFrame()
 
 void BattleAnimationSprite::startNextUnitFrames()
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Progressing next battle frame current=" + QString::number(m_currentFrame.size()) +
                   " next frames=" + QString::number(m_nextFrames.length()) +
                   " frame iterator=" + QString::number(m_frameIterator) +
@@ -1006,6 +1021,7 @@ void BattleAnimationSprite::startNextUnitFrames()
             m_frameIterator = 0;
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 bool BattleAnimationSprite::getPlayNextFrame() const
@@ -1118,6 +1134,7 @@ void BattleAnimationSprite::setStartWithFraming(bool startWithFraming)
 
 void BattleAnimationSprite::addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
 {
+    Mainapp::getInstance()->pauseRendering();
     auto pOwner = dynamic_cast<BattleAnimation*>(getParent());
     if (pOwner != nullptr)
     {
@@ -1125,27 +1142,34 @@ void BattleAnimationSprite::addScreenshake(qint32 startIntensity, float decay, q
                                durationMs  * Settings::getInstance()->getAnimationSpeed() / Settings::getInstance()->getBattleAnimationSpeed(),
                                delayMs  * Settings::getInstance()->getAnimationSpeed() / Settings::getInstance()->getBattleAnimationSpeed(), shakePauseMs);
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void BattleAnimationSprite::addSpriteScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
 {
+    Mainapp::getInstance()->pauseRendering();
     oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getInstance()->getBattleAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
                                                                    oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getInstance()->getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getInstance()->getBattleAnimationSpeed())));
-    getParent()->addTween(tween);
+    getParent()->addTween(tween);    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void BattleAnimationSprite::addSpriteShakeY(qint32 startIntensity, float startPercent, float endPercent, qint32 durationMs, qint32 delayMs, qint32 loops)
 {
+    Mainapp::getInstance()->pauseRendering();
     oxygine::spTween tween = oxygine::createTween(TweenShakeY(startIntensity, startPercent, endPercent),
                                                                    oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getInstance()->getBattleAnimationSpeed())), loops, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getInstance()->getBattleAnimationSpeed())));
     getParent()->addTween(tween);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void BattleAnimationSprite::addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
 {
+    Mainapp::getInstance()->pauseRendering();
     auto pOwner = dynamic_cast<BattleAnimation*>(getParent());
     if (pOwner != nullptr)
     {
         pOwner->addBattleViewScreenshake(startIntensity, decay, durationMs, delayMs, shakePauseMs);
     }
+    Mainapp::getInstance()->continueRendering();
 }
