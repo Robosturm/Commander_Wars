@@ -28,6 +28,7 @@ void Password::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     Filesupport::writeByteArray(pStream, m_passwordHash);
+    pStream << m_isSet;
 }
 
 void Password::deserializeObject(QDataStream& pStream)
@@ -35,6 +36,10 @@ void Password::deserializeObject(QDataStream& pStream)
     qint32 version = 0;
     pStream >> version;
     m_passwordHash = Filesupport::readByteArray(pStream);
+    if (version > 1)
+    {
+        pStream >> m_isSet;
+    }
 }
 
 void Password::setPassword(const QString password)

@@ -31,7 +31,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 1;
+        return 2;
     }
     /**
      * @brief setPassword
