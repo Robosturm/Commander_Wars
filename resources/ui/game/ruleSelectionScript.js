@@ -160,6 +160,11 @@ var RuleSelectionScript =
         }
         return RuleSelectionScript.victoryRuleEntries;
     },
+    initializeVictoryRuleEntries : function()
+    {
+        RuleSelectionScript.victoryRuleEntries = null;
+        return RuleSelectionScript.getVictoryRuleCount();
+    },
     getVictoryRuleCount : function()
     {
         return RuleSelectionScript.getVictoryRuleEntries().length;

@@ -1018,7 +1018,7 @@
             <Tab>
                 <name>"victory"</name>
                 <label>QT_TRANSLATE_NOOP("GAME","Victory")</label>
-                <loop count="RuleSelectionScript.getVictoryRuleCount()">
+                <loop count="RuleSelectionScript.initializeVictoryRuleEntries()">
                     <loop count="RuleSelectionScript.getVictoryRuleElementCount(loopIdx)">
                         <if condition="RuleSelectionScript.showVictoryRuleCategory(loopIdx)">
                             <Label>
