@@ -361,7 +361,7 @@ var RuleSelectionScript =
     setGameRuleValue : function(input, loopIdx)
     {
         var rule = currentMenu.getMap().getGameRules().getGameRule(objectId);
-        return rule.getRuleCategory(input, loopIdx);
+        return rule.setRuleValue(input, loopIdx);
     },
     getRuleCategory : function(loopIdx)
     {

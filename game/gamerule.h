@@ -60,6 +60,7 @@ public:
     Q_INVOKABLE QString getRuleDescription(qint32 itemNumber = 0);
     Q_INVOKABLE QString getRuleID() const;
     Q_INVOKABLE QString getRuleCategory(qint32 itemNumber = 0);
+    Q_INVOKABLE bool getIsDisabled();
 
     Q_INVOKABLE ScriptVariables* getVariables()
     {

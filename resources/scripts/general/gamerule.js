@@ -1,13 +1,13 @@
 var GAMERULE =
 {
-    getRuleDescription : function(itemNumber)
+    getRuleDescription : function(buggyVar, itemNumber, rule)
     {
         return "";
     },
     getRuleDescription : null,
 
     // shown name in the game
-    getRuleName : function(itemNumber)
+    getRuleName : function(buggyVar, itemNumber, rule)
     {
         return "";
     },
@@ -64,5 +64,10 @@ var GAMERULE =
     getRuleCategory : function(rule, itemNumber)
     {
         return GAMERULE.ruleCategories[GAMERULE.ruleCategoryMisc];
+    },
+    getIsDisabled : function(rule)
+    {
+        // use to override to override the default rule removal detection code
+        return false;
     },
 }

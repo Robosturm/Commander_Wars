@@ -275,7 +275,7 @@ void GameRules::onGameStart()
             if (inputTypes[0] == VictoryRule::checkbox)
             {
                 qint32 ruleValue = pRule->getRuleValue(0);
-                if (ruleValue == 0)
+                if (ruleValue == 0 && pRule->getIsDisabled())
                 {
                     CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, GameConsole::eDEBUG);
                     removeGameRule(ruleID);

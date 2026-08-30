@@ -31,6 +31,7 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
 void GameAnimationCapture::addBuildingSprite(const QString spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode)
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::ep_ignore_error);
     if (mode == GameEnums::Recoloring_Mask)
@@ -68,6 +69,7 @@ void GameAnimationCapture::addBuildingSprite(const QString spriteID, Player* sta
     {
         CONSOLE_PRINT_MODULE("Unable to load building sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
+    pApp->continueRendering();
 }
 
 void GameAnimationCapture::getRecoloredImage(Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode,

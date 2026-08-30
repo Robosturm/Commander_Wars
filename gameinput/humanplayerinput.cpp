@@ -848,6 +848,7 @@ void HumanPlayerInput::finishAction()
 
 void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x, qint32 y)
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("HumanPlayerInput::createActionMenu", GameConsole::eDEBUG);
     clearMarkedFields();
     clearMenu();
@@ -862,6 +863,7 @@ void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x,
         m_CurrentMenu = MemoryManagement::create<HumanPlayerInputMenu>(pGameMenue, m_pMap, data.getTexts(), actionIDs, data.getIconList());
     }
     attachActionMenu(x, y);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)

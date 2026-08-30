@@ -37,7 +37,8 @@ QStringList GameRule::getRuleType()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRuleType";
-    QJSValue ret = pInterpreter->doFunction(m_RuleID, function1);
+    QJSValueList args({m_jsThis,});
+    QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isString())
     {
         return QStringList(ret.toString());
@@ -83,7 +84,6 @@ QString GameRule::getRuleCategory(qint32 itemNumber)
         return "";
     }
 }
-
 void GameRule::setRuleValue(qint32 value, qint32 itemNumber)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -149,7 +149,7 @@ QString GameRule::getRuleDescription(qint32 itemNumber)
     QString function1 = "getRuleDescription";
     QJSValueList args({JsThis::getJsThis(nullptr),
                        QJSValue(itemNumber),
-                       JsThis::getJsThis(nullptr)});
+                       m_jsThis});
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isString())
     {
@@ -158,6 +158,22 @@ QString GameRule::getRuleDescription(qint32 itemNumber)
     else
     {
         return "";
+    }
+}
+
+bool GameRule::getIsDisabled()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getIsDisabled";
+    QJSValueList args({m_jsThis});
+    QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    else
+    {
+        return false;
     }
 }
 

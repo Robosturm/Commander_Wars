@@ -1,12 +1,17 @@
 var Constructor = function()
 {
-    this.getRuleDescription = function(itemNumber)
+    this.getRuleDescription = function(buggyVar, itemNumber, rule)
     {
         return qsTr("Allows material to be refilled if enabled.");
     };
-    this.getRuleName = function(itemNumber)
+    this.getRuleName = function(buggyVar, itemNumber, rule)
     {
         return qsTr("Material refill");
+    };
+    this.getRuleType = function(itemNumber)
+    {
+        // for now checkbox or spinbox
+        return ["checkbox"];
     };
     this.getRuleCategory = function(rule, itemNumber)
     {

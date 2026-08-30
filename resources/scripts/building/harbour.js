@@ -30,7 +30,15 @@ var Constructor = function()
     this.constructionList = ["GUNBOAT", "CANNONBOAT", "BLACK_BOAT", "LANDER", "TORPEDOBOAT", "FRIGATE", "DESTROYER", "CRUISER", "SUBMARINE", "BATTLECRUISER", "BATTLESHIP", "AIRCRAFTCARRIER"];
     this.getConstructionList = function(building)
     {
-        return HARBOUR.constructionList;
+        var factoryRule = map.getGameRules().getGameRule("GAMERULE_HOVERCRAFT_FACTORIES");
+        if (factoryRule && factoryRule.getRuleValue(1) > 0)
+        {
+            return HARBOUR.constructionList.concat(AMPHIBIOUSFACTORY.constructionList);
+        }
+        else
+        {
+            return HARBOUR.constructionList;
+        }
     };
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {

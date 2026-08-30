@@ -32,7 +32,15 @@ var Constructor = function()
                              "NEOTANK", "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
     this.getConstructionList = function(building)
     {
-        return FACTORY.constructionList;
+        var factoryRule = map.getGameRules().getGameRule("GAMERULE_HOVERCRAFT_FACTORIES");
+        if (factoryRule && factoryRule.getRuleValue(0) > 0)
+        {
+            return FACTORY.constructionList.concat(AMPHIBIOUSFACTORY.constructionList);
+        }
+        else
+        {
+            return FACTORY.constructionList;
+        }
     };
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {

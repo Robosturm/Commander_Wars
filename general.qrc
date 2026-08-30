@@ -2100,5 +2100,6 @@
         <file>resources/scripts/general/settingsLoader.js</file>
         <file>resources/scripts/gamerules/victory/victoryrule_firsthq.js</file>
         <file>resources/scripts/gamerules/victory/victoryrule_unitsdomination.js</file>
+        <file>resources/scripts/gamerules/rules/GAMERULE_HOVERCRAFT_FACTORIES.js</file>
     </qresource>
 </RCC>
