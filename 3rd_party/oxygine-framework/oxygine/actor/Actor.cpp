@@ -9,6 +9,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 #include <QtMath>
+#include <algorithm>
 
 namespace oxygine
 {
@@ -596,19 +597,34 @@ namespace oxygine
         if (m_parent)
         {
             Q_ASSERT(!m_internalUpdateRunning);
-            m_zOrder = zorder;
             spActor me = getSharedPtr<Actor>();
-            auto iter = m_parent->m_children.cbegin();
-            while (iter != m_parent->m_children.cend())
+            auto & children = m_parent->m_children;
+            auto iter = std::find_if(children.begin(), children.end(),
+                                     [&me](const spActor & child)
             {
-                if (iter->get() == me.get())
+                return child.get() == me.get();
+            });
+            Q_ASSERT(iter != children.end());
+
+            if (zorder < m_zOrder)
+            {
+                auto insertBefore = std::upper_bound(children.begin(), iter, zorder,
+                                                      [](qint32 priority, const spActor & child)
                 {
-                    m_parent->m_children.erase(iter);
-                    break;
-                }
-                ++iter;
+                    return priority < child->getPriority();
+                });
+                std::rotate(insertBefore, iter, iter + 1);
             }
-            m_parent->insertActor(me);
+            else
+            {
+                auto insertBefore = std::upper_bound(iter + 1, children.end(), zorder,
+                                                      [](qint32 priority, const spActor & child)
+                {
+                    return priority < child->getPriority();
+                });
+                std::rotate(iter, iter + 1, insertBefore);
+            }
+            m_zOrder = zorder;
         }
         else
         {
@@ -972,17 +988,17 @@ namespace oxygine
         Q_ASSERT(!m_internalUpdateRunning);
 #endif
         qint32 z = actor->getPriority();
-        auto iter = m_children.cend();
-        auto insertBefore = iter;
-        while (iter != m_children.cbegin())
+        if (m_children.empty() || m_children.back()->getPriority() <= z)
         {
-            iter--;
-            if (iter->get()->getPriority() <= z)
-            {
-                break;
-            }
-            insertBefore = iter;
+            m_children.push_back(actor);
+            return;
         }
+
+        auto insertBefore = std::upper_bound(m_children.cbegin(), m_children.cend(), z,
+                                             [](qint32 priority, const spActor & child)
+        {
+            return priority < child->getPriority();
+        });
         m_children.insert(insertBefore, actor);
     }
 
