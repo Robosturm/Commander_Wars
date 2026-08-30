@@ -52,6 +52,10 @@ PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
 
 void PlayerSelection::attachNetworkInterface(spNetworkInterface pNetworkInterface)
 {
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        disconnect(m_pNetworkInterface.get(), nullptr, this, nullptr);
+    }
     m_pNetworkInterface = pNetworkInterface;
     if (m_pNetworkInterface.get() != nullptr)
     {
@@ -1636,6 +1640,10 @@ void PlayerSelection::recievePlayerServerReady(quint64, QDataStream &stream)
 {
     qint32 size = 0;
     stream >> size;
+    if (size > m_playerReadyFlags.size())
+    {
+        size = m_playerReadyFlags.size();
+    }
     for (qint32 i = 0; i < size; i++)
     {
         bool value = false;
@@ -1815,15 +1823,16 @@ void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString &u
         {
             pPlayer->setPlayerNameId(getNameFromAiType(eAiType));
             m_playerSockets[player] = 0;
+            pPlayer->setSocketId(0);
         }
         else
         {
             pPlayer->setPlayerNameId(username);
             m_playerSockets[player] = socketID;
+            pPlayer->setSocketId(socketID);
             // the owning client may have pressed ready before this slot was bound to its socket
             applySocketReadyState(player, socketID);
         }
-        pPlayer->setSocketId(socketID);
         if (pDropDownmenu != nullptr)
         {
             pDropDownmenu->setCurrentItemText(username);
@@ -1946,7 +1955,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream &stream)
             aiType != GameEnums::AiTypes::AiTypes_ProxyAi)
         {
             GameEnums::AiTypes originalAiType = static_cast<GameEnums::AiTypes>(aiType);
-            if (player < m_playerSockets.size() && m_pMap != nullptr)
+            if (player >= 0 && player < m_playerSockets.size() && m_pMap != nullptr)
             {
                 if (aiType != GameEnums::AiTypes::AiTypes_Open &&
                     aiType != GameEnums::AiTypes::AiTypes_Closed)
@@ -1994,7 +2003,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream &stream)
                 m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, eAiType));
                 m_pMap->getPlayer(player)->setPlayerNameId(name);
                 m_pMap->getPlayer(player)->setControlType(originalAiType);
-                m_pMap->getPlayer(player)->setSocketId(socketId);
+                m_pMap->getPlayer(player)->setSocketId(m_playerSockets[player]);
                 if (Mainapp::getSlave() &&
                     m_playerSockets[player] != 0)
                 {
@@ -2138,31 +2147,38 @@ void PlayerSelection::recievedCOData(quint64, QDataStream &stream)
     QString coid;
     stream >> playerIdx;
     stream >> coid;
-    QStringList perks = Filesupport::readVectorList<QString, QList>(stream);
-    if (!m_saveGame)
+    if (playerIdx < 0 || playerIdx >= m_pMap->getPlayerCount())
     {
-        m_pMap->getPlayer(playerIdx)->setCO(coid, 0);
-        CO *pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
-        if (pCO != nullptr)
-        {
-            pCO->setPerkList(perks);
-            pCO->readCoStyleFromStream(stream);
-        }
+        CONSOLE_PRINT("Ignoring CO update for invalid player " + QString::number(playerIdx), GameConsole::eERROR);
     }
-    updateCO1Sprite(coid, playerIdx);
-    stream >> coid;
-    perks = Filesupport::readVectorList<QString, QList>(stream);
-    if (!m_saveGame)
+    else
     {
-        m_pMap->getPlayer(playerIdx)->setCO(coid, 1);
-        CO *pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
-        if (pCO != nullptr)
+        QStringList perks = Filesupport::readVectorList<QString, QList>(stream);
+        if (!m_saveGame)
         {
-            pCO->setPerkList(perks);
-            pCO->readCoStyleFromStream(stream);
+            m_pMap->getPlayer(playerIdx)->setCO(coid, 0);
+            CO *pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
+            if (pCO != nullptr)
+            {
+                pCO->setPerkList(perks);
+                pCO->readCoStyleFromStream(stream);
+            }
         }
+        updateCO1Sprite(coid, playerIdx);
+        stream >> coid;
+        perks = Filesupport::readVectorList<QString, QList>(stream);
+        if (!m_saveGame)
+        {
+            m_pMap->getPlayer(playerIdx)->setCO(coid, 1);
+            CO *pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
+            if (pCO != nullptr)
+            {
+                pCO->setPerkList(perks);
+                pCO->readCoStyleFromStream(stream);
+            }
+        }
+        updateCO2Sprite(coid, playerIdx);
     }
-    updateCO2Sprite(coid, playerIdx);
 }
 
 void PlayerSelection::recievedColorData(quint64, QDataStream &stream)
@@ -2171,13 +2187,20 @@ void PlayerSelection::recievedColorData(quint64, QDataStream &stream)
     QColor displayColor;
     stream >> playerIdx;
     stream >> displayColor;
-    Player *pPlayer = m_pMap->getPlayer(playerIdx);
-    QColor tableColor = displayColorToTableColor(displayColor);
-    pPlayer->setColor(tableColor);
-    DropDownmenuColor *pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(playerIdx));
-    if (pDropDownmenuColor != nullptr)
+    if (playerIdx < 0 || playerIdx >= m_pMap->getPlayerCount())
     {
-        pDropDownmenuColor->setCurrentItem(displayColor);
+        CONSOLE_PRINT("Ignoring color update for invalid player " + QString::number(playerIdx), GameConsole::eERROR);
+    }
+    else
+    {
+        Player *pPlayer = m_pMap->getPlayer(playerIdx);
+        QColor tableColor = displayColorToTableColor(displayColor);
+        pPlayer->setColor(tableColor);
+        DropDownmenuColor *pDropDownmenuColor = getCastedObject<DropDownmenuColor>(OBJECT_COLOR_PREFIX + QString::number(playerIdx));
+        if (pDropDownmenuColor != nullptr)
+        {
+            pDropDownmenuColor->setCurrentItem(displayColor);
+        }
     }
 }
 
@@ -2187,15 +2210,22 @@ void PlayerSelection::recievePlayerArmy(quint64, QDataStream &stream)
     QString army;
     stream >> playerIdx;
     stream >> army;
-    Player *pPlayer = m_pMap->getPlayer(playerIdx);
-    if (army == Player::CO_ARMY)
+    if (playerIdx < 0 || playerIdx >= m_pMap->getPlayerCount())
     {
-        pPlayer->setPlayerArmySelected(false);
+        CONSOLE_PRINT("Ignoring army update for invalid player " + QString::number(playerIdx), GameConsole::eERROR);
     }
     else
     {
-        pPlayer->setPlayerArmy(army);
-        pPlayer->setPlayerArmySelected(true);
+        Player *pPlayer = m_pMap->getPlayer(playerIdx);
+        if (army == Player::CO_ARMY)
+        {
+            pPlayer->setPlayerArmySelected(false);
+        }
+        else
+        {
+            pPlayer->setPlayerArmy(army);
+            pPlayer->setPlayerArmySelected(true);
+        }
     }
 }
 
