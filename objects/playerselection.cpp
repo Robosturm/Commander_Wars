@@ -2524,9 +2524,11 @@ bool PlayerSelection::getReady(qint32 playerIdx)
 void PlayerSelection::setPlayerReady(bool value)
 {
     m_playerReady = value;
+    const quint64 localSocketID = m_pNetworkInterface->getIsServer() ? 0 : m_pNetworkInterface->getSocketID();
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        if (m_pMap->getPlayer(i)->getControlType() >= GameEnums::AiTypes_Human &&
+        if (m_playerSockets[i] == localSocketID &&
+            m_pMap->getPlayer(i)->getControlType() >= GameEnums::AiTypes_Human &&
             m_pMap->getPlayer(i)->getControlType() != GameEnums::AiTypes_Open)
         {
             m_playerReadyFlags[i] = value;

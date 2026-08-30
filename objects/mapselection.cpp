@@ -296,6 +296,10 @@ void MapSelection::updateSelection()
     m_Items.clear();
     m_ItemContainer->addItem(m_SelectedItem);
     qint32 y = 5;
+    if (!m_Files.contains(".."))    
+    {
+        m_Files.push_front("..");
+    }
     for (qint32 i = 0; i < m_Files.size() || i < m_itemCount; ++i)
     {
         const bool isFolder = (i < m_Files.size()) && (m_Files[i] == ".." || QDir(m_Files[i]).exists());
