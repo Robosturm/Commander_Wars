@@ -52,11 +52,8 @@ public:
     {
         if (!isMainThread())
         {
-            if (m_pausedCounter == 0)
-            {
-                QMutexLocker lock(&m_renderSync);
-                ++m_pausedCounter;
-            }
+            QMutexLocker lock(&m_renderSync);
+            ++m_pausedCounter;
         }
     }
     /**
