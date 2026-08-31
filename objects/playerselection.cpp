@@ -339,6 +339,72 @@ QColor PlayerSelection::displayColorToTableColor(QColor displayColor)
     return Player::displayColorToTableColor(displayColor);
 }
 
+bool PlayerSelection::canModifyPlayer(qint32 player) const
+{
+    if (m_pMap == nullptr ||
+        player < 0 ||
+        player >= m_pMap->getPlayerCount())
+    {
+        return false;
+    }
+    if (m_pNetworkInterface.get() == nullptr ||
+        getIsServerNetworkInterface())
+    {
+        return true;
+    }
+    const quint64 socketID = m_pNetworkInterface->getSocketID();
+    bool canModify = socketID != 0 &&
+                     player < m_playerSockets.size() &&
+                     m_playerSockets[player] == socketID;
+    if (!canModify)
+    {
+       CONSOLE_PRINT("Ignoring unauthorized modification of " + QString::number(player) + " from socket " + QString::number(socketID), GameConsole::eERROR);
+    }
+    return canModify;
+}
+
+bool PlayerSelection::senderOwnsPlayer(quint64 socketID, qint32 player) const
+{
+    if (m_pMap != nullptr &&
+           player >= 0 &&
+           player < m_pMap->getPlayerCount() &&
+           socketID != 0)
+    {
+        auto playerSocket = m_pMap->getPlayer(player)->getSocketId();
+        if (playerSocket == socketID)
+        {
+            return true;
+        }
+        else
+        {
+            CONSOLE_PRINT("Owner check for player " + QString::number(player) + " failed got socket " + QString::number(socketID) + " expected socket " + QString::number(playerSocket), GameConsole::eERROR);
+        }
+    }
+    return false;
+}
+
+void PlayerSelection::sendPlayerState(quint64 socketID, qint32 player)
+{
+    if (m_pNetworkInterface.get() != nullptr &&
+        player >= 0 &&
+        player < m_pMap->getPlayerCount())
+    {
+        Player *pPlayer = m_pMap->getPlayer(player);
+        const quint64 playerSocketID = pPlayer->getSocketId();
+        const bool recipientOwnsPlayer = playerSocketID == socketID;
+        GameEnums::AiTypes aiType = pPlayer->getControlType();
+        if (!recipientOwnsPlayer &&
+            aiType != GameEnums::AiTypes_Open &&
+            aiType != GameEnums::AiTypes_Closed)
+        {
+            aiType = GameEnums::AiTypes_ProxyAi;
+        }
+        QByteArray data;
+        createPlayerChangedData(data, playerSocketID, pPlayer->getPlayerNameId(), aiType, player, recipientOwnsPlayer, true);
+        emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+    }
+}
+
 QString PlayerSelection::getStartColorName(qint32 player)
 {
     QColor startColor = tableColorToDisplayColor(m_pMap->getPlayer(player)->getColor());
@@ -524,7 +590,7 @@ void PlayerSelection::updateInitialState(bool relaunchedLobby)
             }
         }
     }
-    else
+    else if (m_pNetworkInterface.get() == nullptr || getIsServerNetworkInterface())
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
@@ -718,6 +784,10 @@ QStringList PlayerSelection::getSelectableArmies() const
 
 void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
 {
+    if (!canModifyPlayer(player))
+    {
+        return;
+    }
     Player *pPlayer = m_pMap->getPlayer(player);
     if (army == Player::CO_ARMY)
     {
@@ -738,12 +808,25 @@ void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
         sendStream << command;
         sendStream << player;
         sendStream << army;
-        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        if (m_pNetworkInterface->getIsServer())
+        {
+            emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        }
+        else
+        {
+            emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        }
     }
 }
 
 void PlayerSelection::allPlayerIncomeChanged(float value)
 {
+    if (m_pNetworkInterface.get() != nullptr &&
+        !getIsServerNetworkInterface())
+    {
+        CONSOLE_PRINT("Ignoring modification of allPlayerIncomeChanged", GameConsole::eERROR);
+        return;
+    }
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_pMap->getPlayer(i)->setFundsModifier(value);
@@ -753,6 +836,12 @@ void PlayerSelection::allPlayerIncomeChanged(float value)
 
 void PlayerSelection::allPlayerStartFundsChanged(float value)
 {
+    if (m_pNetworkInterface.get() != nullptr &&
+        !getIsServerNetworkInterface())
+    {
+        CONSOLE_PRINT("Ignoring modification of allPlayerStartFundsChanged", GameConsole::eERROR);
+        return;
+    }
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_pMap->getPlayer(i)->setFunds(static_cast<qint32>(value));
@@ -762,6 +851,10 @@ void PlayerSelection::allPlayerStartFundsChanged(float value)
 
 void PlayerSelection::playerIncomeChanged(float value, qint32 playerIdx)
 {
+    if (!canModifyPlayer(playerIdx))
+    {
+        return;
+    }
     m_pMap->getPlayer(playerIdx)->setFundsModifier(value);
     playerDataChanged();
 }
@@ -783,6 +876,12 @@ void PlayerSelection::slotShowPlayerBuildList(qint32 player)
 
 void PlayerSelection::slotChangeAllBuildList(qint32, QStringList buildList)
 {
+    if (m_pNetworkInterface.get() != nullptr &&
+        !getIsServerNetworkInterface())
+    {
+        CONSOLE_PRINT("Ignoring modification of slotChangeAllBuildList", GameConsole::eERROR);
+        return;
+    }
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_pMap->getPlayer(i)->setBuildList(buildList);
@@ -792,7 +891,7 @@ void PlayerSelection::slotChangeAllBuildList(qint32, QStringList buildList)
 
 void PlayerSelection::slotChangePlayerBuildList(qint32 player, QStringList buildList)
 {
-    if (player >= 0 && player < m_pMap->getPlayerCount())
+    if (canModifyPlayer(player))    
     {
         m_pMap->getPlayer(player)->setBuildList(buildList);
     }
@@ -801,12 +900,20 @@ void PlayerSelection::slotChangePlayerBuildList(qint32 player, QStringList build
 
 void PlayerSelection::playerStartFundsChanged(float value, qint32 playerIdx)
 {
+    if (!canModifyPlayer(playerIdx))
+    {
+        return;
+    }
     m_pMap->getPlayer(playerIdx)->setFunds(static_cast<qint32>(value));
     playerDataChanged();
 }
 
 void PlayerSelection::playerTeamChanged(qint32 value, qint32 playerIdx)
 {
+    if (!canModifyPlayer(playerIdx))
+    {
+        return;
+    }
     m_pMap->getPlayer(playerIdx)->setTeam(value);
     playerDataChanged();
 }
@@ -842,6 +949,10 @@ void PlayerSelection::playerDataChanged()
 
 void PlayerSelection::playerColorChanged(QColor displayColor, qint32 playerIdx, qint32 item)
 {
+    if (!canModifyPlayer(playerIdx))
+    {
+        return;
+    }
     QColor tableColor = displayColorToTableColor(displayColor);
     m_pMap->getPlayer(playerIdx)->setColor(tableColor, item);
     if (m_pNetworkInterface.get() != nullptr)
@@ -854,12 +965,23 @@ void PlayerSelection::playerColorChanged(QColor displayColor, qint32 playerIdx, 
         sendStream << command;
         sendStream << playerIdx;
         sendStream << displayColor;
-        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        if (m_pNetworkInterface->getIsServer())
+        {
+            emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        }
+        else
+        {
+            emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        }
     }
 }
 
 void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
 {
+    if (!canModifyPlayer(playerIdx))
+    {
+        return;
+    }
     if (!m_saveGame)
     {
         CO *pCO = m_pMap->getPlayer(playerIdx)->getCO(1);
@@ -992,6 +1114,10 @@ void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
 
 void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
 {
+    if (!canModifyPlayer(playerIdx))
+    {
+        return;
+    }
     if (!m_saveGame)
     {
         CO *pCO = m_pMap->getPlayer(playerIdx)->getCO(0);
@@ -1051,6 +1177,10 @@ void PlayerSelection::updateCO2Sprite(QString coid, qint32 playerIdx)
 
 void PlayerSelection::updateCOData(qint32 playerIdx)
 {
+    if (!canModifyPlayer(playerIdx))
+    {
+        return;
+    }
     if (m_pNetworkInterface.get() != nullptr)
     {
         QString command = QString(NetworkCommands::CODATA);
@@ -1090,7 +1220,14 @@ void PlayerSelection::updateCOData(qint32 playerIdx)
         {
             pCO->writeCoStyleToStream(sendStream);
         }
-        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        if (m_pNetworkInterface->getIsServer())
+        {
+            emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        }
+        else
+        {
+            emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        }
     }
 }
 
@@ -1369,6 +1506,29 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
             CONSOLE_PRINT("Ignoring " + messageType + " received before a map was attached", GameConsole::eDEBUG);
             return;
         }
+        if (!m_isServerGame)
+        {
+            if ((m_pNetworkInterface->getIsServer()) &&
+                (messageType == NetworkCommands::CODATA ||
+                 messageType == NetworkCommands::COLORDATA ||
+                 messageType == NetworkCommands::PLAYERARMY))
+            {
+                const qint64 playerPosition = stream.device()->pos();
+                qint32 player = -1;
+                stream >> player;
+                if (!senderOwnsPlayer(socketID, player))
+                {
+                    CONSOLE_PRINT("Ignoring unauthorized " + messageType + " update for player " + QString::number(player) + " from socket " + 
+                                  QString::number(socketID) + " is server game:" + QString::number(m_isServerGame), GameConsole::eERROR);
+                    if (player >= 0 && player < m_pMap->getPlayerCount())
+                    {
+                        sendPlayerState(socketID, player);
+                    }
+                    return;
+                }
+                stream.device()->seek(playerPosition);
+            }
+        }
         if (messageType == NetworkCommands::REQUESTPLAYER)
         {
             requestPlayer(socketID, stream);
@@ -1385,14 +1545,26 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         else if (messageType == NetworkCommands::CODATA)
         {
             recievedCOData(socketID, stream);
+            if (m_pNetworkInterface->getIsServer())
+            {
+                emit m_pNetworkInterface->sigForwardData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer);
+            }
         }
         else if (messageType == NetworkCommands::COLORDATA)
         {
             recievedColorData(socketID, stream);
+            if (m_pNetworkInterface->getIsServer() || m_isServerGame)
+            {
+                emit m_pNetworkInterface->sigForwardData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer);
+            }
         }
         else if (messageType == NetworkCommands::PLAYERARMY)
         {
             recievePlayerArmy(socketID, stream);
+            if (m_pNetworkInterface->getIsServer() || m_isServerGame)
+            {
+                emit m_pNetworkInterface->sigForwardData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer);
+            }
         }
         else if (messageType == NetworkCommands::PLAYERACCESSDENIED)
         {

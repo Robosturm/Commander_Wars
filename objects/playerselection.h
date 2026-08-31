@@ -353,6 +353,9 @@ protected:
      */
     void createInitialAi(DropDownmenu* pPlayerAi, qint32 ai, qint32 player);
 private:
+    bool canModifyPlayer(qint32 player) const;
+    bool senderOwnsPlayer(quint64 socketID, qint32 player) const;
+    void sendPlayerState(quint64 socketID, qint32 player);
     /**
      * @brief applySocketReadyState applies the last ready state received from
      * the given socket to the given player slot
