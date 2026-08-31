@@ -82,8 +82,8 @@ void VeryEasyAI::process()
         m_rebuildIslandMaps = false;
         // remove island maps of the last turn
         m_IslandMaps.clear();
+        rebuildIsland(pUnits);
     }
-    rebuildIsland(pUnits);
 
     // make the ai do stuff
     if (useCOPower(pUnits, pEnemyUnits))
@@ -530,6 +530,10 @@ bool VeryEasyAI::loadUnits(spQmlVectorUnit & pUnits)
 bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& actions,
                           std::vector<QVector3D>& targets, std::vector<QVector3D>& transporterTargets, bool unload)
 {
+    if (targets.empty())
+    {
+        return false;
+    }
     AI_CONSOLE_PRINT("VeryEasyAI::moveUnit()", GameConsole::eDEBUG);
     TargetedUnitPathFindingSystem pfs(m_pMap, pUnit, targets, &m_MoveCostMap);
     pfs.explore();

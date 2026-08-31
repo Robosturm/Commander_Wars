@@ -120,16 +120,19 @@ QPoint TargetedUnitPathFindingSystem::getReachableTargetField(qint32 movepoints)
     {
         auto path = getPathFast(m_FinishNodeX, m_FinishNodeY);
         qint32 cost = UnitPathFindingSystem::getCosts(path);
+        size_t pathStart = 0;
         qint32 curX = m_FinishNodeX;
         qint32 curY = m_FinishNodeY;
         while (((curX != m_StartPoint.x() || curY != m_StartPoint.y()) &&
                 (cost > movepoints)) ||
-               (path.size() > 1 && UnitPathFindingSystem::getCosts(getIndex(curX, curY), curX, curY, path[1].x(), path[1].y(), 0) == 0))
+               (path.size() - pathStart > 1 && UnitPathFindingSystem::getCosts(getIndex(curX, curY), curX, curY, path[pathStart + 1].x(), path[pathStart + 1].y(), 0) == 0))
         {
-            path.erase(path.cbegin());
-            cost = UnitPathFindingSystem::getCosts(path);
+            cost -= UnitPathFindingSystem::getCosts(getIndex(path[pathStart].x(), path[pathStart].y()),
+                                                     path[pathStart].x(), path[pathStart].y(),
+                                                     path[pathStart + 1].x(), path[pathStart + 1].y(), 0);
+            ++pathStart;
         }
-        return path[0];
+        return path[pathStart];
     }
     return QPoint(-1, -1);
 }

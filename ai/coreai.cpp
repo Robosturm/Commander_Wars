@@ -136,18 +136,12 @@ void CoreAI::init(BaseGamemenu* pMenu)
 
 void CoreAI::resetMoveMap()
 {
-    if (m_pMap != nullptr)
+    if (m_pMap != nullptr && (m_MoveCostMap.size() != static_cast<qint32>(m_pMap->getMapWidth()) ||
+        m_MoveCostMap[0].size() != static_cast<qint32>(m_pMap->getMapHeight())))
     {
         qint32 heigth = m_pMap->getMapHeight();
         qint32 width = m_pMap->getMapWidth();
-        for (qint32 x = 0; x < width; x++)
-        {
-            m_MoveCostMap.push_back(std::vector<std::tuple<qint32, bool>>());
-            for (qint32 y = 0; y < heigth; y++)
-            {
-                m_MoveCostMap[x].push_back(std::tuple<qint32, bool>(0, false));
-            }
-        }
+        m_MoveCostMap.assign(width, std::vector<std::tuple<qint32, bool>>(heigth, {0, false}));
     }
 }
 

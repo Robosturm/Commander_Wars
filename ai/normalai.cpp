@@ -1889,19 +1889,11 @@ void NormalAi::updateUnitData(spQmlVectorUnit &pUnits, std::vector<MoveUnitData>
     }
     else
     {
-        qint32 i = 0;
-        while (i < pUnitData.size())
+        pUnitData.erase(std::remove_if(pUnitData.begin(), pUnitData.end(), [](const MoveUnitData & unitData)
         {
-            if (pUnitData[i].pUnit->getHp() <= 0 ||
-                pUnitData[i].pUnit->getTerrain() == nullptr)
-            {
-                pUnitData.erase(pUnitData.cbegin() + i);
-            }
-            else
-            {
-                i++;
-            }
-        }
+            return unitData.pUnit->getHp() <= 0 ||
+                   unitData.pUnit->getTerrain() == nullptr;
+        }), pUnitData.end());
     }
     if (!enemy && m_aiStep >= AISteps::moveTransporters)
     {
@@ -1928,12 +1920,12 @@ void NormalAi::updateUnitData(spQmlVectorUnit &pUnits, std::vector<MoveUnitData>
         }
     }
     Interpreter *pInterpreter = Interpreter::getInstance();
-    std::vector<qint32> updated;
+    std::vector<bool> updated(pUnitData.size(), false);
     for (auto point : m_updatePoints)
     {
         for (qint32 i2 = 0; i2 < pUnitData.size(); i2++)
         {
-            if (!GlobalUtils::contains(updated, i2))
+            if (!updated[i2])
             {
                 pInterpreter->threadProcessEvents();
                 auto &unitData = pUnitData[i2];
@@ -1948,7 +1940,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit &pUnits, std::vector<MoveUnitData>
                     {
                         createUnitData(pUnit, unitData, enemy, m_influenceUnitRange + 1, otherUnitData, true);
                     }
-                    updated.push_back(i2);
+                    updated[i2] = true;
                 }
             }
         }
