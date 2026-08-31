@@ -1,6 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/Event.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include <algorithm>
 
 #ifndef GRAPHICSUPPORT
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
@@ -75,24 +76,13 @@ namespace oxygine
     {
         Q_ASSERT(!isNotThreadsafe());
         m_lastID++;
-        listener ls;
-        ls.type = et;
-        ls.cb = cb;
-        ls.id = m_lastID;
-        bool added = false;
-        for (auto i = m_listeners.begin(); i != m_listeners.end(); ++i)
+        const listener ls{cb, m_lastID, et};
+        const auto insertPosition = std::upper_bound(m_listeners.cbegin(), m_listeners.cend(), et,
+                                                     [](eventType type, const listener& item)
         {
-            if (et < i->type)
-            {
-                m_listeners.insert(i, ls);
-                added = true;
-                break;
-            }
-        }
-        if (!added)
-        {
-            m_listeners.push_back(ls);
-        }
+            return type < item.type;
+        });
+        m_listeners.insert(insertPosition, ls);
         return ls.id;
     }
 
@@ -122,15 +112,13 @@ namespace oxygine
 
     void EventDispatcher::__removeEventListener(qint32 id)
     {
-        for (size_t size = m_listeners.size(), i = 0; i != size; ++i)
+        const auto listenerToRemove = std::find_if(m_listeners.cbegin(), m_listeners.cend(), [id](const listener& item)
         {
-            const listener& ls = m_listeners.at(i);
-            if (ls.id == id)
-            {
-
-                m_listeners.erase(m_listeners.cbegin() + i);
-                break;
-            }
+            return item.id == id;
+        });
+        if (listenerToRemove != m_listeners.cend())
+        {
+            m_listeners.erase(listenerToRemove);
         }
     }
 
@@ -160,15 +148,11 @@ namespace oxygine
 
     void EventDispatcher::__removeEventListeners(IClosureOwner* callbackThis)
     {
-        for (qint32 i = 0; i < m_listeners.size(); ++i)
+        const auto newEnd = std::remove_if(m_listeners.begin(), m_listeners.end(), [callbackThis](const listener& item)
         {
-            const listener& ls = m_listeners.at(i);
-            if (ls.cb.isOwner(callbackThis))
-            {
-                m_listeners.erase(m_listeners.cbegin() + i);
-                --i;
-            }
-        }
+            return item.cb.isOwner(callbackThis);
+        });
+        m_listeners.erase(newEnd, m_listeners.end());
     }
 
     void EventDispatcher::dispatchEvent(Event* event)
@@ -178,23 +162,34 @@ namespace oxygine
             return;
         }
         Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread() || oxygine::GameWindow::getWindow()->renderingPaused());
+        spEventDispatcher dispatcher;
         if (!event->target)
         {
-            event->target = getSharedPtr<EventDispatcher>();
+            dispatcher = getSharedPtr<EventDispatcher>();
+            event->target = dispatcher;
         }
-        qint32 i = 0;
-        while (i < m_listeners.size())
+        const auto firstListener = std::lower_bound(m_listeners.cbegin(), m_listeners.cend(), event->type,
+                                                    [](const listener& item, eventType type)
         {
-            auto & listener = m_listeners[i];
-            if (listener.type == event->type)
+            return item.type < type;
+        });
+        if (firstListener == m_listeners.cend() || firstListener->type != event->type)
+        {
+            return;
+        }
+        if (!dispatcher)
+        {
+            dispatcher = getSharedPtr<EventDispatcher>();
+        }
+        qint32 i = static_cast<qint32>(firstListener - m_listeners.cbegin());
+        while (i < m_listeners.size() && m_listeners[i].type == event->type)
+        {
+            event->currentTarget = dispatcher;
+            event->listenerID = m_listeners[i].id;
+            m_listeners[i].cb(event);
+            if (event->stopsImmediatePropagation)
             {
-                event->currentTarget = getSharedPtr<EventDispatcher>();
-                event->listenerID = listener.id;
-                listener.cb(event);
-                if (event->stopsImmediatePropagation)
-                {
-                    break;
-                }
+                break;
             }
             ++i;
         }
