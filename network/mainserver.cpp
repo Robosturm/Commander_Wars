@@ -340,7 +340,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         }
         else if (messageType == NetworkCommands::RESETPASSWORD)
         {
-            resetAccountPassword(socketID, objData);
+            // resetAccountPassword(socketID, objData);
         }
         else if (messageType == NetworkCommands::CHANGEPASSWORD)
         {

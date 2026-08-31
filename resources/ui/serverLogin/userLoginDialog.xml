@@ -74,6 +74,7 @@
                 <text>UserLoginDialog.forgotPassword()</text>
                 <tooltip>UserLoginDialog.forgotPasswordTooltip()</tooltip>
                 <onEvent>userLogin.createDialog("forgotPassword", "ui/serverLogin/forgotPasswordDialog.xml", userLogin.getBaseMenu())</onEvent>
+                <visible>false</visible>
             </Button>
             <Button>
                 <Id>BackButton</Id>
