@@ -264,10 +264,6 @@ namespace oxygine
             window->glVertexAttribPointer(el.index, el.size, el.elemType, el.normalized, decl->size, vData + el.offset);
         }
         window->glDrawArrays(getPT(pt), 0, primitives);
-        for (const auto & el : decl->m_elements)
-        {
-            window->glDisableVertexAttribArray(el.index);
-        }
     }
 
     void VideoDriver::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, const quint16* indicesData, quint32 numIndices)
@@ -281,11 +277,6 @@ namespace oxygine
         }
 
         window->glDrawElements(getPT(pt), numIndices, GL_UNSIGNED_SHORT, indicesData);
-
-        for (const auto & el : decl->m_elements)
-        {
-            window->glDisableVertexAttribArray(el.index);
-        }
     }
 
     void VideoDriver::setDefaultSettings()
