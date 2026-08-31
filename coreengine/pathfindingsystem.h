@@ -5,7 +5,10 @@
 #include <QObject>
 #include <QVector>
 #include <QPoint>
-#include <QList>
+
+#include <array>
+#include <memory>
+#include <vector>
 
 #include "coreengine/qmlvector.h"
 
@@ -33,7 +36,8 @@ public:
     {
         Node(qint32 x, qint32 y, qint32 index,
              qint32 totalCost, qint32 currentCosts,
-             qint32 prevNodeX, qint32 prevNodeY, qint32 distance)
+                         qint32 prevNodeX, qint32 prevNodeY, qint32 distance,
+                         qint64 queueOrder = 0)
             : x(x),
               y(y),
               index(index),
@@ -41,7 +45,8 @@ public:
               currentCosts(currentCosts),
               prevNodeX(prevNodeX),
               prevNodeY(prevNodeY),
-              distance(distance)
+              distance(distance),
+              queueOrder(queueOrder)
         {
         }
         /**
@@ -76,6 +81,7 @@ public:
          * @brief distance
          */
         qint32 distance;
+        qint64 queueOrder;
     };
     /**
      * @brief PathFindingSystem
@@ -247,12 +253,10 @@ protected:
     std::vector<qint32> m_costs;
     std::vector<Directions> m_DirectionMap;
     std::vector<std::array<qint32, Directions::Max>> m_movecosts;
-    std::list<Node> m_OpenList;
+    std::vector<Node> m_OpenList;
     qint32 m_FinishNode = -1;
     qint32 m_FinishNodeX = -1;
     qint32 m_FinishNodeY = -1;
 
 };
-
-
 #endif // PATHFINDINGSYSTEM_H

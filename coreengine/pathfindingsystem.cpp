@@ -12,7 +12,9 @@ bool operator<(const PathFindingSystem::Node& pNodeLhs, const PathFindingSystem:
             // same end cost but currently cheaper cost
             (pNodeLhs.currentCosts < pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost) ||
             // same
-            (pNodeLhs.distance < pNodeRhs.distance && pNodeLhs.currentCosts == pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost);
+            (pNodeLhs.distance < pNodeRhs.distance && pNodeLhs.currentCosts == pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost) ||
+            (pNodeLhs.queueOrder < pNodeRhs.queueOrder && pNodeLhs.distance == pNodeRhs.distance &&
+             pNodeLhs.currentCosts == pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost);
 }
 
 PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
@@ -51,8 +53,9 @@ void PathFindingSystem::explore()
         return;
     }
     qint32 neighboursIndex = getIndex(m_StartPoint.x(), m_StartPoint.y());
+    qint64 queueOrder = 0;
     m_OpenList.push_back(Node(m_StartPoint.x(), m_StartPoint.y(), neighboursIndex, 0, 0,
-                              m_StartPoint.x(), m_StartPoint.y(), 0));
+                              m_StartPoint.x(), m_StartPoint.y(), 0, queueOrder++));
     qint32 remainingCosts;
     qint32 neighboursX = -1;
     qint32 neighboursY = -1;
@@ -62,8 +65,12 @@ void PathFindingSystem::explore()
     while (!m_OpenList.empty())
     {
         // get current node and pop it
-        Node pCurrent = m_OpenList.front();
-        m_OpenList.pop_front();
+        std::pop_heap(m_OpenList.begin(), m_OpenList.end(), [](const Node& lhs, const Node& rhs)
+        {
+            return rhs < lhs;
+        });
+        Node pCurrent = m_OpenList.back();
+        m_OpenList.pop_back();
         if (pCurrent.index < 0 || m_costs[pCurrent.index] != infinite)
         {
             if (pCurrent.index < 0)
@@ -181,8 +188,13 @@ void PathFindingSystem::explore()
                     // node we want to insert
                     Node workNode = Node(neighboursX, neighboursY, neighboursIndex, totalCost, newCosts,
                                          pCurrent.x, pCurrent.y,
-                                         qAbs(neighboursX - m_StartPoint.x()) + qAbs(neighboursY - m_StartPoint.y()));
-                    m_OpenList.insert(std::upper_bound(m_OpenList.cbegin(), m_OpenList.cend(), workNode), workNode);
+                                         qAbs(neighboursX - m_StartPoint.x()) + qAbs(neighboursY - m_StartPoint.y()),
+                                         queueOrder++);
+                    m_OpenList.push_back(workNode);
+                    std::push_heap(m_OpenList.begin(), m_OpenList.end(), [](const Node& lhs, const Node& rhs)
+                    {
+                        return rhs < lhs;
+                    });
                 }
             }
         }
