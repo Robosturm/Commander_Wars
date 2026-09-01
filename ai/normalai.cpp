@@ -985,7 +985,7 @@ bool NormalAi::moveToUnloadArea(spGameAction &pAction, MoveUnitData *pUnitData, 
     {
         auto path = pUnitData->pUnitPfs->getPathFast(targetFields.x(), targetFields.y());
         pAction->setMovepath(path, pUnitData->pUnitPfs->getCosts(path));
-        pAction->setActionID(ACTION_UNLOAD);
+        pAction->setActionID(CoreAI::getUnloadAction(pUnit));
         if (pAction->canBePerformed() && targetFields == pfs.getTarget())
         {
             return unloadUnits(pAction, pUnit, pEnemyUnits);

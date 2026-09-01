@@ -48,6 +48,7 @@ const char* const CoreAI::ACTION_PLACE = "ACTION_PLACE";
 const char* const CoreAI::ACTION_FIRE = "ACTION_FIRE";
 const char* const CoreAI::ACTION_JOIN = "ACTION_JOIN";
 const char* const CoreAI::ACTION_UNLOAD = "ACTION_UNLOAD";
+const char* const CoreAI::ACTION_UNLOAD_LAUNCH = "ACTION_UNLOAD_LAUNCH";
 const char* const CoreAI::ACTION_LOAD = "ACTION_LOAD";
 const char* const CoreAI::ACTION_NEXT_PLAYER = "ACTION_NEXT_PLAYER";
 const char* const CoreAI::ACTION_SWAP_COS = "ACTION_SWAP_COS";
@@ -2986,6 +2987,21 @@ bool CoreAI::buildCOUnit(spQmlVectorUnit & pUnits)
         }
     }
     return false;
+}
+
+QString CoreAI::getUnloadAction(Unit *pUnit) const
+{
+    auto actionList = pUnit->getActionList();
+    if (actionList.contains(CoreAI::ACTION_UNLOAD_LAUNCH))
+    {
+        return CoreAI::ACTION_UNLOAD_LAUNCH;
+    }
+    else if (actionList.contains(CoreAI::ACTION_UNLOAD))
+    {
+        return CoreAI::ACTION_UNLOAD;
+    }
+    return QString();
+
 }
 
 bool CoreAI::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)

@@ -550,7 +550,7 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
             {
                 auto path = turnPfs.getPathFast(targetFields.x(), targetFields.y());
                 pAction->setMovepath(path, turnPfs.getCosts(path));
-                pAction->setActionID(ACTION_UNLOAD);
+                pAction->setActionID(CoreAI::getUnloadAction(pUnit));
                 // this isn't ideal since we unload the units in a random order and not the best fitting order
                 // but we're lazy here for the very easy ai
                 while (true)

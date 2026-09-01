@@ -161,6 +161,7 @@ public:
     static const char* const ACTION_FIRE;
     static const char* const ACTION_JOIN;
     static const char* const ACTION_UNLOAD;
+    static const char* const ACTION_UNLOAD_LAUNCH;
     static const char* const ACTION_LOAD;
     static const char* const ACTION_NEXT_PLAYER;
     static const char* const ACTION_SWAP_COS;
@@ -779,6 +780,10 @@ protected:
      * @return
      */
     bool buildCOUnit(spQmlVectorUnit & pUnits);
+    /**
+     * 
+     */
+    QString getUnloadAction(Unit *pUnit) const;
     /**
      * @brief canTransportToEnemy
      * @param pUnit
