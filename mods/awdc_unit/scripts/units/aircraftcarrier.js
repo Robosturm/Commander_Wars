@@ -20,3 +20,16 @@ AIRCRAFTCARRIER.getBaseCost = function()
 {
     return 28000;
 };
+
+AIRCRAFTCARRIER.startOfTurnOldAWDCUnit = AIRCRAFTCARRIER.startOfTurn;
+AIRCRAFTCARRIER.startOfTurn = function (unit, map) {
+    AIRCRAFTCARRIER.startOfTurnOldAWDCUnit(unit, map);
+    var size = unit.getLoadedUnitCount();
+    for (var i = 0; i < size; i++)
+    {
+        var transportUnit = unit.getLoadedUnit(i);
+        transportUnit.setHasMoved(false);
+    }
+}
+
+AIRCRAFTCARRIER.actionList = ["ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD_LAUNCH", "ACTION_BUILD_WATERPLANE", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
