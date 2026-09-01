@@ -738,6 +738,15 @@ void Settings::setUserPath(const QString newUserPath)
     VirtualPaths::setSearchPath(m_userPath, m_activeMods);
 }
 
+bool Settings::isAndroidDevice() const
+{
+#ifdef ISANDROIDDEVICE
+    return true;
+#else
+    return false;
+#endif // ISANDROIDDEVICE
+}
+
 bool Settings::getSmallScreenDevice()
 {
     return m_smallScreenDevice;

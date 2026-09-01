@@ -234,21 +234,23 @@
                 <onEvent>settings.setMapFolderColor(input)</onEvent>
                 <colorPicker>false</colorPicker>
             </DropDownMenuColor>
-            <Label>
-                <x>10</x>
-                <y>lastY + lastHeight + 10</y>
-                <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Automatic updates:")</text>
-                <font>"main"</font>
-                <fontSize>24</fontSize>
-            </Label>
-            <Checkbox>
-                <x>lastX + lastWidth + 10</x>
-                <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: The game tries to stay up to date by updating to the latest release if required.")</tooltip>
-                <startValue>settings.getAutomaticUpdates()</startValue>
-                <onEvent>settings.setAutomaticUpdates(input)</onEvent>
-            </Checkbox>
+            <if condition="!settings.isAndroidDevice()">
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Automatic updates:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Checkbox>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: The game tries to stay up to date by updating to the latest release if required.")</tooltip>
+                    <startValue>settings.getAutomaticUpdates()</startValue>
+                    <onEvent>settings.setAutomaticUpdates(input)</onEvent>
+                </Checkbox>     
+            </if>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>

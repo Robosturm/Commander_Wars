@@ -172,6 +172,11 @@ else("Release")
         -DDEBUG_LEVEL=1             # default console log level
     )
 endif()
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    add_definitions(
+        -DISANDROIDDEVICE
+    )
+endif()
 
 if (AUDIOSUPPORT)
     message("Building with Audio")

@@ -860,6 +860,7 @@ public:
     Q_INVOKABLE QString getSettingString(const QString & group, const QString & name) const;
     Q_INVOKABLE float getSettingFloat(const QString & group, const QString & name) const;
     Q_INVOKABLE qint32 getSettingInt(const QString & group, const QString & name) const;
+    Q_INVOKABLE bool isAndroidDevice() const;
 
 private:
     friend class MemoryManagement;
