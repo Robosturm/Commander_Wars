@@ -578,7 +578,11 @@
         <image file="gs/co_meiyo+face.png" cols = "3" />
         <image file="gs/co_meiyo+alt+nrm.png" />
         <image file="gs/co_meiyo+alt+info.png" />
+        <image file="gs/co_meiyo+alt+mini.png" />
         <image file="gs/co_meiyo+alt+face.png" cols = "3" />
+        <image file="gs/co_meiyo+alt2+nrm.png" />
+        <image file="gs/co_meiyo+alt2+info.png" />
+        <image file="gs/co_meiyo+alt2+face.png" cols = "3" />
         <image file="gs/co_minamoto+nrm.png" />
         <image file="gs/co_minamoto+info.png" />
         <image file="gs/co_minamoto+mini.png" />
