@@ -8,7 +8,7 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        return ["+alt"];
+        return ["+alt", "+alt2"];
     };
 
     this.activatePower = function(co, map)
