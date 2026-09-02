@@ -5085,5 +5085,10 @@
         <file>resources/images/building/grand_bolt+eye+left+destroyed+mask.png</file>
         <file>resources/images/building/grand_bolt+eye+middle+destroyed+mask.png</file>
         <file>resources/images/building/grand_bolt+eye+right+destroyed+mask.png</file>
+        <file>resources/images/co/gs/co_meiyo+alt2+face.png</file>
+        <file>resources/images/co/gs/co_meiyo+alt2+info.png</file>
+        <file>resources/images/co/gs/co_meiyo+alt2+nrm.png</file>
+        <file>resources/images/co/gs/co_meiyo+alt2+table.png</file>
+        <file>resources/images/co/gs/co_meiyo+alt+mini.png</file>
     </qresource>
 </RCC>

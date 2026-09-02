@@ -198,8 +198,8 @@ protected:
     void previousMarkedField();
     void nextSelectOption();
     void previousSelectOption();
-    void showSelectedUnitAttackableFields(bool all);
-    void showUnitAttackFields(Unit* pUnit, std::vector<QPoint> & usedFields);
+    void showSelectedUnitAttackableFields(bool all, bool hideExistingFields);
+    void showUnitAttackFields(Unit* pUnit, std::vector<QPoint> & usedFields, bool hideExistingFields);
     /**
      * @brief HumanPlayerInput::createMarkedFieldActor
      * @param point

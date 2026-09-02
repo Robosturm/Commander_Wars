@@ -941,6 +941,11 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     }
     m_pUnitPathFindingSystem->explore();
     createMarkedMoveFields();
+    if (Settings::getInstance()->getAutoShowAttackableFields())
+    {
+        showSelectedUnitAttackableFields(true, false);
+    }
+
     Mainapp::getInstance()->continueRendering();
 }
 
@@ -1585,12 +1590,12 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
         else if (cur == Settings::getInstance()->getKey_ShowAttackFields() ||
                  cur == Settings::getInstance()->getKey_ShowAttackFields2())
         {
-            showSelectedUnitAttackableFields(true);
+            showSelectedUnitAttackableFields(true, true);
         }
         else if (cur == Settings::getInstance()->getKey_ShowIndirectAttackFields() ||
                  cur == Settings::getInstance()->getKey_ShowIndirectAttackFields2())
         {
-            showSelectedUnitAttackableFields(false);
+            showSelectedUnitAttackableFields(false, true);
         }
         else if (cur == Settings::getInstance()->getKey_QuickAction())
         {
@@ -1614,7 +1619,7 @@ void HumanPlayerInput::onFocusLost()
     m_quickAction = false;
 }
 
-void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
+void HumanPlayerInput::showSelectedUnitAttackableFields(bool all, bool hideExistingFields)
 {
     CONSOLE_PRINT("HumanPlayerInput::showSelectedUnitAttackableFields", GameConsole::eDEBUG);
     if (m_pUnitPathFindingSystem.get() != nullptr &&
@@ -1640,35 +1645,40 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
         else
         {
             Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
-            for (auto & fields : m_Fields)
+            if (hideExistingFields)
             {
-                fields->setVisible(false);
+                for (auto & fields : m_Fields)
+                {
+                    fields->setVisible(false);
+                }
             }
             Unit* currentUnit = m_pGameAction->getTargetUnit();
-            QPoint position = currentUnit->getPosition();
-            qint32 distance = currentUnit->getMovementpoints(position);
-            distance += currentUnit->getMaxRange(position);
-
-            std::vector<QPoint> usedFields;
-            
-            for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
+            if (currentUnit != nullptr) 
             {
-                for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
+                QPoint position = currentUnit->getPosition();
+                qint32 distance = currentUnit->getMovementpoints(position);
+                distance += currentUnit->getMaxRange(position);
+                std::vector<QPoint> usedFields;
+                for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
                 {
-                    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-                    if ((pUnit != nullptr) &&
-                        m_pPlayer->isEnemyUnit(pUnit) &&
-                        (!pUnit->isStealthed(m_pPlayer)))
+                    for (qint32 y = 0; y < m_pMap->getMapHeight(); y++)
                     {
-                        QPoint unitPositionpUnit(x, y);
-                        qint32 currentMaxDistance = distance;
-                        currentMaxDistance += pUnit->getMovementpoints(unitPositionpUnit);
-                        currentMaxDistance += pUnit->getMaxRange(unitPositionpUnit);
-                        if (GlobalUtils::getDistance(unitPositionpUnit, position) <= currentMaxDistance)
+                        Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                        if ((pUnit != nullptr) &&
+                            m_pPlayer->isEnemyUnit(pUnit) &&
+                            (!pUnit->isStealthed(m_pPlayer)))
                         {
-                            if(all || pUnit->getBaseMaxRange() > 1)
+                            QPoint unitPositionpUnit(x, y);
+                            qint32 currentMaxDistance = distance;
+                            currentMaxDistance += pUnit->getMovementpoints(unitPositionpUnit);
+                            currentMaxDistance += pUnit->getMaxRange(unitPositionpUnit);
+                            if (GlobalUtils::getDistance(unitPositionpUnit, position) <= currentMaxDistance && 
+                                pUnit->isAttackable(currentUnit))
                             {
-                                showUnitAttackFields(pUnit, usedFields);
+                                if(all || pUnit->getBaseMaxRange() > 1)
+                                {
+                                    showUnitAttackFields(pUnit, usedFields, hideExistingFields);
+                                }
                             }
                         }
                     }
@@ -1679,7 +1689,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
     
 }
 
-void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, std::vector<QPoint> & usedFields)
+void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, std::vector<QPoint> & usedFields, bool hideExistingFields)
 {
     Mainapp::getInstance()->pauseRendering();
     UnitPathFindingSystem pfs(m_pMap, pUnit, m_pPlayer);
@@ -1711,7 +1721,14 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, std::vector<QPoint> & u
                     !GlobalUtils::contains(usedFields, QPoint(target.x(), target.y())))
                 {
                     usedFields.push_back(target);
-                    m_InfoFields.push_back(createMarkedFieldActor(target, QColor(255, 0, 0)));
+                    if (hideExistingFields || !GlobalUtils::contains(m_FieldPoints, target))
+                    {
+                        m_InfoFields.push_back(createMarkedFieldActor(target, QColor(255, 0, 0)));
+                    }
+                    else
+                    {
+                        m_InfoFields.push_back(createMarkedFieldActor(target, QColor(255, 165, 0)));
+                    }
                 }
             }
         }

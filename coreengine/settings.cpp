@@ -1542,6 +1542,7 @@ void Settings::setup()
             MemoryManagement::create<Value<QString>>("Game", "AiPipeUuid", &m_pipeUuid, "", "", ""),
             MemoryManagement::create<Value<bool>>("Game", "UseAiProcess", &m_spawnAiProcess, false, false, true),
             MemoryManagement::create<Value<qint32>>("Game", "DebounceTime", &m_debounceTimeMs, 20, 0, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<bool>>("Game", "AutoShowAttackableFields", &m_autoShowAttackableFields, true, false, true),
 
             // network
             MemoryManagement::create<Value<quint16>>("Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()),
@@ -2598,4 +2599,14 @@ QString Settings::getSettingString(const QString & group, const QString & name) 
 bool Settings::getSettingBool(const QString & group, const QString & name) const
 {
     return getSetting(group, name).toBool();
+}
+
+bool Settings::getAutoShowAttackableFields() const
+{
+    return m_autoShowAttackableFields;
+}
+
+void Settings::setAutoShowAttackableFields(bool newAutoShowAttackableFields)
+{
+    m_autoShowAttackableFields = newAutoShowAttackableFields;
 }

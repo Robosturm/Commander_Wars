@@ -861,6 +861,8 @@ public:
     Q_INVOKABLE float getSettingFloat(const QString & group, const QString & name) const;
     Q_INVOKABLE qint32 getSettingInt(const QString & group, const QString & name) const;
     Q_INVOKABLE bool isAndroidDevice() const;
+    Q_INVOKABLE bool getAutoShowAttackableFields() const;
+    Q_INVOKABLE void setAutoShowAttackableFields(bool newAutoShowAttackableFields);
 
 private:
     friend class MemoryManagement;
@@ -1038,6 +1040,7 @@ private:
     bool m_simpleDeselect{false};
     bool m_showDetailedBattleForcast{true};
     bool m_autoMoveCursor{false};
+    bool m_autoShowAttackableFields{true};
     float m_supplyWarning{0.33f};
     qint32 m_debounceTimeMs{20};
 

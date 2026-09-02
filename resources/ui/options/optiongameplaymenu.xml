@@ -613,6 +613,23 @@
                 <onEvent>settings.setSimpleDeselect(input)</onEvent>
                 <enabled>!settings.getSmallScreenDevice()</enabled>
             </Checkbox>
+
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Auto show attack fields:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: Fields on which enemy units can attack are shown on selecting a unit.")</tooltip>
+                <startValue>settings.getAutoShowAttackableFields()</startValue>
+                <onEvent>settings.setAutoShowAttackableFields(input)</onEvent>
+            </Checkbox>
+
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
