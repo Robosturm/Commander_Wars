@@ -11,6 +11,7 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/settings.h"
 #include "coreengine/virtualpaths.h"
 
 
@@ -249,6 +250,30 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
                !id.startsWith("___"))
             {
                 pInterpreter->openScript(dirIter.fileInfo().filePath(), true);
+            }
+        }
+    }
+    if (!m_scriptPath.isEmpty())
+    {
+        const QString resourceScriptPath = "resources/" + m_scriptPath;
+        QStringList scriptPaths = VirtualPaths::createSearchPath(resourceScriptPath, false);
+        const QStringList mods = Settings::getInstance()->getMods();
+        for (const auto & mod : mods)
+        {
+            const QStringList modPaths = VirtualPaths::createSearchPath(mod, false);
+            for (const auto & modPath : modPaths)
+            {
+                scriptPaths.append(modPath + "/" + m_scriptPath);
+                scriptPaths.append(modPath + "/" + resourceScriptPath);
+            }
+        }
+        searchPaths.clear();
+        for (const auto & path : scriptPaths)
+        {
+            const QString canonicalPath = QFileInfo(path).canonicalFilePath();
+            if (!canonicalPath.isEmpty() && !searchPaths.contains(canonicalPath))
+            {
+                searchPaths.append(canonicalPath);
             }
         }
     }
