@@ -318,7 +318,8 @@ void Gamepad::handleThumbStickPress(bool left, bool right)
 }
 
 void Gamepad::handleMouseEvent(oxygine::MouseButton button, bool pressed)
-{                
+{       
+#ifdef GRAPHICSUPPORT         
     Mainapp* pApp = Mainapp::getInstance();                
     QPoint pos = pApp->cursor().pos();
     pos =pApp->mapPosFromGlobal(pos);
@@ -330,6 +331,7 @@ void Gamepad::handleMouseEvent(oxygine::MouseButton button, bool pressed)
     {
         emit pApp->sigMouseReleaseEvent(button, pos.x(), pos.y());
     }
+#endif
 }
 
 void Gamepad::nextMoveSpeed(float & currentValue)

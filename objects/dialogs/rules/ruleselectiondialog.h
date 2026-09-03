@@ -6,6 +6,7 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 
 #include "objects/ruleselection.h"
 #include "objects/base/panel.h"
@@ -38,7 +39,7 @@ private:
     oxygine::spButton m_pButtonLoadRules;
     oxygine::spButton m_pButtonSaveRules;
     spRuleSelection m_pRuleSelection;
-    spPanel m_pPanel;
+    oxygine::spBox9Sprite m_pSpriteBox;
     GameMap* m_pMap{nullptr};
 };
 
