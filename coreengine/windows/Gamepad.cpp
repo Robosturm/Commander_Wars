@@ -41,7 +41,7 @@ void Gamepad::update()
     m_inputValues.m_rightY = getAxisValue(xstate.Gamepad.sThumbRY);
     handleButtonPress(m_keys[Buttons::A], (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_A) != 0);
     handleButtonPress(m_keys[Buttons::B], (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_B) != 0);
-    handleAxes(inputValues);
+    handleAxes(m_inputValues);
 
     if (m_updateCounter == xstate.dwPacketNumber)
     {
