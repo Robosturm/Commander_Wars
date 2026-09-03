@@ -115,12 +115,12 @@ void Gamepad::handleButton(qint32 button, bool pressed)
         }
         case 9:
         {
-            handleMouseEvent(oxygine::MouseEvent::MouseButton_Left, pressed); 
+            handleMouseEvent(oxygine::MouseButton::MouseButton_Left, pressed); 
             break;
         }
         case 10:
         {
-            handleMouseEvent(oxygine::MouseEvent::MouseButton_Right, pressed); 
+            handleMouseEvent(oxygine::MouseButton::MouseButton_Right, pressed); 
             break;
         }
         default: 
