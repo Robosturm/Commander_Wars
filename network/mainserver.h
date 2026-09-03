@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QProcess>
+#include <QJsonArray>
 
 #include "network/tcpserver.h"
 #include "network/networkgamedata.h"
@@ -313,12 +314,7 @@ private:
      * @param id
      */
     void spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data, QString configuration = "", QString id = "");
-    /**
-     * @brief validHostRequest checks if all requested mods are installed on the server
-     * @param mods
-     * @return
-     */
-    bool validHostRequest(QStringList mods);
+    bool validHostRequest(const QStringList & mods, QStringList & unsupportedMods, QJsonArray & modInfos);
     /**
      * @brief joinSlaveGame request of a client to join a specific slave game
      * @param socketID
