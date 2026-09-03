@@ -1506,6 +1506,7 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
             CONSOLE_PRINT("Ignoring " + messageType + " received before a map was attached", GameConsole::eDEBUG);
             return;
         }
+        bool validMessage = true;
         if (!m_isServerGame)
         {
             if ((m_pNetworkInterface->getIsServer()) &&
@@ -1524,63 +1525,66 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
                     {
                         sendPlayerState(socketID, player);
                     }
-                    return;
+                    validMessage = false;
                 }
                 stream.device()->seek(playerPosition);
             }
         }
-        if (messageType == NetworkCommands::REQUESTPLAYER)
+        if (validMessage)
         {
-            requestPlayer(socketID, stream);
-        }
-        else if (messageType == NetworkCommands::PLAYERCHANGED)
-        {
-            changePlayer(socketID, stream);
-            sendOpenPlayerCount();
-        }
-        else if (messageType == NetworkCommands::PLAYERDATA)
-        {
-            recievedPlayerData(socketID, stream);
-        }
-        else if (messageType == NetworkCommands::CODATA)
-        {
-            recievedCOData(socketID, stream);
-            if (m_pNetworkInterface->getIsServer())
+            if (messageType == NetworkCommands::REQUESTPLAYER)
             {
-                emit m_pNetworkInterface->sigForwardData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer);
+                requestPlayer(socketID, stream);
             }
-        }
-        else if (messageType == NetworkCommands::COLORDATA)
-        {
-            recievedColorData(socketID, stream);
-            if (m_pNetworkInterface->getIsServer() || m_isServerGame)
+            else if (messageType == NetworkCommands::PLAYERCHANGED)
             {
-                emit m_pNetworkInterface->sigForwardData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer);
+                changePlayer(socketID, stream);
+                sendOpenPlayerCount();
             }
-        }
-        else if (messageType == NetworkCommands::PLAYERARMY)
-        {
-            recievePlayerArmy(socketID, stream);
-            if (m_pNetworkInterface->getIsServer() || m_isServerGame)
+            else if (messageType == NetworkCommands::PLAYERDATA)
             {
-                emit m_pNetworkInterface->sigForwardData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer);
+                recievedPlayerData(socketID, stream);
             }
-        }
-        else if (messageType == NetworkCommands::PLAYERACCESSDENIED)
-        {
-            playerAccessDenied();
-        }
-        else if (messageType == NetworkCommands::JOINASOBSERVER)
-        {
-            joinObserver(socketID);
-        }
-        else if (messageType == NetworkCommands::SERVERREADY)
-        {
-            recievePlayerServerReady(socketID, stream);
-        }
-        else
-        {
-            CONSOLE_PRINT("Command not handled in playerselection", GameConsole::eDEBUG);
+            else if (messageType == NetworkCommands::CODATA)
+            {
+                recievedCOData(socketID, stream);
+                if (m_pNetworkInterface->getIsServer())
+                {
+                    emit m_pNetworkInterface->sigForwardData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer);
+                }
+            }
+            else if (messageType == NetworkCommands::COLORDATA)
+            {
+                recievedColorData(socketID, stream);
+                if (m_pNetworkInterface->getIsServer() || m_isServerGame)
+                {
+                    emit m_pNetworkInterface->sigForwardData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer);
+                }
+            }
+            else if (messageType == NetworkCommands::PLAYERARMY)
+            {
+                recievePlayerArmy(socketID, stream);
+                if (m_pNetworkInterface->getIsServer() || m_isServerGame)
+                {
+                    emit m_pNetworkInterface->sigForwardData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer);
+                }
+            }
+            else if (messageType == NetworkCommands::PLAYERACCESSDENIED)
+            {
+                playerAccessDenied();
+            }
+            else if (messageType == NetworkCommands::JOINASOBSERVER)
+            {
+                joinObserver(socketID);
+            }
+            else if (messageType == NetworkCommands::SERVERREADY)
+            {
+                recievePlayerServerReady(socketID, stream);
+            }
+            else
+            {
+                CONSOLE_PRINT("Command not handled in playerselection", GameConsole::eDEBUG);
+            }
         }
     }
     else if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
