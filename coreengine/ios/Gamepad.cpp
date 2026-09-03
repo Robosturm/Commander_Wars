@@ -12,6 +12,8 @@ constexpr qint32 ButtonUsagePage = 0x09;
 constexpr qint32 GenericDesktopX = 0x30;
 constexpr qint32 GenericDesktopY = 0x31;
 constexpr qint32 GenericDesktopZ = 0x32;
+constexpr qint32 GenericDesktopRx = 0x33;
+constexpr qint32 GenericDesktopRy = 0x34;
 constexpr qint32 GenericDesktopRz = 0x35;
 constexpr qint32 GenericDesktopHatSwitch = 0x39;
 
@@ -47,44 +49,53 @@ void onInputValue(void* context, IOReturn, void*, IOHIDValueRef value)
     }
 
     const float valueAsAxis = axisValue(value);
+    Gamepad::InputValues & inputValues = gamepad->getInputValues();
     switch (usage)
     {
         case GenericDesktopX:
         case GenericDesktopY:
+        case GenericDesktopRx:
+        case GenericDesktopRy:
         case GenericDesktopZ:
         case GenericDesktopRz:
         case GenericDesktopHatSwitch: 
         {
-            
-            
-            gamepad->handleMacOsAxis(usage, valueAsAxis, integerValue); 
-
             switch (usage)
             {
                 case 0x30: 
                 {
-                    m_inputValues.m_leftX = valueAsAxis; 
+                    inputValues.m_leftX = valueAsAxis; 
                     break;
                 }
                 case 0x31: 
                 {
-                    m_inputValues.m_leftY = valueAsAxis; 
+                    inputValues.m_leftY = valueAsAxis; 
                     break;
                 }
-                case 0x32: 
+                case GenericDesktopRx: 
                 {
-                    m_inputValues.m_rightX = valueAsAxis; 
+                    inputValues.m_rightX = valueAsAxis; 
                     break;
                 }
-                case 0x35: 
+                case GenericDesktopRy: 
                 {
-                    m_inputValues.m_rightY = valueAsAxis; 
+                    inputValues.m_rightY = valueAsAxis; 
+                    break;
+                }
+                case GenericDesktopZ:
+                {
+                    gamepad->handleMouseEvent(oxygine::MouseButton::MouseButton_Left, valueAsAxis > Gamepad::MinCursorTilt);
+                    break;
+                }
+                case GenericDesktopRz:
+                {
+                    gamepad->handleMouseEvent(oxygine::MouseButton::MouseButton_Right, valueAsAxis > Gamepad::MinCursorTilt);
                     break;
                 }
                 case 0x39:
                 {
-                    m_inputValues.m_hatX = integerValue == 2 || integerValue == 3 || integerValue == 4 ? 1.0f : integerValue == 6 || integerValue == 7 || integerValue == 8 ? -1.0f : 0.0f;
-                    m_inputValues.m_hatY = integerValue == 4 || integerValue == 5 || integerValue == 6 ? 1.0f : integerValue == 0 || integerValue == 1 || integerValue == 8 ? -1.0f : 0.0f;
+                    inputValues.m_hatX = integerValue == 2 || integerValue == 3 || integerValue == 4 ? 1.0f : integerValue == 6 || integerValue == 7 || integerValue == 8 ? -1.0f : 0.0f;
+                    inputValues.m_hatY = integerValue == 4 || integerValue == 5 || integerValue == 6 ? 1.0f : integerValue == 0 || integerValue == 1 || integerValue == 8 ? -1.0f : 0.0f;
                     break;
                 }
                 default: 
@@ -94,7 +105,7 @@ void onInputValue(void* context, IOReturn, void*, IOHIDValueRef value)
             }
             break;
         }
-        default: 
+        default:
         {
             break;
         }

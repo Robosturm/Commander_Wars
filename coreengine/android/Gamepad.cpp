@@ -37,15 +37,18 @@ Java_org_robosturm_commander_1wars_CommanderWarsActivity_nativeGamepadButton(JNI
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_org_robosturm_commander_1wars_CommanderWarsActivity_nativeGamepadAxes(JNIEnv*, jclass, jfloat leftX, jfloat leftY, jfloat rightX, jfloat rightY, jfloat hatX, jfloat hatY)
+Java_org_robosturm_commander_1wars_CommanderWarsActivity_nativeGamepadAxes(JNIEnv*, jclass, jfloat leftX, jfloat leftY, jfloat rightX, jfloat rightY, jfloat leftTrigger, jfloat rightTrigger, jfloat hatX, jfloat hatY)
 {
-    auto & inputValues = Mainapp::getInstance()->getGamepad().getInputValues();
+    Gamepad & gamepad = Mainapp::getInstance()->getGamepad();
+    auto & inputValues = gamepad.getInputValues();
     inputValues.m_leftX = leftX;
     inputValues.m_leftY = leftY;
     inputValues.m_rightX = rightX;
     inputValues.m_rightY = rightY;
     inputValues.m_hatX = hatX;
     inputValues.m_hatY = hatY;
+    gamepad.handleMouseEvent(oxygine::MouseButton::MouseButton_Left, leftTrigger > Gamepad::MinCursorTilt);
+    gamepad.handleMouseEvent(oxygine::MouseButton::MouseButton_Right, rightTrigger > Gamepad::MinCursorTilt);
 }
 
 Gamepad::~Gamepad() = default;

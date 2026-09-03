@@ -7,7 +7,7 @@ import org.qtproject.qt.android.bindings.QtActivity;
 
 public class CommanderWarsActivity extends QtActivity {
     private static native void nativeGamepadButton(int button, boolean pressed);
-    private static native void nativeGamepadAxes(float leftX, float leftY, float rightX, float rightY, float hatX, float hatY);
+    private static native void nativeGamepadAxes(float leftX, float leftY, float rightX, float rightY, float leftTrigger, float rightTrigger, float hatX, float hatY);
 
     private static boolean isGamepad(InputDevice device) {
         if (device == null) {
@@ -31,6 +31,7 @@ public class CommanderWarsActivity extends QtActivity {
         if (event.getAction() == MotionEvent.ACTION_MOVE && isGamepad(event.getDevice())) {
             nativeGamepadAxes(event.getAxisValue(MotionEvent.AXIS_X), event.getAxisValue(MotionEvent.AXIS_Y),
                               event.getAxisValue(MotionEvent.AXIS_Z), event.getAxisValue(MotionEvent.AXIS_RZ),
+                              event.getAxisValue(MotionEvent.AXIS_LTRIGGER), event.getAxisValue(MotionEvent.AXIS_RTRIGGER),
                               event.getAxisValue(MotionEvent.AXIS_HAT_X), event.getAxisValue(MotionEvent.AXIS_HAT_Y));
         }
         return super.onGenericMotionEvent(event);
