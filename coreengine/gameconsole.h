@@ -47,6 +47,7 @@ public:
         eAudio       = 1 << 6,
         eUiFactory   = 1 << 7,
         eKeepAlive   = 1 << 8,
+        eGamepad     = 1 << 9,
     };
     Q_ENUM(eModules)
 

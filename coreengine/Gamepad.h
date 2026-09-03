@@ -2,14 +2,25 @@
 
 #include <QObject>
 #include <QTimer>
+#include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 
 class Gamepad final : public QObject
 {
     Q_OBJECT
 public:
+    struct InputValues
+    {
+        float m_leftX{0.0f};
+        float m_leftY{0.0f};
+        float m_rightX{0.0f};
+        float m_rightY{0.0f};
+        float m_hatX{0.0f};
+        float m_hatY{0.0f};
+    };
+
     static constexpr float MaxAxisValue = 32767.0f;
     static constexpr float MaxNegativeAxisValue = 32768.0f;
-    static constexpr float MinCursorTilt = 0.3f;
+    static constexpr float MinCursorTilt = 0.5f;
     static constexpr qint32 wheelSpeed = 7;
     static constexpr qint32 cursorSpeed = 25;
     static constexpr qint64 mouseIntervall = 50;
@@ -28,8 +39,10 @@ public:
         Y,
         Start,
         Select,
-        L2,
-        R2,
+        L1,
+        R1,
+        ThumbLeft,
+        ThumbRight,
         Max,
     };
 
@@ -40,12 +53,18 @@ public:
     };
 
     explicit Gamepad(qint32 gamepadId);
-    virtual ~Gamepad() = default;
+    virtual ~Gamepad();
 
-    void init();
+    void updateState();
     DeviceState getDeviceState() const;
+    void handleButton(qint32 button, bool pressed);
+    void handleAxes(InputValues & inputValues);
+    void handleMouseEvent(oxygine::MouseButton button, bool pressed);
 
     static bool isSupported();
+
+    InputValues & getInputValues() { return m_inputValues; }
+
 protected slots:
     void update();
 protected:
@@ -72,4 +91,7 @@ private:
     float m_mouseMapMoveSpeed{1};
     qint64 m_lastMouseMoveEvent{0};
     float m_mouseMoveSpeed{1};
+    qint32 m_deviceFileDescriptor{-1};
+    void* m_nativeDeviceManager{nullptr};
+    InputValues m_inputValues;
 };

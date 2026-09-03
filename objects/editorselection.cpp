@@ -993,24 +993,30 @@ void EditorSelection::KeyInput(Qt::Key cur)
 {
     if (cur == Settings::getInstance()->getKey_EditorPlaceTerrain())
     {
+        Mainapp::getInstance()->pauseRendering();
         oxygine::TouchEvent event(oxygine::TouchEvent::CLICK, false);
         event.target = m_pSpriteTerrainMode;
         event.currentTarget = m_pSpriteTerrainMode;
         m_pSpriteTerrainMode->dispatchEvent(&event);
+        Mainapp::getInstance()->continueRendering();
     }
     else if (cur  == Settings::getInstance()->getKey_EditorPlaceBuilding())
     {
+        Mainapp::getInstance()->pauseRendering();
         oxygine::TouchEvent event(oxygine::TouchEvent::CLICK, false);
         event.target = m_pSpriteBuildingMode;
         event.currentTarget = m_pSpriteBuildingMode;
         m_pSpriteBuildingMode->dispatchEvent(&event);
+        Mainapp::getInstance()->continueRendering();
     }
     else if (cur  == Settings::getInstance()->getKey_EditorPlaceUnit())
     {
+        Mainapp::getInstance()->pauseRendering();
         oxygine::TouchEvent event(oxygine::TouchEvent::CLICK, false);
         event.target = m_pSpriteUnitMode;
         event.currentTarget = m_pSpriteUnitMode;
         m_pSpriteUnitMode->dispatchEvent(&event);
+        Mainapp::getInstance()->continueRendering();
     }
     else if (cur  == Settings::getInstance()->getKey_EditorNextTeam())
     {

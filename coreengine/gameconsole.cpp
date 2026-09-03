@@ -28,7 +28,7 @@
 
 // values which differ from release to debug build
 GameConsole::eLogLevels GameConsole::m_LogLevel = static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL);
-quint64 GameConsole::m_activeModules = eGeneral | eJavaScript;
+quint64 GameConsole::m_activeModules = eGeneral | eJavaScript | eGamepad;
 bool GameConsole::m_show = false;
 bool GameConsole::m_toggled = false;
 bool GameConsole::m_developerMode = false;

@@ -624,10 +624,7 @@ bool Settings::getGamepadEnabled()
 void Settings::setGamepadEnabled(bool newGamepadEnabled)
 {
     m_gamepadEnabled = newGamepadEnabled;
-    if (m_gamepadEnabled)
-    {
-        Mainapp::getInstance()->getGamepad().init();
-    }
+    Mainapp::getInstance()->getGamepad().updateState();
 }
 
 bool Settings::getUseCoMinis()
@@ -1581,7 +1578,7 @@ void Settings::setup()
             // logging
             MemoryManagement::create<Value<bool>>("Logging", "LogActions", &m_LogActions, false, false, true),
             MemoryManagement::create<Value<GameConsole::eLogLevels>>("Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL),
-            MemoryManagement::create<Value<quint64>>("Logging", "LogModules", &m_defaultLogModuls, GameConsole::eGeneral | GameConsole::eJavaScript, 0, std::numeric_limits<quint64>::max()),
+            MemoryManagement::create<Value<quint64>>("Logging", "LogModules", &m_defaultLogModuls, GameConsole::eGeneral | GameConsole::eJavaScript | GameConsole::eGamepad, 0, std::numeric_limits<quint64>::max()),
             MemoryManagement::create<Value<bool>>("Logging", "CreateAiTrainingData", &m_createAiTrainingData, false, false, true),
             // heavy ai training
             MemoryManagement::create<Value<QString>>("AiTraining", "HeavyAiTrainingFile", &m_heavyAiTrainingFile, "", "", ""),

@@ -463,55 +463,55 @@
         <file>maps/advance_wars_dual_strike_campaign/The New Black.map</file>
         <file>maps/advance_wars_dual_strike_campaign/The Ocean Blue.map</file>
         <file>maps/advance_wars_dual_strike_campaign/Victory or Death!.map</file>
-        <file>maps/AWBW Global League/1vs1 Ardennes.map</file>
-        <file>maps/AWBW Global League/1vs1 Feishui.map</file>
-        <file>maps/AWBW Global League/1vs1 Issus.map</file>
-        <file>maps/AWBW Global League/1vs1 Marengo.map</file>
-        <file>maps/AWBW Global League/1vs1 Normandie.map</file>
-        <file>maps/AWBW Global League/1vs1 Somme.map</file>
-        <file>maps/AWBW Global League/1vs1 Stalingard.map</file>
-        <file>maps/AWBW Global League/Bandit Revolution.map</file>
-        <file>maps/AWBW Global League/Beach Nation Vacation.map</file>
-        <file>maps/AWBW Global League/Blood on my Hands.map</file>
-        <file>maps/AWBW Global League/Bring M.map</file>
-        <file>maps/AWBW Global League/Brush With Death.map</file>
-        <file>maps/AWBW Global League/Caustic Finale.map</file>
-        <file>maps/AWBW Global League/Chaos Theory.map</file>
-        <file>maps/AWBW Global League/Crossfire-Ring of Forest.map</file>
-        <file>maps/AWBW Global League/Cycles of Gehenna.map</file>
-        <file>maps/AWBW Global League/Dancing chap.map</file>
-        <file>maps/AWBW Global League/Desert Tomb.map</file>
-        <file>maps/AWBW Global League/Donu and Deca.map</file>
-        <file>maps/AWBW Global League/First Step Into Fog.map</file>
-        <file>maps/AWBW Global League/Flow Futuristic.map</file>
-        <file>maps/AWBW Global League/From Wharf to Wilds.map</file>
-        <file>maps/AWBW Global League/Gehenna Recycled.map</file>
-        <file>maps/AWBW Global League/Heist Miser's Prized Tires.map</file>
-        <file>maps/AWBW Global League/Hephaestus.map</file>
-        <file>maps/AWBW Global League/Highway To Hell.map</file>
-        <file>maps/AWBW Global League/Icebound.map</file>
-        <file>maps/AWBW Global League/Jaw of Tyrants.map</file>
-        <file>maps/AWBW Global League/Lacrimosa.map</file>
-        <file>maps/AWBW Global League/Last Sword.map</file>
-        <file>maps/AWBW Global League/Love Supremacies.map</file>
-        <file>maps/AWBW Global League/Mists of Avelon.map</file>
-        <file>maps/AWBW Global League/Misty.map</file>
-        <file>maps/AWBW Global League/Raptus Regaliter.map</file>
-        <file>maps/AWBW Global League/Reforming.map</file>
-        <file>maps/AWBW Global League/Resourceful.map</file>
-        <file>maps/AWBW Global League/Roll For Initiative.map</file>
-        <file>maps/AWBW Global League/Sand Dream.map</file>
-        <file>maps/AWBW Global League/Scorpion Operation.map</file>
-        <file>maps/AWBW Global League/Shadow Drifter.map</file>
-        <file>maps/AWBW Global League/Shadows chase you endlessly.map</file>
-        <file>maps/AWBW Global League/Splintered.map</file>
-        <file>maps/AWBW Global League/String Theory.map</file>
-        <file>maps/AWBW Global League/Tertiary Star.map</file>
-        <file>maps/AWBW Global League/The Michigan Maneuver.map</file>
-        <file>maps/AWBW Global League/The Rd to Dark.map</file>
-        <file>maps/AWBW Global League/Titans Rise.map</file>
-        <file>maps/AWBW Global League/Truth Is.map</file>
-        <file>maps/AWBW Global League/Unstable Fusion.map</file>
+        <file>maps/AWBW_Global_League/1vs1 Ardennes.map</file>
+        <file>maps/AWBW_Global_League/1vs1 Feishui.map</file>
+        <file>maps/AWBW_Global_League/1vs1 Issus.map</file>
+        <file>maps/AWBW_Global_League/1vs1 Marengo.map</file>
+        <file>maps/AWBW_Global_League/1vs1 Normandie.map</file>
+        <file>maps/AWBW_Global_League/1vs1 Somme.map</file>
+        <file>maps/AWBW_Global_League/1vs1 Stalingard.map</file>
+        <file>maps/AWBW_Global_League/Bandit Revolution.map</file>
+        <file>maps/AWBW_Global_League/Beach Nation Vacation.map</file>
+        <file>maps/AWBW_Global_League/Blood on my Hands.map</file>
+        <file>maps/AWBW_Global_League/Bring M.map</file>
+        <file>maps/AWBW_Global_League/Brush With Death.map</file>
+        <file>maps/AWBW_Global_League/Caustic Finale.map</file>
+        <file>maps/AWBW_Global_League/Chaos Theory.map</file>
+        <file>maps/AWBW_Global_League/Crossfire-Ring of Forest.map</file>
+        <file>maps/AWBW_Global_League/Cycles of Gehenna.map</file>
+        <file>maps/AWBW_Global_League/Dancing chap.map</file>
+        <file>maps/AWBW_Global_League/Desert Tomb.map</file>
+        <file>maps/AWBW_Global_League/Donu and Deca.map</file>
+        <file>maps/AWBW_Global_League/First Step Into Fog.map</file>
+        <file>maps/AWBW_Global_League/Flow Futuristic.map</file>
+        <file>maps/AWBW_Global_League/From Wharf to Wilds.map</file>
+        <file>maps/AWBW_Global_League/Gehenna Recycled.map</file>
+        <file>maps/AWBW_Global_League/Heist Miser's Prized Tires.map</file>
+        <file>maps/AWBW_Global_League/Hephaestus.map</file>
+        <file>maps/AWBW_Global_League/Highway To Hell.map</file>
+        <file>maps/AWBW_Global_League/Icebound.map</file>
+        <file>maps/AWBW_Global_League/Jaw of Tyrants.map</file>
+        <file>maps/AWBW_Global_League/Lacrimosa.map</file>
+        <file>maps/AWBW_Global_League/Last Sword.map</file>
+        <file>maps/AWBW_Global_League/Love Supremacies.map</file>
+        <file>maps/AWBW_Global_League/Mists of Avelon.map</file>
+        <file>maps/AWBW_Global_League/Misty.map</file>
+        <file>maps/AWBW_Global_League/Raptus Regaliter.map</file>
+        <file>maps/AWBW_Global_League/Reforming.map</file>
+        <file>maps/AWBW_Global_League/Resourceful.map</file>
+        <file>maps/AWBW_Global_League/Roll For Initiative.map</file>
+        <file>maps/AWBW_Global_League/Sand Dream.map</file>
+        <file>maps/AWBW_Global_League/Scorpion Operation.map</file>
+        <file>maps/AWBW_Global_League/Shadow Drifter.map</file>
+        <file>maps/AWBW_Global_League/Shadows chase you endlessly.map</file>
+        <file>maps/AWBW_Global_League/Splintered.map</file>
+        <file>maps/AWBW_Global_League/String Theory.map</file>
+        <file>maps/AWBW_Global_League/Tertiary Star.map</file>
+        <file>maps/AWBW_Global_League/The Michigan Maneuver.map</file>
+        <file>maps/AWBW_Global_League/The Rd to Dark.map</file>
+        <file>maps/AWBW_Global_League/Titans Rise.map</file>
+        <file>maps/AWBW_Global_League/Truth Is.map</file>
+        <file>maps/AWBW_Global_League/Unstable Fusion.map</file>
         <file>maps/commander_wars.camp/alphaLand.png</file>
         <file>maps/commander_wars.camp/oilInTheDesert.js</file>
         <file>maps/commander_wars.camp/oilInTheDesert.map</file>

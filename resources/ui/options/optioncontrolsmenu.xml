@@ -59,7 +59,7 @@
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Enables Gamepad support for controllers. Note: This is an experimental feature and won't work 100% with all controllers. This feature isn't supported for Android, iOS, MacOS and Linux.")</tooltip>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Enables experimental gamepad support for controllers. It may not work with every controller.")</tooltip>
                 <startValue>settings.getGamepadEnabled()</startValue>
                 <onEvent>settings.setGamepadEnabled(input)</onEvent>
                 <enabled>settings.isGamepadSupported()</enabled>

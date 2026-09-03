@@ -22,7 +22,7 @@
                 <x>10</x>
                 <y>10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","1) Previous unit")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","1) Left mouse button")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -30,7 +30,7 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","2) Left mouse button")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","2) Previous unit")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -46,7 +46,7 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","4) Left mouse button")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","4) ")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -70,7 +70,7 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","7) Show info")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","7) Toggle grid layout")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -78,7 +78,7 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","8) Next unit")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","8) Right mouse button")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -86,7 +86,7 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","9) Right mouse button")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","9) Next unit")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -94,7 +94,7 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","10) Show info")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","10) Quick action")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -102,7 +102,7 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","11) Show info")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","11) Show attack fields")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -134,7 +134,7 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","15) Right mouse button")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","15) ")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>

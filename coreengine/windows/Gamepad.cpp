@@ -3,6 +3,8 @@
 #include <dinput.h>
 #include "coreengine/mainapp.h"
 
+Gamepad::~Gamepad() = default;
+
 void Gamepad::update()
 {
     if (!Mainapp::getInstance()->isActive())
@@ -16,30 +18,30 @@ void Gamepad::update()
         m_deviceState = DeviceState::Unavailable;
         return;
     }
-    m_deviceState = DeviceState::Available;
-    qint32 wheelX = 0;
-    qint32 wheelY = 0;
+    m_deviceState = DeviceState::Available;    
     if ((xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) != 0)
     {
-        wheelY = wheelSpeed;
+        m_inputValues.m_hatY = 1;
     }
     else if ((xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN) != 0)
     {
-        wheelY = -wheelSpeed;
+        m_inputValues.m_hatY = -1;
     }
     if ((xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) != 0)
     {
-        wheelX = wheelSpeed;
+        m_inputValues.m_hatX = 1;
     }
     else if ((xstate.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) != 0)
     {
-        wheelX = -wheelSpeed;
+        m_inputValues.m_hatX = -1;
     }
-    handleWheelEvent(wheelX, wheelY);
+    m_inputValues.m_leftX = getAxisValue(xstate.Gamepad.sThumbLX);
+    m_inputValues.m_leftY = getAxisValue(xstate.Gamepad.sThumbLY);
+    m_inputValues.m_rightX = getAxisValue(xstate.Gamepad.sThumbRX);
+    m_inputValues.m_rightY = getAxisValue(xstate.Gamepad.sThumbRY);
     handleButtonPress(m_keys[Buttons::A], (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_A) != 0);
     handleButtonPress(m_keys[Buttons::B], (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_B) != 0);
-    handleMouseCursorStick(getAxisValue(xstate.Gamepad.sThumbLX), getAxisValue(xstate.Gamepad.sThumbLY));
-    handleKeyCursorStick(getAxisValue(xstate.Gamepad.sThumbRX), getAxisValue(xstate.Gamepad.sThumbRY));
+    handleAxes(inputValues);
 
     if (m_updateCounter == xstate.dwPacketNumber)
     {
@@ -49,18 +51,13 @@ void Gamepad::update()
 
     handleThumbStickPress((xstate.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB) != 0, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB) != 0);
     handleThumbStickPress((xstate.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) != 0, (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0);
-
+    
     handleButtonPress(m_keys[Buttons::X], (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_X) != 0);
     handleButtonPress(m_keys[Buttons::Y], (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_Y) != 0);
     handleButtonPress(m_keys[Buttons::Start], (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_START) != 0);
     handleButtonPress(m_keys[Buttons::Select], (xstate.Gamepad.wButtons & XINPUT_GAMEPAD_BACK) != 0);
-    handleButtonPress(m_keys[Buttons::L2], xstate.Gamepad.bLeftTrigger != 0);
-    handleButtonPress(m_keys[Buttons::R2], xstate.Gamepad.bRightTrigger != 0);
-}
-
-Gamepad::DeviceState Gamepad::getDeviceState() const
-{
-    return m_deviceState;
+    handleButtonPress(m_keys[Buttons::L1], xstate.Gamepad.bLeftTrigger != 0);
+    handleButtonPress(m_keys[Buttons::R1], xstate.Gamepad.bRightTrigger != 0);
 }
 
 bool Gamepad::isSupported()

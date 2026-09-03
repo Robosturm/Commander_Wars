@@ -455,7 +455,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             {
                 if (!m_slave)
                 {
-                    m_gamepad.init();
+                    m_gamepad.updateState();
                 }
                 if (Settings::getInstance()->getSpawnAiProcess())
                 {

@@ -1323,6 +1323,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
+        "-framework IOKit"
         )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     target_link_libraries(${PROJECT_NAME} PUBLIC
