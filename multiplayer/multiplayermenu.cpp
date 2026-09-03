@@ -1634,64 +1634,66 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
         spDialogMessageBox pDialog = MemoryManagement::create<DialogMessageBox>(serverMessage);
         connect(pDialog.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
         addChild(pDialog);
-        return;
     }
 
-    // Mod-sync is offerable when host advertised CapabilityModSync, no engine resource drift, and any mismatch class is non-empty (downloads OR settings-only activate/deactivate work).
-    const bool hostSupportsModSync = (hostCapabilities & Filesupport::CapabilityModSync) != 0;
-    const bool resourceDrift = !mismatchedResourceFolders.isEmpty();
-    const bool fixableViaSync = hostSupportsModSync && !resourceDrift && (!missingHere.isEmpty() || !versionDiffs.isEmpty() || !contentDiffs.isEmpty() || !extraHere.isEmpty());
-
-    if (message.isEmpty())
+    else
     {
-        // Legacy and fail-closed payloads have no structured detail.
-        if (differentHash)
+        // Mod-sync is offerable when host advertised CapabilityModSync, no engine resource drift, and any mismatch class is non-empty (downloads OR settings-only activate/deactivate work).
+        const bool hostSupportsModSync = (hostCapabilities & Filesupport::CapabilityModSync) != 0;
+        const bool resourceDrift = !mismatchedResourceFolders.isEmpty();
+        const bool fixableViaSync = hostSupportsModSync && !resourceDrift && (!missingHere.isEmpty() || !versionDiffs.isEmpty() || !contentDiffs.isEmpty() || !extraHere.isEmpty());
+
+        if (message.isEmpty())
         {
-            message = tr("Host has a different version of a mod or the game resource folder has been modified by one of the games.");
+            // Legacy and fail-closed payloads have no structured detail.
+            if (differentHash)
+            {
+                message = tr("Host has a different version of a mod or the game resource folder has been modified by one of the games.");
+            }
+            else
+            {
+                CONSOLE_PRINT("handleVersionMissmatch reached unreachable branch: !differentHash with no mod-set or hash diff detail. checkMods set !sameMods but our classification found nothing. Investigate.", GameConsole::eERROR);
+                message = tr("Failed to join game due to unknown verification failure.");
+            }
+        }
+        else if (fixableViaSync)
+        {
+            message = tr("Your game data differs from the host:") + "\n\n" + message + tr("Want me to download host's mod set, apply it, and restart automatically?");
         }
         else
         {
-            CONSOLE_PRINT("handleVersionMissmatch reached unreachable branch: !differentHash with no mod-set or hash diff detail. checkMods set !sameMods but our classification found nothing. Investigate.", GameConsole::eERROR);
-            message = tr("Failed to join game due to unknown verification failure.");
+            message = tr("Cannot join, your game data differs from the host:") + "\n\n" + message + tr("Leaving the game again.");
         }
-    }
-    else if (fixableViaSync)
-    {
-        message = tr("Your game data differs from the host:") + "\n\n" + message + tr("Want me to download host's mod set, apply it, and restart automatically?");
-    }
-    else
-    {
-        message = tr("Cannot join, your game data differs from the host:") + "\n\n" + message + tr("Leaving the game again.");
-    }
 
-    if (fixableViaSync)
-    {
-        spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(message, true, tr("Apply"), tr("Leave game"));
-        // Host's advertised list is already cosmetic-filtered when the rule allows them; re-add client cosmetic-only mods so the user does not silently lose them on next boot.
-        QStringList postSyncActiveMods = mods;
-        if (cosmeticAllowed)
+        if (fixableViaSync)
         {
-            const QStringList clientFull = settings->getMods();
-            for (const auto & mod : std::as_const(clientFull))
+            spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(message, true, tr("Apply"), tr("Leave game"));
+            // Host's advertised list is already cosmetic-filtered when the rule allows them; re-add client cosmetic-only mods so the user does not silently lose them on next boot.
+            QStringList postSyncActiveMods = mods;
+            if (cosmeticAllowed)
             {
-                if (!postSyncActiveMods.contains(mod) && settings->getIsCosmetic(mod))
+                const QStringList clientFull = settings->getMods();
+                for (const auto & mod : std::as_const(clientFull))
                 {
-                    postSyncActiveMods.append(mod);
+                    if (!postSyncActiveMods.contains(mod) && settings->getIsCosmetic(mod))
+                    {
+                        postSyncActiveMods.append(mod);
+                    }
                 }
             }
+            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, [this, modsToDownloadPaths, postSyncActiveMods]()
+            {
+                confirmModSync(modsToDownloadPaths, postSyncActiveMods);
+            }, Qt::QueuedConnection);
+            connect(pDialogMessageBox.get(), &DialogMessageBox::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+            addChild(pDialogMessageBox);
         }
-        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, [this, modsToDownloadPaths, postSyncActiveMods]()
+        else
         {
-            confirmModSync(modsToDownloadPaths, postSyncActiveMods);
-        }, Qt::QueuedConnection);
-        connect(pDialogMessageBox.get(), &DialogMessageBox::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
-        addChild(pDialogMessageBox);
-    }
-    else
-    {
-        spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(message);
-        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
-        addChild(pDialogMessageBox);
+            spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(message);
+            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+            addChild(pDialogMessageBox);
+        }
     }
 }
 
@@ -1955,35 +1957,37 @@ void Multiplayermenu::handleServerInvalidModConfig(const QJsonObject & data)
             tr("One or more active mods are not supported on this server. Disable them manually or use gateway hosting."));
         connect(pDialog.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
         addChild(pDialog);
-        return;
     }
 
-    QString message;
-    QStringList unsupportedNames;
-    for (const auto & mod : std::as_const(unsupportedMods))
+    else
     {
-        unsupportedNames.append(settings->getModName(mod) + " " + settings->getModVersion(mod));
-    }
-    appendSection(message, tr("Not supported on this server:"), unsupportedNames);
-    appendSection(message, tr("Version update required:"), versionDiffs);
-    appendSection(message, tr("Content update required:"), contentDiffs);
-    if (!versionDiffs.isEmpty() || !contentDiffs.isEmpty())
-    {
-        message += tr("Install the server's matching mod version and files before trying again. Nothing will be downloaded automatically.") + "\n\n";
-    }
-    message += tr("Restart with the unsupported mods disabled, or use gateway hosting to play with them. Their installed files will not be deleted.");
-    spDialogMessageBox pDialog = MemoryManagement::create<DialogMessageBox>(message, true, tr("Disable and restart"), tr("Cancel"));
-    connect(pDialog.get(), &DialogMessageBox::sigOk, this, [this, unsupportedMods]()
-    {
-        QStringList remainingMods = Settings::getInstance()->getMods();
-        for (const auto & mod : unsupportedMods)
+        QString message;
+        QStringList unsupportedNames;
+        for (const auto & mod : std::as_const(unsupportedMods))
         {
-            remainingMods.removeAll(mod);
+            unsupportedNames.append(settings->getModName(mod) + " " + settings->getModVersion(mod));
         }
-        restartWithActiveMods(remainingMods);
-    }, Qt::QueuedConnection);
-    connect(pDialog.get(), &DialogMessageBox::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
-    addChild(pDialog);
+        appendSection(message, tr("Not supported on this server:"), unsupportedNames);
+        appendSection(message, tr("Version update required:"), versionDiffs);
+        appendSection(message, tr("Content update required:"), contentDiffs);
+        if (!versionDiffs.isEmpty() || !contentDiffs.isEmpty())
+        {
+            message += tr("Install the server's matching mod version and files before trying again. Nothing will be downloaded automatically.") + "\n\n";
+        }
+        message += tr("Restart with the unsupported mods disabled, or use gateway hosting to play with them. Their installed files will not be deleted.");
+        spDialogMessageBox pDialog = MemoryManagement::create<DialogMessageBox>(message, true, tr("Disable and restart"), tr("Cancel"));
+        connect(pDialog.get(), &DialogMessageBox::sigOk, this, [this, unsupportedMods]()
+        {
+            QStringList remainingMods = Settings::getInstance()->getMods();
+            for (const auto & mod : unsupportedMods)
+            {
+                remainingMods.removeAll(mod);
+            }
+            restartWithActiveMods(remainingMods);
+        }, Qt::QueuedConnection);
+        connect(pDialog.get(), &DialogMessageBox::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+        addChild(pDialog);
+    }
 }
 
 void Multiplayermenu::prepareServerModError()
