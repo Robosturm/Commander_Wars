@@ -80,6 +80,7 @@ public:
     static const char* const SQL_MAILADRESS;
     static const char* const SQL_VALIDPASSWORD;
     static const char* const SQL_LASTLOGIN;
+    static const char* const SQL_TOTPSECRET;
     static const char* const SQL_TABLE_PLAYERDATA;
     static const char* const SQL_COID;
     static const char* const SQL_GAMESMADE;
@@ -469,6 +470,27 @@ private:
      */
     static QSqlQuery getAccountInfo(QSqlDatabase & database, const QString & username, bool & success);
     /**
+     * @brief hasTotpSecret checks if a totp secret for 2 factor authentication is stored for the account
+     * @param database
+     * @param username
+     * @return true if a non-empty totp secret exists
+     */
+    static bool hasTotpSecret(QSqlDatabase & database, const QString & username);
+    /**
+     * @brief storeTotpSecret stores the base32 encoded totp secret for the account
+     * @param database
+     * @param username
+     * @param base32Secret base32 encoded totp secret
+     * @return true if the secret was stored
+     */
+    static bool storeTotpSecret(QSqlDatabase & database, const QString & username, const QString & base32Secret);
+    /**
+     * @brief clearTotpSecret removes the totp secret of the account
+     * @param database
+     * @param username
+     * @return true if the secret was removed
+     */
+    static bool clearTotpSecret(QSqlDatabase & database, const QString & username);    /**
      * @brief sendMail
      * @param message
      */

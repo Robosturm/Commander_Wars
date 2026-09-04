@@ -18,6 +18,7 @@
 #include "coreengine/commandlineparser.h"
 #include "coreengine/globalutils.h"
 #include "multiplayer/password.h"
+#include "multiplayer/totp.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
@@ -29,6 +30,7 @@ const char *const MainServer::SQL_PASSWORD = "password";
 const char *const MainServer::SQL_MAILADRESS = "mailAdress";
 const char *const MainServer::SQL_VALIDPASSWORD = "validPassword";
 const char *const MainServer::SQL_LASTLOGIN = "lastLogin";
+const char *const MainServer::SQL_TOTPSECRET = "totpSecret";
 
 const char *const MainServer::SQL_TABLE_PLAYERDATA = "playerData";
 const char *const MainServer::SQL_COID = "coid";
@@ -149,6 +151,7 @@ MainServer::MainServer()
 
     if (m_serverData != nullptr)
     {
+        Totp::selfTest();
         startDatabase();
         m_mailSender.moveToThread(&m_mailSenderThread);
         m_mailSenderThread.start(QThread::Priority::NormalPriority);
@@ -195,6 +198,31 @@ void MainServer::startDatabase()
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create player table error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+    }
+    // migrate older databases: add the totp secret column if missing
+    QSqlQuery pragmaQuery(*m_serverData);
+    pragmaQuery.exec(QString("PRAGMA table_info(") + SQL_TABLE_PLAYERS + ")");
+    bool hasTotpColumn = false;
+    while (pragmaQuery.next())
+    {
+        if (pragmaQuery.value("name").toString() == QLatin1String(SQL_TOTPSECRET))
+        {
+            hasTotpColumn = true;
+            break;
+        }
+    }
+    if (!hasTotpColumn)
+    {
+        QSqlQuery alterQuery(*m_serverData);
+        alterQuery.exec(QString("ALTER TABLE ") + SQL_TABLE_PLAYERS + " ADD COLUMN " + SQL_TOTPSECRET + " TEXT DEFAULT ''");
+        if (sqlQueryFailed(alterQuery))
+        {
+            CONSOLE_PRINT("Unable to add totp column to player table: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+        }
+        else
+        {
+            CONSOLE_PRINT("Added totp secret column to player table", GameConsole::eDEBUG);
+        }
     }
     // create table for map file server
     query.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_DOWNLOADMAPINFO + " (" +
@@ -1526,6 +1554,7 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonObject &objData)
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    outData.insert(JsonKeys::JSONKEY_HAS2FA, hasTotpSecret(*m_serverData, username));
     QJsonDocument outDoc(outData);
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
@@ -1723,6 +1752,39 @@ QString MainServer::createRandomPassword() const
         password += static_cast<char>(GlobalUtils::randInt('A', 'Z'));
     }
     return password;
+}
+
+bool MainServer::hasTotpSecret(QSqlDatabase &database, const QString &username)
+{
+    bool success = false;
+    QSqlQuery query = getAccountInfo(database, username, success);
+    if (query.first() && success)
+    {
+        return !query.value(SQL_TOTPSECRET).toString().isEmpty();
+    }
+    return false;
+}
+
+bool MainServer::storeTotpSecret(QSqlDatabase &database, const QString &username, const QString &base32Secret)
+{
+    QSqlQuery updateQuery(database);
+    updateQuery.prepare(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                        SQL_TOTPSECRET + " = ? WHERE " +
+                        SQL_USERNAME + " = ?;");
+    updateQuery.addBindValue(base32Secret);
+    updateQuery.addBindValue(username);
+    updateQuery.exec();
+    if (sqlQueryFailed(updateQuery))
+    {
+        CONSOLE_PRINT("Unable to store totp secret for user " + username + ". Error: " + database.lastError().nativeErrorCode(), GameConsole::eERROR);
+        return false;
+    }
+    return true;
+}
+
+bool MainServer::clearTotpSecret(QSqlDatabase &database, const QString &username)
+{
+    return storeTotpSecret(database, username, "");
 }
 
 QSqlDatabase &MainServer::getDatabase()

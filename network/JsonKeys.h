@@ -38,6 +38,11 @@ namespace JsonKeys
     const char* const JSONKEY_USERNAME = "username";
     const char* const JSONKEY_ONLINEINFO = "onlineInfo";
     const char* const JSONKEY_ACCOUNT_ERROR = "accountError";
+    const char* const JSONKEY_TOTPCODE = "totpCode";
+    const char* const JSONKEY_TOTPSECRET = "totpSecret";
+    const char* const JSONKEY_TOTPURL = "totpUrl";
+    const char* const JSONKEY_NEWPASSWORD = "newPassword";
+    const char* const JSONKEY_HAS2FA = "has2fa";
     const char* const JSONKEY_USERNAMES = "usernames";
     const char* const JSONKEY_DISCONNECTREASON = "disconnectReason";
     const char* const JSONKEY_WINNERINFO = "winnerInfo";
