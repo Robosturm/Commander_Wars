@@ -3,6 +3,7 @@
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
 #include <QElapsedTimer>
+#include <QTimer>
 #include "coreengine/memorymanagement.h"
 
 namespace oxygine
@@ -37,7 +38,7 @@ namespace oxygine
         PointerState* getTouchByID(qint64 id);
         PointerState* getPointerMouse();
         void sendPointerButtonEvent(spStage & stage, MouseButton button, qint32 x, qint32 y, float pressure, qint32 type, PointerState* ps);
-        void sendPointerMotionEvent(spStage & stage, qint32 x, qint32 y, float pressure, PointerState* ps);
+        qint32 sendPointerMotionEvent(spStage & stage, qint32 x, qint32 y, float pressure, PointerState* ps);
         void sendPointerWheelEvent(spStage & stage, const QPoint& dir, PointerState* ps);
     private:
         explicit Input();

@@ -49,6 +49,7 @@
 #endif
 
 WorkerThread::WorkerThread()
+    : m_mouseDelayTimer(this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("WorkerThread");
@@ -62,7 +63,11 @@ WorkerThread::WorkerThread()
     connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerThread::mouseReleaseEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
+    m_mouseDelayTimer.setSingleShot(true);
+    connect(&m_mouseDelayTimer, &QTimer::timeout, this, &WorkerThread::mouseMoveEventDelayed, Qt::QueuedConnection);
+
     moveToThread(Mainapp::getWorkerthread());
+    
 }
 
 WorkerThread::~WorkerThread()
@@ -311,7 +316,21 @@ void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint
 void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::getInstance();
-    input->sendPointerMotionEvent(oxygine::Stage::getStage(), x, y, 1.0f, input->getPointerMouse());
+    m_lastMousePosition = QPoint(x, y);
+    auto delayed = input->sendPointerMotionEvent(oxygine::Stage::getStage(), x, y, 1.0f, input->getPointerMouse());
+    if (delayed > 0)
+    {
+        m_mouseDelayTimer.start(delayed);
+    }
+    else
+    {
+        m_mouseDelayTimer.stop();
+    }
+}
+
+void WorkerThread::mouseMoveEventDelayed()
+{
+    mouseMoveEvent(m_lastMousePosition.x(), m_lastMousePosition.y());
 }
 
 void WorkerThread::wheelEvent(qint32 x, qint32 y)

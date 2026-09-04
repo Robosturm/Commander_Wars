@@ -68,11 +68,11 @@ namespace oxygine
         }
     }
 
-    void Input::sendPointerMotionEvent(spStage & stage, qint32 x, qint32 y, float pressure, PointerState* ps)
+    qint32 Input::sendPointerMotionEvent(spStage & stage, qint32 x, qint32 y, float pressure, PointerState* ps)
     {
         if (!m_multiTouch && ps->getIndex() != 1 && ps != &m_pointerMouse)
         {
-            return;
+            return 0;
         }
         if (m_moveTimer.elapsed() >= Settings::getInstance()->getMouseUpdateRate())
         {
@@ -87,6 +87,11 @@ namespace oxygine
             }
             Mainapp::getInstance()->continueRendering();
             m_moveTimer.restart();
+            return 0;
+        }
+        else
+        {
+            return Settings::getInstance()->getMouseUpdateRate() - m_moveTimer.elapsed();
         }
     }
 

@@ -1,5 +1,5 @@
-#ifndef RENDERTHREAD_H
-#define RENDERTHREAD_H
+#ifndef WORKERTHREAD_H
+#define WORKERTHREAD_H
 
 #include <QObject>
 #include <QElapsedTimer>
@@ -28,8 +28,11 @@ private slots:
     void mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
     void mouseMoveEvent(qint32 x, qint32 y);
     void wheelEvent(qint32 x, qint32 y);
+    void mouseMoveEventDelayed();
 private:
     bool m_started{false};
+    QTimer m_mouseDelayTimer;
+    QPoint m_lastMousePosition;
 };
 
-#endif // RENDERTHREAD_H
+#endif // WORKERTHREAD_H
