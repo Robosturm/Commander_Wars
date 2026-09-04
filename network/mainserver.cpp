@@ -1064,7 +1064,9 @@ void MainServer::spawnSlaveGame(QDataStream &stream, quint64 socketID, QByteArra
 {
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
-    if (validHostRequest(mods))
+    QStringList unsupportedMods;
+    QJsonArray modInfos;
+    if (validHostRequest(mods, unsupportedMods, modInfos))
     {
         QByteArray minimapData = Filesupport::readByteArray(stream);
         spawnSlave(initScript, mods, id, socketID, data, minimapData);
@@ -1076,6 +1078,8 @@ void MainServer::spawnSlaveGame(QDataStream &stream, quint64 socketID, QByteArra
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_UNSUPPORTEDMODS, QJsonArray::fromStringList(unsupportedMods));
+        data.insert(JsonKeys::JSONKEY_MODINFOS, modInfos);
         QJsonDocument doc(data);
         emit m_pGameServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
@@ -1249,19 +1253,35 @@ void MainServer::spawnSlave(const QString &initScript, const QStringList &mods, 
     }
 }
 
-bool MainServer::validHostRequest(QStringList mods)
+bool MainServer::validHostRequest(const QStringList & mods, QStringList & unsupportedMods, QJsonArray & modInfos)
 {
-    // make sure the server has the requested mods installed.
-    for (auto &mod : mods)
+    QStringList supportedMods;
+    for (const auto & mod : mods)
     {
         if (!QFile::exists(mod + "/mod.txt") &&
             !QFile::exists(Settings::getInstance()->getUserPath() + mod + "/mod.txt") &&
             !QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + mod + "/mod.txt"))
         {
-            return false;
+            unsupportedMods.append(mod);
+        }
+        else
+        {
+            supportedMods.append(mod);
         }
     }
-    return true;
+    if (!unsupportedMods.isEmpty())
+    {
+        const auto hashes = Filesupport::getPerModHashes(supportedMods);
+        for (const auto & mod : std::as_const(supportedMods))
+        {
+            QJsonObject modInfo;
+            modInfo.insert(JsonKeys::JSONKEY_MODPATH, mod);
+            modInfo.insert(JsonKeys::JSONKEY_MODVERSION, Settings::getInstance()->getModVersion(mod));
+            modInfo.insert(JsonKeys::JSONKEY_MODHASH, QString::fromLatin1(hashes.value(mod).toHex()));
+            modInfos.append(modInfo);
+        }
+    }
+    return unsupportedMods.isEmpty();
 }
 
 void MainServer::playerJoined(qint64 socketId)

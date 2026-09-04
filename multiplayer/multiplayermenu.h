@@ -197,6 +197,9 @@ protected:
     void clientMapInfo(QDataStream & stream, quint64 socketID);
     void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, QStringList & mismatchedResourceFolders, QStringList & mismatchedMods, QMap<QString, QByteArray> & hostModHashes, quint32 & hostCapabilities, bool & sameMods, bool & differentHash, bool & sameVersion, bool & cosmeticAllowed);
     void handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, const QStringList & mismatchedResourceFolders, const QStringList & mismatchedMods, const QMap<QString, QByteArray> & hostModHashes, quint32 hostCapabilities, bool sameMods, bool differentHash, bool sameVersion, bool cosmeticAllowed);
+    void handleServerInvalidModConfig(const QJsonObject & data);
+    void prepareServerModError();
+    void restartWithActiveMods(const QStringList & activeMods);
     void confirmModSync(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
     void startModSyncDownload(const QStringList & modsToDownload, const QStringList & postSyncActiveMods);
     void onModSyncProgress();
@@ -400,6 +403,7 @@ private:
     QTimer m_slaveDespawnTimer{this};
     bool m_despawning{false};
     bool m_sameVersionAsServer{false};
+    bool m_serverModErrorPending{false};
 
     // Mod-sync client-session state; cleared on completion or abort.
     QList<QPair<QString, QString>> m_modSyncStagings;

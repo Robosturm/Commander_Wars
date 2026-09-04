@@ -109,6 +109,8 @@ namespace JsonKeys
     const char* const JSONKEY_MODNAME = "modName";
     const char* const JSONKEY_MODINFOS = "modInfos";
     const char* const JSONKEY_MODVERSION = "modVersion";
+    const char* const JSONKEY_MODHASH = "modHash";
+    const char* const JSONKEY_UNSUPPORTEDMODS = "unsupportedMods";
 
     // bracket graph data
     const char* const JSONKEY_BRACKETGRAPHINFO = "bracketGraphInfo";
