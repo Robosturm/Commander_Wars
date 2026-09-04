@@ -835,6 +835,7 @@ set(${PROJECT_NAME}_SRCS
     multiplayer/multiplayermenu.cpp multiplayer/multiplayermenu.h
     multiplayer/gamedata.cpp multiplayer/gamedata.h
     multiplayer/password.cpp multiplayer/password.h
+    multiplayer/totp.cpp multiplayer/totp.h
     multiplayer/dialogpasswordandadress.cpp multiplayer/dialogpasswordandadress.h
     multiplayer/dialogpassword.cpp multiplayer/dialogpassword.h
     multiplayer/networkgamedataview.h multiplayer/networkgamedataview.cpp
