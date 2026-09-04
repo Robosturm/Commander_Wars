@@ -43,6 +43,24 @@ public:
     Q_INVOKABLE void loginToServerAccount(const QString password);
     Q_INVOKABLE void resetPasswordOnServerAccount(const QString emailAdress);
     Q_INVOKABLE void changePasswordOnServerAccount(const QString oldServerPassword, const QString newServerPassword);
+    /**
+     * @brief requestServer2faSetup starts the optional 2fa enrollment on the server for the current account
+     */
+    Q_INVOKABLE void requestServer2faSetup();
+    /**
+     * @brief confirmServer2fa confirms the pending 2fa enrollment with the code shown in the user's app
+     * @param code current totp code
+     */
+    Q_INVOKABLE void confirmServer2fa(const QString code);
+    /**
+     * @brief cancelServer2fa cancels a pending 2fa enrollment or password reset on the server
+     */
+    Q_INVOKABLE void cancelServer2fa();
+    /**
+     * @brief submitPasswordResetCode sends the entered totp code of a pending password reset to the server
+     * @param code current totp code
+     */
+    Q_INVOKABLE void submitPasswordResetCode(const QString code);
     Q_INVOKABLE void enableServerButtons(bool enable);
     Q_INVOKABLE void requestObserverUpdateGames();
     Q_INVOKABLE void showContactingServer();
@@ -113,6 +131,13 @@ private:
     void joinSlaveGame(const QJsonObject & objData);
     void checkVersionAndShowInfo(const QJsonObject & objData);
     void handleAccountMessage(quint64 socketID, const QString object, const QJsonObject & objData);
+    /**
+     * @brief handle2faMessage forwards a 2fa server response to the js dialog
+     * @param socketID
+     * @param object js object name of the dialog
+     * @param objData server response data
+     */
+    void handle2faMessage(quint64 socketID, const QString object, const QJsonObject & objData);
     void requestServerGames();
     void requestUserUpdateGames();
     void onDownloadResponse(const QJsonObject & objData);
