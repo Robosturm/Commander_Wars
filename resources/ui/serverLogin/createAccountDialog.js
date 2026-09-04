@@ -103,7 +103,7 @@ var CreateAccountDialog =
     {
         if (errorCode === GameEnums.LoginError_None)
         {
-            createAccount.showMessageBox(qsTr("Account successfully created."));
+            createAccount.showMessageBox(qsTr("Account successfully created. Log in to optionally set up a 2 factor authentication with the 'Setup 2FA' button, which allows you to reset your password in case you forget it."));
             createAccount.exit();
         }
         else if (errorCode === GameEnums.LoginError_AccountExists)

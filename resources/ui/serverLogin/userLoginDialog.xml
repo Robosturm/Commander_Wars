@@ -104,6 +104,15 @@
                 <onEvent>userLogin.createDialog("changePassword", "ui/serverLogin/changePasswordDialog.xml", userLogin.getBaseMenu())</onEvent>
             </Button>
             <Button>
+                <Id>Setup2faButton</Id>
+                <x>settings.getStageWidth() / 2 - 75 - 210</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>200</width>
+                <text>UserLoginDialog.setup2fa()</text>
+                <tooltip>UserLoginDialog.setup2faTooltip()</tooltip>
+                <onEvent>UserLoginDialog.openSetup2fa()</onEvent>
+            </Button>
+            <Button>
                 <Id>DeleteButton</Id>
                 <x>settings.getStageWidth() / 2 - 75</x>
                 <y>lastY + lastHeight + 20</y>

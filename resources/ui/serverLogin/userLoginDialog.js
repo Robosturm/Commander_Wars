@@ -57,6 +57,20 @@ var UserLoginDialog =
     {
         return qsTr("Let's you delete your account on the servers.");
     },
+    setup2fa : function()
+    {
+        return qsTr("Setup 2FA");
+    },
+    setup2faTooltip : function()
+    {
+        return qsTr("Sets up an optional 2 factor authentication for your account which allows you to reset your password.");
+    },
+    openSetup2fa : function()
+    {
+        var menu = userLogin.getBaseMenu();
+        userLogin.createDialog("setup2fa", "ui/serverLogin/setup2faDialog.xml", menu);
+        menu.requestServer2faSetup();
+    },
     loginOnServerText : function()
     {
         return qsTr("Login on Server");
@@ -90,12 +104,16 @@ var UserLoginDialog =
         menu.loginToServerAccount(password);
         settings.setServerPassword(password);
     },    
-    onAccountMessage : function(errorCode)
+    onAccountMessage : function(errorCode, has2fa)
     {
         var menu = userLogin.getBaseMenu();
         if (errorCode === GameEnums.LoginError_None)
         {
             userLogin.showMessageBox(qsTr("Logged onto the server."));
+            if (has2fa === false)
+            {
+                userLogin.showMessageBox(qsTr("Your account has no 2 factor authentication. Without it your password can not be reset in case you forget it. You can set it up with the 'Setup 2FA' button after logging in."));
+            }
             menu.onLogin();
             userLogin.exit();
         }
