@@ -2368,6 +2368,7 @@ void GameMenue::doSaveMap()
                         m_pMap->serializeObject(stream);
                         file.close();
                         Settings::getInstance()->setLastSaveGame(m_saveFile);
+                        Settings::getInstance()->saveSettings();
                     }
                 }
                 else
