@@ -167,6 +167,7 @@ bool Totp::selfTest()
         {
             CONSOLE_PRINT("Totp self test failed for time " + QString::number(vector.timeSeconds) +
                           ": expected " + vector.expected + " got " + code, GameConsole::eLogLevels::eERROR);
+            CONSOLE_PRINT("2-Factor Authentication is broken and won't work correctly", GameConsole::eLogLevels::eERROR);
             success = false;
         }
     }
@@ -175,6 +176,7 @@ bool Totp::selfTest()
     if (base32Decode(base32Encode(testData)) != testData)
     {
         CONSOLE_PRINT("Totp self test failed: base32 round trip mismatch", GameConsole::eLogLevels::eERROR);
+        CONSOLE_PRINT("2-Factor Authentication is broken and won't work correctly", GameConsole::eLogLevels::eERROR);
         success = false;
     }
     if (success)
