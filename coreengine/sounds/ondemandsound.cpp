@@ -2,6 +2,8 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
+#include <algorithm>
+
 #ifdef AUDIOSUPPORT
 #include <QAudioDevice>
 #endif
@@ -122,22 +124,19 @@ void AudioManager::stopSoundInternal(qint32 soundIndex)
     {
         cleanUpSounds();
     }
+    // queued playingChanged signals can trigger this twice for the same slot, avoid duplicate free-list entries
+    if (!m_freeSoundSlots.contains(soundIndex))
+    {
+        m_freeSoundSlots.append(soundIndex);
+    }
 }
 
 void AudioManager::cleanUpSounds()
 {
-    qint32 i = 0;
-    while (i < m_toDeleteSounds.size())
-    {
-        if (!m_toDeleteSounds[i]->isPlaying())
-        {
-            m_toDeleteSounds.erase(m_toDeleteSounds.cbegin() + i);
-        }
-        else
-        {
-            ++i;
-        }
-    }
+    m_toDeleteSounds.erase(std::remove_if(m_toDeleteSounds.begin(), m_toDeleteSounds.end(),
+                                          [](const spQSoundEffect & sound)
+                                          { return !sound->isPlaying(); }),
+                            m_toDeleteSounds.end());
 }
 
 void AudioManager::playDelayedSound(SoundData *soundData, qint32 soundIndex, bool stopOldestSound, qint32 duration)
