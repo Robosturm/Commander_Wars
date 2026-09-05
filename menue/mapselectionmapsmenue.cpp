@@ -19,6 +19,7 @@
 
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/filedialog.h"
+#include "objects/dialogs/mapfiledialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
 
 #include "multiplayer/multiplayermenu.h"
@@ -532,9 +533,9 @@ void MapSelectionMapsMenue::showSaveMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getInstance()->getUserPath() + "maps/";
-    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, "", false, tr("Save"));
+    spMapFileDialog fileDialog = MemoryManagement::create<MapFileDialog>(path, wildcards, true, "", tr("Save"));
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);
+    connect(fileDialog.get(),  &MapFileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);
 }
 
 void MapSelectionMapsMenue::showMapFilter()

@@ -15,7 +15,7 @@
 
 const char* const ROOT = "::::";
 
-FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile, bool preview, QString acceptButtonName, QColor folderColor)
+FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile, bool preview, QString acceptButtonName, QColor folderColor, bool derived)
     : m_preview(preview),
       m_pathPrefix(Settings::getInstance()->getUserPath()),
       m_isSaveDialog(isSaveDialog),
@@ -102,12 +102,17 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
         }
     });
     connect(this, &FileDialog::sigShowOverwriteWarning, this, &FileDialog::showOverwriteWarning, Qt::QueuedConnection);
-    connect(this, &FileDialog::sigShowFolder, this, &FileDialog::showFolder, Qt::QueuedConnection);
-    showFolder(startFolder);
+    connect(this, &FileDialog::sigShowFolder, this, &FileDialog::showFolder, Qt::QueuedConnection);    
     connect(pApp, &Mainapp::sigKeyDown, this, &FileDialog::KeyInput, Qt::QueuedConnection);
     connect(this, &FileDialog::sigCancel, this, &FileDialog::remove, Qt::QueuedConnection);
     connect(this, &FileDialog::sigFinished, this, &FileDialog::remove, Qt::QueuedConnection);
     connect(this, &FileDialog::sigShowDeleteQuestion, this, &FileDialog::showDeleteQuestion, Qt::QueuedConnection);
+
+    if (!derived)
+    {
+        showFolder(startFolder);
+    }
+
     pApp->continueRendering();
 }
 
@@ -316,23 +321,27 @@ void FileDialog::showFolder(QString inputFolder)
             });
             if (m_preview)
             {
-                QImage img(infoList[i].filePath());
-                oxygine::spSingleResAnim pAnim = MemoryManagement::create<oxygine::SingleResAnim>();
-                Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1);
-                m_ResAnims.append(pAnim);
-                oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
-                pSprite->setResAnim(pAnim.get());
-                if (pAnim-> getWidth() > 0)
+                QImage img;
+                loadPreviewHook(infoList[i].filePath(), img);
+                if (img.width() > 0 && img.height() > 0 && !img.isNull())
                 {
-                    pSprite->setScaleX(30.0f / static_cast<float>(pAnim->getWidth()));
+                    oxygine::spSingleResAnim pAnim = MemoryManagement::create<oxygine::SingleResAnim>();
+                    Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1);
+                    m_ResAnims.append(pAnim);
+                    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+                    pSprite->setResAnim(pAnim.get());
+                    if (pAnim-> getWidth() > 0)
+                    {
+                        pSprite->setScaleX(30.0f / static_cast<float>(pAnim->getWidth()));
+                    }
+                    if (pAnim->getHeight() > 0)
+                    {
+                        pSprite->setScaleY(30.0f / static_cast<float>(pAnim->getHeight()));
+                    }
+                    pSprite->setPosition(8, 5);
+                    pBox->addChild(pSprite);
+                    textField->setX(53);
                 }
-                if (pAnim->getHeight() > 0)
-                {
-                    pSprite->setScaleY(30.0f / static_cast<float>(pAnim->getHeight()));
-                }
-                pSprite->setPosition(8, 5);
-                pBox->addChild(pSprite);
-                textField->setX(53);
             }
         }
         else
@@ -353,6 +362,11 @@ void FileDialog::showFolder(QString inputFolder)
         m_CurrentFolder->setCurrentText(inputFolder);
     }
     pApp->continueRendering();
+}
+
+void FileDialog::loadPreviewHook(const QString & file, QImage & img) const
+{
+    img.load(file);
 }
 
 void FileDialog::showDeleteQuestion()

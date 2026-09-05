@@ -20,7 +20,7 @@ using spFileDialog = std::shared_ptr<FileDialog>;
  * Upon success or cancel the dialog will remove itself from the scene.
  * You have to hold a smart pointer to this object if you need further info from it.
  */
-class FileDialog final : public QObject, public oxygine::Actor
+class FileDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
@@ -36,11 +36,12 @@ public:
      * @param startFolder initial folder of the file dialog
      * @param wildcards wildcard items will be split at ;
      */
-    explicit FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"), QColor folderColor = Settings::getInstance()->getMapFolderColor());
+    explicit FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"), QColor folderColor = Settings::getInstance()->getMapFolderColor(), bool derived = false);
     virtual ~FileDialog() = default;
 
     bool getPreview() const;
     void setPreview(bool preview);
+    virtual void loadPreviewHook(const QString & file, QImage & img) const;
 
 signals:
     void sigFileSelected(QString file);

@@ -2,6 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 
 #include "objects/dialogs/filedialog.h"
+#include "objects/dialogs/mapfiledialog.h"
 #include "objects/dialogs/editor/dialogextendmap.h"
 #include "objects/base/textbox.h"
 
@@ -90,7 +91,7 @@ void DialogExtendMap::showSelectMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getInstance()->getUserPath() + "maps";
-    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
+    spMapFileDialog fileDialog = MemoryManagement::create<MapFileDialog>(path, wildcards, false, "", tr("Load"));
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogExtendMap::mapFileChanged, Qt::QueuedConnection);
+    connect(fileDialog.get(),  &MapFileDialog::sigFileSelected, this, &DialogExtendMap::mapFileChanged, Qt::QueuedConnection);
 }

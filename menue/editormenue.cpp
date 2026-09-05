@@ -27,6 +27,7 @@
 #include "objects/dialogs/editor/dialogviewmapstats.h"
 #include "objects/dialogs/editor/dialogextendmap.h"
 #include "objects/dialogs/customdialog.h"
+#include "objects/dialogs/mapfiledialog.h"
 
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/label.h"
@@ -494,10 +495,10 @@ void EditorMenue::showSaveMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getInstance()->getUserPath() + "maps";
-    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
+    spMapFileDialog fileDialog = MemoryManagement::create<MapFileDialog>(path, wildcards, true, m_pMap->getMapName(), tr("Save"));
     addChild(fileDialog);
-    connect(fileDialog.get(), &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
-    connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    connect(fileDialog.get(), &MapFileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
+    connect(fileDialog.get(), &MapFileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     setFocused(false);
 }
 
@@ -506,10 +507,10 @@ void EditorMenue::showLoadMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getInstance()->getUserPath() + "maps";
-    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
+    spMapFileDialog fileDialog = MemoryManagement::create<MapFileDialog>(path, wildcards, false, "", tr("Load"));
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
-    connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    connect(fileDialog.get(),  &MapFileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
+    connect(fileDialog.get(), &MapFileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     setFocused(false);
 }
 

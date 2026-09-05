@@ -66,6 +66,10 @@ void Minimap::updateMinimap(const GameMap* pMap, bool useVision)
         {
             pPlayer = m_pGamemenu->getCurrentViewPlayer();
         }
+        if (pPlayer == nullptr)
+        {
+            pPlayer = pMap->getPlayer(0);
+        }
         if (pPlayer != nullptr)
         {
             GameManager* pGameManager = GameManager::getInstance();

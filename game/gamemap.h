@@ -56,6 +56,7 @@ public:
         qint32 m_uniqueIdCounter{0};
         QByteArray m_mapMagic;
         mutable GameEnums::MapFilterFlags m_mapFlags{GameEnums::MapFilterFlags_None};
+        mutable QImage m_mapPreview;
     };
 
     struct ImporterUnitInfo
@@ -191,6 +192,10 @@ public:
      */
     static void readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo);
     /**
+     * @brief writeMapHeader
+     */
+    void writeMapHeader(QDataStream& pStream, bool forHash) const;
+    /**
      * @brief validMap
      * @param headerInfo
      * @return
@@ -213,7 +218,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 17;
+        return 18;
     }
     /**
      * @brief clearMap
@@ -788,7 +793,7 @@ public:
      * @param player player index in the vector
      * @return pointer to the player
      */
-    Q_INVOKABLE Player* getPlayer(qint32 player);
+    Q_INVOKABLE Player* getPlayer(qint32 player) const;
     /**
      * @brief getCurrentPlayer the current player
      * @return

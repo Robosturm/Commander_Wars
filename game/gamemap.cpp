@@ -554,7 +554,7 @@ spPlayer GameMap::getSpPlayer(qint32 player)
     }
 }
 
-Player* GameMap::getPlayer(qint32 player)
+Player* GameMap::getPlayer(qint32 player) const
 {
     if (player >= 0 && player < m_players.size())
     {
@@ -1471,26 +1471,9 @@ void GameMap::serializeObject(QDataStream& pStream) const
 void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
 {
     CONSOLE_PRINT("GameMap::serializeObject with unique id counter " + QString::number(m_headerInfo.m_uniqueIdCounter) + " at day " + QString::number(m_currentDay), GameConsole::eDEBUG);
+    writeMapHeader(pStream, forHash);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
-    // store header
-    pStream << getVersion();
-    if (!forHash)
-    {
-        pStream << GlobalUtils::MAP_MAGIC;
-        pStream << m_headerInfo.m_mapName;
-        pStream << m_headerInfo.m_mapAuthor;
-        pStream << m_headerInfo.m_mapDescription;
-    }
-    pStream << width;
-    pStream << heigth;
-    pStream << m_headerInfo.m_uniqueIdCounter;
-    pStream << getPlayerCount();
-    if (!forHash)
-    {
-        updateMapFlags();
-        pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
-    }
     qint32 currentPlayerIdx = 0;
     QByteArray uncompressedData;
     QDataStream uncompressedStream(&uncompressedData, QIODevice::WriteOnly);
@@ -1659,6 +1642,39 @@ bool GameMap::validMap() const
     return validMap(m_headerInfo);
 }
 
+void GameMap::writeMapHeader(QDataStream& pStream, bool forHash) const
+{
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    // store header
+    pStream << getVersion();
+    if (!forHash)
+    {
+        pStream << GlobalUtils::MAP_MAGIC;
+        pStream << m_headerInfo.m_mapName;
+        pStream << m_headerInfo.m_mapAuthor;
+        pStream << m_headerInfo.m_mapDescription;
+    }
+    pStream << width;
+    pStream << heigth;
+    pStream << m_headerInfo.m_uniqueIdCounter;
+    pStream << getPlayerCount();
+    if (!forHash)
+    {
+        updateMapFlags();
+        pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
+        Minimap minimap;
+        auto gameMenu = dynamic_cast<GameMenue*>(m_pMenu);
+        if (gameMenu != nullptr)
+        {
+            minimap.setMenu(gameMenu);
+        }
+        minimap.updateMinimap(this, true);
+        Mainapp::getInstance()->saveMapAsImage(&minimap, &m_headerInfo.m_mapPreview);
+        pStream << m_headerInfo.m_mapPreview;
+    }
+}
+
 void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
 {
     pStream >> headerInfo.m_Version;
@@ -1699,6 +1715,10 @@ void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
         quint64 flags;
         pStream >> flags;
         headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(flags);
+    }
+    if (headerInfo.m_Version > 17)
+    {
+        pStream >> headerInfo.m_mapPreview;
     }
 }
 
