@@ -51,7 +51,7 @@ public:
         QString m_mapAuthor;
         QString m_mapDescription;
         qint32 m_width{0};
-        qint32 m_heigth{0};
+        qint32 m_height{0};
         qint32 m_playerCount{0};
         qint32 m_uniqueIdCounter{0};
         QByteArray m_mapMagic;

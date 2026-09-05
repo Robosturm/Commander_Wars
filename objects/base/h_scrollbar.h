@@ -58,7 +58,7 @@ private:
     float m_Scrollspeed{1.0f};
     qint32 m_globalMoveListenerId{-1};
     qint32 m_speedCounter{0};
-    qint32 m_Heigth;
+    qint32 m_height;
     qint32 m_ContentHeigth;
     qint32 m_scroll{0};
     bool m_sliding{false};

@@ -15,7 +15,7 @@
 
 const char* const ROOT = "::::";
 
-FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile, bool preview, QString acceptButtonName, QColor folderColor, bool derived)
+FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile, bool preview, QString acceptButtonName, QColor folderColor, bool derived, qint32 sideBarWidth)
     : m_preview(preview),
       m_pathPrefix(Settings::getInstance()->getUserPath()),
       m_isSaveDialog(isSaveDialog),
@@ -44,7 +44,7 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
     m_CurrentFolder->setCurrentText(startFolder);
     connect(m_CurrentFolder.get(), &Textbox::sigTextChanged, this, &FileDialog::showFolder, Qt::QueuedConnection);
     // folder file selection
-    m_MainPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 210), QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 300));
+    m_MainPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60 - sideBarWidth, oxygine::Stage::getStage()->getHeight() - 210), QSize(oxygine::Stage::getStage()->getWidth() - 60 - sideBarWidth, oxygine::Stage::getStage()->getHeight() - 300));
     m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getScaledHeight() + 10);
     pSpriteBox->addChild(m_MainPanel);
     // file folder
@@ -318,6 +318,7 @@ void FileDialog::showFolder(QString inputFolder)
                     m_pathPrefix = Settings::getInstance()->getUserPath();
                 }
                 pCurrentFile->setCurrentText(file);
+                emit sigSelectedFileChanged(fullPath);
             });
             if (m_preview)
             {

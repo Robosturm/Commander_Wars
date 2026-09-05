@@ -71,12 +71,12 @@ void ScriptConditionUnitReachedArea::setWidth(const qint32 &width)
 
 qint32 ScriptConditionUnitReachedArea::getHeigth() const
 {
-    return m_heigth;
+    return m_height;
 }
 
 void ScriptConditionUnitReachedArea::setHeigth(const qint32 &heigth)
 {
-    m_heigth = heigth;
+    m_height = heigth;
 }
 
 void ScriptConditionUnitReachedArea::readCondition(QTextStream& rStream, QString line)
@@ -94,7 +94,7 @@ void ScriptConditionUnitReachedArea::readCondition(QTextStream& rStream, QString
             m_x = items0[0].toInt();
             m_y = items0[1].toInt();
             m_width = items0[2].toInt();
-            m_heigth = items0[3].toInt();
+            m_height = items0[3].toInt();
         }
         if (items1.size() >= 3)
         {
@@ -135,7 +135,7 @@ void ScriptConditionUnitReachedArea::writeCondition(QTextStream& rStream)
 {
     CONSOLE_PRINT("Writing ConditionUnitReachedArea", GameConsole::eDEBUG);
     rStream << "        if (map.isUnitInArea(Qt.rect(" << QString::number(m_x) << ", " << QString::number(m_y) << ", "
-            << QString::number(m_width) << ", " << QString::number(m_heigth) << "), "
+            << QString::number(m_width) << ", " << QString::number(m_height) << "), "
             << m_unitID << "Value) && " << m_executed << ".readDataBool() === false) {"
             << "// " << m_UnitX << " " << m_UnitY << " " << QString::number(getVersion()) << " " << ConditionUnitReachedArea << "\n";
     if (subCondition.get() != nullptr)
@@ -271,7 +271,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     spinBox = MemoryManagement::create<SpinBox>(300, 1, 99999);
     spinBox->setTooltipText(tr("Target Area heigth which the unit needs to reach."));
     spinBox->setPosition(width, 230);
-    spinBox->setCurrentValue(m_heigth);
+    spinBox->setCurrentValue(m_height);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this](qreal value)
     {

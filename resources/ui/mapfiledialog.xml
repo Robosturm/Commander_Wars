@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>settings.getStageWidth() * 0.6 - 30</x>
+        <y>80</y>
+        <width>settings.getStageWidth() * 0.4</width>
+        <height>settings.getStageHeight() - 210</height>
+        <childs>
+             <Box>
+                <x>5</x>
+                <y>5</y>
+                <width>settings.getStageWidth() * 0.4 - 50</width>
+                <height>settings.getStageHeight() / 2 - 50</height>
+                <sprite>"panel"</sprite>
+                <childs>
+                    <SlidingBox>
+                        <x>5</x>
+                        <y>5</y>
+                        <width>settings.getStageWidth() * 0.4 - 60</width>
+                        <height>settings.getStageHeight() / 2 - 60</height>
+                        <content>
+                            <Sprite>
+                                <x>10</x>
+                                <y>10</y>
+                                <Id>OBJECT_MAP_PREVIEW</Id>
+                                <sprite></sprite>
+                                <scale>1</scale>
+                            </Sprite>
+                        </content>
+                    </SlidingBox>
+                </childs>
+            </Box>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Map name:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>300</width>
+                <text></text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+                <Id>OBJECT_MAP_NAME</Id>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Map author:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>300</width>
+                <text></text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+                <Id>OBJECT_MAP_AUTHOR</Id>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Player count:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>300</width>
+                <text></text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+                <Id>OBJECT_MAP_PLAYER_COUNT</Id>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Map width:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>300</width>
+                <text></text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+                <Id>OBJECT_MAP_WIDTH</Id>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Map height:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>300</width>
+                <text></text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+                <Id>OBJECT_MAP_HEIGHT</Id>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Last modified:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>300</width>
+                <text></text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+                <Id>OBJECT_MAP_LAST_MODIFIED</Id>
+            </Label>
+        </childs>
+    </Panel>
+</ui>

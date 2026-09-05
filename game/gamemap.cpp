@@ -1700,7 +1700,7 @@ void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
         pStream >> headerInfo.m_mapDescription;
     }
     pStream >> headerInfo.m_width;
-    pStream >> headerInfo.m_heigth;
+    pStream >> headerInfo.m_height;
     if (headerInfo.m_Version > 6)
     {
         pStream >> headerInfo.m_uniqueIdCounter;
@@ -1734,8 +1734,8 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         return;
     }
     CONSOLE_PRINT("Loading map " + m_headerInfo.m_mapName + " Fast =" + (fast ? "true" : "false"), GameConsole::eDEBUG);
-    qint32 mapSize = m_headerInfo.m_width * m_headerInfo.m_heigth;
-    setSize(m_headerInfo.m_width * GameMap::getImageSize(), m_headerInfo.m_heigth * GameMap::getImageSize());
+    qint32 mapSize = m_headerInfo.m_width * m_headerInfo.m_height;
+    setSize(m_headerInfo.m_width * GameMap::getImageSize(), m_headerInfo.m_height * GameMap::getImageSize());
     bool showLoadingScreen = (mapSize >= loadingScreenSize) && !fast;
     if (showLoadingScreen)
     {
@@ -1776,21 +1776,21 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     }
 
     // restore map
-    m_fields.reserve(m_headerInfo.m_heigth);
-    m_rowSprites.reserve(m_headerInfo.m_heigth);
-    for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
+    m_fields.reserve(m_headerInfo.m_height);
+    m_rowSprites.reserve(m_headerInfo.m_height);
+    for (qint32 y = 0; y < m_headerInfo.m_height; y++)
     {
         auto pActor = MemoryManagement::create<oxygine::Actor>();
         pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         m_rowSprites.push_back(pActor);
         addChild(pActor);
     }
-    for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
+    for (qint32 y = 0; y < m_headerInfo.m_height; y++)
     {
         if (showLoadingScreen)
         {
-            QString title = tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth);
-            qint32 progress = 5 + 75 * y / m_headerInfo.m_heigth;
+            QString title = tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_height);
+            qint32 progress = 5 + 75 * y / m_headerInfo.m_height;
             pLoadingScreen->setProgress(title, progress);
         }
         m_fields.push_back(std::vector<spTerrain>(m_headerInfo.m_width, spTerrain()));

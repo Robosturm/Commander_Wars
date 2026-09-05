@@ -40,7 +40,7 @@ public:
     {
         return tr("Unit at X: ") + QString::number(m_UnitX) + " Y: " + QString::number(m_UnitY) + tr(" reached X:") +
                QString::number(m_x) + " Y: " + QString::number(m_y) +
-               tr(" width: ") + QString::number(m_width) + tr(" heigth: ") + QString::number(m_heigth);
+               tr(" width: ") + QString::number(m_width) + tr(" heigth: ") + QString::number(m_height);
     }
     /**
      * @brief showEditConditin
@@ -122,7 +122,7 @@ private:
     qint32 m_x{0};
     qint32 m_y{0};
     qint32 m_width{1};
-    qint32 m_heigth{1};
+    qint32 m_height{1};
     QString m_executed;
     QString m_unitID;
 };
