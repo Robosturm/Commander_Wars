@@ -329,6 +329,8 @@ private:
         QTimer timer;
     };
     QMap<QString, qint32> m_musicPlayPositionCache;
+    // indices into m_soundEffectData that are currently free to use, avoids scanning the whole array on every playSound call
+    QVector<qint32> m_freeSoundSlots;
     SoundEffect m_soundEffectData[MAX_PARALLEL_SOUNDS]{SoundEffect(this),
                                                        SoundEffect(this),
                                                        SoundEffect(this),
@@ -530,7 +532,6 @@ private:
                                                        SoundEffect(this),
                                                        SoundEffect(this)};
     std::vector<spQSoundEffect> m_toDeleteSounds;
-    qint32 m_lastUsedSoundSlot{0};
 #endif
     bool m_loadBaseGameFolders{true};
     bool m_noAudio{false};

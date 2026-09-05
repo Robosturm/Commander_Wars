@@ -15,6 +15,7 @@
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/folderdialog.h"
+#include "objects/dialogs/mapfiledialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/spinbox.h"
@@ -183,9 +184,9 @@ void CampaignEditor::showAddCampaign()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getInstance()->getUserPath() + m_CampaignFolder->getCurrentText();
-    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Add"));
+    spMapFileDialog fileDialog = MemoryManagement::create<MapFileDialog>(path, wildcards, false, "", tr("Add"));
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);
 }
 
 void CampaignEditor::showSaveCampaign()

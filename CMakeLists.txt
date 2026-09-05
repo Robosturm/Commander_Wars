@@ -598,6 +598,7 @@ set(${PROJECT_NAME}_SRCS
     objects/dialogs/colorselectiondialog.cpp objects/dialogs/colorselectiondialog.h
     objects/dialogs/dialogconnecting.cpp objects/dialogs/dialogconnecting.h
     objects/dialogs/filedialog.cpp objects/dialogs/filedialog.h
+    objects/dialogs/mapfiledialog.cpp objects/dialogs/mapfiledialog.h
     objects/dialogs/dialogcostyle.cpp objects/dialogs/dialogcostyle.h
     objects/dialogs/dialogmessagebox.cpp objects/dialogs/dialogmessagebox.h
     objects/dialogs/dialogmodsyncprogress.cpp objects/dialogs/dialogmodsyncprogress.h
@@ -1147,6 +1148,7 @@ set(AppHeadersCxx
     objects/dialogs/customdialog.h
     objects/dialogs/dialogmessagebox.h
     objects/dialogs/filedialog.h
+    objects/dialogs/mapfiledialog.h
     ui_reader/createdgui.h
     ui_reader/uifactory.h
     wiki/wikidatabase.h

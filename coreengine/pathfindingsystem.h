@@ -249,7 +249,7 @@ protected:
 protected:
     QPoint m_StartPoint;
     qint32 m_width;
-    qint32 m_heigth;
+    qint32 m_height;
     std::vector<qint32> m_costs;
     std::vector<Directions> m_DirectionMap;
     std::vector<std::array<qint32, Directions::Max>> m_movecosts;

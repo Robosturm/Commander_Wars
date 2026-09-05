@@ -86,6 +86,7 @@ GameAnimationPower::~GameAnimationPower()
 
 void GameAnimationPower::createMovingText(const QString font, const QString text, qint32 delay, QPoint startPos, QPoint endPos, qint32 duration, QEasingCurve::Type easeType)
 {
+    Mainapp::getInstance()->pauseRendering();
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getInstance()->getFont(font));
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;
@@ -101,10 +102,12 @@ void GameAnimationPower::createMovingText(const QString font, const QString text
     m_lastCreatedTweenQueue->add(tween4);
     textField->addTween(m_lastCreatedTweenQueue);
     addChild(textField);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameAnimationPower::addMovingCoSprite(const QString sprite, float scale, QPoint startPos, QPoint endPos, qint32 duration, qint32 delay, QEasingCurve::Type easeType)
 {
+    Mainapp::getInstance()->pauseRendering();
     oxygine::ResAnim* pAnim = m_pCO->getResAnim(sprite);
     if (pAnim != nullptr)
     {
@@ -120,6 +123,7 @@ void GameAnimationPower::addMovingCoSprite(const QString sprite, float scale, QP
         pSprite->addTween(m_lastCreatedTweenQueue);
         addChild(pSprite);
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 QPoint GameAnimationPower::getCoSpriteSize(const QString sprite) const
@@ -142,6 +146,7 @@ void GameAnimationPower::setDuration(qint32 timeMs)
 
 void GameAnimationPower::createRotatingBackground(const QString resAnim, const QColor color, qint32 speedX)
 {
+    Mainapp::getInstance()->pauseRendering();
     oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim(resAnim);    
     setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     if (pAnimMask != nullptr)
@@ -169,12 +174,14 @@ void GameAnimationPower::createRotatingBackground(const QString resAnim, const Q
         rotSprite->setDirection(speedX);
         addChild(rotSprite);
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameAnimationPower::createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop)
 {
     if (!Settings::getInstance()->getSmallScreenDevice())
     {
+        Mainapp::getInstance()->pauseRendering();
         QString description;
         switch (powerMode)
         {
@@ -212,6 +219,7 @@ void GameAnimationPower::createPowerDescription(CO* pCo, GameEnums::PowerMode po
             descriptionField->setY(oxygine::Stage::getStage()->getHeight() - descriptionField->getTextRect().height() - 20);
         }
         addChild(descriptionField);
+        Mainapp::getInstance()->continueRendering();
     }
 }
 

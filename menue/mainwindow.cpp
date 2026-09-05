@@ -33,6 +33,7 @@
 #include "multiplayer/lobbymenu.h"
 
 #include "objects/dialogs/filedialog.h"
+#include "objects/dialogs/mapfiledialog.h"
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/dialogs/folderdialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
@@ -263,7 +264,7 @@ void Mainwindow::enterLoadGame()
     QStringList wildcards;
     wildcards.append("*.sav");
     QString path = Settings::getInstance()->getUserPath() + "savegames";
-    spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
+    spMapFileDialog saveDialog = MemoryManagement::create<MapFileDialog>(path, wildcards, false, "", tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
 }

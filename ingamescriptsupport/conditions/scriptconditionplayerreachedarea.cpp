@@ -50,12 +50,12 @@ void ScriptConditionPlayerReachedArea::setWidth(const qint32 &width)
 
 qint32 ScriptConditionPlayerReachedArea::getHeigth() const
 {
-    return m_heigth;
+    return m_height;
 }
 
 void ScriptConditionPlayerReachedArea::setHeigth(const qint32 &heigth)
 {
-    m_heigth = heigth;
+    m_height = heigth;
 }
 
 void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream, QString line)
@@ -75,7 +75,7 @@ void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream, QStri
                 m_x = items0[0].toInt();
                 m_y = items0[1].toInt();
                 m_width = items0[2].toInt();
-                m_heigth = items0[3].toInt();
+                m_height = items0[3].toInt();
                 m_Player.append(items0[4].toInt());
             }
         }
@@ -88,7 +88,7 @@ void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream, QStri
                 m_x = items0[0].toInt();
                 m_y = items0[1].toInt();
                 m_width = items0[2].toInt();
-                m_heigth = items0[3].toInt();
+                m_height = items0[3].toInt();
                 for (qint32 i = 4; i < items0.size() - 1; i++)
                 {
                     m_Player.append(items0[i].toInt());
@@ -124,7 +124,7 @@ void ScriptConditionPlayerReachedArea::writePreCondition(QTextStream& rStream)
 void ScriptConditionPlayerReachedArea::writeCondition(QTextStream& rStream)
 {
     rStream << "        if (map.isPlayersUnitInArea(Qt.rect(" << QString::number(m_x) << ", " << QString::number(m_y) << ", "
-            << QString::number(m_width) << ", " << QString::number(m_heigth) << "), [";
+            << QString::number(m_width) << ", " << QString::number(m_height) << "), [";
     for (qint32 i = 0; i < m_Player.size(); i++)
     {
         rStream << QString::number(m_Player[i]);
@@ -240,7 +240,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     spinBox = MemoryManagement::create<SpinBox>(300, 1, 99999);
     spinBox->setTooltipText(tr("Target Area heigth which the player needs to reach."));
     spinBox->setPosition(width, y);
-    spinBox->setCurrentValue(m_heigth);
+    spinBox->setCurrentValue(m_height);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this](qreal value)
     {

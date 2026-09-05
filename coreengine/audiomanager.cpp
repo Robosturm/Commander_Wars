@@ -64,6 +64,7 @@ AudioManager::AudioManager(bool noAudio, bool useAudioThread)
         connect(this, &AudioManager::sigStopAudio,         this, &AudioManager::stopAudio, connectionType);
         connect(this, &AudioManager::sigCreateSoundCache,  this, &AudioManager::createSoundCache, connectionType);
 
+        m_freeSoundSlots.reserve(MAX_PARALLEL_SOUNDS);
         for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
         {
             m_soundEffectData[i].timer.setObjectName("SoundEffect" + QString::number(i));
@@ -76,6 +77,7 @@ AudioManager::AudioManager(bool noAudio, bool useAudioThread)
                     CONSOLE_PRINT_MODULE("Error: Occured when playing sound: " + m_soundEffectData[i].sound->source().toString(), GameConsole::eDEBUG, GameConsole::eAudio);
                 }
             }, Qt::QueuedConnection);
+            m_freeSoundSlots.append(i);
         }
 #endif
     }
@@ -795,29 +797,15 @@ void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float
             auto & soundCache = m_soundCaches[file];
             if (soundCache->m_usedSounds.size() < soundCache->m_maxUseCount)
             {
-                bool started = false;
-                for (qint32 i = m_lastUsedSoundSlot; i < MAX_PARALLEL_SOUNDS; ++i)
+                // a popped slot can occasionally still be busy (queued playingChanged signals can free the same slot twice), retry with the next one instead of dropping the sound
+                while (!m_freeSoundSlots.isEmpty())
                 {
+                    qint32 i = m_freeSoundSlots.takeLast();
                     if (tryPlaySoundAtCachePosition(soundCache, i,
-                                                    file, loops, delay, sound,
-                                                    stopOldestSound, duration))
+                                                     file, loops, delay, sound,
+                                                     stopOldestSound, duration))
                     {
-                        m_lastUsedSoundSlot = i + 1;
-                        started = true;
                         break;
-                    }
-                }
-                if (!started)
-                {
-                    for (qint32 i = 0; i < m_lastUsedSoundSlot; ++i)
-                    {
-                        if (tryPlaySoundAtCachePosition(soundCache, i,
-                                                        file, loops, delay, sound,
-                                                        stopOldestSound, duration))
-                        {
-                            m_lastUsedSoundSlot = 0;
-                            break;
-                        }
                     }
                 }
             }
@@ -834,13 +822,14 @@ void AudioManager::SlotStopAllSounds()
 {
 #ifdef AUDIOSUPPORT
     CONSOLE_PRINT_MODULE("Stopping all sounds", GameConsole::eDEBUG, GameConsole::eAudio);
+    // only touch the slots that are actually in use instead of looping over every slot for every cache
     for (auto & soundCache : m_soundCaches)
     {
-        for (auto & soundEffect : m_soundEffectData)
+        for (auto index : soundCache->m_usedSounds)
         {
-            soundEffect.sound->stop();
-            soundEffect.timer.stop();
+            stopSoundInternal(index);
         }
+        soundCache->m_usedSounds.clear();
     }
 #endif
 }

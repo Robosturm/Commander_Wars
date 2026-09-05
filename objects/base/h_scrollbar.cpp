@@ -7,7 +7,7 @@
 #include "coreengine/interpreter.h"
 
 H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
-    : m_Heigth(heigth),
+    : m_height(heigth),
       m_ContentHeigth(contentHeigth)
 {
 #ifdef GRAPHICSUPPORT
@@ -261,7 +261,7 @@ void H_Scrollbar::scrollToLocalY(qint32 localY)
 {
     qint32 y = localY - m_slider->getScaledHeight() / 2;
     qint32 minY = 20;
-    qint32 maxY = m_Heigth - m_slider->getScaledHeight() - 20;
+    qint32 maxY = m_height - m_slider->getScaledHeight() - 20;
     if (y < minY)
     {
         y = minY;
@@ -271,7 +271,7 @@ void H_Scrollbar::scrollToLocalY(qint32 localY)
         y = maxY;
     }
     m_slider->setY(y);
-    auto div = m_Heigth - m_slider->getScaledHeight() - 20 - 20;
+    auto div = m_height - m_slider->getScaledHeight() - 20 - 20;
     if (div > 0)
     {
         m_Scrollvalue = static_cast<float>(y - 20) / static_cast<float>(div);
@@ -345,15 +345,15 @@ void H_Scrollbar::setContentHeigth(qint32 heigth)
     qint32 sliderHeight = 50;
     if (m_ContentHeigth > 0)
     {
-        sliderHeight = ((m_Heigth - 20 - 20) * m_Heigth) / m_ContentHeigth;
+        sliderHeight = ((m_height - 20 - 20) * m_height) / m_ContentHeigth;
     }
     if (sliderHeight < 11)
     {
         sliderHeight = 11;
     }
-    else if (sliderHeight > (m_Heigth - 20 - 20))
+    else if (sliderHeight > (m_height - 20 - 20))
     {
-        sliderHeight = (m_Heigth - 20 - 20);
+        sliderHeight = (m_height - 20 - 20);
     }
     m_Scrollvalue = 0;
     m_slider->setSize(18, sliderHeight);
@@ -368,7 +368,7 @@ void H_Scrollbar::update(const oxygine::UpdateState&)
     {
         if (m_ScrollTimer.elapsed() > 250)
         {
-            if (m_ContentHeigth > m_Heigth && m_ContentHeigth > 0)
+            if (m_ContentHeigth > m_height && m_ContentHeigth > 0)
             {
                 m_speedCounter++;
                 if (m_speedCounter % 8 == 0)
@@ -399,7 +399,7 @@ void H_Scrollbar::changeScrollValue(float value)
         {
             // all fine do nothing
         }
-        m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getScaledHeight() - 20 - 20));
+        m_slider->setY(20 + m_Scrollvalue * (m_height - m_slider->getScaledHeight() - 20 - 20));
         emit sigScrollValueChanged(m_Scrollvalue);
     }
 }
@@ -421,7 +421,7 @@ void H_Scrollbar::setScrollvalue(float Scrollvalue)
         {
             // all fine do nothing
         }
-        m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getScaledHeight() - 20 - 20));
+        m_slider->setY(20 + m_Scrollvalue * (m_height - m_slider->getScaledHeight() - 20 - 20));
     }
 }
 
@@ -429,9 +429,9 @@ void H_Scrollbar::setHeight(qint32 h)
 {
     
     oxygine::Actor::setHeight(h);
-    m_Heigth = h;
+    m_height = h;
     m_pBox->setHeight(h);
-    m_pArrowDown->setPosition(9, m_Heigth - m_pArrowDown->getScaledHeight() - 8);
+    m_pArrowDown->setPosition(9, m_height - m_pArrowDown->getScaledHeight() - 8);
     setContentHeigth(m_ContentHeigth);
     
 }

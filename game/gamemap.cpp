@@ -554,7 +554,7 @@ spPlayer GameMap::getSpPlayer(qint32 player)
     }
 }
 
-Player* GameMap::getPlayer(qint32 player)
+Player* GameMap::getPlayer(qint32 player) const
 {
     if (player >= 0 && player < m_players.size())
     {
@@ -1471,26 +1471,9 @@ void GameMap::serializeObject(QDataStream& pStream) const
 void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
 {
     CONSOLE_PRINT("GameMap::serializeObject with unique id counter " + QString::number(m_headerInfo.m_uniqueIdCounter) + " at day " + QString::number(m_currentDay), GameConsole::eDEBUG);
+    writeMapHeader(pStream, forHash);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
-    // store header
-    pStream << getVersion();
-    if (!forHash)
-    {
-        pStream << GlobalUtils::MAP_MAGIC;
-        pStream << m_headerInfo.m_mapName;
-        pStream << m_headerInfo.m_mapAuthor;
-        pStream << m_headerInfo.m_mapDescription;
-    }
-    pStream << width;
-    pStream << heigth;
-    pStream << m_headerInfo.m_uniqueIdCounter;
-    pStream << getPlayerCount();
-    if (!forHash)
-    {
-        updateMapFlags();
-        pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
-    }
     qint32 currentPlayerIdx = 0;
     QByteArray uncompressedData;
     QDataStream uncompressedStream(&uncompressedData, QIODevice::WriteOnly);
@@ -1659,6 +1642,39 @@ bool GameMap::validMap() const
     return validMap(m_headerInfo);
 }
 
+void GameMap::writeMapHeader(QDataStream& pStream, bool forHash) const
+{
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    // store header
+    pStream << getVersion();
+    if (!forHash)
+    {
+        pStream << GlobalUtils::MAP_MAGIC;
+        pStream << m_headerInfo.m_mapName;
+        pStream << m_headerInfo.m_mapAuthor;
+        pStream << m_headerInfo.m_mapDescription;
+    }
+    pStream << width;
+    pStream << heigth;
+    pStream << m_headerInfo.m_uniqueIdCounter;
+    pStream << getPlayerCount();
+    if (!forHash)
+    {
+        updateMapFlags();
+        pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
+        Minimap minimap;
+        auto gameMenu = dynamic_cast<GameMenue*>(m_pMenu);
+        if (gameMenu != nullptr)
+        {
+            minimap.setMenu(gameMenu);
+        }
+        minimap.updateMinimap(this, true);
+        Mainapp::getInstance()->saveMapAsImage(&minimap, &m_headerInfo.m_mapPreview);
+        pStream << m_headerInfo.m_mapPreview;
+    }
+}
+
 void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
 {
     pStream >> headerInfo.m_Version;
@@ -1684,7 +1700,7 @@ void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
         pStream >> headerInfo.m_mapDescription;
     }
     pStream >> headerInfo.m_width;
-    pStream >> headerInfo.m_heigth;
+    pStream >> headerInfo.m_height;
     if (headerInfo.m_Version > 6)
     {
         pStream >> headerInfo.m_uniqueIdCounter;
@@ -1700,6 +1716,10 @@ void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
         pStream >> flags;
         headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(flags);
     }
+    if (headerInfo.m_Version > 17)
+    {
+        pStream >> headerInfo.m_mapPreview;
+    }
 }
 
 void GameMap::deserializer(QDataStream& pStream, bool fast)
@@ -1714,8 +1734,8 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         return;
     }
     CONSOLE_PRINT("Loading map " + m_headerInfo.m_mapName + " Fast =" + (fast ? "true" : "false"), GameConsole::eDEBUG);
-    qint32 mapSize = m_headerInfo.m_width * m_headerInfo.m_heigth;
-    setSize(m_headerInfo.m_width * GameMap::getImageSize(), m_headerInfo.m_heigth * GameMap::getImageSize());
+    qint32 mapSize = m_headerInfo.m_width * m_headerInfo.m_height;
+    setSize(m_headerInfo.m_width * GameMap::getImageSize(), m_headerInfo.m_height * GameMap::getImageSize());
     bool showLoadingScreen = (mapSize >= loadingScreenSize) && !fast;
     if (showLoadingScreen)
     {
@@ -1756,21 +1776,21 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     }
 
     // restore map
-    m_fields.reserve(m_headerInfo.m_heigth);
-    m_rowSprites.reserve(m_headerInfo.m_heigth);
-    for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
+    m_fields.reserve(m_headerInfo.m_height);
+    m_rowSprites.reserve(m_headerInfo.m_height);
+    for (qint32 y = 0; y < m_headerInfo.m_height; y++)
     {
         auto pActor = MemoryManagement::create<oxygine::Actor>();
         pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         m_rowSprites.push_back(pActor);
         addChild(pActor);
     }
-    for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
+    for (qint32 y = 0; y < m_headerInfo.m_height; y++)
     {
         if (showLoadingScreen)
         {
-            QString title = tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth);
-            qint32 progress = 5 + 75 * y / m_headerInfo.m_heigth;
+            QString title = tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_height);
+            qint32 progress = 5 + 75 * y / m_headerInfo.m_height;
             pLoadingScreen->setProgress(title, progress);
         }
         m_fields.push_back(std::vector<spTerrain>(m_headerInfo.m_width, spTerrain()));

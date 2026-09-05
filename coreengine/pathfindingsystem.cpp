@@ -21,7 +21,7 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
                                      qint32 width, qint32 heigth)
     : m_StartPoint(startX, startY),
     m_width(width),
-    m_heigth(heigth),
+    m_height(heigth),
     m_costs(width * heigth, infinite),
     m_DirectionMap(width * heigth, Directions::Unknown),
     m_movecosts(width * heigth, std::array<qint32, Directions::Max>({infinite, infinite, infinite, infinite}))
@@ -47,7 +47,7 @@ void PathFindingSystem::setFinishNode(qint32 x, qint32 y)
 void PathFindingSystem::explore()
 {
     if (m_StartPoint.x() < 0 || m_StartPoint.y() < 0
-        || m_StartPoint.x() >= m_width || m_StartPoint.y() >= m_heigth)
+        || m_StartPoint.x() >= m_width || m_StartPoint.y() >= m_height)
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "PathFindingSystem::explore invalid start point");
         return;
@@ -137,7 +137,7 @@ void PathFindingSystem::explore()
             else if (i == 2)
             {
                 // bottom
-                if (pCurrent.y + 1 < m_heigth)
+                if (pCurrent.y + 1 < m_height)
                 {
                     neighboursIndex = pCurrent.index + m_width;
                     fieldCost = m_costs[neighboursIndex];
@@ -222,7 +222,7 @@ std::vector<QPoint> PathFindingSystem::getAllNodePointsFast(qint32 maxRange)
     std::vector<QPoint> points;
     for (qint32 x = 0; x < m_width; x++)
     {
-        for (qint32 y = 0; y < m_heigth; y++)
+        for (qint32 y = 0; y < m_height; y++)
         {
             qint32 cost = m_costs[getIndex(x, y)];
             if (cost >= 0 && cost < maxRange)
@@ -239,7 +239,7 @@ QmlVectorPoint* PathFindingSystem::getAllQmlVectorPoints()
     auto* ret = MemoryManagement::createAndTrackJsObject<QmlVectorPoint>();
     for (qint32 x = 0; x < m_width; x++)
     {
-        for (qint32 y = 0; y < m_heigth; y++)
+        for (qint32 y = 0; y < m_height; y++)
         {
             qint32 cost = m_costs[getIndex(x, y)];
             if (cost >= 0 && cost < infinite)
@@ -317,7 +317,7 @@ std::vector<QPoint> PathFindingSystem::getPathFast(qint32 x, qint32 y) const
 qint32 PathFindingSystem::getTargetCosts(qint32 x, qint32 y) const
 {
     if (x >= 0 && x < m_width &&
-        y >= 0 && y < m_heigth)
+        y >= 0 && y < m_height)
     {
         const qint32 cost = m_costs[getIndex(x, y)];
         if (cost < infinite)

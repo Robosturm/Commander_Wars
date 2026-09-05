@@ -49,7 +49,7 @@ void ReplayRecorder::requestReplayStart()
 
 void ReplayRecorder::startRecording(const QString & file)
 {    
-    if (Settings::getInstance()->getRecord() && m_pMap != nullptr && !Settings::getInstance()->getAiSlave())
+    if (Settings::getInstance()->getRecord() && m_pMap != nullptr && !Settings::getInstance()->getAiSlave() && !m_recording)
     {
         QString fileName = file;
         if (fileName.isEmpty())

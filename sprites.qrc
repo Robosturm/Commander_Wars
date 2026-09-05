@@ -5092,5 +5092,6 @@
         <file>resources/images/co/gs/co_meiyo+alt2+nrm.png</file>
         <file>resources/images/co/gs/co_meiyo+alt2+table.png</file>
         <file>resources/images/co/gs/co_meiyo+alt+mini.png</file>
+        <file>resources/ui/mapfiledialog.xml</file>
     </qresource>
 </RCC>

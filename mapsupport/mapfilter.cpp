@@ -14,7 +14,7 @@ bool MapFilter::matches(GameMap::MapHeaderInfo & info) const
     }
     matches = matches && m_players.matches(info.m_playerCount);
     matches = matches && m_width.matches(info.m_width);
-    matches = matches && m_height.matches(info.m_heigth);
+    matches = matches && m_height.matches(info.m_height);
     matches = matches && matchesMapFlags(m_filter, info.m_mapFlags);
     return matches;
 }

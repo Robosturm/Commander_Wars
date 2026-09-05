@@ -122,6 +122,7 @@ void GameAnimationDialog::nextDialogStep()
 {
     if (!m_stopped && m_started)
     {
+        Mainapp::getInstance()->pauseRendering();
         if (m_paused)
         {
             m_paused = false;
@@ -158,6 +159,7 @@ void GameAnimationDialog::nextDialogStep()
 
             }
         }
+        Mainapp::getInstance()->continueRendering();
     }
 }
 
@@ -265,6 +267,7 @@ void GameAnimationDialog::setDialog(const QString text)
 
 void GameAnimationDialog::setCO(const QString coid, GameEnums::COMood mood)
 {
+    Mainapp::getInstance()->pauseRendering();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     QString resAnim = coid + "+face";
     oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(resAnim.toLower());
@@ -280,6 +283,7 @@ void GameAnimationDialog::setCO(const QString coid, GameEnums::COMood mood)
             m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMood mood)
@@ -287,6 +291,7 @@ void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMoo
     
     if (m_pMap)
     {
+        Mainapp::getInstance()->pauseRendering();
         if (player >= 0 && player < m_pMap->getPlayerCount())
         {
             CO* pCo = m_pMap->getPlayer(player)->getCO(co);
@@ -304,6 +309,7 @@ void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMoo
                 m_COSprite->setResAnim(nullptr);
             }
         }
+        Mainapp::getInstance()->continueRendering();
     }
 }
 
@@ -326,6 +332,7 @@ void GameAnimationDialog::restart()
 {
     if (m_pMap != nullptr)
     {
+        Mainapp::getInstance()->pauseRendering();
         auto* pMenu = m_pMap->getMenu();
         m_writePosition = 0;
         m_stopped = false;
@@ -334,6 +341,7 @@ void GameAnimationDialog::restart()
         {
             pMenu->addChild(getSharedPtr<oxygine::Actor>());
         }
+        Mainapp::getInstance()->continueRendering();
     }
 }
 
@@ -350,6 +358,7 @@ void GameAnimationDialog::loadBackground(const QString file)
 {
     if (!file.isEmpty())
     {
+        Mainapp::getInstance()->pauseRendering();
         QImage img;
         QString imgPath = VirtualPaths::find(file);
         if (QFile::exists(imgPath))
@@ -365,6 +374,7 @@ void GameAnimationDialog::loadBackground(const QString file)
             m_BackgroundSprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pAnim->getWidth()));
             m_BackgroundSprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pAnim->getHeight()));
         }
+        Mainapp::getInstance()->continueRendering();
     }
     else
     {
@@ -376,6 +386,7 @@ void GameAnimationDialog::loadCoSprite(const QString coid, float offsetX, float 
 {
     if (!coid.isEmpty())
     {
+        Mainapp::getInstance()->pauseRendering();
         oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(coid + "+nrm", oxygine::error_policy::ep_ignore_error);
         if (pAnim != nullptr)
         {
@@ -387,5 +398,6 @@ void GameAnimationDialog::loadCoSprite(const QString coid, float offsetX, float 
             pSprite->setPosition(offsetX, offsetY);
             addChild(pSprite);
         }
+        Mainapp::getInstance()->continueRendering();
     }
 }
