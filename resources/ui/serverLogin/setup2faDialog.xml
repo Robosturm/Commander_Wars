@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
+        <childs>
+            <Label>
+                <x>40</x>
+                <y>20</y>
+                <width>parentWidth - 80</width>
+                <text>Setup2faDialog.titleText()</text>
+                <font>"main"</font>
+                <hAlign>"Middle"</hAlign>
+                <fontSize>48</fontSize>
+            </Label>
+            <Label>
+                <Id>InfoLabel</Id>
+                <x>40</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>parentWidth - 80</width>
+                <text>Setup2faDialog.infoText()</text>
+                <font>"main"</font>
+                <fontSize>20</fontSize>
+            </Label>
+            <QrCode>
+                <Id>QrCodeBox</Id>
+                <x>settings.getStageWidth() / 2 - 100</x>
+                <y>lastY + lastHeight + 30</y>
+            </QrCode>
+            <Label>
+                <x>settings.getStageWidth() / 2 - 310</x>
+                <y>lastY + lastHeight + 30</y>
+                <width>220</width>
+                <text>Setup2faDialog.secretText()</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <Id>SecretBox</Id>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>400</width>
+                <tooltip>Setup2faDialog.secretTooltip()</tooltip>
+                <startValue>""</startValue>
+            </Textbox>
+            <Label>
+                <x>settings.getStageWidth() / 2 - 310</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>220</width>
+                <text>Setup2faDialog.codeText()</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <Id>CodeBox</Id>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>Setup2faDialog.codeTooltip()</tooltip>
+                <startValue>""</startValue>
+                <onEvent>Setup2faDialog.codeInput(input);</onEvent>
+            </Textbox>
+            <Button>
+                <Id>AbortButton</Id>
+                <x>settings.getStageWidth() / 2 - 160</x>
+                <y>lastY + lastHeight + 30</y>
+                <width>150</width>
+                <text>Setup2faDialog.abortText()</text>
+                <tooltip>Setup2faDialog.abortTooltip()</tooltip>
+                <onEvent>Setup2faDialog.abort();</onEvent>
+            </Button>
+            <Button>
+                <Id>ConfirmButton</Id>
+                <x>settings.getStageWidth() / 2 + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <text>Setup2faDialog.confirmText()</text>
+                <tooltip>Setup2faDialog.confirmTooltip()</tooltip>
+                <onEvent>Setup2faDialog.confirm();</onEvent>
+            </Button>
+        </childs>
+    </Panel>
+</ui>

@@ -205,6 +205,12 @@ void GameEnums::registerEnums()
     value.setProperty("LoginError_DatabaseNotAccesible", LoginError_DatabaseNotAccesible);
     value.setProperty("LoginError_SendingMailFailed", LoginError_SendingMailFailed);
     value.setProperty("LoginError_WrongEmailAdress", LoginError_WrongEmailAdress);
+    value.setProperty("LoginError_No2faConfigured", LoginError_No2faConfigured);
+    value.setProperty("LoginError_Invalid2faCode", LoginError_Invalid2faCode);
+    value.setProperty("LoginError_2faResetTimeout", LoginError_2faResetTimeout);
+    value.setProperty("LoginError_TooMany2faAttempts", LoginError_TooMany2faAttempts);
+    value.setProperty("LoginError_2faAlreadyConfigured", LoginError_2faAlreadyConfigured);
+    value.setProperty("LoginError_2faSetupExpired", LoginError_2faSetupExpired);
 
     value.setProperty("QEasingCurve_Linear", QEasingCurve::Linear);
     value.setProperty("QEasingCurve_InQuad", QEasingCurve::InQuad);

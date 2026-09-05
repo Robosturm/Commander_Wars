@@ -34,6 +34,7 @@
 #include "objects/base/box9object.h"
 #include "objects/base/coloredbar.h"
 #include "objects/minimap.h"
+#include "objects/qrcodeactor.h"
 #include "objects/boxterrainpalettepreview.h"
 
 #include "game/gamemap.h"
@@ -69,6 +70,7 @@ static const char* const itemTopbar = "Topbar";
 static const char* const itemTabbedBox = "TabbedBox";
 static const char* const itemTab = "Tab";
 static const char* const itemMinimap = "Minimap";
+static const char* const itemQrCode = "QrCode";
 static const char* const itemSlidingBox = "SlidingBox";
 static const char* const itemColoredBar = "ColoredBar";
 static const char* const itemBoxTerrainPalette = "BoxTerrainPalette";
@@ -173,6 +175,7 @@ UiFactory::UiFactory()
     m_factoryItems.push_back({QString(itemTopbar), std::bind(&UiFactory::createTopbar, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemTabbedBox), std::bind(&UiFactory::createTabbedBox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemMinimap), std::bind(&UiFactory::createMinimap, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.push_back({QString(itemQrCode), std::bind(&UiFactory::createQrCode, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemSlidingBox), std::bind(&UiFactory::createSlidingBox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemColoredBar), std::bind(&UiFactory::createColoredBar, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemBoxTerrainPalette), std::bind(&UiFactory::createBoxTerrainPalette, this, _1, _2, _3, _4, _5)});
@@ -783,6 +786,33 @@ bool UiFactory::createMinimap(oxygine::spActor parent, QDomElement element, oxyg
         }
         parent->addChild(pMinimap);
         item = pMinimap;
+        m_lastCoordinates = QRect(x, y, 10, 10);
+        updateMenuSize(pMenu);
+    }
+    return success;
+}
+
+bool UiFactory::createQrCode(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
+        qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
+        qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
+        bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
+        bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
+        spQrCodeActor pQrCode = MemoryManagement::create<QrCodeActor>();
+        pQrCode->setPosition(x, y);
+        pQrCode->setVisible(visible);
+        pQrCode->setEnabled(enabled);
+        if (!id.isEmpty())
+        {
+            pQrCode->setObjectName(id);
+        }
+        parent->addChild(pQrCode);
+        item = pQrCode;
         m_lastCoordinates = QRect(x, y, 10, 10);
         updateMenuSize(pMenu);
     }

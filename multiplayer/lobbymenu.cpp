@@ -615,6 +615,18 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             handleAccountMessage(socketID, "DeleteAccountDialog", objData);
         }
+        else if (messageType == NetworkCommands::SERVERRESPONSSETUP2FA)
+        {
+            handle2faMessage(socketID, "Setup2faDialog", objData);
+        }
+        else if (messageType == NetworkCommands::SERVERRESPONSCONFIRM2FA)
+        {
+            handle2faMessage(socketID, "Setup2faDialog", objData);
+        }
+        else if (messageType == NetworkCommands::SERVERRESPONSRESETPASSWORD2FA)
+        {
+            handle2faMessage(socketID, "ForgotPasswordDialog", objData);
+        }
         else if (messageType == NetworkCommands::SERVERSENDAUTOMATCHINFO)
         {
             receivedShowAutoMatches(objData);
@@ -867,11 +879,32 @@ void LobbyMenu::handleAccountMessage(quint64 socketID, const QString object, con
         Interpreter *pInterpreter = Interpreter::getInstance();
         QJSValueList args;
         args.append(accountError);
+        args.append(objData.value(JsonKeys::JSONKEY_HAS2FA).toBool());
         pInterpreter->doFunction(object, "onAccountMessage", args);
     }
     else
     {
         CONSOLE_PRINT("Account message is empty.", GameConsole::eDEBUG);
+    }
+}
+
+void LobbyMenu::handle2faMessage(quint64 socketID, const QString object, const QJsonObject &objData)
+{
+    auto accountError = objData.value(JsonKeys::JSONKEY_ACCOUNT_ERROR).toInt();
+    if (!object.isEmpty())
+    {
+        CONSOLE_PRINT("Calling function " + object + ".on2faMessage(" + QString::number(accountError) + ")", GameConsole::eDEBUG);
+        Interpreter *pInterpreter = Interpreter::getInstance();
+        QJSValueList args;
+        args.append(accountError);
+        args.append(objData.value(JsonKeys::JSONKEY_TOTPSECRET).toString());
+        args.append(objData.value(JsonKeys::JSONKEY_TOTPURL).toString());
+        args.append(objData.value(JsonKeys::JSONKEY_NEWPASSWORD).toString());
+        pInterpreter->doFunction(object, "on2faMessage", args);
+    }
+    else
+    {
+        CONSOLE_PRINT("2fa message is empty.", GameConsole::eDEBUG);
     }
 }
 
@@ -973,6 +1006,52 @@ void LobbyMenu::changePasswordOnServerAccount(const QString oldServerPassword, c
     data.insert(JsonKeys::JSONKEY_PASSWORD, GlobalUtils::toJsonArray(password.getHash()));
     password.setPassword(oldServerPassword);
     data.insert(JsonKeys::JSONKEY_OLDPASSWORD, GlobalUtils::toJsonArray(password.getHash()));
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
+    QJsonDocument doc(data);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::requestServer2faSetup()
+{
+    QString command = NetworkCommands::SETUP2FA;
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
+    QJsonDocument doc(data);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::confirmServer2fa(const QString code)
+{
+    QString command = NetworkCommands::CONFIRM2FA;
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_TOTPCODE, code);
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
+    QJsonDocument doc(data);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::cancelServer2fa()
+{
+    QString command = NetworkCommands::CANCEL2FA;
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
+    QJsonDocument doc(data);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::submitPasswordResetCode(const QString code)
+{
+    QString command = NetworkCommands::SUBMITPASSWORDRESET2FACODE;
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_TOTPCODE, code);
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
     emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::JsonFormat::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);

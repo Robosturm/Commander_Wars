@@ -3287,6 +3287,8 @@
         <file>resources/ui/serverLogin/createAccountDialog.xml</file>
         <file>resources/ui/serverLogin/forgotPasswordDialog.js</file>
         <file>resources/ui/serverLogin/forgotPasswordDialog.xml</file>
+        <file>resources/ui/serverLogin/setup2faDialog.js</file>
+        <file>resources/ui/serverLogin/setup2faDialog.xml</file>
         <file>resources/ui/serverLogin/userLoginDialog.js</file>
         <file>resources/ui/serverLogin/userLoginDialog.xml</file>
         <file>resources/ui/menu/mainmenu.xml</file>

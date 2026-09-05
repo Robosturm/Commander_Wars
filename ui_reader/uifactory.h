@@ -255,6 +255,16 @@ private:
      */
     bool createMinimap(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
+     * @brief createQrCode creates a qr code display item, the content is set from js via QrCodeActor::setQrData
+     * @param parent
+     * @param element
+     * @param item
+     * @param pMenu
+     * @param loopIdx
+     * @return
+     */
+    bool createQrCode(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
      * Nodename: SlidingBox
      * supported attributes are:
      * mandatory: x, y, width, height, content

@@ -18,6 +18,7 @@
 #include "coreengine/commandlineparser.h"
 #include "coreengine/globalutils.h"
 #include "multiplayer/password.h"
+#include "multiplayer/totp.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
@@ -29,6 +30,7 @@ const char *const MainServer::SQL_PASSWORD = "password";
 const char *const MainServer::SQL_MAILADRESS = "mailAdress";
 const char *const MainServer::SQL_VALIDPASSWORD = "validPassword";
 const char *const MainServer::SQL_LASTLOGIN = "lastLogin";
+const char *const MainServer::SQL_TOTPSECRET = "totpSecret";
 
 const char *const MainServer::SQL_TABLE_PLAYERDATA = "playerData";
 const char *const MainServer::SQL_COID = "coid";
@@ -149,6 +151,7 @@ MainServer::MainServer()
 
     if (m_serverData != nullptr)
     {
+        Totp::selfTest();
         startDatabase();
         m_mailSender.moveToThread(&m_mailSenderThread);
         m_mailSenderThread.start(QThread::Priority::NormalPriority);
@@ -195,6 +198,31 @@ void MainServer::startDatabase()
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create player table error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+    }
+    // migrate older databases: add the totp secret column if missing
+    QSqlQuery pragmaQuery(*m_serverData);
+    pragmaQuery.exec(QString("PRAGMA table_info(") + SQL_TABLE_PLAYERS + ")");
+    bool hasTotpColumn = false;
+    while (pragmaQuery.next())
+    {
+        if (pragmaQuery.value("name").toString() == QLatin1String(SQL_TOTPSECRET))
+        {
+            hasTotpColumn = true;
+            break;
+        }
+    }
+    if (!hasTotpColumn)
+    {
+        QSqlQuery alterQuery(*m_serverData);
+        alterQuery.exec(QString("ALTER TABLE ") + SQL_TABLE_PLAYERS + " ADD COLUMN " + SQL_TOTPSECRET + " TEXT DEFAULT ''");
+        if (sqlQueryFailed(alterQuery))
+        {
+            CONSOLE_PRINT("Unable to add totp column to player table: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+        }
+        else
+        {
+            CONSOLE_PRINT("Added totp secret column to player table", GameConsole::eDEBUG);
+        }
     }
     // create table for map file server
     query.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_DOWNLOADMAPINFO + " (" +
@@ -340,7 +368,23 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         }
         else if (messageType == NetworkCommands::RESETPASSWORD)
         {
-            // resetAccountPassword(socketID, objData);
+            startPasswordReset(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::SUBMITPASSWORDRESET2FACODE)
+        {
+            submitPasswordReset2faCode(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::SETUP2FA)
+        {
+            start2faSetup(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::CONFIRM2FA)
+        {
+            confirm2faSetup(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::CANCEL2FA)
+        {
+            cancel2fa(socketID, objData);
         }
         else if (messageType == NetworkCommands::CHANGEPASSWORD)
         {
@@ -1057,7 +1101,9 @@ void MainServer::slotStartRemoteGame(QString initScript, QString id)
 
 void MainServer::disconnected(qint64 socketId)
 {
-    // nothing to do.
+    // drop pending 2fa states of the disconnected client
+    m_pending2faSetups.remove(socketId);
+    m_passwordResetSessions.remove(socketId);
 }
 
 void MainServer::spawnSlaveGame(QDataStream &stream, quint64 socketID, QByteArray &data, QString initScript, QString id)
@@ -1295,8 +1341,41 @@ void MainServer::periodicTasks()
     // CONSOLE_PRINT("MainServer::periodicTasks", GameConsole::eDEBUG);
     cleanUpSuspendedGames(m_runningSlaves);
     cleanUpSuspendedGames(m_runningLobbies);
+    cleanUpExpired2faSessions();
     executeScript();
     m_matchMakingCoordinator.periodicTasks();
+}
+
+void MainServer::cleanUpExpired2faSessions()
+{
+    const QDateTime now = QDateTime::currentDateTimeUtc();
+    for (auto it = m_pending2faSetups.begin(); it != m_pending2faSetups.end();)
+    {
+        if (it->created.msecsTo(now) > TOTP_SETUP_TIMEOUT_MS)
+        {
+            CONSOLE_PRINT("Dropping expired 2fa setup of client " + QString::number(it.key()), GameConsole::eDEBUG);
+            it = m_pending2faSetups.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+    for (auto it = m_passwordResetSessions.begin(); it != m_passwordResetSessions.end();)
+    {
+        if (it->created.msecsTo(now) > PASSWORD_RESET_TIMEOUT_MS)
+        {
+            CONSOLE_PRINT("Password reset of client " + QString::number(it.key()) + " timed out", GameConsole::eDEBUG);
+            const quint64 socketId = it.key();
+            it = m_passwordResetSessions.erase(it);
+            // inform the client so the cancellation is shown to the user
+            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_2faResetTimeout);
+        }
+        else
+        {
+            ++it;
+        }
+    }
 }
 
 void MainServer::cleanUpSuspendedGames(QVector<SuspendedSlaveInfo> &games)
@@ -1526,6 +1605,7 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonObject &objData)
     QJsonObject outData;
     outData.insert(JsonKeys::JSONKEY_COMMAND, command);
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    outData.insert(JsonKeys::JSONKEY_HAS2FA, hasTotpSecret(*m_serverData, username));
     QJsonDocument outDoc(outData);
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
@@ -1665,9 +1745,191 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonObject &objDat
     }
 }
 
-void MainServer::onMailSendResult(quint64 socketId, const QString receiverAddress, const QString username, bool result)
+void MainServer::send2faResponse(qint64 socketId, const QString & command, GameEnums::LoginError result, const QJsonObject & additionalData)
 {
-    QString command = QString(NetworkCommands::SERVERRESPONSRESETPASSWORD);
+    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), GameConsole::eDEBUG);
+    QJsonObject outData = additionalData;
+    outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    QJsonDocument outDoc(outData);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void MainServer::start2faSetup(qint64 socketId, const QJsonObject &objData)
+{
+    QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
+    CONSOLE_PRINT("Starting 2fa setup for username " + username, GameConsole::eDEBUG);
+    bool success = false;
+    QSqlQuery query = getAccountInfo(*m_serverData, username, success);
+    if (!query.first() || !success)
+    {
+        send2faResponse(socketId, NetworkCommands::SERVERRESPONSSETUP2FA, GameEnums::LoginError_AccountDoesntExist);
+        return;
+    }
+    if (!query.value(SQL_TOTPSECRET).toString().isEmpty())
+    {
+        send2faResponse(socketId, NetworkCommands::SERVERRESPONSSETUP2FA, GameEnums::LoginError_2faAlreadyConfigured);
+        return;
+    }
+    TotpEnrollment enrollment;
+    enrollment.username = username;
+    enrollment.base32Secret = Totp::base32Encode(Totp::generateSecret());
+    enrollment.created = QDateTime::currentDateTimeUtc();
+    m_pending2faSetups.insert(socketId, enrollment);
+    QJsonObject additionalData;
+    additionalData.insert(JsonKeys::JSONKEY_TOTPSECRET, enrollment.base32Secret);
+    additionalData.insert(JsonKeys::JSONKEY_TOTPURL, Totp::buildOtpAuthUrl(QStringLiteral("CommanderWars"), username, enrollment.base32Secret));
+    send2faResponse(socketId, NetworkCommands::SERVERRESPONSSETUP2FA, GameEnums::LoginError_None, additionalData);
+}
+
+void MainServer::confirm2faSetup(qint64 socketId, const QJsonObject &objData)
+{
+    QString code = objData.value(JsonKeys::JSONKEY_TOTPCODE).toString();
+    auto enrollment = m_pending2faSetups.find(socketId);
+    if (enrollment == m_pending2faSetups.end())
+    {
+        send2faResponse(socketId, NetworkCommands::SERVERRESPONSCONFIRM2FA, GameEnums::LoginError_2faSetupExpired);
+        return;
+    }
+    if (enrollment->created.msecsTo(QDateTime::currentDateTimeUtc()) > TOTP_SETUP_TIMEOUT_MS)
+    {
+        m_pending2faSetups.erase(enrollment);
+        send2faResponse(socketId, NetworkCommands::SERVERRESPONSCONFIRM2FA, GameEnums::LoginError_2faSetupExpired);
+        return;
+    }
+    const QByteArray secret = Totp::base32Decode(enrollment->base32Secret);
+    if (Totp::validateCode(secret, code))
+    {
+        const QString username = enrollment->username;
+        const QString base32Secret = enrollment->base32Secret;
+        m_pending2faSetups.erase(enrollment);
+        if (storeTotpSecret(*m_serverData, username, base32Secret))
+        {
+            CONSOLE_PRINT("2fa activated for username " + username, GameConsole::eDEBUG);
+            send2faResponse(socketId, NetworkCommands::SERVERRESPONSCONFIRM2FA, GameEnums::LoginError_None);
+        }
+        else
+        {
+            send2faResponse(socketId, NetworkCommands::SERVERRESPONSCONFIRM2FA, GameEnums::LoginError_DatabaseNotAccesible);
+        }
+    }
+    else
+    {
+        send2faResponse(socketId, NetworkCommands::SERVERRESPONSCONFIRM2FA, GameEnums::LoginError_Invalid2faCode);
+    }
+}
+
+void MainServer::cancel2fa(qint64 socketId, const QJsonObject &objData)
+{
+    Q_UNUSED(objData);
+    CONSOLE_PRINT("Canceling 2fa workflows of client " + QString::number(socketId), GameConsole::eDEBUG);
+    m_pending2faSetups.remove(socketId);
+    m_passwordResetSessions.remove(socketId);
+}
+
+void MainServer::startPasswordReset(qint64 socketId, const QJsonObject &objData)
+{
+    QString mailAdress = objData.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
+    QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
+    CONSOLE_PRINT("Password reset requested for username " + username, GameConsole::eDEBUG);
+    bool success = false;
+    QSqlQuery query = getAccountInfo(*m_serverData, username, success);
+    if (!query.first() || !success)
+    {
+        send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_AccountDoesntExist);
+        return;
+    }
+    const QString totpSecret = query.value(SQL_TOTPSECRET).toString();
+    if (!totpSecret.isEmpty())
+    {
+        // totp based reset: ask the client for the current code of the user's app
+        PasswordResetSession session;
+        session.username = username;
+        session.created = QDateTime::currentDateTimeUtc();
+        m_passwordResetSessions.insert(socketId, session);
+        send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_None);
+    }
+    else if (!Settings::getInstance()->getMailServerAddress().isEmpty())
+    {
+        // fallback to the mail based reset for accounts without 2fa
+        resetAccountPassword(socketId, objData);
+    }
+    else
+    {
+        // no 2fa configured and no mail server available: the account can't be reset
+        send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_No2faConfigured);
+    }
+}
+
+void MainServer::submitPasswordReset2faCode(qint64 socketId, const QJsonObject &objData)
+{
+    QString code = objData.value(JsonKeys::JSONKEY_TOTPCODE).toString();
+    auto session = m_passwordResetSessions.find(socketId);
+    if (session == m_passwordResetSessions.end())
+    {
+        send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_2faResetTimeout);
+        return;
+    }
+    if (session->created.msecsTo(QDateTime::currentDateTimeUtc()) > PASSWORD_RESET_TIMEOUT_MS)
+    {
+        m_passwordResetSessions.erase(session);
+        send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_2faResetTimeout);
+        return;
+    }
+    bool success = false;
+    QSqlQuery query = getAccountInfo(*m_serverData, session->username, success);
+    const QString totpSecret = (query.first() && success) ? query.value(SQL_TOTPSECRET).toString() : QString();
+    if (totpSecret.isEmpty())
+    {
+        m_passwordResetSessions.erase(session);
+        send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_No2faConfigured);
+        return;
+    }
+    if (Totp::validateCode(Totp::base32Decode(totpSecret), code))
+    {
+        const QString username = session->username;
+        m_passwordResetSessions.erase(session);
+        QString newPassword = createRandomPassword();
+        Password password;
+        password.setPassword(newPassword);
+        QSqlQuery changeQuery(*m_serverData);
+        changeQuery.prepare(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                            SQL_PASSWORD + " = ?, " +
+                            SQL_VALIDPASSWORD + " = 0 WHERE " +
+                            SQL_USERNAME + " = ?;");
+        changeQuery.addBindValue(password.getHash().toHex());
+        changeQuery.addBindValue(username);
+        changeQuery.exec();
+        if (!sqlQueryFailed(changeQuery))
+        {
+            CONSOLE_PRINT("Password reset by 2fa for username " + username, GameConsole::eDEBUG);
+            QJsonObject additionalData;
+            additionalData.insert(JsonKeys::JSONKEY_NEWPASSWORD, newPassword);
+            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_None, additionalData);
+        }
+        else
+        {
+            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_DatabaseNotAccesible);
+        }
+    }
+    else
+    {
+        ++session->attempts;
+        if (session->attempts >= PASSWORD_RESET_MAX_ATTEMPTS)
+        {
+            CONSOLE_PRINT("Too many wrong 2fa codes for password reset of client " + QString::number(socketId), GameConsole::eDEBUG);
+            m_passwordResetSessions.erase(session);
+            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_TooMany2faAttempts);
+        }
+        else
+        {
+            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_Invalid2faCode);
+        }
+    }
+}
+
+void MainServer::onMailSendResult(quint64 socketId, const QString receiverAddress, const QString username, bool result)
+{    QString command = QString(NetworkCommands::SERVERRESPONSRESETPASSWORD);
     GameEnums::LoginError mailSendResult = GameEnums::LoginError_None;
     if (!result)
     {
@@ -1723,6 +1985,39 @@ QString MainServer::createRandomPassword() const
         password += static_cast<char>(GlobalUtils::randInt('A', 'Z'));
     }
     return password;
+}
+
+bool MainServer::hasTotpSecret(QSqlDatabase &database, const QString &username)
+{
+    bool success = false;
+    QSqlQuery query = getAccountInfo(database, username, success);
+    if (query.first() && success)
+    {
+        return !query.value(SQL_TOTPSECRET).toString().isEmpty();
+    }
+    return false;
+}
+
+bool MainServer::storeTotpSecret(QSqlDatabase &database, const QString &username, const QString &base32Secret)
+{
+    QSqlQuery updateQuery(database);
+    updateQuery.prepare(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                        SQL_TOTPSECRET + " = ? WHERE " +
+                        SQL_USERNAME + " = ?;");
+    updateQuery.addBindValue(base32Secret);
+    updateQuery.addBindValue(username);
+    updateQuery.exec();
+    if (sqlQueryFailed(updateQuery))
+    {
+        CONSOLE_PRINT("Unable to store totp secret for user " + username + ". Error: " + database.lastError().nativeErrorCode(), GameConsole::eERROR);
+        return false;
+    }
+    return true;
+}
+
+bool MainServer::clearTotpSecret(QSqlDatabase &database, const QString &username)
+{
+    return storeTotpSecret(database, username, "");
 }
 
 QSqlDatabase &MainServer::getDatabase()

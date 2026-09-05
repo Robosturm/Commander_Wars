@@ -367,6 +367,12 @@ public:
         LoginError_DatabaseNotAccesible,
         LoginError_SendingMailFailed,
         LoginError_WrongEmailAdress,
+        LoginError_No2faConfigured,
+        LoginError_Invalid2faCode,
+        LoginError_2faResetTimeout,
+        LoginError_TooMany2faAttempts,
+        LoginError_2faAlreadyConfigured,
+        LoginError_2faSetupExpired,
     };
     Q_ENUM(LoginError)
 
