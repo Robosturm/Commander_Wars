@@ -2251,14 +2251,14 @@ void GameMenue::saveGame()
     QStringList wildcards;
     wildcards.append("*" + getSaveFileEnding());
     QString path = Settings::getInstance()->getUserPath() + "savegames";
-    spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
+    spMapFileDialog saveDialog = MemoryManagement::create<MapFileDialog>(path, wildcards, true, m_pMap->getMapName(), tr("Save"));
     addChild(saveDialog);
-    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, [this](QString filename)
+    connect(saveDialog.get(), &MapFileDialog::sigFileSelected, this, [this](QString filename)
     {
         saveMap(filename);
     }, Qt::QueuedConnection);
     setFocused(false);
-    connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
+    connect(saveDialog.get(), &MapFileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
 }
 
 QString GameMenue::getSaveFileEnding()
