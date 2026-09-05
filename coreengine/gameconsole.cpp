@@ -331,15 +331,20 @@ void GameConsole::update(const oxygine::UpdateState& us)
             auto font = FontManager::getFont("console16");
             QFontMetrics metrics(font.font);
             qint32 lineHeight = metrics.height();
+            qint32 textWidth = m_text->getWidth();
+            qint32 maxHeight = screenheight - lineHeight * 3;
             // create output text
             QString drawText;
             qint32 i = m_output.size() - 1;
             qint32 currentHeight = 0;
-            while (i >= 0 && currentHeight < screenheight - lineHeight * 3)
+            while (i >= 0 && currentHeight < maxHeight)
             {
                 QString testDrawText = ("> " + m_output[i] + "\n") + drawText;
-                qint32 nextHeight = testDrawText.split("\n").size() * lineHeight;
-                if (nextHeight > screenheight - lineHeight * 3)
+                // measure the actual wrapped height instead of just counting '\n', since long lines wrap in the multiline text field
+                QString plainText = testDrawText;
+                plainText.replace("&amp;", "&");
+                qint32 nextHeight = metrics.boundingRect(QRect(0, 0, textWidth, INT_MAX), Qt::TextWordWrap, plainText).height();
+                if (nextHeight > maxHeight)
                 {
                     break;
                 }

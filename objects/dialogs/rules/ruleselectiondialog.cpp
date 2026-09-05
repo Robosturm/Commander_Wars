@@ -102,16 +102,18 @@ void RuleSelectionDialog::loadRules(QString filename)
             if (!file.open(QIODevice::ReadOnly))
             {
                 CONSOLE_PRINT("Failed to open file " + filename, GameConsole::eERROR);
-                return;
             }
-            QDataStream stream(&file);
-            stream.setVersion(QDataStream::Version::Qt_6_5);
-            m_pMap->getGameRules()->deserializeObject(stream);
-            file.close();
-            auto mode = m_pRuleSelection->getMode();
-            m_pRuleSelection->detachAndRemove();
-            m_pRuleSelection = MemoryManagement::create<RuleSelection>(m_pMap, oxygine::Stage::getStage()->getWidth() - 80, mode);
-            m_pSpriteBox->addChild(m_pRuleSelection);
+            else
+            {
+                QDataStream stream(&file);
+                stream.setVersion(QDataStream::Version::Qt_6_5);
+                m_pMap->getGameRules()->deserializeObject(stream);
+                file.close();
+                auto mode = m_pRuleSelection->getMode();
+                m_pRuleSelection->detachAndRemove();
+                m_pRuleSelection = MemoryManagement::create<RuleSelection>(m_pMap, oxygine::Stage::getStage()->getWidth() - 80, mode);
+                m_pSpriteBox->addChild(m_pRuleSelection);
+            }
         }
     }
     Mainapp::getInstance()->continueRendering();
