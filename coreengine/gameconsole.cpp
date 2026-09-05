@@ -63,6 +63,7 @@ const char* const GameConsole::functions[] =
     "printObjectDetails",
     "resetMapsGameRules",
     "updateTerrainPaletteMasks",
+    "updateMaps",
     "loadScript",
     ""
 };
@@ -487,6 +488,31 @@ void GameConsole::resetMapsGameRules(const QString & folder)
         QString filePath = dirIter.fileInfo().canonicalFilePath();
         spGameMap pMap = MemoryManagement::create<GameMap>(filePath, true, true, false);
         pMap->getGameRules()->reset();
+        QFile file(filePath);
+        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
+            pMap->serializeObject(stream);
+            file.close();
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
+    }
+}
+
+void GameConsole::updateMaps(const QString & folder)
+{
+    QStringList filters;
+    filters << "*.map";
+    QDirIterator dirIter(folder, filters, QDir::Files, QDirIterator::IteratorFlag::Subdirectories);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString filePath = dirIter.fileInfo().canonicalFilePath();
+        spGameMap pMap = MemoryManagement::create<GameMap>(filePath, true, true, false);
         QFile file(filePath);
         if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
         {

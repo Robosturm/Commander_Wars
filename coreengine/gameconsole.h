@@ -229,6 +229,7 @@ public slots:
      * @brief resetMaps
      */
     void resetMapsGameRules(const QString & folder);
+    void updateMaps(const QString & folder);
     /**
      * @brief update
      * @param us
