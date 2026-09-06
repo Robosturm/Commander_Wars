@@ -16,7 +16,7 @@
         "           </QrCode>",
         "           <Label>",
         "               <x>40</x>",
-        "               <y>settings.getStageHeight() / 2 - 180</y>",
+        "               <y>lastY + lastHeight + 30</y>",
         "               <width>parentWidth - 80</width>",
         "               <text>Beta Release 39.1</text>",
         "               <font>\"main\"</font>",
