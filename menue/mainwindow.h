@@ -48,6 +48,7 @@ public slots:
     void versionClicked();
     bool isValidSavegame();
     void createRandomInis(GameEnums::AiTypes ai, QString baseName, qint32 amount);
+    void showNews();
 protected slots:
     void cheatTimeout();
     void unlockAllShopItems();

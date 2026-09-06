@@ -269,8 +269,26 @@ void UiFactory::createUiFromString(const QString& uiXml, CreatedGui* pMenu, oxyg
 {
     bool overwrite = false;
     QDomDocument document;
-    document.setContent(uiXml);
-    createUiFromDocument(document, pMenu, root, overwrite);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+    auto result = document.setContent(uiXml);
+    bool loaded = static_cast<bool>(result);
+    QString errorMessage = result.errorMessage;
+    qsizetype errorLine = result.errorLine;
+    qsizetype errorColumn = result.errorColumn;
+#else
+    QString errorMessage;
+    int errorLine = 0;
+    int errorColumn = 0;
+    bool loaded = document.setContent(uiXml, &errorMessage, &errorLine, &errorColumn);
+#endif
+    if (loaded)
+    {
+        createUiFromDocument(document, pMenu, root, overwrite);
+    }
+    else
+    {
+        CONSOLE_PRINT("Error: " + errorMessage + " at line " + QString::number(errorLine) + " at column " + QString::number(errorColumn), GameConsole::eERROR);
+    }
 }
 
 bool UiFactory::createUiFromDocument(QDomDocument & document, CreatedGui* pMenu, oxygine::spActor root, bool & overwrite)

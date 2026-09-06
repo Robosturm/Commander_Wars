@@ -1,6 +1,7 @@
 #include <QFile>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "menue/mainwindow.h"
 #include "menue/campaignmenu.h"
@@ -45,7 +46,8 @@
 #include "objects/qrcodeactor.h"
 
 Mainwindow::Mainwindow(const QString & initialView)
-    : m_cheatTimeout(this)
+    : m_cheatTimeout(this),
+    m_newsDownloader(this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Mainwindow");
@@ -102,19 +104,6 @@ Mainwindow::Mainwindow(const QString & initialView)
     });
     connect(this, &Mainwindow::sigVersionClicked, this, &Mainwindow::versionClicked, Qt::QueuedConnection);
     addChild(pTextfield);
-
-    if (!Settings::getInstance()->getSmallScreenDevice())
-    {
-        // import
-        oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), 170, tr("Imports all data from an other Commander Wars release to the current release."));
-        addChild(pImport);
-        pImport->setPosition(10, oxygine::Stage::getStage()->getHeight() - 10 - pImport->getScaledHeight());
-        pImport->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-        {
-            emit sigImport();
-        });
-        connect(this, &Mainwindow::sigImport, this, &Mainwindow::import, Qt::QueuedConnection);
-    }
 
     m_cheatTimeout.setSingleShot(true);
     connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);
@@ -485,21 +474,32 @@ void Mainwindow::onNewsDownloaded(bool newNews)
 {
     if (newNews)
     {
-        QJsonDocument jsonDoc = QJsonDocument::fromJson(Settings::getInstance()->getLastNews().toUtf8());
-        QJsonObject jsonObj = jsonDoc.object();
-        QJsonArray contentArray = jsonObj["content"].toArray();
-        QString newsText;
-        for (const QJsonValue& value : contentArray)
+        auto* pButton = getCastedObject<oxygine::Button>("NewsButton");
+        if (pButton)
         {
-            if (value.isString())
-            {
-                newsText += value.toString() + "\n";
-            }
+            pButton->setEnabled(true);
         }
-        if (!newsText.isEmpty())
+        showNews();
+    }
+}
+
+void Mainwindow::showNews()
+{
+    auto newsContent = Settings::getInstance()->getLastNews();
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(newsContent.toUtf8());
+    QJsonObject jsonObj = jsonDoc.object();
+    QJsonArray contentArray = jsonObj["content"].toArray();
+    QString newsText;
+    for (const QJsonValue& value : std::as_const(contentArray))
+    {
+        if (value.isString())
         {
-            spCustomDialog pNewsBox = MemoryManagement::create<CustomDialog>("", newsText, this, tr("Ok"), true);
-            addChild(pNewsBox);
-        }        
+            newsText += value.toString() + "\n";
+        }
+    }
+    if (!newsText.isEmpty())
+    {
+        spCustomDialog pNewsBox = MemoryManagement::create<CustomDialog>("", newsText, this, tr("Ok"), true);
+        addChild(pNewsBox);
     }
 }

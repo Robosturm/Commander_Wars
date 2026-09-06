@@ -8,7 +8,7 @@ class NewsDownloader : public QObject
 {
     Q_OBJECT
 public:
-    explicit NewsDownloader();
+    explicit NewsDownloader(QObject *parent);
     virtual ~NewsDownloader() = default;
 
     void startDownloadNews();
@@ -17,6 +17,7 @@ signals:
 
 private slots:
     void onResponseFinished(QNetworkReply* pReply);
+    void downloadErrorOccurred(QNetworkReply::NetworkError code);
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 private:
     QNetworkAccessManager m_webCtrl;

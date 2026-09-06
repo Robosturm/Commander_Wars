@@ -70,4 +70,23 @@
         <tooltip>QT_TRANSLATE_NOOP("GAME","Quit")</tooltip>
         <onEvent>currentMenu.quitGame();</onEvent>
     </Button>
+    <Button>
+        <x>10</x>
+        <y>settings.getStageHeight() - 10 - lastHeight</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Import")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME", "Imports all data from an other Commander Wars release to the current release.")</tooltip>
+        <onEvent>currentMenu.import()</onEvent>
+        <enabled>!settings.getSmallScreenDevice()</enabled>
+    </Button>
+    <Button>
+        <Id>NewsButton</Id>
+        <x>10</x>
+        <y>lastY - lastHeight - 10</y>
+        <width>170</width>
+        <text>QT_TRANSLATE_NOOP("GAME","News")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","News")</tooltip>
+        <onEvent>currentMenu.showNews()</onEvent>
+        <enabled>settings.getNewsDownloaded()</enabled>
+    </Button>
 </ui>

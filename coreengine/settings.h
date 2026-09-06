@@ -874,10 +874,10 @@ public:
     QString getNewsUrl() const;
     QString getLastNewsHash() const;
     void setLastNewsHash(const QString & newLastNewsHash);
-    bool getNewsDownloaded() const;
+    Q_INVOKABLE bool getNewsDownloaded() const;
     void setNewsDownloaded(bool newNewsDownloaded);
     void setLastNews(const QString & newLastNews);
-    QString getLastNews() const;
+    Q_INVOKABLE QString getLastNews() const;
 
 private:
     friend class MemoryManagement;
