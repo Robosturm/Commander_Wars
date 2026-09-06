@@ -878,6 +878,8 @@ public:
     void setNewsDownloaded(bool newNewsDownloaded);
     void setLastNews(const QString & newLastNews);
     Q_INVOKABLE QString getLastNews() const;
+    Q_INVOKABLE void setNewsEnabled(bool newNewsEnabled);
+    Q_INVOKABLE bool getNewsEnabled() const;
 
 private:
     friend class MemoryManagement;
@@ -1028,6 +1030,7 @@ private:
     QString m_lastNews;
     QString m_lastNewsHash;
     bool m_newsDownloaded{false};
+    bool m_newsEnabled{true};
     
     // ingame options
     bool m_overworldAnimations{true};

@@ -1576,6 +1576,7 @@ void Settings::setup()
             // news
             MemoryManagement::create<Value<QString>>("News", "NewsUrl", &m_newsUrl, "https://raw.githubusercontent.com/Robosturm/Commander_Wars/master/news.json", "", ""),
             MemoryManagement::create<Value<QString>>("News", "LastNewsHash", &m_lastNewsHash, "", "", ""),
+            MemoryManagement::create<Value<bool>>("News", "NewsEnabled", &m_newsEnabled, true, false, true),
 
             // auto saving
             MemoryManagement::create<Value<std::chrono::seconds>>("Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)),
@@ -2678,4 +2679,14 @@ void Settings::setLastNews(const QString & newLastNews)
 QString Settings::getLastNews() const
 {
     return m_lastNews;
+}
+
+void Settings::setNewsEnabled(bool newNewsEnabled)
+{
+    m_newsEnabled = newNewsEnabled;
+}
+
+bool Settings::getNewsEnabled() const
+{
+    return m_newsEnabled;
 }

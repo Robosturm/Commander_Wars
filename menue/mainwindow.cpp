@@ -109,7 +109,10 @@ Mainwindow::Mainwindow(const QString & initialView)
     connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);
 
     connect(&m_newsDownloader, &NewsDownloader::sigNewsDownloaded, this, &Mainwindow::onNewsDownloaded, Qt::QueuedConnection);
-    m_newsDownloader.startDownloadNews();
+    if (Settings::getInstance()->getNewsEnabled())
+    {
+        m_newsDownloader.startDownloadNews();
+    }
 
     pApp->continueRendering();
 }
@@ -472,13 +475,13 @@ void Mainwindow::createRandomInis(GameEnums::AiTypes ai, QString baseName, qint3
 
 void Mainwindow::onNewsDownloaded(bool newNews)
 {
+    auto* pButton = getCastedObject<oxygine::Button>("NewsButton");
+    if (pButton)
+    {
+        pButton->setEnabled(true);
+    }
     if (newNews)
     {
-        auto* pButton = getCastedObject<oxygine::Button>("NewsButton");
-        if (pButton)
-        {
-            pButton->setEnabled(true);
-        }
         showNews();
     }
 }
