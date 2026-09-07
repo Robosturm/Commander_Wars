@@ -1533,8 +1533,21 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
             -always-overwrite
         COMMENT "Running macdeployqt..."
     )
+    # NOTE: target the bundle in the build tree (not CMAKE_INSTALL_PREFIX, which does not exist yet at this point)
+    #       so the plugin is present when install(TARGETS) later copies the bundle.
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${QT_BIN_DIR}/../plugins/multimedia/libdarwinmediaplugin.dylib "${CMAKE_INSTALL_PREFIX}/Commander_Wars.app/Contents/PlugIns/multimedia/libdarwinmediaplugin.dylib")
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/PlugIns/multimedia"
+        COMMAND ${CMAKE_COMMAND} -E copy ${QT_BIN_DIR}/../plugins/multimedia/libdarwinmediaplugin.dylib "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/PlugIns/multimedia/libdarwinmediaplugin.dylib"
+        COMMENT "Copying darwin media plugin..."
+    )
+    # Re-sign the bundle (ad-hoc) after macdeployqt/manual plugin copies modified its contents.
+    # Without this, Gatekeeper treats the whole .app as having an invalid signature once
+    # quarantined, so double-clicking it in Finder silently fails/hangs even though the
+    # raw executable inside Contents/MacOS still launches fine from a terminal.
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND codesign --force --deep --sign - "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../.."
+        COMMENT "Ad-hoc codesigning app bundle..."
+    )
 endif()
 
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
