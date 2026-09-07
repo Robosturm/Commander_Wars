@@ -1573,6 +1573,10 @@ void Settings::setup()
             MemoryManagement::create<Value<qint64>>("TwoFactorAuthentication", "TotpSetupTimeoutMs", &m_totpSetupTimeoutMs, 10 * 60 * 1000, 0, std::numeric_limits<qint64>::max()),
             MemoryManagement::create<Value<qint64>>("TwoFactorAuthentication", "PasswordResetTimeoutMs", &m_passwordResetTimeoutMs, 5 * 60 * 1000, 0, std::numeric_limits<qint64>::max()),
             MemoryManagement::create<Value<qint32>>("TwoFactorAuthentication", "PasswordResetMaxAttempts", &m_passwordResetMaxAttempts, 5, 0, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<qint64>>("TwoFactorAuthentication", "PasswordFailTimeoutS", &m_passwordFailTimeoutS, 24 * 60 * 60, 0, std::numeric_limits<qint64>::max()),
+            MemoryManagement::create<Value<qint32>>("TwoFactorAuthentication", "LoginPasswordMaxAttempts", &m_loginPasswordMaxAttempts, 5, 0, std::numeric_limits<qint32>::max()),
+            MemoryManagement::create<Value<qint64>>("TwoFactorAuthentication", "LoginPasswordFailTimeoutS", &m_loginPasswordFailTimeoutS, 24 * 60 * 60, 0, std::numeric_limits<qint64>::max()),
+
             // news
             MemoryManagement::create<Value<QString>>("News", "NewsUrl", &m_newsUrl, "https://raw.githubusercontent.com/Robosturm/Commander_Wars/master/news.json", "", ""),
             MemoryManagement::create<Value<QString>>("News", "LastNewsHash", &m_lastNewsHash, "", "", ""),
@@ -2644,6 +2648,36 @@ void Settings::setPasswordResetMaxAttempts(qint32 newPasswordResetMaxAttempts)
 qint32 Settings::getPasswordResetMaxAttempts() const
 {
     return m_passwordResetMaxAttempts;
+}
+
+void Settings::setPasswordFailTimeoutS(qint64 newPasswordFailTimeoutS)
+{
+    m_passwordFailTimeoutS = newPasswordFailTimeoutS;
+}
+
+qint64 Settings::getPasswordFailTimeoutS() const
+{
+    return m_passwordFailTimeoutS;
+}
+
+void Settings::setLoginPasswordMaxAttempts(qint32 newLoginPasswordMaxAttempts)
+{
+    m_loginPasswordMaxAttempts = newLoginPasswordMaxAttempts;
+}
+
+qint32 Settings::getLoginPasswordMaxAttempts() const
+{
+    return m_loginPasswordMaxAttempts;
+}
+
+void Settings::setLoginPasswordFailTimeoutS(qint64 newLoginPasswordFailTimeoutS)
+{
+    m_loginPasswordFailTimeoutS = newLoginPasswordFailTimeoutS;
+}
+
+qint64 Settings::getLoginPasswordFailTimeoutS() const
+{
+    return m_loginPasswordFailTimeoutS;
 }
 
 QString Settings::getNewsUrl() const

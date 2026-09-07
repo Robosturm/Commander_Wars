@@ -863,13 +863,18 @@ public:
     Q_INVOKABLE bool isAndroidDevice() const;
     Q_INVOKABLE bool getAutoShowAttackableFields() const;
     Q_INVOKABLE void setAutoShowAttackableFields(bool newAutoShowAttackableFields);
-
     Q_INVOKABLE void setTotpSetupTimeoutMs(qint64 newTotpSetupTimeoutMs);
     Q_INVOKABLE qint64 getTotpSetupTimeoutMs() const;
     Q_INVOKABLE void setPasswordResetTimeoutMs(qint64 newPasswordResetTimeoutMs);
     Q_INVOKABLE qint64 getPasswordResetTimeoutMs() const;
     Q_INVOKABLE void setPasswordResetMaxAttempts(qint32 newPasswordResetMaxAttempts);
     Q_INVOKABLE qint32 getPasswordResetMaxAttempts() const;
+    Q_INVOKABLE void setPasswordFailTimeoutS(qint64 newPasswordFailTimeoutS);
+    Q_INVOKABLE qint64 getPasswordFailTimeoutS() const;
+    Q_INVOKABLE void setLoginPasswordMaxAttempts(qint32 newLoginPasswordMaxAttempts);
+    Q_INVOKABLE qint32 getLoginPasswordMaxAttempts() const;
+    Q_INVOKABLE void setLoginPasswordFailTimeoutS(qint64 newLoginPasswordFailTimeoutS);
+    Q_INVOKABLE qint64 getLoginPasswordFailTimeoutS() const;
 
     QString getNewsUrl() const;
     QString getLastNewsHash() const;
@@ -1020,6 +1025,9 @@ private:
     qint64 m_totpSetupTimeoutMs{10 * 60 * 1000}; // 10 minutes
     qint64 m_passwordResetTimeoutMs{5 * 60 * 1000}; // 5 minutes
     qint32 m_passwordResetMaxAttempts{5};
+    qint64 m_passwordFailTimeoutS{24 * 60 * 60}; // 24 hours
+    qint32 m_loginPasswordMaxAttempts{5};
+    qint64 m_loginPasswordFailTimeoutS{24 * 60 * 60}; // 24 hours
 
     // auto saving
     std::chrono::seconds m_autoSavingCylceTime{std::chrono::minutes(0)};

@@ -123,6 +123,11 @@ var ForgotPasswordDialog =
             forgotPassword.showMessageBox(qsTr("This account has no 2 factor authentication configured and the server cannot send e-mails. The password can not be reset. Please contact a server admin."));
             forgotPassword.exit();
         }
+        else if (errorCode === GameEnums.LoginError_2faLockedDueToTooManyFailedAttempts)
+        {
+            forgotPassword.showMessageBox(qsTr("Your account resetting is locked due to too many failed authentication attempts. Please try again later."));
+            forgotPassword.exit();
+        }
         else
         {
             forgotPassword.showMessageBox(qsTr("Unknown error happened."));

@@ -102,28 +102,66 @@ void TwoFactorAuthenticatorServer::startPasswordReset(qint64 socketId, const QJs
     if (!query.first() || !success)
     {
         send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_AccountDoesntExist);
-        return;
-    }
-    const QString totpSecret = query.value(MainServer::SQL_TOTPSECRET).toString();
-    if (!totpSecret.isEmpty())
-    {
-        // totp based reset: ask the client for the current code of the user's app
-        PasswordResetSession session;
-        session.username = username;
-        session.created = QDateTime::currentDateTimeUtc();
-        m_passwordResetSessions.insert(socketId, session);
-        send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_None);
-    }
-    else if (!Settings::getInstance()->getMailServerAddress().isEmpty())
-    {
-        // fallback to the mail based reset for accounts without 2fa
-        m_mainServer.resetAccountPassword(socketId, objData);
     }
     else
     {
-        // no 2fa configured and no mail server available: the account can't be reset
-        send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_No2faConfigured);
+        
+        const QString totpSecret = query.value(MainServer::SQL_TOTPSECRET).toString();
+        if (!totpSecret.isEmpty())
+        {
+            if (isPasswordResetAllowed(m_mainServer.getDatabase(), query))
+            {
+                // totp based reset: ask the client for the current code of the user's app
+                PasswordResetSession session;
+                session.username = username;
+                session.created = QDateTime::currentDateTimeUtc();
+                m_passwordResetSessions.insert(socketId, session);
+                send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_None);
+            }
+            else
+            {
+                send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_2faLockedDueToTooManyFailedAttempts);
+            }
+        }
+        else
+        {
+            // no 2fa configured and no mail server available: the account can't be reset
+            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_No2faConfigured);
+        }
     }
+}
+
+bool TwoFactorAuthenticatorServer::isPasswordResetAllowed(QSqlDatabase &database, QSqlQuery &accountInfo)
+{
+    bool allowed = false;
+    auto loginFailCount = accountInfo.value(MainServer::SQL_TOTPSECRETFAILCOUNT).toInt();
+    if (loginFailCount < Settings::getInstance()->getPasswordResetMaxAttempts())
+    {
+        allowed = true;
+    }
+    else
+    {
+        auto firstFailTime = accountInfo.value(MainServer::SQL_TOTPSECRETFIRSTFAILTIME).toLongLong();
+        qint64 currentTime = QDateTime::currentSecsSinceEpoch();
+        if (currentTime - firstFailTime > Settings::getInstance()->getPasswordFailTimeoutS())
+        {
+            resetLoginAttempts(database, accountInfo);
+            allowed = true;
+        }
+    }
+    return allowed;
+}
+
+void TwoFactorAuthenticatorServer::resetLoginAttempts(QSqlDatabase &database, QSqlQuery &accountInfo)
+{
+    // reset login fail count and first fail time
+    QSqlQuery resetQuery(database);
+    resetQuery.prepare(QString("UPDATE ") + MainServer::SQL_TABLE_PLAYERS + " SET " +
+                       MainServer::SQL_TOTPSECRETFAILCOUNT + " = 0, " +
+                       MainServer::SQL_TOTPSECRETFIRSTFAILTIME + " = 0 WHERE " +
+                       MainServer::SQL_USERNAME + " = ?;");
+    resetQuery.addBindValue(accountInfo.value(MainServer::SQL_USERNAME).toString());
+    resetQuery.exec();
 }
 
 void TwoFactorAuthenticatorServer::submitPasswordReset2faCode(qint64 socketId, const QJsonObject &objData)
@@ -133,65 +171,95 @@ void TwoFactorAuthenticatorServer::submitPasswordReset2faCode(qint64 socketId, c
     if (session == m_passwordResetSessions.end())
     {
         send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_2faResetTimeout);
-        return;
     }
-    if (session->created.msecsTo(QDateTime::currentDateTimeUtc()) > Settings::getInstance()->getPasswordResetTimeoutMs())
+    else if (session->created.msecsTo(QDateTime::currentDateTimeUtc()) > Settings::getInstance()->getPasswordResetTimeoutMs())
     {
         m_passwordResetSessions.erase(session);
         send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_2faResetTimeout);
-        return;
-    }
-    bool success = false;
-    QSqlQuery query = MainServer::getAccountInfo(m_mainServer.getDatabase(), session->username, success);
-    const QString totpSecret = (query.first() && success) ? query.value(MainServer::SQL_TOTPSECRET).toString() : QString();
-    if (totpSecret.isEmpty())
-    {
-        m_passwordResetSessions.erase(session);
-        send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_No2faConfigured);
-        return;
-    }
-    if (Totp::validateCode(Totp::base32Decode(totpSecret), code))
-    {
-        const QString username = session->username;
-        m_passwordResetSessions.erase(session);
-        QString newPassword = m_mainServer.createRandomPassword();
-        Password password;
-        password.setPassword(newPassword);
-        QSqlQuery changeQuery(m_mainServer.getDatabase());
-        changeQuery.prepare(QString("UPDATE ") + MainServer::SQL_TABLE_PLAYERS + " SET " +
-                            MainServer::SQL_PASSWORD + " = ?, " +
-                            MainServer::SQL_VALIDPASSWORD + " = 0 WHERE " +
-                            MainServer::SQL_USERNAME + " = ?;");
-        auto hash = password.getHash().toHex();
-        changeQuery.addBindValue(hash);
-        changeQuery.addBindValue(username);
-        changeQuery.exec();
-        if (!MainServer::sqlQueryFailed(changeQuery))
-        {
-            CONSOLE_PRINT("Password reset by 2fa for username " + username, GameConsole::eDEBUG);
-            QJsonObject additionalData;
-            additionalData.insert(JsonKeys::JSONKEY_NEWPASSWORD, newPassword);
-            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_None, additionalData);
-        }
-        else
-        {
-            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_DatabaseNotAccesible);
-        }
     }
     else
     {
-        ++session->attempts;
-        if (session->attempts >= Settings::getInstance()->getPasswordResetMaxAttempts())
+        bool success = false;
+        QSqlQuery query = MainServer::getAccountInfo(m_mainServer.getDatabase(), session->username, success);
+        const QString totpSecret = (query.first() && success) ? query.value(MainServer::SQL_TOTPSECRET).toString() : QString();
+        if (totpSecret.isEmpty())
         {
-            CONSOLE_PRINT("Too many wrong 2fa codes for password reset of client " + QString::number(socketId), GameConsole::eDEBUG);
             m_passwordResetSessions.erase(session);
-            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_TooMany2faAttempts);
+            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_No2faConfigured);
+        }
+        else if (isPasswordResetAllowed(m_mainServer.getDatabase(), query))
+        {
+            if (Totp::validateCode(Totp::base32Decode(totpSecret), code))
+            {
+                resetLoginAttempts(m_mainServer.getDatabase(), query);
+                const QString username = session->username;
+                m_passwordResetSessions.erase(session);
+                QString newPassword = m_mainServer.createRandomPassword();
+                Password password;
+                password.setPassword(newPassword);
+                QSqlQuery changeQuery(m_mainServer.getDatabase());
+                changeQuery.prepare(QString("UPDATE ") + MainServer::SQL_TABLE_PLAYERS + " SET " +
+                                    MainServer::SQL_PASSWORD + " = ?, " +
+                                    MainServer::SQL_VALIDPASSWORD + " = 0 WHERE " +
+                                    MainServer::SQL_USERNAME + " = ?;");
+                auto hash = password.getHash().toHex();
+                changeQuery.addBindValue(hash);
+                changeQuery.addBindValue(username);
+                changeQuery.exec();
+                if (!MainServer::sqlQueryFailed(changeQuery))
+                {
+                    CONSOLE_PRINT("Password reset by 2fa for username " + username, GameConsole::eDEBUG);
+                    QJsonObject additionalData;
+                    additionalData.insert(JsonKeys::JSONKEY_NEWPASSWORD, newPassword);
+                    send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_None, additionalData);
+                }
+                else
+                {
+                    send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_DatabaseNotAccesible);
+                }
+            }
+            else
+            {
+                handleLoginFailed(m_mainServer.getDatabase(), query);
+                ++session->attempts;
+                if (session->attempts >= Settings::getInstance()->getPasswordResetMaxAttempts())
+                {
+                    CONSOLE_PRINT("Too many wrong 2fa codes for password reset of client " + QString::number(socketId), GameConsole::eDEBUG);
+                    m_passwordResetSessions.erase(session);
+                    send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_TooMany2faAttempts);
+                }
+                else
+                {
+                    send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_Invalid2faCode);
+                }
+            }
         }
         else
         {
-            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_Invalid2faCode);
+            send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_2faLockedDueToTooManyFailedAttempts);
         }
     }
+}
+
+void TwoFactorAuthenticatorServer::handleLoginFailed(QSqlDatabase &database, QSqlQuery &accountInfo)
+{
+    auto loginFailCount = accountInfo.value(MainServer::SQL_TOTPSECRETFAILCOUNT).toInt();
+    loginFailCount++;
+    qint64 firstFailTime = 0;
+    if (loginFailCount >= Settings::getInstance()->getPasswordResetMaxAttempts())
+    {
+        firstFailTime = QDateTime::currentSecsSinceEpoch();
+    }    
+    // lock account
+    QSqlQuery lockQuery(database);
+    lockQuery.prepare(QString("UPDATE ") + MainServer::SQL_TABLE_PLAYERS + " SET " +
+                      MainServer::SQL_TOTPSECRETFAILCOUNT + " = ?, " +
+                      MainServer::SQL_TOTPSECRETFIRSTFAILTIME + " = ? WHERE " +
+                      MainServer::SQL_USERNAME + " = ?;");
+    lockQuery.addBindValue(loginFailCount);
+    lockQuery.addBindValue(firstFailTime);
+    lockQuery.addBindValue(accountInfo.value(MainServer::SQL_USERNAME).toString());
+    lockQuery.exec();
 }
 
 void TwoFactorAuthenticatorServer::cleanUpExpired2faSessions()
@@ -258,6 +326,57 @@ void TwoFactorAuthenticatorServer::migrateAddTotpDatabase(QSqlDatabase &database
         else
         {
             CONSOLE_PRINT("Added totp secret column to player table", GameConsole::eDEBUG);
+        }
+    }
+    // migrate older databases: add the totp secret fail count column if missing
+    bool hasTotpFailCountColumn = false;
+    pragmaQuery.exec(QString("PRAGMA table_info(") + MainServer::SQL_TABLE_PLAYERS + ")");
+    while (pragmaQuery.next())
+    {
+        if (pragmaQuery.value("name").toString() == QLatin1String(MainServer::SQL_TOTPSECRETFAILCOUNT))
+        {
+            hasTotpFailCountColumn = true;
+            break;
+        }
+    }
+    if (!hasTotpFailCountColumn)
+    {
+        QSqlQuery alterQuery(database);
+        alterQuery.exec(QString("ALTER TABLE ") + MainServer::SQL_TABLE_PLAYERS + " ADD COLUMN " + MainServer::SQL_TOTPSECRETFAILCOUNT + " INTEGER DEFAULT 0");
+        if (MainServer::sqlQueryFailed(alterQuery))
+        {
+            CONSOLE_PRINT("Unable to add totp secret fail count column to player table: " + database.lastError().nativeErrorCode(), GameConsole::eERROR);
+        }
+        else
+        {
+            CONSOLE_PRINT("Added totp secret fail count column to player table", GameConsole::eDEBUG);
+        }
+        alterQuery.exec(QString("ALTER TABLE ") + MainServer::SQL_TABLE_PLAYERS + " ADD COLUMN " + MainServer::SQL_TOTPSECRETFIRSTFAILTIME + " INTEGER DEFAULT 0");
+        if (MainServer::sqlQueryFailed(alterQuery))
+        {
+            CONSOLE_PRINT("Unable to add totp secret first fail time column to player table: " + database.lastError().nativeErrorCode(), GameConsole::eERROR);
+        }
+        else
+        {
+            CONSOLE_PRINT("Added totp secret first fail time column to player table", GameConsole::eDEBUG);
+        }
+        alterQuery.exec(QString("ALTER TABLE ") + MainServer::SQL_TABLE_PLAYERS + " ADD COLUMN " + MainServer::SQL_LOGINFAILCOUNT + " INTEGER DEFAULT 0");
+        if (MainServer::sqlQueryFailed(alterQuery))
+        {
+            CONSOLE_PRINT("Unable to add login fail count column to player table: " + database.lastError().nativeErrorCode(), GameConsole::eERROR);
+        }
+        else
+        {
+            CONSOLE_PRINT("Added login fail count column to player table", GameConsole::eDEBUG);
+        }
+        alterQuery.exec(QString("ALTER TABLE ") + MainServer::SQL_TABLE_PLAYERS + " ADD COLUMN " + MainServer::SQL_LOGINFIRSTFAILTIME + " INTEGER DEFAULT 0");
+        if (MainServer::sqlQueryFailed(alterQuery))
+        {
+            CONSOLE_PRINT("Unable to add login first fail time column to player table: " + database.lastError().nativeErrorCode(), GameConsole::eERROR);
+        }
+        else
+        {
+            CONSOLE_PRINT("Added login first fail time column to player table", GameConsole::eDEBUG);
         }
     }
 }

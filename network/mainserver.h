@@ -82,6 +82,10 @@ public:
     static const char* const SQL_VALIDPASSWORD;
     static const char* const SQL_LASTLOGIN;
     static const char* const SQL_TOTPSECRET;
+    static const char* const SQL_TOTPSECRETFAILCOUNT;
+    static const char* const SQL_TOTPSECRETFIRSTFAILTIME;
+    static const char* const SQL_LOGINFAILCOUNT;
+    static const char* const SQL_LOGINFIRSTFAILTIME;
     static const char* const SQL_TABLE_PLAYERDATA;
     static const char* const SQL_COID;
     static const char* const SQL_GAMESMADE;
@@ -468,6 +472,14 @@ private:
      * @return
      */
     static GameEnums::LoginError checkPassword(QSqlDatabase & database, const QString & username, const QByteArray & password);
+    /**
+     * @brief checkPassword
+     * @param database
+     * @param accountInfo
+     */
+    static void handleLoginFailed(QSqlDatabase & database, QSqlQuery & accountInfo);
+    static void resetLoginAttempts(QSqlDatabase &database, QSqlQuery &accountInfo);
+    static bool isLoginAllowed(QSqlDatabase &database, QSqlQuery &accountInfo);
     /**
      * @brief changeAccountPassword
      * @param socketId

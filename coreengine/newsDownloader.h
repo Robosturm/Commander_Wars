@@ -20,6 +20,9 @@ private slots:
     void downloadErrorOccurred(QNetworkReply::NetworkError code);
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 private:
+    void handleNewsDownloadFinished();
+    
+private:
     QNetworkAccessManager m_webCtrl;
     QNetworkReply* m_reply{nullptr};
     QByteArray m_newsData;

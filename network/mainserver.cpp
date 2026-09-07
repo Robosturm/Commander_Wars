@@ -31,6 +31,10 @@ const char *const MainServer::SQL_MAILADRESS = "mailAdress";
 const char *const MainServer::SQL_VALIDPASSWORD = "validPassword";
 const char *const MainServer::SQL_LASTLOGIN = "lastLogin";
 const char *const MainServer::SQL_TOTPSECRET = "totpSecret";
+const char *const MainServer::SQL_TOTPSECRETFAILCOUNT = "totpSecretFailCount";
+const char *const MainServer::SQL_TOTPSECRETFIRSTFAILTIME = "totpSecretFirstFailTime";
+const char *const MainServer::SQL_LOGINFAILCOUNT = "loginFailCount";
+const char *const MainServer::SQL_LOGINFIRSTFAILTIME = "loginFirstFailTime";
 
 const char *const MainServer::SQL_TABLE_PLAYERDATA = "playerData";
 const char *const MainServer::SQL_COID = "coid";
@@ -1460,14 +1464,25 @@ void MainServer::createAccount(qint64 socketId, const QJsonObject &objData)
                           SQL_MAILADRESS + ", " +
                           SQL_MMR + ", " +
                           SQL_VALIDPASSWORD + ", " +
-                          SQL_LASTLOGIN +
-                          ") VALUES(?, ?, ?, ?, ?, ?);");
+                          SQL_LASTLOGIN + ", " +
+                          SQL_TOTPSECRET + ", " +
+                          SQL_TOTPSECRETFAILCOUNT + ", " +
+                          SQL_TOTPSECRETFIRSTFAILTIME + ", " +
+                          SQL_LOGINFAILCOUNT + ", " +
+                          SQL_LOGINFIRSTFAILTIME +
+                          ") VALUES(?, ?, ?, ?, ?," + 
+                                   "?, ?, ?, ?, ?, ?);");
         insertQuery.addBindValue(username);
         insertQuery.addBindValue(hexPassword);
         insertQuery.addBindValue(mailAdress);
         insertQuery.addBindValue(750);
         insertQuery.addBindValue(1);
         insertQuery.addBindValue(dateTime);
+        insertQuery.addBindValue(""); // SQL_TOTPSECRET
+        insertQuery.addBindValue(0); // SQL_TOTPSECRETFAILCOUNT
+        insertQuery.addBindValue(0); // SQL_TOTPSECRETFIRSTFAILTIME
+        insertQuery.addBindValue(0); // SQL_LOGINFAILCOUNT
+        insertQuery.addBindValue(0); // SQL_LOGINFIRSTFAILTIME
         insertQuery.exec();
         createUserTable(username);
         if (sqlQueryFailed(insertQuery))
@@ -1601,16 +1616,30 @@ GameEnums::LoginError MainServer::checkPassword(QSqlDatabase &database, const QS
     if (query.first() && success)
     {
         CONSOLE_PRINT("Checking password for : " + username, GameConsole::eDEBUG);
-        auto dbPassword = query.value(SQL_PASSWORD);
-        auto outdatedPassword = query.value(SQL_VALIDPASSWORD).toInt();
-        if (dbPassword.toByteArray() != password.toHex())
+        if (!isLoginAllowed(database, query))
         {
-            result = GameEnums::LoginError_WrongPassword;
+            CONSOLE_PRINT("Account info for : " + username + " is locked due to too many failed login attempts.", GameConsole::eDEBUG);
+            result = GameEnums::LoginError_LoginLockedDueToTooManyFailedAttempts;
         }
-        else if (outdatedPassword == 0)
+        else
         {
-            CONSOLE_PRINT("Account info for : " + username + " is out dated.", GameConsole::eDEBUG);
-            result = GameEnums::LoginError_PasswordOutdated;
+            auto dbPassword = query.value(SQL_PASSWORD);
+            auto outdatedPassword = query.value(SQL_VALIDPASSWORD).toInt();
+            if (dbPassword.toByteArray() != password.toHex())
+            {
+                result = GameEnums::LoginError_WrongPassword;
+                handleLoginFailed(database, query);
+            }
+            else if (outdatedPassword == 0)
+            {
+                CONSOLE_PRINT("Account info for : " + username + " is out dated.", GameConsole::eDEBUG);
+                result = GameEnums::LoginError_PasswordOutdated;
+                resetLoginAttempts(database, query);
+            }
+            else
+            {
+                resetLoginAttempts(database, query);
+            }
         }
     }
     else
@@ -1619,6 +1648,60 @@ GameEnums::LoginError MainServer::checkPassword(QSqlDatabase &database, const QS
         result = GameEnums::LoginError_AccountDoesntExist;
     }
     return result;
+}
+
+bool MainServer::isLoginAllowed(QSqlDatabase &database, QSqlQuery &accountInfo)
+{
+    bool allowed = false;
+    auto loginFailCount = accountInfo.value(SQL_LOGINFAILCOUNT).toInt();
+    if (loginFailCount < Settings::getInstance()->getLoginPasswordMaxAttempts())
+    {
+        allowed = true;
+    }
+    else
+    {
+        auto firstFailTime = accountInfo.value(SQL_LOGINFIRSTFAILTIME).toLongLong();
+        qint64 currentTime = QDateTime::currentSecsSinceEpoch();
+        if (currentTime - firstFailTime > Settings::getInstance()->getLoginPasswordFailTimeoutS())
+        {
+            resetLoginAttempts(database, accountInfo);
+            allowed = true;
+        }
+    }
+    return allowed;
+}
+
+void MainServer::resetLoginAttempts(QSqlDatabase &database, QSqlQuery &accountInfo)
+{
+    // reset login fail count and first fail time
+    QSqlQuery resetQuery(database);
+    resetQuery.prepare(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                       SQL_LOGINFAILCOUNT + " = 0, " +
+                       SQL_LOGINFIRSTFAILTIME + " = 0 WHERE " +
+                       SQL_USERNAME + " = ?;");
+    resetQuery.addBindValue(accountInfo.value(SQL_USERNAME).toString());
+    resetQuery.exec();
+}
+
+void MainServer::handleLoginFailed(QSqlDatabase &database, QSqlQuery &accountInfo)
+{
+    auto loginFailCount = accountInfo.value(SQL_LOGINFAILCOUNT).toInt();
+    loginFailCount++;
+    qint64 firstFailTime = 0;
+    if (loginFailCount >= Settings::getInstance()->getLoginPasswordMaxAttempts())
+    {
+        firstFailTime = QDateTime::currentSecsSinceEpoch();
+    }    
+    // lock account
+    QSqlQuery lockQuery(database);
+    lockQuery.prepare(QString("UPDATE ") + SQL_TABLE_PLAYERS + " SET " +
+                      SQL_LOGINFAILCOUNT + " = ?, " +
+                      SQL_LOGINFIRSTFAILTIME + " = ? WHERE " +
+                      SQL_USERNAME + " = ?;");
+    lockQuery.addBindValue(loginFailCount);
+    lockQuery.addBindValue(firstFailTime);
+    lockQuery.addBindValue(accountInfo.value(SQL_USERNAME).toString());
+    lockQuery.exec();
 }
 
 GameEnums::LoginError MainServer::verifyLoginData(const QString &username, const QByteArray &password)
@@ -1830,7 +1913,11 @@ QSqlQuery MainServer::getAccountInfo(QSqlDatabase &database, const QString &user
                SQL_MMR + ", " +
                SQL_VALIDPASSWORD + ", " +
                SQL_LASTLOGIN + ", " +
-               SQL_TOTPSECRET +
+               SQL_TOTPSECRET + ", " +
+               SQL_TOTPSECRETFAILCOUNT + ", " +
+               SQL_TOTPSECRETFIRSTFAILTIME + ", " +
+               SQL_LOGINFAILCOUNT + ", " +
+               SQL_LOGINFIRSTFAILTIME +
                " from " + SQL_TABLE_PLAYERS +
                " WHERE " + SQL_USERNAME + " = ?;");
     query.addBindValue(username);

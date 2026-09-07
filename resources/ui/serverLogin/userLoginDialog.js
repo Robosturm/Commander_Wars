@@ -153,6 +153,12 @@ var UserLoginDialog =
             userLogin.createDialog("changePassword", "ui/serverLogin/changePasswordDialog.xml", menu);
             userLogin.exit();
         }
+        else if (errorCode === GameEnums.LoginError_LoginLockedDueToTooManyFailedAttempts)
+        {
+            settings.setServerPassword("");
+            userLogin.showMessageBox(qsTr("Your account is locked due to too many failed login attempts. Please try again later."));
+            UserLoginDialog.changeEnableForItems(true);
+        }
         else
         {
             settings.setServerPassword("");

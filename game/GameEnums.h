@@ -373,6 +373,8 @@ public:
         LoginError_TooMany2faAttempts,
         LoginError_2faAlreadyConfigured,
         LoginError_2faSetupExpired,
+        LoginError_LoginLockedDueToTooManyFailedAttempts,
+        LoginError_2faLockedDueToTooManyFailedAttempts,
     };
     Q_ENUM(LoginError)
 

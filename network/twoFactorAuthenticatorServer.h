@@ -100,6 +100,18 @@ public:
      * @return true if the secret was removed
      */
     static bool clearTotpSecret(QSqlDatabase & database, const QString & username);
+    /**
+     * @brief isPasswordResetAllowed checks if a password reset is allowed for the account (not locked due to too many failed attempts)
+     */
+    static bool isPasswordResetAllowed(QSqlDatabase &database, QSqlQuery &accountInfo);
+    /**
+     * @brief resetLoginAttempts resets the login attempts for the account
+     */
+    static void resetLoginAttempts(QSqlDatabase &database, QSqlQuery &accountInfo);
+    /**
+     * @brief handleLoginFailed handles a failed login attempt for the account, increasing the fail count and locking the account if necessary
+     */
+    static void handleLoginFailed(QSqlDatabase &database, QSqlQuery &accountInfo);
 private:
     /**
      * @brief m_pending2faSetups pending 2fa enrollments per client socket

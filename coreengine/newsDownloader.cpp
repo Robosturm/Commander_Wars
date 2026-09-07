@@ -14,12 +14,25 @@ void NewsDownloader::startDownloadNews()
     if (!Settings::getInstance()->getNewsDownloaded())
     {
         auto url = Settings::getInstance()->getNewsUrl();
-        QUrl requestUrl("https://raw.githubusercontent.com/Robosturm/Commander_Wars/master/news.json");
-        QNetworkRequest request(requestUrl);
-        m_reply = m_webCtrl.get(request);
-        connect(m_reply, &QNetworkReply::downloadProgress, this, &NewsDownloader::downloadProgress);
-        connect(m_reply, &QNetworkReply::errorOccurred, this, &NewsDownloader::downloadErrorOccurred, Qt::QueuedConnection);
-        m_downloadingNews = true;        
+        if (url.startsWith("https://") || url.startsWith("http://"))
+        {
+            CONSOLE_PRINT("NewsDownloader::startDownloadNews downloading news from: " + url, GameConsole::eDEBUG);
+            QUrl requestUrl(url);
+            QNetworkRequest request(requestUrl);
+            m_reply = m_webCtrl.get(request);
+            connect(m_reply, &QNetworkReply::downloadProgress, this, &NewsDownloader::downloadProgress);
+            connect(m_reply, &QNetworkReply::errorOccurred, this, &NewsDownloader::downloadErrorOccurred, Qt::QueuedConnection);
+            m_downloadingNews = true;        
+        }
+        else
+        {
+            QFile file(url);
+            if (file.open(QIODevice::ReadOnly))
+            {
+                m_newsData = file.readAll();
+                handleNewsDownloadFinished();
+            }
+        }
     }
 }
 
@@ -43,20 +56,25 @@ void NewsDownloader::onResponseFinished(QNetworkReply* pReply)
     {
         m_downloadingNews = false;
         m_newsData.append(result);
-        QString newsHash = QString::fromUtf8(QCryptographicHash::hash(m_newsData, QCryptographicHash::Sha256).toHex());
-        bool newNews = false;
-        if (newsHash != Settings::getInstance()->getLastNewsHash())
-        {
-            Settings::getInstance()->setLastNewsHash(newsHash);
-            newNews = true;
-        }
-        Settings::getInstance()->setLastNews(QString::fromUtf8(m_newsData));
-        Settings::getInstance()->setNewsDownloaded(true);
-        emit sigNewsDownloaded(newNews);
+        handleNewsDownloadFinished();
     }
     else
     {
         CONSOLE_PRINT("NewsDownloader::onResponseFinished error: " + pReply->errorString(), GameConsole::eERROR);
     }
     pReply->deleteLater();
+}
+
+void NewsDownloader::handleNewsDownloadFinished()
+{
+    QString newsHash = QString::fromUtf8(QCryptographicHash::hash(m_newsData, QCryptographicHash::Sha256).toHex());
+    bool newNews = false;
+    if (newsHash != Settings::getInstance()->getLastNewsHash())
+    {
+        Settings::getInstance()->setLastNewsHash(newsHash);
+        newNews = true;
+    }
+    Settings::getInstance()->setLastNews(QString::fromUtf8(m_newsData));
+    Settings::getInstance()->setNewsDownloaded(true);
+    emit sigNewsDownloaded(newNews);    
 }
