@@ -496,6 +496,7 @@ protected:
     void startDespawnTimer();
     void loadUIButtons();
     void loadGameMenue();
+    void restoreLocalHumanControl();
     void connectMap();
     void keyInputAll(Qt::Key cur);
     QString getSaveFileEnding();

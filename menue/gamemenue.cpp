@@ -1496,6 +1496,30 @@ bool GameMenue::isNetworkGame()
     return false;
 }
 
+void GameMenue::restoreLocalHumanControl()
+{
+    if (m_SaveGame && !m_Multiplayer)
+    {
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+        {
+            auto* pPlayer = m_pMap->getPlayer(i);
+            auto* pInput = pPlayer->getBaseGameInput();
+            if (pInput != nullptr && pInput->getAiType() == GameEnums::AiTypes_ProxyAi)
+            {
+                auto controlType = pPlayer->getControlType();
+                if (controlType == GameEnums::AiTypes_ProxyAi)
+                {
+                    // Older saves do not retain the remote player's original controller.
+                    controlType = GameEnums::AiTypes_Human;
+                    pPlayer->setControlType(controlType);
+                }
+                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap.get(), controlType));
+                CONSOLE_PRINT("Restored offline controller " + QString::number(controlType) + " for player " + QString::number(i), GameConsole::eDEBUG);
+            }
+        }
+    }
+}
+
 void GameMenue::loadGameMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -1511,6 +1535,7 @@ void GameMenue::loadGameMenue()
     }
 
     CONSOLE_PRINT("initializing player inputs", GameConsole::eDEBUG);
+    restoreLocalHumanControl();
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         auto* input = m_pMap->getPlayer(i)->getBaseGameInput();
