@@ -50,6 +50,8 @@ EXCLUDES_LIST="
     --exclude-library *libqsqlodbc*
     --exclude-library *libqsqlmimer*
     --exclude-library *libqsqlpsql*
+    --exclude-library *libqsqloci*
+    --exclude-library *libqsqlibase*
     --exclude-library *libgallium*
     --exclude-library *libLLVM*
     --exclude-library *libqicns*
