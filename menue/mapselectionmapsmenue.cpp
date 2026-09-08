@@ -513,18 +513,24 @@ void MapSelectionMapsMenue::saveRules(QString filename)
     if (filename.endsWith(".grl"))
     {
         QFile file(filename);
-        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        QDataStream stream(&file);
-        stream.setVersion(QDataStream::Version::Qt_6_5);
-        spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-        pMap->getGameRules()->serializeObject(stream);
-        file.close();
-        spDialogMessageBox pMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Do you want to make the saved ruleset the default ruleset?"), true, tr("Yes"), tr("No"));
-        addChild(pMessageBox);
-        connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
+        if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
         {
-            Settings::getInstance()->setDefaultRuleset(filename);
-        }, Qt::QueuedConnection);
+            QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
+            spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+            pMap->getGameRules()->serializeObject(stream);
+            file.close();
+            spDialogMessageBox pMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Do you want to make the saved ruleset the default ruleset?"), true, tr("Yes"), tr("No"));
+            addChild(pMessageBox);
+            connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
+            {
+                Settings::getInstance()->setDefaultRuleset(filename);
+            }, Qt::QueuedConnection);
+        }
+        else
+        {
+            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+        }
     }
 }
 

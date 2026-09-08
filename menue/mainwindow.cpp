@@ -287,11 +287,17 @@ void Mainwindow::loadCampaign(QString filename)
             spCampaign pCampaign = MemoryManagement::create<Campaign>();
             QDataStream stream(&file);
             stream.setVersion(QDataStream::Version::Qt_6_5);
-            file.open(QIODevice::ReadOnly);
-            pCampaign->deserializeObject(stream);
-            spCampaignMenu pMenu = MemoryManagement::create<CampaignMenu>(pCampaign, false);
-            oxygine::Stage::getStage()->addChild(pMenu);
-            leaveMenue();
+            if (file.open(QIODevice::ReadOnly))
+            {
+                pCampaign->deserializeObject(stream);
+                spCampaignMenu pMenu = MemoryManagement::create<CampaignMenu>(pCampaign, false);
+                oxygine::Stage::getStage()->addChild(pMenu);
+                leaveMenue();
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to open campaign file: " + filename, GameConsole::eERROR);
+            }
         }
         else
         {

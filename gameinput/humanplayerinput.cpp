@@ -1644,9 +1644,9 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all, bool hideExist
         }
         else
         {
-            Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
             if (hideExistingFields)
             {
+                Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
                 for (auto & fields : m_Fields)
                 {
                     fields->setVisible(false);
@@ -1721,11 +1721,11 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, std::vector<QPoint> & u
                     !GlobalUtils::contains(usedFields, QPoint(target.x(), target.y())))
                 {
                     usedFields.push_back(target);
-                    if (hideExistingFields || !GlobalUtils::contains(m_FieldPoints, target))
+                    if (hideExistingFields)
                     {
                         m_InfoFields.push_back(createMarkedFieldActor(target, QColor(255, 0, 0)));
                     }
-                    else
+                    else if (GlobalUtils::contains(m_FieldPoints, target))
                     {
                         m_InfoFields.push_back(createMarkedFieldActor(target, QColor(255, 165, 0)));
                     }
