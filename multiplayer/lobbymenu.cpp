@@ -864,7 +864,6 @@ void LobbyMenu::onLogout()
     m_games.clear();
     m_currentGame = NetworkGameData();
     m_gamesview->setItems(ComplexTableView::Items());
-    Settings::getInstance()->setServerPassword("");
 }
 
 void LobbyMenu::onEnter()

@@ -13,8 +13,11 @@ Timer::Timer(QObject* pParent)
 void Timer::pause()
 {
     qint32 remaining  = remainingTime();
-    stop();
-    setInterval(remaining);
+    if (remaining > 0)
+    {
+        stop();
+        setInterval(remaining);
+    }
 }
 
 void Timer::resume()
