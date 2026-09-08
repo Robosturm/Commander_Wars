@@ -2,6 +2,7 @@
 #include <QOpenGLWindow>
 #include <QOpenGLFunctions>
 #include <QMutex>
+#include <atomic>
 
 namespace oxygine
 {
@@ -26,7 +27,7 @@ namespace oxygine
     protected:
         bool m_renderEnabled{true};
         qint32 m_repeatedFramesDropped{0};
-        qint32 m_pausedCounter{0};
+        std::atomic<quint8> m_pausedCounter{0};
         QMutex m_renderSync;
         bool m_quit{false};
         bool m_terminating{false};

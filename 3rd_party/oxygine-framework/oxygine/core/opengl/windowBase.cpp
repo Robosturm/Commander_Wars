@@ -26,6 +26,10 @@ namespace oxygine
         {
             CONSOLE_PRINT("Multitextures are not supported by open gl. This may result in a black screen.", GameConsole::eWARNING);
         }
+        if (!m_pausedCounter.is_lock_free())
+        {
+            CONSOLE_PRINT("m_pausedCounter is not lock free. This may result in worse performance.", GameConsole::eWARNING);
+        }
         // init oxygine engine
         CONSOLE_PRINT("initialize oxygine", GameConsole::eDEBUG);
         VideoDriver::instance = MemoryManagement::create<VideoDriver>();

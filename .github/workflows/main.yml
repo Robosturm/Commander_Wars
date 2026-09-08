@@ -302,7 +302,7 @@ jobs:
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
         --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
         --output ${{env.workspace}}/build/android-build \
-        --android-platform android-34 \
+        --android-platform android-35 \
         --gradle \
         --release \
         $SIGN_FLAG
