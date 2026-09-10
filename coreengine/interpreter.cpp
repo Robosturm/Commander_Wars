@@ -18,16 +18,14 @@
 #include <QTextStream>
 #include <QThread>
 
-QThread* Interpreter::m_pOwner{nullptr};
 spInterpreter Interpreter::m_pInstance{nullptr};
 QString Interpreter::m_runtimeData;
 
-Interpreter* Interpreter::createInstance()
+Interpreter* Interpreter::createInstance(QObject* pParent)
 {
     if (m_pInstance.get() == nullptr)
     {
-        m_pOwner = QThread::currentThread();
-        m_pInstance = MemoryManagement::create<Interpreter>();
+        m_pInstance = MemoryManagement::create<Interpreter>(pParent);
         m_pInstance->init();
     }
     else
@@ -37,8 +35,8 @@ Interpreter* Interpreter::createInstance()
     return m_pInstance.get();
 }
 
-Interpreter::Interpreter()
-    : QJSEngine(Mainapp::getInstance()->getWorker())
+Interpreter::Interpreter(QObject* pParent)
+    : QJSEngine(pParent)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Interpreter");
@@ -46,15 +44,17 @@ Interpreter::Interpreter()
     setCppOwnerShip(this);
     connect(this, &Interpreter::sigNetworkGameFinished, this, &Interpreter::networkGameFinished, Qt::QueuedConnection);
     installExtensions(QJSEngine::Extension::AllExtensions);
+    m_garbageCollectionTimer.start();
 }
 
 bool Interpreter::reloadInterpreter(const QString runtime)
 {
-    Q_ASSERT(m_pOwner == QThread::currentThread());
+    Q_ASSERT(m_pInstance->thread() == QThread::currentThread());
     CONSOLE_PRINT_MODULE("Reloading interpreter", GameConsole::eDEBUG, GameConsole::eJavaScript);
     auto reloadObjects = m_pInstance->m_ownedObjects;
+    auto* pParent = m_pInstance->parent();
     m_pInstance.reset();
-    m_pInstance = MemoryManagement::create<Interpreter>();
+    m_pInstance = MemoryManagement::create<Interpreter>(pParent);
     m_pInstance->init();
     for (auto & obj : reloadObjects)
     {

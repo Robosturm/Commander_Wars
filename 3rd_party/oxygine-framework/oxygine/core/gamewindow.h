@@ -9,6 +9,8 @@
 
 #include "windowBase.h"
 
+using spQThread = std::shared_ptr<QThread>;
+
 namespace oxygine
 {
 class GameWindow : public WindowBase
@@ -50,8 +52,9 @@ public:
          */
     void pauseRendering()
     {
-        if (!isMainThread())
+        if (!isRenderThread())
         {
+            // Q_ASSERT(isWorkerThread());
             if (m_pausedCounter == 0)
             {
                 QMutexLocker lock(&m_renderSync);
@@ -68,8 +71,9 @@ public:
          */
     void continueRendering()
     {
-        if (!isMainThread())
+        if (!isRenderThread())
         {
+            // Q_ASSERT(isWorkerThread());
             Q_ASSERT(m_pausedCounter > 0);
             --m_pausedCounter;
         }
@@ -89,6 +93,15 @@ public:
     bool isMainThread() const
     {
         return QThread::currentThread() == m_pMainThread || m_pMainThread == nullptr;
+    }
+    bool isRenderThread() const
+    {
+        // return QThread::currentThread() == m_renderThread.get() || m_renderThread.get() == nullptr;
+        return QThread::currentThread() == m_pMainThread || m_pMainThread == nullptr;
+    }
+    bool isWorkerThread() const
+    {
+        return QThread::currentThread() == m_workerThread.get() || m_workerThread.get() == nullptr;
     }
     virtual void launchGame() override;
     /**
@@ -166,6 +179,7 @@ protected:
     bool m_launched{false};
     bool m_workerLaunched{false};
     QThread* m_pMainThread{nullptr};
+    spQThread m_workerThread;
     struct
     {
         QElapsedTimer leftDown;

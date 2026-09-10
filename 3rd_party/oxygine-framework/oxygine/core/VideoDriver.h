@@ -6,6 +6,7 @@
 #include "texture.h"
 
 #include <QMatrix4x4>
+#include <QOpenGLExtraFunctions>
 
 namespace oxygine
 {

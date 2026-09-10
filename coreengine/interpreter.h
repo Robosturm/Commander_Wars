@@ -7,6 +7,7 @@
 #include <QThread>
 #include <list>
 #include <QCoreApplication>
+#include <QElapsedTimer>
 #include "coreengine/jsthis.h"
 
 using spQObject = std::shared_ptr<QObject>;
@@ -30,14 +31,14 @@ class Interpreter final : public QJSEngine
 public:
     static Interpreter* getInstance()
     {
-        Q_ASSERT(m_pOwner == QThread::currentThread());
+        Q_ASSERT(m_pInstance->thread() == QThread::currentThread());
         return m_pInstance.get();
     }
     static bool exists()
     {
         return m_pInstance.get() != nullptr;
     }
-    static Interpreter* createInstance();
+    static Interpreter* createInstance(QObject* pParent);
     virtual ~Interpreter();
     static void release();
 
@@ -99,6 +100,11 @@ public slots:
                             ret.property("lineNumber").toString();
             printError(error);
         }
+        else if (m_garbageCollectionTimer.elapsed() > 500)
+        {
+            collectGarbage();
+            m_garbageCollectionTimer.restart();
+        }
         return ret;
     }
     inline QJSValue doFunction(const QString & obj, const QString & func, const QJSValueList& args = QJSValueList())
@@ -120,6 +126,11 @@ public slots:
                                     ret.property("fileName").toString() + " at Line: " +
                                     ret.property("lineNumber").toString();
                     printError(error);
+                }
+                else if (m_garbageCollectionTimer.elapsed() > 500)
+                {
+                    collectGarbage();
+                    m_garbageCollectionTimer.restart();
                 }
             }
         }
@@ -203,7 +214,7 @@ private slots:
     void networkGameFinished(qint32 value, QString id);
 private:
     friend class MemoryManagement;
-    explicit Interpreter();    
+    explicit Interpreter(QObject* pParent);    
     /**
      * @brief init
      */
@@ -229,7 +240,7 @@ private:
     std::vector<spQObject> m_jsObjects;
     std::list<JsThisData> m_ownedObjects;
     qint32 m_jsCallCount{0};
-    static QThread* m_pOwner;
+    QElapsedTimer m_garbageCollectionTimer;
 };
 
 #endif // INTERPRETER_H

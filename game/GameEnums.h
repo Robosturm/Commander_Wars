@@ -7,6 +7,33 @@ class GameEnums : public QObject
 {
     Q_OBJECT
 public:
+    enum StartupPhase
+    {
+        StartupPhase_Start,
+        StartupPhase_General = StartupPhase_Start,
+        StartupPhase_UpdateManager,
+        StartupPhase_ObjectManager,
+        StartupPhase_Building,
+        StartupPhase_COSprites,
+        StartupPhase_GameAnimations,
+        StartupPhase_GameManager,
+        StartupPhase_GameRuleManager,
+        StartupPhase_TerrainManager,
+        StartupPhase_UnitSpriteManager,
+        StartupPhase_BattleAnimationManager,
+        StartupPhase_COPerkManager,
+        StartupPhase_WikiDatabase,
+        StartupPhase_Userdata,
+        StartupPhase_Achievementmanager,
+        StartupPhase_MovementPlannerAddInManager,
+        StartupPhase_UiManager,
+        StartupPhase_ShopLoader,
+        StartupPhase_Sound,
+        StartupPhase_LoadingScripts,
+        StartupPhase_Finalizing,
+    };
+    Q_ENUM(StartupPhase)
+
     enum Alliance
     {
         Alliance_Friend,

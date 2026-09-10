@@ -80,10 +80,7 @@ void LoadingScreen::setProgress(QString workText, qint32 value)
     if (oxygine::Stage::getStage().get() != nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        if (!pApp->isMainThread())
-        {
-            pApp->pauseRendering();
-        }
+        pApp->pauseRendering();
         CONSOLE_PRINT("LoadingScreen::setProgress " + workText + " " + QString::number(value), GameConsole::eDEBUG);
         m_workText->setHtmlText(workText);
         m_loadingProgress->setHtmlText(QString::number(value) + " %");
@@ -92,10 +89,7 @@ void LoadingScreen::setProgress(QString workText, qint32 value)
         {
             QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
         }
-        else
-        {
-            pApp->continueRendering();
-        }
+        pApp->continueRendering();
     }
 }
 

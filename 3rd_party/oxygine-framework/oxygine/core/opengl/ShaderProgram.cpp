@@ -7,9 +7,9 @@
 namespace oxygine
 {
     ShaderProgram::ShaderProgram(const QString & vsShader, const QString & fsShader, const VertexDeclaration* decl)
-        : m_program(oxygine::GameWindow::getWindow()),
-          m_vsShader(QOpenGLShader::Vertex, oxygine::GameWindow::getWindow()),
-          m_fsShader(QOpenGLShader::Fragment, oxygine::GameWindow::getWindow())
+        : m_program(oxygine::GameWindow::getWindow()->context()),
+          m_vsShader(QOpenGLShader::Vertex, oxygine::GameWindow::getWindow()->context()),
+          m_fsShader(QOpenGLShader::Fragment, oxygine::GameWindow::getWindow()->context())
     {
         compileShader(m_vsShader, vsShader);
         compileShader(m_fsShader, fsShader);

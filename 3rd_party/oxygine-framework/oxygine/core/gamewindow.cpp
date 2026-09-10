@@ -171,7 +171,7 @@ namespace oxygine
     {
         if (!m_shuttingDown && !m_noUi)
         {
-            if (isMainThread())
+            if (isRenderThread())
             {
                 loadSingleResAnim(pAnim, image, columns, rows, scaleFactor, clamp2Edge, linearFilter);
             }

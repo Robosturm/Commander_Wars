@@ -10,6 +10,28 @@
 
 namespace oxygine
 {
+    WindowBase::WindowBase()
+        : m_renderer(*this)
+    {
+#ifdef GRAPHICSUPPORT
+        m_renderThread = MemoryManagement::createNamedQObject<QThread>("QThread");
+        m_renderThread->setObjectName("Renderthread");
+#endif
+    }
+
+    void WindowBase::setupRendering()
+    {
+        makeCurrent();
+        doneCurrent();
+        QOpenGLContext *context = QOpenGLWindow::context();
+        context->moveToThread(m_renderThread.get());
+        m_renderer.moveToThread(m_renderThread.get());
+        m_renderThread->start(QThread::Priority::HighestPriority);
+        m_renderingInitialized = true;
+        emit m_renderer.sigStart();
+        //m_renderer.start();
+    }
+
     QSurfaceFormat::RenderableType WindowBase::getRenderableType()
     {
         return QSurfaceFormat::RenderableType::DefaultRenderableType;
@@ -29,97 +51,42 @@ namespace oxygine
         if (!m_pausedCounter.is_lock_free())
         {
             CONSOLE_PRINT("m_pausedCounter is not lock free. This may result in worse performance.", GameConsole::eWARNING);
-        }
-        // init oxygine engine
-        CONSOLE_PRINT("initialize oxygine", GameConsole::eDEBUG);
-        VideoDriver::instance = MemoryManagement::create<VideoDriver>();
-        VideoDriver::instance->setDefaultSettings();
-        rsCache().setDriver(VideoDriver::instance.get());
-
-        STDRenderer::initialize();
-
-        STDRenderer::instance = MemoryManagement::create<STDRenderer>();
-        RenderDelegate::instance = MemoryManagement::create<RenderDelegate>();
-        Material::null = MemoryManagement::create<Material>();
-        Material::current = Material::null;
-
-        STDRenderer::current = STDRenderer::instance;
+        }       
+        
         launchGame();
     }
 
     void WindowBase::redrawUi()
     {
-        if (!m_noUi)
+        if (!m_noUi && m_renderingInitialized)
         {
-            update();
+            // check for termination
+            if (m_quit && !m_terminating)
+            {
+                m_terminating = true;
+                CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
+                QCoreApplication::exit();
+            }
+            else
+            {
+                emit m_renderer.sigPaintGl();
+            }
         }
     }
+
     void WindowBase::resizeGL(qint32 w, qint32 h)
     {
-        CONSOLE_PRINT("core::restore()", GameConsole::eDEBUG);
-        VideoDriver::instance->restore();
-        STDRenderer::restore();
-        CONSOLE_PRINT("core::restore() done", GameConsole::eDEBUG);
+        if (m_renderingInitialized)
+        {
+            emit m_renderer.sigResize(w, h);
+        }
     }
 
     void WindowBase::swapDisplayBuffers()
     {
     }
 
-    bool WindowBase::beginRendering()
-    {
-        if (!m_renderEnabled)
-        {
-            return false;
-        }
-
-        bool ready = STDRenderer::isReady();
-        if (ready)
-        {
-            rsCache().reset();
-        }
-        else
-        {
-            CONSOLE_PRINT("!ready", GameConsole::eDEBUG);
-        }
-
-        return ready;
-    }
-
     void WindowBase::paintGL()
     {
-        // check for termination
-        if (m_quit && !m_terminating)
-        {
-            m_terminating = true;
-            CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
-            QCoreApplication::exit();
-        }
-
-        if (m_pausedCounter == 0)
-        {
-            if (m_renderSync.tryLock())
-            {
-                if (!m_terminating && m_pausedCounter == 0)
-                {
-                    updateData();
-                    if (oxygine::Stage::getStage().get() != nullptr)
-                    {
-                        oxygine::Stage::getStage()->updateStage();
-                        if (beginRendering())
-                        {
-                            QColor clearColor(0, 0, 0, 255);
-                            QSize windowSize = size();
-                            QRect viewport(0, 0, windowSize.width(), windowSize.height());
-                            // Render all actors inside the stage. Actor::render will also be called for all its children
-                            oxygine::Stage::getStage()->renderStage(clearColor, viewport);
-                            swapDisplayBuffers();
-                            m_repeatedFramesDropped = 0;
-                        }
-                    }
-                }
-                m_renderSync.unlock();
-            }
-        }
     }
 }

@@ -15,6 +15,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/Gamepad.h"
 #include "coreengine/commandlineparser.h"
+#include "game/GameEnums.h"
 
 #ifdef UPDATESUPPORT
 #include "updater/gameupdater.h"
@@ -31,7 +32,6 @@ using spNetworkInterface = std::shared_ptr<NetworkInterface>;
 class AiProcessPipe;
 using spAiProcessPipe = std::shared_ptr<AiProcessPipe>;
 class Minimap;
-using spQThread = std::shared_ptr<QThread>;
 using spQProcess = std::shared_ptr<QProcess>;
 
 class Mainapp final : public oxygine::GameWindow
@@ -40,33 +40,7 @@ class Mainapp final : public oxygine::GameWindow
 public:
     static const char* const GAME_CONTEXT;
     static constexpr qint32 stepProgress = 4;
-    enum StartupPhase
-    {
-        Start,
-        General = Start,
-        UpdateManager,
-        ObjectManager,
-        Building,
-        COSprites,
-        GameAnimations,
-        GameManager,
-        GameRuleManager,
-        TerrainManager,
-        UnitSpriteManager,
-        BattleAnimationManager,
-        COPerkManager,
-        WikiDatabase,
-        Userdata,
-        Achievementmanager,
-        MovementPlannerAddInManager,
-        UiManager,
-        ShopLoader,
-        Sound,
-        LoadingScripts,
-        Finalizing,
-    };
-    Q_ENUM(StartupPhase)
-    static constexpr qint16 SCRIPT_PROCESS = ShopLoader * stepProgress;
+    static constexpr qint16 SCRIPT_PROCESS = GameEnums::StartupPhase::StartupPhase_ShopLoader * stepProgress;
     /**
      * @brief The ZOrder enum for z-order of actors directly attached to the game map or the menu
      */
@@ -112,12 +86,12 @@ public:
 
     inline static QThread* getWorkerthread()
     {
-        return getInstance()->m_Workerthread.get();
+        return getInstance()->m_workerThread.get();
     }
 
     inline static QThread* getNetworkThread()
     {
-        return getInstance()->m_Networkthread.get();
+        return getInstance()->m_networkThread.get();
     }
     /**
      * @brief loadRessources
@@ -233,7 +207,7 @@ public:
 
     QPoint mapPosFromGlobal(QPoint pos) const;
     QPoint mapPosToGlobal(QPoint pos) const;
-    StartupPhase getStartUpStep() const;
+    GameEnums::StartupPhase getStartUpStep() const;
     /**
      * @brief getAiProcessPipe
      * @return
@@ -277,7 +251,7 @@ public slots:
      * @brief doScreenshot
      */
     void doScreenshot();
-    void nextStartUpStep(Mainapp::StartupPhase step);
+    void nextStartUpStep(GameEnums::StartupPhase step);
     /**
      * @brief inputMethodQuery dummy function to rerout qlineedit events
      * @param query
@@ -315,7 +289,7 @@ signals:
      */
     void sigShowCrashReport(QString log);
 
-    void sigNextStartUpStep(Mainapp::StartupPhase step);
+    void sigNextStartUpStep(GameEnums::StartupPhase step);
     void sigCreateLineEdit();
     void sigDoMapshot(BaseGamemenu* pMenu);
     void sigSaveMapAsImage(Minimap* pMinimap, QImage * img);
@@ -335,8 +309,7 @@ private:
     static QStringList m_restartArgv;
     static QString m_rejoinPassword;
     QMutex m_crashMutex;
-    spQThread m_Workerthread;
-    spQThread m_Networkthread;
+    spQThread m_networkThread;
     spQThread m_audioThread;
     spQProcess m_aiSubProcess;
     spWorkerThread m_Worker;
@@ -348,7 +321,7 @@ private:
     Gamepad m_gamepad{0};
     bool m_noAudio{false};
     CommandLineParser m_parser;
-    StartupPhase m_startUpStep{StartupPhase::Start};
+    GameEnums::StartupPhase m_startUpStep{GameEnums::StartupPhase::StartupPhase_Start};
 #ifdef UPDATESUPPORT
     spGameUpdater m_gameUpdater;
 #endif

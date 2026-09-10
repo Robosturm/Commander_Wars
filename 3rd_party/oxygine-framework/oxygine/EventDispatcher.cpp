@@ -161,7 +161,7 @@ namespace oxygine
         {
             return;
         }
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread() || oxygine::GameWindow::getWindow()->renderingPaused());
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isRenderThread() || oxygine::GameWindow::getWindow()->renderingPaused());
         spEventDispatcher dispatcher;
         if (!event->target)
         {
@@ -210,7 +210,7 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         // Headless mode has no render pass to drain deferred updates.
         auto* window = GameWindow::getWindow();
-        return !window->isMainThread() &&
+        return !window->isRenderThread() &&
                !window->renderingPaused() &&
                !window->getNoUi() &&
                !notInSharedUse();

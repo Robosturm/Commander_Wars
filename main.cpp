@@ -22,6 +22,12 @@
 
 int main(qint32 argc, char* argv[])
 {
+    if (// !qputenv("QV4_JIT_CALL_THRESHOLD", "1") ||
+        !qputenv("QV4_GC_TIMELIMIT", "20"))
+    {
+        qWarning("Failed to set QV4_JIT_CALL_THRESHOLD or QV4_GC_TIMELIMIT environment variable");
+    }
+
 #ifdef GRAPHICSUPPORT
     QApplication app(argc, argv);
 #else

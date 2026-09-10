@@ -400,6 +400,7 @@ if (GRAPHICSUPPORT)
             3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/ShaderProgram.h
             3rd_party/oxygine-framework/oxygine/core/opengl/VideoDriver.cpp
             3rd_party/oxygine-framework/oxygine/core/opengl/UberShaderProgram.cpp
+            3rd_party/oxygine-framework/oxygine/core/opengl/renderer.cpp 3rd_party/oxygine-framework/oxygine/core/opengl/renderer.h
             game/gamerecording/opengl/gamemapimagesaver.cpp
         )
     endif()

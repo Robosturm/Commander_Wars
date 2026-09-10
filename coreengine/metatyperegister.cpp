@@ -159,7 +159,7 @@ void MetaTypeRegister::registerInterfaceData()
     qRegisterMetaType<GameEnums::EditorModes>("GameEnums::EditorModes");
     qRegisterMetaType<QEasingCurve::Type>("QEasingCurve::Type");
     qRegisterMetaType<GameConsole::eLogLevels>("Console::eLogLevels");
-    qRegisterMetaType<Mainapp::StartupPhase>("Mainapp::StartupPhase");
+    qRegisterMetaType<GameEnums::StartupPhase>("GameEnums::StartupPhase");
     qRegisterMetaType<spScriptEvent>("spScriptEvent");
     qRegisterMetaType<spScriptCondition>("spScriptCondition");
     qRegisterMetaType<oxygine::spActor>("oxygine::spActor");

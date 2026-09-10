@@ -188,7 +188,7 @@ namespace oxygine
     {
 #ifdef GRAPHICSUPPORT
         // Headless mode has no render pass to drain deferred updates.
-        return !GameWindow::getWindow()->isMainThread() &&
+        return !GameWindow::getWindow()->isRenderThread() &&
                !GameWindow::getWindow()->renderingPaused() &&
                !GameWindow::getWindow()->getNoUi() &&
                !notInSharedUse() &&
@@ -1272,7 +1272,7 @@ namespace oxygine
     {
 #ifdef GRAPHICSUPPORT
         m_internalUpdateRunning = true;
-        Q_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        Q_ASSERT(oxygine::GameWindow::getWindow()->isRenderThread());
         auto iter = m_tweens.begin();
         while (iter != m_tweens.end())
         {

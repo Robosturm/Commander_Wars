@@ -136,7 +136,7 @@ void WorkerThread::start()
     // create the initial menue no need to store the object
     // it will add itself to the current stage
     oxygine::Stage::getStage()->addChild(pConsole);
-    Interpreter* pInterpreter = Interpreter::createInstance();
+    Interpreter* pInterpreter = Interpreter::createInstance(this);
     Settings::getInstance()->setLanguage(Settings::getInstance()->getLanguage());
     pConsole->init();
     pApp->continueRendering();
@@ -232,7 +232,7 @@ void WorkerThread::start()
     pLoadingScreen->hide();
     m_started = true;
     CONSOLE_PRINT("WorkerThread::start Finalizing", GameConsole::eDEBUG);
-    emit pApp->sigNextStartUpStep(Mainapp::StartupPhase::Finalizing);
+    emit pApp->sigNextStartUpStep(GameEnums::StartupPhase::StartupPhase_Finalizing);
 }
 
 void WorkerThread::showMainwindow()
