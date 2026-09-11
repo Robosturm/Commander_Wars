@@ -1531,11 +1531,13 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     # finishes launching. Sign every nested framework/plugin individually first (inside-out),
     # then sign the outer bundle without --deep. Also strip any leftover xattrs (e.g. quarantine
     # flags reintroduced by zipping) that can make codesign/Gatekeeper re-flag nested binaries.
+    # Use "-exec ... +" (batches args, no trailing ";") instead of "-exec ... \;" since the
+    # semicolon needs multiple layers of escaping (CMake, make, shell) that's easy to break.
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND /usr/bin/xattr -cr "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../.."
-        COMMAND /bin/sh -c "find '$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/Frameworks' -name '*.framework' -exec codesign --force --sign - {} \\;"
-        COMMAND /bin/sh -c "find '$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/PlugIns' -name '*.dylib' -exec codesign --force --sign - {} \\;"
-        COMMAND /bin/sh -c "find '$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/Frameworks' -name '*.dylib' -exec codesign --force --sign - {} \\;"
+        COMMAND /bin/sh -c "find '$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/Frameworks' -name '*.framework' -exec codesign --force --sign - {} +"
+        COMMAND /bin/sh -c "find '$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/PlugIns' -name '*.dylib' -exec codesign --force --sign - {} +"
+        COMMAND /bin/sh -c "find '$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/Frameworks' -name '*.dylib' -exec codesign --force --sign - {} +"
         COMMAND codesign --force --sign - "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../.."
         COMMENT "Ad-hoc codesigning app bundle (inside-out)..."
     )

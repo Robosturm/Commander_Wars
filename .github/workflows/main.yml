@@ -282,9 +282,9 @@ jobs:
       run: |
         APP="${{github.workspace}}/install/Commander_Wars_Release/Commander_Wars.app"
         xattr -cr "$APP"
-        find "$APP/Contents/Frameworks" -name "*.framework" -exec codesign --force --sign - {} \;
-        find "$APP/Contents/PlugIns" -name "*.dylib" -exec codesign --force --sign - {} \;
-        find "$APP/Contents/Frameworks" -name "*.dylib" -exec codesign --force --sign - {} \;
+        find "$APP/Contents/Frameworks" -name "*.framework" -exec codesign --force --sign - {} +
+        find "$APP/Contents/PlugIns" -name "*.dylib" -exec codesign --force --sign - {} +
+        find "$APP/Contents/Frameworks" -name "*.dylib" -exec codesign --force --sign - {} +
         codesign --force --sign - "$APP"
 
     - name: Build android
