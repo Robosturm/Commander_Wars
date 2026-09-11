@@ -48,7 +48,8 @@ private:
             return "Player";
         }
         Player(QObject *parent)
-            : m_player(parent)
+            : m_player(parent),
+            m_fileStream(parent)
         {
         }
         QMediaPlayer m_player;

@@ -116,7 +116,7 @@ void AudioManager::initAudio()
                 value.toString() == Settings::getInstance()->DEFAULT_AUDIODEVICE)
             {
                 const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
-                m_audioOutput.setDevice(defaultDeviceInfo);
+                m_audioDevice = defaultDeviceInfo;
             }
             else
             {

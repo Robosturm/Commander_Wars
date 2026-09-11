@@ -109,7 +109,7 @@ void AudioManager::stopSoundInternal(qint32 soundIndex)
     m_soundEffectData[soundIndex].sound->setVolume(0);
     m_soundEffectData[soundIndex].sound->setMuted(true);
     m_toDeleteSounds.push_back(m_soundEffectData[soundIndex].sound);
-    m_soundEffectData[soundIndex].sound = MemoryManagement::createNamedQObject<QSoundEffect>("QSoundEffect", this);
+    m_soundEffectData[soundIndex].sound = MemoryManagement::createNamedQObject<QSoundEffect>("QSoundEffect", m_audioDevice, this);
     m_soundEffectData[soundIndex].sound->setObjectName("SoundEffect" + QString::number(soundIndex));
     connect(m_soundEffectData[soundIndex].sound.get(), &QSoundEffect::statusChanged, this, [this, soundIndex]()
     {
