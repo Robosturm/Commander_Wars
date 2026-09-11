@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include <QImage>
+#include <QTimer>
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
 class BaseGamemenu;
@@ -18,6 +19,7 @@ namespace oxygine
         virtual ~Renderer();
 
         bool beginRendering();
+
     signals:    
         void sigPaint();
         void sigLoadResources(qint32 step);
@@ -44,14 +46,17 @@ namespace oxygine
         void sigRemoveEventListener(oxygine::spEventDispatcher dispatcher, qint32 id);
         void sigRemoveEventListeners(oxygine::spEventDispatcher dispatcher, oxygine::IClosureOwner* callbackThis);
         void sigQuit();
-
+        void sigSetRendering(bool render);
+        void sigSetTimerCycle(qint32 newTimerCycle);
     public slots:
+        void loadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor, bool clamp2Edge = true, quint32 linearFilter = 0);
+
+    private slots:
         void quit();
         void onPaint();
         void loadResources(qint32 step);
         void start();
         void resize(qint32 w, qint32 h);
-        void loadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor, bool clamp2Edge = true, quint32 linearFilter = 0);
         void doMapshot(BaseGamemenu* pMenu);
         /**
          * @brief saveMapAsImage
@@ -59,7 +64,6 @@ namespace oxygine
          * @param img
          */
         void saveMapAsImage(Minimap* pMinimap, QImage * img);
-    private slots:
         void setAddColor(oxygine::spVStyleActor actor, QColor color);
         void rebuildText(oxygine::spTextField actor);
         void changeAnimFrame(oxygine::spSprite actor, const oxygine::AnimationFrame& frame);
@@ -78,10 +82,13 @@ namespace oxygine
         void removeEventListeners(oxygine::spEventDispatcher dispatcher, oxygine::IClosureOwner* callbackThis);
         void detachAndRemove(oxygine::spActor actor);
         void detach(oxygine::spActor actor);
+        void setTimerCycle(qint32 newTimerCycle);
+        void setRendering(bool render);
 
     private:
         WindowBase & m_window;
         qint32 m_repeatedFramesDropped{0};
+        QTimer m_timer;
     };
 }
 

@@ -36,7 +36,7 @@ int main(qint32 argc, char* argv[])
     GlobalUtils::setup();
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(GameVersion().toString());
-    QThread::currentThread()->setPriority(QThread::Priority::HighestPriority);
+    QThread::currentThread()->setPriority(QThread::Priority::HighPriority);
     Mainapp window;
     window.setTitle("Commander Wars");
     {

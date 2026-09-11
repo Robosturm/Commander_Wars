@@ -194,6 +194,8 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
         m_pMainThread = QThread::currentThread();
 #ifdef GRAPHICSUPPORT
         m_pMainThread->setObjectName("Mainthread");
+        // refresh timer cycle before using it.
+        Settings::getInstance()->setFramesPerSecond(Settings::getInstance()->getFramesPerSecond());
         setupRendering();
 #endif
     }
@@ -227,7 +229,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
 #ifdef AUDIOSUPPORT
             if (m_useAudioThread)
             {
-                m_audioThread->start(QThread::Priority::HighPriority);
+                m_audioThread->start(QThread::Priority::NormalPriority);
                 m_AudioManager->moveToThread(m_audioThread.get());
             }
             m_AudioManager->initAudio();
@@ -238,14 +240,12 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
             pLoadingScreen->setProgress(tr("Checking for new version..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_ObjectManager:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Building Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_UpdateManager:
@@ -277,105 +277,90 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
             }
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_COSprites:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Animation Textures..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_GameAnimations:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Game Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_GameManager:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Rule Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_GameRuleManager:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Terrain Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_TerrainManager:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Units Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_UnitSpriteManager:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Battleanimation Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_BattleAnimationManager:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading CO-Perk Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_COPerkManager:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Wiki Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_WikiDatabase:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Userdata ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_Userdata:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Achievement Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_Achievementmanager:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Shop Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_MovementPlannerAddInManager:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Movement planner addin Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_UiManager:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Ui Textures ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_ShopLoader:
         {
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading sounds ..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_Sound:
@@ -385,20 +370,11 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
                 m_AudioManager->createSoundCache();
             }
             LoadingScreen::getInstance()->setProgress(tr("Loading Scripts ..."), SCRIPT_PROCESS);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_LoadingScripts:
         {
             m_networkThread->start(QThread::Priority::NormalPriority);
-            redrawUi();
-            if (!m_noUi)
-            {
-                // refresh timer cycle before using it.
-                Settings::getInstance()->setFramesPerSecond(Settings::getInstance()->getFramesPerSecond());
-                m_timer.setInterval(m_timerCycle);
-                m_timer.start();
-            }
             m_workerLaunched = true;
             emit m_workerObject->sigStart();
             break;
@@ -500,6 +476,7 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
     {
         return;
     }
+    pauseRendering();
     changeScreen(Settings::getInstance()->getScreen());
     CONSOLE_PRINT("Changing screen mode to " + QString::number(static_cast<qint32>(mode)), GameConsole::eDEBUG);
     hide();
@@ -566,6 +543,7 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
     }
     // change screen size after changing the border flags
     changeScreenSize(Settings::getInstance()->getWidth(), Settings::getInstance()->getHeight());
+    continueRendering();
 #endif
 }
 
@@ -576,6 +554,7 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
     {
         return;
     }
+    pauseRendering();
     CONSOLE_PRINT("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), GameConsole::eDEBUG);
     resize(width, heigth);
     setMinimumSize(QSize(width, heigth));
@@ -587,6 +566,7 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
     initStage();
     emit sigWindowLayoutChanged();
     emit sigChangePosition(QPoint(-1, -1), true);
+    continueRendering();
 #endif
 }
 
@@ -782,22 +762,10 @@ void Mainapp::showCrashReport(const QString & log)
 #endif
 }
 
-void Mainapp::setRendering(bool render)
-{
-    if (render)
-    {
-        m_timer.start();
-    }
-    else
-    {
-        m_timer.stop();
-    }
-}
-
 void Mainapp::setNoUi()
 {
     m_noUi = true;
-    m_timer.stop();
+    emit m_renderer.sigSetRendering(false);
 }
 
 void Mainapp::setNoAudio()

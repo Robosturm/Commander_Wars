@@ -271,11 +271,21 @@ jobs:
 
     # Safety net: install(TARGETS) re-copies the .app bundle into the install prefix after
     # CMakeLists.txt already ad-hoc signs it in the build tree. Re-sign here too so an unsigned/
-    # invalidated signature never ends up in the artifact that gets zipped and shipped, which is
-    # what causes the app to hang/fail to launch from Finder once macOS quarantines it.
+    # invalidated signature never ends up in the artifact that gets zipped and shipped.
+    # `--deep` mishandles versioned framework bundles (Qt*.framework/Versions/A + "Current"
+    # symlink), leaving nested frameworks/plugins with a broken signature that only LaunchServices'
+    # full recursive validation (i.e. double-clicking in Finder) catches - the raw executable still
+    # launches fine directly, but the .app hangs/never finishes launching from Finder. Sign every
+    # nested framework/plugin individually first (inside-out), then sign the outer bundle.
     - name: Codesign macOS app bundle
       if: matrix.buildTarget == 'macos-desktop'
-      run: codesign --force --deep --sign - "${{github.workspace}}/install/Commander_Wars_Release/Commander_Wars.app"
+      run: |
+        APP="${{github.workspace}}/install/Commander_Wars_Release/Commander_Wars.app"
+        xattr -cr "$APP"
+        find "$APP/Contents/Frameworks" -name "*.framework" -exec codesign --force --sign - {} \;
+        find "$APP/Contents/PlugIns" -name "*.dylib" -exec codesign --force --sign - {} \;
+        find "$APP/Contents/Frameworks" -name "*.dylib" -exec codesign --force --sign - {} \;
+        codesign --force --sign - "$APP"
 
     - name: Build android
       if: matrix.target == 'android'

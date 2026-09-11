@@ -27,6 +27,8 @@ void Renderer::start()
             FontManager::getInstance();
             // load ressources by creating the singletons
             BackgroundManager::getInstance();
+            m_timer.start();
+
         }
         else
         {
@@ -37,6 +39,7 @@ void Renderer::start()
 
 void Renderer::quit()
 {
+    m_timer.stop();
     auto* context = m_window.context();
     context->doneCurrent();
     context->moveToThread(m_window.thread());
@@ -84,32 +87,42 @@ bool Renderer::beginRendering()
 
 void Renderer::onPaint()
 {
-    if (!m_window.m_noUi)
+    // check for termination
+    if (m_window.m_quit && !m_window.m_terminating)
     {
-        if (m_window.m_pausedCounter == 0)
+        m_window.m_terminating = true;
+        CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
+        QCoreApplication::exit();
+    }
+    else
+    {
+        if (!m_window.m_noUi)
         {
-            if (m_window.m_renderSync.tryLock())
+            if (m_window.m_pausedCounter == 0)
             {
-                if (!m_window.m_terminating && m_window.m_pausedCounter == 0)
+                if (m_window.m_renderSync.tryLock())
                 {
-                    m_window.updateData();
-                    if (oxygine::Stage::getStage().get() != nullptr)
+                    if (!m_window.m_terminating && m_window.m_pausedCounter == 0)
                     {
-                        oxygine::Stage::getStage()->updateStage();
-                        if (beginRendering())
+                        m_window.updateData();
+                        if (oxygine::Stage::getStage().get() != nullptr)
                         {
-                            auto* context = m_window.context();
-                            QColor clearColor(0, 0, 0, 255);
-                            QSize windowSize = m_window.size();
-                            QRect viewport(0, 0, windowSize.width(), windowSize.height());
-                            // Render all actors inside the stage. Actor::render will also be called for all its children
-                            oxygine::Stage::getStage()->renderStage(clearColor, viewport);
-                            context->swapBuffers(context->surface());
-                            m_repeatedFramesDropped = 0;
+                            oxygine::Stage::getStage()->updateStage();
+                            if (beginRendering())
+                            {
+                                auto* context = m_window.context();
+                                QColor clearColor(0, 0, 0, 255);
+                                QSize windowSize = m_window.size();
+                                QRect viewport(0, 0, windowSize.width(), windowSize.height());
+                                // Render all actors inside the stage. Actor::render will also be called for all its children
+                                oxygine::Stage::getStage()->renderStage(clearColor, viewport);
+                                context->swapBuffers(context->surface());
+                                m_repeatedFramesDropped = 0;
+                            }
                         }
                     }
+                    m_window.m_renderSync.unlock();
                 }
-                m_window.m_renderSync.unlock();
             }
         }
     }

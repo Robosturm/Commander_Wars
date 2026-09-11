@@ -81,8 +81,6 @@ public:
     }
 
     virtual void shutdown();
-    void setTimerCycle(qint32 newTimerCycle);
-    qint32 getTimerCycle() const;
     bool getShuttingDown() const;
     void setShuttingDown(bool newShuttingDown);
     void initStage();
@@ -158,10 +156,8 @@ protected:
     void mouseMoveEvent(int x, int y);
 
 protected:
-    QTimer m_timer;
     QTimer m_mouseDelayTimer;
     QPoint m_lastMousePosition;
-    qint32 m_timerCycle{1};
     QElapsedTimer m_pressDownTime;
     bool m_pressDownTimeRunning{false};
 

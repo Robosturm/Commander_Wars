@@ -21,4 +21,5 @@ void Renderer::onPaint()
 
 void Renderer::quit()
 {
+    m_timer.stop();
 }

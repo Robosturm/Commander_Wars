@@ -1522,12 +1522,22 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
         COMMENT "Copying darwin media plugin..."
     )
     # Re-sign the bundle (ad-hoc) after macdeployqt/manual plugin copies modified its contents.
-    # Without this, Gatekeeper treats the whole .app as having an invalid signature once
-    # quarantined, so double-clicking it in Finder silently fails/hangs even though the
-    # raw executable inside Contents/MacOS still launches fine from a terminal.
+    # `codesign --deep` signs bundles outside-in and mishandles versioned framework bundles
+    # (Contents/Frameworks/Qt*.framework/Versions/A + "Current" symlink), which can leave nested
+    # frameworks/plugins with an invalid/stale signature even though the outer .app signature
+    # itself still verifies fine. Launching the raw executable directly only checks its own
+    # signature, so it "works", while LaunchServices (double-clicking the .app in Finder) performs
+    # a full recursive validation, finds the broken nested signatures and the app hangs/never
+    # finishes launching. Sign every nested framework/plugin individually first (inside-out),
+    # then sign the outer bundle without --deep. Also strip any leftover xattrs (e.g. quarantine
+    # flags reintroduced by zipping) that can make codesign/Gatekeeper re-flag nested binaries.
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND codesign --force --deep --sign - "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../.."
-        COMMENT "Ad-hoc codesigning app bundle..."
+        COMMAND /usr/bin/xattr -cr "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../.."
+        COMMAND /bin/sh -c "find '$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/Frameworks' -name '*.framework' -exec codesign --force --sign - {} \\;"
+        COMMAND /bin/sh -c "find '$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/PlugIns' -name '*.dylib' -exec codesign --force --sign - {} \\;"
+        COMMAND /bin/sh -c "find '$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/Frameworks' -name '*.dylib' -exec codesign --force --sign - {} \\;"
+        COMMAND codesign --force --sign - "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../.."
+        COMMENT "Ad-hoc codesigning app bundle (inside-out)..."
     )
 endif()
 

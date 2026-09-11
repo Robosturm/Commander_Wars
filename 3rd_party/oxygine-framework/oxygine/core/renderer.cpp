@@ -7,9 +7,13 @@
 using namespace oxygine;
 
 Renderer::Renderer(WindowBase & window)
-    : m_window(window)
+    : m_window(window),
+      m_timer(this)
 {
     connect(this, &Renderer::sigPaint, this, &Renderer::onPaint, Qt::QueuedConnection);
+    connect(&m_timer, &QTimer::timeout, this, &Renderer::onPaint);
+    connect(this, &Renderer::sigSetTimerCycle, this, &Renderer::setTimerCycle);
+    connect(this, &Renderer::sigSetRendering, this, &Renderer::setRendering);
 
     auto conntectionType = Qt::BlockingQueuedConnection;
     if (m_window.m_noUi)
@@ -280,4 +284,21 @@ void Renderer::detachAndRemove(oxygine::spActor actor)
 void Renderer::detach(oxygine::spActor actor)
 {
     actor->__detach();
+}
+
+void Renderer::setRendering(bool render)
+{
+    if (render)
+    {
+        m_timer.start();
+    }
+    else
+    {
+        m_timer.stop();
+    }
+}
+
+void Renderer::setTimerCycle(qint32 newTimerCycle)
+{
+    m_timer.setInterval(newTimerCycle);
 }

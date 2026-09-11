@@ -572,7 +572,7 @@ void Settings::setFramesPerSecond(qint32 newFramesPerSecond)
     Mainapp* pApp = Mainapp::getInstance();
     if (pApp != nullptr)
     {
-        pApp->setTimerCycle(msPerSec / m_framesPerSecond);
+        emit pApp->getRenderer().sigSetTimerCycle(msPerSec / m_framesPerSecond);
     }
 }
 

@@ -28,8 +28,7 @@ namespace oxygine
     GameWindow* GameWindow::m_window(nullptr);
 
     GameWindow::GameWindow()
-        : m_timer(this)
-        , m_mouseDelayTimer(this)
+        : m_mouseDelayTimer(this)
     {
 #ifdef GRAPHICSUPPORT
         setObjectName("GameWindow");
@@ -60,8 +59,7 @@ namespace oxygine
         QObject::connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
         QObject::connect(this, &GameWindow::sigQuit, this, &GameWindow::quit, Qt::QueuedConnection);
         QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &GameWindow::quitApp);
-        QObject::connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
-        QObject::connect(&m_timer, &QTimer::timeout, this, &GameWindow::redrawUi);    
+        QObject::connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);        
         QObject::connect(&m_mouseDelayTimer, &QTimer::timeout, this, &GameWindow::mouseMoveEventDelayed, Qt::QueuedConnection);
         m_mouseDelayTimer.setSingleShot(true);
         // start debounce timer
@@ -76,8 +74,6 @@ namespace oxygine
     void GameWindow::shutdown()
     {
         QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
-        m_timerCycle = -1;
-        m_timer.stop();
         rsCache().reset();
         rsCache().setDriver(nullptr);
         MaterialCache::mc().release();
@@ -467,11 +463,6 @@ namespace oxygine
         return m_pMainThread;
     }
 
-    void GameWindow::setTimerCycle(qint32 newTimerCycle)
-    {
-        m_timerCycle = newTimerCycle;
-    }
-
     void GameWindow::handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints)
     {
         if (touchPoints.count() == 2)
@@ -504,11 +495,6 @@ namespace oxygine
     bool GameWindow::getShuttingDown() const
     {
         return m_shuttingDown;
-    }
-
-    qint32 GameWindow::getTimerCycle() const
-    {
-        return m_timerCycle;
     }
 
     bool GameWindow::isEvenScale(qint32 width1, qint32 width2)

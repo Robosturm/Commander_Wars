@@ -159,11 +159,6 @@ public:
      */
     void setNoUi();
     /**
-     * @brief setRendering
-     * @param render
-     */
-    void setRendering(bool render);
-    /**
      * @brief setNoAudio
      */
     void setNoAudio();
