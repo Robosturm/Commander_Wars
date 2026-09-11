@@ -25,11 +25,7 @@ SoundData::SoundData()
 }
 
 AudioManager::AudioManager(bool noAudio, bool useAudioThread)
-    :
-#ifdef AUDIOSUPPORT
-      m_audioOutput(this),
-#endif
-      m_noAudio(noAudio)
+    : m_noAudio(noAudio)
 
 {
 #ifdef GRAPHICSUPPORT
@@ -63,22 +59,6 @@ AudioManager::AudioManager(bool noAudio, bool useAudioThread)
         connect(this, &AudioManager::sigInitAudio,         this, &AudioManager::initAudio, connectionType);
         connect(this, &AudioManager::sigStopAudio,         this, &AudioManager::stopAudio, connectionType);
         connect(this, &AudioManager::sigCreateSoundCache,  this, &AudioManager::createSoundCache, connectionType);
-
-        m_freeSoundSlots.reserve(MAX_PARALLEL_SOUNDS);
-        for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
-        {
-            m_soundEffectData[i].timer.setObjectName("SoundEffect" + QString::number(i));
-            m_soundEffectData[i].timer.setSingleShot(true);
-            m_soundEffectData[i].sound->setObjectName("SoundEffect" + QString::number(i));
-            connect(m_soundEffectData[i].sound.get(), &QSoundEffect::statusChanged, this, [this, i]()
-            {
-                if (m_soundEffectData[i].sound->status() == QSoundEffect::Error)
-                {
-                    CONSOLE_PRINT_MODULE("Error: Occured when playing sound: " + m_soundEffectData[i].sound->source().toString(), GameConsole::eDEBUG, GameConsole::eAudio);
-                }
-            }, Qt::QueuedConnection);
-            m_freeSoundSlots.append(i);
-        }
 #endif
     }
 }
@@ -122,7 +102,25 @@ void AudioManager::initAudio()
             {
                 m_audioDevice = value.value<QAudioDevice>();
             }
-            m_audioOutput.setDevice(m_audioDevice);
+            m_audioOutput = MemoryManagement::createNamedQObject<QAudioOutput>("QAudioOutput", this);
+            m_audioOutput->setDevice(m_audioDevice);
+
+            m_freeSoundSlots.reserve(MAX_PARALLEL_SOUNDS);
+            for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
+            {
+                m_soundEffectData[i] = MemoryManagement::create<SoundEffect, QObject*, QAudioDevice &>(this, m_audioDevice);
+                m_soundEffectData[i]->timer.setObjectName("SoundEffect" + QString::number(i));
+                m_soundEffectData[i]->timer.setSingleShot(true);
+                m_soundEffectData[i]->sound->setObjectName("SoundEffect" + QString::number(i));
+                connect(m_soundEffectData[i]->sound.get(), &QSoundEffect::statusChanged, this, [this, i]()
+                {
+                    if (m_soundEffectData[i]->sound->status() == QSoundEffect::Error)
+                    {
+                        CONSOLE_PRINT_MODULE("Error: Occured when playing sound: " + m_soundEffectData[i]->sound->source().toString(), GameConsole::eDEBUG, GameConsole::eAudio);
+                    }
+                }, Qt::QueuedConnection);
+                m_freeSoundSlots.append(i);
+            }
             createPlayer();
             SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getInstance()->getMusicVolume())));
             connect(&m_player->m_player, &QMediaPlayer::positionChanged, this, &AudioManager::SlotCheckMusicEnded);
@@ -232,7 +230,7 @@ void AudioManager::createPlayer()
     {
         CONSOLE_PRINT_MODULE("AudioThread::createPlayer()", GameConsole::eDEBUG, GameConsole::eAudio);
         m_player = MemoryManagement::create<Player>(this);
-        m_player->m_player.setAudioOutput(&m_audioOutput);
+        m_player->m_player.setAudioOutput(m_audioOutput.get());
         m_player->m_fileStream.setBuffer(&m_player->m_content);
         connect(&m_player->m_player, &QMediaPlayer::mediaStatusChanged, this, &AudioManager::mediaStatusChanged, Qt::QueuedConnection);
         connect(&m_player->m_player, &QMediaPlayer::playbackStateChanged, this, &AudioManager::mediaPlaybackStateChanged, Qt::QueuedConnection);
@@ -260,8 +258,8 @@ void AudioManager::SlotChangeAudioDevice(const QVariant value)
     {
         m_audioDevice = value.value<QAudioDevice>();
         CONSOLE_PRINT_MODULE("Changing to audio device: " + m_audioDevice.description(), GameConsole::eDEBUG, GameConsole::eAudio);
-        m_audioOutput.setDevice(m_audioDevice);
-        m_player->m_player.setAudioOutput(&m_audioOutput);
+        m_audioOutput->setDevice(m_audioDevice);
+        m_player->m_player.setAudioOutput(m_audioOutput.get());
         m_soundCaches.clear();
         createSoundCache();
         m_player->m_player.stop();
@@ -300,7 +298,7 @@ void AudioManager::setVolume(qint32 value)
 qint32 AudioManager::getVolume()
 {
 #ifdef AUDIOSUPPORT
-    return m_audioOutput.volume();
+    return m_audioOutput->volume();
 #else
     return 0;
 #endif
@@ -549,7 +547,7 @@ void AudioManager::SlotSetVolume(qint32 value)
             }
         }
         CONSOLE_PRINT_MODULE("Setting volume to : " + QString::number(volume), GameConsole::eDEBUG, GameConsole::eAudio);
-        m_audioOutput.setVolume(volume);
+        m_audioOutput->setVolume(volume);
     }
 #endif
 }
@@ -560,12 +558,12 @@ void AudioManager::slotSetMuteInternal(bool value)
     {
         m_internalMuted = value;
 #ifdef AUDIOSUPPORT
-        m_audioOutput.setMuted(m_internalMuted);
+        m_audioOutput->setMuted(m_internalMuted);
         for (auto & soundEffect : m_soundEffectData)
         {
-            if (soundEffect.sound.get() != nullptr)
+            if (soundEffect->sound.get() != nullptr)
             {
-                soundEffect.sound->setMuted(m_internalMuted);
+                soundEffect->sound->setMuted(m_internalMuted);
             }
         }
 #endif

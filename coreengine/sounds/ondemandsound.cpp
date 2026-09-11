@@ -45,13 +45,13 @@ bool AudioManager::tryPlaySoundAtCachePosition(spSoundData &soundCache, qint32 i
                                                QString &file, qint32 loops, qint32 delay, qreal sound, bool stopOldestSound, qint32 duration)
 {
     bool started = false;
-    if (!m_soundEffectData[i].timer.isActive() &&
-        !m_soundEffectData[i].sound->isPlaying())
+    if (!m_soundEffectData[i]->timer.isActive() &&
+        !m_soundEffectData[i]->sound->isPlaying())
     {
         CONSOLE_PRINT_MODULE("Playing sound: " + file + " using cache sound " + QString::number(i), GameConsole::eDEBUG, GameConsole::eAudio);
-        disconnect(&m_soundEffectData[i].timer, nullptr, nullptr, nullptr);
-        disconnect(m_soundEffectData[i].sound.get(), nullptr, nullptr, nullptr);
-        auto &soundItem = m_soundEffectData[i].sound;
+        disconnect(&m_soundEffectData[i]->timer, nullptr, nullptr, nullptr);
+        disconnect(m_soundEffectData[i]->sound.get(), nullptr, nullptr, nullptr);
+        auto &soundItem = m_soundEffectData[i]->sound;
         soundItem->setObjectName(file + QString::number(i));
         soundItem->setAudioDevice(m_audioDevice);
         soundItem->setSource(soundCache->cacheUrl);
@@ -71,9 +71,9 @@ bool AudioManager::tryPlaySoundAtCachePosition(spSoundData &soundCache, qint32 i
         // start play
         if (delay > 0)
         {
-            connect(&m_soundEffectData[i].timer, &QTimer::timeout, soundItem.get(), [this, stopOldestSound, pSoundCache, i, duration]()
+            connect(&m_soundEffectData[i]->timer, &QTimer::timeout, soundItem.get(), [this, stopOldestSound, pSoundCache, i, duration]()
                     { playDelayedSound(pSoundCache, i, stopOldestSound, duration); });
-            m_soundEffectData[i].timer.start(delay);
+            m_soundEffectData[i]->timer.start(delay);
         }
         else
         {
@@ -86,7 +86,7 @@ bool AudioManager::tryPlaySoundAtCachePosition(spSoundData &soundCache, qint32 i
         connect(
             soundItem.get(), &QSoundEffect::playingChanged, this, [this, pSoundCache, i]()
             {
-            if (!m_soundEffectData[i].sound->isPlaying())
+            if (!m_soundEffectData[i]->sound->isPlaying())
             {
                 pSoundCache->m_usedSounds.removeAll(i);
                 stopSoundInternal(i);
@@ -104,18 +104,18 @@ bool AudioManager::tryPlaySoundAtCachePosition(spSoundData &soundCache, qint32 i
 void AudioManager::stopSoundInternal(qint32 soundIndex)
 {
     CONSOLE_PRINT_MODULE("Stopping sound at index " + QString::number(soundIndex), GameConsole::eDEBUG, GameConsole::eAudio);
-    m_soundEffectData[soundIndex].timer.stop();
-    //m_soundEffectData[soundIndex].sound->stop();
-    m_soundEffectData[soundIndex].sound->setVolume(0);
-    m_soundEffectData[soundIndex].sound->setMuted(true);
-    m_toDeleteSounds.push_back(m_soundEffectData[soundIndex].sound);
-    m_soundEffectData[soundIndex].sound = MemoryManagement::createNamedQObject<QSoundEffect>("QSoundEffect", m_audioDevice, this);
-    m_soundEffectData[soundIndex].sound->setObjectName("SoundEffect" + QString::number(soundIndex));
-    connect(m_soundEffectData[soundIndex].sound.get(), &QSoundEffect::statusChanged, this, [this, soundIndex]()
+    m_soundEffectData[soundIndex]->timer.stop();
+    //m_soundEffectData[soundIndex]->sound->stop();
+    m_soundEffectData[soundIndex]->sound->setVolume(0);
+    m_soundEffectData[soundIndex]->sound->setMuted(true);
+    m_toDeleteSounds.push_back(m_soundEffectData[soundIndex]->sound);
+    m_soundEffectData[soundIndex]->sound = MemoryManagement::createNamedQObject<QSoundEffect>("QSoundEffect", m_audioDevice, this);
+    m_soundEffectData[soundIndex]->sound->setObjectName("SoundEffect" + QString::number(soundIndex));
+    connect(m_soundEffectData[soundIndex]->sound.get(), &QSoundEffect::statusChanged, this, [this, soundIndex]()
     {
-        if (m_soundEffectData[soundIndex].sound->status() == QSoundEffect::Error)
+        if (m_soundEffectData[soundIndex]->sound->status() == QSoundEffect::Error)
         {
-            CONSOLE_PRINT_MODULE("Error: Occured when playing sound: " + m_soundEffectData[soundIndex].sound->source().toString(), GameConsole::eDEBUG, GameConsole::eAudio);
+            CONSOLE_PRINT_MODULE("Error: Occured when playing sound: " + m_soundEffectData[soundIndex]->sound->source().toString(), GameConsole::eDEBUG, GameConsole::eAudio);
         }
     },
     Qt::QueuedConnection);
@@ -156,14 +156,14 @@ void AudioManager::playSoundInternal(SoundData *soundData, qint32 soundIndex, qi
         if (duration > 0)
         {
             connect(
-                &m_soundEffectData[soundIndex].timer, &QTimer::timeout, m_soundEffectData[soundIndex].sound.get(), [this, soundIndex, soundData]()
+                &m_soundEffectData[soundIndex]->timer, &QTimer::timeout, m_soundEffectData[soundIndex]->sound.get(), [this, soundIndex, soundData]()
                 {
                 soundData->m_usedSounds.removeAll(soundIndex);
                 stopSoundInternal(soundIndex); },
                 Qt::QueuedConnection);
-            m_soundEffectData[soundIndex].timer.start(duration);
+            m_soundEffectData[soundIndex]->timer.start(duration);
         }
-        m_soundEffectData[soundIndex].sound->play();
+        m_soundEffectData[soundIndex]->sound->play();
     }
     else
     {
