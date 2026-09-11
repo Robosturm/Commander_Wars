@@ -198,6 +198,7 @@ public:
      * @return
      */
     static AiProcessPipe & getAiProcessPipe();
+    static bool existsAiProcessPipe();
 
     bool isAudioThread() const
     {
@@ -288,7 +289,7 @@ private:
     spQThread m_networkThread;
     spQThread m_audioThread;
     spQProcess m_aiSubProcess;
-    WorkerObject m_Worker;
+    spWorkerObject m_workerObject;
     spAudioManager m_AudioManager;
     spAiProcessPipe m_aiProcessPipe;
     spNetworkInterface m_slaveClient;

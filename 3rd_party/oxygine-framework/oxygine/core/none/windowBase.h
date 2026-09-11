@@ -3,13 +3,15 @@
 #include <QKeyEvent>
 #include <QMutex>
 
+#include "3rd_party/oxygine-framework/oxygine/core/renderer.h"
+
 namespace oxygine
 {
     class WindowBase : public QObject
     {
         Q_OBJECT
     public:
-        WindowBase() = default;
+        WindowBase();
         virtual ~WindowBase() = default;
 
         QSize size() const;
@@ -24,6 +26,10 @@ namespace oxygine
         QPoint mapFromGlobal(QPoint pos) const;
         QPoint mapToGlobal(QPoint pos) const;
         void redrawUi();
+        Renderer & getRenderer()
+        {
+            return m_renderer;
+        }
     public slots:
         virtual void launchGame() = 0;
         void update();
@@ -43,12 +49,14 @@ namespace oxygine
 
         bool beginRendering();
     protected:
+        friend Renderer;
+        Renderer m_renderer;
         bool m_renderEnabled{true};
         qint32 m_repeatedFramesDropped{0};
         QMutex m_pauseMutex;
         qint32 m_pausedCounter{0};
         bool m_quit{false};
-        bool m_noUi{false};
+        bool m_noUi{true};
         QMutex m_renderSync;
     };
 }

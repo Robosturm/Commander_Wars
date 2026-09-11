@@ -68,6 +68,7 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
     CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
+    m_workerObject = MemoryManagement::create<WorkerObject>();
 }
 
 Mainapp::~Mainapp()
@@ -96,7 +97,9 @@ void Mainapp::resetLineEdit()
 
 void Mainapp::shutdown()
 {
+    pauseRendering();
     m_aiSubProcess->kill();
+    emit m_renderer.sigQuit();
     if (BuildingSpriteManager::created())
     {
         BuildingSpriteManager::getInstance()->free();
@@ -162,7 +165,20 @@ void Mainapp::shutdown()
     {
         ShopLoader::getInstance()->free();
     }
+#ifdef GRAPHICSUPPORT
+    if (m_renderThread)
+    {
+        m_renderThread->exit();
+        m_renderThread->wait();
+    }
+#endif
     GameWindow::shutdown();
+    m_workerObject.reset();
+    for (qint32 i = 0; i < 20; ++i)
+    {
+        QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
+    }
+    continueRendering();
 }
 
 void Mainapp::loadRessources()
@@ -218,10 +234,17 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
             m_AudioManager->clearPlayList();
             m_AudioManager->loadFolder("resources/music/hauptmenue");
 #endif
+            emit m_renderer.sigLoadResources(step);
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
-            emit m_renderer.sigLoadResources(step);
             pLoadingScreen->setProgress(tr("Checking for new version..."), step  * stepProgress);
+            redrawUi();
+            break;
+        }
+        case GameEnums::StartupPhase::StartupPhase_ObjectManager:
+        {
+            emit m_renderer.sigLoadResources(step);
+            LoadingScreen::getInstance()->setProgress(tr("Loading Building Textures ..."), step  * stepProgress);
             redrawUi();
             break;
         }
@@ -243,18 +266,11 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
             break;
 #endif
         }
-        case GameEnums::StartupPhase::StartupPhase_ObjectManager:
+        case GameEnums::StartupPhase::StartupPhase_Building:
         {
 #ifdef UPDATESUPPORT
             m_gameUpdater.reset();
 #endif
-            emit m_renderer.sigLoadResources(step);
-            LoadingScreen::getInstance()->setProgress(tr("Loading Building Textures ..."), step  * stepProgress);
-            redrawUi();
-            break;
-        }
-        case GameEnums::StartupPhase::StartupPhase_Building:
-        {
             if (m_AudioManager.get() != nullptr)
             {
                 m_AudioManager->playRandom();
@@ -384,7 +400,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
                 m_timer.start();
             }
             m_workerLaunched = true;
-            emit m_Worker.sigStart();
+            emit m_workerObject->sigStart();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_Finalizing:
@@ -419,11 +435,11 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
                 }               
                 if (m_slave && m_initScript.isEmpty())
                 {
-                    emit m_Worker.sigStartSlaveGame();
+                    emit m_workerObject->sigStartSlaveGame();
                 }
                 else
                 {
-                    emit m_Worker.sigShowMainwindow();
+                    emit m_workerObject->sigShowMainwindow();
                 }
             }
             break;
@@ -930,6 +946,11 @@ void Mainapp::setEnableAudioThread(bool enable)
 AiProcessPipe & Mainapp::getAiProcessPipe()
 {
     return *(getInstance()->m_aiProcessPipe.get());
+}
+
+bool Mainapp::existsAiProcessPipe()
+{
+    return getInstance()->m_aiProcessPipe.get() != nullptr;
 }
 
 GameEnums::StartupPhase Mainapp::getStartUpStep() const

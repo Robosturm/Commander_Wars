@@ -35,6 +35,13 @@ void Renderer::start()
     }
 }
 
+void Renderer::quit()
+{
+    auto* context = m_window.context();
+    context->doneCurrent();
+    context->moveToThread(m_window.thread());
+}
+
 void Renderer::resize(qint32 w, qint32 h)
 {
     CONSOLE_PRINT("core::restore()", GameConsole::eDEBUG);

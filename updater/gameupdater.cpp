@@ -161,15 +161,22 @@ void GameUpdater::finishDownload()
     pLoadingScreen->setProgress(tr("Preparing extraction..."), 0);
     Mainapp::getInstance()->redrawUi();
     QCoreApplication::processEvents();
-    m_downloadFile.open(QIODevice::ReadOnly);
-    QDir dir(COW_INSTALLDIR);
-    dir.removeRecursively();
-    bool success = m_zipReader.extractAll(UNPACK_PATH);
-    pLoadingScreen->setProgress(tr("Removing zip..."), 50);
-    Mainapp::getInstance()->redrawUi();
-    QCoreApplication::processEvents();
-    m_downloadFile.close();
-    m_downloadFile.remove();
+    bool success = false;
+    if (m_downloadFile.open(QIODevice::ReadOnly))
+    {
+        QDir dir(COW_INSTALLDIR);
+        dir.removeRecursively();
+        success = m_zipReader.extractAll(UNPACK_PATH);
+        pLoadingScreen->setProgress(tr("Removing zip..."), 50);
+        Mainapp::getInstance()->redrawUi();
+        QCoreApplication::processEvents();
+        m_downloadFile.close();
+        m_downloadFile.remove();
+    }
+    else
+    {
+        GameConsole::print("Failed to open downloaded file.", GameConsole::eERROR);
+    }
     if (success)
     {
         pLoadingScreen->setProgress(tr("Launching patcher..."), 75);
@@ -231,7 +238,7 @@ void GameUpdater::continueBooting()
         pLoadingScreen->setProgress(tr("Loading Object Textures ..."), 8);
         pApp->redrawUi();
         QCoreApplication::processEvents();
-        emit pApp->sigNextStartUpStep(static_cast<Mainapp::StartupPhase>(static_cast<qint8>(pApp->getStartUpStep()) + 1));
+        emit pApp->sigNextStartUpStep(static_cast<GameEnums::StartupPhase>(static_cast<qint8>(pApp->getStartUpStep()) + 1));
     }
 }
 

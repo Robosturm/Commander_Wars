@@ -25,7 +25,7 @@ set(CMAKE_AUTORCC ON)
 option(OPENSSL_USE_STATIC_LIBS "you may disable linking static against openssl but it's not recommended. The installation process won't deploy the libs." TRUE)
 option(OPENSSL_MSVC_STATIC_RT "you may disable linking static against openssl but it's not recommended. The installation process won't deploy the libs." TRUE)
 option(AUDIOSUPPORT "enables audio support for the game and compiles music/sound into the exe" ON)
-option(GRAPHICSUPPORT "enables sprites for the game and compiles them into the exe" ON)
+option(GRAPHICSUPPORT "enables sprites for the game and compiles them into the exe" OFF)
 option(PRECOMPILEDOPENSSL "if the openssl are precompiled libs or or package exists" OFF)
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
 option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or deployed as folder" OFF)
@@ -394,7 +394,7 @@ else()
         3rd_party/oxygine-framework/oxygine/core/none/ShaderProgram.cpp 3rd_party/oxygine-framework/oxygine/core/none/ShaderProgram.h
         3rd_party/oxygine-framework/oxygine/core/none/VideoDriver.cpp
         3rd_party/oxygine-framework/oxygine/core/none/UberShaderProgram.cpp
-        3rd_party/oxygine-framework/oxygine/core/opengl/renderer.cpp 
+        3rd_party/oxygine-framework/oxygine/core/none/renderer.cpp 
         game/gamerecording/none/gamemapimagesaver.cpp
     )
 endif()

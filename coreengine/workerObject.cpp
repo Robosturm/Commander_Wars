@@ -49,7 +49,6 @@
 #endif
 
 WorkerObject::WorkerObject()
-    : m_mouseDelayTimer(this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("WorkerThread");
@@ -58,8 +57,6 @@ WorkerObject::WorkerObject()
     connect(this, &WorkerObject::sigStart, this, &WorkerObject::start, Qt::QueuedConnection);
     connect(this, &WorkerObject::sigShowMainwindow, this, &WorkerObject::showMainwindow, Qt::QueuedConnection);
     connect(this, &WorkerObject::sigStartSlaveGame, this, &WorkerObject::startSlaveGame, Qt::QueuedConnection);
-    m_mouseDelayTimer.setSingleShot(true);
-    connect(&m_mouseDelayTimer, &QTimer::timeout, this, &WorkerObject::mouseMoveEventDelayed, Qt::QueuedConnection);
 }
 
 WorkerObject::~WorkerObject()
@@ -70,18 +67,25 @@ WorkerObject::~WorkerObject()
         CONSOLE_PRINT("Shutting down game server", GameConsole::eDEBUG);
         MainServer::getInstance()->release();
     }
-    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-    pLoadingScreen->hide();
-    UiFactory::shutdown();
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    if (oxygine::Stage::getStage())
+    if (LoadingScreen::exists())
     {
-        oxygine::Stage::getStage()->cleanup();
-        if (pInterpreter != nullptr)
+        spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+        pLoadingScreen->hide();
+    }
+    UiFactory::shutdown();
+    Interpreter* pInterpreter = nullptr;
+    if (Interpreter::exists())
+    {
+        if (oxygine::Stage::getStage())
         {
-            for (qint32 i = 0; i < 20; ++i)
+            oxygine::Stage::getStage()->cleanup();
+            pInterpreter = Interpreter::getInstance();
+            if (pInterpreter != nullptr)
             {
-                pInterpreter->threadProcessEvents();
+                for (qint32 i = 0; i < 20; ++i)
+                {
+                    pInterpreter->threadProcessEvents();
+                }
             }
         }
     }
@@ -104,7 +108,11 @@ WorkerObject::~WorkerObject()
     FontManager::getInstance()->release();
 
     Player::releaseStaticData();
-    Mainapp::getAiProcessPipe().quit();
+    if (Mainapp::existsAiProcessPipe())
+    {
+        Mainapp::getAiProcessPipe().quit();
+    }
+
     GameConsole::getInstance()->release();
     if (pInterpreter != nullptr)
     {
@@ -121,10 +129,6 @@ void WorkerObject::start()
 {
     GameConsole::print("Loading worker object", GameConsole::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
-    connect(pApp, &Mainapp::sigMousePressEvent, this, &WorkerObject::mousePressEvent, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerObject::mouseReleaseEvent, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerObject::wheelEvent, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerObject::mouseMoveEvent, Qt::QueuedConnection);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pApp->pauseRendering();
     spConsole pConsole = GameConsole::getSpInstance();
@@ -288,50 +292,4 @@ void WorkerObject::startSlaveGame()
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     Mainapp::getInstance()->getParser().startSlaveGame();
-}
-
-void WorkerObject::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y)
-{
-    Mainapp::getInstance()->pauseRendering();
-    oxygine::Input* input = &oxygine::Input::getInstance();
-    input->sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
-                                  oxygine::TouchEvent::TOUCH_DOWN, input->getPointerMouse());
-    Mainapp::getInstance()->continueRendering();
-}
-
-void WorkerObject::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y)
-{
-    Mainapp::getInstance()->pauseRendering();
-    oxygine::Input* input = &oxygine::Input::getInstance();
-    input->sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
-                                  oxygine::TouchEvent::TOUCH_UP, input->getPointerMouse());
-    Mainapp::getInstance()->continueRendering();
-}
-
-void WorkerObject::mouseMoveEvent(qint32 x, qint32 y)
-{
-    oxygine::Input* input = &oxygine::Input::getInstance();
-    m_lastMousePosition = QPoint(x, y);
-    auto delayed = input->sendPointerMotionEvent(oxygine::Stage::getStage(), x, y, 1.0f, input->getPointerMouse());
-    if (delayed > 0)
-    {
-        m_mouseDelayTimer.start(delayed);
-    }
-    else
-    {
-        m_mouseDelayTimer.stop();
-    }
-}
-
-void WorkerObject::mouseMoveEventDelayed()
-{
-    mouseMoveEvent(m_lastMousePosition.x(), m_lastMousePosition.y());
-}
-
-void WorkerObject::wheelEvent(qint32 x, qint32 y)
-{
-    Mainapp::getInstance()->pauseRendering();
-    oxygine::Input* input = &oxygine::Input::getInstance();
-    input->sendPointerWheelEvent(oxygine::Stage::getStage(), QPoint(x, y), input->getPointerMouse());
-    Mainapp::getInstance()->continueRendering();
 }

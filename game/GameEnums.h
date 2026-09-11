@@ -11,8 +11,8 @@ public:
     {
         StartupPhase_Start,
         StartupPhase_General = StartupPhase_Start,
-        StartupPhase_UpdateManager,
         StartupPhase_ObjectManager,
+        StartupPhase_UpdateManager,
         StartupPhase_Building,
         StartupPhase_COSprites,
         StartupPhase_GameAnimations,

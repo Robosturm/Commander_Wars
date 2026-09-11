@@ -17,6 +17,10 @@ class LoadingScreen final : public CreatedGui
     Q_OBJECT
 public:
     static spLoadingScreen getInstance();
+    static bool exists()
+    {
+        return m_pLoadingScreen != nullptr;
+    }
     virtual ~LoadingScreen();
     /**w
      * @brief show

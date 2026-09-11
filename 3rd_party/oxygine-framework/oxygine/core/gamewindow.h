@@ -93,7 +93,11 @@ public:
     }
     bool isRenderThread() const
     {
+#ifdef GRAPHICSUPPORT
         return QThread::currentThread() == m_renderThread.get() || m_renderThread.get() == nullptr;
+#else
+        return true;
+#endif
     }
     virtual void launchGame() override;
     /**
@@ -137,6 +141,7 @@ protected slots:
     virtual void onQuit() = 0;
     void quit(qint32 exitCode);
     void showKeyboard(bool visible);
+    void mouseMoveEventDelayed();
 
 protected:
     virtual void registerResourceTypes();
@@ -150,9 +155,12 @@ protected:
 
     void handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints);
     bool sameTouchpoint(const QPointF & pos1, const QPointF & pos2) const;
+    void mouseMoveEvent(int x, int y);
 
 protected:
     QTimer m_timer;
+    QTimer m_mouseDelayTimer;
+    QPoint m_lastMousePosition;
     qint32 m_timerCycle{1};
     QElapsedTimer m_pressDownTime;
     bool m_pressDownTimeRunning{false};

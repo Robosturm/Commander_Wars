@@ -43,8 +43,10 @@ namespace oxygine
         void sigAddEventListener(oxygine::spEventDispatcher dispatcher, oxygine::eventType et, const oxygine::EventCallback cb);
         void sigRemoveEventListener(oxygine::spEventDispatcher dispatcher, qint32 id);
         void sigRemoveEventListeners(oxygine::spEventDispatcher dispatcher, oxygine::IClosureOwner* callbackThis);
+        void sigQuit();
 
     public slots:
+        void quit();
         void onPaint();
         void loadResources(qint32 step);
         void start();

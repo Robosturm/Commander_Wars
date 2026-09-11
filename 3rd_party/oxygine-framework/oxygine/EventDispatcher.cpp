@@ -210,7 +210,8 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         // Headless mode has no render pass to drain deferred updates.
         auto* window = GameWindow::getWindow();
-        return !window->isRenderThread() &&
+        return window != nullptr &&
+               !window->isRenderThread() &&
                !window->renderingPaused() &&
                !window->getNoUi() &&
                !notInSharedUse();

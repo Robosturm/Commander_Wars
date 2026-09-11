@@ -2,6 +2,11 @@
 
 namespace oxygine
 {
+    WindowBase::WindowBase()
+        : m_renderer(*this)
+    {
+    }
+
     QSize WindowBase::size() const
     {
         return QSize();

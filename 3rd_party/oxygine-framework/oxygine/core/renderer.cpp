@@ -14,7 +14,7 @@ Renderer::Renderer(WindowBase & window)
     auto conntectionType = Qt::BlockingQueuedConnection;
     if (m_window.m_noUi)
     {
-        conntectionType = Qt::DirectConnection;
+        conntectionType = Qt::AutoConnection;
     }
     connect(this, &Renderer::sigLoadResources, this, &Renderer::loadResources, conntectionType);
     connect(this, &Renderer::sigStart, this, &Renderer::start, conntectionType);
@@ -39,6 +39,7 @@ Renderer::Renderer(WindowBase & window)
     connect(this, &Renderer::sigRemoveEventListeners, this, &Renderer::removeEventListeners, conntectionType);
     connect(this, &Renderer::sigDetachAndRemove, this, &Renderer::detachAndRemove, conntectionType);
     connect(this, &Renderer::sigDetach, this, &Renderer::detach, conntectionType);
+    connect(this, &Renderer::sigQuit, this, &Renderer::quit, conntectionType);
 }
 
 Renderer::~Renderer()
@@ -52,6 +53,9 @@ void Renderer::loadResources(qint32 step)
     {
     case GameEnums::StartupPhase::StartupPhase_General:
     {
+        FontManager::getInstance();
+        // load ressources by creating the singletons
+        BackgroundManager::getInstance();
         break;
     }
     case GameEnums::StartupPhase::StartupPhase_ObjectManager:

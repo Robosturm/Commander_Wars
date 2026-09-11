@@ -21,6 +21,10 @@ namespace oxygine
 #endif
     }
 
+    WindowBase::~WindowBase()
+    {
+    }
+
     void WindowBase::setupRendering()
     {
         makeCurrent();

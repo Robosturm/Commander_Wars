@@ -15,7 +15,7 @@ namespace oxygine
         Q_OBJECT
     public:
         WindowBase();
-        virtual ~WindowBase() = default;
+        virtual ~WindowBase();
         void setupRendering();
         Renderer & getRenderer()
         {

@@ -69,12 +69,19 @@ void FileDownloader::startDownloading()
 void FileDownloader::downloadFile(const QUrl & fileUrl)
 {
     m_requestUrl = fileUrl;
-    m_file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-
-    QNetworkRequest request(m_requestUrl);
-    m_reply = m_webCtrl.get(request);
-    connect(m_reply, &QNetworkReply::downloadProgress, this, &FileDownloader::downloadProgress);
-    connect(m_reply, &QNetworkReply::errorOccurred, this, &FileDownloader::errorOccurred);
+    if (m_file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        QNetworkRequest request(m_requestUrl);
+        m_reply = m_webCtrl.get(request);
+        connect(m_reply, &QNetworkReply::downloadProgress, this, &FileDownloader::downloadProgress);
+        connect(m_reply, &QNetworkReply::errorOccurred, this, &FileDownloader::errorOccurred);
+    }
+    else
+    {
+        GameConsole::print("Failed to start download of " + fileUrl.toString(), GameConsole::eERROR);
+        m_downloadFailed = true;
+        emit sigNewState(State::DownloadingFailed);
+    }
 }
 
 QString FileDownloader::getLatestTag() const

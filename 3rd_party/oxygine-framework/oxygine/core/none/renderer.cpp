@@ -12,8 +12,13 @@ void Renderer::resize(qint32 w, qint32 h)
 
 bool Renderer::beginRendering()
 {
+    return false;
 }
 
 void Renderer::onPaint()
+{
+}
+
+void Renderer::quit()
 {
 }
