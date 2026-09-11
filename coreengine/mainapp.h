@@ -15,6 +15,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/Gamepad.h"
 #include "coreengine/commandlineparser.h"
+#include "coreengine/workerObject.h"
 #include "game/GameEnums.h"
 
 #ifdef UPDATESUPPORT
@@ -22,8 +23,6 @@
 #endif
 
 class BaseGamemenu;
-class WorkerThread;
-using spWorkerThread = std::shared_ptr<WorkerThread>;
 class AudioManager;
 using spAudioManager = std::shared_ptr<AudioManager>;
 using spAudioThread = std::shared_ptr<AudioManager>;
@@ -84,11 +83,6 @@ public:
         return getInstance()->m_AudioManager.get();
     }
 
-    inline static QThread* getWorkerthread()
-    {
-        return getInstance()->m_workerThread.get();
-    }
-
     inline static QThread* getNetworkThread()
     {
         return getInstance()->m_networkThread.get();
@@ -97,8 +91,6 @@ public:
      * @brief loadRessources
      */
     virtual void loadRessources() override;
-    virtual bool isWorker() override;
-    virtual bool isWorkerRunning() override;
     /**
      * @brief getSlave
      * @return
@@ -120,14 +112,7 @@ public:
      * @return
      */
     static QString qsTr(const char* const text);
-    /**
-     * @brief getWorker
-     * @return
-     */
-    static WorkerThread* getWorker()
-    {
-        return getInstance()->m_Worker.get();
-    }
+
     static QProcess & GetAiSubProcess()
     {
         return *(getInstance()->m_aiSubProcess.get());
@@ -263,13 +248,6 @@ public slots:
      */
     void createLineEdit();
     void resetLineEdit();
-    void doMapshot(BaseGamemenu* pMenu);
-    /**
-     * @brief saveMapAsImage
-     * @param pMinimap
-     * @param img
-     */
-    void saveMapAsImage(Minimap* pMinimap, QImage * img);
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -291,8 +269,6 @@ signals:
 
     void sigNextStartUpStep(GameEnums::StartupPhase step);
     void sigCreateLineEdit();
-    void sigDoMapshot(BaseGamemenu* pMenu);
-    void sigSaveMapAsImage(Minimap* pMinimap, QImage * img);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
@@ -312,7 +288,7 @@ private:
     spQThread m_networkThread;
     spQThread m_audioThread;
     spQProcess m_aiSubProcess;
-    spWorkerThread m_Worker;
+    WorkerObject m_Worker;
     spAudioManager m_AudioManager;
     spAiProcessPipe m_aiProcessPipe;
     spNetworkInterface m_slaveClient;

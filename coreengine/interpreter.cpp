@@ -3,7 +3,6 @@
 #include "coreengine/scriptfunctionsource.h"
 #include "coreengine/audiomanager.h"
 #include "coreengine/userdata.h"
-#include "coreengine/workerthread.h"
 #include "coreengine/gameconsole.h"
 
 #include "resource_management/fontmanager.h"

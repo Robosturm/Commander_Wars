@@ -1,19 +1,18 @@
-#ifndef WORKERTHREAD_H
-#define WORKERTHREAD_H
+#pragma once
 
 #include <QObject>
 #include <QElapsedTimer>
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 
-class WorkerThread;
-using spWorkerThread = std::shared_ptr<WorkerThread>;
+class WorkerObject;
+using spWorkerObject = std::shared_ptr<WorkerObject>;
 
-class WorkerThread final : public QObject
+class WorkerObject final : public QObject
 {
     Q_OBJECT
 public:
-    explicit WorkerThread();
-    virtual ~WorkerThread();
+    explicit WorkerObject();
+    virtual ~WorkerObject();
     bool getStarted() const;
 signals:
     void sigStart();
@@ -34,5 +33,3 @@ private:
     QTimer m_mouseDelayTimer;
     QPoint m_lastMousePosition;
 };
-
-#endif // WORKERTHREAD_H

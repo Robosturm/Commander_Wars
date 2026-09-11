@@ -43,7 +43,7 @@ public:
      * @param folder
      * @param files
      */
-    void setSelection(QString folder, QStringList files);
+    void setSelection(QString folder, QStringList files, bool showUpFolder = true);
     /**
      * @brief setCurrentItem
      * @param item
@@ -65,7 +65,7 @@ signals:
 public slots:
     void startItemChangeTimer();
     void changeFolder(QString folder);
-    void updateSelection();
+    void updateSelection(bool showUpFolder = true);
     void itemChangeTimerExpired();
     void createItemContainer(qint32 y, qint32 width, qint32 height);
     void filterChanged();

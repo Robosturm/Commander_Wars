@@ -10,7 +10,7 @@
 
 #include "coreengine/filesupport.h"
 #include "coreengine/mainapp.h"
-#include "coreengine/workerthread.h"
+#include "coreengine/workerObject.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
 #include "coreengine/userdata.h"
@@ -48,29 +48,21 @@
 #include "tests/oxygine_lifetime/oxyginelifetimetests.h"
 #endif
 
-WorkerThread::WorkerThread()
+WorkerObject::WorkerObject()
     : m_mouseDelayTimer(this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("WorkerThread");
 #endif
     Interpreter::setCppOwnerShip(this);
-    connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);
-    connect(this, &WorkerThread::sigShowMainwindow, this, &WorkerThread::showMainwindow, Qt::QueuedConnection);
-    connect(this, &WorkerThread::sigStartSlaveGame, this, &WorkerThread::startSlaveGame, Qt::QueuedConnection);
-    Mainapp* pApp = Mainapp::getInstance();
-    connect(pApp, &Mainapp::sigMousePressEvent, this, &WorkerThread::mousePressEvent, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerThread::mouseReleaseEvent, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
+    connect(this, &WorkerObject::sigStart, this, &WorkerObject::start, Qt::QueuedConnection);
+    connect(this, &WorkerObject::sigShowMainwindow, this, &WorkerObject::showMainwindow, Qt::QueuedConnection);
+    connect(this, &WorkerObject::sigStartSlaveGame, this, &WorkerObject::startSlaveGame, Qt::QueuedConnection);
     m_mouseDelayTimer.setSingleShot(true);
-    connect(&m_mouseDelayTimer, &QTimer::timeout, this, &WorkerThread::mouseMoveEventDelayed, Qt::QueuedConnection);
-
-    moveToThread(Mainapp::getWorkerthread());
-    
+    connect(&m_mouseDelayTimer, &QTimer::timeout, this, &WorkerObject::mouseMoveEventDelayed, Qt::QueuedConnection);
 }
 
-WorkerThread::~WorkerThread()
+WorkerObject::~WorkerObject()
 {
     CONSOLE_PRINT("Shutting down workerthread", GameConsole::eDEBUG);
     if (MainServer::exists())
@@ -125,12 +117,15 @@ WorkerThread::~WorkerThread()
     }
 }
 
-void WorkerThread::start()
+void WorkerObject::start()
 {
-    GameConsole::print("Loading worker thread", GameConsole::eDEBUG);
-    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-    Q_ASSERT(pLoadingScreen->moveToThread(QThread::currentThread()));
+    GameConsole::print("Loading worker object", GameConsole::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
+    connect(pApp, &Mainapp::sigMousePressEvent, this, &WorkerObject::mousePressEvent, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerObject::mouseReleaseEvent, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerObject::wheelEvent, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerObject::mouseMoveEvent, Qt::QueuedConnection);
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pApp->pauseRendering();
     spConsole pConsole = GameConsole::getSpInstance();
     // create the initial menue no need to store the object
@@ -235,7 +230,7 @@ void WorkerThread::start()
     emit pApp->sigNextStartUpStep(GameEnums::StartupPhase::StartupPhase_Finalizing);
 }
 
-void WorkerThread::showMainwindow()
+void WorkerObject::showMainwindow()
 {
 #ifdef COW_BUILD_TESTING
     if (qEnvironmentVariableIsSet("COW_OXYGINE_SELFTEST"))
@@ -283,19 +278,19 @@ void WorkerThread::showMainwindow()
     oxygine::Stage::getStage()->addChild(window);
 }
 
-bool WorkerThread::getStarted() const
+bool WorkerObject::getStarted() const
 {
     return m_started;
 }
 
-void WorkerThread::startSlaveGame()
+void WorkerObject::startSlaveGame()
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     Mainapp::getInstance()->getParser().startSlaveGame();
 }
 
-void WorkerThread::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y)
+void WorkerObject::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y)
 {
     Mainapp::getInstance()->pauseRendering();
     oxygine::Input* input = &oxygine::Input::getInstance();
@@ -304,7 +299,7 @@ void WorkerThread::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32
     Mainapp::getInstance()->continueRendering();
 }
 
-void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y)
+void WorkerObject::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y)
 {
     Mainapp::getInstance()->pauseRendering();
     oxygine::Input* input = &oxygine::Input::getInstance();
@@ -313,7 +308,7 @@ void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint
     Mainapp::getInstance()->continueRendering();
 }
 
-void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
+void WorkerObject::mouseMoveEvent(qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::getInstance();
     m_lastMousePosition = QPoint(x, y);
@@ -328,12 +323,12 @@ void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
     }
 }
 
-void WorkerThread::mouseMoveEventDelayed()
+void WorkerObject::mouseMoveEventDelayed()
 {
     mouseMoveEvent(m_lastMousePosition.x(), m_lastMousePosition.y());
 }
 
-void WorkerThread::wheelEvent(qint32 x, qint32 y)
+void WorkerObject::wheelEvent(qint32 x, qint32 y)
 {
     Mainapp::getInstance()->pauseRendering();
     oxygine::Input* input = &oxygine::Input::getInstance();

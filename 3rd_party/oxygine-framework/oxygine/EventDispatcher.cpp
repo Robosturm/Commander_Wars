@@ -53,7 +53,7 @@ namespace oxygine
         {
             if (m_syncEvents)
             {
-                emit MemoryManagement::getInstance().sigAddEventListener(getSharedPtr<EventDispatcher>(), et, cb);
+                emit GameWindow::getWindow()->getRenderer().sigAddEventListener(getSharedPtr<EventDispatcher>(), et, cb);
             }
             else
             {
@@ -92,7 +92,7 @@ namespace oxygine
         {
             if (m_syncEvents)
             {
-                emit MemoryManagement::getInstance().sigRemoveEventListener(getSharedPtr<EventDispatcher>(), id);
+                emit GameWindow::getWindow()->getRenderer().sigRemoveEventListener(getSharedPtr<EventDispatcher>(), id);
             }
             else
             {
@@ -128,7 +128,7 @@ namespace oxygine
         {
             if (m_syncEvents)
             {
-                emit MemoryManagement::getInstance().sigRemoveEventListeners(getSharedPtr<EventDispatcher>(), callbackThis);
+                emit GameWindow::getWindow()->getRenderer().sigRemoveEventListeners(getSharedPtr<EventDispatcher>(), callbackThis);
             }
             else
             {

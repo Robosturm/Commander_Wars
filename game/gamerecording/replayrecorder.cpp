@@ -508,7 +508,7 @@ QByteArray ReplayRecorder::createRecordJson() const
             Minimap minimap;
             minimap.updateMinimap(m_pMap);
             QImage image;
-            Mainapp::getInstance()->saveMapAsImage(&minimap, &image);
+            emit Mainapp::getInstance()->getRenderer().sigSaveMapAsImage(&minimap, &image);
             QByteArray imageArray;
             QBuffer buffer(&imageArray);
             buffer.open(QIODevice::WriteOnly);

@@ -886,6 +886,8 @@ public:
     Q_INVOKABLE void setNewsEnabled(bool newNewsEnabled);
     Q_INVOKABLE bool getNewsEnabled() const;
 
+    Q_INVOKABLE bool getNoUi() const;
+    Q_INVOKABLE void setNoUi(bool newNoUi);
 private:
     friend class MemoryManagement;
     explicit Settings();
@@ -915,6 +917,7 @@ private:
 
     bool m_borderless{true};
     bool m_fullscreen{false};
+    bool m_noUi{false};
 
     Qt::Key m_key_quickAction{Qt::Key_Control};
     Qt::Key m_key_escape{Qt::Key_Escape};

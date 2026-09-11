@@ -360,7 +360,7 @@ void BaseGamemenu::keyInput(oxygine::KeyEvent event)
         }
         else if (cur == Settings::getInstance()->getKey_mapshot())
         {
-            emit Mainapp::getInstance()->sigDoMapshot(this);
+            emit Mainapp::getInstance()->getRenderer().sigDoMapshot(this);
         }
         else
         {

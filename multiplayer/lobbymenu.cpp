@@ -1151,7 +1151,7 @@ void LobbyMenu::uploadMap(const  QString & selectedFilePath)
             Minimap minimap;
             minimap.updateMinimap(&map);
             QImage image;
-            Mainapp::getInstance()->saveMapAsImage(&minimap, &image);
+            emit Mainapp::getInstance()->getRenderer().sigSaveMapAsImage(&minimap, &image);
             QByteArray imageArray;
             QBuffer buffer(&imageArray);
             buffer.open(QIODevice::WriteOnly);

@@ -20,7 +20,10 @@ public:
     explicit GameWindow();
     virtual ~GameWindow() = default;
 
-    static GameWindow* getWindow();
+    static GameWindow* getWindow()
+    {
+        return m_window;
+    }
     bool isReady2Render();
     bool getNoUi() const
     {
@@ -34,12 +37,6 @@ public:
         m_quit = true;
     }
     void loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32  rows, float scaleFactor, bool clamp2Edge = true, quint32 linearFilter = 0);
-    virtual bool isWorker() = 0;
-    /**
-         * @brief isWorkerRunning
-         * @return
-         */
-    virtual bool isWorkerRunning() = 0;
     /**
          * @brief isEvenScale
          * @param width1
@@ -54,7 +51,7 @@ public:
     {
         if (!isRenderThread())
         {
-            // Q_ASSERT(isWorkerThread());
+            Q_ASSERT(isMainThread());
             if (m_pausedCounter == 0)
             {
                 QMutexLocker lock(&m_renderSync);
@@ -73,7 +70,7 @@ public:
     {
         if (!isRenderThread())
         {
-            // Q_ASSERT(isWorkerThread());
+            Q_ASSERT(isMainThread());
             Q_ASSERT(m_pausedCounter > 0);
             --m_pausedCounter;
         }
@@ -96,12 +93,7 @@ public:
     }
     bool isRenderThread() const
     {
-        // return QThread::currentThread() == m_renderThread.get() || m_renderThread.get() == nullptr;
-        return QThread::currentThread() == m_pMainThread || m_pMainThread == nullptr;
-    }
-    bool isWorkerThread() const
-    {
-        return QThread::currentThread() == m_workerThread.get() || m_workerThread.get() == nullptr;
+        return QThread::currentThread() == m_renderThread.get() || m_renderThread.get() == nullptr;
     }
     virtual void launchGame() override;
     /**
@@ -139,7 +131,6 @@ signals:
     void sigShowKeyboard(bool visible);
 
 protected slots:
-    void loadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor, bool clamp2Edge = true, quint32 linearFilter = 0);
     virtual void loadRessources(){}
 
     void quitApp();
@@ -179,7 +170,6 @@ protected:
     bool m_launched{false};
     bool m_workerLaunched{false};
     QThread* m_pMainThread{nullptr};
-    spQThread m_workerThread;
     struct
     {
         QElapsedTimer leftDown;

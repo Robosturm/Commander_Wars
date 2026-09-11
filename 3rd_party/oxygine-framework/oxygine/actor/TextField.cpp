@@ -183,7 +183,7 @@ namespace oxygine
         {
             if (m_syncEvents)
             {
-                emit MemoryManagement::getInstance().sigRebuildText(getSharedPtr<TextField>());
+                emit GameWindow::getWindow()->getRenderer().sigRebuildText(getSharedPtr<TextField>());
             }
             else
             {

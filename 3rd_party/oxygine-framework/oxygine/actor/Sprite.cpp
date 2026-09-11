@@ -197,7 +197,7 @@ namespace oxygine
         {
             if (m_syncEvents)
             {
-                emit MemoryManagement::getInstance().sigSetColorTable(getSharedPtr<Sprite>(), pAnim, matrix);
+                emit GameWindow::getWindow()->getRenderer().sigSetColorTable(getSharedPtr<Sprite>(), pAnim, matrix);
             }
             else
             {
@@ -270,7 +270,7 @@ namespace oxygine
         {
             if (m_syncEvents)
             {
-                emit MemoryManagement::getInstance().sigChangeAnimFrame(getSharedPtr<Sprite>(), frame);
+                emit GameWindow::getWindow()->getRenderer().sigChangeAnimFrame(getSharedPtr<Sprite>(), frame);
             }
             else
             {

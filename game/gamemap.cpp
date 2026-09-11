@@ -1670,7 +1670,7 @@ void GameMap::writeMapHeader(QDataStream& pStream, bool forHash) const
             minimap.setMenu(gameMenu);
         }
         minimap.updateMinimap(this, true);
-        Mainapp::getInstance()->saveMapAsImage(&minimap, &m_headerInfo.m_mapPreview);
+        emit Mainapp::getInstance()->getRenderer().sigSaveMapAsImage(&minimap, &m_headerInfo.m_mapPreview);
         pStream << m_headerInfo.m_mapPreview;
     }
 }

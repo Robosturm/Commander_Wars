@@ -55,12 +55,12 @@ namespace oxygine
         setFormat(newFormat);
 #endif
         m_window = this;
-        QObject::connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
+        QObject::connect(this, &GameWindow::sigLoadSingleResAnim, &m_renderer, &Renderer::loadSingleResAnim, Qt::BlockingQueuedConnection);
         QObject::connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
         QObject::connect(this, &GameWindow::sigQuit, this, &GameWindow::quit, Qt::QueuedConnection);
         QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &GameWindow::quitApp);
         QObject::connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
-        QObject::connect(&m_timer, &QTimer::timeout, this, qOverload<>(&GameWindow::update));
+        QObject::connect(&m_timer, &QTimer::timeout, this, &GameWindow::redrawUi);
         // start debounce timer
         m_debounceTimer.leftDown.start();
         m_debounceTimer.rightDown.start();
@@ -173,20 +173,12 @@ namespace oxygine
         {
             if (isRenderThread())
             {
-                loadSingleResAnim(pAnim, image, columns, rows, scaleFactor, clamp2Edge, linearFilter);
+                m_renderer.loadSingleResAnim(pAnim, image, columns, rows, scaleFactor, clamp2Edge, linearFilter);
             }
             else
             {
                 emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor, clamp2Edge, linearFilter);
             }
-        }
-    }
-
-    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor, bool clamp2Edge, quint32 linearFilter)
-    {
-        if (pAnim.get() != nullptr && !m_noUi)
-        {
-            pAnim->init(image, columns, rows, scaleFactor, clamp2Edge, linearFilter);
         }
     }
 
@@ -486,11 +478,6 @@ namespace oxygine
     qint32 GameWindow::getTimerCycle() const
     {
         return m_timerCycle;
-    }
-
-    GameWindow* GameWindow::getWindow()
-    {
-        return m_window;
     }
 
     bool GameWindow::isEvenScale(qint32 width1, qint32 width2)

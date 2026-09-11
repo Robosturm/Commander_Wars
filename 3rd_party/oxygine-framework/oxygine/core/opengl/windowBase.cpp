@@ -7,11 +7,13 @@
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
 #include "coreengine/gameconsole.h"
+#include "coreengine/settings.h"
 
 namespace oxygine
 {
     WindowBase::WindowBase()
-        : m_renderer(*this)
+        : m_noUi(Settings::getInstance()->getNoUi())
+         , m_renderer(*this)
     {
 #ifdef GRAPHICSUPPORT
         m_renderThread = MemoryManagement::createNamedQObject<QThread>("QThread");
@@ -29,7 +31,7 @@ namespace oxygine
         m_renderThread->start(QThread::Priority::HighestPriority);
         m_renderingInitialized = true;
         emit m_renderer.sigStart();
-        //m_renderer.start();
+        // m_renderer.start();
     }
 
     QSurfaceFormat::RenderableType WindowBase::getRenderableType()
@@ -69,7 +71,7 @@ namespace oxygine
             }
             else
             {
-                emit m_renderer.sigPaintGl();
+                emit m_renderer.sigPaint();
             }
         }
     }

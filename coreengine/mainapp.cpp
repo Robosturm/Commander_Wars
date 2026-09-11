@@ -16,7 +16,6 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/audiomanager.h"
-#include "coreengine/workerthread.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/gameversion.h"
 
@@ -26,31 +25,6 @@
 
 #include "network/tcpclient.h"
 #include "network/mainserver.h"
-
-#include "menue/basegamemenu.h"
-
-#include "game/gamerecording/gamemapimagesaver.h"
-
-#include "objects/minimap.h"
-
-#include "resource_management/backgroundmanager.h"
-#include "resource_management/buildingspritemanager.h"
-#include "resource_management/cospritemanager.h"
-#include "resource_management/fontmanager.h"
-#include "resource_management/gameanimationmanager.h"
-#include "resource_management/gamemanager.h"
-#include "resource_management/gamerulemanager.h"
-#include "resource_management/objectmanager.h"
-#include "resource_management/terrainmanager.h"
-#include "resource_management/unitspritemanager.h"
-#include "resource_management/battleanimationmanager.h"
-#include "resource_management/coperkmanager.h"
-#include "resource_management/achievementmanager.h"
-#include "resource_management/shoploader.h"
-#include "resource_management/movementtablemanager.h"
-#include "resource_management/weaponmanager.h"
-#include "resource_management/movementplanneraddinmanager.h"
-#include "resource_management/uimanager.h"
 
 #include "wiki/wikidatabase.h"
 
@@ -75,7 +49,6 @@ Mainapp::Mainapp()
     m_pMainapp = this;
     QThread::currentThread()->setObjectName("Renderthread");
     MemoryManagement::getInstance().moveToThread(QThread::currentThread());
-    m_workerThread = MemoryManagement::createNamedQObject<QThread>("QThread");
     m_networkThread = MemoryManagement::createNamedQObject<QThread>("QThread");
     m_aiSubProcess = MemoryManagement::createNamedQObject<QProcess>("QProcess");
 #ifdef AUDIOSUPPORT
@@ -87,17 +60,13 @@ Mainapp::Mainapp()
 
 #endif
 #ifdef GRAPHICSUPPORT
-    m_workerThread->setObjectName("Workerthread");
     m_networkThread->setObjectName("Networkthread");
 #endif
-    m_Worker = MemoryManagement::create<WorkerThread>();
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
-    connect(this, &Mainapp::sigDoMapshot, this, &Mainapp::doMapshot, Qt::BlockingQueuedConnection);
-    connect(this, &Mainapp::sigSaveMapAsImage, this, &Mainapp::saveMapAsImage, Qt::BlockingQueuedConnection);
     CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
 }
 
@@ -196,18 +165,6 @@ void Mainapp::shutdown()
     GameWindow::shutdown();
 }
 
-bool Mainapp::isWorker()
-{
-    return QThread::currentThread() == m_workerThread.get() ||
-            ((QThread::currentThread() == m_pMainThread || m_pMainThread == nullptr) &&
-             (m_shuttingDown || !m_Worker->getStarted()));
-}
-
-bool Mainapp::isWorkerRunning()
-{
-    return m_Worker->getStarted();
-}
-
 void Mainapp::loadRessources()
 {
     redrawUi();
@@ -235,7 +192,6 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
     GameConsole::print("Loading startup phase: " + QString::number(step), GameConsole::eDEBUG);
     m_startUpStep = step;
     bool automaticNextStep = true;
-    emit m_renderer.sigLoadResources(step);
     switch (step)
     {
         case GameEnums::StartupPhase::StartupPhase_General:
@@ -246,14 +202,11 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
             {
                 CONSOLE_PRINT("Launching game with mods: " + mod, GameConsole::eDEBUG);
             }
-            m_aiProcessPipe->moveToThread(m_workerThread.get());
             emit m_aiProcessPipe->sigStartPipe();
-            LoadingScreen::getInstance()->moveToThread(m_workerThread.get());
             m_AudioManager = MemoryManagement::create<AudioManager>(m_noAudio, m_useAudioThread);
             // start after ressource loading
 #ifdef GRAPHICSUPPORT
             m_networkThread->setObjectName("NetworkThread");
-            m_workerThread->setObjectName("WorkerThread");
 #endif
 #ifdef AUDIOSUPPORT
             if (m_useAudioThread)
@@ -267,7 +220,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
 #endif
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
-
+            emit m_renderer.sigLoadResources(step);
             pLoadingScreen->setProgress(tr("Checking for new version..."), step  * stepProgress);
             redrawUi();
             break;
@@ -295,6 +248,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
 #ifdef UPDATESUPPORT
             m_gameUpdater.reset();
 #endif
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Building Textures ..."), step  * stepProgress);
             redrawUi();
             break;
@@ -305,101 +259,117 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
             {
                 m_AudioManager->playRandom();
             }
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_COSprites:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Animation Textures..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_GameAnimations:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Game Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_GameManager:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Rule Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_GameRuleManager:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Terrain Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_TerrainManager:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Units Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_UnitSpriteManager:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Battleanimation Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_BattleAnimationManager:
         {
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading CO-Perk Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_COPerkManager:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Wiki Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_WikiDatabase:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Userdata ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_Userdata:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Achievement Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_Achievementmanager:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Shop Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_MovementPlannerAddInManager:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Movement planner addin Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_UiManager:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading Ui Textures ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_ShopLoader:
         {
-            redrawUi();
+            emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading sounds ..."), step  * stepProgress);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_Sound:
         {
-            redrawUi();
             if (!m_noAudio && m_AudioManager.get() != nullptr)
             {
                 m_AudioManager->createSoundCache();
             }
             LoadingScreen::getInstance()->setProgress(tr("Loading Scripts ..."), SCRIPT_PROCESS);
+            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_LoadingScripts:
@@ -413,13 +383,8 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
                 m_timer.setInterval(m_timerCycle);
                 m_timer.start();
             }
-            GameConsole::getInstance()->moveToThread(Mainapp::getWorkerthread());
             m_workerLaunched = true;
-            m_workerThread->start(QThread::Priority::NormalPriority);
-            if (m_Worker != nullptr)
-            {
-                emit m_Worker->sigStart();
-            }
+            emit m_Worker.sigStart();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_Finalizing:
@@ -454,11 +419,11 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
                 }               
                 if (m_slave && m_initScript.isEmpty())
                 {
-                    emit m_Worker->sigStartSlaveGame();
+                    emit m_Worker.sigStartSlaveGame();
                 }
                 else
                 {
-                    emit m_Worker->sigShowMainwindow();
+                    emit m_Worker.sigShowMainwindow();
                 }
             }
             break;
@@ -684,6 +649,7 @@ bool Mainapp::event(QEvent *event)
     bool handled = false;
     if (!m_shuttingDown)
     {
+        auto eventType = event->type();
         FocusableObject* pObj(FocusableObject::getFocusedObject());
         if (pObj != nullptr)
         {
@@ -691,7 +657,11 @@ bool Mainapp::event(QEvent *event)
         }
         if (!handled)
         {
-            if (event->type() == QEvent::InputMethod)
+            if (eventType == QEvent::UpdateRequest)
+            {
+                redrawUi();
+            }
+            else if (eventType == QEvent::InputMethod)
             {
 #ifdef GRAPHICSUPPORT
                 QInputMethodEvent* inputEvent = static_cast<QInputMethodEvent*>(event);
@@ -905,22 +875,6 @@ void Mainapp::onQuit()
 {
     const qint64 waitTime = 120;
     QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
-    if (m_Worker != nullptr)
-    {
-
-        m_Worker = nullptr;
-    }
-    if (m_workerThread->isRunning())
-    {
-        auto curTimte = QDateTime::currentSecsSinceEpoch();
-        m_workerThread->quit();
-        while (!m_workerThread->wait(1) &&
-               QDateTime::currentSecsSinceEpoch() - curTimte < waitTime)
-        {
-            QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
-        }
-    }
-    QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
     m_aiProcessPipe.reset();
 #ifdef AUDIOSUPPORT
     if (m_AudioManager.get() != nullptr)
@@ -1011,39 +965,4 @@ void Mainapp::setCreateSlaveLogs(bool create)
 void Mainapp::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
 {
     FocusableObject::handleInputMethodQuery(query, arg);
-}
-
-void Mainapp::doMapshot(BaseGamemenu* pMenu)
-{
-    if (m_renderer.beginRendering())
-    {
-        qint32 i = 0;
-        QDir dir("screenshots/");
-        dir.mkpath(".");
-        while (i < std::numeric_limits<qint32>::max())
-        {
-            QString filename = "screenshots/mapshot+" + QString::number(i) + ".png";
-            if (!QFile::exists(filename))
-            {
-                GamemapImageSaver::saveMapAsImage(filename, *pMenu);
-                break;
-            }
-            ++i;
-        }
-    }
-}
-
-void Mainapp::saveMapAsImage(Minimap* pMinimap, QImage * img)
-{
-    if (!m_shuttingDown && !m_noUi)
-    {
-        if (isRenderThread())
-        {
-            GamemapImageSaver::saveMapAsImage(pMinimap, *img);
-        }
-        else
-        {
-            emit sigSaveMapAsImage(pMinimap, img);
-        }
-    }
 }

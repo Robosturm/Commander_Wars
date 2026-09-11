@@ -165,7 +165,6 @@ MainServer::MainServer()
         emit m_pGameServer->sig_connect(Settings::getInstance()->getServerListenAdress(), Settings::getInstance()->getServerPort(), Settings::getInstance()->getServerSecondaryListenAdress());
         emit m_pSlaveServer->sig_connect(Settings::getInstance()->getSlaveListenAdress(), Settings::getInstance()->getSlaveServerPort(), "");
     }
-    moveToThread(Mainapp::getWorkerthread());
 }
 
 MainServer::~MainServer()

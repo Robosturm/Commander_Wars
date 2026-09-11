@@ -561,7 +561,7 @@ namespace oxygine
             {
                 if (requiresThreadChange())
                 {
-                    emit MemoryManagement::getInstance().sigSetPriority(getSharedPtr<Actor>(), zorder);
+                    emit GameWindow::getWindow()->getRenderer().sigSetPriority(getSharedPtr<Actor>(), zorder);
                 }
                 else
                 {
@@ -753,7 +753,7 @@ namespace oxygine
         {
             if (requiresThreadChange())
             {
-                emit MemoryManagement::getInstance().sigRestartAllTweens(getSharedPtr<Actor>());
+                emit GameWindow::getWindow()->getRenderer().sigRestartAllTweens(getSharedPtr<Actor>());
             }
             else
             {
@@ -796,7 +796,7 @@ namespace oxygine
         {
             if (requiresThreadChange())
             {
-                emit MemoryManagement::getInstance().sigSyncAllTweens(getSharedPtr<Actor>(), syncTime);
+                emit GameWindow::getWindow()->getRenderer().sigSyncAllTweens(getSharedPtr<Actor>(), syncTime);
             }
             else
             {
@@ -1020,7 +1020,7 @@ namespace oxygine
             {
                 if (requiresThreadChange() || actor->requiresThreadChange())
                 {
-                    emit MemoryManagement::getInstance().sigAddChild(getSharedPtr<Actor>(), actor);
+                    emit GameWindow::getWindow()->getRenderer().sigAddChild(getSharedPtr<Actor>(), actor);
                 }
                 else
                 {
@@ -1073,7 +1073,7 @@ namespace oxygine
         {
             if (requiresThreadChange() || actor->requiresThreadChange())
             {
-                emit MemoryManagement::getInstance().sigRemoveChild(getSharedPtr<Actor>(), actor);
+                emit GameWindow::getWindow()->getRenderer().sigRemoveChild(getSharedPtr<Actor>(), actor);
             }
             else
             {
@@ -1142,7 +1142,7 @@ namespace oxygine
         {
             if (requiresThreadChange())
             {
-                emit MemoryManagement::getInstance().sigRemoveChildren(getSharedPtr<Actor>());
+                emit GameWindow::getWindow()->getRenderer().sigRemoveChildren(getSharedPtr<Actor>());
             }
             else
             {
@@ -1187,7 +1187,7 @@ namespace oxygine
         {
             if (requiresThreadChange())
             {
-                emit MemoryManagement::getInstance().sigDetach(getSharedPtr<Actor>());
+                emit GameWindow::getWindow()->getRenderer().sigDetach(getSharedPtr<Actor>());
             }
             else
             {
@@ -1231,7 +1231,7 @@ namespace oxygine
         {
             if (requiresThreadChange())
             {
-                emit MemoryManagement::getInstance().sigDetachAndRemove(getSharedPtr<Actor>());
+                emit GameWindow::getWindow()->getRenderer().sigDetachAndRemove(getSharedPtr<Actor>());
             }
             else
             {
@@ -1436,7 +1436,7 @@ namespace oxygine
             {
                 if (requiresThreadChange())
                 {
-                    emit MemoryManagement::getInstance().sigAddTween(getSharedPtr<Actor>(), tween);
+                    emit GameWindow::getWindow()->getRenderer().sigAddTween(getSharedPtr<Actor>(), tween);
                 }
                 else
                 {
@@ -1486,7 +1486,7 @@ namespace oxygine
             {
                 if (requiresThreadChange())
                 {
-                    emit MemoryManagement::getInstance().sigRemoveTween(getSharedPtr<Actor>(), pTween);
+                    emit GameWindow::getWindow()->getRenderer().sigRemoveTween(getSharedPtr<Actor>(), pTween);
                 }
                 else
                 {
@@ -1541,7 +1541,7 @@ namespace oxygine
         {
             if (requiresThreadChange())
             {
-                emit MemoryManagement::getInstance().sigRemoveTweens(getSharedPtr<Actor>());
+                emit GameWindow::getWindow()->getRenderer().sigRemoveTweens(getSharedPtr<Actor>());
             }
             else
             {

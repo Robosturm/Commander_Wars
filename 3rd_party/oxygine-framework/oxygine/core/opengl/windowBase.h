@@ -4,7 +4,7 @@
 #include <QMutex>
 #include <atomic>
 
-#include "3rd_party/oxygine-framework/oxygine/core/opengl/renderer.h"
+#include "3rd_party/oxygine-framework/oxygine/core/renderer.h"
 
 using spQThread = std::shared_ptr<QThread>;
 
@@ -16,11 +16,15 @@ namespace oxygine
     public:
         WindowBase();
         virtual ~WindowBase() = default;
-        void redrawUi();
         void setupRendering();
+        Renderer & getRenderer()
+        {
+            return m_renderer;
+        }
     public slots:
         virtual void initializeGL() override;
         virtual void launchGame() = 0;
+        void redrawUi();
     protected:
         virtual void resizeGL(qint32 w, qint32 h) override;
         virtual void paintGL() override;
@@ -30,7 +34,6 @@ namespace oxygine
         void swapDisplayBuffers();
     protected:
         friend Renderer;
-        Renderer m_renderer;
         bool m_renderEnabled{true};
         std::atomic<quint8> m_pausedCounter{0};
         QMutex m_renderSync;
@@ -39,5 +42,6 @@ namespace oxygine
         bool m_noUi{false};
         bool m_renderingInitialized{false};
         spQThread m_renderThread;
+        Renderer m_renderer;
     };
 }

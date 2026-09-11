@@ -72,7 +72,7 @@ namespace oxygine
             QString vs = m_vertexShader;
             VideoDriver* driver = VideoDriver::instance.get();
             const VertexDeclaration* decl = driver->getVertexDeclaration();
-
+            
             spShaderProgram pgl = MemoryManagement::create<ShaderProgram>(vs, fs, decl);
             driver->setShaderProgram(pgl.get());
             driver->setUniformInt("base_texture", UberShaderProgram::SAMPLER_BASE);

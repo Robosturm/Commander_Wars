@@ -67,13 +67,13 @@ void MapSelection::createItemContainer(qint32 y, qint32 width, qint32 height)
     addChild(m_ItemContainer);
 }
 
-void MapSelection::setSelection(QString folder, QStringList files)
+void MapSelection::setSelection(QString folder, QStringList files, bool showUpFolder)
 {    
     CONSOLE_PRINT("MapSelection::setSelection", GameConsole::eDEBUG);
     m_itemClicked = false;
     m_currentFolder = folder;
     m_Files = files;
-    updateSelection();
+    updateSelection(showUpFolder);
     if (m_currentIdx < m_Files.size() && m_currentIdx >= 0)
     {
         m_currentItem = m_Files[0];
@@ -287,7 +287,7 @@ void MapSelection::addNewSelectionItem(qint32 i, qint32 & y, bool isFolder)
     y += m_itemHeigth;
 }
 
-void MapSelection::updateSelection()
+void MapSelection::updateSelection(bool showUpFolder)
 {
     auto* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
@@ -296,7 +296,7 @@ void MapSelection::updateSelection()
     m_Items.clear();
     m_ItemContainer->addItem(m_SelectedItem);
     qint32 y = 5;
-    if (!m_Files.contains(".."))    
+    if (showUpFolder && !m_Files.contains(".."))    
     {
         m_Files.push_front("..");
     }

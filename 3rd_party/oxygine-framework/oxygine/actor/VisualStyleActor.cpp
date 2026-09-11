@@ -43,7 +43,7 @@ namespace oxygine
         {
             if (m_syncEvents)
             {
-                emit MemoryManagement::getInstance().sigSetAddColor(getSharedPtr<VStyleActor>(), color);
+                emit GameWindow::getWindow()->getRenderer().sigSetAddColor(getSharedPtr<VStyleActor>(), color);
             }
             else
             {

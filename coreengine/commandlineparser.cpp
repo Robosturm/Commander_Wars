@@ -184,6 +184,10 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
         QString value = m_parser.value(m_update);
         Settings::getInstance()->setUpdateStep(value);
     }
+    if (m_parser.isSet(m_noUi))
+    {
+        Settings::getInstance()->setNoUi(true);
+    }
     if (m_parser.isSet(m_rejoinPassword))
     {
         Mainapp::setRejoinPassword(m_parser.value(m_rejoinPassword));

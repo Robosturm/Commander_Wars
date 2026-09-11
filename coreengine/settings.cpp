@@ -2724,3 +2724,13 @@ bool Settings::getNewsEnabled() const
 {
     return m_newsEnabled;
 }
+
+bool Settings::getNoUi() const
+{
+    return m_noUi;
+}
+
+void Settings::setNoUi(bool newNoUi)
+{
+    m_noUi = newNoUi;
+}
