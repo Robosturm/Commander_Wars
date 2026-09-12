@@ -34,7 +34,7 @@ Mainapp* Mainapp::m_pMainapp{nullptr};
 
 bool Mainapp::m_slave{false};
 bool Mainapp::m_trainingSession{false};
-bool Mainapp::m_useAudioThread{false};
+bool Mainapp::m_useAudioThread{true};
 QStringList Mainapp::m_restartArgv;
 QString Mainapp::m_rejoinPassword;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
