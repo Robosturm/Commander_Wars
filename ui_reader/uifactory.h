@@ -321,6 +321,7 @@ private:
     QString getId(QString attribute);
     oxygine::TextStyle::HorizontalAlign getHAlignment(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
     void updateMenuSize(CreatedGui* pMenu);
+    void updateMaxSizes();
     QDomNode addTabNode(QDomNode & tabNode, spTabbedBox & pTabbedBox, CreatedGui* pMenu, qint32 loopIdx, bool & success);
     QDomNode addItemNode(QDomNode & itemNode, spTopbar & pTopbar, qint32 groupId, CreatedGui* pMenu, qint32 loopIdx);
     bool loadPanelContent(QDomNode node, spPanel & pPanel, CreatedGui* pMenu, qint32 loopIdx, qint32 sliderWidth = 40, qint32 sliderHeight = 40);
@@ -431,6 +432,8 @@ private:
     static spUiFactory m_pUiFactory;
     QVector<FactoryItem> m_factoryItems;
     QRect m_lastCoordinates;
+    qint32 m_maxWidth = 0;
+    qint32 m_maxHeight = 0;
     QSize m_parentSize;
     quint32 m_creationCount{0};
     spPlayer m_dropDownPlayer;

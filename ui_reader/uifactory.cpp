@@ -374,6 +374,7 @@ bool UiFactory::loop(oxygine::spActor parent, QDomElement element, oxygine::spAc
                 if (loopItem.get() != nullptr && pPanel != nullptr)
                 {
                     pPanel->addItem(loopItem);
+                    updateMaxSizes();
                 }
             }
             node = node.nextSibling();
@@ -404,6 +405,7 @@ bool UiFactory::ifCondition(oxygine::spActor parent, QDomElement element, oxygin
                 if (loopItem.get() != nullptr && pPanel != nullptr)
                 {
                     pPanel->addItem(loopItem);
+                    updateMaxSizes();
                 }
             }
             node = node.nextSibling();
@@ -1046,6 +1048,7 @@ QDomNode UiFactory::addItemNode(QDomNode & itemNode, spTopbar & pTopbar, qint32 
         if (!itemText.isEmpty() && !itemID.isEmpty())
         {
             pTopbar->addItem(itemText, itemID, groupId, itemTooltip);
+            updateMaxSizes();
         }
         itemNode = itemNode.nextSibling();
     }
@@ -1154,8 +1157,8 @@ QDomNode UiFactory::addTabNode(QDomNode & tabNode, spTabbedBox & pTabbedBox, Cre
 
             // Add child elements to the tab panel
             auto childNode = tabElement.firstChild();
-            qint32 maxWidth = 0;
-            qint32 maxHeight = 0;
+            m_maxWidth = 0;
+            m_maxHeight = 0;
             while (!childNode.isNull())
             {
                 while (childNode.isComment())
@@ -1176,30 +1179,23 @@ QDomNode UiFactory::addTabNode(QDomNode & tabNode, spTabbedBox & pTabbedBox, Cre
                         if (tabItem.get() != nullptr)
                         {
                             tabPanel->addItem(tabItem);
-                        }
-                        if (maxHeight < m_lastCoordinates.y() + m_lastCoordinates.height())
-                        {
-                            maxHeight = m_lastCoordinates.y() + m_lastCoordinates.height();
-                        }
-                        if (maxWidth < m_lastCoordinates.x() + m_lastCoordinates.width())
-                        {
-                            maxWidth = m_lastCoordinates.x() + m_lastCoordinates.width();
+                            updateMaxSizes();
                         }
                     }
                 }
                 childNode = childNode.nextSibling();
             }
-            if (maxHeight >= tabPanel->getScaledHeight() - 80)
+            if (m_maxHeight >= tabPanel->getScaledHeight() - 80)
             {
-                tabPanel->setContentHeigth(maxHeight + 40);
+                tabPanel->setContentHeigth(m_maxHeight + 80);
             }
             else
             {
                 tabPanel->setContentHeigth(tabPanel->getScaledHeight() - 80);
             }
-            if (maxWidth >= tabPanel->getScaledWidth() - 80)
+            if (m_maxWidth >= tabPanel->getScaledWidth() - 80)
             {
-                tabPanel->setContentWidth(maxWidth + 80);
+                tabPanel->setContentWidth(m_maxWidth + 80);
             }
             else
             {
@@ -1646,8 +1642,8 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
 bool UiFactory::loadPanelContent(QDomNode node, spPanel & pPanel, CreatedGui* pMenu, qint32 loopIdx, qint32 sliderWidth, qint32 sliderHeight)
 {
     bool success = true;
-    qint32 maxWidth = 0;
-    qint32 maxHeight = 0;
+    m_maxWidth = 0;
+    m_maxHeight = 0;
     while (!node.isNull())
     {
         while (node.isComment())
@@ -1661,30 +1657,23 @@ bool UiFactory::loadPanelContent(QDomNode node, spPanel & pPanel, CreatedGui* pM
             if (panelItem.get() != nullptr)
             {
                 pPanel->addItem(panelItem);
-            }
-            if (maxHeight < m_lastCoordinates.y() + m_lastCoordinates.height())
-            {
-                maxHeight = m_lastCoordinates.y() + m_lastCoordinates.height();
-            }
-            if (maxWidth < m_lastCoordinates.x() + m_lastCoordinates.width())
-            {
-                maxWidth = m_lastCoordinates.x() + m_lastCoordinates.width();
+                updateMaxSizes();
             }
         }
         node = node.nextSibling();
     }
     // restore last coordinates after iterating over child elements
-    if (maxHeight >= pPanel->getScaledHeight() - sliderHeight)
+    if (m_maxHeight >= pPanel->getScaledHeight() - sliderHeight)
     {
-        pPanel->setContentHeigth(maxHeight + sliderHeight);
+        pPanel->setContentHeigth(m_maxHeight + sliderHeight);
     }
     else
     {
         pPanel->setContentHeigth(pPanel->getScaledHeight() - sliderHeight);
     }
-    if (maxWidth >= pPanel->getScaledWidth() - sliderWidth)
+    if (m_maxWidth >= pPanel->getScaledWidth() - sliderWidth)
     {
-        pPanel->setContentWidth(maxWidth + sliderWidth);
+        pPanel->setContentWidth(m_maxWidth + sliderWidth);
     }
     else
     {
@@ -2608,5 +2597,17 @@ void UiFactory::updateMenuSize(CreatedGui* pMenu)
     if (pMenu->getHeight() < height)
     {
         pMenu->setHeight(height);
+    }
+}
+
+void UiFactory::updateMaxSizes()
+{
+    if (m_maxHeight < m_lastCoordinates.y() + m_lastCoordinates.height())
+    {
+        m_maxHeight = m_lastCoordinates.y() + m_lastCoordinates.height();
+    }
+    if (m_maxWidth < m_lastCoordinates.x() + m_lastCoordinates.width())
+    {
+        m_maxWidth = m_lastCoordinates.x() + m_lastCoordinates.width();
     }
 }
