@@ -31,6 +31,11 @@ LoadingScreen::~LoadingScreen()
     CONSOLE_PRINT("LoadingScreen::deleted", GameConsole::eDEBUG);
 }
 
+QString LoadingScreen::backgroundSelector()
+{
+    return "mainmenu_" + QString::number(GlobalUtils::randInt(1, 43, true));
+}
+
 void LoadingScreen::show()
 {
     if (oxygine::Stage::getStage().get() != nullptr)
@@ -41,7 +46,7 @@ void LoadingScreen::show()
         oxygine::Stage::getStage()->addChild(m_pLoadingScreen);
         removeChildren();
 
-        changeBackground("loadingscreen");
+        changeBackground("loadingscreen", [this]() { return backgroundSelector(); });
 
         m_BackgroundBar = MemoryManagement::create<oxygine::ColorRectSprite>();
         m_BackgroundBar->setSize(oxygine::Stage::getStage()->getWidth(), 60);
@@ -58,14 +63,14 @@ void LoadingScreen::show()
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
         style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
         style.multiline = true;
-        m_workText = MemoryManagement::create<Label>(oxygine::Stage::getStage()->getWidth());
+        m_workText = MemoryManagement::create<Label>(600, true);
         m_workText->setStyle(style);
-        m_workText->setX(0);
+        m_workText->setX(oxygine::Stage::getStage()->getWidth() / 2 - m_workText->getWidth() / 2);
         m_workText->setY(oxygine::Stage::getStage()->getHeight() / 2);
         addChild(m_workText);
-        m_loadingProgress = MemoryManagement::create<Label>(oxygine::Stage::getStage()->getWidth());
+        m_loadingProgress = MemoryManagement::create<Label>(oxygine::Stage::getStage()->getWidth() - 40, true);
         m_loadingProgress->setStyle(style);
-        m_loadingProgress->setPosition(0, oxygine::Stage::getStage()->getHeight() - 50);
+        m_loadingProgress->setPosition(20, oxygine::Stage::getStage()->getHeight() - 50);
         addChild(m_loadingProgress);
         m_workText->setHtmlText("Loading...");
         m_loadingProgress->setHtmlText("0 %");

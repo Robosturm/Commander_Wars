@@ -45,6 +45,7 @@ public:
 private:
     friend class MemoryManagement;
     explicit LoadingScreen();
+    QString backgroundSelector();
 private:
     spLabel m_workText;
     spLabel m_loadingProgress;

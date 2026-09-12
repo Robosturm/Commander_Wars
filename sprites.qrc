@@ -5122,19 +5122,19 @@
         <file>resources/images/backgrounds/mainmenu_12.jpg</file>
         <file>resources/images/backgrounds/mainmenu_11.jpg</file>
         <file>resources/images/backgrounds/mainmenu_10.jpg</file>
-        <file>resources/images/backgrounds/mainmenu_07.jpg</file>
-        <file>resources/images/backgrounds/mainmenu_06.jpg</file>
-        <file>resources/images/backgrounds/mainmenu_05.jpg</file>
-        <file>resources/images/backgrounds/mainmenu_03.jpg</file>
-        <file>resources/images/backgrounds/mainmenu_02.jpg</file>
-        <file>resources/images/backgrounds/mainmenu_01.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_7.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_6.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_5.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_3.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_2.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_1.jpg</file>
         <file>resources/images/backgrounds/mainmenu_38.jpg</file>
         <file>resources/images/backgrounds/mainmenu_36.jpg</file>
         <file>resources/images/backgrounds/mainmenu_35.jpg</file>
         <file>resources/images/backgrounds/mainmenu_26.jpg</file>
         <file>resources/images/backgrounds/mainmenu_17.jpg</file>
-        <file>resources/images/backgrounds/mainmenu_09.jpg</file>
-        <file>resources/images/backgrounds/mainmenu_08.jpg</file>
-        <file>resources/images/backgrounds/mainmenu_04.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_9.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_8.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_4.jpg</file>
     </qresource>
 </RCC>

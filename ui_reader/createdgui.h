@@ -61,6 +61,7 @@ public:
      * @param background
      */
     Q_INVOKABLE void changeBackground(QString background);
+    void changeBackground(QString background, std::function<QString()> backgroundSelector);
     /**
      * @brief deleteObject may lead to stale child items if
      * @param id
