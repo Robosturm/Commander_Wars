@@ -183,6 +183,7 @@ endif()
 
 if (AUDIOSUPPORT)
     message("Building with Audio (PortAudio & Opus)")
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
     set(PA_BUILD_SHARED_LIBS OFF CACHE BOOL "Build PortAudio as static" FORCE)
     set(PA_BUILD_TESTS OFF CACHE BOOL "Build PortAudio tests" FORCE)
     set(PA_BUILD_EXAMPLES OFF CACHE BOOL "Build PortAudio examples" FORCE)
@@ -199,12 +200,17 @@ if (AUDIOSUPPORT)
     set(OPUS_BUILD_PROGRAMS OFF CACHE BOOL "" FORCE)
     add_subdirectory(3rd_party/libopus EXCLUDE_FROM_ALL)
 
+    set_target_properties(portaudio PROPERTIES POSITION_INDEPENDENT_CODE ON)
+    set_target_properties(ogg PROPERTIES POSITION_INDEPENDENT_CODE ON)
+    set_target_properties(opus PROPERTIES POSITION_INDEPENDENT_CODE ON C_VISIBILITY_PRESET hidden)
+
     add_library(opusfile STATIC
         3rd_party/libopusfile/src/info.c
         3rd_party/libopusfile/src/internal.c
         3rd_party/libopusfile/src/opusfile.c
         3rd_party/libopusfile/src/stream.c
     )
+    set_target_properties(opusfile PROPERTIES POSITION_INDEPENDENT_CODE ON)
     target_compile_definitions(opusfile PRIVATE OP_DISABLE_HTTP=1)
     target_include_directories(opusfile PUBLIC
         3rd_party/libopusfile/include
