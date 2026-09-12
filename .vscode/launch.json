@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Commander Wars: C++ with QML debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${command:cmake.launchTargetPath}",
+            "args": [
+                "--noUi"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "visualizerFile": "${command:qt-cpp.natvis}",
+            "showDisplayString": true
+        }
+    ]
+}

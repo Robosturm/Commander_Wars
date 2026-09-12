@@ -70,6 +70,11 @@ namespace oxygine
         return pos;
     }
 
+    void WindowBase::setupRendering()
+    {
+        m_renderer.connectSignals();
+    }
+
     bool WindowBase::beginRendering()
     {
         return false;

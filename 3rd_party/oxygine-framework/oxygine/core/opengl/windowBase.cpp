@@ -27,12 +27,16 @@ namespace oxygine
 
     void WindowBase::setupRendering()
     {
-        makeCurrent();
-        doneCurrent();
-        QOpenGLContext *context = QOpenGLWindow::context();
-        context->moveToThread(m_renderThread.get());
-        m_renderer.moveToThread(m_renderThread.get());
-        m_renderThread->start(QThread::Priority::HighestPriority);
+        m_renderer.connectSignals();
+        if (!m_noUi)
+        {
+            makeCurrent();
+            doneCurrent();
+            QOpenGLContext *context = QOpenGLWindow::context();
+            context->moveToThread(m_renderThread.get());
+            m_renderer.moveToThread(m_renderThread.get());
+            m_renderThread->start(QThread::Priority::HighestPriority);
+        }
         m_renderingInitialized = true;
         emit m_renderer.sigStart();
         // m_renderer.start();

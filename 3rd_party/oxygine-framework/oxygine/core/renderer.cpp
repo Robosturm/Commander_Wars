@@ -10,6 +10,14 @@ Renderer::Renderer(WindowBase & window)
     : m_window(window),
       m_timer(this)
 {
+}
+
+Renderer::~Renderer()
+{
+}
+
+void Renderer::connectSignals()
+{
     connect(this, &Renderer::sigPaint, this, &Renderer::onPaint, Qt::QueuedConnection);
     connect(&m_timer, &QTimer::timeout, this, &Renderer::onPaint);
     connect(this, &Renderer::sigSetTimerCycle, this, &Renderer::setTimerCycle);
@@ -44,10 +52,6 @@ Renderer::Renderer(WindowBase & window)
     connect(this, &Renderer::sigDetachAndRemove, this, &Renderer::detachAndRemove, conntectionType);
     connect(this, &Renderer::sigDetach, this, &Renderer::detach, conntectionType);
     connect(this, &Renderer::sigQuit, this, &Renderer::quit, conntectionType);
-}
-
-Renderer::~Renderer()
-{
 }
 
 void Renderer::loadResources(qint32 step)

@@ -13,6 +13,7 @@ namespace oxygine
     public:
         WindowBase();
         virtual ~WindowBase() = default;
+        void setupRendering();
 
         QSize size() const;
         qint32 x() const;

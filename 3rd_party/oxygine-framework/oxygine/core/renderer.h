@@ -18,6 +18,7 @@ namespace oxygine
         Renderer(WindowBase & window);
         virtual ~Renderer();
 
+        void connectSignals();
         bool beginRendering();
 
     signals:    
