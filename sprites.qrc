@@ -5093,5 +5093,48 @@
         <file>resources/images/co/gs/co_meiyo+alt2+table.png</file>
         <file>resources/images/co/gs/co_meiyo+alt+mini.png</file>
         <file>resources/ui/mapfiledialog.xml</file>
+        <file>resources/images/backgrounds/mainmenu_43.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_41.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_40.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_39.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_37.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_34.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_33.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_32.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_31.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_30.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_27.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_22.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_20.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_15.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_14.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_42.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_29.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_28.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_25.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_24.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_23.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_21.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_19.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_18.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_16.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_13.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_12.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_11.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_10.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_07.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_06.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_05.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_03.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_02.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_01.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_38.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_36.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_35.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_26.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_17.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_09.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_08.jpg</file>
+        <file>resources/images/backgrounds/mainmenu_04.jpg</file>
     </qresource>
 </RCC>
