@@ -60,7 +60,7 @@ void Renderer::loadResources(qint32 step)
     switch (static_cast<GameEnums::StartupPhase>(step))
     {
     case GameEnums::StartupPhase::StartupPhase_General:
-    {
+    {        
         FontManager::getInstance();
         // load ressources by creating the singletons
         BackgroundManager::getInstance();

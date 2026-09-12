@@ -16,17 +16,12 @@ void Renderer::start()
             rsCache().setDriver(VideoDriver::instance.get());
 
             STDRenderer::initialize();
-
             STDRenderer::instance = MemoryManagement::create<STDRenderer>();
             RenderDelegate::instance = MemoryManagement::create<RenderDelegate>();
             Material::null = MemoryManagement::create<Material>();
             Material::current = Material::null;
 
             STDRenderer::current = STDRenderer::instance;
-
-            FontManager::getInstance();
-            // load ressources by creating the singletons
-            BackgroundManager::getInstance();
             m_timer.start();
 
         }
