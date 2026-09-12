@@ -61,13 +61,13 @@ void Renderer::loadResources(qint32 step)
     case GameEnums::StartupPhase::StartupPhase_General:
     {        
         FontManager::getInstance();
-        // load ressources by creating the singletons
         BackgroundManager::getInstance();
+        ObjectManager::getInstance();
         break;
     }
     case GameEnums::StartupPhase::StartupPhase_ObjectManager:
     {
-        ObjectManager::getInstance();
+        BackgroundManager::getInstance()->loadRessources("/images/backgrounds/res.xml");
         break;
     }
     case GameEnums::StartupPhase::StartupPhase_Building:

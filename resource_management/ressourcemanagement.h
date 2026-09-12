@@ -91,11 +91,11 @@ public:
     {
         m_pInstance.reset();
     }
+    void loadRessources(QString resPath);
 
 protected:
     explicit RessourceManagement(QString resPath, QString scriptPath, bool raiseErrors = true);
-   virtual ~RessourceManagement() = default;
-    void loadRessources(QString resPath);
+    virtual ~RessourceManagement() = default;
     void loadAll(QStringList& list);
     void reset(QStringList& list);
     QStringList getSearchPaths();

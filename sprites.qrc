@@ -5158,5 +5158,6 @@
         <file>resources/images/backgrounds/gamemenu_12.jpg</file>
         <file>resources/images/backgrounds/gamemenu_16.jpg</file>
         <file>resources/images/backgrounds/gamemenu_18.jpg</file>
+        <file>resources/images/backgrounds/initial.xml</file>
     </qresource>
 </RCC>

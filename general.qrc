@@ -2102,5 +2102,6 @@
         <file>resources/scripts/gamerules/victory/victoryrule_unitsdomination.js</file>
         <file>resources/scripts/gamerules/rules/GAMERULE_HOVERCRAFT_FACTORIES.js</file>
         <file>resources/scripts/actions/ACTION_UNLOAD_LAUNCH.js</file>
+        <file>resources/ui/externalLinks.xml</file>
     </qresource>
 </RCC>

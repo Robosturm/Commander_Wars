@@ -14,8 +14,9 @@ class Basemenu : public CreatedGui
 public:
     explicit Basemenu();
     virtual ~Basemenu() = default;
-   Q_INVOKABLE bool getFocused() const;
-   Q_INVOKABLE  virtual void setFocused(bool Focused);
+    Q_INVOKABLE bool getFocused() const;
+    Q_INVOKABLE  virtual void setFocused(bool Focused);
+    Q_INVOKABLE void showCustomDialog(const QString & jsName, const QString & uiXml, const QString & confirmText = tr("Ok"), bool contentString = false);
 protected slots:
     virtual void onEnter() = 0;
 protected:

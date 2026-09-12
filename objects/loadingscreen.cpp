@@ -46,7 +46,7 @@ void LoadingScreen::show()
         oxygine::Stage::getStage()->addChild(m_pLoadingScreen);
         removeChildren();
 
-        changeBackground("loadingscreen", [this]() { return backgroundSelector(); });
+        changeBackground("mainmenu_1", [this]() { return backgroundSelector(); });
 
         m_BackgroundBar = MemoryManagement::create<oxygine::ColorRectSprite>();
         m_BackgroundBar->setSize(oxygine::Stage::getStage()->getWidth(), 60);

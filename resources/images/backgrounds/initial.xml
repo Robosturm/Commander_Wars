@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<resources>
+    <set path = "resources/images/backgrounds/" />
+    <atlas>
+        <image file="mainmenu_1.jpg"/>
+    </atlas>
+</resources>
