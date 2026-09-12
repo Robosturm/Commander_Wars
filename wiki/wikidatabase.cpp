@@ -19,6 +19,8 @@
 #include "resource_management/terrainmanager.h"
 #include "resource_management/shoploader.h"
 #include "resource_management/gamerulemanager.h"
+#include "resource_management/backgroundmanager.h"
+#include "resource_management/objectmanager.h"
 
 #include "game/co.h"
 #include "game/player.h"
@@ -384,6 +386,14 @@ oxygine::ResAnim* WikiDatabase::getGlobalResAnim(QString file)
     if (pAnim == nullptr)
     {
         pAnim = AchievementManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim == nullptr)
+    {
+        pAnim = BackgroundManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim == nullptr)
+    {
+        pAnim = ObjectManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     }
     if (pAnim == nullptr)
     {

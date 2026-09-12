@@ -5,6 +5,7 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/timer.h"
+#include "coreengine/scriptvariables.h"
 
 #include "game/victoryrule.h"
 #include "game/gamerule.h"
@@ -669,7 +670,14 @@ public:
 
     Q_INVOKABLE bool getCoGlobalD2D() const;
     Q_INVOKABLE void setCoGlobalD2D(bool newCoGlobalD2D);
-
+    /**
+     * @brief getVariables
+     * @return
+     */
+    Q_INVOKABLE inline ScriptVariables* getVariables()
+    {
+        return &m_Variables;
+    }
 private:
     /**
      * @brief resetArrays
@@ -678,7 +686,7 @@ private:
 
 private:
     static constexpr qint32 AI_BEHAVIOR_SERIALIZATION_VERSION = 33;
-    static constexpr qint32 SERIALIZATION_VERSION = AI_BEHAVIOR_SERIALIZATION_VERSION;
+    static constexpr qint32 SERIALIZATION_VERSION = 34;
 
     QVector<spGameRule> m_GameRules;
     // victory conditions
@@ -760,6 +768,7 @@ private:
         bool votingInProgress{false};
         QVector<GameEnums::DrawVoting> votingResults;
     } m_drawVoting;
+    ScriptVariables m_Variables;
 };
 
 Q_DECLARE_INTERFACE(GameRules, "GameRules");

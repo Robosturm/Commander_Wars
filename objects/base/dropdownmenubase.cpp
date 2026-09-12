@@ -6,7 +6,8 @@
 
 #include "resource_management/objectmanager.h"
 
-DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
+DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount, qint32 height)
+    : m_height(height)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenuBase");
@@ -15,33 +16,33 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
-    setHeight(40);
+    setHeight(height);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");
     m_Box = MemoryManagement::create<oxygine::Box9Sprite>();
     m_Box->setResAnim(pAnim);
-    m_Box->setSize(width, 40);
+    m_Box->setSize(width, height);
     m_pClipActor = MemoryManagement::create<oxygine::ClipRectActor>();
     m_Box->addChild(m_pClipActor);
     m_pClipActor->setSize(m_Box->getScaledWidth() - 20 - 45, m_Box->getScaledHeight());
     m_pClipActor->setX(10);
     addChild(m_Box);
     qint32 maxItemCount = 2;
-    qint32 changedCount = oxygine::Stage::getStage()->getHeight() / 40 / 4;
+    qint32 changedCount = oxygine::Stage::getStage()->getHeight() / height / 4;
     if (changedCount > maxItemCount)
     {
         maxItemCount = changedCount;
     }
-    if (oxygine::Stage::getStage()->getHeight() / 4 < maxItemCount * 40)
+    if (oxygine::Stage::getStage()->getHeight() / 4 < maxItemCount * height)
     {
-        maxItemCount = oxygine::Stage::getStage()->getHeight() / 4 / 40;
+        maxItemCount = oxygine::Stage::getStage()->getHeight() / 4 / height;
     }
-    qint32 scrollHeigth = maxItemCount * 40;
+    qint32 scrollHeigth = maxItemCount * height;
     if (itemcount < maxItemCount)
     {
-        scrollHeigth = (itemcount + 1) * 40;
+        scrollHeigth = (itemcount + 1) * height;
     }
-    m_Panel = MemoryManagement::create<Panel>(false, QSize(width, scrollHeigth), QSize(width, itemcount * 40));
+    m_Panel = MemoryManagement::create<Panel>(false, QSize(width, scrollHeigth), QSize(width, itemcount * height));
     m_Panel->setSubComponent(true);
     m_Panel->setVisible(false);
     addChild(m_Panel);
@@ -77,7 +78,7 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 
 void DropDownmenuBase::changeItemCount(qint32 itemcount)
 {
-    m_Panel->setContentHeigth(itemcount * 40);
+    m_Panel->setContentHeigth(itemcount * m_height);
 }
 
 void DropDownmenuBase::focusedLost()
@@ -142,8 +143,8 @@ const QSize& DropDownmenuBase::addDropDownItem(oxygine::spActor item, qint32 id)
     oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pBox->setResAnim(pAnim);
     pBox->addChild(item);
-    pBox->setSize(getWidth() - 33, 40);
-    pBox->setPosition(0, 40 * m_Items.size());
+    pBox->setSize(getWidth() - 33, m_height);
+    pBox->setPosition(0, m_height * m_Items.size());
 
     m_Items.append(pBox);
     m_Panel->addItem(pBox);

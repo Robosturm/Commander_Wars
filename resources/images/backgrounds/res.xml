@@ -61,5 +61,27 @@
         <image file="mainmenu_41.jpg"/>
         <image file="mainmenu_42.jpg"/>
         <image file="mainmenu_43.jpg"/>
+        <image file="gamemenu_1.jpg"/>
+        <image file="gamemenu_2.jpg"/>
+        <image file="gamemenu_3.jpg"/>
+        <image file="gamemenu_4.jpg"/>
+        <image file="gamemenu_5.jpg"/>
+        <image file="gamemenu_6.jpg"/>
+        <image file="gamemenu_7.jpg"/>
+        <image file="gamemenu_8.jpg"/>
+        <image file="gamemenu_9.jpg"/>
+        <image file="gamemenu_10.jpg"/>
+        <image file="gamemenu_11.jpg"/>
+        <image file="gamemenu_12.jpg"/>
+        <image file="gamemenu_13.jpg"/>
+        <image file="gamemenu_14.jpg"/>
+        <image file="gamemenu_15.jpg"/>
+        <image file="gamemenu_16.jpg"/>
+        <image file="gamemenu_17.jpg"/>
+        <image file="gamemenu_18.jpg"/>
+        <image file="gamemenu_19.jpg"/>
+        <image file="gamemenu_20.jpg"/>
+        <image file="gamemenu_21.jpg"/>
+        <image file="gamemenu_22.jpg"/>
     </atlas>
 </resources>
