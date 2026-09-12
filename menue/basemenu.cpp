@@ -17,3 +17,9 @@ void Basemenu::setFocused(bool Focused)
 {
     m_Focused = Focused;
 }
+
+void Basemenu::showCustomDialog(const QString & jsName, const QString & uiXml, const QString & confirmText, bool contentString)
+{
+    spCustomDialog pCustomDialog = MemoryManagement::create<CustomDialog>(jsName, uiXml, this, confirmText, contentString);
+    addChild(pCustomDialog);
+}

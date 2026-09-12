@@ -43,7 +43,6 @@ Interpreter::Interpreter(QObject* pParent)
     setCppOwnerShip(this);
     connect(this, &Interpreter::sigNetworkGameFinished, this, &Interpreter::networkGameFinished, Qt::QueuedConnection);
     installExtensions(QJSEngine::Extension::AllExtensions);
-    m_garbageCollectionTimer.start();
 }
 
 bool Interpreter::reloadInterpreter(const QString runtime)

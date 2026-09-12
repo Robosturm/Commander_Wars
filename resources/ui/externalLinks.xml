@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
+        <childs>
+            <Textbox>
+                <x>settings.getStageWidth() / 2 - 350</x>
+                <y>10</y>
+                <width>700</width>
+                <tooltip>https://commander-wars.pages.dev</tooltip>
+                <startValue>https://commander-wars.pages.dev</startValue>
+                <onEvent></onEvent>
+                <readonly>true</readonly>
+            </Textbox>
+            <QrCode>
+                <Id>QrCodeBox</Id>
+                <x>settings.getStageWidth() / 2 - 100</x>
+                <y>lastY + lastHeight + 10</y>
+                <content>https://commander-wars.pages.dev</content>
+            </QrCode>
+            <Textbox>
+                <x>settings.getStageWidth() / 2 - 350</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>700</width>
+                <tooltip>https://www.moddb.com/games/commander-wars</tooltip>
+                <startValue>https://www.moddb.com/games/commander-wars</startValue>
+                <onEvent></onEvent>
+                <readonly>true</readonly>
+            </Textbox>
+            <QrCode>
+                <Id>QrCodeBox</Id>
+                <x>settings.getStageWidth() / 2 - 100</x>
+                <y>lastY + lastHeight + 10</y>
+                <content>https://www.moddb.com/games/commander-wars</content>
+            </QrCode>
+            <Textbox>
+                <x>settings.getStageWidth() / 2 - 350</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>700</width>
+                <tooltip>https://discord.com/invite/ZqExNgm</tooltip>
+                <startValue>https://discord.com/invite/ZqExNgm</startValue>
+                <onEvent></onEvent>
+                <readonly>true</readonly>
+            </Textbox>
+            <QrCode>
+                <Id>QrCodeBox</Id>
+                <x>settings.getStageWidth() / 2 - 100</x>
+                <y>lastY + lastHeight + 10</y>
+                <content>https://discord.com/invite/ZqExNgm</content>
+            </QrCode>
+        </childs>
+    </Panel>  
+</ui>
