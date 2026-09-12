@@ -46,6 +46,30 @@ BACKGROUNDSELECTOR =
         "mainmenu_42",
         "mainmenu_43",
     ],
+    GAMEMENU_IDS : [
+        "gamemenu_1",
+        "gamemenu_2",
+        "gamemenu_3",
+        "gamemenu_4",
+        "gamemenu_5",
+        "gamemenu_6",
+        "gamemenu_7",
+        "gamemenu_8",
+        "gamemenu_9",
+        "gamemenu_10",
+        "gamemenu_11",
+        "gamemenu_12",
+        "gamemenu_13",
+        "gamemenu_14",
+        "gamemenu_15",
+        "gamemenu_16",
+        "gamemenu_17",
+        "gamemenu_18",
+        "gamemenu_19",
+        "gamemenu_20",
+        "gamemenu_21",
+        "gamemenu_22",
+    ],
     // the following hooks are called to determine the background sprite
     // note you may returna list of sprite id's the game will try to find the image which requires the least streatching and selects that as the background
     // note the main game loading screen won't call these hooks cause the hooks aren't loaded yet
@@ -86,7 +110,7 @@ BACKGROUNDSELECTOR =
     },
     getBackgroundSpritesEditorMenu : function(menu, background)
     {
-        return [background];
+        return BACKGROUNDSELECTOR.getBackGroundFromList(BACKGROUNDSELECTOR.GAMEMENU_IDS, background);
     },
     getBackgroundSpritesMainwindow : function(menu, background)
     {
@@ -123,6 +147,15 @@ BACKGROUNDSELECTOR =
     },
     getBackgroundSpritesGameMenu : function(menu, background)
     {
+        var variable = menu.getMap().getGameRules().getVariables().createVariable("BACKGROUND_SPRITE");
+        if (variable !== null)
+        {
+            var sprite = variable.readDataString();
+            if (sprite !== "")
+            {
+                background = sprite;
+            }
+        }
         return [background];
     },
     getBackgroundSpritesGeneratorMenu : function(menu, background)

@@ -810,7 +810,7 @@
                     <tooltip>QT_TRANSLATE_NOOP("GAME","Random")</tooltip>
                     <onEvent>RuleSelectionScript.selectRandomPalette()</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
-                </Button>
+                </Button>                
                 <BoxTerrainPalette>
                     <x>lastX + lastWidth + 5</x>
                     <y>lastY + 2</y>
@@ -854,6 +854,37 @@
                 <Label>
                     <x>5</x>
                     <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Background:")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>                
+                <DropDownMenuSprite>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <Id>"BACKGROUND_SPRITE"</Id>
+                    <width>250</width>
+                    <height>100</height>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Background sprite")</tooltip>
+                    <startValue>RuleSelectionScript.getStartBackgroundSprite()</startValue>
+                    <spriteType>""</spriteType>
+                    <spriteSize>195</spriteSize>
+                    <items>RuleSelectionScript.getBackgroundSprites()</items>
+                    <onEvent>RuleSelectionScript.selectBackground(input2)</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </DropDownMenuSprite>
+                <Button>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>260</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","Random")</text>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Random")</tooltip>
+                    <onEvent>RuleSelectionScript.selectRandomBackground()</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </Button>
+                <Label>
+                    <x>5</x>
+                    <y>lastY + 110</y>
                     <width>300</width>
                     <text>QT_TRANSLATE_NOOP("GAME","CO banlist:")</text>
                     <font>"main"</font>

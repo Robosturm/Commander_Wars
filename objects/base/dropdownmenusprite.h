@@ -14,7 +14,7 @@ class DropDownmenuSprite final : public DropDownmenuBase
 {
     Q_OBJECT
 public:
-    explicit DropDownmenuSprite(qint32 width, QStringList& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth = -1, bool autoScale = true);
+    explicit DropDownmenuSprite(qint32 width, QStringList& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth = -1, bool autoScale = true, qint32 height = 40);
     virtual ~DropDownmenuSprite() = default;
 signals:
     void sigItemChanged(qint32 item);

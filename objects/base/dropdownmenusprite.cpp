@@ -1,10 +1,9 @@
 #include "objects/base/dropdownmenusprite.h"
 
-DropDownmenuSprite::DropDownmenuSprite(qint32 width, QStringList& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth, bool autoScale)
-    : DropDownmenuBase(width, items.size()),
+DropDownmenuSprite::DropDownmenuSprite(qint32 width, QStringList& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth, bool autoScale, qint32 height)
+    : DropDownmenuBase(width, items.size(), height),
       m_Creator(creator),
       m_autoScale(autoScale)
-
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenuSprite");
@@ -27,7 +26,7 @@ DropDownmenuSprite::DropDownmenuSprite(qint32 width, QStringList& items, std::fu
 
 void DropDownmenuSprite::setCurrentItem(qint32 index)
 {
-    if ((index >= 0) && (index < m_ItemTexts.size()))
+    if ((index >= 0) && (index < m_ItemTexts.size()) && m_Creator)
     {
         m_currentItem = index;
         m_currentText = m_ItemTexts[index];

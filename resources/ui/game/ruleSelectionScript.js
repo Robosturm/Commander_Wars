@@ -423,4 +423,31 @@ var RuleSelectionScript =
     {
         return RuleSelectionScript.getRuleCategory(loopIdx) === GAMERULE.ruleCategories[category];
     },
+    getStartBackgroundSprite : function()
+    {
+        return RuleSelectionScript.selectRandomBackground();
+    },
+    getBackgroundSprites : function()
+    {
+        return BACKGROUNDSELECTOR.GAMEMENU_IDS;
+    },
+    selectBackground : function(sprite)
+    {
+        var variable = currentMenu.getMap().getGameRules().getVariables().createVariable("BACKGROUND_SPRITE");
+        if (variable !== null)
+        {
+            variable.writeDataString(sprite);
+        }
+    },
+    selectRandomBackground : function()
+    {
+        var spriteId = BACKGROUNDSELECTOR.getBackGroundFromList(BACKGROUNDSELECTOR.GAMEMENU_IDS, "")[0];
+        RuleSelectionScript.selectBackground(spriteId);        
+        var spriteSelector = currentMenu.getObject("BACKGROUND_SPRITE");
+        if (spriteSelector !== null)
+        {
+            spriteSelector.setCurrentItem(spriteId);
+        }
+        return spriteId;
+    }
 };

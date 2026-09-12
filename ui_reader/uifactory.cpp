@@ -1811,6 +1811,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
         qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
         qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
+        qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
         qint32 spriteSize = getIntValue(getAttribute(childs, attrSpriteSize), id, loopIdx, pMenu);
         QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs, attrOnEvent);
@@ -1863,7 +1864,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
                 return ret;
             };
         }
-        else
+        else if (spriteCreator == "building")
         {
             BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
             QStringList buildingIds = pBuildingSpriteManager->getLoadedBuildings();
@@ -1890,7 +1891,17 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
                 return pRet;
             };
         }
-        spDropDownmenuSprite pDropDownmenu = MemoryManagement::create<DropDownmenuSprite>(width, items, creator, spriteSize);
+        else
+        {
+            creator = [this](QString id)
+            {
+                auto* pAnim = WikiDatabase::getInstance()->getGlobalResAnim(id);
+                auto pSprite = MemoryManagement::create<oxygine::Sprite>();
+                pSprite->setResAnim(pAnim);
+                return pSprite;
+            };
+        }
+        spDropDownmenuSprite pDropDownmenu = MemoryManagement::create<DropDownmenuSprite>(width, items, creator, spriteSize, true, height);
         pDropDownmenu->setPosition(x, y);
         pDropDownmenu->setTooltipText(tooltip);
         pDropDownmenu->setVisible(visible);

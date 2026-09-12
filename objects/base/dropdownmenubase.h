@@ -19,7 +19,7 @@ class DropDownmenuBase : public Tooltip
 {
     Q_OBJECT
 public:
-    explicit DropDownmenuBase(qint32 width, qint32 itemcount);
+    explicit DropDownmenuBase(qint32 width, qint32 itemcount, qint32 height = 40);
     virtual ~DropDownmenuBase() = default;
     /**
      * @brief setEnabled
@@ -68,6 +68,7 @@ protected:
     QVector<oxygine::spBox9Sprite> m_Items;
     spPanel m_Panel;
     qint32 m_currentItem{0};
+    qint32 m_height{40};
 };
 
 Q_DECLARE_INTERFACE(DropDownmenuBase, "DropDownmenuBase");
