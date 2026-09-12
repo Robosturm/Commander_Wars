@@ -12,6 +12,7 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 
 #include <QPainter>
+#include <QOpenGLPaintDevice>
 
 namespace oxygine
 {
@@ -112,17 +113,27 @@ namespace oxygine
             //---------------------------------------------------------
             // qt painter usage
             GameWindow* window = oxygine::GameWindow::getWindow();
-            QPainter painter(window);
-            if (scissorEnabled)
+            const qreal dpr = window->devicePixelRatio();
+            QSize size = window->size();
+            QOpenGLPaintDevice paintDevice(size * dpr);
+            paintDevice.setDevicePixelRatio(dpr);
+            QPainter painter;
+            if (painter.begin(&paintDevice))
             {
-                QSize size = window->size();
-                QRect clipRect(scissorRect.x(), size.height() - scissorRect.y() - scissorRect.height(), scissorRect.width(), scissorRect.height());
-                painter.setClipRect(clipRect);
+                if (scissorEnabled)
+                {
+                    QRect clipRect(scissorRect.x(), size.height() - scissorRect.y() - scissorRect.height(), scissorRect.width(), scissorRect.height());
+                    painter.setClipRect(clipRect);
+                }
+                painter.setRenderHints(QPainter::Antialiasing, tf->getFont()->antialiasing);
+                root->draw(rs, tf->getStyle(), tf->getStyle().color, painter);
+                painter.setRenderHints(QPainter::Antialiasing, false);
+                painter.end();
             }
-            painter.setRenderHints(QPainter::Antialiasing, tf->getFont()->antialiasing);
-            root->draw(rs, tf->getStyle(), tf->getStyle().color, painter);
-            painter.setRenderHints(QPainter::Antialiasing, false);
-            painter.end();
+            else
+            {
+                CONSOLE_PRINT("Failed to begin QPainter on paint device", GameConsole::eERROR);
+            }
             //---------------------------------------------------------
         }
         rsCache().restoreAfterPainterUse();
