@@ -231,8 +231,13 @@ if (AUDIOSUPPORT)
         3rd_party/libogg/include
         ${CMAKE_CURRENT_BINARY_DIR}/3rd_party/libogg/include
     )
+    set(${PROJECT_NAME}_AUDIO_SRCS
+        coreengine/audiodecoder.cpp coreengine/audiodecoder.h
+    )
 else()
     message("Building without Audio")
+    set(${PROJECT_NAME}_AUDIO_SRCS
+    )
 endif()
 
 if (SCRIPTSOURCESUPPORT)
@@ -714,7 +719,6 @@ set(${PROJECT_NAME}_SRCS
     coreengine/interpreter.cpp coreengine/interpreter.h
     coreengine/gameconsole.cpp coreengine/gameconsole.h
     coreengine/audiomanager.cpp coreengine/audiomanager.h
-    coreengine/audiodecoder.cpp coreengine/audiodecoder.h
     coreengine/pathfindingsystem.cpp coreengine/pathfindingsystem.h
     coreengine/qmlvector.cpp coreengine/qmlvector.h
     coreengine/scriptvariables.cpp coreengine/scriptvariables.h
@@ -1297,6 +1301,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_SmtpClient_SRCS}
     ${${PROJECT_NAME}_OpenNN_SRCS}
     ${${PROJECT_NAME}_UPDATE_SRCS}
+    ${${PROJECT_NAME}_AUDIO_SRCS}
     ${WIN_ICON}
 )
 

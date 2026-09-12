@@ -1,5 +1,7 @@
 #include "coreengine/audiomanager.h"
-#include "coreengine/audiodecoder.h"
+#ifdef AUDIOSUPPORT
+    #include "coreengine/audiodecoder.h"
+#endif
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
