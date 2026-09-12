@@ -10,6 +10,10 @@ Renderer::Renderer(WindowBase & window)
     : m_window(window),
       m_timer(this)
 {
+    connect(this, &Renderer::sigPaint, this, &Renderer::onPaint, Qt::QueuedConnection);
+    connect(&m_timer, &QTimer::timeout, this, &Renderer::onPaint);
+    connect(this, &Renderer::sigSetTimerCycle, this, &Renderer::setTimerCycle);
+    connect(this, &Renderer::sigSetRendering, this, &Renderer::setRendering);
 }
 
 Renderer::~Renderer()
@@ -18,11 +22,6 @@ Renderer::~Renderer()
 
 void Renderer::connectSignals()
 {
-    connect(this, &Renderer::sigPaint, this, &Renderer::onPaint, Qt::QueuedConnection);
-    connect(&m_timer, &QTimer::timeout, this, &Renderer::onPaint);
-    connect(this, &Renderer::sigSetTimerCycle, this, &Renderer::setTimerCycle);
-    connect(this, &Renderer::sigSetRendering, this, &Renderer::setRendering);
-
     auto conntectionType = Qt::BlockingQueuedConnection;
     if (m_window.m_noUi)
     {

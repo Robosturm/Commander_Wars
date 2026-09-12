@@ -192,12 +192,12 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
     if (m_pMainThread == nullptr)
     {
         m_pMainThread = QThread::currentThread();
+        setupRendering();
 #ifdef GRAPHICSUPPORT
         m_pMainThread->setObjectName("Mainthread");
         // refresh timer cycle before using it.
         Settings::getInstance()->setFramesPerSecond(Settings::getInstance()->getFramesPerSecond());        
 #endif
-        setupRendering();
     }
 #ifdef GRAPHICSUPPORT
     if (m_noUi)
