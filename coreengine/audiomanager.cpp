@@ -1,4 +1,5 @@
 #include "coreengine/audiomanager.h"
+#include "coreengine/audiodecoder.h"
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
@@ -12,9 +13,11 @@
 #include <QtGlobal>
 #include <QDirIterator>
 #include <QList>
-#ifdef AUDIOSUPPORT
-#include <QAudioDevice>
-#endif
+#include <QDomDocument>
+
+#include <algorithm>
+#include <cmath>
+#include <limits>
 
 SoundData::SoundData()
 {
@@ -26,7 +29,6 @@ SoundData::SoundData()
 
 AudioManager::AudioManager(bool noAudio, bool useAudioThread)
     : m_noAudio(noAudio)
-
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("AudioThread");
@@ -47,8 +49,8 @@ AudioManager::AudioManager(bool noAudio, bool useAudioThread)
         connect(this, &AudioManager::sigChangeAudioDevice, this, &AudioManager::SlotChangeAudioDevice, Qt::QueuedConnection);
         connect(this, &AudioManager::sigLoadNextAudioFile, this, &AudioManager::loadNextAudioFile, Qt::QueuedConnection);
         connect(this, &AudioManager::sigSetMuteInternal,   this, &AudioManager::slotSetMuteInternal, Qt::QueuedConnection);
-        connect(this, &AudioManager::sigContinueMusic,   this, &AudioManager::SlotContinueMusic, Qt::QueuedConnection);
-        connect(this, &AudioManager::sigClearMusicPositions,   this, &AudioManager::SlotClearMusicPositions, Qt::QueuedConnection);
+        connect(this, &AudioManager::sigContinueMusic,     this, &AudioManager::SlotContinueMusic, Qt::QueuedConnection);
+        connect(this, &AudioManager::sigClearMusicPositions, this, &AudioManager::SlotClearMusicPositions, Qt::QueuedConnection);
 
         // sync startup and stop signals and slots
         auto connectionType = Qt::AutoConnection;
@@ -68,11 +70,14 @@ void AudioManager::stopAudio()
 #ifdef AUDIOSUPPORT
     if (Mainapp::getInstance()->isAudioThread())
     {
-        if (m_player != nullptr)
+        m_pollTimer.stop();
+        if (m_paStream)
         {
-            m_player->m_player.disconnect();
-            m_player->m_player.stop();
+            Pa_StopStream(m_paStream);
+            Pa_CloseStream(m_paStream);
+            m_paStream = nullptr;
         }
+        Pa_Terminate();
         m_soundCaches.clear();
         disconnect();
     }
@@ -91,39 +96,33 @@ void AudioManager::initAudio()
         if (Mainapp::getInstance()->isAudioThread())
         {
             CONSOLE_PRINT_MODULE("AudioThread::initAudio", GameConsole::eDEBUG, GameConsole::eAudio);
-            const auto value = Settings::getInstance()->getAudioOutput();
-            if (value.typeId() == QMetaType::QString &&
-                value.toString() == Settings::getInstance()->DEFAULT_AUDIODEVICE)
+            PaError err = Pa_Initialize();
+            if (err != paNoError)
             {
-                const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
-                m_audioDevice = defaultDeviceInfo;
+                CONSOLE_PRINT_MODULE("Pa_Initialize failed: " + QString::fromUtf8(Pa_GetErrorText(err)), GameConsole::eERROR, GameConsole::eAudio);
+                return;
             }
-            else
-            {
-                m_audioDevice = value.value<QAudioDevice>();
-            }
-            m_audioOutput = MemoryManagement::createNamedQObject<QAudioOutput>("QAudioOutput", this);
-            m_audioOutput->setDevice(m_audioDevice);
 
-            m_freeSoundSlots.reserve(MAX_PARALLEL_SOUNDS);
-            for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
+            const auto value = Settings::getInstance()->getAudioOutput();
+            QString deviceName = value.toString();
+            if (deviceName.isEmpty())
             {
-                m_soundEffectData[i] = MemoryManagement::create<SoundEffect, QObject*, QAudioDevice &>(this, m_audioDevice);
-                m_soundEffectData[i]->timer.setObjectName("SoundEffect" + QString::number(i));
-                m_soundEffectData[i]->timer.setSingleShot(true);
-                m_soundEffectData[i]->sound->setObjectName("SoundEffect" + QString::number(i));
-                connect(m_soundEffectData[i]->sound.get(), &QSoundEffect::statusChanged, this, [this, i]()
-                {
-                    if (m_soundEffectData[i]->sound->status() == QSoundEffect::Error)
-                    {
-                        CONSOLE_PRINT_MODULE("Error: Occured when playing sound: " + m_soundEffectData[i]->sound->source().toString(), GameConsole::eDEBUG, GameConsole::eAudio);
-                    }
-                }, Qt::QueuedConnection);
-                m_freeSoundSlots.append(i);
+                deviceName = Settings::DEFAULT_AUDIODEVICE;
             }
-            createPlayer();
+
+            openStream(deviceName);
+
+            m_pollTimer.setInterval(50);
+            connect(&m_pollTimer, &QTimer::timeout, this, [this]()
+            {
+                if (m_trackEndedFlag.exchange(false))
+                {
+                    SlotPlayRandom();
+                }
+            });
+            m_pollTimer.start();
+
             SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getInstance()->getMusicVolume())));
-            connect(&m_player->m_player, &QMediaPlayer::positionChanged, this, &AudioManager::SlotCheckMusicEnded);
         }
         else
         {
@@ -132,6 +131,248 @@ void AudioManager::initAudio()
     }
 #endif
 }
+
+bool AudioManager::openStream(const QString& deviceName)
+{
+#ifdef AUDIOSUPPORT
+    if (m_paStream)
+    {
+        Pa_StopStream(m_paStream);
+        Pa_CloseStream(m_paStream);
+        m_paStream = nullptr;
+    }
+
+    PaDeviceIndex targetDevice = paNoDevice;
+    if (deviceName == Settings::DEFAULT_AUDIODEVICE || deviceName.isEmpty())
+    {
+        targetDevice = Pa_GetDefaultOutputDevice();
+    }
+    else
+    {
+        qint32 numDevices = Pa_GetDeviceCount();
+        for (qint32 i = 0; i < numDevices; ++i)
+        {
+            const PaDeviceInfo* devInfo = Pa_GetDeviceInfo(i);
+            if (devInfo && devInfo->maxOutputChannels > 0 && QString::fromUtf8(devInfo->name) == deviceName)
+            {
+                targetDevice = i;
+                break;
+            }
+        }
+        if (targetDevice == paNoDevice)
+        {
+            targetDevice = Pa_GetDefaultOutputDevice();
+        }
+    }
+
+    if (targetDevice == paNoDevice)
+    {
+        CONSOLE_PRINT_MODULE("No PortAudio output device found", GameConsole::eERROR, GameConsole::eAudio);
+        return false;
+    }
+
+    const PaDeviceInfo* devInfo = Pa_GetDeviceInfo(targetDevice);
+    if (devInfo)
+    {
+        CONSOLE_PRINT_MODULE("Opening audio device: " + QString::fromUtf8(devInfo->name), GameConsole::eDEBUG, GameConsole::eAudio);
+        m_sampleRate = (devInfo->defaultSampleRate > 0) ? static_cast<qint32>(devInfo->defaultSampleRate) : 44100;
+    }
+    else
+    {
+        m_sampleRate = 44100;
+    }
+
+    PaStreamParameters outParams;
+    outParams.device = targetDevice;
+    outParams.channelCount = 2;
+    outParams.sampleFormat = paFloat32;
+    outParams.suggestedLatency = devInfo ? devInfo->defaultLowOutputLatency : 0.050;
+    outParams.hostApiSpecificStreamInfo = nullptr;
+
+    PaError err = Pa_OpenStream(
+        &m_paStream,
+        nullptr,
+        &outParams,
+        m_sampleRate,
+        paFramesPerBufferUnspecified,
+        paNoFlag,
+        &AudioManager::paCallback,
+        this
+    );
+
+    if (err != paNoError)
+    {
+        CONSOLE_PRINT_MODULE("Pa_OpenStream failed: " + QString::fromUtf8(Pa_GetErrorText(err)), GameConsole::eERROR, GameConsole::eAudio);
+        return false;
+    }
+
+    err = Pa_StartStream(m_paStream);
+    if (err != paNoError)
+    {
+        CONSOLE_PRINT_MODULE("Pa_StartStream failed: " + QString::fromUtf8(Pa_GetErrorText(err)), GameConsole::eERROR, GameConsole::eAudio);
+        return false;
+    }
+
+    return true;
+#else
+    Q_UNUSED(deviceName);
+    return false;
+#endif
+}
+
+#ifdef AUDIOSUPPORT
+int AudioManager::paCallback(const void* inputBuffer, void* outputBuffer,
+                             unsigned long framesPerBuffer,
+                             const PaStreamCallbackTimeInfo* timeInfo,
+                             PaStreamCallbackFlags statusFlags,
+                             void* userData)
+{
+    Q_UNUSED(inputBuffer);
+    Q_UNUSED(timeInfo);
+    Q_UNUSED(statusFlags);
+    auto* self = static_cast<AudioManager*>(userData);
+    float* out = static_cast<float*>(outputBuffer);
+    if (!out)
+    {
+        return paContinue;
+    }
+
+    std::fill(out, out + framesPerBuffer * 2, 0.0f);
+
+    std::unique_lock<std::mutex> lock(self->m_audioMutex, std::try_to_lock);
+    if (!lock.owns_lock())
+    {
+        return paContinue;
+    }
+
+    if (self->m_isMuted || self->m_internalMuted)
+    {
+        return paContinue;
+    }
+
+    float totalVol = self->m_totalVolume;
+    if (totalVol <= 0.0f)
+    {
+        return paContinue;
+    }
+
+    // Mix music
+    if (self->m_musicState.isPlaying && !self->m_musicState.samples.empty())
+    {
+        float musicVol = self->m_musicState.volume * self->m_musicVolume * totalVol;
+        auto& ms = self->m_musicState;
+
+        for (unsigned long i = 0; i < framesPerBuffer; ++i)
+        {
+            if (ms.loopEndFrame > 0 && ms.currentFrame >= ms.loopEndFrame)
+            {
+                if (ms.currentMediaIndex == ms.nextMediaIndex || ms.nextMediaIndex < 0)
+                {
+                    ms.currentFrame = ms.loopStartFrame;
+                }
+                else
+                {
+                    ms.isPlaying = false;
+                    self->m_trackEndedFlag.store(true, std::memory_order_relaxed);
+                    break;
+                }
+            }
+            else if (ms.currentFrame >= ms.totalFrames)
+            {
+                if (ms.currentMediaIndex == ms.nextMediaIndex)
+                {
+                    ms.currentFrame = ms.loopStartFrame;
+                }
+                else
+                {
+                    ms.isPlaying = false;
+                    self->m_trackEndedFlag.store(true, std::memory_order_relaxed);
+                    break;
+                }
+            }
+
+            if (ms.currentFrame < ms.totalFrames)
+            {
+                out[i * 2 + 0] += ms.samples[ms.currentFrame * 2 + 0] * musicVol;
+                out[i * 2 + 1] += ms.samples[ms.currentFrame * 2 + 1] * musicVol;
+                ms.currentFrame++;
+            }
+        }
+    }
+
+    // Mix sound effects
+    float sfxBaseVol = self->m_soundVolume * totalVol;
+    for (qint32 v = 0; v < MAX_PARALLEL_SOUNDS; ++v)
+    {
+        auto& voice = self->m_soundVoices[v];
+        if (!voice.active || !voice.soundData || voice.soundData->m_samples.empty())
+        {
+            continue;
+        }
+
+        float voiceVol = voice.volume * sfxBaseVol;
+        const auto& samples = voice.soundData->m_samples;
+        qint64 totalFrames = voice.soundData->m_totalFrames;
+
+        for (unsigned long i = 0; i < framesPerBuffer; ++i)
+        {
+            if (voice.delayFrames > 0)
+            {
+                voice.delayFrames--;
+                continue;
+            }
+
+            if (voice.remainingDurationFrames > 0)
+            {
+                voice.remainingDurationFrames--;
+                if (voice.remainingDurationFrames == 0)
+                {
+                    voice.active = false;
+                    if (voice.soundData->m_currentUseCount > 0)
+                    {
+                        voice.soundData->m_currentUseCount--;
+                    }
+                    break;
+                }
+            }
+
+            if (voice.currentFrame >= totalFrames)
+            {
+                if (voice.remainingLoops > 1)
+                {
+                    voice.remainingLoops--;
+                    voice.currentFrame = 0;
+                }
+                else if (voice.remainingLoops == -1)
+                {
+                    voice.currentFrame = 0;
+                }
+                else
+                {
+                    voice.active = false;
+                    if (voice.soundData->m_currentUseCount > 0)
+                    {
+                        voice.soundData->m_currentUseCount--;
+                    }
+                    break;
+                }
+            }
+
+            out[i * 2 + 0] += samples[voice.currentFrame * 2 + 0] * voiceVol;
+            out[i * 2 + 1] += samples[voice.currentFrame * 2 + 1] * voiceVol;
+            voice.currentFrame++;
+        }
+    }
+
+    // Clamp output buffer to [-1.0f, 1.0f]
+    for (unsigned long i = 0; i < framesPerBuffer * 2; ++i)
+    {
+        out[i] = std::clamp(out[i], -1.0f, 1.0f);
+    }
+
+    return paContinue;
+}
+#endif
 
 void AudioManager::createSoundCache()
 {
@@ -206,9 +447,9 @@ void AudioManager::readSoundCacheFromXml(QString folder)
                         if (node.nodeName() == "sound")
                         {
                             auto element = node.toElement();
-                            QString file = element.attribute("file");
+                            QString soundFile = element.attribute("file");
                             qint32 cacheSize = element.attribute("cachesize").toInt();
-                            fillSoundCache(cacheSize, folder, file);
+                            fillSoundCache(cacheSize, folder, soundFile);
                         }
                     }
                     node = node.nextSibling();
@@ -223,18 +464,41 @@ void AudioManager::readSoundCacheFromXml(QString folder)
     }
 }
 
-void AudioManager::createPlayer()
+void AudioManager::fillSoundCache(qint32 count, QString folder, QString file)
 {
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        CONSOLE_PRINT_MODULE("AudioThread::createPlayer()", GameConsole::eDEBUG, GameConsole::eAudio);
-        m_player = MemoryManagement::create<Player>(this);
-        m_player->m_player.setAudioOutput(m_audioOutput.get());
-        m_player->m_fileStream.setBuffer(&m_player->m_content);
-        connect(&m_player->m_player, &QMediaPlayer::mediaStatusChanged, this, &AudioManager::mediaStatusChanged, Qt::QueuedConnection);
-        connect(&m_player->m_player, &QMediaPlayer::playbackStateChanged, this, &AudioManager::mediaPlaybackStateChanged, Qt::QueuedConnection);
-        connect(&m_player->m_player, &QMediaPlayer::errorOccurred, this, &AudioManager::reportReplayError, Qt::QueuedConnection);
+        if (count > SoundData::MAX_SAME_SOUNDS)
+        {
+            count = SoundData::MAX_SAME_SOUNDS;
+        }
+        QString filePath = folder + file;
+        QFile soundFile(filePath);
+        if (soundFile.open(QIODevice::ReadOnly))
+        {
+            QByteArray data = soundFile.readAll();
+            DecodedAudio decoded = AudioDecoder::decode(data, filePath, m_sampleRate);
+            if (decoded.isValid())
+            {
+                spSoundData cache = MemoryManagement::create<SoundData>();
+                cache->m_filePath = filePath;
+                cache->cacheUrl = GlobalUtils::getUrlForFile(filePath);
+                cache->m_maxUseCount = count;
+                cache->m_samples = std::move(decoded.samples);
+                cache->m_totalFrames = decoded.totalFrames;
+                CONSOLE_PRINT_MODULE("Caching sound " + filePath + " with amount " + QString::number(count), GameConsole::eDEBUG, GameConsole::eAudio);
+                m_soundCaches.insert(file, cache);
+            }
+            else
+            {
+                CONSOLE_PRINT_MODULE("Failed to decode sound " + filePath, GameConsole::eERROR, GameConsole::eResources);
+            }
+        }
+        else
+        {
+            CONSOLE_PRINT_MODULE("Unable to find sound " + filePath + " with amount " + QString::number(count), GameConsole::eERROR, GameConsole::eResources);
+        }
     }
 #endif
 }
@@ -256,14 +520,9 @@ void AudioManager::SlotChangeAudioDevice(const QVariant value)
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        m_audioDevice = value.value<QAudioDevice>();
-        CONSOLE_PRINT_MODULE("Changing to audio device: " + m_audioDevice.description(), GameConsole::eDEBUG, GameConsole::eAudio);
-        m_audioOutput->setDevice(m_audioDevice);
-        m_player->m_player.setAudioOutput(m_audioOutput.get());
-        m_soundCaches.clear();
-        createSoundCache();
-        m_player->m_player.stop();
-        SlotPlayRandom();
+        QString deviceName = value.toString();
+        CONSOLE_PRINT_MODULE("Changing to audio device: " + deviceName, GameConsole::eDEBUG, GameConsole::eAudio);
+        openStream(deviceName);
     }
 #endif
 }
@@ -298,7 +557,7 @@ void AudioManager::setVolume(qint32 value)
 qint32 AudioManager::getVolume()
 {
 #ifdef AUDIOSUPPORT
-    return m_audioOutput->volume();
+    return static_cast<qint32>(m_musicVolume * 100.0f);
 #else
     return 0;
 #endif
@@ -359,16 +618,20 @@ void AudioManager::SlotClearPlayList()
     if (!m_noAudio)
     {
         CONSOLE_PRINT_MODULE("AudioThread::SlotClearPlayList() start clearing", GameConsole::eDEBUG, GameConsole::eAudio);
-        if (!m_player->m_currentMediaFile.isEmpty())
+        std::lock_guard<std::mutex> lock(m_audioMutex);
+        if (!m_musicState.currentFile.isEmpty())
         {
-            m_musicPlayPositionCache[m_player->m_currentMediaFile] = m_player->m_player.position();
-            m_player->m_currentMediaFile = "";
+            qint32 currentPosMs = (m_sampleRate > 0) ? static_cast<qint32>((m_musicState.currentFrame * 1000) / m_sampleRate) : 0;
+            m_musicPlayPositionCache[m_musicState.currentFile] = currentPosMs;
+            m_musicState.currentFile = "";
         }
         m_PlayListdata.clear();
-        m_player->m_currentMedia = -1;
-        m_player->m_nextMedia = -1;
-        m_player->m_player.stop();
-        m_player->m_fileStream.close();
+        m_musicState.samples.clear();
+        m_musicState.currentFrame = 0;
+        m_musicState.totalFrames = 0;
+        m_musicState.isPlaying = false;
+        m_musicState.currentMediaIndex = -1;
+        m_musicState.nextMediaIndex = -1;
         CONSOLE_PRINT_MODULE("AudioThread::SlotClearPlayList() playlist cleared", GameConsole::eDEBUG, GameConsole::eAudio);
     }
 #endif
@@ -382,17 +645,16 @@ void AudioManager::SlotPlayMusic(qint32 file)
         if (file >= 0 && file < m_PlayListdata.size())
         {
             CONSOLE_PRINT_MODULE("Starting music for player: " + m_PlayListdata[file].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
-            if (!m_player->m_currentMediaFile.isEmpty())
+            if (!m_musicState.currentFile.isEmpty())
             {
-                m_musicPlayPositionCache[m_player->m_currentMediaFile] = m_player->m_player.position();
-                m_player->m_currentMediaFile = "";
+                qint32 currentPosMs = (m_sampleRate > 0) ? static_cast<qint32>((m_musicState.currentFrame * 1000) / m_sampleRate) : 0;
+                m_musicPlayPositionCache[m_musicState.currentFile] = currentPosMs;
+                m_musicState.currentFile = "";
             }
-            m_player->m_player.stop();
-            m_player->m_currentMedia = -1;
-            m_player->m_nextMedia = -1;
-            m_player->m_currentMedia = file;
+            m_musicState.isPlaying = false;
+            m_musicState.currentMediaIndex = file;
+            m_musicState.nextMediaIndex = -1;
             loadMediaForFile(m_PlayListdata[file].m_file);
-            m_player->m_player.play();
         }
         else
         {
@@ -418,22 +680,20 @@ void AudioManager::SlotContinueMusic(QString file, qint32 position)
                 if (m_PlayListdata[i].m_file.endsWith(file))
                 {
                     CONSOLE_PRINT_MODULE("Continue music for player: " + file, GameConsole::eDEBUG, GameConsole::eAudio);
-                    if (!m_player->m_currentMediaFile.isEmpty())
+                    if (!m_musicState.currentFile.isEmpty())
                     {
-                        m_musicPlayPositionCache[m_player->m_currentMediaFile] = m_player->m_player.position();
-                        m_player->m_currentMediaFile = "";
+                        qint32 currentPosMs = (m_sampleRate > 0) ? static_cast<qint32>((m_musicState.currentFrame * 1000) / m_sampleRate) : 0;
+                        m_musicPlayPositionCache[m_musicState.currentFile] = currentPosMs;
+                        m_musicState.currentFile = "";
                     }
-                    m_player->m_player.stop();
-                    m_player->m_currentMedia = -1;
-                    m_player->m_nextMedia = -1;
-                    if (position <  0)
+                    m_musicState.isPlaying = false;
+                    m_musicState.currentMediaIndex = i;
+                    m_musicState.nextMediaIndex = -1;
+                    if (position < 0)
                     {
                         position = m_musicPlayPositionCache[m_PlayListdata[i].m_file];
                     }
-                    m_player->m_currentMedia = i;
                     loadMediaForFile(m_PlayListdata[i].m_file, position);
-                    m_seekPosition = position;
-                    m_player->m_player.play();
                     break;
                 }
             }
@@ -451,20 +711,43 @@ void AudioManager::loadMediaForFile(QString filePath, qint32 position)
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        m_player->m_player.setPosition(0);
-        m_player->m_fileStream.close();
         QFile file(filePath);
-        m_player->m_currentMediaFile = filePath;
         if (file.open(QIODevice::ReadOnly))
         {
-            m_player->m_content = file.readAll();
-            m_player->m_fileStream.open(QIODevice::ReadOnly);
-            m_player->m_player.setSourceDevice(&(m_player->m_fileStream), GlobalUtils::getUrlForFile(filePath));
-            m_player->m_player.setPosition(position);
+            QByteArray data = file.readAll();
+            DecodedAudio decoded = AudioDecoder::decode(data, filePath, m_sampleRate);
+            if (decoded.isValid())
+            {
+                std::lock_guard<std::mutex> lock(m_audioMutex);
+                m_musicState.samples = std::move(decoded.samples);
+                m_musicState.totalFrames = decoded.totalFrames;
+                m_musicState.currentFile = filePath;
+
+                qint32 curIdx = m_musicState.currentMediaIndex;
+                if (curIdx >= 0 && curIdx < m_PlayListdata.size())
+                {
+                    qint64 startMs = m_PlayListdata[curIdx].m_startpointMs;
+                    qint64 endMs = m_PlayListdata[curIdx].m_endpointMs;
+                    m_musicState.loopStartFrame = (startMs > 0) ? (startMs * m_sampleRate) / 1000 : 0;
+                    m_musicState.loopEndFrame = (endMs > 0) ? (endMs * m_sampleRate) / 1000 : decoded.totalFrames;
+                }
+                else
+                {
+                    m_musicState.loopStartFrame = 0;
+                    m_musicState.loopEndFrame = decoded.totalFrames;
+                }
+
+                m_musicState.currentFrame = (position > 0) ? (static_cast<qint64>(position) * m_sampleRate) / 1000 : 0;
+                m_musicState.isPlaying = true;
+            }
+            else
+            {
+                CONSOLE_PRINT("Failed to decode music file: " + filePath, GameConsole::eERROR);
+            }
         }
         else
         {
-            CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+            CONSOLE_PRINT("Failed to open file " + filePath, GameConsole::eERROR);
         }
     }
 #endif
@@ -479,44 +762,40 @@ void AudioManager::SlotPlayRandom()
         qint32 size = m_PlayListdata.size();
         if (size > 0)
         {
-            if (m_player->m_nextMedia < 0 || m_player->m_nextMedia > size)
+            if (m_musicState.nextMediaIndex < 0 || m_musicState.nextMediaIndex >= size)
             {
-                m_player->m_player.stop();
-                m_player->m_currentMedia = GlobalUtils::randIntBase(0, size - 1);
-                loadMediaForFile(m_PlayListdata[m_player->m_currentMedia].m_file);
-
-
-                m_player->m_player.play();
-                CONSOLE_PRINT_MODULE("Buffering music for player: " + m_PlayListdata[m_player->m_currentMedia].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
+                m_musicState.isPlaying = false;
+                m_musicState.currentMediaIndex = GlobalUtils::randIntBase(0, size - 1);
+                loadMediaForFile(m_PlayListdata[m_musicState.currentMediaIndex].m_file);
+                CONSOLE_PRINT_MODULE("Buffering music for player: " + m_PlayListdata[m_musicState.currentMediaIndex].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
             }
-            else if (m_player->m_currentMedia == m_player->m_nextMedia)
+            else if (m_musicState.currentMediaIndex == m_musicState.nextMediaIndex)
             {
-                qint32 loopPos = m_PlayListdata[m_player->m_currentMedia].m_startpointMs;
+                qint32 loopPos = m_PlayListdata[m_musicState.currentMediaIndex].m_startpointMs;
                 if (loopPos < 0)
                 {
                     loopPos = 0;
                 }
-                if (m_player->m_player.playbackState() != QMediaPlayer::PlayingState)
+                if (!m_musicState.isPlaying || m_musicState.samples.empty())
                 {
-                    loadMediaForFile(m_PlayListdata[m_player->m_currentMedia].m_file);
-                    m_player->m_player.setPosition(loopPos);
-                    m_player->m_player.play();
+                    loadMediaForFile(m_PlayListdata[m_musicState.currentMediaIndex].m_file, loopPos);
                 }
                 else
                 {
-                    m_player->m_player.setPosition(loopPos);
+                    std::lock_guard<std::mutex> lock(m_audioMutex);
+                    m_musicState.currentFrame = (static_cast<qint64>(loopPos) * m_sampleRate) / 1000;
+                    m_musicState.isPlaying = true;
                 }
-                CONSOLE_PRINT_MODULE("Seeking music for player: " + m_PlayListdata[m_player->m_currentMedia].m_file + " to " + QString::number(loopPos), GameConsole::eDEBUG, GameConsole::eAudio);
+                CONSOLE_PRINT_MODULE("Seeking music for player: " + m_PlayListdata[m_musicState.currentMediaIndex].m_file + " to " + QString::number(loopPos), GameConsole::eDEBUG, GameConsole::eAudio);
             }
             else
             {
-                m_player->m_player.stop();
-                m_player->m_currentMedia = m_player->m_nextMedia;
-                loadMediaForFile(m_PlayListdata[m_player->m_currentMedia].m_file);
-                m_player->m_player.play();
-                CONSOLE_PRINT_MODULE("Buffering music for player: " + m_PlayListdata[m_player->m_currentMedia].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
+                m_musicState.isPlaying = false;
+                m_musicState.currentMediaIndex = m_musicState.nextMediaIndex;
+                loadMediaForFile(m_PlayListdata[m_musicState.currentMediaIndex].m_file);
+                CONSOLE_PRINT_MODULE("Buffering music for player: " + m_PlayListdata[m_musicState.currentMediaIndex].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
             }
-            m_player->m_nextMedia = GlobalUtils::randIntBase(0, size - 1);
+            m_musicState.nextMediaIndex = GlobalUtils::randIntBase(0, size - 1);
         }
         else
         {
@@ -531,23 +810,13 @@ void AudioManager::SlotSetVolume(qint32 value)
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        qreal sound = (static_cast<qreal>(value) / 100.0 *
-                       static_cast<qreal>(Settings::getInstance()->getTotalVolume()) / 100.0);
-        qreal volume = QAudio::convertVolume(sound, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
-        if (Settings::getInstance()->getMuted())
-        {
-            volume = 0.0f;
-            m_player->m_player.stop();
-        }
-        else
-        {
-            if (m_player->m_player.playbackState() != QMediaPlayer::PlayingState)
-            {
-                SlotPlayRandom();
-            }
-        }
-        CONSOLE_PRINT_MODULE("Setting volume to : " + QString::number(volume), GameConsole::eDEBUG, GameConsole::eAudio);
-        m_audioOutput->setVolume(volume);
+        std::lock_guard<std::mutex> lock(m_audioMutex);
+        m_musicVolume = static_cast<float>(value) / 100.0f;
+        m_totalVolume = static_cast<float>(Settings::getInstance()->getTotalVolume()) / 100.0f;
+        m_soundVolume = static_cast<float>(Settings::getInstance()->getSoundVolume()) / 100.0f;
+        m_isMuted = Settings::getInstance()->getMuted();
+
+        CONSOLE_PRINT_MODULE("Setting volume to : music=" + QString::number(m_musicVolume) + " total=" + QString::number(m_totalVolume), GameConsole::eDEBUG, GameConsole::eAudio);
     }
 #endif
 }
@@ -556,16 +825,9 @@ void AudioManager::slotSetMuteInternal(bool value)
 {
     if (Settings::getInstance()->getMuteOnFcousedLost())
     {
-        m_internalMuted = value;
 #ifdef AUDIOSUPPORT
-        m_audioOutput->setMuted(m_internalMuted);
-        for (auto & soundEffect : m_soundEffectData)
-        {
-            if (soundEffect->sound.get() != nullptr)
-            {
-                soundEffect->sound->setMuted(m_internalMuted);
-            }
-        }
+        std::lock_guard<std::mutex> lock(m_audioMutex);
+        m_internalMuted = value;
 #endif
     }
 }
@@ -579,7 +841,6 @@ bool AudioManager::tryAddMusic(QString file, qint64 startPointMs, qint64 endPoin
         QString currentPath = VirtualPaths::find(file);
         if (QFile::exists(currentPath))
         {
-            m_player->m_player.stop();
             addMusicToPlaylist(currentPath, startPointMs, endPointMs);
             success = true;
         }
@@ -605,74 +866,19 @@ void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoi
 #endif
 }
 
-#ifdef AUDIOSUPPORT
-void AudioManager::mediaStatusChanged(QMediaPlayer::MediaStatus status)
-{
-    if (!m_noAudio)
-    {
-        CONSOLE_PRINT_MODULE("Media status changed for player to " + QString::number(status), GameConsole::eDEBUG, GameConsole::eAudio);
-        switch (status)
-        {
-            case QMediaPlayer::NoMedia:
-            {
-                break;
-            }
-            case QMediaPlayer::EndOfMedia:
-            {
-                m_player->m_currentMedia = -1;
-                CONSOLE_PRINT_MODULE("Music stopped at position " + QString::number(m_player->m_player.position()), GameConsole::eDEBUG, GameConsole::eAudio);
-                // shuffle through loaded media
-                SlotPlayRandom();
-                break;
-            }
-            case QMediaPlayer::InvalidMedia:
-            {
-                CONSOLE_PRINT_MODULE("Invalid media detected for player", GameConsole::eWARNING, GameConsole::eAudio);
-                if (m_player->m_currentMedia < m_PlayListdata.size())
-                {
-                    CONSOLE_PRINT_MODULE("Unable to play: " +  m_PlayListdata[m_player->m_currentMedia].m_file, GameConsole::eWARNING, GameConsole::eAudio);
-                }
-            }
-            default:
-            {
-                break;
-            }
-        }
-    }
-}
-#endif
 void AudioManager::loadNextAudioFile()
 {
     SlotPlayRandom();
 }
-
-#ifdef AUDIOSUPPORT
-void AudioManager::mediaPlaybackStateChanged(QMediaPlayer::PlaybackState newState)
-{
-    CONSOLE_PRINT_MODULE("Playback state changed to " + QString::number(newState) + " for player", GameConsole::eDEBUG, GameConsole::eAudio);
-    if (newState == QMediaPlayer::PlaybackState::PlayingState)
-    {
-        if (m_seekPosition > 0)
-        {
-            m_player->m_player.setPosition(m_seekPosition);
-            if (m_player->m_player.position() < m_seekPosition)
-            {
-                CONSOLE_PRINT("Failed to seek audio to " + QString::number(m_seekPosition) + " device seekable state " + QString::number(m_player->m_player.isSeekable()), GameConsole::eERROR);
-            }
-        }
-        m_seekPosition = -1;
-    }
-}
-#endif
 
 void AudioManager::SlotLoadFolder(QString folder)
 {
 #ifdef AUDIOSUPPORT
     QStringList loadedSounds;
     QStringList searchPath = VirtualPaths::createSearchPathRev(folder);
-    for (const QString & folder : std::as_const(searchPath))
+    for (const QString & currentFolder : std::as_const(searchPath))
     {
-        loadMusicFolder(folder, loadedSounds);
+        loadMusicFolder(currentFolder, loadedSounds);
     }
 #endif
 }
@@ -709,8 +915,12 @@ void AudioManager::addMusicToPlaylist(const QString & file, qint64 startPointMs,
 {
     CONSOLE_PRINT_MODULE("Adding " + file + " to play list", GameConsole::eDEBUG, GameConsole::eAudio);
 #ifdef AUDIOSUPPORT
-    m_PlayListdata.append(PlaylistData(file, startPointMs, endPointMs));
+    m_PlayListdata.append(PlaylistData(file, static_cast<qint32>(startPointMs), static_cast<qint32>(endPointMs)));
 #endif
+}
+
+void AudioManager::clearTempFolder()
+{
 }
 
 bool AudioManager::getLoadBaseGameFolders() const
@@ -725,58 +935,8 @@ void AudioManager::setLoadBaseGameFolders(bool loadBaseGameFolders)
 
 void AudioManager::SlotCheckMusicEnded(qint64 duration)
 {
-#ifdef AUDIOSUPPORT
-    if (m_player->m_currentMedia >= 0 && m_player->m_currentMedia < m_PlayListdata.size())
-    {
-        qint64 loopPos = m_PlayListdata[m_player->m_currentMedia].m_endpointMs;
-        if (loopPos > 0 && duration >= loopPos && m_player->m_currentMedia == m_player->m_nextMedia)
-        {
-            CONSOLE_PRINT_MODULE("Player reached loop end desired position " + QString::number(loopPos) + " actual loop position " + QString::number(duration) + " for player", GameConsole::eDEBUG, GameConsole::eAudio);
-            // shuffle load media
-            SlotPlayRandom();
-        }
-    }
-#endif
+    Q_UNUSED(duration);
 }
-
-#ifdef AUDIOSUPPORT
-void AudioManager::reportReplayError(QMediaPlayer::Error error, const QString &errorString)
-{
-    CONSOLE_PRINT("Error in player: " + errorString, GameConsole::eERROR);
-    switch (error)
-    {
-        case QMediaPlayer::Error::FormatError:
-        {
-            CONSOLE_PRINT("Audio playback error: Wrong audio format provided.", GameConsole::eERROR);
-            break;
-        }
-        case QMediaPlayer::Error::NetworkError:
-        {
-            CONSOLE_PRINT("Audio playback error: Network access error to audio file.", GameConsole::eERROR);
-            break;
-        }
-        case QMediaPlayer::Error::ResourceError:
-        {
-            CONSOLE_PRINT("Audio playback error: Media ressouce file could not be resolved.", GameConsole::eERROR);
-            break;
-        }
-        case QMediaPlayer::Error::AccessDeniedError:
-        {
-            CONSOLE_PRINT("Audio playback error: Access denied.", GameConsole::eERROR);
-            break;
-        }
-        case QMediaPlayer::Error::NoError:
-        {
-            break;
-        }
-        default:
-        {
-            CONSOLE_PRINT("Audio playback error: Service for replaying the requested audio format is missing.", GameConsole::eERROR);
-            break;
-        }
-    }
-}
-#endif
 
 void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float volume, bool stopOldestSound, qint32 duration)
 {
@@ -785,33 +945,71 @@ void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float
     {
         return;
     }
-    qreal sound = (static_cast<qreal>(Settings::getInstance()->getSoundVolume()) / 100.0 *
-                   static_cast<qreal>(Settings::getInstance()->getTotalVolume()) / 100.0) * volume;
-    sound = QAudio::convertVolume(sound, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
-    if (sound > 0)
+    if (m_soundCaches.contains(file))
     {
-        if (m_soundCaches.contains(file))
+        auto & soundCache = m_soundCaches[file];
+        if (soundCache->m_samples.empty())
         {
-            auto & soundCache = m_soundCaches[file];
-            if (soundCache->m_usedSounds.size() < soundCache->m_maxUseCount)
+            return;
+        }
+
+        std::lock_guard<std::mutex> lock(m_audioMutex);
+        if (soundCache->m_currentUseCount >= soundCache->m_maxUseCount)
+        {
+            if (stopOldestSound)
             {
-                // a popped slot can occasionally still be busy (queued playingChanged signals can free the same slot twice), retry with the next one instead of dropping the sound
-                while (!m_freeSoundSlots.isEmpty())
+                qint32 oldestIdx = -1;
+                qint64 oldestAge = std::numeric_limits<qint64>::max();
+                for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
                 {
-                    qint32 i = m_freeSoundSlots.takeLast();
-                    if (tryPlaySoundAtCachePosition(soundCache, i,
-                                                     file, loops, delay, sound,
-                                                     stopOldestSound, duration))
+                    if (m_soundVoices[i].active && m_soundVoices[i].soundData == soundCache)
                     {
-                        break;
+                        if (m_soundVoices[i].age < oldestAge)
+                        {
+                            oldestAge = m_soundVoices[i].age;
+                            oldestIdx = i;
+                        }
                     }
                 }
+                if (oldestIdx >= 0)
+                {
+                    m_soundVoices[oldestIdx].active = false;
+                    soundCache->m_currentUseCount--;
+                }
+            }
+            else
+            {
+                return;
             }
         }
-        else
+
+        qint32 slot = -1;
+        for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
         {
-            CONSOLE_PRINT("Unable to locate sound: " + file, GameConsole::eDEBUG);
+            if (!m_soundVoices[i].active)
+            {
+                slot = i;
+                break;
+            }
         }
+
+        if (slot >= 0)
+        {
+            auto& voice = m_soundVoices[slot];
+            voice.soundData = soundCache;
+            voice.currentFrame = 0;
+            voice.remainingLoops = loops;
+            voice.delayFrames = (delay > 0) ? static_cast<qint32>((static_cast<qint64>(delay) * m_sampleRate) / 1000) : 0;
+            voice.remainingDurationFrames = (duration > 0) ? static_cast<qint32>((static_cast<qint64>(duration) * m_sampleRate) / 1000) : -1;
+            voice.volume = volume;
+            voice.age = ++m_voiceCounter;
+            voice.active = true;
+            soundCache->m_currentUseCount++;
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to locate sound: " + file, GameConsole::eDEBUG);
     }
 #endif
 }
@@ -820,14 +1018,14 @@ void AudioManager::SlotStopAllSounds()
 {
 #ifdef AUDIOSUPPORT
     CONSOLE_PRINT_MODULE("Stopping all sounds", GameConsole::eDEBUG, GameConsole::eAudio);
-    // only touch the slots that are actually in use instead of looping over every slot for every cache
+    std::lock_guard<std::mutex> lock(m_audioMutex);
+    for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
+    {
+        m_soundVoices[i].active = false;
+    }
     for (auto & soundCache : m_soundCaches)
     {
-        for (auto index : soundCache->m_usedSounds)
-        {
-            stopSoundInternal(index);
-        }
-        soundCache->m_usedSounds.clear();
+        soundCache->m_currentUseCount = 0;
     }
 #endif
 }
@@ -838,25 +1036,16 @@ void AudioManager::SlotStopSound(QString file)
     if (m_soundCaches.contains(file))
     {
         CONSOLE_PRINT_MODULE("Stopping sound " + file, GameConsole::eDEBUG, GameConsole::eAudio);
+        std::lock_guard<std::mutex> lock(m_audioMutex);
         auto & soundCache = m_soundCaches[file];
-        for (auto & item : soundCache->m_usedSounds)
+        for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
         {
-            stopSoundInternal(item);
+            if (m_soundVoices[i].active && m_soundVoices[i].soundData == soundCache)
+            {
+                m_soundVoices[i].active = false;
+            }
         }
-        soundCache->m_usedSounds.clear();
+        soundCache->m_currentUseCount = 0;
     }
 #endif
 }
-
-#ifdef AUDIOSUPPORT
-
-void AudioManager::stopOldestSound(SoundData* soundData)
-{
-    CONSOLE_PRINT_MODULE("Stopping oldest sound sound of " + soundData->cacheUrl.toString(), GameConsole::eDEBUG, GameConsole::eAudio);
-    if (soundData->m_usedSounds.size() > 0)
-    {
-        stopSoundInternal(soundData->m_usedSounds[0]);
-        soundData->m_usedSounds.removeFirst();
-    }
-}
-#endif

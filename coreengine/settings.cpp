@@ -16,6 +16,9 @@
 #include <QInputDevice>
 #include <QDirIterator>
 #include <QUuid>
+#ifdef AUDIOSUPPORT
+#include <portaudio.h>
+#endif
 
 #include "coreengine/settings.h"
 #include "coreengine/filesupport.h"
@@ -2329,10 +2332,14 @@ QStringList Settings::getAudioDevices()
 {
     QStringList items = {tr("Default device")};
 #ifdef AUDIOSUPPORT
-    const auto deviceInfos = QMediaDevices::audioOutputs();
-    for (qint32 i = 0; i < deviceInfos.size(); ++i)
+    qint32 numDevices = Pa_GetDeviceCount();
+    for (qint32 i = 0; i < numDevices; ++i)
     {
-        items.append(deviceInfos[i].description());
+        const PaDeviceInfo* devInfo = Pa_GetDeviceInfo(i);
+        if (devInfo && devInfo->maxOutputChannels > 0)
+        {
+            items.append(QString::fromUtf8(devInfo->name));
+        }
     }
 #endif
     return items;
@@ -2342,14 +2349,18 @@ qint32 Settings::getCurrentDevice()
 {
     qint32 currentItem = 0;
 #ifdef AUDIOSUPPORT
-    auto currentDevice = Settings::getAudioOutput().value<QAudioDevice>();
-    const auto deviceInfos = QMediaDevices::audioOutputs();
-
-    for (qint32 i = 0; i < deviceInfos.size(); ++i)
+    QString currentDeviceName = Settings::getAudioOutput().toString();
+    if (currentDeviceName == Settings::DEFAULT_AUDIODEVICE || currentDeviceName.isEmpty())
     {
-        if (deviceInfos[i] == currentDevice)
+        return 0;
+    }
+    const auto devices = getAudioDevices();
+    for (qint32 i = 1; i < devices.size(); ++i)
+    {
+        if (devices[i] == currentDeviceName)
         {
-            currentItem = i + 1;
+            currentItem = i;
+            break;
         }
     }
 #endif
@@ -2362,18 +2373,23 @@ void Settings::setAudioDevice(qint32 value)
     AudioManager* pAudio = Mainapp::getInstance()->getAudioManager();
     if (value == 0)
     {
-        auto item = QVariant::fromValue(QMediaDevices::defaultAudioOutput());
-        pAudio->changeAudioDevice(item);
         Settings::setAudioOutput(QVariant(Settings::DEFAULT_AUDIODEVICE));
+        if (pAudio)
+        {
+            pAudio->changeAudioDevice(QVariant(Settings::DEFAULT_AUDIODEVICE));
+        }
     }
     else
     {
-        const auto deviceInfos = QMediaDevices::audioOutputs();
-        if (value <= deviceInfos.size())
+        const auto devices = getAudioDevices();
+        if (value < devices.size())
         {
-            auto item = QVariant::fromValue(deviceInfos[value - 1]);
-            Settings::setAudioOutput(item);
-            pAudio->changeAudioDevice(item);
+            QString devName = devices[value];
+            Settings::setAudioOutput(QVariant(devName));
+            if (pAudio)
+            {
+                pAudio->changeAudioDevice(QVariant(devName));
+            }
         }
     }
 #endif

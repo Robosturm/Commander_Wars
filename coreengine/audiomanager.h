@@ -3,32 +3,33 @@
 
 #include <QObject>
 #include <QVector>
-#ifdef AUDIOSUPPORT
-#include <QSoundEffect>
-#include <QMediaPlayer>
-#include <QMediaDevices>
-#include <QAudioDevice>
-#include <QAudioOutput>
-using spQSoundEffect = std::shared_ptr<QSoundEffect>;
-#endif
-#include <QIODevice>
+#include <QMap>
+#include <QString>
 #include <QTimer>
 #include <QUrl>
-#include <QBuffer>
+#include <vector>
+#include <mutex>
+#include <atomic>
+
+#ifdef AUDIOSUPPORT
+#include <portaudio.h>
+#endif
 
 #include "coreengine/memorymanagement.h"
 
 class AudioManager;
 using spAudioManager = std::shared_ptr<AudioManager>;
 
-
 struct SoundData : public QObject
 {
     static constexpr qint32 MAX_SAME_SOUNDS = 60;
     static constexpr qint32 DEFAULT_CACHE_SIZE = 10;
     QUrl cacheUrl;
-    QVector<qint32> m_usedSounds;
+    QString m_filePath;
     qint32 m_maxUseCount{0};
+    qint32 m_currentUseCount{0};
+    std::vector<float> m_samples; // Interleaved stereo float PCM
+    qint64 m_totalFrames{0};
     SoundData();
 };
 using spSoundData = std::shared_ptr<SoundData>;
@@ -39,41 +40,23 @@ class AudioManager final : public QObject
 {
     static constexpr qint32 MAX_PARALLEL_SOUNDS = 200;
     Q_OBJECT
-private:
-#ifdef AUDIOSUPPORT
-    struct Player
-    {
-        static constexpr const char* const getTypeName()
-        {
-            return "Player";
-        }
-        Player(QObject *parent)
-            : m_player(parent),
-            m_fileStream(parent)
-        {
-        }
-        QMediaPlayer m_player;
-        qint32 m_currentMedia{-1};
-        qint32 m_nextMedia{-1};
-        QByteArray m_content;
-        QBuffer m_fileStream;
-        QString m_currentMediaFile;
-    };
-    using spPlayer = std::shared_ptr<Player>;
-#endif
+
 public:
     explicit AudioManager(bool noAudio, bool useAudioThread);
     virtual ~AudioManager() = default;
+
     /**
      * @brief getLoadBaseGameFolders
      * @return
      */
     Q_INVOKABLE bool getLoadBaseGameFolders() const;
+
     /**
      * @brief setLoadBaseGameFolders
      * @param loadBaseGameFolders
      */
     Q_INVOKABLE void setLoadBaseGameFolders(bool loadBaseGameFolders);
+
 signals:
     void sigCreateSoundCache();
     void sigInitAudio();
@@ -93,24 +76,29 @@ signals:
     void sigSetMuteInternal(bool value);
     void sigContinueMusic(QString file, qint32 position = -1);
     void sigClearMusicPositions();
+
 public slots:
     /**
      * @brief createSoundCache
      */
     void createSoundCache();
+
     /**
      * @brief initAudio
      */
     void initAudio();
+
     /**
      * @brief stopAudio
      */
     void stopAudio();
+
     /**
      * @brief playMusic
      * @param File the music file to be played
      */
     void playMusic(qint32 File);
+
     /**
      * @brief continueMusic if file is empty and exactly one music is in the playlist that music is continued else a random music is started from 0.
      * If file isn't empty the game tries to continue the given music.
@@ -119,6 +107,7 @@ public slots:
      * @param position
      */
     void continueMusic(QString file, qint32 position = -1);
+
     /**
      * @brief addMusic
      * @param File adds a file to the playlist
@@ -126,29 +115,35 @@ public slots:
      * @param endPointMs when this file is played the music will end at this position in ms and the next file will be played. Values smaller 0 mean play till end.
      */
     void addMusic(QString File, qint64 startPointMs = -1, qint64 endPointMs = -1);
+
     /**
-     * @brief loadFolder loads all mp3 to the playlist
-     * @param folder  the folder to be loaded
+     * @brief loadFolder loads all mp3/ogg/wav to the playlist
+     * @param folder the folder to be loaded
      */
     void loadFolder(QString folder);
+
     /**
      * @brief setVolume changes the volume between 0 and 100
      * @param value
      */
     void setVolume(qint32 value);
+
     /**
      * @brief getVolume
      * @return the current volume in percent 0 to 100
      */
     qint32 getVolume();
+
     /**
      * @brief clearPlayList clears the current playlist
      */
     void clearPlayList();
+
     /**
-     * @brief playRandom plays a random mp3 from the playlist
+     * @brief playRandom plays a random track from the playlist
      */
     void playRandom();
+
     /**
      * @brief playSound
      * @param file
@@ -156,24 +151,29 @@ public slots:
      */
     void playSound(QString file, qint32 loops = 1, qint32 delay = 0, float volume = 1.0f,
                    bool stopOldestSound = false, qint32 duration = -1);
+
     /**
      * @brief stopSound
      * @param file
      */
     void stopSound(QString file);
+
     /**
-     * @brief stopAllSound
+     * @brief stopAllSounds
      */
     void stopAllSounds();
+
     /**
      * @brief changeAudioDevice
      * @param value
      */
     void changeAudioDevice(const QVariant &value);
+
     /**
      * @brief SlotClearMusicPositions
      */
     void clearMusicPositions();
+
 protected slots:
     // stops current Music and launches another one.
     void SlotContinueMusic(QString file, qint32 position = -1);
@@ -191,113 +191,35 @@ protected slots:
     void SlotStopAllSounds();
     void SlotChangeAudioDevice(const QVariant value);
     void slotSetMuteInternal(bool value);
+
     /**
-     * @brief clearMusicPositions
+     * @brief SlotClearMusicPositions
      */
     void SlotClearMusicPositions();
+
     /**
      * @brief loadNextAudioFile
-     * @param playerIndex
      */
     void loadNextAudioFile();
-#ifdef AUDIOSUPPORT
-    /**
-     * @brief stopSound
-     * @param soundData
-     * @param soundIndex
-     */
-    void stopSoundInternal(qint32 soundIndex);
-#endif
+
 protected:
-    /**
-     * @brief createPlayer
-     * @param player
-     */
-    void createPlayer();
-    /**
-     * @brief addMusicToTempFolder
-     * @param file
-     * @param startPointMs
-     * @param endPointMs
-     */
     void addMusicToPlaylist(const QString & file, qint64 startPointMs = -1, qint64 endPointMs = -1);
-    /**
-     * @brief clearTempFolder
-     */
     void clearTempFolder();
-    /**
-     * @brief loadMusicFolder
-     * @param folder
-     * @param loadedSounds
-     */
     void loadMusicFolder(const QString & folder, QStringList &loadedSounds);
-    /**
-     * @brief readSoundCacheFromXml
-     * @param folder
-     */
     void readSoundCacheFromXml(QString folder);
-    /**
-     * @brief fillCache
-     * @param cache
-     * @param count
-     * @param file
-     */
     void fillSoundCache(qint32 count, QString folder, QString file);
-#ifdef AUDIOSUPPORT
-    /**
-     * @brief reportReplayError
-     * @param error
-     * @param errorString
-     */
-    void reportReplayError(QMediaPlayer::Error error, const QString &errorString);
-    /**
-     * @brief mediaStatusChanged
-     * @param status
-     */
-    void mediaStatusChanged(QMediaPlayer::MediaStatus status);
-    /**
-     * @brief mediaPlaybackStateChanged
-     * @param playerIndex
-     * @param newState
-     */
-    void mediaPlaybackStateChanged(QMediaPlayer::PlaybackState newState);
-    /**
-     * @brief playSoundAtCachePosition
-     * @param soundCache
-     * @param i
-     * @return
-     */
-    bool tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> &soundCache, qint32 i,
-                                     QString &file, qint32 loops, qint32 delay, qreal sound,
-                                     bool stopOldestSound, qint32 duration);
-    /**
-     * @brief stopOldestSound
-     * @param soundData
-     */
-    void stopOldestSound(SoundData *soundData);
-    /**
-     * @brief playDelayedSound
-     * @param soundData
-     * @param soundIndex
-     * @param stopOldestSound
-     */
-    void playDelayedSound(SoundData *soundData, qint32 soundIndex, bool stopOldestSound, qint32 duration);
-    /**
-     * @brief playSoundInternal
-     * @param soundData
-     * @param soundIndex
-     * @param duration
-     */
-    void playSoundInternal(SoundData *soundData, qint32 soundIndex, qint32 duration);
-    /**
-     * @brief cleanUpSounds
-     */
-    void cleanUpSounds();
-#endif
     void loadMediaForFile(QString filePath, qint32 position = 0);
+    bool openStream(const QString& deviceName);
+
+#ifdef AUDIOSUPPORT
+    static int paCallback(const void* inputBuffer, void* outputBuffer,
+                          unsigned long framesPerBuffer,
+                          const PaStreamCallbackTimeInfo* timeInfo,
+                          PaStreamCallbackFlags statusFlags,
+                          void* userData);
+#endif
 
 private:
-    // music playback data
     struct PlaylistData
     {
         explicit PlaylistData(const QString & file, qint32 startpointMs = -1, qint32 endpointMs = -1)
@@ -311,35 +233,58 @@ private:
         QString m_file;
     };
     bool tryAddMusic(QString file, qint64 startPointMs, qint64 endPointMs);
+
 #ifdef AUDIOSUPPORT
-    spPlayer m_player;
-    QVector<PlaylistData> m_PlayListdata;
-    // sound playback data
-    QMap<QString, spSoundData> m_soundCaches;
-    // general audio info
-    QAudioDevice m_audioDevice;
-    std::shared_ptr<QAudioOutput> m_audioOutput;
-    struct SoundEffect
+    struct SoundVoice
     {
-        SoundEffect(QObject *owner, QAudioDevice & audioDevice)
-            : timer(owner)
-        {
-            sound = MemoryManagement::create<QSoundEffect, QAudioDevice &, QObject *>(audioDevice, owner);
-        }
-        spQSoundEffect sound;
-        QTimer timer;
+        spSoundData soundData;
+        qint64 currentFrame{0};
+        qint32 remainingLoops{1};
+        qint32 delayFrames{0};
+        qint32 remainingDurationFrames{-1};
+        float volume{1.0f};
+        bool active{false};
+        qint64 age{0};
     };
-    using spSoundEffect = std::shared_ptr<SoundEffect>;
+
+    struct MusicState
+    {
+        std::vector<float> samples;
+        qint64 currentFrame{0};
+        qint64 totalFrames{0};
+        qint64 loopStartFrame{0};
+        qint64 loopEndFrame{0};
+        bool isPlaying{false};
+        float volume{1.0f};
+        QString currentFile;
+        qint32 currentMediaIndex{-1};
+        qint32 nextMediaIndex{-1};
+    };
+
+    PaStream* m_paStream{nullptr};
+    qint32 m_sampleRate{44100};
+    std::mutex m_audioMutex;
+
+    SoundVoice m_soundVoices[MAX_PARALLEL_SOUNDS];
+    qint64 m_voiceCounter{0};
+
+    MusicState m_musicState;
+    std::atomic<bool> m_trackEndedFlag{false};
+    QTimer m_pollTimer;
+
+    float m_musicVolume{1.0f};
+    float m_soundVolume{1.0f};
+    float m_totalVolume{1.0f};
+    bool m_isMuted{false};
+
+    QVector<PlaylistData> m_PlayListdata;
+    QMap<QString, spSoundData> m_soundCaches;
     QMap<QString, qint32> m_musicPlayPositionCache;
-    // indices into m_soundEffectData that are currently free to use, avoids scanning the whole array on every playSound call
-    QVector<qint32> m_freeSoundSlots;
-    spSoundEffect m_soundEffectData[MAX_PARALLEL_SOUNDS];
-    std::vector<spQSoundEffect> m_toDeleteSounds;
 #endif
+
     bool m_loadBaseGameFolders{true};
     bool m_noAudio{false};
     bool m_internalMuted{false};
-    qint64 m_seekPosition = -1;
 };
 
 Q_DECLARE_INTERFACE(AudioManager, "AudioManager");

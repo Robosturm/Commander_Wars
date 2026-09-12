@@ -15,7 +15,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # set tool chain info
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_C_STANDARD 90)
+set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Instruct CMake to run moc automatically when needed.
@@ -182,10 +182,54 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
 endif()
 
 if (AUDIOSUPPORT)
-    message("Building with Audio")
-    find_package(Qt6 COMPONENTS Multimedia REQUIRED)
+    message("Building with Audio (PortAudio & Opus)")
+    set(PA_BUILD_SHARED_LIBS OFF CACHE BOOL "Build PortAudio as static" FORCE)
+    set(PA_BUILD_TESTS OFF CACHE BOOL "Build PortAudio tests" FORCE)
+    set(PA_BUILD_EXAMPLES OFF CACHE BOOL "Build PortAudio examples" FORCE)
+    add_subdirectory(3rd_party/portaudio EXCLUDE_FROM_ALL)
+
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build Ogg static" FORCE)
+    set(INSTALL_DOCS OFF CACHE BOOL "" FORCE)
+    set(INSTALL_PKG_CONFIG_MODULE OFF CACHE BOOL "" FORCE)
+    set(INSTALL_CMAKE_PACKAGE_MODULE OFF CACHE BOOL "" FORCE)
+    add_subdirectory(3rd_party/libogg EXCLUDE_FROM_ALL)
+
+    set(OPUS_BUILD_SHARED_LIBRARY OFF CACHE BOOL "Build Opus static" FORCE)
+    set(OPUS_BUILD_TESTING OFF CACHE BOOL "" FORCE)
+    set(OPUS_BUILD_PROGRAMS OFF CACHE BOOL "" FORCE)
+    add_subdirectory(3rd_party/libopus EXCLUDE_FROM_ALL)
+
+    add_library(opusfile STATIC
+        3rd_party/libopusfile/src/info.c
+        3rd_party/libopusfile/src/internal.c
+        3rd_party/libopusfile/src/opusfile.c
+        3rd_party/libopusfile/src/stream.c
+    )
+    target_compile_definitions(opusfile PRIVATE OP_DISABLE_HTTP=1)
+    target_include_directories(opusfile PUBLIC
+        3rd_party/libopusfile/include
+    )
+    target_include_directories(opusfile PRIVATE
+        3rd_party/libopusfile/src
+        3rd_party/libogg/include
+        ${CMAKE_CURRENT_BINARY_DIR}/3rd_party/libogg/include
+        3rd_party/libopus/include
+    )
+    target_link_libraries(opusfile PRIVATE ogg opus)
+    if (UNIX AND NOT APPLE AND NOT ANDROID)
+        target_link_libraries(opusfile PRIVATE m)
+    endif()
+
     add_definitions(
         -DAUDIOSUPPORT
+    )
+    include_directories(
+        3rd_party/portaudio/include
+        3rd_party/audio_decoders
+        3rd_party/libopusfile/include
+        3rd_party/libopus/include
+        3rd_party/libogg/include
+        ${CMAKE_CURRENT_BINARY_DIR}/3rd_party/libogg/include
     )
 else()
     message("Building without Audio")
@@ -670,6 +714,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/interpreter.cpp coreengine/interpreter.h
     coreengine/gameconsole.cpp coreengine/gameconsole.h
     coreengine/audiomanager.cpp coreengine/audiomanager.h
+    coreengine/audiodecoder.cpp coreengine/audiodecoder.h
     coreengine/pathfindingsystem.cpp coreengine/pathfindingsystem.h
     coreengine/qmlvector.cpp coreengine/qmlvector.h
     coreengine/scriptvariables.cpp coreengine/scriptvariables.h
@@ -957,25 +1002,21 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/windows/crashreporter_os.cpp
         coreengine/windows/Gamepad.cpp
-        coreengine/sounds/ondemandsound.cpp
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/android/crashreporter_os.cpp
         coreengine/android/Gamepad.cpp
-        coreengine/sounds/ondemandsound.cpp
     )
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/ios/crashreporter_os.cpp
         coreengine/ios/Gamepad.cpp
-        coreengine/sounds/ondemandsound.cpp
     )
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/linux/crashreporter_os.cpp
         coreengine/linux/Gamepad.cpp
-        coreengine/sounds/ondemandsound.cpp
     )
 else()
     message(FATAL_ERROR "Unsupported OS found")
@@ -1038,7 +1079,10 @@ set(QT_LIBRARIES
 if (AUDIOSUPPORT)
     set(QT_LIBRARIES
         ${QT_LIBRARIES}
-        Qt6::Multimedia
+        portaudio
+        opusfile
+        opus
+        ogg
     )
 endif()
 
@@ -1408,7 +1452,6 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
     ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Network${LibNameEnd}
-    ${QT_BIN_DIR}/${LibNameStart}Multimedia${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
     ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
@@ -1448,7 +1491,6 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION     "/"             OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION     "platforms"     OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_SQL_LIBS}        DESTINATION     "sqldrivers"    OPTIONAL)
-    install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION     "/"             OPTIONAL)
     install(FILES xinput1_3.dll                                 DESTINATION     "/"             OPTIONAL)
     install(FILES ${OPENSSL_LIBS}                               DESTINATION     "/"             OPTIONAL)
 
@@ -1513,13 +1555,6 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
             "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../.."
             -always-overwrite
         COMMENT "Running macdeployqt..."
-    )
-    # NOTE: target the bundle in the build tree (not CMAKE_INSTALL_PREFIX, which does not exist yet at this point)
-    #       so the plugin is present when install(TARGETS) later copies the bundle.
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/PlugIns/multimedia"
-        COMMAND ${CMAKE_COMMAND} -E copy ${QT_BIN_DIR}/../plugins/multimedia/libdarwinmediaplugin.dylib "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../Contents/PlugIns/multimedia/libdarwinmediaplugin.dylib"
-        COMMENT "Copying darwin media plugin..."
     )
     # Re-sign the bundle (ad-hoc) after macdeployqt/manual plugin copies modified its contents.
     # `codesign --deep` signs bundles outside-in and mishandles versioned framework bundles
