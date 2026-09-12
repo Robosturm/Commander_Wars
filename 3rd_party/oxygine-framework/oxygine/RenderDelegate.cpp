@@ -12,7 +12,9 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 
 #include <QPainter>
+#ifdef GRAPHICSUPPORT
 #include <QOpenGLPaintDevice>
+#endif
 
 namespace oxygine
 {
