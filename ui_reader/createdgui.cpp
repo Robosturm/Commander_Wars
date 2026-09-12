@@ -191,7 +191,13 @@ void CreatedGui::deleteObject(const QString & id)
     }
 }
 
+
 void CreatedGui::changeBackground(QString background)
+{
+    changeBackground(background, nullptr);
+}
+
+void CreatedGui::changeBackground(QString background, std::function<QString()> backgroundSelector)
 {
     if (m_backgroundSprite.get() == nullptr)
     {
@@ -243,6 +249,15 @@ void CreatedGui::changeBackground(QString background)
             }
         }
     }
+    else if (backgroundSelector)
+    {
+        auto* pAnim = pBackgroundManager->getResAnim(backgroundSelector());
+        if (pAnim != nullptr && pAnim->getWidth() > 0 && pAnim->getHeight() > 0)
+        {
+            pBackground = pAnim;
+        }
+    }
+    
     if (pBackground != nullptr &&
         pBackground->getWidth() > 0 &&
         pBackground->getHeight() > 0)

@@ -237,16 +237,13 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
             m_AudioManager->loadFolder("resources/music/hauptmenue");
 #endif
             emit m_renderer.sigLoadResources(step);
-            spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-            pLoadingScreen->show();
-            pLoadingScreen->setProgress(tr("Loading objects..."), step  * stepProgress);
-            redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_ObjectManager:
         {
             emit m_renderer.sigLoadResources(step);
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+            pLoadingScreen->show();
             pLoadingScreen->setProgress(tr("Checking for new version..."), step  * stepProgress);
             redrawUi();
             break;
