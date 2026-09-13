@@ -92,10 +92,23 @@ namespace oxygine
         void setTimerCycle(qint32 newTimerCycle);
         void setRendering(bool render);
     private:
-        inline bool acquireLock();
+        inline bool acquireLock()
+        {
+            if (m_pausedCounter == 0)
+            {
+                if (m_renderSync.try_lock() && 
+                    m_pausedCounter == 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
     private:
         WindowBase & m_window;
+        std::atomic<quint8> & m_pausedCounter;
+        QMutex & m_renderSync;
         qint32 m_repeatedFramesDropped{0};
         QTimer m_timer;
         QTimer m_mouseDelayTimer;

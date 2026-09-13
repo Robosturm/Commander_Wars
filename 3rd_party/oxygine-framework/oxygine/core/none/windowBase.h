@@ -55,7 +55,7 @@ namespace oxygine
         bool m_renderEnabled{true};
         qint32 m_repeatedFramesDropped{0};
         QMutex m_pauseMutex;
-        qint32 m_pausedCounter{0};
+        std::atomic<quint8> m_pausedCounter{0};
         bool m_quit{false};
         bool m_noUi{true};
         QMutex m_renderSync;
