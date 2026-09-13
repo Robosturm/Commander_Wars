@@ -1,6 +1,9 @@
 #include "objects/base/EventTextEdit.h"
 #include "coreengine/interpreter.h"
 
+#include <QGuiApplication>
+#include <QInputMethod>
+
 EventTextEdit::EventTextEdit()
 {
 #ifdef GRAPHICSUPPORT
@@ -65,6 +68,7 @@ void EventTextEdit::inputMethodEvent(QInputMethodEvent *event)
     cursor.setPosition(replacementEnd, QTextCursor::KeepAnchor);
     cursor.insertText(commitString);
     setTextCursor(cursor);
+    QGuiApplication::inputMethod()->update(Qt::ImQueryAll);
     event->accept();
 }
 

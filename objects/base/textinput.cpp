@@ -5,6 +5,8 @@
 #include "coreengine/interpreter.h"
 
 #include <QFontMetrics>
+#include <QGuiApplication>
+#include <QInputMethod>
 
 TextInput::TextInput()
 {
@@ -202,6 +204,7 @@ void TextInput::focused()
         }
         m_lineEdit->setTextCursor(cursor);
     }
+    QGuiApplication::inputMethod()->update(Qt::ImQueryAll);
     emit Mainapp::getInstance()->sigShowKeyboard(true);
 }
 
