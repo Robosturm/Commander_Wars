@@ -30,7 +30,8 @@ SoundData::SoundData()
 }
 
 AudioManager::AudioManager(bool noAudio, bool useAudioThread)
-    : m_noAudio(noAudio)
+    : m_noAudio(noAudio),
+    m_pollTimer(this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("AudioThread");
