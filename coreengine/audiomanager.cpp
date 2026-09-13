@@ -307,7 +307,7 @@ int AudioManager::paCallback(const void* inputBuffer, void* outputBuffer,
     for (qint32 v = 0; v < MAX_PARALLEL_SOUNDS; ++v)
     {
         auto& voice = self->m_soundVoices[v];
-        if (!voice.active || !voice.soundData || voice.soundData->m_samples.empty())
+        if (!voice.active || !voice.soundData || voice.soundData->m_samples.empty() || voice.soundData->m_totalFrames <= 0)
         {
             continue;
         }
@@ -345,7 +345,7 @@ int AudioManager::paCallback(const void* inputBuffer, void* outputBuffer,
                     voice.remainingLoops--;
                     voice.currentFrame = 0;
                 }
-                else if (voice.remainingLoops == -1)
+                else if (voice.remainingLoops < 0)
                 {
                     voice.currentFrame = 0;
                 }
