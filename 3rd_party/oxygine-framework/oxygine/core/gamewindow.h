@@ -47,7 +47,7 @@ public:
     /**
          * @brief pauseRendering
          */
-    void pauseRendering()
+    inline void pauseRendering()
     {
         if (!isRenderThread())
         {
@@ -66,7 +66,7 @@ public:
     /**
          * @brief continueRendering
          */
-    void continueRendering()
+    inline void continueRendering()
     {
         if (!isRenderThread())
         {
@@ -139,7 +139,6 @@ protected slots:
     virtual void onQuit() = 0;
     void quit(qint32 exitCode);
     void showKeyboard(bool visible);
-    void mouseMoveEventDelayed();
 
 protected:
     virtual void registerResourceTypes();
@@ -156,8 +155,6 @@ protected:
     void mouseMoveEvent(int x, int y);
 
 protected:
-    QTimer m_mouseDelayTimer;
-    QPoint m_lastMousePosition;
     QElapsedTimer m_pressDownTime;
     bool m_pressDownTimeRunning{false};
 

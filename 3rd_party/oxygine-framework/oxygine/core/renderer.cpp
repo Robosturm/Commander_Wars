@@ -1,4 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/core/renderer.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "game/GameEnums.h"
 #include "game/gamerecording/gamemapimagesaver.h"
 #include "menue/basegamemenu.h"
@@ -8,12 +9,15 @@ using namespace oxygine;
 
 Renderer::Renderer(WindowBase & window)
     : m_window(window),
-      m_timer(this)
+      m_timer(this),
+      m_mouseDelayTimer(this)
 {
     connect(this, &Renderer::sigPaint, this, &Renderer::onPaint, Qt::QueuedConnection);
     connect(&m_timer, &QTimer::timeout, this, &Renderer::onPaint);
     connect(this, &Renderer::sigSetTimerCycle, this, &Renderer::setTimerCycle);
     connect(this, &Renderer::sigSetRendering, this, &Renderer::setRendering);
+    connect(&m_mouseDelayTimer, &QTimer::timeout, this, &Renderer::mouseMoveEventDelayed, Qt::QueuedConnection);
+    m_mouseDelayTimer.setSingleShot(true);
 }
 
 Renderer::~Renderer()
@@ -304,4 +308,108 @@ void Renderer::setRendering(bool render)
 void Renderer::setTimerCycle(qint32 newTimerCycle)
 {
     m_timer.setInterval(newTimerCycle);
+}
+
+void Renderer::mouseMoveEvent(int x, int y)
+{
+    bool handled = false;
+    if (acquireLock())
+    {
+        oxygine::Input* input = &oxygine::Input::getInstance();
+        m_lastMousePosition = QPoint(x, y);
+        auto delayed = input->sendPointerMotionEvent(oxygine::Stage::getStage(), x, y, 1.0f, input->getPointerMouse());
+        if (delayed > 0)
+        {
+            m_mouseDelayTimer.start(delayed);
+        }
+        else
+        {
+            m_mouseDelayTimer.stop();
+        }
+        m_window.m_renderSync.unlock();
+        handled = true;
+    }
+    if (!handled)
+    {
+        QTimer::singleShot(5, this, [this, x, y]()
+        {
+            mouseMoveEvent(x, y);
+        });
+    }
+}
+bool Renderer::acquireLock()
+{
+    if (m_window.m_pausedCounter == 0)
+    {
+        if (m_window.m_renderSync.try_lock() && 
+            m_window.m_pausedCounter == 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Renderer::mouseMoveEventDelayed()
+{
+    mouseMoveEvent(m_lastMousePosition.x(), m_lastMousePosition.y());
+}
+
+void Renderer::wheelEvent(qint32 x, qint32 y)
+{
+    bool handled = false;
+    if (acquireLock())
+    {
+        oxygine::Input & input = oxygine::Input::getInstance();
+        input.sendPointerWheelEvent(oxygine::Stage::getStage(), QPoint(x, y), input.getPointerMouse());
+        m_window.m_renderSync.unlock();
+        handled = true;
+    }
+    if (!handled)
+    {
+        QTimer::singleShot(5, this, [this, x, y]()
+        {
+            wheelEvent(x, y);
+        });
+    }
+}
+
+void Renderer::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y)
+{
+    bool handled = false;
+    if (acquireLock())
+    {
+        oxygine::Input & input = oxygine::Input::getInstance();
+        input.sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
+                                      oxygine::TouchEvent::TOUCH_DOWN, input.getPointerMouse());
+        m_window.m_renderSync.unlock();
+        handled = true;
+    }
+    if (!handled)
+    {
+        QTimer::singleShot(5, this, [this, button, x, y]()
+        {
+            mousePressEvent(button, x, y);
+        });
+    }
+}
+
+void Renderer::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y)
+{
+    bool handled = false;
+    if (acquireLock())
+    {
+        oxygine::Input & input = oxygine::Input::getInstance();
+        input.sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
+                                 oxygine::TouchEvent::TOUCH_UP, input.getPointerMouse());
+        m_window.m_renderSync.unlock();
+        handled = true;
+    }
+    if (!handled)
+    {
+        QTimer::singleShot(5, this, [this, button, x, y]()
+        {
+            mouseReleaseEvent(button, x, y);
+        });
+    }
 }

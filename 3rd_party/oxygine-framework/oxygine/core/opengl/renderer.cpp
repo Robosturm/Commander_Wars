@@ -93,31 +93,28 @@ void Renderer::onPaint()
     {
         if (!m_window.m_noUi)
         {
-            if (m_window.m_pausedCounter == 0)
+            if (acquireLock())
             {
-                if (m_window.m_renderSync.tryLock())
+                if (!m_window.m_terminating)
                 {
-                    if (!m_window.m_terminating && m_window.m_pausedCounter == 0)
+                    m_window.updateData();
+                    if (oxygine::Stage::getStage().get() != nullptr)
                     {
-                        m_window.updateData();
-                        if (oxygine::Stage::getStage().get() != nullptr)
+                        oxygine::Stage::getStage()->updateStage();
+                        if (beginRendering())
                         {
-                            oxygine::Stage::getStage()->updateStage();
-                            if (beginRendering())
-                            {
-                                auto* context = m_window.context();
-                                QColor clearColor(0, 0, 0, 255);
-                                QSize windowSize = m_window.size();
-                                QRect viewport(0, 0, windowSize.width(), windowSize.height());
-                                // Render all actors inside the stage. Actor::render will also be called for all its children
-                                oxygine::Stage::getStage()->renderStage(clearColor, viewport);
-                                context->swapBuffers(context->surface());
-                                m_repeatedFramesDropped = 0;
-                            }
+                            auto* context = m_window.context();
+                            QColor clearColor(0, 0, 0, 255);
+                            QSize windowSize = m_window.size();
+                            QRect viewport(0, 0, windowSize.width(), windowSize.height());
+                            // Render all actors inside the stage. Actor::render will also be called for all its children
+                            oxygine::Stage::getStage()->renderStage(clearColor, viewport);
+                            context->swapBuffers(context->surface());
+                            m_repeatedFramesDropped = 0;
                         }
                     }
-                    m_window.m_renderSync.unlock();
                 }
+                m_window.m_renderSync.unlock();
             }
         }
     }
