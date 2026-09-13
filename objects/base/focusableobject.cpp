@@ -46,7 +46,6 @@ bool FocusableObject::handleEvent(QEvent *event)
     {
         switch (event->type())
         {
-            case QEvent::InputMethodQuery:
             case QEvent::InputMethod:
             case QEvent::KeyPress:
             case QEvent::KeyRelease:
