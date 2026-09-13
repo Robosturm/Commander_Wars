@@ -239,7 +239,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
             emit m_renderer.sigLoadResources(step);
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
-            pLoadingScreen->setProgress(tr("Loading backgrounds..."), 1);
+            pLoadingScreen->setProgress(tr("Loading backgrounds..."), 2);
             redrawUi();
             break;
         }

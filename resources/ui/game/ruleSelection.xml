@@ -863,12 +863,12 @@
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY</y>
                     <Id>"BACKGROUND_SPRITE"</Id>
-                    <width>250</width>
-                    <height>100</height>
+                    <width>400</width>
+                    <height>125</height>
                     <tooltip>QT_TRANSLATE_NOOP("GAME","Background sprite")</tooltip>
                     <startValue>RuleSelectionScript.getStartBackgroundSprite()</startValue>
                     <spriteType>""</spriteType>
-                    <spriteSize>195</spriteSize>
+                    <spriteSize>335</spriteSize>
                     <items>RuleSelectionScript.getBackgroundSprites()</items>
                     <onEvent>RuleSelectionScript.selectBackground(input2)</onEvent>
                     <enabled>currentMenu.getRuleChangeEabled()</enabled>
@@ -884,7 +884,7 @@
                 </Button>
                 <Label>
                     <x>5</x>
-                    <y>lastY + 110</y>
+                    <y>lastY + 135</y>
                     <width>300</width>
                     <text>QT_TRANSLATE_NOOP("GAME","CO banlist:")</text>
                     <font>"main"</font>

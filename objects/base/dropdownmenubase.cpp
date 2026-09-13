@@ -28,14 +28,14 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount, qint32 height
     m_pClipActor->setX(10);
     addChild(m_Box);
     qint32 maxItemCount = 2;
-    qint32 changedCount = oxygine::Stage::getStage()->getHeight() / height / 4;
+    qint32 changedCount = oxygine::Stage::getStage()->getHeight() / height / 3;
     if (changedCount > maxItemCount)
     {
         maxItemCount = changedCount;
     }
-    if (oxygine::Stage::getStage()->getHeight() / 4 < maxItemCount * height)
+    if (oxygine::Stage::getStage()->getHeight() / 3 < maxItemCount * height)
     {
-        maxItemCount = oxygine::Stage::getStage()->getHeight() / 4 / height;
+        maxItemCount = oxygine::Stage::getStage()->getHeight() / 3 / height;
     }
     qint32 scrollHeigth = maxItemCount * height;
     if (itemcount < maxItemCount)
