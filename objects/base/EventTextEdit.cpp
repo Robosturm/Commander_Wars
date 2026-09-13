@@ -47,6 +47,27 @@ bool EventTextEdit::event(QEvent *event)
     return QTextEdit::event(event);
 }
 
+void EventTextEdit::inputMethodEvent(QInputMethodEvent *event)
+{
+    const QString commitString = event->commitString();
+    const qint32 replacementLength = event->replacementLength();
+    if (commitString.isEmpty() && replacementLength == 0)
+    {
+        QTextEdit::inputMethodEvent(event);
+        return;
+    }
+
+    auto cursor = textCursor();
+    const qint32 documentLength = document()->characterCount() - 1;
+    const qint32 replacementStart = qBound(0, cursor.position() + event->replacementStart(), documentLength);
+    const qint32 replacementEnd = qBound(replacementStart, replacementStart + replacementLength, documentLength);
+    cursor.setPosition(replacementStart);
+    cursor.setPosition(replacementEnd, QTextCursor::KeepAnchor);
+    cursor.insertText(commitString);
+    setTextCursor(cursor);
+    event->accept();
+}
+
 bool EventTextEdit::isEditingKeyPress(QKeyEvent *keyEvent) const
 {
     bool editing = false;
