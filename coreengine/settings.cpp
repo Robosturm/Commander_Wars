@@ -1362,11 +1362,17 @@ QString Settings::getActiveUserPath()
 {
     bool smallScreenDevice = hasSmallScreen();
     QString defaultPath = "";
-    if (smallScreenDevice)
+#ifdef Q_OS_ANDROID
+    QString publicDataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
+    if (!publicDataPath.isEmpty() && QFileInfo(publicDataPath).isWritable())
     {
-        defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
+        defaultPath = publicDataPath;
     }
-#ifdef USEAPPCONFIGPATH
+    else
+    {
+        defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
+    }
+#elif defined(USEAPPCONFIGPATH)
     defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
 #endif
     Mainapp::getInstance()->getParser().getUserPath(defaultPath);
