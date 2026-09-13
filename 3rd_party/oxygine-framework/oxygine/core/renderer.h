@@ -52,6 +52,12 @@ namespace oxygine
     public slots:
         void loadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor, bool clamp2Edge = true, quint32 linearFilter = 0);
 
+        // event loop handling
+        void mouseMoveEvent(int x, int y);
+        void mouseMoveEventDelayed();
+        void wheelEvent(qint32 x, qint32 y);
+        void mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
+        void mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
     private slots:
         void quit();
         void onPaint();
@@ -85,11 +91,15 @@ namespace oxygine
         void detach(oxygine::spActor actor);
         void setTimerCycle(qint32 newTimerCycle);
         void setRendering(bool render);
+    private:
+        inline bool acquireLock();
 
     private:
         WindowBase & m_window;
         qint32 m_repeatedFramesDropped{0};
         QTimer m_timer;
+        QTimer m_mouseDelayTimer;
+        QPoint m_lastMousePosition;
     };
 }
 
