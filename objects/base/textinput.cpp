@@ -50,12 +50,13 @@ void TextInput::editFinished()
     }
 }
 
-void TextInput::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
+QVariant TextInput::inputMethodQuery(Qt::InputMethodQuery query) const
 {
     if (m_lineEdit != nullptr)
     {
-        m_lineEdit->inputMethodQuery(query, arg);
+        return m_lineEdit->inputMethodQuery(query);
     }
+    return QVariant();
 }
 
 QString TextInput::getCurrentText() const

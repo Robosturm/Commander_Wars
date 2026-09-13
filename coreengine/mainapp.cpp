@@ -682,6 +682,35 @@ bool Mainapp::event(QEvent *event)
             {
                 redrawUi();
             }
+            else if (eventType == QEvent::InputMethodQuery)
+            {
+                QInputMethodQueryEvent* inputEvent = static_cast<QInputMethodQueryEvent*>(event);
+                constexpr Qt::InputMethodQuery queries[] =
+                {
+                    Qt::ImEnabled,
+                    Qt::ImCursorRectangle,
+                    Qt::ImFont,
+                    Qt::ImCursorPosition,
+                    Qt::ImSurroundingText,
+                    Qt::ImCurrentSelection,
+                    Qt::ImMaximumTextLength,
+                    Qt::ImAnchorPosition,
+                    Qt::ImHints,
+                    Qt::ImPreferredLanguage,
+                    Qt::ImAbsolutePosition,
+                    Qt::ImTextBeforeCursor,
+                    Qt::ImTextAfterCursor,
+                    Qt::ImEnterKeyType,
+                };
+                for (auto query : queries)
+                {
+                    if (inputEvent->queries().testFlag(query))
+                    {
+                        inputEvent->setValue(query, FocusableObject::handleInputMethodQuery(query));
+                    }
+                }
+                handled = true;
+            }
             else if (eventType == QEvent::InputMethod)
             {
 #ifdef GRAPHICSUPPORT
@@ -974,9 +1003,4 @@ bool Mainapp::getCreateSlaveLogs() const
 void Mainapp::setCreateSlaveLogs(bool create)
 {
     m_createSlaveLogs = create;
-}
-
-void Mainapp::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
-{
-    FocusableObject::handleInputMethodQuery(query, arg);
 }

@@ -65,12 +65,13 @@ bool FocusableObject::handleEvent(QEvent *event)
     return handled;
 }
 
-void FocusableObject::handleInputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
+QVariant FocusableObject::handleInputMethodQuery(Qt::InputMethodQuery query)
 {
     if (FocusableObject::getFocusedObject() != nullptr)
     {
-        FocusableObject::getFocusedObject()->inputMethodQuery(query, arg);
+        return FocusableObject::getFocusedObject()->inputMethodQuery(query);
     }
+    return QVariant();
 }
 
 

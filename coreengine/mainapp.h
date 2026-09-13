@@ -234,12 +234,6 @@ public slots:
     void doScreenshot();
     void nextStartUpStep(GameEnums::StartupPhase step);
     /**
-     * @brief inputMethodQuery dummy function to rerout qlineedit events
-     * @param query
-     * @param ret
-     */
-    void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
-    /**
      * @brief createLineEdit
      */
     void createLineEdit();
