@@ -9,6 +9,8 @@ using namespace oxygine;
 
 Renderer::Renderer(WindowBase & window)
     : m_window(window),
+      m_pausedCounter(window.m_pausedCounter),
+      m_renderSync(window.m_renderSync),
       m_timer(this),
       m_mouseDelayTimer(this)
 {
@@ -336,18 +338,6 @@ void Renderer::mouseMoveEvent(int x, int y)
             mouseMoveEvent(x, y);
         });
     }
-}
-bool Renderer::acquireLock()
-{
-    if (m_window.m_pausedCounter == 0)
-    {
-        if (m_window.m_renderSync.try_lock() && 
-            m_window.m_pausedCounter == 0)
-        {
-            return true;
-        }
-    }
-    return false;
 }
 
 void Renderer::mouseMoveEventDelayed()
