@@ -25,8 +25,6 @@
 
 namespace
 {
-    constexpr const char* LOG_TAG = "PortAudioAAudioShim";
-
     struct PaAndroidStream
     {
         AAudioStream* aaudioStream{nullptr};
