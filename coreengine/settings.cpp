@@ -735,6 +735,12 @@ void Settings::setUserPath(const QString newUserPath)
         }
         m_userPath = folder;
     }
+    if (!m_userPath.isEmpty() && 
+        !QDir().exists(m_userPath) && 
+        !QDir().mkdir(m_userPath))
+    {
+        CONSOLE_PRINT("Failed to create directory for user path: " + m_userPath, GameConsole::eINFO);
+    }
     VirtualPaths::setSearchPath(m_userPath, m_activeMods);
 }
 
@@ -1363,17 +1369,25 @@ QString Settings::getActiveUserPath()
     bool smallScreenDevice = hasSmallScreen();
     QString defaultPath = "";
 #ifdef Q_OS_ANDROID
-    QString publicDataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
+    QString publicDataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     if (!publicDataPath.isEmpty() && QFileInfo(publicDataPath).isWritable())
     {
         defaultPath = publicDataPath;
     }
     else
     {
-        defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
+        publicDataPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+        if (!publicDataPath.isEmpty() && QFileInfo(publicDataPath).isWritable())
+        {
+            defaultPath = publicDataPath;
+        }
+        else
+        {
+            defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+        }
     }
 #elif defined(USEAPPCONFIGPATH)
-    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
+    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #endif
     Mainapp::getInstance()->getParser().getUserPath(defaultPath);
     if (!defaultPath.isEmpty())
