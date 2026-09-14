@@ -104,7 +104,7 @@ void AudioManager::initAudio()
             PaError err = Pa_Initialize();
             if (err != paNoError)
             {
-                CONSOLE_PRINT_MODULE("Pa_Initialize failed: " + QString::fromUtf8(Pa_GetErrorText(err)), GameConsole::eERROR, GameConsole::eAudio);
+                CONSOLE_PRINT("Pa_Initialize failed: " + QString::fromUtf8(Pa_GetErrorText(err)), GameConsole::eERROR);
                 return;
             }
 
