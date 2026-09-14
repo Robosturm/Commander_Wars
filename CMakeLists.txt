@@ -184,10 +184,25 @@ endif()
 if (AUDIOSUPPORT)
     message("Building with Audio (PortAudio & Opus)")
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-    set(PA_BUILD_SHARED_LIBS OFF CACHE BOOL "Build PortAudio as static" FORCE)
-    set(PA_BUILD_TESTS OFF CACHE BOOL "Build PortAudio tests" FORCE)
-    set(PA_BUILD_EXAMPLES OFF CACHE BOOL "Build PortAudio examples" FORCE)
-    add_subdirectory(3rd_party/portaudio EXCLUDE_FROM_ALL)
+
+    if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+        # Upstream PortAudio ships no Android host API (no ALSA/PulseAudio/JACK device nodes
+        # exist on stock Android), so Pa_Initialize() would succeed with zero usable devices
+        # and every stream would silently fail to open. Use a small AAudio-backed shim instead
+        # that implements the exact subset of the PortAudio C API AudioManager relies on.
+        message("Using AAudio-backed PortAudio compatibility shim for Android")
+        add_library(portaudio STATIC
+            3rd_party/portaudio_android/pa_android_aaudio.cpp
+        )
+        target_include_directories(portaudio PUBLIC 3rd_party/portaudio/include)
+        target_link_libraries(portaudio PRIVATE aaudio log android)
+    else()
+        set(PA_BUILD_SHARED_LIBS OFF CACHE BOOL "Build PortAudio as static" FORCE)
+        set(PA_BUILD_TESTS OFF CACHE BOOL "Build PortAudio tests" FORCE)
+        set(PA_BUILD_EXAMPLES OFF CACHE BOOL "Build PortAudio examples" FORCE)
+        add_subdirectory(3rd_party/portaudio EXCLUDE_FROM_ALL)
+        set_target_properties(portaudio PROPERTIES POSITION_INDEPENDENT_CODE ON)
+    endif()
 
     set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build Ogg static" FORCE)
     set(INSTALL_DOCS OFF CACHE BOOL "" FORCE)
@@ -200,7 +215,6 @@ if (AUDIOSUPPORT)
     set(OPUS_BUILD_PROGRAMS OFF CACHE BOOL "" FORCE)
     add_subdirectory(3rd_party/libopus EXCLUDE_FROM_ALL)
 
-    set_target_properties(portaudio PROPERTIES POSITION_INDEPENDENT_CODE ON)
     set_target_properties(ogg PROPERTIES POSITION_INDEPENDENT_CODE ON)
     set_target_properties(opus PROPERTIES POSITION_INDEPENDENT_CODE ON C_VISIBILITY_PRESET hidden)
 
