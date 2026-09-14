@@ -233,7 +233,6 @@ public slots:
      */
     void doScreenshot();
     void nextStartUpStep(GameEnums::StartupPhase step);
-    Q_INVOKABLE QVariant inputMethodQuery(Qt::InputMethodQuery query, QVariant argument);
     /**
      * @brief createLineEdit
      */

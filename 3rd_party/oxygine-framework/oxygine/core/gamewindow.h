@@ -153,6 +153,7 @@ protected:
     void handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints);
     bool sameTouchpoint(const QPointF & pos1, const QPointF & pos2) const;
     void mouseMoveEvent(int x, int y);
+    bool isConsoleTouchEvent(QList<QTouchEvent::TouchPoint> & touchPoints);
 
 protected:
     QElapsedTimer m_pressDownTime;
@@ -161,6 +162,9 @@ protected:
     // touch handling
     bool m_longPressSent{false};
     bool m_touchMousePressSent{false};
+    bool m_longPress{false};
+    bool m_consolePress{false};
+    
     float m_lastZoomValue{1.0f};
 
     static GameWindow* m_window;

@@ -44,6 +44,7 @@ bool FocusableObject::handleEvent(QEvent *event)
     bool handled = false;
     if (pObj != nullptr)
     {
+        CONSOLE_PRINT("Handling input event for focused object " + QString::number(event->type()), GameConsole::eDEBUG);
         switch (event->type())
         {
             case QEvent::InputMethod:
@@ -67,7 +68,8 @@ bool FocusableObject::handleEvent(QEvent *event)
 QVariant FocusableObject::handleInputMethodQuery(Qt::InputMethodQuery query)
 {
     if (FocusableObject::getFocusedObject() != nullptr)
-    {
+    {    
+        CONSOLE_PRINT("Handling input method query for focused object " + QString::number(query), GameConsole::eDEBUG);
         return FocusableObject::getFocusedObject()->inputMethodQuery(query);
     }
     return QVariant();

@@ -735,12 +735,6 @@ bool Mainapp::keyInputMethodEvent(QInputMethodEvent *event)
     return true;
 }
 
-QVariant Mainapp::inputMethodQuery(Qt::InputMethodQuery query, QVariant argument)
-{
-    Q_UNUSED(argument);
-    return FocusableObject::handleInputMethodQuery(query);
-}
-
 bool Mainapp::getNoUi() const
 {
     return m_noUi;

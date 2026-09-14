@@ -37,14 +37,9 @@ bool EventTextEdit::event(QEvent *event)
         }
         else if (event->type() == QEvent::InputMethod)
         {
-            // swallow the commit of an input method text
             QInputMethodEvent* inputEvent = static_cast<QInputMethodEvent*>(event);
-            if (!inputEvent->commitString().isEmpty() ||
-                inputEvent->replacementLength() > 0)
-            {
-                return true;
-            }
-            return QTextEdit::event(event);
+            inputMethodEvent(inputEvent);
+            return true;
         }
     }
     return QTextEdit::event(event);
@@ -54,6 +49,7 @@ void EventTextEdit::inputMethodEvent(QInputMethodEvent *event)
 {
     const QString commitString = event->commitString();
     const qint32 replacementLength = event->replacementLength();
+    CONSOLE_PRINT("Handling input method event: commitString='" + commitString + "' replacementLength=" + QString::number(replacementLength), GameConsole::eDEBUG);
     if (commitString.isEmpty() && replacementLength == 0)
     {
         QTextEdit::inputMethodEvent(event);
