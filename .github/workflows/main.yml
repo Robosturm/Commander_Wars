@@ -135,7 +135,7 @@ jobs:
             qtPath: 'android_armv7'
             qtTools: ''
             target: 'android'
-            target-api-level: '23'
+            target-api-level: '26'
             abi : "armeabi-v7a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
@@ -152,7 +152,7 @@ jobs:
             qtPath: 'android_arm64_v8a'
             qtTools: ''
             target: 'android'
-            target-api-level: '23'
+            target-api-level: '26'
             abi : "arm64-v8a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
