@@ -7,7 +7,7 @@ project (Commander_Wars LANGUAGES CXX C)
 # 3. make sure that -DOPENSSL_ROOT_DIR= targets your local openssl installation e.g. -DOPENSSL_ROOT_DIR=D:/Qt/Tools/OpenSSL
 
 # Special Information for Android
-# ANDROID_NATIVE_API_LEVEL needs to be 27
+# ANDROID_NATIVE_API_LEVEL needs to be at least 26 when audio support is enabled.
 # NDK Version needs to be: 21.3.6528147 -> This needs to be matched exactly
 
 # Find includes in corresponding build directories
@@ -186,6 +186,13 @@ if (AUDIOSUPPORT)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
     if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+        if (CMAKE_SYSTEM_VERSION VERSION_LESS 26)
+            message(FATAL_ERROR
+                "AUDIOSUPPORT on Android requires API level 26 or later because it uses AAudio. "
+                "Configure with -DANDROID_NATIVE_API_LEVEL=26 or disable AUDIOSUPPORT."
+            )
+        endif()
+
         # Upstream PortAudio ships no Android host API (no ALSA/PulseAudio/JACK device nodes
         # exist on stock Android), so Pa_Initialize() would succeed with zero usable devices
         # and every stream would silently fail to open. Use a small AAudio-backed shim instead
