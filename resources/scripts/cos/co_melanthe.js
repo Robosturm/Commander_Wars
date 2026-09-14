@@ -40,117 +40,58 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        CO_MELANTHE.melantheDamage(co, CO_MELANTHE.powerHeal, CO_MELANTHE.powerDamage, powerNameAnimation, map);
+        CO_MELANTHE.melantheDamage(co, CO_MELANTHE.powerHeal, CO_MELANTHE.powerDamage, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
-    this.melantheDamage = function(co, heal, damage, powerNameAnimation, map)
+    this.melantheDamage = function(co, heal, damage, parentBuilder, map)
     {
-
-        var player = co.getOwner();
-        var units = player.getUnits();
-        var animations = [];
-        var counter = 0;
-        units.randomize();
-        for (var i = 0; i < units.size(); i++)
-        {
-            var unit = units.at(i);
-            if (CO_MELANTHE.isNature(unit.getX(), unit.getY(), map) === true)
+        var ownUnitsBuilder = new OWN_UNITS_ANIMATION_BUILDER(co, map);
+        ownUnitsBuilder.setUnitFilter((unit, map) => 
+            CO_MELANTHE.isNature(unit.getX(), unit.getY(), map)
+        );
+        ownUnitsBuilder.setSound("power3.wav");
+        ownUnitsBuilder.setSprite("power3");
+        ownUnitsBuilder.setPerAnimationFunction((unit, animation, map) => 
             {
-                var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-
                 animation.writeDataInt32(unit.getX());
                 animation.writeDataInt32(unit.getY());
                 animation.writeDataInt32(heal);
                 animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
-                var delay = globals.randInt(135, 265);
-                if (animations.length < 5)
-                {
-                    delay *= i;
-                }
-                animation.setSound("power3.wav", 1, delay);
-                if (animations.length < 5)
-                {
-                    animation.addSprite("power3", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                    powerNameAnimation.queueAnimation(animation);
-                    animations.push(animation);
-                }
-                else
-                {
-                    animation.addSprite("power3", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                    animations[counter].queueAnimation(animation);
-                    animations[counter] = animation;
-                    counter++;
-                    if (counter >= animations.length)
-                    {
-                        counter = 0;
-                    }
-                }
             }
-        }
+        );
+        parentBuilder.queueAnimationBuilder(ownUnitsBuilder);
+
         if (damage > 0)
         {
-            var playerCounter = map.getPlayerCount();
-            for (var i2 = 0; i2 < playerCounter; i2++)
-            {
-                var enemyPlayer = map.getPlayer(i2);
-                if ((enemyPlayer !== player) &&
-                        (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+            var enemyUnitsBuilder = new ENEMY_UNITS_ANIMATION_BUILDER(co, map);
+            enemyUnitsBuilder.setUnitFilter((unit, map) => 
+                CO_MELANTHE.isNature(unit.getX(), unit.getY(), map)
+            );
+            enemyUnitsBuilder.setSound("power4.wav");
+            enemyUnitsBuilder.setSprite("power4");
+            enemyUnitsBuilder.setPerAnimationFunction((unit, animation, map) => 
                 {
-
-                    units = enemyPlayer.getUnits();
-                    units.randomize();
-                    for (i = 0; i < units.size(); i++)
-                    {
-                        unit = units.at(i);
-
-                        if (CO_MELANTHE.isNature(unit.getX(), unit.getY(), map) === true)
-                        {
-                            animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                            animation.writeDataInt32(unit.getX());
-                            animation.writeDataInt32(unit.getY());
-                            animation.writeDataInt32(damage);
-                            animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
-                            var delay = globals.randInt(135, 265);
-                            if (animations.length < 5)
-                            {
-                                delay *= i;
-                            }
-                            animation.setSound("power4.wav", 1, delay);
-                            if (animations.length < 5)
-                            {
-                                animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                powerNameAnimation.queueAnimation(animation);
-                                animations.push(animation);
-                            }
-                            else
-                            {
-                                animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                animations[counter].queueAnimation(animation);
-                                animations[counter] = animation;
-                                counter++;
-                                if (counter >= animations.length)
-                                {
-                                    counter = 0;
-                                }
-                            }
-                        }
-                    }
+                    animation.writeDataInt32(unit.getX());
+                    animation.writeDataInt32(unit.getY());
+                    animation.writeDataInt32(damage);
+                    animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
                 }
-            }
+            );
+            ownUnitsBuilder.queueAnimationBuilder(enemyUnitsBuilder);
         }
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        CO_MELANTHE.melantheDamage(co, CO_MELANTHE.superPowerHeal, CO_MELANTHE.superPowerDamage, powerNameAnimation, map);
+        CO_MELANTHE.melantheDamage(co, CO_MELANTHE.superPowerHeal, CO_MELANTHE.superPowerDamage, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.isNature = function(posX, posY, map)

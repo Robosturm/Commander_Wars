@@ -13,10 +13,9 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        dialogBuilder.displayAnimation();
 
         var player = co.getOwner();
         var income = 0;
@@ -35,76 +34,43 @@ var Constructor = function()
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
         var variables = co.getVariables();
         var bonusUnitVariable = variables.createVariable("BONUSUNITS");
         var bonusOffVariable = variables.createVariable("BONUSOFF");
         var bonusUnits = bonusUnitVariable.readDataListInt32();
         var bonusOffs = bonusOffVariable.readDataListInt32();
-
         var costs = 0;
-        var units = co.getOwner().getUnits();
-        var animations = [];
-        var counter = 0;
-        units.randomize();
-        var size = units.size();
-        for (var i = 0; i < size; i++)
-        {
-            var unit = units.at(i);
 
-            // apply cost and offense boni
-            var healing = unit.getHpRounded() + CO_VARLOT.superPowerHeal;
-            if (healing > 10)
+        var ownUnitsBuilder = new OWN_UNITS_ANIMATION_BUILDER(co, map);
+        ownUnitsBuilder.setSounds(["power12_1.wav", "power12_2.wav"]);
+        ownUnitsBuilder.setSprite("power12");
+        ownUnitsBuilder.setAnimationAmount(7);
+        ownUnitsBuilder.setPerAnimationFunction((unit, animation, map) => 
             {
-                costs += unit.getUnitCosts() * (10 - unit.getHpRounded()) / 10;
-                var unitId = unit.getUniqueID();
-                bonusUnits.push(unitId);
-                bonusOffs.push((healing - 10) * CO_VARLOT.superPowerOverhealOffBonus);
-            }
-            else
-            {
-                costs += unit.getUnitCosts() * CO_VARLOT.superPowerHeal / 10;
-            }
-
-            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-            animation.writeDataInt32(unit.getX());
-            animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(4);
-            animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
-            var delay = globals.randInt(135, 265);
-            if (animations.length < 7)
-            {
-                delay *= i;
-            }
-            if (i % 2 === 0)
-            {
-                animation.setSound("power12_1.wav", 1, delay);
-            }
-            else
-            {
-                animation.setSound("power12_2.wav", 1, delay);
-            }
-            if (animations.length < 7)
-            {
-                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, delay);
-                powerNameAnimation.queueAnimation(animation);
-                animations.push(animation);
-            }
-            else
-            {
-                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, delay);
-                animations[counter].queueAnimation(animation);
-                animations[counter] = animation;
-                counter++;
-                if (counter >= animations.length)
+                var healing = unit.getHpRounded() + CO_VARLOT.superPowerHeal;
+                if (healing > 10)
                 {
-                    counter = 0;
+                    costs += unit.getUnitCosts() * (10 - unit.getHpRounded()) / 10;
+                    var unitId = unit.getUniqueID();
+                    bonusUnits.push(unitId);
+                    bonusOffs.push((healing - 10) * CO_VARLOT.superPowerOverhealOffBonus);
                 }
+                else
+                {
+                    costs += unit.getUnitCosts() * CO_VARLOT.superPowerHeal / 10;
+                }
+
+                animation.writeDataInt32(unit.getX());
+                animation.writeDataInt32(unit.getY());
+                animation.writeDataInt32(CO_VARLOT.superPowerHeal);
+                animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
             }
-        }
+        );
+        dialogBuilder.queueAnimationBuilder(ownUnitsBuilder);
+
+        dialogBuilder.displayAnimation();
 
         bonusUnitVariable.writeDataListInt32(bonusUnits);
         bonusOffVariable.writeDataListInt32(bonusOffs);

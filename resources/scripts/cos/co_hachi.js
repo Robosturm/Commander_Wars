@@ -13,26 +13,22 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
-        animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
-        animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        powerNameAnimation.queueAnimation(animation2);
+        var flashBuilder = new FLASH_ANIMATION_BUILDER(map);
+        dialogBuilder.queueAnimationBuilder(flashBuilder);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
-        animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
-        animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        powerNameAnimation.queueAnimation(animation2);
+        var flashBuilder = new FLASH_ANIMATION_BUILDER(map);
+        dialogBuilder.queueAnimationBuilder(flashBuilder);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.loadCOMusic = function(co, map)

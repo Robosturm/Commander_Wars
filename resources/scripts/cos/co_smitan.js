@@ -35,108 +35,47 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        var units = co.getOwner().getUnits();
-        var animations = [];
-        var counter = 0;
-        units.randomize();
-        for (var i = 0; i < units.size(); i++)
-        {
-            var unit = units.at(i);
-            if (unit.getBaseMaxRange() > 1)
+        var ownUnitsBuilder = new OWN_UNITS_ANIMATION_BUILDER(co, map);
+        ownUnitsBuilder.setUnitFilter((unit, map) => 
+            unit.getBaseMaxRange() > 1
+        );
+        ownUnitsBuilder.setSounds(["power9_1.wav", "power9_2.wav"]);
+        ownUnitsBuilder.setSprite("power9");
+        ownUnitsBuilder.setPerAnimationFunction((unit, animation, map) => 
             {
                 var variables = unit.getVariables();
                 var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
                 variable.writeDataInt32(1);
-                var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                var delay = globals.randInt(135, 265);
-                if (animations.length < 5)
-                {
-                    delay *= i;
-                }
-                if (i % 2 === 0)
-                {
-                    animation.setSound("power9_1.wav", 1, delay);
-                }
-                else
-                {
-                    animation.setSound("power9_2.wav", 1, delay);
-                }
-                if (animations.length < 5)
-                {
-                    animation.addSprite("power9", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                    powerNameAnimation.queueAnimation(animation);
-                    animations.push(animation);
-                }
-                else
-                {
-                    animation.addSprite("power9", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                    animations[counter].queueAnimation(animation);
-                    animations[counter] = animation;
-                    counter++;
-                    if (counter >= animations.length)
-                    {
-                        counter = 0;
-                    }
-                }
             }
-        }
+        );
+        dialogBuilder.queueAnimationBuilder(ownUnitsBuilder);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        var units = co.getOwner().getUnits();
-        var animations = [];
-        var counter = 0;
-        units.randomize();
-        for (var i = 0; i < units.size(); i++)
-        {
-            var unit = units.at(i);
-            if (unit.getBaseMaxRange() > 1)
+        var ownUnitsBuilder = new OWN_UNITS_ANIMATION_BUILDER(co, map);
+        ownUnitsBuilder.setUnitFilter((unit, map) => 
+            unit.getBaseMaxRange() > 1
+        );
+        ownUnitsBuilder.setSounds(["power12_1.wav", "power12_2.wav"]);
+        ownUnitsBuilder.setSprite("power12");
+        ownUnitsBuilder.setAnimationAmount(7);
+        ownUnitsBuilder.setPerAnimationFunction((unit, animation, map) => 
             {
                 var variables = unit.getVariables();
                 var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
                 variable.writeDataInt32(2);
-                var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                var delay = globals.randInt(135, 265);
-                if (animations.length < 7)
-                {
-                    delay *= i;
-                }
-                if (i % 2 === 0)
-                {
-                    animation.setSound("power12_1.wav", 1, delay);
-                }
-                else
-                {
-                    animation.setSound("power12_2.wav", 1, delay);
-                }
-                if (animations.length < 7)
-                {
-                    animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, delay);
-                    powerNameAnimation.queueAnimation(animation);
-                    animations.push(animation);
-                }
-                else
-                {
-                    animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, delay);
-                    animations[counter].queueAnimation(animation);
-                    animations[counter] = animation;
-                    counter++;
-                    if (counter >= animations.length)
-                    {
-                        counter = 0;
-                    }
-                }
             }
-        }
+        );
+        dialogBuilder.queueAnimationBuilder(ownUnitsBuilder);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)

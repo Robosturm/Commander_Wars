@@ -35,46 +35,41 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        CO_STURM.throwMeteor(co, CO_STURM.powerDamage, powerNameAnimation, map);
+        CO_STURM.throwMeteor(co, CO_STURM.powerDamage, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        CO_STURM.throwMeteor(co, CO_STURM.superPowerDamage, powerNameAnimation, map);
+        CO_STURM.throwMeteor(co, CO_STURM.superPowerDamage, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
-    this.throwMeteor = function(co, damage, powerNameAnimation, map)
+    this.throwMeteor = function(co, damage, dialogBuilder, map)
     {
         var meteorTarget = co.getOwner().getRockettarget(2, damage);
         // create cool meteor animation :)
-        var animation = GameAnimationFactory.createAnimation(map, meteorTarget.x + 2, meteorTarget.y - 4);
-        animation.addSprite("meteor", 0, 0, 2500, 4.0);
-        animation.addTweenPosition(Qt.point((meteorTarget.x - 2) * map.getImageSize(), (meteorTarget.y - 2) * map.getImageSize()), 1000);
-        animation.addTweenScale(0.65, 1000);
-        animation.addTweenColor(0, "#FFFFFFFF", "#00FFFFFF", 1000, false, 1200);
-        animation.addSound("meteorFall.wav");
-        powerNameAnimation.queueAnimation(animation);
-        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
-        animation2.addSprite2("white_pixel", 0, 0, 4200, map.getMapWidth(), map.getMapHeight());
-        animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true, 1000);
-        animation2.addSound("meteorImpact.wav");
-        powerNameAnimation.queueAnimation(animation2);
-        animation.setEndOfAnimationCall("CO_STURM", "postAnimationThrowMeteor");
-        animation.setStartOfAnimationCall("CO_STURM", "preAnimationThrowMeteor");
+        var meteorBuilder = new METEOR_ANIMATION_BUILDER(meteorTarget.x, meteorTarget.y, map);
+        meteorBuilder.setPerAnimationFunction((animation, map) =>
+            {
+                animation.setEndOfAnimationCall("CO_STURM", "postAnimationThrowMeteor");
+            }
+        );
+        dialogBuilder.queueAnimationBuilder(meteorBuilder);
+
+        var flashBuilder = new FLASH_ANIMATION_BUILDER(map);
+        flashBuilder.setDelay(meteorBuilder.fallTime);
+        flashBuilder.setSound("meteorImpact.wav");
+        dialogBuilder.queueAnimationBuilder(flashBuilder);
+
         CO_STURM.postAnimationThrowMeteorTarget = meteorTarget;
         CO_STURM.postAnimationThrowMeteorDamage = damage;
-    };
-    this.preAnimationThrowMeteor = function(animation, map)
-    {
-        map.centerMap(CO_STURM.postAnimationThrowMeteorTarget.x, CO_STURM.postAnimationThrowMeteorTarget.y);
     };
     this.postAnimationThrowMeteorTarget = null;
     this.postAnimationThrowMeteorDamage = 0;

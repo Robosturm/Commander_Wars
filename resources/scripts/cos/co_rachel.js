@@ -35,94 +35,47 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        var units = co.getOwner().getUnits();
-        var animations = [];
-        var counter = 0;
-        units.randomize();
-        for (var i = 0; i < units.size(); i++)
-        {
-            var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-            var delay = globals.randInt(135, 265);
-            if (animations.length < 5)
-            {
-                delay *= i;
-            }
-            if (i % 2 === 0)
-            {
-                animation.setSound("power7_1.wav", 1, delay);
-            }
-            else
-            {
-                animation.setSound("power7_2.wav", 1, delay);
-            }
-            if (animations.length < 5)
-            {
-                animation.addSprite("power7", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                powerNameAnimation.queueAnimation(animation);
-                animations.push(animation);
-            }
-            else
-            {
-                animation.addSprite("power7", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                animations[counter].queueAnimation(animation);
-                animations[counter] = animation;
-                counter++;
-                if (counter >= animations.length)
-                {
-                    counter = 0;
-                }
-            }
-        }
+        var ownUnitsBuilder = new OWN_UNITS_ANIMATION_BUILDER(co, map);
+        ownUnitsBuilder.setSounds(["power7_1.wav", "power7_2.wav"]);
+        ownUnitsBuilder.setSprite("power7");
+        dialogBuilder.queueAnimationBuilder(ownUnitsBuilder);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        var ret = CO_RACHEL.throwRocket(co, CO_RACHEL.superPowerDamage, GameEnums.RocketTarget_HpLowMoney, powerNameAnimation, 0, map);
+        var ret = CO_RACHEL.throwRocket(co, CO_RACHEL.superPowerDamage, GameEnums.RocketTarget_HpLowMoney, dialogBuilder, 0, map);
         ret = CO_RACHEL.throwRocket(co, CO_RACHEL.superPowerDamage, GameEnums.RocketTarget_HpHighMoney, ret, 1, map);
         CO_RACHEL.throwRocket(co, CO_RACHEL.superPowerDamage, GameEnums.RocketTarget_Money, ret, 2, map);
+
+        dialogBuilder.displayAnimation();
     };
 
-    this.throwRocket = function(co, damage, targetType, animation2, index, map)
+    this.throwRocket = function(co, damage, targetType, parentBuilder, index, map)
     {
         var rocketTarget = co.getOwner().getRockettarget(2, damage, 1.2, targetType);
-        
-        var animation = GameAnimationFactory.createAnimation(map, rocketTarget.x - 2, rocketTarget.y - 2 - 1);
-        animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
-        animation.setSound("missle_explosion.wav", 1);
-        animation.setEndOfAnimationCall("CO_RACHEL", "postAnimationThrowRocket" + index.toString());
-        animation.setStartOfAnimationCall("CO_RACHEL", "preAnimationThrowRocket" + index.toString());
-        animation2.queueAnimation(animation);
+
+        // GameConsole.print("Target X: " + rocketTarget.x + " Y: " + rocketTarget.y, 1);
+
+        var missileBuilder = new MISSILE_ANIMATION_BUILDER(rocketTarget.x, rocketTarget.y, map);
+        missileBuilder.setPerAnimationFunction((animation, map) => 
+            {
+                animation.setEndOfAnimationCall("CO_RACHEL", "postAnimationThrowRocket" + index.toString());
+            }
+        );
+        parentBuilder.queueAnimationBuilder(missileBuilder);
+
         CO_RACHEL.postAnimationThrowRocketTarget[index] = rocketTarget;
         CO_RACHEL.postAnimationThrowRocketDamage[index] = damage;
-        return animation;
+        return missileBuilder;
     };
     this.postAnimationThrowRocketTarget = [null, null, null];
     this.postAnimationThrowRocketDamage = [0, 0, 0];
-
-    this.preAnimationThrowRocket0 = function(animation, map)
-    {
-        map.centerMap(CO_RACHEL.postAnimationThrowRocketTarget[0].x,
-                      CO_RACHEL.postAnimationThrowRocketTarget[0].y);
-    };
-    this.preAnimationThrowRocket1 = function(animation, map)
-    {
-        map.centerMap(CO_RACHEL.postAnimationThrowRocketTarget[1].x,
-                      CO_RACHEL.postAnimationThrowRocketTarget[1].y);
-    };
-    this.preAnimationThrowRocket2 = function(animation, map)
-    {
-        map.centerMap(CO_RACHEL.postAnimationThrowRocketTarget[2].x,
-                      CO_RACHEL.postAnimationThrowRocketTarget[2].y);
-    };
 
     this.postAnimationThrowRocket0 = function(animation, map)
     {

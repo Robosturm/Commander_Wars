@@ -35,76 +35,41 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        CO_SENSEI.spawnUnits(co, "INFANTRY", CO_SENSEI.powerSpawnHp, powerNameAnimation, map);
+        CO_SENSEI.spawnUnits(co, "INFANTRY", CO_SENSEI.powerSpawnHp, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        CO_SENSEI.spawnUnits(co, "MECH", CO_SENSEI.powerSpawnHp, powerNameAnimation, map);
+        CO_SENSEI.spawnUnits(co, "MECH", CO_SENSEI.powerSpawnHp, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
-    this.spawnUnits = function(co, unitID, hp, powerNameAnimation, map)
+    this.spawnUnits = function(co, unitID, hp, parentBuilder, map)
     {
-        var buildings = co.getOwner().getBuildings();
-        var animations = [];
-        var counter = 0;
-        buildings.randomize();
-        var size = buildings.size();
-        for (var i = 0; i < size; i++)
-        {
-            var building = buildings.at(i);
-            if (building.getBuildingID() === "TOWN")
+        var ownBuildingsBuilder = new OWN_BUILDINGS_ANIMATION_BUILDER(co, map);
+        ownBuildingsBuilder.setBuildingFilter((building, map) => 
+            building.getBuildingID() === "TOWN" && map.getTerrain(building.getX(), building.getY()).getUnit() === null
+        );
+        ownBuildingsBuilder.setSounds(["power8_1.wav", "power8_2.wav"]);
+        ownBuildingsBuilder.setSprite("power8");
+        ownBuildingsBuilder.setPerAnimationFunction((building, animation, map) =>
             {
-                if (map.getTerrain(building.getX(), building.getY()).getUnit() === null)
-                {
-                    var animation = GameAnimationFactory.createAnimation(map, building.getX(), building.getY());
-                    animation.writeDataInt32(building.getX());
-                    animation.writeDataInt32(building.getY());
-                    animation.writeDataString(unitID);
-                    animation.writeDataInt32(co.getOwner().getPlayerID());
-                    animation.writeDataInt32(hp);
-                    animation.setStartOfAnimationCall("ANIMATION", "postAnimationSpawnUnit");
-                    var delay = globals.randInt(135, 265);
-                    if (animations.length < 5)
-                    {
-                        delay *= i;
-                    }
-                    if (i % 2 === 0)
-                    {
-                        animation.setSound("power8_1.wav", 1, delay);
-                    }
-                    else
-                    {
-                        animation.setSound("power8_2.wav", 1, delay);
-                    }
-                    if (animations.length < 5)
-                    {
-                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        powerNameAnimation.queueAnimation(animation);
-                        animations.push(animation);
-                    }
-                    else
-                    {
-                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        animations[counter].queueAnimation(animation);
-                        animations[counter] = animation;
-                        counter++;
-                        if (counter >= animations.length)
-                        {
-                            counter = 0;
-                        }
-                    }
-                }
+                animation.writeDataInt32(building.getX());
+                animation.writeDataInt32(building.getY());
+                animation.writeDataString(unitID);
+                animation.writeDataInt32(co.getOwner().getPlayerID());
+                animation.writeDataInt32(hp);
+                animation.setStartOfAnimationCall("ANIMATION", "postAnimationSpawnUnit");
             }
-        }
+        );
+        parentBuilder.queueAnimationBuilder(ownBuildingsBuilder);
     };
 
     this.getCOUnitRange = function(co, map)

@@ -35,33 +35,35 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        CO_VON_BOLT.throwLaserray(co, CO_VON_BOLT.powerDamage, CO_VON_BOLT.powerRange, powerNameAnimation, map);
+        CO_VON_BOLT.throwLaserray(co, CO_VON_BOLT.powerDamage, CO_VON_BOLT.powerRange, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        CO_VON_BOLT.throwLaserray(co, CO_VON_BOLT.superPowerDamage, CO_VON_BOLT.superPowerRange, powerNameAnimation, map);
+        CO_VON_BOLT.throwLaserray(co, CO_VON_BOLT.superPowerDamage, CO_VON_BOLT.superPowerRange, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
-    this.throwLaserray = function(co, damage, range, powerNameAnimation, map)
+    this.throwLaserray = function(co, damage, range, parentBuilder, map)
     {
         var meteorTarget = co.getOwner().getRockettarget(range, damage);
 
-        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
-        animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
-        animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        powerNameAnimation.queueAnimation(animation2);
-
-        animation2.setStartOfAnimationCall("CO_VON_BOLT", "preAnimationLaserray");
-        animation2.setEndOfAnimationCall("CO_VON_BOLT", "postAnimationLaserray");
+        var flashBuilder = new FLASH_ANIMATION_BUILDER(map);
+        flashBuilder.setPerAnimationFunction((animation, map) =>
+            {
+                animation.setStartOfAnimationCall("CO_VON_BOLT", "preAnimationLaserray");
+                animation.setEndOfAnimationCall("CO_VON_BOLT", "postAnimationLaserray");
+            }
+        );
+        parentBuilder.queueAnimationBuilder(flashBuilder);
+        
         CO_VON_BOLT.postAnimationLaserrayTarget = meteorTarget;
         CO_VON_BOLT.postAnimationLaserrayDamage = damage;
         CO_VON_BOLT.postAnimationLaserrayRange = range;
