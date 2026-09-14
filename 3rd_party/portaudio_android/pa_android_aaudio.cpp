@@ -17,9 +17,11 @@
 #include "portaudio.h"
 
 #include <aaudio/AAudio.h>
-#include <android/log.h>
+#include "coreengine/gameconsole.h"
 
+#include <algorithm>
 #include <cstring>
+#include <vector>
 
 namespace
 {
@@ -30,6 +32,8 @@ namespace
         AAudioStream* aaudioStream{nullptr};
         PaStreamCallback* callback{nullptr};
         void* userData{nullptr};
+        aaudio_format_t outputFormat{AAUDIO_FORMAT_UNSPECIFIED};
+        std::vector<float> floatBuffer;
     };
 
     aaudio_data_callback_result_t audioDataCallback(AAudioStream* /*stream*/, void* userData,
@@ -40,17 +44,37 @@ namespace
         {
             return AAUDIO_CALLBACK_RESULT_STOP;
         }
+
         PaStreamCallbackTimeInfo timeInfo;
         memset(&timeInfo, 0, sizeof(timeInfo));
-        int result = paStream->callback(nullptr, audioData, static_cast<unsigned long>(numFrames),
-                                         &timeInfo, 0, paStream->userData);
+        if (paStream->outputFormat == AAUDIO_FORMAT_PCM_FLOAT)
+        {
+            int result = paStream->callback(nullptr, audioData, static_cast<unsigned long>(numFrames),
+                                             &timeInfo, 0, paStream->userData);
+            return (result == paContinue) ? AAUDIO_CALLBACK_RESULT_CONTINUE : AAUDIO_CALLBACK_RESULT_STOP;
+        }
+
+        if (paStream->outputFormat != AAUDIO_FORMAT_PCM_I16)
+        {
+            return AAUDIO_CALLBACK_RESULT_STOP;
+        }
+
+        const size_t sampleCount = static_cast<size_t>(numFrames) * 2;
+        paStream->floatBuffer.resize(sampleCount);
+        int result = paStream->callback(nullptr, paStream->floatBuffer.data(),
+                                         static_cast<unsigned long>(numFrames), &timeInfo, 0,
+                                         paStream->userData);
+        auto* output = static_cast<int16_t*>(audioData);
+        for (size_t sample = 0; sample < sampleCount; ++sample)
+        {
+            output[sample] = static_cast<int16_t>(std::clamp(paStream->floatBuffer[sample], -1.0f, 1.0f) * 32767.0f);
+        }
         return (result == paContinue) ? AAUDIO_CALLBACK_RESULT_CONTINUE : AAUDIO_CALLBACK_RESULT_STOP;
     }
 
     void errorCallback(AAudioStream* /*stream*/, void* /*userData*/, aaudio_result_t error)
     {
-        __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "AAudio stream error: %s",
-                             AAudio_convertResultToText(error));
+        CONSOLE_PRINT("AAudio stream error: %s", AAudio_convertResultToText(error), GameConsole::eERROR);
     }
 }
 
@@ -168,13 +192,36 @@ PaError Pa_OpenStream(PaStream** stream,
 
     if (result != AAUDIO_OK || aaudioStream == nullptr)
     {
-        __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "Failed to open AAudio stream: %s",
-                             AAudio_convertResultToText(result));
+        CONSOLE_PRINT("Failed to open AAudio stream: %s", AAudio_convertResultToText(result), GameConsole::eERROR);
         delete paStream;
         return paUnanticipatedHostError;
     }
 
     paStream->aaudioStream = aaudioStream;
+    paStream->outputFormat = AAudioStream_getFormat(aaudioStream);
+    const int32_t channelCount = AAudioStream_getChannelCount(aaudioStream);
+    if ((paStream->outputFormat != AAUDIO_FORMAT_PCM_FLOAT && paStream->outputFormat != AAUDIO_FORMAT_PCM_I16) ||
+        channelCount != outputParameters->channelCount)
+    {
+        CONSOLE_PRINT("Unsupported AAudio output configuration: format=%d channels=%d",
+                      paStream->outputFormat, channelCount, GameConsole::eERROR);
+        AAudioStream_close(aaudioStream);
+        delete paStream;
+        return paSampleFormatNotSupported;
+    }
+
+    if (paStream->outputFormat == AAUDIO_FORMAT_PCM_I16)
+    {
+        const int32_t callbackFrames = AAudioStream_getFramesPerDataCallback(aaudioStream);
+        if (callbackFrames > 0)
+        {
+            paStream->floatBuffer.resize(static_cast<size_t>(callbackFrames) * channelCount);
+        }
+    }
+    CONSOLE_PRINT_MODULE("Opened AAudio stream: format=%d channels=%d sampleRate=%d callbackFrames=%d",
+                  paStream->outputFormat, channelCount,
+                  AAudioStream_getSampleRate(aaudioStream),
+                  AAudioStream_getFramesPerDataCallback(aaudioStream), GameConsole::eINFO, GameConsole::eAudio);
     *stream = paStream;
     return paNoError;
 }
