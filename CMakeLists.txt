@@ -186,13 +186,6 @@ if (AUDIOSUPPORT)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
     if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-        if (CMAKE_SYSTEM_VERSION VERSION_LESS 26)
-            message(FATAL_ERROR
-                "AUDIOSUPPORT on Android requires API level 26 or later because it uses AAudio. "
-                "Configure with -DANDROID_NATIVE_API_LEVEL=26 or disable AUDIOSUPPORT."
-            )
-        endif()
-
         # Upstream PortAudio ships no Android host API (no ALSA/PulseAudio/JACK device nodes
         # exist on stock Android), so Pa_Initialize() would succeed with zero usable devices
         # and every stream would silently fail to open. Use a small AAudio-backed shim instead
