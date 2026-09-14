@@ -44,107 +44,57 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        CO_HAWKE.hawkeDamage(co, CO_HAWKE.powerDamage, powerNameAnimation, map);
+        CO_HAWKE.hawkeDamage(co, CO_HAWKE.powerDamage, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
-    this.hawkeDamage = function(co, value, powerNameAnimation, map)
+    this.hawkeDamage = function(co, value, parentBuilder, map)
     {
 
         var player = co.getOwner();
         var units = player.getUnits();
-        var animations = [];
-        var counter = 0;
         units.randomize();
-        for (var i = 0; i < units.size(); i++)
+        var enemyUnits = player.getEnemyUnits();
+        enemyUnits.randomize();
+        for (var i = 0; i < enemyUnits.size(); i++)
         {
-            var unit = units.at(i);
-
-            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-            animation.writeDataInt32(unit.getX());
-            animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(value);
-            animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
-            var delay = globals.randInt(135, 265);
-            if (animations.length < 5)
-            {
-                delay *= i;
-            }
-            animation.setSound("power4.wav", 1, delay);
-            if (animations.length < 5)
-            {
-                animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                powerNameAnimation.queueAnimation(animation);
-                animations.push(animation);
-            }
-            else
-            {
-                animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                animations[counter].queueAnimation(animation);
-                animations[counter] = animation;
-                counter++;
-                if (counter >= animations.length)
-                {
-                    counter = 0;
-                }
-            }
+            units.append(enemyUnits.at(i));
         }
-        var playerCounter = map.getPlayerCount();
-        for (var i2 = 0; i2 < playerCounter; i2++)
-        {
-            var enemyPlayer = map.getPlayer(i2);
-            if ((enemyPlayer !== player) &&
-                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+        var unitsBuilder = new UNITS_ANIMATION_BUILDER(units, map);
+        unitsBuilder.setRandomize(false);
+        unitsBuilder.setSound("power4.wav");
+        unitsBuilder.setSprite("power4");
+        unitsBuilder.setPerAnimationFunction((unit, animation, map) => 
             {
-
-                units = enemyPlayer.getUnits();
-                units.randomize();
-                for (i = 0; i < units.size(); i++)
+                if (unit.getOwner() == co.getOwner())
                 {
-                    unit = units.at(i);
-                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
+                    animation.writeDataInt32(unit.getX());
+                    animation.writeDataInt32(unit.getY());
+                    animation.writeDataInt32(value);
+                    animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
+                }
+                else
+                {
                     animation.writeDataInt32(unit.getX());
                     animation.writeDataInt32(unit.getY());
                     animation.writeDataInt32(value);
                     animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
-                    var delay = globals.randInt(135, 265);
-                    if (animations.length < 5)
-                    {
-                        delay *= i;
-                    }
-                    animation.setSound("power4.wav", 1, delay);
-                    if (animations.length < 5)
-                    {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        powerNameAnimation.queueAnimation(animation);
-                        animations.push(animation);
-                    }
-                    else
-                    {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        animations[counter].queueAnimation(animation);
-                        animations[counter] = animation;
-                        counter++;
-                        if (counter >= animations.length)
-                        {
-                            counter = 0;
-                        }
-                    }
                 }
             }
-        }
+        );
+        parentBuilder.queueAnimationBuilder(unitsBuilder);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        CO_HAWKE.hawkeDamage(co, CO_HAWKE.superPowerDamage, powerNameAnimation, map);
+        CO_HAWKE.hawkeDamage(co, CO_HAWKE.superPowerDamage, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.getCOUnitRange = function(co, map)

@@ -13,30 +13,32 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
+
         var invasion = ["ARTILLERY", "FLAK", "LIGHT_TANK", "FLAK", "LIGHT_TANK"];
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
-        CO_YUKIO.spawnUnits(co, 0.4, invasion, powerNameAnimation, map);
+        CO_YUKIO.spawnUnits(co, 0.4, invasion, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var invsion = ["HEAVY_TANK", "FLAK", "LIGHT_TANK", "ARTILLERY", "LIGHT_TANK", "K_HELI", "K_HELI"];
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        CO_YUKIO.spawnUnits(co, 0.7, invsion, powerNameAnimation, map);
-        CO_YUKIO.yukioDamage(co, CO_YUKIO.superPowerBombDamage, powerNameAnimation, map);
+        var invasion = ["HEAVY_TANK", "FLAK", "LIGHT_TANK", "ARTILLERY", "LIGHT_TANK", "K_HELI", "K_HELI"];
+        CO_YUKIO.spawnUnits(co, 0.7, invasion, dialogBuilder, map);
+
+        CO_YUKIO.yukioDamage(co, CO_YUKIO.superPowerBombDamage, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
-    this.yukioDamage = function(co, value, powerNameAnimation, map)
+    this.yukioDamage = function(co, value, parentBuilder, map)
     {
         var player = co.getOwner();
-        var animations = [];
-        var counter = 0;
         var playerCounter = map.getPlayerCount();
+        var enemyUnits = map.getUnits(null);
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
             var enemyPlayer = map.getPlayer(i2);
@@ -50,94 +52,54 @@ var Constructor = function()
                 for (i = 0; i < size; i++)
                 {
                     var unit = units.at(i);
-                    var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                    animation.writeDataInt32(unit.getX());
-                    animation.writeDataInt32(unit.getY());
-                    animation.writeDataInt32(value);
-                    animation.setStartOfAnimationCall("ANIMATION", "postAnimationDamage");
-                    var delay = globals.randInt(135, 265);
-                    if (animations.length < 5)
-                    {
-                        delay *= i;
-                    }
-                    animation.setSound("power4.wav", 1, delay);
-                    if (animations.length < 5)
-                    {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        powerNameAnimation.queueAnimation(animation);
-                        animations.push(animation);
-                    }
-                    else
-                    {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        animations[counter].queueAnimation(animation);
-                        animations[counter] = animation;
-                        counter++;
-                        if (counter >= animations.length)
-                        {
-                            counter = 0;
-                        }
-                    }
+                    enemyUnits.append(unit);
                 }
             }
         }
+
+        var enemyUnitsBuilder = new UNITS_ANIMATION_BUILDER(enemyUnits, map);
+        enemyUnitsBuilder.setSound("power4.wav");
+        enemyUnitsBuilder.setSprite("power4");
+        enemyUnitsBuilder.setPerAnimationFunction((unit, animation, map) => 
+            {
+                animation.writeDataInt32(unit.getX());
+                animation.writeDataInt32(unit.getY());
+                animation.writeDataInt32(value);
+                animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
+            }
+        );
+        parentBuilder.queueAnimationBuilder(enemyUnitsBuilder);
     };
 
-    this.spawnUnits = function(co, count, invasion, powerNameAnimation, map)
+    this.spawnUnits = function(co, count, invasion, parentBuilder, map)
     {
-        var buildings = co.getOwner().getBuildings();
-        var animations = [];
-        var counter = 0;
+        var buildings = co.getOwner().getBuildings("TOWN");
         buildings.randomize();
-        var size = buildings.size();
-        for (var i = 0; i < size * count; i++)
+        var targetSize = buildings.size() * count;
+        while (buildings.size() > targetSize)
         {
-            var building = buildings.at(i);
-            if (building.getBuildingID() === "TOWN")
-            {
-                if (map.getTerrain(building.getX(), building.getY()).getUnit() === null)
-                {
-                    var animation = GameAnimationFactory.createAnimation(map, building.getX(), building.getY());
-                    animation.writeDataInt32(building.getX());
-                    animation.writeDataInt32(building.getY());
-                    animation.writeDataString(invasion[i % invasion.length]);
-                    animation.writeDataInt32(co.getOwner().getPlayerID());
-                    animation.writeDataInt32(10);
-                    animation.setStartOfAnimationCall("ANIMATION", "postAnimationSpawnUnit");
-
-                    var delay = globals.randInt(135, 265);
-                    if (animations.length < 5)
-                    {
-                        delay *= i;
-                    }
-                    if (i % 2 === 0)
-                    {
-                        animation.setSound("power8_1.wav", 1, delay);
-                    }
-                    else
-                    {
-                        animation.setSound("power8_2.wav", 1, delay);
-                    }
-                    if (animations.length < 5)
-                    {
-                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        powerNameAnimation.queueAnimation(animation);
-                        animations.push(animation);
-                    }
-                    else
-                    {
-                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        animations[counter].queueAnimation(animation);
-                        animations[counter] = animation;
-                        counter++;
-                        if (counter >= animations.length)
-                        {
-                            counter = 0;
-                        }
-                    }
-                }
-            }
+            buildings.removeAt(buildings.size() - 1);
         }
+
+        var ownBuildingsBuilder = new BUILDINGS_ANIMATION_BUILDER(buildings, map);
+        ownBuildingsBuilder.setBuildingFilter((building, map) => 
+            map.getTerrain(building.getX(), building.getY()).getUnit() === null
+        );
+        ownBuildingsBuilder.setSounds(["power8_1.wav", "power8_2.wav"]);
+        ownBuildingsBuilder.setSprite("power8");
+        var spawnIndex = 0;
+        ownBuildingsBuilder.setPerAnimationFunction((building, animation, map) =>
+            {
+                animation.writeDataInt32(building.getX());
+                animation.writeDataInt32(building.getY());
+                animation.writeDataString(invasion[spawnIndex % invasion.length]);
+                spawnIndex++;
+                animation.writeDataInt32(co.getOwner().getPlayerID());
+                animation.writeDataInt32(10);
+                animation.setStartOfAnimationCall("ANIMATION", "postAnimationSpawnUnit");
+            }
+        );
+        parentBuilder.queueAnimationBuilder(ownBuildingsBuilder);
     };
 
     this.loadCOMusic = function(co, map)

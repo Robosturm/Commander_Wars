@@ -13,30 +13,27 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        CO_JULIA.juliaStun(co, CO_JULIA.powerStunChance, powerNameAnimation, map);
+        CO_JULIA.juliaStun(co, CO_JULIA.powerStunChance, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        CO_JULIA.juliaStun(co, CO_JULIA.superPowerStunChance, powerNameAnimation, map);
+        CO_JULIA.juliaStun(co, CO_JULIA.superPowerStunChance, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
-    this.juliaStun = function(co, amount, animation2, map)
+    this.juliaStun = function(co, amount, parentBuilder, map)
     {
         var player = co.getOwner();
-        var counter = 0;
         var playerCounter = map.getPlayerCount();
-        var animation = null;
-        var animations = [];
-
+        var stunUnits = map.getUnits(null);
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
             var enemyPlayer = map.getPlayer(i2);
@@ -45,40 +42,26 @@ var Constructor = function()
             {
                 var units = enemyPlayer.getUnits();
                 units.randomize();
-                var count = amount * units.size()
+                var count = amount * units.size();
                 for (i = 0; i < count; i++)
                 {
                     var unit = units.at(i);
-                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                    var delay = globals.randInt(135, 265);
-                    if (animations.length < 5)
-                    {
-                        delay *= i;
-                    }
-                    animation.setSound("power4.wav", 1, delay);
-                    if (animations.length < 5)
-                    {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        animation2.queueAnimation(animation);
-                        animations.push(animation);
-                    }
-                    else
-                    {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        animations[counter].queueAnimation(animation);
-                        animations[counter] = animation;
-                        counter++;
-                        if (counter >= animations.length)
-                        {
-                            counter = 0;
-                        }
-                    }
-                    animation.writeDataInt32(unit.getX());
-                    animation.writeDataInt32(unit.getY());
-                    animation.setEndOfAnimationCall("CO_JULIA", "postAnimationStun");
+                    stunUnits.append(unit);
                 }
             }
         }
+
+        var stunUnitsBuilder = new UNITS_ANIMATION_BUILDER(stunUnits, map);
+        stunUnitsBuilder.setSound("power4.wav");
+        stunUnitsBuilder.setSprite("power4");
+        stunUnitsBuilder.setPerAnimationFunction((unit, animation, map) =>
+            {
+                    animation.writeDataInt32(unit.getX());
+                    animation.writeDataInt32(unit.getY());
+                    animation.setEndOfAnimationCall("CO_JULIA", "postAnimationStun");
+            }
+        );
+        parentBuilder.queueAnimationBuilder(stunUnitsBuilder);          
     };
 
     this.postAnimationStun = function(postAnimation, map)

@@ -13,194 +13,136 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        var animations = [];
-        var counter = 0;
-        var buildings = co.getOwner().getBuildings();
-        buildings.randomize();
-        var fields = globals.getCircle(0, CO_ALEXIS.powerRadius);
-        for (var i2 = 0; i2 < buildings.size(); i2++)
-        {
-            var building = buildings.at(i2);
-            var x = building.getX();
-            var y = building.getY();
-            var animation = null;
-            for (var i = 0; i < fields.size(); i++)
-            {
-                var point = fields.at(i);
-                if (map.onMap(x + point.x, y + point.y))
-                {
-                    var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
-                    if ((unit !== null) &&
-                            (unit.getOwner() === co.getOwner()))
-                    {
-                        animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                        animation.writeDataInt32(unit.getX());
-                        animation.writeDataInt32(unit.getY());
-                        animation.writeDataInt32(CO_ALEXIS.powerHeal);
-                        animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
-                        var delay = globals.randInt(135, 265);
-                        if (animations.length < 5)
-                        {
-                            delay *= i;
-                        }
-                        animation.setSound("power0.wav", 1, delay);
-                        if (animations.length < 5)
-                        {
-                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                            powerNameAnimation.queueAnimation(animation);
-                            animations.push(animation);
-                        }
-                        else
-                        {
-                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                            animations[counter].queueAnimation(animation);
-                            animations[counter] = animation;
-                            counter++;
-                            if (counter >= animations.length)
-                            {
-                                counter = 0;
-                            }
-                        }
+        var ownBuildingsBuilder = new OWN_BUILDINGS_ANIMATION_BUILDER(co, map);
+        // ownBuildingsBuilder.setMinDelay(210);
+        // ownBuildingsBuilder.setMaxDelay(340);
+        ownBuildingsBuilder.setAnimationAmount(3);
+        // ownBuildingsBuilder.setSound(null);
+        // ownBuildingsBuilder.setSprite("white_pixel");
+        // ownBuildingsBuilder.setScale(0);
+        ownBuildingsBuilder.setSounds(["power9_1.wav", "power9_2.wav"]);
+        ownBuildingsBuilder.setSprite("power9");
+        ownBuildingsBuilder.setPerAnimationFunction(
+            CO_ALEXIS.alexisBuildingFunctionFactory(co, false, true, CO_ALEXIS.powerHeal, CO_ALEXIS.powerRadius, ["power0.wav"], "power0")
+        );
+        dialogBuilder.queueAnimationBuilder(ownBuildingsBuilder);
 
-                    }
-                }
-            }
-        }
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        var animations = [];
-        var counter = 0;
-        var player = co.getOwner();
-        var buildings = player.getBuildings();
-        buildings.randomize();
-        var fields = globals.getCircle(0, CO_ALEXIS.superPowerHealRadius);
+        var ownBuildingsBuilder = new OWN_BUILDINGS_ANIMATION_BUILDER(co, map);
+        ownBuildingsBuilder.setAnimationAmount(3);
+        ownBuildingsBuilder.setSounds(["power9_1.wav", "power9_2.wav"]);
+        ownBuildingsBuilder.setSprite("power9");
+        ownBuildingsBuilder.setPerAnimationFunction(
+            CO_ALEXIS.alexisBuildingFunctionFactory(co, false, true, CO_ALEXIS.superPowerHeal, CO_ALEXIS.superPowerHealRadius, ["power0.wav"], "power0")
+        );
+        dialogBuilder.queueAnimationBuilder(ownBuildingsBuilder);
 
-        var unit =  null;
-        var building = null;
-        var animation = null;
-        var x = 0;
-        var y = 0;
-        var i = 0;
-        var i2 = 0;
-        for (i2 = 0; i2 < buildings.size(); i2++)
+        var enemyBuildingsBuilder = new ENEMY_BUILDINGS_ANIMATION_BUILDER(co, map);
+        enemyBuildingsBuilder.setBuildingFilter((building, map) =>
+            building.getOwner() !== null
+        );
+        enemyBuildingsBuilder.setAnimationAmount(3);
+        enemyBuildingsBuilder.setSounds(["power5_1.wav", "power5_2.wav"]);
+        enemyBuildingsBuilder.setSprite("power5");
+        enemyBuildingsBuilder.setPerAnimationFunction(
+            CO_ALEXIS.alexisBuildingFunctionFactory(co, false, false, CO_ALEXIS.superPowerDamage, CO_ALEXIS.superPowerDamageRadius, ["power4.wav"], "power4")
+        );
+        ownBuildingsBuilder.queueAnimationBuilder(enemyBuildingsBuilder);
+
+        dialogBuilder.displayAnimation();
+    };
+
+    this.unitsNearBuilding = function(building, minRadius, radius, map)
+    {
+        var fields = globals.getCircle(minRadius, radius);
+        var units = map.getUnits(null);
+        var x = building.getX();
+        var y = building.getY();
+        for (i = 0; i < fields.size(); i++)
         {
-            building = buildings.at(i2);
-            x = building.getX();
-            y = building.getY();
-            animation = null;
-            for (i = 0; i < fields.size(); i++)
+            var point = fields.at(i);
+            if (map.onMap(x + point.x, y + point.y))
             {
-                var point = fields.at(i);
-                if (map.onMap(x + point.x, y + point.y))
+                var unitX = x + point.x;
+                var unitY = y + point.y;
+                var unit = map.getTerrain(unitX, unitY).getUnit();
+                if ((unit !== null))
                 {
-                    var unitX = x + point.x;
-                    var unitY = y + point.y;
-                    unit = map.getTerrain(unitX, unitY).getUnit();
-                    if ((unit !== null) &&
-                            (unit.getOwner() === player))
+                    units.append(unit);
+                }
+            }
+        }
+        return units;
+    }
+
+    this.alexisBuildingFunctionFactory = function(co, isRepair, isHealing, value, radius, sounds, sprite)
+    {
+        return (building, animation, map) =>
+        {
+            var minRadius = 0;
+            if (isRepair)
+            {
+                minRadius = 1;
+            }
+            var units = CO_ALEXIS.unitsNearBuilding(building, minRadius, radius, map);
+
+            var unitsBuilder = new UNITS_ANIMATION_BUILDER(units, map);
+            unitsBuilder.setUnitFilter((unit, map) =>
+                {
+                    if (isHealing)
                     {
-                        animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                        animation.writeDataInt32(unitX);
-                        animation.writeDataInt32(unitY);
-                        animation.writeDataInt32(CO_ALEXIS.superPowerHeal);
-                        animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
-                        var delay = globals.randInt(135, 265);
-                        if (animations.length < 5)
+                        return unit.getOwner() === co.getOwner();
+                    }
+                    else
+                    {
+                        return unit.getOwner() !== co.getOwner();
+                    }
+                }
+            );
+            unitsBuilder.setRandomize(false);
+            unitsBuilder.setMinDelay(0);
+            unitsBuilder.setMaxDelay(0);
+            unitsBuilder.setAnimationAmount(units.size());
+            unitsBuilder.setSounds(sounds);
+            unitsBuilder.setSprite(sprite);
+            unitsBuilder.setPerAnimationFunction((unit, animation, map) => 
+                {
+                    if (isRepair)
+                    {
+                        UNIT.repairUnit(unit, CO_ALEXIS.d2dHealBonus, map);
+                        if (!map.getCurrentViewPlayer().getFieldVisible(unit.getX(), unit.getY()))
                         {
-                            delay *= i;
+                            animation.setVisible(false);
                         }
-                        animation.setSound("power4.wav", 1, delay);
-                        if (animations.length < 5)
+                    }
+                    else
+                    {
+                        animation.writeDataInt32(unit.getX());
+                        animation.writeDataInt32(unit.getY());
+                        animation.writeDataInt32(value);
+                        if (isHealing)
                         {
-                            animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                            powerNameAnimation.queueAnimation(animation);
-                            animations.push(animation);
+                            animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
                         }
                         else
                         {
-                            animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                            animations[counter].queueAnimation(animation);
-                            animations[counter] = animation;
-                            counter++;
-                            if (counter >= animations.length)
-                            {
-                                counter = 0;
-                            }
+                            animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
                         }
                     }
                 }
-            }
+            );
+
+            unitsBuilder.displayAnimation(animation);
         }
-        fields = globals.getCircle(0, CO_ALEXIS.superPowerDamageRadius);
-        var playerCounter = map.getPlayerCount();
-        for (var i3 = 0; i3 < playerCounter; i3++)
-        {
-            var enemyPlayer = map.getPlayer(i3);
-            buildings = enemyPlayer.getBuildings();
-            buildings.randomize();
-            if ((enemyPlayer !== player) &&
-                    (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
-            {
-                for (i2 = 0; i2 < buildings.size(); i2++)
-                {
-                    building = buildings.at(i2);
-                    x = building.getX();
-                    y = building.getY();
-                    animation = null;
-                    for (i = 0; i < fields.size(); i++)
-                    {
-                        point = fields.at(i);
-                        if (map.onMap(x + point.x, y + point.y))
-                        {
-                            unit = map.getTerrain(x + point.x, y + point.y).getUnit();
-                            if ((unit !== null) &&
-                                    (co.getOwner().isEnemyUnit(unit)))
-                            {
-                                animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                                animation.writeDataInt32(unit.getX());
-                                animation.writeDataInt32(unit.getY());
-                                animation.writeDataInt32(CO_ALEXIS.superPowerDamage);
-                                animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
-                                var delay = globals.randInt(135, 265);
-                                if (animations.length < 5)
-                                {
-                                    delay *= i;
-                                }
-                                animation.setSound("power4.wav", 1, delay);
-                                if (animations.length < 5)
-                                {
-                                    animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                    powerNameAnimation.queueAnimation(animation);
-                                    animations.push(animation);
-                                }
-                                else
-                                {
-                                    animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                    animations[counter].queueAnimation(animation);
-                                    animations[counter] = animation;
-                                    counter++;
-                                    if (counter >= animations.length)
-                                    {
-                                        counter = 0;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    };
+    }
 
     this.loadCOMusic = function(co, map)
     {
@@ -327,66 +269,14 @@ var Constructor = function()
                 var player = co.getOwner();
                 if (!player.getIsDefeated())
                 {
-                    var animations = [];
-                    var counter = 0;
-                    var buildings = co.getOwner().getBuildings();
-                    var fields = globals.getCircle(1, CO_ALEXIS.d2dHealRadius);
-                    var viewplayer = map.getCurrentViewPlayer();
-                    var size1 = buildings.size();
-                    var size2 = fields.size();
-                    for (var i2 = 0; i2 < size1; i2++)
-                    {
-                        var building = buildings.at(i2);
-                        var id = building.getBuildingID();
-                        if (!id.startsWith("TEMPORARY_"))
-                        {
-                            var x = building.getX();
-                            var y = building.getY();
-                            var animation = null;
-                            for (var i = 0; i < size2; i++)
-                            {
-                                var point = fields.at(i);
-                                if (map.onMap(x + point.x, y + point.y))
-                                {
-                                    var unitX = x + point.x;
-                                    var unitY = y + point.y;
-                                    var unit = map.getTerrain(unitX, unitY).getUnit();
-                                    if ((unit !== null) &&
-                                            (unit.getOwner() === co.getOwner()))
-                                    {
-                                        UNIT.repairUnit(unit, CO_ALEXIS.d2dHealBonus, map);
-                                        animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
-                                        var delay = globals.randInt(135, 265);
-                                        if (animations.length < 5)
-                                        {
-                                            delay *= i;
-                                        }
-                                        animation.setSound("power0.wav", 1, delay);
-                                        if (animations.length < 5)
-                                        {
-                                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                            animations.push(animation);
-                                        }
-                                        else
-                                        {
-                                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                            animations[counter].queueAnimation(animation);
-                                            animations[counter] = animation;
-                                            counter++;
-                                            if (counter >= animations.length)
-                                            {
-                                                counter = 0;
-                                            }
-                                        }
-                                        if (!viewplayer.getFieldVisible(unitX, unitY))
-                                        {
-                                            animation.setVisible(false);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    var ownBuildingsBuilder = new OWN_BUILDINGS_ANIMATION_BUILDER(co, map);
+                    ownBuildingsBuilder.setAnimationAmount(3);
+                    ownBuildingsBuilder.setSounds(["power9_1.wav", "power9_2.wav"]);
+                    ownBuildingsBuilder.setSprite("power9");
+                    ownBuildingsBuilder.setPerAnimationFunction(
+                        CO_ALEXIS.alexisBuildingFunctionFactory(co, true, true, CO_ALEXIS.d2dHealBonus, CO_ALEXIS.d2dHealRadius, ["power0.wav"], "power0")
+                    );
+                    ownBuildingsBuilder.displayAnimation();
                 }
             }
         }

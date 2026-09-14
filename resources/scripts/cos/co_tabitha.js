@@ -30,40 +30,39 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        CO_TABITHA.throwMeteor(co, CO_TABITHA.powerDamage, powerNameAnimation, map);
+        CO_TABITHA.throwMeteor(co, CO_TABITHA.powerDamage, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-            var dialogAnimation = co.createPowerSentence();
-            var powerNameAnimation = co.createPowerScreen(powerMode);
-            powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-            CO_TABITHA.throwMeteor(co, CO_TABITHA.superPowerDamage, powerNameAnimation, map);
+        CO_TABITHA.throwMeteor(co, CO_TABITHA.superPowerDamage, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
-    this.throwMeteor = function(co, damage, powerNameAnimation, map)
+
+    this.throwMeteor = function(co, damage, parentBuilder, map)
     {
         var rocketTarget = co.getOwner().getRockettarget(2, damage);
-        // create cool meteor animation :)
-        var animation = GameAnimationFactory.createAnimation(map, rocketTarget.x - 2, rocketTarget.y - 2 - 1);
-        animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
-        animation.setSound("missle_explosion.wav", 1);
-        animation.setStartOfAnimationCall("CO_TABITHA", "preAnimationThrowMeteor");
-        animation.setEndOfAnimationCall("CO_TABITHA", "postAnimationThrowMeteor");        
-        powerNameAnimation.queueAnimation(animation);
+
+        // create cool missile animation :)
+        var missileBuilder = new MISSILE_ANIMATION_BUILDER(rocketTarget.x, rocketTarget.y, map);
+        missileBuilder.setPerAnimationFunction((animation, map) => 
+            {
+                animation.setEndOfAnimationCall("CO_TABITHA", "postAnimationThrowMeteor");
+            }
+        );
+        parentBuilder.queueAnimationBuilder(missileBuilder);
+
         CO_TABITHA.postAnimationThrowMeteorTarget = rocketTarget;
         CO_TABITHA.postAnimationThrowMeteorDamage = damage;
     };
 
-
-    this.preAnimationThrowMeteor = function(animation, map)
-    {
-        map.centerMap(CO_TABITHA.postAnimationThrowMeteorTarget.x, CO_TABITHA.postAnimationThrowMeteorTarget.y);
-    };
     this.postAnimationThrowMeteorTarget = null;
     this.postAnimationThrowMeteorDamage = 0;
     this.postAnimationThrowMeteor = function(animation, map)

@@ -13,112 +13,39 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        var units = co.getOwner().getUnits();
-        var animations = [];
-        var counter = 0;
-        units.randomize();
-        for (var i = 0; i < units.size(); i++)
-        {
-            var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-            var delay = globals.randInt(135, 265);
-            if (animations.length < 5)
-            {
-                delay *= i;
-            }
-            if (i % 2 === 0)
-            {
-                animation.setSound("power8_1.wav", 1, delay);
-            }
-            else
-            {
-                animation.setSound("power8_2.wav", 1, delay);
-            }
-            if (animations.length < 5)
-            {
-                animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                powerNameAnimation.queueAnimation(animation);
-                animations.push(animation);
-            }
-            else
-            {
-                animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                animations[counter].queueAnimation(animation);
-                animations[counter] = animation;
-                counter++;
-                if (counter >= animations.length)
-                {
-                    counter = 0;
-                }
-            }
-        }
+        var ownUnitsBuilder = new OWN_UNITS_ANIMATION_BUILDER(co, map);
+        ownUnitsBuilder.setSounds(["power8_1.wav", "power8_2.wav"]);
+        ownUnitsBuilder.setSprite("power8");
+        dialogBuilder.queueAnimationBuilder(ownUnitsBuilder);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        CO_CASSIDY.cassidyDamage(co, CO_CASSIDY.superPowerDamage, dialogAnimation, map);
+        CO_CASSIDY.cassidyDamage(co, CO_CASSIDY.superPowerDamage, dialogBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
-    this.cassidyDamage = function(co, value, animation2, map)
+    this.cassidyDamage = function(co, value, parentBuilder, map)
     {
-        var player = co.getOwner();
-        var counter = 0;
-        var playerCounter = map.getPlayerCount();
-        var animation = null;
-        var animations = [];
-
-        for (var i2 = 0; i2 < playerCounter; i2++)
-        {
-            var enemyPlayer = map.getPlayer(i2);
-            if ((enemyPlayer !== player) &&
-                    (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+        var enemyUnitsBuilder = new ENEMY_UNITS_ANIMATION_BUILDER(co, map);
+        enemyUnitsBuilder.setSound("power4.wav");
+        enemyUnitsBuilder.setSprite("power4");
+        enemyUnitsBuilder.setPerAnimationFunction((unit, animation, map) => 
             {
-
-                var units = enemyPlayer.getUnits();
-                units.randomize();
-                for (i = 0; i < units.size(); i++)
-                {
-                    var unit = units.at(i);
-
-                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                    var delay = globals.randInt(135, 265);
-                    if (animations.length < 5)
-                    {
-                        delay *= i;
-                    }
-                    animation.setSound("power4.wav", 1, delay);
-                    if (animations.length < 5)
-                    {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        animation2.queueAnimation(animation);
-                        animations.push(animation);
-                    }
-                    else
-                    {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        animations[counter].queueAnimation(animation);
-                        animations[counter] = animation;
-                        counter++;
-                        if (counter >= animations.length)
-                        {
-                            counter = 0;
-                        }
-                    }
-                    animation.writeDataInt32(unit.getX());
-                    animation.writeDataInt32(unit.getY());
-                    animation.writeDataInt32(value);
-                    animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
-                }
+                animation.writeDataInt32(unit.getX());
+                animation.writeDataInt32(unit.getY());
+                animation.writeDataInt32(value);
+                animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
             }
-        }
+        );
+        parentBuilder.queueAnimationBuilder(enemyUnitsBuilder);
     };
 
     this.loadCOMusic = function(co, map)

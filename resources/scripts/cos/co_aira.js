@@ -18,93 +18,40 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        var whiteAnimation = GameAnimationFactory.createAnimation(map, 0, 0);
-        whiteAnimation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
-        whiteAnimation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        powerNameAnimation.queueAnimation(whiteAnimation);
+        var flashBuilder = new FLASH_ANIMATION_BUILDER(map);
+        dialogBuilder.queueAnimationBuilder(flashBuilder);
+
         map.getGameRules().changeWeather("WEATHER_1SUN", map.getPlayerCount() * 1);
 
-        var player = co.getOwner();
-        var counter = 0;
-        var playerCounter = map.getPlayerCount();
-        var animation = null;
-        var animations = [];
-        for (var i2 = 0; i2 < playerCounter; i2++)
-        {
-            var enemyPlayer = map.getPlayer(i2);
-            if ((enemyPlayer !== player) &&
-                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
-            {
-                var units = enemyPlayer.getUnits();
-                units.randomize();
-                for (i = 0; i < units.size(); i++)
-                {
-                    var unit = units.at(i);
-                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                    var delay = globals.randInt(135, 265);
-                    if (animations.length < 5)
-                    {
-                        delay *= i;
-                    }
-                    if (i % 2 === 0)
-                    {
-                        animation.setSound("power10_1.wav", 1, delay);
-                    }
-                    else
-                    {
-                        animation.setSound("power10_2.wav", 1, delay);
-                    }
-                    if (animations.length < 5)
-                    {
-                        animation.addSprite("power14", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        if (whiteAnimation !== null)
-                        {
-                            whiteAnimation.queueAnimation(animation);
-                        }
-                        animations.push(animation);
-                    }
-                    else
-                    {
-                        animation.addSprite("power14", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                        animations[counter].queueAnimation(animation);
-                        animations[counter] = animation;
-                        counter++;
-                        if (counter >= animations.length)
-                        {
-                            counter = 0;
-                        }
-                    }
-                }
-            }
-        }
+        var enemyUnitsBuilder = new ENEMY_UNITS_ANIMATION_BUILDER(co, map);
+        enemyUnitsBuilder.setSounds(["power10_1.wav", "power10_2.wav"]);
+        enemyUnitsBuilder.setSprite("power14");
+        flashBuilder.queueAnimationBuilder(enemyUnitsBuilder);
+
+        dialogBuilder.displayAnimation();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        var animation = GameAnimationFactory.createAnimation(map, 0, 0);
-        animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
-        animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        powerNameAnimation.queueAnimation(animation);
+        var flashBuilder = new FLASH_ANIMATION_BUILDER(map);
+        dialogBuilder.queueAnimationBuilder(flashBuilder);
+
         map.getGameRules().changeWeather("WEATHER_1SUN", map.getPlayerCount() * 1);
 
-        CO_AIRA.airaDamage(co, CO_AIRA.superPowerDamage, animation, map);
+        CO_AIRA.airaDamage(co, CO_AIRA.superPowerDamage, flashBuilder, map);
+
+        dialogBuilder.displayAnimation();
     };
 
-    this.airaDamage = function(co, value, animation2, map)
+    this.airaDamage = function(co, value, parentBuilder, map)
     {
         var player = co.getOwner();
-        var counter = 0;
         var playerCounter = map.getPlayerCount();
-        var animation = null;
-        var animations = [];
+        var cheapUnits = map.getUnits(null);
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
             var enemyPlayer = map.getPlayer(i2);
@@ -119,41 +66,23 @@ var Constructor = function()
                     var unit = units.at(i);
                     if (i >= size / 2 || unit.useTerrainDefense() === false)
                     {
-                        animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                        var delay = globals.randInt(135, 265);
-                        if (animations.length < 5)
-                        {
-                            delay *= i;
-                        }
-                        animation.setSound("power4.wav", 1, delay);
-                        if (animations.length < 5)
-                        {
-                            animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                            if (animation2 !== null)
-                            {
-                                animation2.queueAnimation(animation);
-                            }
-                            animations.push(animation);
-                        }
-                        else
-                        {
-                            animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                            animations[counter].queueAnimation(animation);
-                            animations[counter] = animation;
-                            counter++;
-                            if (counter >= animations.length)
-                            {
-                                counter = 0;
-                            }
-                        }
-                        animation.writeDataInt32(unit.getX());
-                        animation.writeDataInt32(unit.getY());
-                        animation.writeDataInt32(value);
-                        animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
+                        cheapUnits.append(unit);
                     }
                 }
             }
         }
+        var cheapUnitsBuilder = new UNITS_ANIMATION_BUILDER(cheapUnits, map);
+        cheapUnitsBuilder.setSound("power4.wav");
+        cheapUnitsBuilder.setSprite("power4");
+        cheapUnitsBuilder.setPerAnimationFunction((unit, animation, map) =>
+            {
+                animation.writeDataInt32(unit.getX());
+                animation.writeDataInt32(unit.getY());
+                animation.writeDataInt32(value);
+                animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
+            }
+        );
+        parentBuilder.queueAnimationBuilder(cheapUnitsBuilder);
     };
 
     this.loadCOMusic = function(co, map)
