@@ -708,6 +708,7 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 {
                     stream << "Debug: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     std::cout << "Debug: " << msg.toStdString() << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
+                    stream.flush();
                     file.flush();
                 }
                 break;
@@ -716,6 +717,7 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 {
                     stream << "Info: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     std::cout << "Info: " << msg.toStdString() << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
+                    stream.flush();
                     file.flush();
                 }
                 break;
@@ -724,6 +726,7 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 {
                     stream << "Warning: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     std::cout << "Warning: " << msg.toStdString() << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
+                    stream.flush();
                     file.flush();
                 }
                 break;
@@ -732,6 +735,7 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 {
                     stream << "Critical: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     std::cerr << "Critical: " << msg.toStdString() << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
+                    stream.flush();
                     file.flush();
                 }
                 break;
@@ -740,6 +744,7 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 {
                     stream << "Fatal: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     std::cerr << "Fatal: " << msg.toStdString() << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
+                    stream.flush(); 
                     file.flush();
                 }
                 break;
