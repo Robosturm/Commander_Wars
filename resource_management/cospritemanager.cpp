@@ -14,6 +14,7 @@ COSpriteManager::COSpriteManager()
 #ifdef GRAPHICSUPPORT
     setObjectName("COSpriteManager");
 #endif
+    m_excludeIdPaths.append("scripts/cos/animations");
     Interpreter::setCppOwnerShip(this);
     connect(this, &COSpriteManager::sigLoadResAnim, this, &COSpriteManager::loadResAnim, Qt::QueuedConnection);
 }

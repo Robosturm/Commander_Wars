@@ -99,9 +99,11 @@ protected:
     void loadAll(QStringList& list);
     void reset(QStringList& list);
     QStringList getSearchPaths();
+    bool isExcludeFromIds(const QString & path);
 protected:
     QStringList m_loadedRessources;
     QString m_scriptPath;
+    QStringList m_excludeIdPaths;
     bool m_loaded{false};
     bool m_raiseErrors{true};
 private:
@@ -231,6 +233,19 @@ void RessourceManagement<TClass>::loadAll()
 }
 
 template<class TClass>
+bool RessourceManagement<TClass>::isExcludeFromIds(const QString & path)
+{
+    for (auto & exludePaths : m_excludeIdPaths)
+    {
+        if (path.contains(exludePaths))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+template<class TClass>
 void RessourceManagement<TClass>::loadAll(QStringList& list)
 {    
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -287,15 +302,16 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
         {
             dirIter.next();
             QString id = dirIter.fileInfo().fileName().split(".").at(0).toUpper();
+            QString path = dirIter.fileInfo().filePath();
             if (!id.startsWith("__") &&
                 !id.startsWith("___"))
             {
-                pInterpreter->openScript(dirIter.fileInfo().filePath(), true);
-                if (!list.contains(id))
+                pInterpreter->openScript(path, true);
+                if (!list.contains(id) && !isExcludeFromIds(path))
                 {
                     if (m_raiseErrors && !pInterpreter->exists(id))
                     {
-                        CONSOLE_PRINT("File: " + dirIter.fileInfo().filePath() + " didn't add an object named " + id + " to the game", GameConsole::eERROR);
+                        CONSOLE_PRINT("File: " + path + " didn't add an object named " + id + " to the game", GameConsole::eERROR);
                     }
                     else
                     {
