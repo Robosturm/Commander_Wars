@@ -2,7 +2,7 @@ name: Commnader_Wars
 on: [push]
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.9.2'
+  QT_Version: '6.10.3'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
   # JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/17.0.16-8/x64/'
   ANDROID_OPEN_SSL_TAG: '57056d6dd94c235a67b1bc0e4befdba8f9e11c8d'
@@ -187,7 +187,7 @@ jobs:
 
     - name: Install host os qt
       if: matrix.target == 'android'
-      uses: jurplel/install-qt-action@v4
+      uses: jurplel/install-qt-action@v4.3.1 
       with:
           target: 'desktop'
           version: ${{env.QT_Version}}
@@ -196,7 +196,7 @@ jobs:
           install-deps: "true"
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v4
+      uses: jurplel/install-qt-action@v4.3.1 
       with:
           target: ${{matrix.target}}
           version: ${{env.QT_Version}}
