@@ -53,7 +53,7 @@ protected:
      * @return the draw text in pseudo html format
      */
     QString getDrawText(const QString & text);
-    virtual void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg) override;
+    virtual QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
 protected:
     std::shared_ptr<EventTextEdit> m_lineEdit;
     bool m_LineEditFocused{false};

@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QList>
-#include <QMutex>
+#include <mutex>
 
 #include "game/gameaction.h"
 #include "ai/coreai.h"
@@ -70,7 +70,7 @@ private:
     void doNextAction();
 private:
     QList<spGameAction> m_ActionBuffer;
-    QMutex m_ActionMutex;
+    std::mutex m_ActionMutex;
     GameMenue* m_pGameMenue{nullptr};
 };
 

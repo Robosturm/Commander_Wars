@@ -1,7 +1,7 @@
 #ifndef REPLAYMENU_H
 #define REPLAYMENU_H
 
-#include <QMutex>
+#include <mutex>
 #include <QObject>
 
 #include "menue/gamemenue.h"
@@ -125,7 +125,7 @@ private:
     bool m_pauseRequested{false};
     quint32 m_replayCounter{0};
     spV_Scrollbar m_progressBar;
-    QRecursiveMutex m_replayMutex;
+    std::recursive_mutex m_replayMutex;
     oxygine::spButton m_playButton;
     oxygine::spButton m_pauseButton;
     oxygine::spButton m_fastForwardButton;

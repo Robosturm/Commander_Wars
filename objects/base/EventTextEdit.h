@@ -14,6 +14,9 @@ public:
     explicit EventTextEdit();
     virtual ~EventTextEdit() = default;
     virtual bool event(QEvent *event) override;
+protected:
+    virtual void inputMethodEvent(QInputMethodEvent *event) override;
+public:
     bool getSingleLine() const;
     void setSingleLine(bool newSingleLine);
     /**

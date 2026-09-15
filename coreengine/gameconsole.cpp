@@ -1,5 +1,4 @@
-#include <QMutex>
-#include <QMutexLocker>
+#include <mutex>
 #include <QString>
 #include <QDir>
 #include <qlogging.h>
@@ -38,8 +37,8 @@ spConsole GameConsole::m_pConsole{nullptr};
 qint32 GameConsole::m_curlastmsgpos = 0;
 std::vector<QString> GameConsole::m_lastmsgs;
 qint32 GameConsole::m_outputSize = 100;
-QMutex GameConsole::m_datalocker;
-QMutex GameConsole::messageOutputMutex;
+std::mutex GameConsole::m_datalocker;
+std::mutex GameConsole::messageOutputMutex;
 // Console Libary
 const char* const GameConsole::functions[] =
 {
@@ -110,16 +109,6 @@ spConsole GameConsole::getSpInstance()
         qInstallMessageHandler(GameConsole::messageOutput);
     }
     return m_pConsole;
-}
-
-GameConsole* GameConsole::getInstance()
-{
-    return getSpInstance().get();
-}
-
-bool GameConsole::hasInstance()
-{
-    return m_pConsole.get() != nullptr;
 }
 
 void GameConsole::init()
@@ -252,7 +241,7 @@ void GameConsole::print(const QString & message, qint8 logLevel)
 
 void GameConsole::printDirectly(const QString & message, eLogLevels logLevel)
 {
-    QMutexLocker locker(&m_datalocker);
+    std::lock_guard<std::mutex> locker(m_datalocker);
 
     if (logLevel >= GameConsole::m_LogLevel)
     {
@@ -324,7 +313,7 @@ void GameConsole::update(const oxygine::UpdateState& us)
     if(m_show)
     {
 #ifdef GRAPHICSUPPORT
-        QMutexLocker locker(&m_datalocker);
+        std::lock_guard<std::mutex> locker(m_datalocker);
         if (m_outputChanged)
         {
             qint32 screenheight = oxygine::Stage::getStage()->getHeight();
@@ -656,11 +645,28 @@ bool GameConsole::onEditFinished()
     return false;
 }
 
+void GameConsole::messageOutput(const QMessageLogContext &context, const QString &msg, eLogLevels logLevel)
+{
+    QtMsgType type = QtDebugMsg;
+    if (logLevel >= eDEBUG && logLevel < eFATAL)
+    {
+        constexpr QtMsgType logLevelToQtMsgType[] = {
+            QtDebugMsg, // eDEBUG
+            QtInfoMsg,  // eINFO
+            QtWarningMsg, // eWARNING
+            QtCriticalMsg, // eERROR
+            QtFatalMsg // eFATAL
+        };
+        type = logLevelToQtMsgType[logLevel];
+    }
+    messageOutput(type, context, msg);
+}
+
 void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     static QFile file;
     static QTextStream stream(&file);
-    QMutexLocker lock(&messageOutputMutex);
+    std::lock_guard<std::mutex> lock(messageOutputMutex);
     if (!file.isOpen())
     {
         QString date = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
@@ -677,7 +683,7 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
             file.setFileName(Settings::getInstance()->getUserPath() + "consoleAiSlave.log");
             if (!file.open(QIODevice::WriteOnly))
             {
-                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                std::cerr << "Failed to open file " << file.fileName().toStdString() << std::endl;
             }
         }
         Mainapp* pApp = Mainapp::getInstance();
@@ -687,14 +693,14 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
             file.setFileName(Settings::getInstance()->getUserPath() + slaveName + "-" + date + ".log");
             if (!file.open(QIODevice::WriteOnly))
             {
-                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                std::cerr << "Failed to open file " << file.fileName().toStdString() << std::endl;
             }
         }
         else if (!pApp->getSlave())
         {
             if (!file.open(QIODevice::WriteOnly))
             {
-                CONSOLE_PRINT("Failed to open file " + file.fileName(), GameConsole::eERROR);
+                std::cerr << "Failed to open file " << file.fileName().toStdString() << std::endl;
             }
         }
     }
@@ -707,7 +713,7 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eDEBUG)
                 {
                     stream << "Debug: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
-                    // fprintf(stdout, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                    std::cout << "Debug: " << msg.toStdString() << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     stream.flush();
                     file.flush();
                 }
@@ -716,7 +722,7 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eINFO)
                 {
                     stream << "Info: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
-                    // fprintf(stdout, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                    std::cout << "Info: " << msg.toStdString() << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     stream.flush();
                     file.flush();
                 }
@@ -725,7 +731,7 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eWARNING)
                 {
                     stream << "Warning: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
-                    // fprintf(stdout, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                    std::cout << "Warning: " << msg.toStdString() << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     stream.flush();
                     file.flush();
                 }
@@ -734,7 +740,7 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eERROR)
                 {
                     stream << "Critical: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
-                    // fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                    std::cerr << "Critical: " << msg.toStdString() << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                     stream.flush();
                     file.flush();
                 }
@@ -743,8 +749,8 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eFATAL)
                 {
                     stream << "Fatal: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
-                    // fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-                    stream.flush();
+                    std::cerr << "Fatal: " << msg.toStdString() << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
+                    stream.flush(); 
                     file.flush();
                 }
                 break;

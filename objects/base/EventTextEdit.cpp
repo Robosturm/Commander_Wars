@@ -1,6 +1,9 @@
 #include "objects/base/EventTextEdit.h"
 #include "coreengine/interpreter.h"
 
+#include <QGuiApplication>
+#include <QInputMethod>
+
 EventTextEdit::EventTextEdit()
 {
 #ifdef GRAPHICSUPPORT
@@ -34,17 +37,35 @@ bool EventTextEdit::event(QEvent *event)
         }
         else if (event->type() == QEvent::InputMethod)
         {
-            // swallow the commit of an input method text
             QInputMethodEvent* inputEvent = static_cast<QInputMethodEvent*>(event);
-            if (!inputEvent->commitString().isEmpty() ||
-                inputEvent->replacementLength() > 0)
-            {
-                return true;
-            }
-            return QTextEdit::event(event);
+            inputMethodEvent(inputEvent);
+            return true;
         }
     }
     return QTextEdit::event(event);
+}
+
+void EventTextEdit::inputMethodEvent(QInputMethodEvent *event)
+{
+    const QString commitString = event->commitString();
+    const qint32 replacementLength = event->replacementLength();
+    CONSOLE_PRINT("Handling input method event: commitString='" + commitString + "' replacementLength=" + QString::number(replacementLength), GameConsole::eDEBUG);
+    if (commitString.isEmpty() && replacementLength == 0)
+    {
+        QTextEdit::inputMethodEvent(event);
+        return;
+    }
+
+    auto cursor = textCursor();
+    const qint32 documentLength = document()->characterCount() - 1;
+    const qint32 replacementStart = qBound(0, cursor.position() + event->replacementStart(), documentLength);
+    const qint32 replacementEnd = qBound(replacementStart, replacementStart + replacementLength, documentLength);
+    cursor.setPosition(replacementStart);
+    cursor.setPosition(replacementEnd, QTextCursor::KeepAnchor);
+    cursor.insertText(commitString);
+    setTextCursor(cursor);
+    QGuiApplication::inputMethod()->update(Qt::ImQueryAll);
+    event->accept();
 }
 
 bool EventTextEdit::isEditingKeyPress(QKeyEvent *keyEvent) const

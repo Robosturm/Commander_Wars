@@ -34,7 +34,7 @@ Mainapp* Mainapp::m_pMainapp{nullptr};
 
 bool Mainapp::m_slave{false};
 bool Mainapp::m_trainingSession{false};
-bool Mainapp::m_useAudioThread{false};
+bool Mainapp::m_useAudioThread{true};
 QStringList Mainapp::m_restartArgv;
 QString Mainapp::m_rejoinPassword;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
@@ -235,6 +235,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
             m_AudioManager->initAudio();
             m_AudioManager->clearPlayList();
             m_AudioManager->loadFolder("resources/music/hauptmenue");
+            m_AudioManager->playRandom();
 #endif
             emit m_renderer.sigLoadResources(step);
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
@@ -279,10 +280,6 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
 #ifdef UPDATESUPPORT
             m_gameUpdater.reset();
 #endif
-            if (m_AudioManager.get() != nullptr)
-            {
-                m_AudioManager->playRandom();
-            }
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
             redrawUi();
@@ -682,6 +679,35 @@ bool Mainapp::event(QEvent *event)
             {
                 redrawUi();
             }
+            else if (eventType == QEvent::InputMethodQuery)
+            {
+                QInputMethodQueryEvent* inputEvent = static_cast<QInputMethodQueryEvent*>(event);
+                constexpr Qt::InputMethodQuery queries[] =
+                {
+                    Qt::ImEnabled,
+                    Qt::ImCursorRectangle,
+                    Qt::ImFont,
+                    Qt::ImCursorPosition,
+                    Qt::ImSurroundingText,
+                    Qt::ImCurrentSelection,
+                    Qt::ImMaximumTextLength,
+                    Qt::ImAnchorPosition,
+                    Qt::ImHints,
+                    Qt::ImPreferredLanguage,
+                    Qt::ImAbsolutePosition,
+                    Qt::ImTextBeforeCursor,
+                    Qt::ImTextAfterCursor,
+                    Qt::ImEnterKeyType,
+                };
+                for (auto query : queries)
+                {
+                    if (inputEvent->queries().testFlag(query))
+                    {
+                        inputEvent->setValue(query, FocusableObject::handleInputMethodQuery(query));
+                    }
+                }
+                handled = true;
+            }
             else if (eventType == QEvent::InputMethod)
             {
 #ifdef GRAPHICSUPPORT
@@ -974,9 +1000,4 @@ bool Mainapp::getCreateSlaveLogs() const
 void Mainapp::setCreateSlaveLogs(bool create)
 {
     m_createSlaveLogs = create;
-}
-
-void Mainapp::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
-{
-    FocusableObject::handleInputMethodQuery(query, arg);
 }

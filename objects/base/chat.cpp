@@ -1,5 +1,4 @@
 #include <QSize>
-#include <QMutexLocker>
 #include <QJsonDocument>
 
 #include "objects/base/chat.h"

@@ -1,15 +1,13 @@
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 
-#include <QMutexLocker>
-
 namespace oxygine
 {
     spMaterialCache MaterialCache::mcache;
 
     spMaterial MaterialCache::clone_(const Material& other)
     {
-        QMutexLocker alock(&m_lock);
+        std::lock_guard<std::mutex> alock(m_lock);
         size_t hash;
         other.update(hash);
         auto items = m_materials.values(hash);
@@ -47,19 +45,19 @@ namespace oxygine
 
     qint32 MaterialCache::getSize()
     {
-        QMutexLocker alock(&m_lock);
+        std::lock_guard<std::mutex> alock(m_lock);
         return m_materials.size();
     }
 
     void MaterialCache::removeUnused()
     {
-        QMutexLocker alock(&m_lock);
+        std::lock_guard<std::mutex> alock(m_lock);
         removeUnusedNoLock();
     }
 
     void MaterialCache::clear()
     {
-        QMutexLocker alock(&m_lock);
+        std::lock_guard<std::mutex> alock(m_lock);
         m_addCounter = 0;
         m_materials.clear();
     }

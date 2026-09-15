@@ -8,8 +8,7 @@
 #include <QTranslator>
 #include <QSettings>
 #ifdef AUDIOSUPPORT
-#include <QMediaDevices>
-#include <QAudioDevice>
+#include <portaudio.h>
 #endif
 #include <QTemporaryDir>
 
@@ -254,43 +253,14 @@ private:
             {
                 CONSOLE_PRINT("Key " + QString(m_name) + " in group " + m_group + " not found using default value", GameConsole::eDEBUG);
             }
-            const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
             QString description = settings.value(m_name, m_defaultValue).toString();
-            if (description == Settings::getInstance()->DEFAULT_AUDIODEVICE)
-            {
-                *m_value = QVariant(Settings::getInstance()->DEFAULT_AUDIODEVICE);
-            }
-            else
-            {
-                const auto audioDevices = QMediaDevices::audioOutputs();
-                for (const auto & device : audioDevices)
-                {
-                    if (device.description() == description)
-                    {
-                        *m_value = QVariant::fromValue(device);
-                        break;
-                    }
-                }
-                if (m_pInstance->m_audioOutput.value<QAudioDevice>().isNull())
-                {
-                    *m_value = QVariant::fromValue(defaultDeviceInfo);
-                }
-            }
+            *m_value = QVariant(description);
             settings.endGroup();
         }
         virtual void saveValue(QSettings & settings) override
         {
             settings.beginGroup(m_group);
-            if (m_value->typeId() == QMetaType::QString &&
-                m_value->toString() == Settings::getInstance()->DEFAULT_AUDIODEVICE)
-            {
-                settings.setValue(m_name, Settings::getInstance()->DEFAULT_AUDIODEVICE);
-            }
-            else
-            {
-                auto device = (*m_value).value<QAudioDevice>();
-                settings.setValue(m_name, device.description());
-            }
+            settings.setValue(m_name, m_value->toString());
             settings.endGroup();
         }
         virtual void resetValue() override

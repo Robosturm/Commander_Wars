@@ -5,7 +5,7 @@
 #include <QTranslator>
 #include <QThread>
 #include <QCoreApplication>
-#include <QMutex>
+#include <mutex>
 #include <QProcess>
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
@@ -234,12 +234,6 @@ public slots:
     void doScreenshot();
     void nextStartUpStep(GameEnums::StartupPhase step);
     /**
-     * @brief inputMethodQuery dummy function to rerout qlineedit events
-     * @param query
-     * @param ret
-     */
-    void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
-    /**
      * @brief createLineEdit
      */
     void createLineEdit();
@@ -280,7 +274,7 @@ private:
     static bool m_useAudioThread;
     static QStringList m_restartArgv;
     static QString m_rejoinPassword;
-    QMutex m_crashMutex;
+    std::mutex m_crashMutex;
     spQThread m_networkThread;
     spQThread m_audioThread;
     spQProcess m_aiSubProcess;
