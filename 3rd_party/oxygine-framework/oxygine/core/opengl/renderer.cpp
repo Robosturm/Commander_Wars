@@ -94,6 +94,10 @@ void Renderer::onPaint()
         if (!m_window.m_noUi)
         {
             auto currentTime = QDateTime::currentMSecsSinceEpoch();
+            if (!m_window.m_terminating && m_lastFrameTime > 0 && currentTime - m_lastFrameTime > 333)
+            {
+                CONSOLE_PRINT("Frame skipped due to long delay. Last frame time: " + QString::number(currentTime - m_lastFrameTime), GameConsole::eWARNING);
+            }
             if (acquireLock())
             {
                 if (!m_window.m_terminating)
@@ -117,10 +121,6 @@ void Renderer::onPaint()
                     }
                 }
                 m_window.m_renderSync.unlock();
-            }
-            if (!m_window.m_terminating && currentTime - m_lastFrameTime > 333)
-            {
-                CONSOLE_PRINT("Frame skipped due to long delay. Last frame time: " + QString::number(currentTime - m_lastFrameTime), GameConsole::eWARNING);
             }
         }
     }

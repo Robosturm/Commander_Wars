@@ -1,7 +1,7 @@
 #pragma once
 #include <QOpenGLWindow>
 #include <QOpenGLFunctions>
-#include <QMutex>
+#include <mutex>
 #include <atomic>
 
 #include "3rd_party/oxygine-framework/oxygine/core/renderer.h"
@@ -36,7 +36,7 @@ namespace oxygine
         friend Renderer;
         bool m_renderEnabled{true};
         std::atomic<quint8> m_pausedCounter{0};
-        QMutex m_renderSync;
+        std::mutex m_renderSync;
         bool m_quit{false};
         bool m_terminating{false};
         bool m_noUi{false};

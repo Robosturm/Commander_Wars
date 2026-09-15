@@ -47,7 +47,7 @@ namespace oxygine
             }
             else
             {
-                QMutexLocker lock(&m_updateActionMutex);
+                std::lock_guard<std::mutex> updateLocker(m_updateActionMutex);
                 UpdateInfo info;
                 info.parent = getSharedPtr<Actor>();
                 info.action = Actor::UpdateAction::SetAddColor;

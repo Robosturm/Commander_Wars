@@ -4,13 +4,13 @@
 #include <QVector>
 #include <QObject>
 #include <QKeyEvent>
+#include <mutex>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 #include "objects/base/textinput.h"
 
 class QString;
-class QMutex;
 class QKeyEvent;
 class Interpreter;
 
@@ -255,7 +255,7 @@ public slots:
      */
     std::vector<QString> getConsoleLog()
     {
-        QMutexLocker locker(&m_datalocker);
+        std::lock_guard<std::mutex> locker(m_datalocker);
         return m_output;
     }
 protected slots:
@@ -287,8 +287,8 @@ private:
     static bool m_outputChanged;
     static qint32 m_outputSize;
     static bool m_developerMode;
-    static QMutex m_datalocker;
-    static QMutex messageOutputMutex;
+    static std::mutex m_datalocker;
+    static std::mutex messageOutputMutex;
     oxygine::spSprite m_pBackgroundsprite;
     oxygine::spTextField m_text;
     oxygine::spTextField m_editTextfield;

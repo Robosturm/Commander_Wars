@@ -96,10 +96,16 @@ namespace oxygine
         {
             if (m_pausedCounter == 0)
             {
-                if (m_renderSync.try_lock() && 
-                    m_pausedCounter == 0)
+                if (m_renderSync.try_lock())
                 {
-                    return true;
+                    if (m_pausedCounter == 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        m_renderSync.unlock();
+                    }
                 }
             }
             return false;
@@ -108,7 +114,7 @@ namespace oxygine
     private:
         WindowBase & m_window;
         std::atomic<quint8> & m_pausedCounter;
-        QMutex & m_renderSync;
+        std::mutex & m_renderSync;
         qint32 m_repeatedFramesDropped{0};
         qint64 m_lastFrameTime{0};
         QTimer m_timer;

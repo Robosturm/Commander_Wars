@@ -1,6 +1,6 @@
 #pragma once
 #include <QMultiMap>
-#include <QMutex>
+#include <mutex>
 
 class MemoryManagement;
 
@@ -49,8 +49,9 @@ protected:
     using materials = QMultiMap<size_t, spMaterial>;
     materials m_materials;
 
-    QMutex m_lock;
+    std::mutex m_lock;
     qint32 m_addCounter{0};
+
 private:
     friend MemoryManagement;
     explicit MaterialCache() = default;

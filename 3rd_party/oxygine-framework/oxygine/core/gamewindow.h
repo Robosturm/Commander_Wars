@@ -54,7 +54,7 @@ public:
             Q_ASSERT(isMainThread());
             if (m_pausedCounter == 0)
             {
-                QMutexLocker lock(&m_renderSync);
+                std::lock_guard<std::mutex> lock(m_renderSync);
                 ++m_pausedCounter;
             }
             else

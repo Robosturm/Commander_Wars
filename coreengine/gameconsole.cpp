@@ -1,5 +1,4 @@
-#include <QMutex>
-#include <QMutexLocker>
+#include <mutex>
 #include <QString>
 #include <QDir>
 #include <qlogging.h>
@@ -38,8 +37,8 @@ spConsole GameConsole::m_pConsole{nullptr};
 qint32 GameConsole::m_curlastmsgpos = 0;
 std::vector<QString> GameConsole::m_lastmsgs;
 qint32 GameConsole::m_outputSize = 100;
-QMutex GameConsole::m_datalocker;
-QMutex GameConsole::messageOutputMutex;
+std::mutex GameConsole::m_datalocker;
+std::mutex GameConsole::messageOutputMutex;
 // Console Libary
 const char* const GameConsole::functions[] =
 {
@@ -242,7 +241,7 @@ void GameConsole::print(const QString & message, qint8 logLevel)
 
 void GameConsole::printDirectly(const QString & message, eLogLevels logLevel)
 {
-    QMutexLocker locker(&m_datalocker);
+    std::lock_guard<std::mutex> locker(m_datalocker);
 
     if (logLevel >= GameConsole::m_LogLevel)
     {
@@ -314,7 +313,7 @@ void GameConsole::update(const oxygine::UpdateState& us)
     if(m_show)
     {
 #ifdef GRAPHICSUPPORT
-        QMutexLocker locker(&m_datalocker);
+        std::lock_guard<std::mutex> locker(m_datalocker);
         if (m_outputChanged)
         {
             qint32 screenheight = oxygine::Stage::getStage()->getHeight();
@@ -667,7 +666,7 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
 {
     static QFile file;
     static QTextStream stream(&file);
-    QMutexLocker lock(&messageOutputMutex);
+    std::lock_guard<std::mutex> lock(messageOutputMutex);
     if (!file.isOpen())
     {
         QString date = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");

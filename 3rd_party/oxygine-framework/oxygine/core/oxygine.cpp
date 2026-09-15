@@ -2,8 +2,6 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
-#include <qmutex.h>
-
 #include "coreengine/gameconsole.h"
 
 namespace oxygine

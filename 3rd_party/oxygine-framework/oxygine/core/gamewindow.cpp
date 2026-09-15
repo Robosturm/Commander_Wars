@@ -12,7 +12,6 @@
 
 #include <QMouseEvent>
 #include <QTimerEvent>
-#include <QMutexLocker>
 #ifdef GRAPHICSUPPORT
 #include <QApplication>
 #include <QColorSpace>

@@ -1263,8 +1263,6 @@ set(SystemHeaderSources # Every header used 5 or more times.
     <QJsonObject$<ANGLE-R>
     <QKeyEvent$<ANGLE-R>
     <QList$<ANGLE-R>
-    <QMutex$<ANGLE-R>
-    <QMutexLocker$<ANGLE-R>
     <QObject$<ANGLE-R>
     <QPoint$<ANGLE-R>
     <QProcess$<ANGLE-R>
