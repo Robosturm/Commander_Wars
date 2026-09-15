@@ -91,17 +91,20 @@ var Constructor = function()
                 if (map.onMap(atkPosX, atkPosY))
                 {
                     var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
+                    var isPlains = (terrainID === "PLAINS") ||
+                                    (terrainID === "PLAINS_PLASMA") ||
+                                    (terrainID === "PLAINS_DESTROYED");
                     switch (co.getPowerMode())
                     {
                     case GameEnums.PowerMode_Tagpower:
                     case GameEnums.PowerMode_Superpower:
-                        if (terrainID === "PLAINS")
+                        if (isPlains)
                         {
                             return CO_JAKE.superPowerPlainsBonus;
                         }
                         return CO_JAKE.powerOffBonus;
                     case GameEnums.PowerMode_Power:
-                        if (terrainID === "PLAINS")
+                        if (isPlains)
                         {
                             return CO_JAKE.powerPlainsBonus;
                         }
@@ -109,13 +112,13 @@ var Constructor = function()
                     default:
                         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
-                            if (terrainID === "PLAINS")
+                            if (isPlains)
                             {
                                 return CO_JAKE.d2dCoZonePlainsBonus;
                             }
                             return CO_JAKE.d2dCoZoneOffBonus;
                         }
-                        else if (terrainID === "PLAINS")
+                        else if (isPlains)
                         {
                             if (map === null ||
                                 (map !== null && map.getGameRules().getCoGlobalD2D()))
