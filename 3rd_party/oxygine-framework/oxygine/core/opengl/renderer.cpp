@@ -118,7 +118,7 @@ void Renderer::onPaint()
                 }
                 m_window.m_renderSync.unlock();
             }
-            if (currentTime - m_lastFrameTime > 333)
+            if (!m_window.m_terminating && currentTime - m_lastFrameTime > 333)
             {
                 CONSOLE_PRINT("Frame skipped due to long delay. Last frame time: " + QString::number(currentTime - m_lastFrameTime), GameConsole::eWARNING);
             }
