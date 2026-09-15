@@ -1342,7 +1342,7 @@
         <file>mods/map_creator/scripts/terrain/METEOR.js</file>
         <file>mods/map_creator/scripts/terrain/MOUNTAIN.js</file>
         <file>mods/map_creator/scripts/terrain/PIPELINE.js</file>
-        <file>mods/map_creator/scripts/terrain/plains.js</file>
+        <file>mods/map_creator/scripts/terrain/PLAINS.js</file>
         <file>mods/map_creator/scripts/terrain/PLAINS_DESTROYED.js</file>
         <file>mods/map_creator/scripts/terrain/PLAINS_PLASMA.js</file>
         <file>mods/map_creator/scripts/terrain/PLASMA.js</file>
@@ -1834,7 +1834,7 @@
         <file>resources/scripts/terrain/METEOR.js</file>
         <file>resources/scripts/terrain/MOUNTAIN.js</file>
         <file>resources/scripts/terrain/PIPELINE.js</file>
-        <file>resources/scripts/terrain/plains.js</file>
+        <file>resources/scripts/terrain/PLAINS.js</file>
         <file>resources/scripts/terrain/PLAINS_DESTROYED.js</file>
         <file>resources/scripts/terrain/PLAINS_PLASMA.js</file>
         <file>resources/scripts/terrain/PLASMA.js</file>
