@@ -112,16 +112,6 @@ spConsole GameConsole::getSpInstance()
     return m_pConsole;
 }
 
-GameConsole* GameConsole::getInstance()
-{
-    return getSpInstance().get();
-}
-
-bool GameConsole::hasInstance()
-{
-    return m_pConsole.get() != nullptr;
-}
-
 void GameConsole::init()
 {
     // move console to top
@@ -654,6 +644,23 @@ bool GameConsole::onEditFinished()
         setCursorPosition(0);
     }
     return false;
+}
+
+void GameConsole::messageOutput(const QMessageLogContext &context, const QString &msg, eLogLevels logLevel)
+{
+    QtMsgType type = QtDebugMsg;
+    if (logLevel >= eDEBUG && logLevel < eFATAL)
+    {
+        constexpr QtMsgType logLevelToQtMsgType[] = {
+            QtDebugMsg, // eDEBUG
+            QtInfoMsg,  // eINFO
+            QtWarningMsg, // eWARNING
+            QtCriticalMsg, // eERROR
+            QtFatalMsg // eFATAL
+        };
+        type = logLevelToQtMsgType[logLevel];
+    }
+    messageOutput(type, context, msg);
 }
 
 void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)

@@ -306,8 +306,8 @@ namespace oxygine
         const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
         const QTouchEvent::TouchPoint &touchPoint1 = touchPoints.last();
         auto & stage = oxygine::Stage::getStage();
-        if (touchPoint0.pos().x() < RECT_SIZE && touchPoint0.pos().y() < RECT_SIZE &&
-            touchPoint1.pos().x() > stage->getWidth() - RECT_SIZE && touchPoint1.pos().y() > stage->getHeight() - RECT_SIZE)
+        if (touchPoint0.position().x() < RECT_SIZE && touchPoint0.position().y() < RECT_SIZE &&
+            touchPoint1.position().x() > stage->getWidth() - RECT_SIZE && touchPoint1.position().y() > stage->getHeight() - RECT_SIZE)
         {
             return true;
         }

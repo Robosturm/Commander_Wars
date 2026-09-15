@@ -57,12 +57,26 @@ public:
         MAXLASTMSG = 20
     };
     virtual ~GameConsole() = default;
-    static GameConsole* getInstance();
+    static GameConsole* getInstance()
+    {
+        if (hasInstance())
+        {
+            return m_pConsole.get();
+        }
+        else
+        {
+            return getSpInstance().get();
+        }
+    }
     static spConsole getSpInstance();
-    static bool hasInstance();
+    static bool hasInstance()
+    {
+        return m_pConsole.get() != nullptr;
+    }
     static void dotask(QString message);
     static void draw();
     static void messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+    static void messageOutput(const QMessageLogContext &context, const QString &msg, eLogLevels logLevel);
     void init();
     void release();
 
@@ -280,35 +294,35 @@ private:
     oxygine::spTextField m_editTextfield;
 };
 
-template<typename T_StringType>
-void CONSOLE_PRINT(T_StringType message, GameConsole::eLogLevels logLevel)
-{
-    auto * console = GameConsole::getInstance();
-    if (logLevel >= console->getLogLevel() && (console->getActiveModules() & GameConsole::eGeneral) > 0)
-    {
-        GameConsole::printDirectly(message, logLevel);
-    }
+#define CONSOLE_PRINT(message, logLevel)                                                                    \
+{                                                                                                           \
+    auto * console = GameConsole::getInstance();                                                            \
+    if (logLevel >= console->getLogLevel() && (console->getActiveModules() & GameConsole::eGeneral) > 0)    \
+    {                                                                                                       \
+        QMessageLogContext messageContext(__FILE__, __LINE__, __FUNCTION__, "");                            \
+        GameConsole::messageOutput(messageContext, message, logLevel);                                      \
+    }                                                                                                       \
 }
 
-template<typename T_StringType>
-void CONSOLE_PRINT_MODULE(T_StringType message, GameConsole::eLogLevels logLevel, quint64 module)
-{
-    auto * console = GameConsole::getInstance();
-    if (logLevel >= console->getLogLevel() && (console->getActiveModules() & module) > 0)
-    {
-        GameConsole::printDirectly(message, logLevel);
-    }
+#define CONSOLE_PRINT_MODULE(message, logLevel, module)                                                     \
+{                                                                                                           \
+    auto * console = GameConsole::getInstance();                                                            \
+    if (logLevel >= console->getLogLevel() && (console->getActiveModules() & module) > 0)                   \
+    {                                                                                                       \
+        QMessageLogContext messageContext(__FILE__, __LINE__, __FUNCTION__, "");                            \
+        GameConsole::messageOutput(messageContext, message, logLevel);                                      \
+    }                                                                                                       \
 }
 
 #ifdef GAMEDEBUG
-template<typename T_StringType>
-void AI_CONSOLE_PRINT(T_StringType message, GameConsole::eLogLevels logLevel)
-{
-    auto * console = GameConsole::getInstance();
-    if (logLevel >= console->getLogLevel() && console->getActiveModules() & GameConsole::eAI)
-    {
-            GameConsole::printDirectly(message, logLevel);
-    }
+#define AI_CONSOLE_PRINT(message, logLevel)                                                                 \
+{                                                                                                           \
+    auto * console = GameConsole::getInstance();                                                            \
+    if (logLevel >= console->getLogLevel() && console->getActiveModules() & GameConsole::eAI)               \
+    {                                                                                                       \
+        QMessageLogContext messageContext(__FILE__, __LINE__, __FUNCTION__, "");                            \
+        GameConsole::messageOutput(messageContext, message, logLevel);                                      \
+    }                                                                                                       \
 }
 #else
 #define AI_CONSOLE_PRINT(text, logLevel)
