@@ -93,10 +93,12 @@ void Renderer::onPaint()
     {
         if (!m_window.m_noUi)
         {
+            auto currentTime = QDateTime::currentMSecsSinceEpoch();
             if (acquireLock())
             {
                 if (!m_window.m_terminating)
                 {
+                    m_lastFrameTime = currentTime;
                     m_window.updateData();
                     if (oxygine::Stage::getStage().get() != nullptr)
                     {
@@ -115,6 +117,10 @@ void Renderer::onPaint()
                     }
                 }
                 m_window.m_renderSync.unlock();
+            }
+            if (currentTime - m_lastFrameTime > 333)
+            {
+                CONSOLE_PRINT("Frame skipped due to long delay. Last frame time: " + QString::number(currentTime - m_lastFrameTime), GameConsole::eWARNING);
             }
         }
     }

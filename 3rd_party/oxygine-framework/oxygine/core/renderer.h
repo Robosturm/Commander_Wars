@@ -110,6 +110,7 @@ namespace oxygine
         std::atomic<quint8> & m_pausedCounter;
         QMutex & m_renderSync;
         qint32 m_repeatedFramesDropped{0};
+        qint64 m_lastFrameTime{0};
         QTimer m_timer;
         QTimer m_mouseDelayTimer;
         QPoint m_lastMousePosition;

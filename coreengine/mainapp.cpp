@@ -235,6 +235,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
             m_AudioManager->initAudio();
             m_AudioManager->clearPlayList();
             m_AudioManager->loadFolder("resources/music/hauptmenue");
+            m_AudioManager->playRandom();
 #endif
             emit m_renderer.sigLoadResources(step);
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
@@ -279,10 +280,6 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
 #ifdef UPDATESUPPORT
             m_gameUpdater.reset();
 #endif
-            if (m_AudioManager.get() != nullptr)
-            {
-                m_AudioManager->playRandom();
-            }
             emit m_renderer.sigLoadResources(step);
             LoadingScreen::getInstance()->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
             redrawUi();

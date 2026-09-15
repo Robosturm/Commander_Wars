@@ -737,7 +737,7 @@ void Settings::setUserPath(const QString newUserPath)
     }
     if (!m_userPath.isEmpty() && 
         !QDir().exists(m_userPath) && 
-        !QDir().mkdir(m_userPath))
+        !QDir().mkpath(m_userPath))
     {
         CONSOLE_PRINT("Failed to create directory for user path: " + m_userPath, GameConsole::eINFO);
     }
