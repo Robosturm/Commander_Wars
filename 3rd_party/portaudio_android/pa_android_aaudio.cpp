@@ -72,7 +72,7 @@ namespace
 
     void errorCallback(AAudioStream* /*stream*/, void* /*userData*/, aaudio_result_t error)
     {
-        CONSOLE_PRINT("AAudio stream error: %s", AAudio_convertResultToText(error), GameConsole::eERROR);
+        CONSOLE_PRINT(QString("AAudio stream error: ") + AAudio_convertResultToText(error), GameConsole::eERROR);
     }
 }
 
@@ -190,7 +190,7 @@ PaError Pa_OpenStream(PaStream** stream,
 
     if (result != AAUDIO_OK || aaudioStream == nullptr)
     {
-        CONSOLE_PRINT("Failed to open AAudio stream: %s", AAudio_convertResultToText(result), GameConsole::eERROR);
+        CONSOLE_PRINT(QString("Failed to open AAudio stream: ") + AAudio_convertResultToText(result), GameConsole::eERROR);
         delete paStream;
         return paUnanticipatedHostError;
     }
@@ -201,8 +201,7 @@ PaError Pa_OpenStream(PaStream** stream,
     if ((paStream->outputFormat != AAUDIO_FORMAT_PCM_FLOAT && paStream->outputFormat != AAUDIO_FORMAT_PCM_I16) ||
         channelCount != outputParameters->channelCount)
     {
-        CONSOLE_PRINT("Unsupported AAudio output configuration: format=%d channels=%d",
-                      paStream->outputFormat, channelCount, GameConsole::eERROR);
+        CONSOLE_PRINT(QString("Unsupported AAudio output configuration: format=" + QString::number(paStream->outputFormat) + " channels=" + QString::number(channelCount)), GameConsole::eERROR);
         AAudioStream_close(aaudioStream);
         delete paStream;
         return paSampleFormatNotSupported;
@@ -216,10 +215,11 @@ PaError Pa_OpenStream(PaStream** stream,
             paStream->floatBuffer.resize(static_cast<size_t>(callbackFrames) * channelCount);
         }
     }
-    CONSOLE_PRINT_MODULE("Opened AAudio stream: format=%d channels=%d sampleRate=%d callbackFrames=%d",
-                  paStream->outputFormat, channelCount,
-                  AAudioStream_getSampleRate(aaudioStream),
-                  AAudioStream_getFramesPerDataCallback(aaudioStream), GameConsole::eINFO, GameConsole::eAudio);
+    CONSOLE_PRINT_MODULE(QString("Opened AAudio stream: format=" + QString::number(paStream->outputFormat) +
+                                 " channels=" + QString::number(channelCount) +
+                                 " sampleRate=" + QString::number(AAudioStream_getSampleRate(aaudioStream)) +
+                                 " callbackFrames=" + QString::number(AAudioStream_getFramesPerDataCallback(aaudioStream))),
+                         GameConsole::eINFO, GameConsole::eAudio);
     *stream = paStream;
     return paNoError;
 }
