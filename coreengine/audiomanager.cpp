@@ -100,7 +100,7 @@ void AudioManager::initAudio()
     {
         if (Mainapp::getInstance()->isAudioThread())
         {
-            CONSOLE_PRINT_MODULE("AudioThread::initAudio", GameConsole::eDEBUG, GameConsole::eAudio);
+            CONSOLE_PRINT_MODULE("AudioManager::initAudio", GameConsole::eDEBUG, GameConsole::eAudio);
             PaError err = Pa_Initialize();
             if (err != paNoError)
             {

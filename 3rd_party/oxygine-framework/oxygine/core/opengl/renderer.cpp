@@ -22,6 +22,7 @@ void Renderer::start()
             Material::current = Material::null;
 
             STDRenderer::current = STDRenderer::instance;
+            CONSOLE_PRINT("Starting rendering", GameConsole::eDEBUG);
             m_timer.start();
 
         }
