@@ -197,7 +197,7 @@ if (AUDIOSUPPORT)
         target_link_libraries(portaudio PRIVATE aaudio log android)
         
         set(${PROJECT_NAME}_AUDIO_SRCS
-            3rd_party/portaudio_android/pa_android_aaudio.cpp
+            # 3rd_party/portaudio_android/pa_android_aaudio.cpp
             coreengine/audiodecoder.cpp coreengine/audiodecoder.h
         )
     else()

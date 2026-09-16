@@ -279,14 +279,14 @@ var Constructor = function()
                 // check for finishing blow return absurd amount of true damage if luck is enough
                 if (isDefender)
                 {
-                    if (defender.getHp() - damage / 10.0 - attackerBaseHp / 20.0 <= 0)
+                    if (defender.getHp() - damage / 10.0 - attackerBaseHp / 10.0 <= 0)
                     {
                         return 100;
                     }
                 }
                 else
                 {
-                    if (defender.getHp() - damage / 10.0  - attacker.getHpRounded() / 20.0 <= 0)
+                    if (defender.getHp() - damage / 10.0  - attacker.getHpRounded() / 10.0 <= 0)
                     {
                         return 100;
                     }

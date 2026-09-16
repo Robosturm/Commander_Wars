@@ -756,5 +756,4 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 break;
         }
     }
-    QThread::currentThread()->msleep(100);
 }

@@ -107,6 +107,10 @@ void AudioManager::initAudio()
                 CONSOLE_PRINT("Pa_Initialize failed: " + QString::fromUtf8(Pa_GetErrorText(err)), GameConsole::eERROR);
                 return;
             }
+            else
+            {
+                CONSOLE_PRINT_MODULE("Pa_Initialize succeeded", GameConsole::eDEBUG, GameConsole::eAudio);
+            }
 
             const auto value = Settings::getInstance()->getAudioOutput();
             QString deviceName = value.toString();
@@ -114,7 +118,7 @@ void AudioManager::initAudio()
             {
                 deviceName = Settings::DEFAULT_AUDIODEVICE;
             }
-
+            CONSOLE_PRINT_MODULE("Open audio stream with device: " + deviceName, GameConsole::eDEBUG, GameConsole::eAudio);
             openStream(deviceName);
 
             m_pollTimer.setInterval(50);
@@ -816,9 +820,9 @@ void AudioManager::SlotSetVolume(qint32 value)
     if (!m_noAudio)
     {
         std::lock_guard<std::mutex> lock(m_audioMutex);
-        m_musicVolume = static_cast<float>(value) / 100.0f;
-        m_totalVolume = static_cast<float>(Settings::getInstance()->getTotalVolume()) / 100.0f;
-        m_soundVolume = static_cast<float>(Settings::getInstance()->getSoundVolume()) / 100.0f;
+        m_totalVolume = qPow(static_cast<float>(Settings::getInstance()->getTotalVolume()) / 100.0f, 2);
+        m_musicVolume = qPow(static_cast<float>(value) / 100.0f, 2);
+        m_soundVolume = qPow(static_cast<float>(Settings::getInstance()->getSoundVolume()) / 100.0f, 2);
         m_isMuted = Settings::getInstance()->getMuted();
 
         CONSOLE_PRINT_MODULE("Setting volume to : music=" + QString::number(m_musicVolume) + " total=" + QString::number(m_totalVolume), GameConsole::eDEBUG, GameConsole::eAudio);
