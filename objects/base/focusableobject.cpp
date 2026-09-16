@@ -44,9 +44,9 @@ bool FocusableObject::handleEvent(QEvent *event)
     bool handled = false;
     if (pObj != nullptr)
     {
+        CONSOLE_PRINT("Handling input event for focused object " + QString::number(event->type()), GameConsole::eDEBUG);
         switch (event->type())
         {
-            case QEvent::InputMethodQuery:
             case QEvent::InputMethod:
             case QEvent::KeyPress:
             case QEvent::KeyRelease:
@@ -65,12 +65,14 @@ bool FocusableObject::handleEvent(QEvent *event)
     return handled;
 }
 
-void FocusableObject::handleInputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
+QVariant FocusableObject::handleInputMethodQuery(Qt::InputMethodQuery query)
 {
     if (FocusableObject::getFocusedObject() != nullptr)
-    {
-        FocusableObject::getFocusedObject()->inputMethodQuery(query, arg);
+    {    
+        CONSOLE_PRINT("Handling input method query for focused object " + QString::number(query), GameConsole::eDEBUG);
+        return FocusableObject::getFocusedObject()->inputMethodQuery(query);
     }
+    return QVariant();
 }
 
 

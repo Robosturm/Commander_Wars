@@ -1,5 +1,3 @@
-#include <QMutexLocker>
-
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "menue/replaymenu.h"
@@ -132,7 +130,7 @@ void ReplayMenu::exitReplay()
 
 void ReplayMenu::nextReplayAction()
 {
-    QMutexLocker locker(&m_replayMutex);
+    std::lock_guard<std::recursive_mutex> locker(m_replayMutex);
     m_replayReader->onPostAction();
     if (m_pauseRequested && m_replayCounter == 0)
     {
@@ -327,7 +325,7 @@ void ReplayMenu::loadUIButtons()
 
 void ReplayMenu::oneStep()
 {
-    QMutexLocker locker(&m_replayMutex);
+    std::lock_guard<std::recursive_mutex> locker(m_replayMutex);
     ++m_replayCounter;
     if (m_paused)
     {
@@ -364,7 +362,7 @@ void ReplayMenu::loadSeekUi()
 
 void ReplayMenu::startSeeking()
 {
-    QMutexLocker locker(&m_replayMutex);
+    std::lock_guard<std::recursive_mutex> locker(m_replayMutex);
     if (!m_paused)
     {
         swapPlay();
@@ -391,7 +389,7 @@ void ReplayMenu::seekChanged(float value)
 
 void ReplayMenu::seekRecord(float value)
 {
-    QMutexLocker locker(&m_replayMutex);
+    std::lock_guard<std::recursive_mutex> locker(m_replayMutex);
     qint32 count = static_cast<qint32>(static_cast<float>(m_replayReader->getRecordSize()) * value);
     IReplayReader::DayInfo dayInfo = m_replayReader->getDayFromPosition(count);
     seekToDay(dayInfo);
@@ -402,7 +400,7 @@ void ReplayMenu::seekRecord(float value)
 void ReplayMenu::rewindDay()
 {
     startSeeking();
-    QMutexLocker locker(&m_replayMutex);
+    std::lock_guard<std::recursive_mutex> locker(m_replayMutex);
     IReplayReader::DayInfo dayInfo;
     dayInfo.day = m_pMap->getCurrentDay();
     dayInfo.player = 0;
@@ -424,7 +422,7 @@ void ReplayMenu::rewindDay()
 void ReplayMenu::rewindOneStep()
 {
     startSeeking();
-    QMutexLocker locker(&m_replayMutex);
+    std::lock_guard<std::recursive_mutex> locker(m_replayMutex);
     m_rewindTarget = m_replayReader->getProgess() - 1;
     m_seeking = false;
     m_rewindReplayCounter = m_replayCounter;
@@ -460,7 +458,7 @@ void ReplayMenu::rewindOneStep()
 
 void ReplayMenu::seekToDay(IReplayReader::DayInfo dayInfo)
 {
-    QMutexLocker locker(&m_replayMutex);
+    std::lock_guard<std::recursive_mutex> locker(m_replayMutex);
     if (m_replayReader->getRecordSize() > 0)
     {
         CONSOLE_PRINT("Seeking to day " + QString::number(dayInfo.day) + " and player " + QString::number(dayInfo.player), GameConsole::eDEBUG);
@@ -522,7 +520,7 @@ void ReplayMenu::updatePlayerUiData()
 
 void ReplayMenu::swapPlay()
 {
-    QMutexLocker locker(&m_replayMutex);
+    std::lock_guard<std::recursive_mutex> locker(m_replayMutex);
     if (m_paused)
     {
         CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
@@ -537,7 +535,7 @@ void ReplayMenu::swapPlay()
 
 void ReplayMenu::togglePlayUi()
 {
-    QMutexLocker locker(&m_replayMutex);
+    std::lock_guard<std::recursive_mutex> locker(m_replayMutex);
     CONSOLE_PRINT("ReplayMenu::swapPlay()", GameConsole::eDEBUG);
     if (m_playButton->getVisible())
     {
@@ -563,14 +561,14 @@ void ReplayMenu::togglePlayUi()
 
 void ReplayMenu::startFastForward()
 {
-    QMutexLocker locker(&m_replayMutex);
+    std::lock_guard<std::recursive_mutex> locker(m_replayMutex);
     m_storedSeekingAnimationSettings.startSeeking();
     getActionPerformer()->skipAnimations(false);
 }
 
 void ReplayMenu::stopFastForward()
 {
-    QMutexLocker locker(&m_replayMutex);
+    std::lock_guard<std::recursive_mutex> locker(m_replayMutex);
     m_storedSeekingAnimationSettings.restoreAnimationSettings();
 }
 

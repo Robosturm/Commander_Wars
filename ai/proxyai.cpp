@@ -7,8 +7,6 @@
 
 #include "menue/gamemenue.h"
 
-#include <QMutexLocker>
-
 ProxyAi::ProxyAi(GameMap* pMap)
     : CoreAI (pMap, GameEnums::AiTypes_ProxyAi, "ProxyAi")
 {
@@ -99,7 +97,7 @@ void ProxyAi::recieveData(quint64 socketID, QByteArray data, NetworkInterface::N
         if (m_pPlayer->getPlayerID() == player)
         {
             CONSOLE_PRINT("Received action from network for player " + QString::number(player) + " from " + QString::number(socketID), GameConsole::eDEBUG);
-            QMutexLocker locker(&m_ActionMutex);
+            std::lock_guard<std::mutex> locker(m_ActionMutex);
             spGameAction pAction = MemoryManagement::create<GameAction>(m_pMap);
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);
@@ -165,7 +163,7 @@ bool ProxyAi::verifyActionStack()
 
 void ProxyAi::nextAction()
 {
-    QMutexLocker locker(&m_ActionMutex);
+    std::lock_guard<std::mutex> locker(m_ActionMutex);
     if (m_pGameMenue != nullptr &&
         !m_pGameMenue->getActionRunning() &&
         m_pPlayer == m_pMap->getCurrentPlayer())

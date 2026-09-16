@@ -135,7 +135,7 @@ jobs:
             qtPath: 'android_armv7'
             qtTools: ''
             target: 'android'
-            target-api-level: '23'
+            target-api-level: '26'
             abi : "armeabi-v7a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
@@ -152,7 +152,7 @@ jobs:
             qtPath: 'android_arm64_v8a'
             qtTools: ''
             target: 'android'
-            target-api-level: '23'
+            target-api-level: '26'
             abi : "arm64-v8a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
@@ -195,7 +195,22 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
 
-    - name: Install Qt
+    - name: Install android Qt      
+      if: matrix.target == 'android'
+      uses: jurplel/install-qt-action@v4
+      with:    
+          host: 'all_os'
+          target: ${{matrix.target}}
+          version: ${{env.QT_Version}}
+          arch: ${{matrix.COMPILER_VERSION}}
+          modules: 'qtmultimedia'
+          dir: '${{github.workspace}}/qt/'
+          install-deps: "true"
+          tools: '${{matrix.qtTools}}'
+          set-env: 'true'
+
+    - name: Install OS Qt
+      if: matrix.target != 'android'
       uses: jurplel/install-qt-action@v4
       with:
           target: ${{matrix.target}}

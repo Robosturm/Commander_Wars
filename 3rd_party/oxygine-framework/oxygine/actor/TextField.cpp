@@ -5,8 +5,6 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.h"
 #include "resource_management/fontmanager.h"
 
-#include <QMutexLocker>
-
 namespace oxygine
 {
 #ifndef GRAPHICSUPPORT
@@ -187,7 +185,7 @@ namespace oxygine
             }
             else
             {
-                QMutexLocker lock(&m_updateActionMutex);
+                std::lock_guard<std::mutex> updateLocker(m_updateActionMutex);
                 UpdateInfo info;
                 info.parent = getSharedPtr<Actor>();
                 info.action = Actor::UpdateAction::RebuildText;

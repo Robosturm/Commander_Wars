@@ -1,7 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QKeyEvent>
-#include <QMutex>
+#include <mutex>
 
 #include "3rd_party/oxygine-framework/oxygine/core/renderer.h"
 
@@ -54,10 +54,9 @@ namespace oxygine
         Renderer m_renderer;
         bool m_renderEnabled{true};
         qint32 m_repeatedFramesDropped{0};
-        QMutex m_pauseMutex;
         std::atomic<quint8> m_pausedCounter{0};
         bool m_quit{false};
         bool m_noUi{true};
-        QMutex m_renderSync;
+        std::mutex m_renderSync;
     };
 }

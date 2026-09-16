@@ -34,6 +34,10 @@
 #  include <stddef.h>
 #endif
 
+#if defined(Z_HAVE_UNISTD_H) || defined(HAVE_UNISTD_H)
+#  include <unistd.h>
+#endif
+
 #if defined(__TURBOC__) || defined(_MSC_VER) || defined(_WIN32)
 #  include <io.h>
 #endif

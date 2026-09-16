@@ -56,12 +56,12 @@ namespace oxygine
     {
         std::vector<UpdateInfo> updateActions;
         {
-            QMutexLocker updateLocker(&m_updateActionMutex);
+            std::lock_guard<std::mutex> updateLocker(m_updateActionMutex);
             updateActions.swap(m_updateActions);
         }
         for (auto & item : updateActions)
         {
-            QMutexLocker updateLocker(&m_updateActionMutex);
+            std::lock_guard<std::mutex> updateLocker(m_updateActionMutex);
             switch (item.action)
             {
                 case UpdateAction::RestartAllTweens:

@@ -1,6 +1,6 @@
 #pragma once
 #include <QTransform>
-#include <QMutex>
+#include <mutex>
 #include <QRecursiveMutex>
 
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"

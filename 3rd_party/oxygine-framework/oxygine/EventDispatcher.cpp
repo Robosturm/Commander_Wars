@@ -11,7 +11,7 @@ namespace oxygine
 {
     bool EventDispatcher::m_syncEvents{true};
     std::vector<EventDispatcher::EventUpdateInfo> EventDispatcher::m_eventUpdateActions;
-    QMutex EventDispatcher::m_eventUpdateActionMutex;
+    std::mutex EventDispatcher::m_eventUpdateActionMutex;
 
     void EventDispatcher::setSyncEvents(bool sync)
     {
@@ -20,7 +20,7 @@ namespace oxygine
 
     void EventDispatcher::doUpdateInfos()
     {
-        QMutexLocker locker(&m_eventUpdateActionMutex);
+        std::lock_guard<std::mutex> locker(m_eventUpdateActionMutex);
         for (auto & item : m_eventUpdateActions)
         {
             switch (item.action)
@@ -57,7 +57,7 @@ namespace oxygine
             }
             else
             {
-                QMutexLocker lock(&m_eventUpdateActionMutex);
+                std::lock_guard<std::mutex> lock(m_eventUpdateActionMutex);
                 EventUpdateInfo info;
                 info.action = EventUpdateAction::AddEventListener;
                 info.dispatcher = getSharedPtr<EventDispatcher>();
@@ -100,7 +100,7 @@ namespace oxygine
                 info.action = EventUpdateAction::RemoveEventListenerId;
                 info.dispatcher = getSharedPtr<EventDispatcher>();
                 info.id = id;
-                QMutexLocker lock(&m_eventUpdateActionMutex);
+                std::lock_guard<std::mutex> lock(m_eventUpdateActionMutex);
                 m_eventUpdateActions.push_back(info);
             }
         }
@@ -136,7 +136,7 @@ namespace oxygine
                 info.action = EventUpdateAction::RemoveEventListenerThis;
                 info.dispatcher = getSharedPtr<EventDispatcher>();
                 info.callbackThis = callbackThis;
-                QMutexLocker lock(&m_eventUpdateActionMutex);
+                std::lock_guard<std::mutex> lock(m_eventUpdateActionMutex);
                 m_eventUpdateActions.push_back(info);
             }
         }

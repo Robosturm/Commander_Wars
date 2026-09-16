@@ -12,7 +12,6 @@
 
 #include <QMouseEvent>
 #include <QTimerEvent>
-#include <QMutexLocker>
 #ifdef GRAPHICSUPPORT
 #include <QApplication>
 #include <QColorSpace>
@@ -300,6 +299,20 @@ namespace oxygine
         emit sigMouseMoveEvent(event->position().x(), event->position().y());
     }
 
+    bool GameWindow::isConsoleTouchEvent(QList<QTouchEvent::TouchPoint> & touchPoints)
+    {
+        constexpr qint32 RECT_SIZE = 150;
+        const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
+        const QTouchEvent::TouchPoint &touchPoint1 = touchPoints.last();
+        auto & stage = oxygine::Stage::getStage();
+        if (touchPoint0.position().x() < RECT_SIZE && touchPoint0.position().y() < RECT_SIZE &&
+            touchPoint1.position().x() > stage->getWidth() - RECT_SIZE && touchPoint1.position().y() > stage->getHeight() - RECT_SIZE)
+        {
+            return true;
+        }
+        return false;
+    }
+
     void GameWindow::touchEvent(QTouchEvent *event)
     {
         QList<QTouchEvent::TouchPoint> touchPoints = event->points();
@@ -307,12 +320,17 @@ namespace oxygine
         {
         case QEvent::TouchBegin:
         {
+            m_longPress = true;
             if (touchPoints.count() == 1)
             {
                 const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                 emit sigMousePressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
                 m_longPressSent = false;
                 m_touchMousePressSent = true;
+            }
+            else if (isConsoleTouchEvent(touchPoints))
+            {
+                m_consolePress = true;
             }
         }
         case QEvent::TouchUpdate:
@@ -333,6 +351,17 @@ namespace oxygine
                     emit sigMouseMoveEvent(touchPoint0.position().x(), touchPoint0.position().y());
                 }
             }
+            else if (isConsoleTouchEvent(touchPoints))
+            {
+                const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
+                const QTouchEvent::TouchPoint &touchPoint1 = touchPoints.last();
+                if (sameTouchpoint(touchPoint0.pressPosition(), touchPoint0.position()) &&
+                    touchPoint0.timeHeld() >= 0.5 && sameTouchpoint(touchPoint1.pressPosition(), touchPoint1.position()) &&
+                    touchPoint1.timeHeld() >= 0.5)
+                {
+                    m_longPress = true;
+                }                
+            }
             break;
         }
         case QEvent::TouchEnd:
@@ -350,11 +379,17 @@ namespace oxygine
                     }
                 }
             }
+            else if (m_consolePress && m_longPress && isConsoleTouchEvent(touchPoints))
+            {
+                emit GameConsole::getInstance()->sigToggleView();            
+            }
             if (m_touchMousePressSent && !m_longPressSent)
             {
                 const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                 emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
             }
+            m_longPress = false;
+            m_consolePress = false;
             m_touchMousePressSent = false;
             m_longPressSent = false;
             m_lastZoomValue = 1.0f;

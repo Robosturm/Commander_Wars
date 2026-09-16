@@ -62,7 +62,7 @@ private:
     PipeState m_pipeState{PipeState::Disconnected};
     AnimationSkipper m_animationSkipper;
     QList<spGameAction> m_ActionBuffer;
-    QMutex m_ActionMutex;
+    std::mutex m_ActionMutex;
     GameMap* m_pMap{nullptr};
     std::weak_ptr<oxygine::EventDispatcher> m_pMenu;
 };

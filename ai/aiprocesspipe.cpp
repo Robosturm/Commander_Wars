@@ -127,7 +127,7 @@ void AiProcessPipe::onQuitGame()
         Settings::getInstance()->getSpawnAiProcess() &&
         !Settings::getInstance()->getAiSlave())
     {
-        QMutexLocker locker(&m_ActionMutex);
+        std::lock_guard<std::mutex> locker(m_ActionMutex);
         m_pipeState = PipeState::Ready;
         m_pMenu.reset();
         m_pMap = nullptr;
@@ -237,7 +237,7 @@ void AiProcessPipe::onNewActionForMaster(QDataStream & stream)
 
 void AiProcessPipe::onNewAction(QDataStream & stream)
 {
-    QMutexLocker locker(&m_ActionMutex);
+    std::lock_guard<std::mutex> locker(m_ActionMutex);
     spGameAction pAction = MemoryManagement::create<GameAction>(m_pMap);
     pAction->deserializeObject(stream);
     m_ActionBuffer.append(pAction);
@@ -296,7 +296,7 @@ void AiProcessPipe::onStartGame(QDataStream & stream)
 
 void AiProcessPipe::quitGame()
 {
-    QMutexLocker locker(&m_ActionMutex);
+    std::lock_guard<std::mutex> locker(m_ActionMutex);
     m_pipeState = PipeState::Ready;
     {
         spGameMenue pMenu = std::static_pointer_cast<GameMenue>(m_pMenu.lock());
@@ -326,7 +326,7 @@ void AiProcessPipe::nextAction()
 {
     if (m_pipeState == PipeState::Ingame)
     {
-        QMutexLocker locker(&m_ActionMutex);
+        std::lock_guard<std::mutex> locker(m_ActionMutex);
         spGameMenue pMenu = std::static_pointer_cast<GameMenue>(m_pMenu.lock());
         if (pMenu.get() != nullptr &&
             !pMenu->getActionRunning())

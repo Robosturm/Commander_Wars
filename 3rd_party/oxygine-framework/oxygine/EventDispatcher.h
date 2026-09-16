@@ -3,6 +3,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
 #include "coreengine/refobject.h"
 #include <vector>
+#include <mutex>
 
 namespace oxygine
 {
@@ -93,7 +94,7 @@ namespace oxygine
 
         bool m_enabled{true};
 
-        static QMutex m_eventUpdateActionMutex;
+        static std::mutex m_eventUpdateActionMutex;
         static std::vector<EventUpdateInfo> m_eventUpdateActions;
         static bool m_syncEvents;
     };
