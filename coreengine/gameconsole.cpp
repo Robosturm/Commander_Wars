@@ -664,79 +664,78 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
             }
         }
     }
-        // QByteArray localMsg = msg.toLocal8Bit();
-        QString message = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + ": ";
-        switch (type)
-        {
-            case QtDebugMsg:
-                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eDEBUG)
+    QString message = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + ": ";
+    switch (type)
+    {
+        case QtDebugMsg:
+            if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eDEBUG)
+            {
+                message += "Debug: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
+                if (file.isOpen())
                 {
-                    message += "Debug: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function + "\n";                    
-                    if (file.isOpen())
-                    {
-                        stream << message;
-                        stream.flush();
-                        file.flush();
-                    }
-                    std::cout << message.toStdString();
-                    printOnIngameConsole(message);
+                    stream << message << "\n";
+                    stream.flush();
+                    file.flush();
                 }
-                break;
-            case QtInfoMsg:
-                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eINFO)
+                std::cout << message.toStdString() << std::endl;
+                printOnIngameConsole(message);
+            }
+            break;
+        case QtInfoMsg:
+            if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eINFO)
+            {
+                message += "Info: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
+                if (file.isOpen())
                 {
-                    message += "Info: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function + "\n";
-                    if (file.isOpen())
-                    {
-                        stream << message;
-                        stream.flush();
-                        file.flush();
-                    }
-                    std::cout << message.toStdString();
-                    printOnIngameConsole(message);
+                    stream << message << "\n";
+                    stream.flush();
+                    file.flush();
                 }
-                break;
-            case QtWarningMsg:
-                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eWARNING)
+                std::cout << message.toStdString() << std::endl;
+                printOnIngameConsole(message);
+            }
+            break;
+        case QtWarningMsg:
+            if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eWARNING)
+            {
+                message += "Warning: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
+                if (file.isOpen())
                 {
-                    message += "Warning: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function + "\n";
-                    if (file.isOpen())
-                    {
-                        stream << message;
-                        stream.flush();
-                        file.flush();
-                    }
-                    std::cout << message.toStdString();
-                    printOnIngameConsole(message);
+                    stream << message << "\n";
+                    stream.flush();
+                    file.flush();
                 }
-                break;
-            case QtCriticalMsg:
-                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eERROR)
+                std::cout << message.toStdString() << std::endl;
+                printOnIngameConsole(message);
+            }
+            break;
+        case QtCriticalMsg:
+            if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eERROR)
+            {
+                message += "Critical: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
+                if (file.isOpen())
                 {
-                    message += "Critical: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function + "\n";
-                    if (file.isOpen())
-                    {
-                        stream << message;
-                        stream.flush();
-                        file.flush();
-                    }
-                    std::cerr << message.toStdString();
-                    printOnIngameConsole(message);
+                    stream << message << "\n";
+                    stream.flush();
+                    file.flush();
                 }
-                break;
-            case QtFatalMsg:
-                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eFATAL)
+                std::cerr << message.toStdString() << std::endl;
+                printOnIngameConsole(message);
+            }
+            break;
+        case QtFatalMsg:
+            if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eFATAL)
+            {
+                message = "Fatal: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
+                if (file.isOpen())
                 {
-                    message = "Fatal: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function + "\n";
-                    if (file.isOpen())
-                    {
-                        stream << message;
-                        stream.flush(); 
-                        file.flush();
-                    }
-                    std::cerr << message.toStdString();
-                    printOnIngameConsole(message);
+                    stream << message << "\n";
+                    stream.flush(); 
+                    file.flush();
                 }
-                break;
-        }
+                std::cerr << message.toStdString() << std::endl;
+                printOnIngameConsole(message);
+            }
+            break;
+    }
 }
