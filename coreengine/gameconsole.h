@@ -131,7 +131,7 @@ public slots:
      * @param message
      * @param debugMessage false for Errors or Setup Messages. True for Ingame Actions used for Debugging. But unneeded in release build
      */
-    static void printDirectly(const QString & message, GameConsole::eLogLevels logLevel);
+    static void printOnIngameConsole(const QString & message);
     /**
      * @brief printObject
      * @param message
