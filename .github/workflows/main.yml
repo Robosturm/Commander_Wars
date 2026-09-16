@@ -187,7 +187,7 @@ jobs:
 
     - name: Install host os qt
       if: matrix.target == 'android'
-      uses: jurplel/install-qt-action@v4.3.1 
+      uses: jurplel/install-qt-action@v4
       with:
           target: 'desktop'
           version: ${{env.QT_Version}}
@@ -196,8 +196,9 @@ jobs:
           install-deps: "true"
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v4.3.1 
+      uses: jurplel/install-qt-action@v4
       with:
+          host: 'all_os'
           target: ${{matrix.target}}
           version: ${{env.QT_Version}}
           arch: ${{matrix.COMPILER_VERSION}}
