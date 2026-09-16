@@ -195,10 +195,24 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
 
-    - name: Install Qt
+    - name: Install android Qt      
+      if: matrix.target == 'android'
+      uses: jurplel/install-qt-action@v4
+      with:    
+          host: 'all_os'
+          target: ${{matrix.target}}
+          version: ${{env.QT_Version}}
+          arch: ${{matrix.COMPILER_VERSION}}
+          modules: 'qtmultimedia'
+          dir: '${{github.workspace}}/qt/'
+          install-deps: "true"
+          tools: '${{matrix.qtTools}}'
+          set-env: 'true'
+
+    - name: Install OS Qt
+      if: matrix.target != 'android'
       uses: jurplel/install-qt-action@v4
       with:
-          host: 'all_os'
           target: ${{matrix.target}}
           version: ${{env.QT_Version}}
           arch: ${{matrix.COMPILER_VERSION}}

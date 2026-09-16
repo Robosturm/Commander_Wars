@@ -93,7 +93,8 @@ var Constructor = function()
                     var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
                     var isPlains = (terrainID === "PLAINS") ||
                                     (terrainID === "PLAINS_PLASMA") ||
-                                    (terrainID === "PLAINS_DESTROYED");
+                                    (terrainID === "PLAINS_DESTROYED" ||
+                                    (terrainID === "DESTROYEDWELD"));
                     switch (co.getPowerMode())
                     {
                     case GameEnums.PowerMode_Tagpower:

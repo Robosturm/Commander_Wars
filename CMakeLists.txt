@@ -192,16 +192,23 @@ if (AUDIOSUPPORT)
         # that implements the exact subset of the PortAudio C API AudioManager relies on.
         message("Using AAudio-backed PortAudio compatibility shim for Android")
         add_library(portaudio STATIC
-            3rd_party/portaudio_android/pa_android_aaudio.cpp
         )
         target_include_directories(portaudio PUBLIC 3rd_party/portaudio/include)
         target_link_libraries(portaudio PRIVATE aaudio log android)
+        
+        set(${PROJECT_NAME}_AUDIO_SRCS
+            3rd_party/portaudio_android/pa_android_aaudio.cpp
+            coreengine/audiodecoder.cpp coreengine/audiodecoder.h
+        )
     else()
         set(PA_BUILD_SHARED_LIBS OFF CACHE BOOL "Build PortAudio as static" FORCE)
         set(PA_BUILD_TESTS OFF CACHE BOOL "Build PortAudio tests" FORCE)
         set(PA_BUILD_EXAMPLES OFF CACHE BOOL "Build PortAudio examples" FORCE)
         add_subdirectory(3rd_party/portaudio EXCLUDE_FROM_ALL)
         set_target_properties(portaudio PROPERTIES POSITION_INDEPENDENT_CODE ON)
+        set(${PROJECT_NAME}_AUDIO_SRCS
+            coreengine/audiodecoder.cpp coreengine/audiodecoder.h
+        )
     endif()
 
     set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build Ogg static" FORCE)
@@ -250,9 +257,6 @@ if (AUDIOSUPPORT)
         3rd_party/libopus/include
         3rd_party/libogg/include
         ${CMAKE_CURRENT_BINARY_DIR}/3rd_party/libogg/include
-    )
-    set(${PROJECT_NAME}_AUDIO_SRCS
-        coreengine/audiodecoder.cpp coreengine/audiodecoder.h
     )
 else()
     message("Building without Audio")
