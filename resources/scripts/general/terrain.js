@@ -99,8 +99,6 @@ var TERRAIN =
     {
         return 0;
     },
-    getDefense : null,
-
     getFirerangeModifier : function(terrain, unit, map)
     {
         return 0;
