@@ -4,6 +4,7 @@
 #include <mutex>
 
 #include "3rd_party/oxygine-framework/oxygine/core/renderer.h"
+#include "game/GameEnums.h"
 
 namespace oxygine
 {
@@ -36,6 +37,7 @@ namespace oxygine
         void update();
     signals:
         void activeChanged();
+        void sigNextStartUpStep(GameEnums::StartupPhase step);
 
     protected:
         virtual void keyPressEvent(QKeyEvent *event);

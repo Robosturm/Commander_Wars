@@ -256,8 +256,6 @@ signals:
      * @param log
      */
     void sigShowCrashReport(QString log);
-
-    void sigNextStartUpStep(GameEnums::StartupPhase step);
     void sigCreateLineEdit();
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;

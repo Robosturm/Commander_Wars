@@ -24,6 +24,7 @@ namespace oxygine
     signals:    
         void sigPaint();
         void sigLoadResources(qint32 step);
+        void sigSyncLoadResources(qint32 step);
         void sigStart();
         void sigResize(qint32 w, qint32 h);
         void sigDoMapshot(BaseGamemenu* pMenu);
@@ -62,6 +63,7 @@ namespace oxygine
         void quit();
         void onPaint();
         void loadResources(qint32 step);
+        void asyncLoadResources(qint32 step);
         void start();
         void resize(qint32 w, qint32 h);
         void doMapshot(BaseGamemenu* pMenu);

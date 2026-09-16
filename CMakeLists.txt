@@ -37,6 +37,7 @@ option(ENABLE_ASAN "Enable Address Sanitizer for memory leak detection (Linux/GC
 option(ENABLE_VALGRIND "Enable Valgrind instrumentation for memory debugging (Linux/GCC only)" OFF)
 option(BUILD_TESTING "Builds the game as test variant" OFF)
 option(SCRIPTSOURCESUPPORT "Exposes script function source text to JS. Needs the QtQml private headers and is disabled when they are missing" ON)
+option(USE_PA_ANDROID_AUDIO "Use the Android-specific PortAudio backend" OFF)
 
 set(UPDATE_FILE "Commander_Wars-Win10_x64"  CACHE STRING "UPDATE File")
 ###################################################################################
@@ -185,7 +186,7 @@ if (AUDIOSUPPORT)
     message("Building with Audio (PortAudio & Opus)")
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-    if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Android" AND USE_PA_ANDROID_AUDIO)
         # Upstream PortAudio ships no Android host API (no ALSA/PulseAudio/JACK device nodes
         # exist on stock Android), so Pa_Initialize() would succeed with zero usable devices
         # and every stream would silently fail to open. Use a small AAudio-backed shim instead
@@ -197,7 +198,7 @@ if (AUDIOSUPPORT)
         target_link_libraries(portaudio PRIVATE aaudio log android)
         
         set(${PROJECT_NAME}_AUDIO_SRCS
-            # 3rd_party/portaudio_android/pa_android_aaudio.cpp
+            3rd_party/portaudio_android/pa_android_aaudio.cpp
             coreengine/audiodecoder.cpp coreengine/audiodecoder.h
         )
     else()

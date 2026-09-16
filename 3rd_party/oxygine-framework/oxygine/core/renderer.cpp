@@ -33,7 +33,8 @@ void Renderer::connectSignals()
     {
         conntectionType = Qt::AutoConnection;
     }
-    connect(this, &Renderer::sigLoadResources, this, &Renderer::loadResources, conntectionType);
+    connect(this, &Renderer::sigLoadResources, this, &Renderer::asyncLoadResources, Qt::QueuedConnection);
+    connect(this, &Renderer::sigSyncLoadResources, this, &Renderer::loadResources, conntectionType);
     connect(this, &Renderer::sigStart, this, &Renderer::start, conntectionType);
     connect(this, &Renderer::sigResize, this, &Renderer::resize, conntectionType);
     connect(this, &Renderer::sigDoMapshot, this, &Renderer::doMapshot, conntectionType);
@@ -57,6 +58,12 @@ void Renderer::connectSignals()
     connect(this, &Renderer::sigDetachAndRemove, this, &Renderer::detachAndRemove, conntectionType);
     connect(this, &Renderer::sigDetach, this, &Renderer::detach, conntectionType);
     connect(this, &Renderer::sigQuit, this, &Renderer::quit, conntectionType);
+}
+
+void Renderer::asyncLoadResources(qint32 step)
+{
+    loadResources(step);
+    emit m_window.sigNextStartUpStep(static_cast<GameEnums::StartupPhase>(static_cast<qint8>(step) + 1));
 }
 
 void Renderer::loadResources(qint32 step)

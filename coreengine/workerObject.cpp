@@ -131,13 +131,8 @@ void WorkerObject::start()
     Mainapp* pApp = Mainapp::getInstance();
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pApp->pauseRendering();
-    spConsole pConsole = GameConsole::getSpInstance();
-    // create the initial menue no need to store the object
-    // it will add itself to the current stage
-    oxygine::Stage::getStage()->addChild(pConsole);
     Interpreter* pInterpreter = Interpreter::createInstance(this);
-    Settings::getInstance()->setLanguage(Settings::getInstance()->getLanguage());
-    pConsole->init();
+    Settings::getInstance()->setLanguage(Settings::getInstance()->getLanguage());    
     pApp->continueRendering();
     UiFactory::getInstance();
     // load General-Base Scripts

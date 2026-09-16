@@ -5,6 +5,7 @@
 #include <atomic>
 
 #include "3rd_party/oxygine-framework/oxygine/core/renderer.h"
+#include "game/GameEnums.h"
 
 using spQThread = std::shared_ptr<QThread>;
 
@@ -21,6 +22,9 @@ namespace oxygine
         {
             return m_renderer;
         }
+    signals:
+        void sigNextStartUpStep(GameEnums::StartupPhase step);
+
     public slots:
         virtual void initializeGL() override;
         virtual void launchGame() = 0;

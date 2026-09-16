@@ -209,7 +209,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
 #endif
     GameConsole::print("Loading startup phase: " + QString::number(step), GameConsole::eDEBUG);
     m_startUpStep = step;
-    bool automaticNextStep = true;
+    bool automaticNextStep = false;
     switch (step)
     {
         case GameEnums::StartupPhase::StartupPhase_General:
@@ -237,7 +237,8 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
             m_AudioManager->loadFolder("resources/music/hauptmenue");
             m_AudioManager->playRandom();
 #endif
-            emit m_renderer.sigLoadResources(step);
+            automaticNextStep = true;
+            emit m_renderer.sigSyncLoadResources(step);
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
             pLoadingScreen->setProgress(tr("Loading backgrounds..."), 2);
@@ -246,17 +247,25 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
         }
         case GameEnums::StartupPhase::StartupPhase_ObjectManager:
         {
-            emit m_renderer.sigLoadResources(step);
+            automaticNextStep = true;
+            emit m_renderer.sigSyncLoadResources(step);
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->hide();
             pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
+            spConsole pConsole = GameConsole::getSpInstance();
+            pConsole->init();
+            // create the initial menue no need to store the object
+            // it will add itself to the current stage
+            oxygine::Stage::getStage()->addChild(pConsole);
+
             pLoadingScreen->setProgress(tr("Checking for new version..."), step  * stepProgress);
             redrawUi();
             break;
         }
         case GameEnums::StartupPhase::StartupPhase_UpdateManager:
         {
+            automaticNextStep = true;
             LoadingScreen::getInstance()->setProgress(tr("Loading Building Textures ..."), step  * stepProgress);
 #ifdef UPDATESUPPORT
             GameUpdater::cleanUpOldArtifacts();
@@ -267,7 +276,6 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
                     updateStep == GameUpdater::MODE_FORCE ||
                     updateStep == GameUpdater::MODE_INSTALL)
                 {
-                    automaticNextStep = false;
                     m_gameUpdater = MemoryManagement::create<GameUpdater>();
                 }
             }
@@ -385,6 +393,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
         }
         case GameEnums::StartupPhase::StartupPhase_Sound:
         {
+            automaticNextStep = true;
             if (!m_noAudio && m_AudioManager.get() != nullptr)
             {
                 m_AudioManager->createSoundCache();
@@ -395,6 +404,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
         }
         case GameEnums::StartupPhase::StartupPhase_LoadingScripts:
         {
+            automaticNextStep = true;
             m_networkThread->start(QThread::Priority::NormalPriority);
             m_workerLaunched = true;
             emit m_workerObject->sigStart();
@@ -402,6 +412,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
         }
         case GameEnums::StartupPhase::StartupPhase_Finalizing:
         {
+            automaticNextStep = true;
             CONSOLE_PRINT("Finalizing boot", GameConsole::eDEBUG);
             if (Settings::getInstance()->getAiSlave())
             {
@@ -632,21 +643,25 @@ Settings::ScreenModes Mainapp::getScreenMode()
 
 void Mainapp::keyPressEvent(QKeyEvent *event)
 {
-    if (m_startUpStep >= GameEnums::StartupPhase::StartupPhase_Finalizing)
+   
+    Qt::Key cur = static_cast<Qt::Key>(event->key());
+    if (cur == Settings::getInstance()->getKeyConsole())
     {
-        Qt::Key cur = static_cast<Qt::Key>(event->key());
-        if (cur == Settings::getInstance()->getKeyConsole())
+        if (m_startUpStep >= GameEnums::StartupPhase::StartupPhase_UpdateManager)
         {
             emit GameConsole::getInstance()->sigToggleView();
         }
-        else if (cur == Settings::getInstance()->getKey_screenshot())
+    }
+    else if (cur == Settings::getInstance()->getKey_screenshot())
+    {
+        if (m_startUpStep >= GameEnums::StartupPhase::StartupPhase_Finalizing)
         {
             doScreenshot();
         }
-        else
-        {
-            emit sigKeyDown(oxygine::KeyEvent(event));
-        }
+    }
+    else if (m_startUpStep >= GameEnums::StartupPhase::StartupPhase_Finalizing)
+    {
+        emit sigKeyDown(oxygine::KeyEvent(event));
     }
 }
 

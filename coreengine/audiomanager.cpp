@@ -75,6 +75,7 @@ void AudioManager::stopAudio()
 #ifdef AUDIOSUPPORT
     if (Mainapp::getInstance()->isAudioThread())
     {
+        CONSOLE_PRINT_MODULE("Stopping audio", GameConsole::eDEBUG, GameConsole::eAudio);
         m_pollTimer.stop();
         if (m_paStream)
         {
@@ -144,6 +145,7 @@ void AudioManager::initAudio()
 bool AudioManager::openStream(const QString& deviceName)
 {
 #ifdef AUDIOSUPPORT
+    CONSOLE_PRINT_MODULE("AudioManager::openStream for device: " + deviceName, GameConsole::eDEBUG, GameConsole::eAudio); 
     if (m_paStream)
     {
         Pa_StopStream(m_paStream);
