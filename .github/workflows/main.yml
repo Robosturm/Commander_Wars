@@ -163,23 +163,6 @@ jobs:
             asset_name: 'Commander_Wars-Android_arm64_v8a-${{github.ref_name}}.apk'
             cmakeOptions: ''
             openSslabiPath: 'android_openssl/ssl_3/arm64-v8a'
-          - buildTarget: android-arm64_v8a_aaudio
-            os: windows-latest
-            COMPILER_VERSION: 'android_arm64_v8a'
-            qtPath: 'android_arm64_v8a'
-            qtTools: ''
-            target: 'android'
-            target-api-level: '26'
-            abi : "arm64-v8a"
-            COMPILER_TOOLS_VERSION: 'win64_mingw'
-            qtCoreToolsPath: 'mingw_64'
-            installerCommands1: 'choco install ninja'
-            installerCommands2: ''
-            source_asset: 'android-build/build/outputs/apk/release/android-build-release-signed.apk'
-            asset_file: 'Commander_Wars-Android_arm64_v8a_aaudio'
-            asset_name: 'Commander_Wars-Android_arm64_v8a_aaudio-${{github.ref_name}}.apk'
-            cmakeOptions: '-DUSE_PA_ANDROID_AUDIO=ON'
-            openSslabiPath: 'android_openssl/ssl_3/arm64-v8a'
 
     needs: create_release
     

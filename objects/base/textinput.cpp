@@ -52,37 +52,20 @@ void TextInput::editFinished()
     }
 }
 
-QVariant TextInput::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    if (m_lineEdit == nullptr)
-    {
-        return QVariant();
-    }
 
-    const auto cursor = m_lineEdit->textCursor();
-    const QString text = m_lineEdit->toPlainText();
-    switch (query)
+void TextInput::inputMethodEvent(QInputMethodEvent* event)
+{
+    if (m_lineEdit != nullptr)
     {
-        case Qt::ImEnabled:
-            return !m_readonly;
-        case Qt::ImCursorPosition:
-            return cursor.position();
-        case Qt::ImSurroundingText:
-            return text;
-        case Qt::ImCurrentSelection:
-            return cursor.selectedText();
-        case Qt::ImAnchorPosition:
-            return cursor.anchor();
-        case Qt::ImAbsolutePosition:
-            return cursor.position();
-        case Qt::ImTextBeforeCursor:
-            return text.left(cursor.position());
-        case Qt::ImTextAfterCursor:
-            return text.mid(cursor.position());
-        case Qt::ImHints:
-            return Qt::ImhNone;
-        default:
-            return m_lineEdit->inputMethodQuery(query);
+        m_lineEdit->event(event);
+    }
+}
+
+void TextInput::inputMethodQueryEvent(QInputMethodQueryEvent* event)
+{
+    if (m_lineEdit != nullptr)
+    {
+        m_lineEdit->event(event);
     }
 }
 

@@ -3,6 +3,7 @@
 #include <QTextEdit>
 #include <QKeyEvent>
 #include <QInputMethodEvent>
+#include <QInputMethodQueryEvent>
 
 class EventTextEdit;
 using spEventTextEdit = std::shared_ptr<EventTextEdit>;
@@ -15,7 +16,7 @@ public:
     virtual ~EventTextEdit() = default;
     virtual bool event(QEvent *event) override;
 protected:
-    virtual void inputMethodEvent(QInputMethodEvent *event) override;
+    void inputMethodEvent(QInputMethodEvent *event) override;
 public:
     bool getSingleLine() const;
     void setSingleLine(bool newSingleLine);

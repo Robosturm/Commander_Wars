@@ -37,23 +37,24 @@ signals:
     void sigSetText(const QString text);
     void sigSetReadonlyToEdit(const bool editable);
 public slots:
-    virtual void focusedLost() override;
+    void focusedLost() override;
 
 private slots:
     void editFinished();
 protected:
     static qint32 getClickedLinePosition(qint32 x, const QString & line, const QFont & font);
-    virtual bool doHandleEvent(QEvent *event) override;
+    bool doHandleEvent(QEvent *event) override;
     virtual bool onEditFinished() = 0;
-    virtual void focused() override;
-    virtual void looseFocusInternal() override;
+    void focused() override;
+    void looseFocusInternal() override;
     /**
      * @brief getDrawText
      * @param text
      * @return the draw text in pseudo html format
      */
     QString getDrawText(const QString & text);
-    virtual QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
+    void inputMethodEvent(QInputMethodEvent* event) override;
+    void inputMethodQueryEvent(QInputMethodQueryEvent* event) override;
 protected:
     std::shared_ptr<EventTextEdit> m_lineEdit;
     bool m_LineEditFocused{false};

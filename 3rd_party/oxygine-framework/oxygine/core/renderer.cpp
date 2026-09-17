@@ -168,6 +168,10 @@ void Renderer::loadResources(qint32 step)
     {
         break;
     }
+    default:
+    {
+        break;
+    }
 }
 }
 

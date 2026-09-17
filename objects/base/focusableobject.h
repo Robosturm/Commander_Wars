@@ -22,7 +22,8 @@ public:
         return m_focusedObject;
     }
     static bool handleEvent(QEvent *event);
-    static QVariant handleInputMethodQuery(Qt::InputMethodQuery query);
+    static void handleInputMethodQuery(QInputMethodQueryEvent* event);
+    static void handleInputMethodEvent(QInputMethodEvent* event);
     Q_INVOKABLE bool getSubComponent() const;
     Q_INVOKABLE void setSubComponent(bool subComponent);
     Q_INVOKABLE bool getFocused() const;
@@ -35,9 +36,11 @@ signals:
     void sigLooseFocusInternal();
 protected:
     virtual void focused(){}
-    virtual QVariant inputMethodQuery(Qt::InputMethodQuery query) const
+    virtual void inputMethodQueryEvent(QInputMethodQueryEvent* event)
     {
-        return QVariant();
+    }
+    virtual void inputMethodEvent(QInputMethodEvent* event)
+    {
     }
     /**
      * @brief keyInputMethodQueryEvent called in case a focused object shows a virtual key board

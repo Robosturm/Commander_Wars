@@ -3,7 +3,11 @@
 
 # Temporary build files
 /build
+/build_android
 /*.cmake
+cmake-kits.json
+CMakePresets.json
+/settings.json
 CMakeCache.txt
 /CMakeFiles
 CMakeLists.txt.user

@@ -65,14 +65,22 @@ bool FocusableObject::handleEvent(QEvent *event)
     return handled;
 }
 
-QVariant FocusableObject::handleInputMethodQuery(Qt::InputMethodQuery query)
+void FocusableObject::handleInputMethodEvent(QInputMethodEvent* event)
 {
     if (FocusableObject::getFocusedObject() != nullptr)
     {    
-        CONSOLE_PRINT("Handling input method query for focused object " + QString::number(query), GameConsole::eDEBUG);
-        return FocusableObject::getFocusedObject()->inputMethodQuery(query);
+        CONSOLE_PRINT("Handling input method event for focused object " + QString::number(event->type()), GameConsole::eDEBUG);
+        FocusableObject::getFocusedObject()->inputMethodEvent(event);
     }
-    return QVariant();
+}
+
+void FocusableObject::handleInputMethodQuery(QInputMethodQueryEvent* event)
+{
+    if (FocusableObject::getFocusedObject() != nullptr)
+    {    
+        CONSOLE_PRINT("Handling input method query for focused object " + QString::number(event->queries()), GameConsole::eDEBUG);
+        FocusableObject::getFocusedObject()->inputMethodQueryEvent(event);
+    }
 }
 
 
