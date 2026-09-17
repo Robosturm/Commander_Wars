@@ -15,6 +15,22 @@
             "miDebuggerPath": "/usr/bin/gdb",
             "visualizerFile": "${command:qt-cpp.natvis}",
             "showDisplayString": true
+        },
+        {
+            "name": "Commander Wars: Android armv7 attach",
+            "type": "lldb",
+            "request": "launch",
+            "targetCreateCommands": [
+                "target create ${workspaceFolder}/build_android/libCommander_Wars_armeabi-v7a.so"
+            ],
+            "initCommands": [
+                "settings set target.require-hardware-breakpoint true"
+            ],
+            "processCreateCommands": [
+                "gdb-remote 5039"
+            ],
+            "preLaunchTask": "Commander Wars: Android debug server",
+            "postDebugTask": "Commander Wars: Android debug cleanup"
         }
     ]
 }

@@ -118,6 +118,9 @@ if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     include_directories(${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL libs:" ${OPENSSL_LIBS})
+    # Qt's TLS backend plugin dlopen's libssl/libcrypto at runtime instead of using the
+    # statically linked symbols above, so the shared libs also need to be bundled into the APK.
+    include(${CMAKE_CURRENT_SOURCE_DIR}/android_openssl/android_openssl.cmake)
 elseif(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     message("Using local pre-compiled openssl version from path: ${OPENSSL_LIB_PATH} for windows")
     set(OPENSSL_LIBS
@@ -1393,6 +1396,11 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
         )
+endif()
+
+if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    # bundles libssl_3.so/libcrypto_3.so into the APK so Qt's TLS backend can dlopen them
+    add_android_openssl_libraries(${PROJECT_NAME})
 endif()
 
 qt_finalize_target(${PROJECT_NAME})
