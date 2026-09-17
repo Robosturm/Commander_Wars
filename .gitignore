@@ -7,7 +7,8 @@
 /*.cmake
 cmake-kits.json
 CMakePresets.json
-/settings.json
+settings.json
+tasks.json
 CMakeCache.txt
 /CMakeFiles
 CMakeLists.txt.user

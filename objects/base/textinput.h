@@ -38,6 +38,8 @@ signals:
     void sigSetReadonlyToEdit(const bool editable);
 public slots:
     void focusedLost() override;
+protected slots:
+    void focusedInternal() override;
 
 private slots:
     void editFinished();

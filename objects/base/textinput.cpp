@@ -263,3 +263,9 @@ qint32 TextInput::getClickedLinePosition(qint32 x, const QString & line, const Q
     }
     return cursorPos;
 }
+
+void TextInput::focusedInternal()
+{
+    m_lineEdit->setFocus();
+    FocusableObject::focusedInternal();
+}

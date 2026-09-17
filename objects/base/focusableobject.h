@@ -52,10 +52,10 @@ protected:
     }
 protected slots:
     virtual void looseFocusInternal();
+    virtual void focusedInternal();
 public slots:
     virtual void focusedLost(){}
 private slots:
-    void focusedInternal();
 protected:
     bool m_focused{false};
 private:
