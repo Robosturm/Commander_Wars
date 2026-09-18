@@ -10,34 +10,15 @@
 
 TextInput::TextInput()
 {
-    Mainapp* pApp = Mainapp::getInstance();
     Interpreter::setCppOwnerShip(this);
-
-    if (pApp->isMainThread())
-    {
-        pApp->createLineEdit();
-    }
-    else
-    {
-        emit pApp->sigCreateLineEdit();
-    }
-    m_lineEdit = pApp->getLastCreateLineEdit();
-    pApp->resetLineEdit();
-    if (m_lineEdit != nullptr)
-    {
-        connect(m_lineEdit.get(), &EventTextEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
-        connect(this, &TextInput::sigSetText, m_lineEdit.get(), &EventTextEdit::setPlainText, Qt::BlockingQueuedConnection);
-        connect(this, &TextInput::sigSetReadonlyToEdit, m_lineEdit.get(), &EventTextEdit::setEditableKeys, Qt::BlockingQueuedConnection);
-    }
+    connect(&m_lineEdit, &EventTextEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
+    connect(this, &TextInput::sigSetText, &m_lineEdit, &EventTextEdit::setPlainText, Qt::BlockingQueuedConnection);
+    connect(this, &TextInput::sigSetReadonlyToEdit, &m_lineEdit, &EventTextEdit::setEditableKeys, Qt::BlockingQueuedConnection);
     m_toggle.start();
 }
 
 TextInput::~TextInput()
 {
-    if (m_lineEdit != nullptr)
-    {
-        m_lineEdit = nullptr;
-    }
 }
 
 void TextInput::editFinished()
@@ -55,67 +36,38 @@ void TextInput::editFinished()
 
 void TextInput::inputMethodEvent(QInputMethodEvent* event)
 {
-    if (m_lineEdit != nullptr)
-    {
-        m_lineEdit->event(event);
-    }
+    m_lineEdit.handleTextInputEvent(event);
 }
 
 void TextInput::inputMethodQueryEvent(QInputMethodQueryEvent* event)
-{
-    if (m_lineEdit != nullptr)
+{        
+    m_lineEdit.event(event);
+    if (event->queries() & Qt::ImEnabled)
     {
-        m_lineEdit->event(event);
+        event->setValue(Qt::ImEnabled, !m_readonly);
     }
 }
 
 QString TextInput::getCurrentText() const
 {
-    if (m_lineEdit != nullptr)
-    {
-        return m_lineEdit->toPlainText().trimmed();
-    }
-    else
-    {
-        return "";
-    }
+    return m_lineEdit.toPlainText().trimmed();
 }
 
 void TextInput::setCurrentText(const QString text)
 {
-    if (m_lineEdit != nullptr)
-    {
-        if (Mainapp::getInstance()->isMainThread())
-        {
-            m_lineEdit->setPlainText(text);
-        }
-        else
-        {
-            emit sigSetText(text);
-        }
-    }
+    m_lineEdit.setPlainText(text);
 }
 
 qint32 TextInput::getCursorPosition() const
 {
-    if (m_lineEdit != nullptr)
-    {
-        return m_lineEdit->textCursor().position();
-    }
-    else
-    {
-        return 0;
-    }
+    return m_lineEdit.textCursor().position();
 }
 
 void TextInput::setCursorPosition(qint32 position)
 {
-    if (m_lineEdit != nullptr)
-    {
-        auto cursor = m_lineEdit->textCursor();
-        cursor.setPosition(position);
-        m_lineEdit->setTextCursor(cursor);
-    }
+    auto cursor = m_lineEdit.textCursor();
+    cursor.setPosition(position);
+    m_lineEdit.setTextCursor(cursor);
 }
 
 bool TextInput::getReadonly() const
@@ -123,20 +75,15 @@ bool TextInput::getReadonly() const
     return m_readonly;
 }
 
+QObject* TextInput::getInputMethodFocusObject()
+{
+    return &m_lineEdit;
+}
+
 void TextInput::setReadonly(bool readonly)
 {
     m_readonly = readonly;
-    if (m_lineEdit != nullptr)
-    {
-        if (Mainapp::getInstance()->isMainThread())
-        {
-            m_lineEdit->setEditableKeys(!m_readonly);
-        }
-        else
-        {
-            emit sigSetReadonlyToEdit(!m_readonly);
-        }
-    }
+    m_lineEdit.setEditableKeys(!m_readonly);
 }
 
 bool TextInput::doHandleEvent(QEvent *event)
@@ -154,10 +101,7 @@ bool TextInput::doHandleEvent(QEvent *event)
             case QEvent::Shortcut:
             case QEvent::ShortcutOverride:
             {
-                if (m_lineEdit != nullptr)
-                {
-                    ret = m_lineEdit->event(event);
-                }
+                ret = m_lineEdit.handleTextInputEvent(event);
                 break;
             }
             default:
@@ -173,20 +117,18 @@ bool TextInput::doHandleEvent(QEvent *event)
 void TextInput::focused()
 {
     Tooltip::disableTooltip();
-    if (m_lineEdit != nullptr)
+    qint32 charCount = m_lineEdit.toPlainText().size();
+    auto cursor = m_lineEdit.textCursor();
+    if (m_focusPosition < 0 || charCount < m_focusPosition)
     {
-        qint32 charCount = m_lineEdit->toPlainText().size();
-        auto cursor = m_lineEdit->textCursor();
-        if (m_focusPosition < 0 || charCount < m_focusPosition)
-        {
-            cursor.setPosition(charCount);
-        }
-        else
-        {
-            cursor.setPosition(m_focusPosition);
-        }
-        m_lineEdit->setTextCursor(cursor);
+        cursor.setPosition(charCount);
     }
+    else
+    {
+        cursor.setPosition(m_focusPosition);
+    }
+    m_lineEdit.setTextCursor(cursor);
+    Mainapp::getInstance()->focusObjectChanged(&m_lineEdit);
     QGuiApplication::inputMethod()->update(Qt::ImQueryAll);
     emit Mainapp::getInstance()->sigShowKeyboard(true);
 }
@@ -206,9 +148,9 @@ void TextInput::looseFocusInternal()
 QString TextInput::getDrawText(const QString & text)
 {
     QString drawText = text;
-    if(m_focused && m_lineEdit != nullptr)
+    if(m_focused)
     {
-        auto cursor = m_lineEdit->textCursor();
+        auto cursor = m_lineEdit.textCursor();
         qint32 curmsgpos = cursor.position();
         // create output text
         if (m_toggle.elapsed() < BLINKFREQG)
@@ -266,6 +208,6 @@ qint32 TextInput::getClickedLinePosition(qint32 x, const QString & line, const Q
 
 void TextInput::focusedInternal()
 {
-    m_lineEdit->setFocus();
+    m_lineEdit.setFocus();
     FocusableObject::focusedInternal();
 }

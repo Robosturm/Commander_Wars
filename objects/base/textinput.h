@@ -33,6 +33,7 @@ public:
      * @param readonly
      */
     Q_INVOKABLE void setReadonly(bool readonly);
+    QObject* getInputMethodFocusObject() override;
 signals:
     void sigSetText(const QString text);
     void sigSetReadonlyToEdit(const bool editable);
@@ -58,7 +59,7 @@ protected:
     void inputMethodEvent(QInputMethodEvent* event) override;
     void inputMethodQueryEvent(QInputMethodQueryEvent* event) override;
 protected:
-    std::shared_ptr<EventTextEdit> m_lineEdit;
+    EventTextEdit m_lineEdit;
     bool m_LineEditFocused{false};
     QElapsedTimer m_toggle;
     qint32 m_focusPosition{-1};

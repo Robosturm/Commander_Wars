@@ -66,7 +66,6 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
-    connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
     CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
     m_workerObject = MemoryManagement::create<WorkerObject>();
 }
@@ -74,25 +73,6 @@ Mainapp::Mainapp()
 Mainapp::~Mainapp()
 {
     CrashReporter::setSignalHandler(nullptr);
-}
-
-void Mainapp::createLineEdit()
-{
-#ifdef GRAPHICSUPPORT
-    if (GameConsole::hasInstance())
-    {
-        CONSOLE_PRINT("Mainapp::createLineEdit", GameConsole::eDEBUG);
-    }
-    m_pLineEdit = MemoryManagement::create<EventTextEdit>();
-    m_pLineEdit->setVisible(false);
-#endif
-}
-
-void Mainapp::resetLineEdit()
-{
-#ifdef GRAPHICSUPPORT
-    m_pLineEdit.reset();
-#endif
 }
 
 void Mainapp::shutdown()
@@ -639,6 +619,16 @@ Settings::ScreenModes Mainapp::getScreenMode()
     {
         return Settings::ScreenModes::Window;
     }
+}
+
+QObject* Mainapp::focusObject() const
+{
+    FocusableObject* pObj(FocusableObject::getFocusedObject());
+    if (pObj != nullptr)
+    {
+        return pObj->getInputMethodFocusObject();
+    }
+    return oxygine::GameWindow::focusObject();
 }
 
 void Mainapp::keyPressEvent(QKeyEvent *event)

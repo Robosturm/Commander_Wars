@@ -14,7 +14,7 @@ MultilineTextbox::MultilineTextbox(qint32 width, qint32 heigth)
     setSize(width, heigth);
 
     m_multiline = true;
-    m_lineEdit->setSingleLine(false);
+    m_lineEdit.setSingleLine(false);
 
     constexpr qint32 widthReduction = 60;
     QSize size(width, heigth);

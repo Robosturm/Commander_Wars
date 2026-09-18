@@ -168,3 +168,8 @@ bool FocusableObject::getFocused() const
 {
     return m_focused;
 }
+
+QObject* FocusableObject::getInputMethodFocusObject()
+{
+    return this;
+}

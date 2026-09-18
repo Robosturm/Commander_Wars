@@ -117,6 +117,7 @@ public:
     {
         return *(getInstance()->m_aiSubProcess.get());
     }
+    virtual QObject* focusObject() const override;
     /**
      * @brief qsTr
      * @param text
@@ -125,14 +126,6 @@ public:
     static QString qsTr(QString text);
 
     bool getNoUi() const;
-    /**
-     * @brief getLastCreateLineEdit
-     * @return
-     */
-    spEventTextEdit getLastCreateLineEdit() const
-    {
-        return m_pLineEdit;
-    }
     /**
      * @brief getInitScript
      * @return
@@ -233,11 +226,6 @@ public slots:
      */
     void doScreenshot();
     void nextStartUpStep(GameEnums::StartupPhase step);
-    /**
-     * @brief createLineEdit
-     */
-    void createLineEdit();
-    void resetLineEdit();
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -256,7 +244,6 @@ signals:
      * @param log
      */
     void sigShowCrashReport(QString log);
-    void sigCreateLineEdit();
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
@@ -264,8 +251,6 @@ protected:
     virtual bool event(QEvent *ev) override;    
     virtual void onQuit() override;
 private:
-    spEventTextEdit m_pLineEdit;
-
     static Mainapp* m_pMainapp;
     static bool m_slave;
     static bool m_trainingSession;

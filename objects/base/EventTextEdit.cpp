@@ -4,11 +4,14 @@
 #include <QGuiApplication>
 #include <QInputMethod>
 
-EventTextEdit::EventTextEdit()
+EventTextEdit::EventTextEdit(QWidget* parent)
+ : QTextEdit(parent)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("EventTextEdit");
 #endif
+    setAttribute(Qt::WA_InputMethodEnabled, true);
+    setFocusPolicy(Qt::StrongFocus);
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -39,14 +42,37 @@ bool EventTextEdit::event(QEvent *event)
     return QTextEdit::event(event);
 }
 
+bool EventTextEdit::handleTextInputEvent(QEvent *event)
+{
+    const QString currentText = toPlainText();
+    bool handled = EventTextEdit::event(event);
+    if (m_editableKeys &&
+        currentText == toPlainText() &&
+        event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+        handled = handleForwardedEditingKey(keyEvent) || handled;
+    }
+    return handled;
+}
+
 void EventTextEdit::inputMethodEvent(QInputMethodEvent *event)
 {
     auto currentText = toPlainText();
     QTextEdit::inputMethodEvent(event);
-    if (currentText != toPlainText() && m_editableKeys)
+    if (currentText != toPlainText() && !m_editableKeys)
     {
         setPlainText(currentText);
     }
+}
+
+QVariant EventTextEdit::inputMethodQuery(Qt::InputMethodQuery query) const
+{
+    if (query == Qt::ImEnabled)
+    {
+        return m_editableKeys;
+    }
+    return QTextEdit::inputMethodQuery(query);
 }
 
 bool EventTextEdit::isEditingKeyPress(QKeyEvent *keyEvent) const
@@ -81,6 +107,78 @@ bool EventTextEdit::isEditingKeyPress(QKeyEvent *keyEvent) const
         }
     }
     return editing;
+}
+
+bool EventTextEdit::insertForwardedKeyText(QKeyEvent *keyEvent)
+{
+    if (keyEvent->matches(QKeySequence::Copy) ||
+        keyEvent->matches(QKeySequence::Paste) ||
+        keyEvent->matches(QKeySequence::Cut) ||
+        keyEvent->matches(QKeySequence::Undo) ||
+        keyEvent->matches(QKeySequence::Redo) ||
+        keyEvent->modifiers().testFlag(Qt::ControlModifier) ||
+        keyEvent->modifiers().testFlag(Qt::AltModifier) ||
+        keyEvent->modifiers().testFlag(Qt::MetaModifier))
+    {
+        return false;
+    }
+
+    const QString text = keyEvent->text();
+    if (text.isEmpty())
+    {
+        return false;
+    }
+    if (m_singleLine &&
+        (text.contains(QLatin1Char('\r')) ||
+         text.contains(QLatin1Char('\n'))))
+    {
+        emit returnPressed();
+        return true;
+    }
+    insertPlainText(text);
+    keyEvent->accept();
+    return true;
+}
+
+bool EventTextEdit::handleForwardedEditingKey(QKeyEvent *keyEvent)
+{
+    if (keyEvent->matches(QKeySequence::Paste))
+    {
+        paste();
+        keyEvent->accept();
+        return true;
+    }
+    if (keyEvent->matches(QKeySequence::Cut))
+    {
+        cut();
+        keyEvent->accept();
+        return true;
+    }
+    if (keyEvent->matches(QKeySequence::Undo))
+    {
+        undo();
+        keyEvent->accept();
+        return true;
+    }
+    if (keyEvent->matches(QKeySequence::Redo))
+    {
+        redo();
+        keyEvent->accept();
+        return true;
+    }
+    if (keyEvent->key() == Qt::Key_Backspace)
+    {
+        textCursor().deletePreviousChar();
+        keyEvent->accept();
+        return true;
+    }
+    if (keyEvent->key() == Qt::Key_Delete)
+    {
+        textCursor().deleteChar();
+        keyEvent->accept();
+        return true;
+    }
+    return insertForwardedKeyText(keyEvent);
 }
 
 bool EventTextEdit::getSingleLine() const

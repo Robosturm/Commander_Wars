@@ -12,9 +12,11 @@ class EventTextEdit final : public QTextEdit
 {
     Q_OBJECT
 public:
-    explicit EventTextEdit();
+    explicit EventTextEdit(QWidget* parent = nullptr);
     virtual ~EventTextEdit() = default;
     virtual bool event(QEvent *event) override;
+    bool handleTextInputEvent(QEvent *event);
+    virtual QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
 protected:
     void inputMethodEvent(QInputMethodEvent *event) override;
 public:
@@ -32,6 +34,8 @@ signals:
     void returnPressed();
 private:
     bool isEditingKeyPress(QKeyEvent *keyEvent) const;
+    bool handleForwardedEditingKey(QKeyEvent *keyEvent);
+    bool insertForwardedKeyText(QKeyEvent *keyEvent);
 private:
     bool m_singleLine{true};
     bool m_editableKeys{true};
