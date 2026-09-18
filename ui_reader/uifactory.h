@@ -256,6 +256,13 @@ private:
      */
     bool ifCondition(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
+     * Nodename: ComplexTableView
+     * supported attributes are:
+     * mandatory: x, y, widths, header, height
+     * optional: Id, enabled, visible, onEvent
+     */
+    bool createComplexTableView(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
      * Nodename: Minimap
      * supported attributes are:
      * mandatory: x, y

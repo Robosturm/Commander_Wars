@@ -34,6 +34,7 @@
 #include "objects/base/topbar.h"
 #include "objects/base/box9object.h"
 #include "objects/base/coloredbar.h"
+#include "objects/tableView/complextableview.h"
 #include "objects/minimap.h"
 #include "objects/qrcodeactor.h"
 #include "objects/boxterrainpalettepreview.h"
@@ -70,6 +71,7 @@ static const char* const itemIf = "if";
 static const char* const itemTopbar = "Topbar";
 static const char* const itemTabbedBox = "TabbedBox";
 static const char* const itemTab = "Tab";
+static const char* const itemComplexTableView = "ComplexTableView";
 static const char* const itemMinimap = "Minimap";
 static const char* const itemQrCode = "QrCode";
 static const char* const itemSlidingBox = "SlidingBox";
@@ -80,6 +82,8 @@ static const char* const attrX = "x";
 static const char* const attrY = "y";
 static const char* const attrWidth = "width";
 static const char* const attrHeight = "height";
+static const char* const attrWidths = "widths";
+static const char* const attrHeader = "header";
 static const char* const attrSize = "size";
 static const char* const attrLabelWidth = "labelWidth";
 static const char* const attrTooltip = "tooltip";
@@ -179,6 +183,7 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemColoredRect), std::bind(&UiFactory::createColoredRect, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemTopbar), std::bind(&UiFactory::createTopbar, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemTabbedBox), std::bind(&UiFactory::createTabbedBox, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.push_back({QString(itemComplexTableView), std::bind(&UiFactory::createComplexTableView, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemMinimap), std::bind(&UiFactory::createMinimap, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemQrCode), std::bind(&UiFactory::createQrCode, this, _1, _2, _3, _4, _5)});
     m_factoryItems.push_back({QString(itemSlidingBox), std::bind(&UiFactory::createSlidingBox, this, _1, _2, _3, _4, _5)});
@@ -794,6 +799,48 @@ bool UiFactory::createSprite(oxygine::spActor parent, QDomElement element, oxygi
         parent->addChild(pSprite);
         item = pSprite;
         m_lastCoordinates = QRect(x, y, pSprite->getScaledWidth(), pSprite->getScaledHeight());
+        updateMenuSize(pMenu);
+    }
+    return success;
+}
+
+bool UiFactory::createComplexTableView(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidths, attrHeader, attrHeight});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
+        qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
+        qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
+        qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
+        QVector<qint32> widths = getInt32ListValue(getAttribute(childs, attrWidths), id, loopIdx, pMenu);
+        QStringList header = getStringListValue(getAttribute(childs, attrHeader), id, loopIdx, pMenu);
+        bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
+        bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
+        QString onEventLine = getAttribute(childs, attrOnEvent);
+        if (widths.size() != header.size())
+        {
+            CONSOLE_PRINT("ComplexTableView widths and header must contain the same number of items.", GameConsole::eERROR);
+            return false;
+        }
+
+        spComplexTableView pTableView = MemoryManagement::create<ComplexTableView>(widths, header, height);
+        pTableView->setPosition(x, y);
+        pTableView->setObjectName(id);
+        pTableView->setEnabled(enabled);
+        pTableView->setVisible(visible);
+        if (!onEventLine.isEmpty())
+        {
+            ComplexTableView* pTableViewPtr = pTableView.get();
+            connect(pTableView.get(), &ComplexTableView::sigItemClicked, pMenu, [this, onEventLine, pTableViewPtr, id, loopIdx, pMenu]()
+            {
+                onEvent(onEventLine, pTableViewPtr->getCurrentItem(), id, loopIdx, pMenu);
+            }, Qt::QueuedConnection);
+        }
+        parent->addChild(pTableView);
+        item = pTableView;
+        m_lastCoordinates = QRect(x, y, pTableView->getScaledWidth(), pTableView->getScaledHeight());
         updateMenuSize(pMenu);
     }
     return success;
