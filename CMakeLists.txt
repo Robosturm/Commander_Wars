@@ -175,12 +175,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 else("Release")
     message("Compiling as Release")
     add_definitions(
-        -DDEBUG_LEVEL=0             # default console log level
-    )
-endif()
-if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    add_definitions(
-        -DISANDROIDDEVICE
+        -DDEBUG_LEVEL=2             # default console log level
     )
 endif()
 

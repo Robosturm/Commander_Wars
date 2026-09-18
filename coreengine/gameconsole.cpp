@@ -7,6 +7,7 @@
 #include <QFontMetrics>
 #include <QMetaMethod>
 #include <QMetaObject>
+#include <QScopedValueRollback>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
@@ -32,6 +33,7 @@ bool GameConsole::m_show = false;
 bool GameConsole::m_toggled = false;
 bool GameConsole::m_developerMode = false;
 bool GameConsole::m_outputChanged = false;
+bool GameConsole::m_messageLogging = false;
 std::vector<QString> GameConsole::m_output;
 spConsole GameConsole::m_pConsole{nullptr};
 qint32 GameConsole::m_curlastmsgpos = 0;
@@ -624,118 +626,128 @@ void GameConsole::messageOutput(const QMessageLogContext &context, const QString
 
 void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    static QFile file;
-    static QTextStream stream(&file);
-    std::lock_guard<std::mutex> lock(messageOutputMutex);
-    if (!file.isOpen())
+    if (m_messageLogging)
     {
-        QString date = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
-        if (Settings::getInstance()->getServer())
-        {
-            file.setFileName((Settings::getInstance()->getUserPath() + "console-" + date + ".log"));
-        }
-        else
-        {
-            file.setFileName((Settings::getInstance()->getUserPath() + "console" + Settings::getInstance()->getUpdateStep()+ ".log"));
-        }
-        if (Settings::getInstance()->getAiSlave())
-        {
-            file.setFileName(Settings::getInstance()->getUserPath() + "consoleAiSlave.log");
-            if (!file.open(QIODevice::WriteOnly))
-            {
-                std::cerr << "Failed to open file " << file.fileName().toStdString() << std::endl;
-            }
-        }
-        Mainapp* pApp = Mainapp::getInstance();
-        if (pApp->getSlave() && pApp->getCreateSlaveLogs())
-        {
-            QString slaveName = Settings::getInstance()->getSlaveServerName();
-            file.setFileName(Settings::getInstance()->getUserPath() + slaveName + "-" + date + ".log");
-            if (!file.open(QIODevice::WriteOnly))
-            {
-                std::cerr << "Failed to open file " << file.fileName().toStdString() << std::endl;
-            }
-        }
-        else if (!pApp->getSlave())
-        {
-            if (!file.open(QIODevice::WriteOnly))
-            {
-                std::cerr << "Failed to open file " << file.fileName().toStdString() << std::endl;
-            }
-        }
+        std::cout << "Warning: " << msg.toStdString() << std::endl;
     }
-    QString message = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + ": ";
-    switch (type)
+    else
     {
-        case QtDebugMsg:
-            if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eDEBUG)
+        QScopedValueRollback scope(m_messageLogging, true);
+        static QFile file;
+        static QTextStream stream(&file);
+        std::lock_guard<std::mutex> lock(messageOutputMutex);
+        if (!file.isOpen())
+        {
+            QString date = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
+            if (Settings::getInstance()->getServer())
             {
-                message += "Debug: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
-                if (file.isOpen())
-                {
-                    stream << message << "\n";
-                    stream.flush();
-                    file.flush();
-                }
-                std::cout << message.toStdString() << std::endl;
-                printOnIngameConsole(message);
+                file.setFileName((Settings::getInstance()->getUserPath() + "console-" + date + ".log"));
             }
-            break;
-        case QtInfoMsg:
-            if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eINFO)
+            else
             {
-                message += "Info: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
-                if (file.isOpen())
-                {
-                    stream << message << "\n";
-                    stream.flush();
-                    file.flush();
-                }
-                std::cout << message.toStdString() << std::endl;
-                printOnIngameConsole(message);
+                file.setFileName((Settings::getInstance()->getUserPath() + "console" + Settings::getInstance()->getUpdateStep()+ ".log"));
             }
-            break;
-        case QtWarningMsg:
-            if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eWARNING)
+
+            if (Settings::getInstance()->getAiSlave())
             {
-                message += "Warning: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
-                if (file.isOpen())
+                file.setFileName(Settings::getInstance()->getUserPath() + "consoleAiSlave.log");
+                
+                if (!file.open(QIODevice::WriteOnly))
                 {
-                    stream << message << "\n";
-                    stream.flush();
-                    file.flush();
+                    std::cerr << "Failed to open file " << file.fileName().toStdString() << std::endl;
                 }
-                std::cout << message.toStdString() << std::endl;
-                printOnIngameConsole(message);
             }
-            break;
-        case QtCriticalMsg:
-            if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eERROR)
+            Mainapp* pApp = Mainapp::getInstance();
+            if (pApp->getSlave() && pApp->getCreateSlaveLogs())
             {
-                message += "Critical: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
-                if (file.isOpen())
+                QString slaveName = Settings::getInstance()->getSlaveServerName();
+                file.setFileName(Settings::getInstance()->getUserPath() + slaveName + "-" + date + ".log");
+                if (!file.open(QIODevice::WriteOnly))
                 {
-                    stream << message << "\n";
-                    stream.flush();
-                    file.flush();
+                    std::cerr << "Failed to open file " << file.fileName().toStdString() << std::endl;
                 }
-                std::cerr << message.toStdString() << std::endl;
-                printOnIngameConsole(message);
             }
-            break;
-        case QtFatalMsg:
-            if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eFATAL)
+            else if (!pApp->getSlave())
             {
-                message = "Fatal: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
-                if (file.isOpen())
+                if (!file.open(QIODevice::WriteOnly))
                 {
-                    stream << message << "\n";
-                    stream.flush(); 
-                    file.flush();
+                    std::cerr << "Failed to open file " << file.fileName().toStdString() << std::endl;
                 }
-                std::cerr << message.toStdString() << std::endl;
-                printOnIngameConsole(message);
             }
-            break;
+        }
+        QString message = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + ": ";
+        switch (type)
+        {
+            case QtDebugMsg:
+                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eDEBUG)
+                {
+                    message += "Debug: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
+                    if (file.isOpen())
+                    {
+                        stream << message << "\n";
+                        stream.flush();
+                        file.flush();
+                    }
+                    std::cout << message.toStdString() << std::endl;
+                    printOnIngameConsole(message);
+                }
+                break;
+            case QtInfoMsg:
+                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eINFO)
+                {
+                    message += "Info: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
+                    if (file.isOpen())
+                    {
+                        stream << message << "\n";
+                        stream.flush();
+                        file.flush();
+                    }
+                    std::cout << message.toStdString() << std::endl;
+                    printOnIngameConsole(message);
+                }
+                break;
+            case QtWarningMsg:
+                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eWARNING)
+                {
+                    message += "Warning: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
+                    if (file.isOpen())
+                    {
+                        stream << message << "\n";
+                        stream.flush();
+                        file.flush();
+                    }
+                    std::cout << message.toStdString() << std::endl;
+                    printOnIngameConsole(message);
+                }
+                break;
+            case QtCriticalMsg:
+                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eERROR)
+                {
+                    message += "Critical: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
+                    if (file.isOpen())
+                    {
+                        stream << message << "\n";
+                        stream.flush();
+                        file.flush();
+                    }
+                    std::cerr << message.toStdString() << std::endl;
+                    printOnIngameConsole(message);
+                }
+                break;
+            case QtFatalMsg:
+                if (GameConsole::m_LogLevel <= GameConsole::eLogLevels::eFATAL)
+                {
+                    message = "Fatal: " + msg + " File: " + context.file + " Line: " + QString::number(context.line) + " Function: " + context.function;
+                    if (file.isOpen())
+                    {
+                        stream << message << "\n";
+                        stream.flush(); 
+                        file.flush();
+                    }
+                    std::cerr << message.toStdString() << std::endl;
+                    printOnIngameConsole(message);
+                }
+                break;
+        }
     }
 }

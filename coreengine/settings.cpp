@@ -746,11 +746,11 @@ void Settings::setUserPath(const QString newUserPath)
 
 bool Settings::isAndroidDevice() const
 {
-#ifdef ISANDROIDDEVICE
+#ifdef Q_OS_ANDROID
     return true;
 #else
     return false;
-#endif // ISANDROIDDEVICE
+#endif // Q_OS_ANDROID
 }
 
 bool Settings::getSmallScreenDevice()
@@ -1387,6 +1387,8 @@ QString Settings::getActiveUserPath()
         }
     }
 #elif defined(USEAPPCONFIGPATH)
+    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+#elif defined(Q_OS_MACOS)
     defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #endif
     Mainapp::getInstance()->getParser().getUserPath(defaultPath);

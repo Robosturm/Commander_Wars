@@ -289,6 +289,7 @@ private:
     static bool m_developerMode;
     static std::mutex m_datalocker;
     static std::mutex messageOutputMutex;
+    static bool m_messageLogging;
     oxygine::spSprite m_pBackgroundsprite;
     oxygine::spTextField m_text;
     oxygine::spTextField m_editTextfield;
