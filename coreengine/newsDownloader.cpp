@@ -67,6 +67,8 @@ void NewsDownloader::onResponseFinished(QNetworkReply* pReply)
 
 void NewsDownloader::handleNewsDownloadFinished()
 {
+
+    CONSOLE_PRINT("NewsDownloader download finished", GameConsole::eDEBUG);
     QString newsHash = QString::fromUtf8(QCryptographicHash::hash(m_newsData, QCryptographicHash::Sha256).toHex());
     bool newNews = false;
     if (newsHash != Settings::getInstance()->getLastNewsHash())

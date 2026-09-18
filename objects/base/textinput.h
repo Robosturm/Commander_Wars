@@ -59,7 +59,7 @@ protected:
     void inputMethodEvent(QInputMethodEvent* event) override;
     void inputMethodQueryEvent(QInputMethodQueryEvent* event) override;
 protected:
-    EventTextEdit m_lineEdit;
+    spEventTextEdit m_lineEdit;
     bool m_LineEditFocused{false};
     QElapsedTimer m_toggle;
     qint32 m_focusPosition{-1};

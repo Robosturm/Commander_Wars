@@ -481,6 +481,7 @@ void Mainwindow::createRandomInis(GameEnums::AiTypes ai, QString baseName, qint3
 
 void Mainwindow::onNewsDownloaded(bool newNews)
 {
+    CONSOLE_PRINT("Mainwindow::onNewsDownloaded newNews=" + QString::number(newNews), GameConsole::eDEBUG);
     auto* pButton = getCastedObject<oxygine::Button>("NewsButton");
     if (pButton)
     {
@@ -494,6 +495,7 @@ void Mainwindow::onNewsDownloaded(bool newNews)
 
 void Mainwindow::showNews()
 {
+    CONSOLE_PRINT("Mainwindow::showNews", GameConsole::eDEBUG);
     auto newsContent = Settings::getInstance()->getLastNews();
     QJsonDocument jsonDoc = QJsonDocument::fromJson(newsContent.toUtf8());
     QJsonObject jsonObj = jsonDoc.object();
