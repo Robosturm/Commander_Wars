@@ -117,7 +117,7 @@ public:
     {
         return *(getInstance()->m_aiSubProcess.get());
     }
-    virtual QObject* focusObject() const override;
+    QObject* focusObject() const override;
     /**
      * @brief qsTr
      * @param text
@@ -245,11 +245,11 @@ signals:
      */
     void sigShowCrashReport(QString log);
 protected:
-    virtual void keyPressEvent(QKeyEvent *event) override;
-    virtual void keyReleaseEvent(QKeyEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
     bool keyInputMethodEvent(QInputMethodEvent *event);
-    virtual bool event(QEvent *ev) override;    
-    virtual void onQuit() override;
+    bool event(QEvent *ev) override;    
+    void onQuit() override;
 private:
     static Mainapp* m_pMainapp;
     static bool m_slave;
