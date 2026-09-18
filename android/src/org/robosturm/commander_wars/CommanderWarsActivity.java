@@ -1,5 +1,6 @@
 package org.robosturm.commander_wars;
 
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.InputDevice;
@@ -39,18 +40,73 @@ public class CommanderWarsActivity extends QtActivity {
         }
     }
 
+    // qt resets the system ui visibility on its own ui thread events, so re-apply slightly delayed as well
+    private void scheduleImmersiveFullscreen() {
+        final View decorView = getWindow().getDecorView();
+        decorView.post(new Runnable() {
+            @Override
+            public void run() {
+                applyImmersiveFullscreen();
+            }
+        });
+        decorView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                applyImmersiveFullscreen();
+            }
+        }, 500);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void installFullscreenWatchers() {
+        final View decorView = getWindow().getDecorView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+                @Override
+                public WindowInsets onApplyWindowInsets(View view, WindowInsets insets) {
+                    if (insets.isVisible(WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars())) {
+                        scheduleImmersiveFullscreen();
+                    }
+                    return view.onApplyWindowInsets(insets);
+                }
+            });
+        } else {
+            decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+                @Override
+                public void onSystemUiVisibilityChange(int visibility) {
+                    if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                        scheduleImmersiveFullscreen();
+                    }
+                }
+            });
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         applyImmersiveFullscreen();
+        installFullscreenWatchers();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        scheduleImmersiveFullscreen();
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-            applyImmersiveFullscreen();
+            scheduleImmersiveFullscreen();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        scheduleImmersiveFullscreen();
     }
 
     private static boolean isGamepad(InputDevice device) {

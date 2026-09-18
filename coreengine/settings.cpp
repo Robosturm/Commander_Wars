@@ -2337,7 +2337,9 @@ QStringList Settings::getAvailableMods()
 
 bool Settings::hasSmallScreen()
 {
-#ifdef GRAPHICSUPPORT
+#ifdef Q_OS_ANDROID
+    return true;
+#elif GRAPHICSUPPORT
     auto screens = QApplication::screens();
     QScreen* screen = screens[Settings::getScreen()];
     QRect screenSize = screen->availableGeometry();
