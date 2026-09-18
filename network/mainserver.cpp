@@ -1448,7 +1448,7 @@ void MainServer::createAccount(qint64 socketId, const QJsonObject &objData)
     QByteArray password = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
     QString mailAdress = objData.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
     QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
-    CONSOLE_PRINT("Creating account with username " + username + " and email adress " + mailAdress, GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating account with username " + username, GameConsole::eDEBUG);
     bool success = false;
     QSqlQuery query = getAccountInfo(*m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
@@ -1508,7 +1508,7 @@ void MainServer::deleteAccount(qint64 socketId, const QJsonObject &objData)
     QByteArray password = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
     QString mailAdress = objData.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
     QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
-    CONSOLE_PRINT("Deleting account with username " + username + " and email adress " + mailAdress, GameConsole::eDEBUG);
+    CONSOLE_PRINT("Deleting account with username " + username, GameConsole::eDEBUG);
     bool success = false;
     GameEnums::LoginError result = GameEnums::LoginError_None;
     QSqlQuery query = getAccountInfo(*m_serverData, username, success);
@@ -1687,9 +1687,12 @@ void MainServer::handleLoginFailed(QSqlDatabase &database, QSqlQuery &accountInf
     auto loginFailCount = accountInfo.value(SQL_LOGINFAILCOUNT).toInt();
     loginFailCount++;
     qint64 firstFailTime = 0;
+    const QString username = accountInfo.value(SQL_USERNAME).toString();
+    CONSOLE_PRINT("Failed login attempt " + QString::number(loginFailCount) + " for username " + username, GameConsole::eDEBUG);
     if (loginFailCount >= Settings::getInstance()->getLoginPasswordMaxAttempts())
     {
         firstFailTime = QDateTime::currentSecsSinceEpoch();
+        CONSOLE_PRINT("Account " + username + " locked due to too many failed login attempts.", GameConsole::eWARNING);
     }    
     // lock account
     QSqlQuery lockQuery(database);
@@ -1717,7 +1720,7 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonObject &objDat
 {
     QString mailAdress = objData.value(JsonKeys::JSONKEY_EMAILADRESS).toString();
     QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
-    CONSOLE_PRINT("Resetting account with username " + username + " and email adress " + mailAdress, GameConsole::eDEBUG);
+    CONSOLE_PRINT("Resetting account with username " + username, GameConsole::eDEBUG);
     bool success = false;
     QSqlQuery query = getAccountInfo(*m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;

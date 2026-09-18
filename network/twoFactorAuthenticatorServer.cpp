@@ -53,11 +53,13 @@ void TwoFactorAuthenticatorServer::confirm2faSetup(qint64 socketId, const QJsonO
     auto enrollment = m_pending2faSetups.find(socketId);
     if (enrollment == m_pending2faSetups.end())
     {
+        CONSOLE_PRINT("2fa confirmation requested without a pending setup for client " + QString::number(socketId), GameConsole::eDEBUG);
         send2faResponse(socketId, NetworkCommands::SERVERRESPONSCONFIRM2FA, GameEnums::LoginError_2faSetupExpired);
         return;
     }
     if (enrollment->created.msecsTo(QDateTime::currentDateTimeUtc()) > Settings::getInstance()->getTotpSetupTimeoutMs())
     {
+        CONSOLE_PRINT("2fa setup expired for username " + enrollment->username, GameConsole::eDEBUG);
         m_pending2faSetups.erase(enrollment);
         send2faResponse(socketId, NetworkCommands::SERVERRESPONSCONFIRM2FA, GameEnums::LoginError_2faSetupExpired);
         return;
@@ -80,6 +82,7 @@ void TwoFactorAuthenticatorServer::confirm2faSetup(qint64 socketId, const QJsonO
     }
     else
     {
+        CONSOLE_PRINT("Invalid 2fa confirmation code submitted for username " + enrollment->username, GameConsole::eDEBUG);
         send2faResponse(socketId, NetworkCommands::SERVERRESPONSCONFIRM2FA, GameEnums::LoginError_Invalid2faCode);
     }
 }
@@ -120,6 +123,7 @@ void TwoFactorAuthenticatorServer::startPasswordReset(qint64 socketId, const QJs
             }
             else
             {
+                CONSOLE_PRINT("Password reset denied for username " + username + " due to too many failed 2fa attempts.", GameConsole::eWARNING);
                 send2faResponse(socketId, NetworkCommands::SERVERRESPONSRESETPASSWORD2FA, GameEnums::LoginError_2faLockedDueToTooManyFailedAttempts);
             }
         }
@@ -246,9 +250,12 @@ void TwoFactorAuthenticatorServer::handleLoginFailed(QSqlDatabase &database, QSq
     auto loginFailCount = accountInfo.value(MainServer::SQL_TOTPSECRETFAILCOUNT).toInt();
     loginFailCount++;
     qint64 firstFailTime = 0;
+    const QString username = accountInfo.value(MainServer::SQL_USERNAME).toString();
+    CONSOLE_PRINT("Failed 2fa password reset attempt " + QString::number(loginFailCount) + " for username " + username, GameConsole::eDEBUG);
     if (loginFailCount >= Settings::getInstance()->getPasswordResetMaxAttempts())
     {
         firstFailTime = QDateTime::currentSecsSinceEpoch();
+        CONSOLE_PRINT("Account " + username + " locked for 2fa password reset due to too many failed attempts.", GameConsole::eWARNING);
     }    
     // lock account
     QSqlQuery lockQuery(database);
