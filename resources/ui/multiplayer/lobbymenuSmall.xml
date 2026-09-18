@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<ui overwrite="true">
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <Id>LobbyPanel</Id>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 20</height>
+        <childs>
+            <Button>
+                <x>LobbyMenu.getSmallModeX(0)</x>
+                <y>10</y>
+                <Id>OwnGamesButton</Id>
+                <width>LobbyMenu.ModeButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","My games")</text>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.setGameViewMode(GameViewMode_OwnGames)</onEvent>
+            </Button>
+            <Button>
+                <x>LobbyMenu.getSmallModeX(1)</x>
+                <y>10</y>
+                <Id>OpenGamesButton</Id>
+                <width>LobbyMenu.ModeButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Open games")</text>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.setGameViewMode(GameViewMode_OpenGames)</onEvent>
+            </Button>
+            <Button>
+                <x>LobbyMenu.getSmallModeX(2)</x>
+                <y>10</y>
+                <Id>ObserveGamesButton</Id>
+                <width>LobbyMenu.ModeButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Observable")</text>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.setGameViewMode(GameViewMode_ObserveGames)</onEvent>
+            </Button>
+            <Button>
+                <x>LobbyMenu.getSmallModeX(3)</x>
+                <y>10</y>
+                <Id>RefreshGamesButton</Id>
+                <width>LobbyMenu.ModeButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Refresh games")</text>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.requestUpdateGames()</onEvent>
+            </Button>
+
+            <ComplexTableView>
+                <x>10</x>
+                <y>60</y>
+                <Id>GamesView</Id>
+                <widths>LobbyMenu.getTableWidths(LobbyMenu.getSmallTableWidth())</widths>
+                <header>LobbyMenu.getTableHeaders()</header>
+                <height>300</height>
+                <onEvent>currentMenu.selectGame()</onEvent>
+            </ComplexTableView>
+
+            <IconButton>
+                <x>266</x>
+                <y>370</y>
+                <Id>StartPageButton</Id>
+                <sprite>"toStart"</sprite>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.showStart()</onEvent>
+            </IconButton>
+            <IconButton>
+                <x>312</x>
+                <y>370</y>
+                <Id>PreviousPageButton</Id>
+                <sprite>"previous_unit"</sprite>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.showPreviousStep()</onEvent>
+            </IconButton>
+            <Label>
+                <x>358</x>
+                <y>370</y>
+                <Id>MatchViewInfo</Id>
+                <width>200</width>
+                <text>"-- / --"</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+                <hAlign>"Middle"</hAlign>
+                <showBorder>true</showBorder>
+            </Label>
+            <IconButton>
+                <x>568</x>
+                <y>370</y>
+                <Id>NextPageButton</Id>
+                <sprite>"next_unit"</sprite>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.showNextStep()</onEvent>
+            </IconButton>
+            <IconButton>
+                <x>614</x>
+                <y>370</y>
+                <Id>EndPageButton</Id>
+                <sprite>"toEnd"</sprite>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.showEnd()</onEvent>
+            </IconButton>
+
+            <Custom>
+                <x>10</x>
+                <y>420</y>
+                <Id>LobbyChat</Id>
+                <customItem>LobbyMenu.getChatItem(LobbyMenu.getSmallChatWidth(), 180)</customItem>
+                <scale>1</scale>
+            </Custom>
+
+            <Button>
+                <x>LobbyMenu.getSmallActionX(0)</x>
+                <y>610</y>
+                <Id>OtherButton</Id>
+                <width>LobbyMenu.ActionButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Other")</text>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.onShowOtherDialog()</onEvent>
+            </Button>
+            <Button>
+                <x>LobbyMenu.getSmallActionX(1)</x>
+                <y>610</y>
+                <width>LobbyMenu.ActionButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Observe Address")</text>
+                <onEvent>currentMenu.observeAdress()</onEvent>
+            </Button>
+            <Button>
+                <x>LobbyMenu.getSmallActionX(2)</x>
+                <y>610</y>
+                <Id>ObserveGameButton</Id>
+                <width>LobbyMenu.ActionButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Observe Game")</text>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.observeGame()</onEvent>
+            </Button>
+            <Button>
+                <x>LobbyMenu.getSmallActionX(3)</x>
+                <y>610</y>
+                <Id>ServerHostButton</Id>
+                <width>LobbyMenu.ActionButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Server Host")</text>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.hostServer()</onEvent>
+            </Button>
+            <Button>
+                <x>LobbyMenu.getSmallActionX(0)</x>
+                <y>660</y>
+                <width>LobbyMenu.ActionButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Exit")</text>
+                <onEvent>currentMenu.exitMenue()</onEvent>
+            </Button>
+            <Button>
+                <x>LobbyMenu.getSmallActionX(1)</x>
+                <y>660</y>
+                <width>LobbyMenu.ActionButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Join Address")</text>
+                <onEvent>currentMenu.joinAdress()</onEvent>
+            </Button>
+            <Button>
+                <x>LobbyMenu.getSmallActionX(2)</x>
+                <y>660</y>
+                <Id>JoinGameButton</Id>
+                <width>LobbyMenu.ActionButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Join Game")</text>
+                <enabled>false</enabled>
+                <onEvent>currentMenu.joinGame()</onEvent>
+            </Button>
+            <Button>
+                <x>LobbyMenu.getSmallActionX(3)</x>
+                <y>660</y>
+                <width>LobbyMenu.ActionButtonWidth</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Direct Host")</text>
+                <onEvent>currentMenu.hostLocal()</onEvent>
+            </Button>
+        </childs>
+    </Panel>
+</ui>

@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<ui overwrite="true">
+    <Button>
+        <x>settings.getStageWidth() / 2 - LobbyMenu.ModeButtonWidth * 2</x>
+        <y>10</y>
+        <Id>OwnGamesButton</Id>
+        <width>LobbyMenu.ModeButtonWidth</width>
+        <text>QT_TRANSLATE_NOOP("GAME","My games")</text>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.setGameViewMode(GameViewMode_OwnGames)</onEvent>
+    </Button>
+    <Button>
+        <x>lastX + lastWidth</x>
+        <y>lastY</y>
+        <Id>OpenGamesButton</Id>
+        <width>LobbyMenu.ModeButtonWidth</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Open games")</text>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.setGameViewMode(GameViewMode_OpenGames)</onEvent>
+    </Button>
+    <Button>
+        <x>lastX + lastWidth</x>
+        <y>lastY</y>
+        <Id>ObserveGamesButton</Id>
+        <width>LobbyMenu.ModeButtonWidth</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Observable")</text>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.setGameViewMode(GameViewMode_ObserveGames)</onEvent>
+    </Button>
+    <Button>
+        <x>lastX + lastWidth</x>
+        <y>lastY</y>
+        <Id>RefreshGamesButton</Id>
+        <width>LobbyMenu.ModeButtonWidth</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Refresh games")</text>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.requestUpdateGames()</onEvent>
+    </Button>
+
+    <ComplexTableView>
+        <x>10</x>
+        <y>LobbyMenu.TableY</y>
+        <Id>GamesView</Id>
+        <widths>LobbyMenu.getTableWidths(settings.getStageWidth() - 100)</widths>
+        <header>LobbyMenu.getTableHeaders()</header>
+        <height>LobbyMenu.getDesktopTableHeight()</height>
+        <onEvent>currentMenu.selectGame()</onEvent>
+    </ComplexTableView>
+
+    <IconButton>
+        <x>settings.getStageWidth() / 2 - 246</x>
+        <y>LobbyMenu.getDesktopPaginationY()</y>
+        <Id>StartPageButton</Id>
+        <sprite>"toStart"</sprite>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.showStart()</onEvent>
+    </IconButton>
+    <IconButton>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <Id>PreviousPageButton</Id>
+        <sprite>"previous_unit"</sprite>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.showPreviousStep()</onEvent>
+    </IconButton>
+    <Label>
+        <x>settings.getStageWidth() / 2 - 100</x>
+        <y>lastY</y>
+        <Id>MatchViewInfo</Id>
+        <width>200</width>
+        <text>"-- / --"</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+        <hAlign>"Middle"</hAlign>
+        <showBorder>true</showBorder>
+    </Label>
+    <IconButton>
+        <x>settings.getStageWidth() / 2 + 110</x>
+        <y>lastY</y>
+        <Id>NextPageButton</Id>
+        <sprite>"next_unit"</sprite>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.showNextStep()</onEvent>
+    </IconButton>
+    <IconButton>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <Id>EndPageButton</Id>
+        <sprite>"toEnd"</sprite>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.showEnd()</onEvent>
+    </IconButton>
+
+    <Custom>
+        <x>10</x>
+        <y>LobbyMenu.getDesktopChatY()</y>
+        <Id>LobbyChat</Id>
+        <customItem>LobbyMenu.getChatItem(settings.getStageWidth() - 20, LobbyMenu.getDesktopChatHeight())</customItem>
+        <scale>1</scale>
+    </Custom>
+
+    <Button>
+        <x>10</x>
+        <y>settings.getStageHeight() - 100</y>
+        <Id>OtherButton</Id>
+        <width>180</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Other")</text>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.onShowOtherDialog()</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getStageWidth() / 2 - 230</x>
+        <y>lastY</y>
+        <width>LobbyMenu.ActionButtonWidth</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Observe Address")</text>
+        <onEvent>currentMenu.observeAdress()</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getStageWidth() / 2 + 10</x>
+        <y>lastY</y>
+        <Id>ObserveGameButton</Id>
+        <width>LobbyMenu.ActionButtonWidth</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Observe Game")</text>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.observeGame()</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getStageWidth() - 230</x>
+        <y>lastY</y>
+        <Id>ServerHostButton</Id>
+        <width>LobbyMenu.ActionButtonWidth</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Server Host")</text>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.hostServer()</onEvent>
+    </Button>
+    <Button>
+        <x>10</x>
+        <y>settings.getStageHeight() - 50</y>
+        <width>180</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Exit")</text>
+        <onEvent>currentMenu.exitMenue()</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getStageWidth() / 2 - 230</x>
+        <y>lastY</y>
+        <width>LobbyMenu.ActionButtonWidth</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Join Address")</text>
+        <onEvent>currentMenu.joinAdress()</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getStageWidth() / 2 + 10</x>
+        <y>lastY</y>
+        <Id>JoinGameButton</Id>
+        <width>LobbyMenu.ActionButtonWidth</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Join Game")</text>
+        <enabled>false</enabled>
+        <onEvent>currentMenu.joinGame()</onEvent>
+    </Button>
+    <Button>
+        <x>settings.getStageWidth() - 230</x>
+        <y>lastY</y>
+        <width>LobbyMenu.ActionButtonWidth</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Direct Host")</text>
+        <onEvent>currentMenu.hostLocal()</onEvent>
+    </Button>
+</ui>

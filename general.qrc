@@ -2096,6 +2096,9 @@
         <file>resources/scripts/general/backgroundSelector.js</file>
         <file>resources/ui/editor/editorMenu.js</file>
         <file>resources/ui/editor/editorTopbar.xml</file>
+        <file>resources/ui/multiplayer/lobbymenu.js</file>
+        <file>resources/ui/multiplayer/lobbymenu.xml</file>
+        <file>resources/ui/multiplayer/lobbymenuSmall.xml</file>
         <file>resources/scripts/actions/ACTION_TOGGLE_AI_PAUSE.js</file>
         <file>resources/scripts/general/settingsLoader.js</file>
         <file>resources/scripts/gamerules/victory/victoryrule_firsthq.js</file>

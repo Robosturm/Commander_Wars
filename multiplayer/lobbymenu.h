@@ -3,8 +3,6 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
-
 #include "objects/tableView/complextableview.h"
 
 #include "network/networkgamedata.h"
@@ -23,15 +21,11 @@ class LobbyMenu final : public Basemenu
     Q_OBJECT
     static constexpr qint32 REQUEST_COUNT = 50;
 public:
-    enum class GameViewMode
-    {
-        OpenGames,
-        OwnGames,
-        ObserveGames,
-    };
-
     explicit LobbyMenu();
     virtual ~LobbyMenu() = default;
+    virtual oxygine::spActor loadCustomId(const QString & item, qint32 x, qint32 y, bool enabled, bool visible, float scale,
+                                          const QString & id, const QString & tooltip, const QString & onEvent,
+                                          UiFactory* pFactory, CreatedGui* pMenu, qint32 loopIdx, qint32 & scaledWidth, qint32 & scaledHeight) override;
     Q_INVOKABLE bool getServerRequestNewPassword() const;
     Q_INVOKABLE void setServerRequestNewPassword(bool newServerRequestNewPassword);
     Q_INVOKABLE void onLogin();
@@ -69,25 +63,15 @@ public:
     Q_INVOKABLE void requestPlayersFromServer(const QString & searchFilter);
     Q_INVOKABLE void requestPlayerStats(const QString & player);
     Q_INVOKABLE void uploadMap(const  QString & selectedFilePath);
+    Q_INVOKABLE void setGameViewMode(qint32 mode);
+    Q_INVOKABLE void onShowOtherDialog();
     void sendCommandToServer(const QJsonObject & objData);
     NetworkInterface* getTcpClient() const;
 
 signals:
-    void sigExitMenue();
-    void sigHostServer();
-    void sigHostLocal();
-    void sigJoinGame();
-    void sigJoinAdress();
-    void sigObserveGame();
-    void sigObserveAdress();
     void sigUpdateGamesView();
     void sigRequestUpdateGames();
     void sigServerResponded();
-    void sigOther();
-    void sigShowNextStep();
-    void sigShowPreviousStep();
-    void sigShowStart();
-    void sigShowEnd();
     void sigSearchedPlayersReceived(const QStringList & foundPlayers);
     void sigReceivedPlayerStats(const QJsonObject & objData);
     void sigRequestShowAutoMatches(const QJsonObject & objData);
@@ -127,7 +111,6 @@ protected slots:
     void disconnected(quint64 socketID);
     void requestPassword();
 private:
-    void onShowOtherDialog();
     void receivedShowAutoMatches(const QJsonObject & objData);
     void updateGameData(const QJsonObject & objData);
     void joinSlaveGame(const QJsonObject & objData);
@@ -178,26 +161,14 @@ private:
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<NetworkGameData> m_games;
     NetworkGameData m_currentGame;
-    oxygine::spButton m_pButtonHostOnServer;
-    oxygine::spButton m_pButtonGameObserve;    
-    oxygine::spButton m_pButtonGameJoin;
-    oxygine::spButton m_pButtonSwapOpenGamesMode;
-    oxygine::spButton m_pButtonSwapOwnGamesMode;
-    oxygine::spButton m_pButtonSwapObserveGamesMode;
-    oxygine::spButton m_pButtonUpdateGamesMode;
-    oxygine::spButton m_pEndStepButton;
-    oxygine::spButton m_pNextStepButton;
-    oxygine::spButton m_pPreviousStepButton;
-    oxygine::spButton m_pStartStepButton;
-    oxygine::spButton m_pOtherButton;
-    spLabel m_matchViewInfo;
-    spComplexTableView m_gamesview;
+    Label* m_matchViewInfo{nullptr};
+    ComplexTableView* m_gamesview{nullptr};
     QString m_password;
     bool m_loggedIn{false};
     bool m_sameVersionAsServer{false};
 
     bool m_serverRequestNewPassword;
-    GameViewMode m_mode{GameViewMode::OpenGames};
+    GameEnums::GameViewMode m_mode{GameEnums::GameViewMode_OpenGames};
     qint32 m_lastSelectedItem{-1};
     qint32 m_gameIndex{0};
     qint32 m_serverCurrentMatchCount{0};

@@ -290,6 +290,9 @@ void GameEnums::registerEnums()
     value.setProperty("EditorPlacementSize_Big", EditorPlacementSize_Big);
     value.setProperty("EditorPlacementSize_Fill", EditorPlacementSize_Fill);
 
+    value.setProperty("GameViewMode_OpenGames", GameViewMode_OpenGames);
+    value.setProperty("GameViewMode_OwnGames", GameViewMode_OwnGames);
+    value.setProperty("GameViewMode_ObserveGames", GameViewMode_ObserveGames);
 
     pInterpreter->setGlobal("GameEnums", value);
 }

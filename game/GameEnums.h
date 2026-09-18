@@ -460,6 +460,14 @@ public:
     };
     Q_ENUM(EditorPlacementSize)
 
+    enum GameViewMode
+    {
+        GameViewMode_OpenGames,
+        GameViewMode_OwnGames,
+        GameViewMode_ObserveGames,
+    };
+    Q_ENUM(GameViewMode)
+
     static void registerEnums();
 private:
     GameEnums();

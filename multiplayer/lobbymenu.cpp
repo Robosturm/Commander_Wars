@@ -23,7 +23,6 @@
 #include "game/gamemap.h"
 
 #include "resource_management/fontmanager.h"
-#include "resource_management/objectmanager.h"
 
 #include "objects/minimap.h"
 #include "objects/base/chat.h"
@@ -35,6 +34,29 @@
 
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
+
+#include "ui_reader/uifactory.h"
+
+namespace
+{
+const char* const GAMES_VIEW_ID = "GamesView";
+const char* const MATCH_VIEW_INFO_ID = "MatchViewInfo";
+const char* const CHAT_ITEM_PREFIX = "CHAT:";
+const QStringList SERVER_CONTROL_IDS = {
+    "ObserveGameButton",
+    "JoinGameButton",
+    "ServerHostButton",
+    "OpenGamesButton",
+    "OwnGamesButton",
+    "ObserveGamesButton",
+    "RefreshGamesButton",
+    "EndPageButton",
+    "NextPageButton",
+    "PreviousPageButton",
+    "StartPageButton",
+    "OtherButton",
+};
+}
 
 LobbyMenu::LobbyMenu()
 {
@@ -61,195 +83,75 @@ LobbyMenu::LobbyMenu()
     pApp->getAudioManager()->loadFolder("resources/music/multiplayer");
     pApp->getAudioManager()->playRandom();
 
-    oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
-    addChild(pButtonExit);
-    pButtonExit->setPosition(10, oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
-    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                  { emit sigExitMenue(); });
-    connect(this, &LobbyMenu::sigExitMenue, this, &LobbyMenu::exitMenue, Qt::QueuedConnection);
+    const QString uiFile = Settings::getInstance()->getSmallScreenDevice()
+                               ? "ui/multiplayer/lobbymenuSmall.xml"
+                               : "ui/multiplayer/lobbymenu.xml";
+    UiFactory::getInstance().createUi(uiFile, this);
+    m_gamesview = getCastedObject<ComplexTableView>(GAMES_VIEW_ID);
+    m_matchViewInfo = getCastedObject<Label>(MATCH_VIEW_INFO_ID);
 
-    m_pOtherButton = ObjectManager::createButton(tr("Other"));
-    addChild(m_pOtherButton);
-    m_pOtherButton->setPosition(10, pButtonExit->getY() - m_pOtherButton->getScaledHeight());
-    m_pOtherButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                     { emit sigOther(); });
-    connect(this, &LobbyMenu::sigOther, this, &LobbyMenu::onShowOtherDialog, Qt::QueuedConnection);
-    m_pOtherButton->setEnabled(false);
-
-    oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Direct Host"), 220);
-    addChild(pButtonHost);
-    pButtonHost->setPosition(oxygine::Stage::getStage()->getWidth() - pButtonHost->getScaledWidth() - 10,
-                             oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
-    pButtonHost->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                  { emit sigHostLocal(); });
-    connect(this, &LobbyMenu::sigHostLocal, this, &LobbyMenu::hostLocal, Qt::QueuedConnection);
-
-    m_pButtonHostOnServer = ObjectManager::createButton(tr("Server Host"), 220);
-    addChild(m_pButtonHostOnServer);
-    m_pButtonHostOnServer->setPosition(oxygine::Stage::getStage()->getWidth() - pButtonHost->getScaledWidth() - 10,
-                                       oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() * 2 - 10);
-    m_pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                            { emit sigHostServer(); });
-    connect(this, &LobbyMenu::sigHostServer, this, &LobbyMenu::hostServer, Qt::QueuedConnection);
-    m_pButtonHostOnServer->setEnabled(false);
-
-    m_pButtonGameJoin = ObjectManager::createButton(tr("Join Game"), 220);
-    addChild(m_pButtonGameJoin);
-    m_pButtonGameJoin->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10,
-                                   oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
-    m_pButtonGameJoin->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                        { emit sigJoinGame(); });
-    connect(this, &LobbyMenu::sigJoinGame, this, &LobbyMenu::joinGame, Qt::QueuedConnection);
-    m_pButtonGameJoin->setEnabled(false);
-
-    m_pButtonGameObserve = ObjectManager::createButton(tr("Observe Game"), 220);
-    addChild(m_pButtonGameObserve);
-    m_pButtonGameObserve->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10, m_pButtonGameJoin->getY() - m_pButtonGameJoin->getScaledHeight());
-    m_pButtonGameObserve->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                           { emit sigObserveGame(); });
-    connect(this, &LobbyMenu::sigObserveGame, this, &LobbyMenu::observeGame, Qt::QueuedConnection);
-    m_pButtonGameObserve->setEnabled(false);
-
-    oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Address"), 220);
-    addChild(pButtonJoinAdress);
-    pButtonJoinAdress->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - 10 - pButtonJoinAdress->getScaledWidth(),
-                                   oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
-    pButtonJoinAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                        { emit sigJoinAdress(); });
-    connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
-
-    oxygine::spButton pButtonObserveAdress = ObjectManager::createButton(tr("Observe Address"), 220);
-    addChild(pButtonObserveAdress);
-    pButtonObserveAdress->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - 10 - pButtonJoinAdress->getScaledWidth(),
-                                      pButtonJoinAdress->getY() - pButtonJoinAdress->getScaledHeight());
-    pButtonObserveAdress->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                           { emit sigObserveAdress(); });
-    connect(this, &LobbyMenu::sigObserveAdress, this, &LobbyMenu::observeAdress, Qt::QueuedConnection);
-
-    m_pButtonSwapOwnGamesMode = ObjectManager::createButton(tr("My games"), 200);
-    addChild(m_pButtonSwapOwnGamesMode);
-    m_pButtonSwapOwnGamesMode->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pButtonSwapOwnGamesMode->getScaledWidth() * 2, 10);
-    m_pButtonSwapOwnGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                                {
-        m_mode = GameViewMode::OwnGames;
-        emit sigRequestUpdateGames(); });
-    m_pButtonSwapOwnGamesMode->setEnabled(false);
-
-    m_pButtonSwapOpenGamesMode = ObjectManager::createButton(tr("Open games"), 200);
-    addChild(m_pButtonSwapOpenGamesMode);
-    m_pButtonSwapOpenGamesMode->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pButtonSwapOpenGamesMode->getScaledWidth(), 10);
-    m_pButtonSwapOpenGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                                 {
-        m_mode = GameViewMode::OpenGames;
-        emit sigRequestUpdateGames(); });
-    m_pButtonSwapOpenGamesMode->setEnabled(false);
-
-    m_pButtonSwapObserveGamesMode = ObjectManager::createButton(tr("Observable"), 200);
-    addChild(m_pButtonSwapObserveGamesMode);
-    m_pButtonSwapObserveGamesMode->setPosition(oxygine::Stage::getStage()->getWidth() / 2, 10);
-    m_pButtonSwapObserveGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                                    {
-        m_mode = GameViewMode::ObserveGames;
-        emit sigRequestUpdateGames(); });
-    m_pButtonSwapObserveGamesMode->setEnabled(false);
-
-    m_pButtonUpdateGamesMode = ObjectManager::createButton(tr("Refresh games"), 200);
-    addChild(m_pButtonUpdateGamesMode);
-    m_pButtonUpdateGamesMode->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + m_pButtonUpdateGamesMode->getScaledWidth(), 10);
-    m_pButtonUpdateGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *) -> void
-                                               { emit sigRequestUpdateGames(); });
-    m_pButtonUpdateGamesMode->setEnabled(false);
     connect(this, &LobbyMenu::sigRequestUpdateGames, this, &LobbyMenu::requestUpdateGames, Qt::QueuedConnection);
+    connect(this, &LobbyMenu::sigUpdateGamesView, this, &LobbyMenu::updateGamesView, Qt::QueuedConnection);
+}
 
-    qint32 height = m_pButtonHostOnServer->getY() - 270 - 10 - m_pButtonSwapOpenGamesMode->getScaledHeight();
-    if (Settings::getInstance()->getSmallScreenDevice())
+oxygine::spActor LobbyMenu::loadCustomId(const QString & item, qint32 x, qint32 y, bool enabled, bool visible, float scale,
+                                         const QString & id, const QString & tooltip, const QString & onEvent,
+                                         UiFactory* pFactory, CreatedGui* pMenu, qint32 loopIdx, qint32 & scaledWidth, qint32 & scaledHeight)
+{
+    if (!item.startsWith(CHAT_ITEM_PREFIX))
     {
-        height = m_pButtonHostOnServer->getY() - 20 - m_pButtonSwapOpenGamesMode->getScaledHeight();
+        return oxygine::spActor();
     }
 
-    QStringList header = {tr("Map"), tr("Players"), tr("Description"), tr("Mods"), tr("Locked")};
-    QVector<qint32> widths = GlobalUtils::calcWidths({oxygine::Stage::getStage()->getWidth(), 200, oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getWidth(), 200},
-                                                     {0.25f, 0.125f, 0.25f, 0.25f, 0.125f},
-                                                     oxygine::Stage::getStage()->getWidth() - 20 - 80);
-    m_gamesview = MemoryManagement::create<ComplexTableView>(widths, header, height);
-    m_gamesview->setPosition(10, 10 + 10 + pButtonJoinAdress->getScaledHeight());
-    addChild(m_gamesview);
+    const QStringList dimensions = item.mid(QString(CHAT_ITEM_PREFIX).size()).split(":");
+    if (dimensions.size() != 2)
+    {
+        CONSOLE_PRINT("Invalid lobby chat dimensions: " + item, GameConsole::eERROR);
+        return oxygine::spActor();
+    }
 
+    const QSize size(dimensions[0].toInt(), dimensions[1].toInt());
     spNetworkInterface pInterface = m_pTCPClient;
     if (Settings::getInstance()->getServer())
     {
         pInterface = MainServer::getInstance()->getGameServer();
     }
-    qint32 y = m_gamesview->getY() + m_gamesview->getScaledHeight() + 10;
-    const qint32 infoWidth = 100;
-    m_matchViewInfo = MemoryManagement::create<Label>(infoWidth * 2, true);
-    auto style = m_matchViewInfo->getStyle();
-    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
-    m_matchViewInfo->setStyle(style);
-    m_matchViewInfo->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - infoWidth, y);
-    m_matchViewInfo->setText("-- / --");
-    addChild(m_matchViewInfo);
-    m_pNextStepButton = ObjectManager::createIconButton("next_unit", 36);
-    m_pNextStepButton->setEnabled(false);
-    m_pNextStepButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10 + infoWidth, y);
-    m_pNextStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)
-                                        { emit sigShowNextStep(); });
-    addChild(m_pNextStepButton);
-    m_pEndStepButton = ObjectManager::createIconButton("toEnd", 36);
-    m_pEndStepButton->setEnabled(false);
-    m_pEndStepButton->setPosition(m_pNextStepButton->getX() + m_pNextStepButton->getScaledWidth() + 10, y);
-    m_pEndStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)
-                                       { emit sigShowEnd(); });
-    addChild(m_pEndStepButton);
+    spChat pChat = MemoryManagement::create<Chat>(pInterface, size, NetworkInterface::NetworkSerives::LobbyChat, nullptr);
+    pChat->setObjectName(id);
+    pChat->setPosition(x, y);
+    pChat->setEnabled(enabled);
+    pChat->setVisible(visible);
+    pChat->setScale(scale);
+    scaledWidth = pChat->getScaledWidth();
+    scaledHeight = pChat->getScaledHeight();
+    return pChat;
+}
 
-    m_pPreviousStepButton = ObjectManager::createIconButton("previous_unit", 36);
-    m_pPreviousStepButton->setEnabled(false);
-    m_pPreviousStepButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - 10 - infoWidth - m_pPreviousStepButton->getScaledWidth(), y);
-    m_pPreviousStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)
-                                            { emit sigShowPreviousStep(); });
-    addChild(m_pPreviousStepButton);
-
-    m_pStartStepButton = ObjectManager::createIconButton("toStart", 36);
-    m_pStartStepButton->setEnabled(false);
-    m_pStartStepButton->setPosition(m_pPreviousStepButton->getX() - m_pPreviousStepButton->getScaledWidth() - 10, y);
-    m_pStartStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)
-                                         { emit sigShowStart(); });
-    addChild(m_pStartStepButton);
-
-    connect(this, &LobbyMenu::sigShowNextStep, this, &LobbyMenu::showNextStep, Qt::QueuedConnection);
-    connect(this, &LobbyMenu::sigShowPreviousStep, this, &LobbyMenu::showPreviousStep, Qt::QueuedConnection);
-    connect(this, &LobbyMenu::sigShowStart, this, &LobbyMenu::showStart, Qt::QueuedConnection);
-    connect(this, &LobbyMenu::sigShowEnd, this, &LobbyMenu::showEnd, Qt::QueuedConnection);
-    y += 50;
-
-    height = m_pButtonHostOnServer->getY() - m_gamesview->getY() - m_gamesview->getScaledHeight() - 70;
-
-    spChat pChat = MemoryManagement::create<Chat>(pInterface, QSize(oxygine::Stage::getStage()->getWidth() - 20, height), NetworkInterface::NetworkSerives::LobbyChat, nullptr);
-    pChat->setPosition(10, y);
-    if (Settings::getInstance()->getSmallScreenDevice())
+void LobbyMenu::setGameViewMode(qint32 mode)
+{
+    if (mode >= static_cast<qint32>(GameEnums::GameViewMode_OpenGames) &&
+        mode <= static_cast<qint32>(GameEnums::GameViewMode_ObserveGames))
     {
-        pChat->setVisible(false);
+        m_mode = static_cast<GameEnums::GameViewMode>(mode);
+        emit sigRequestUpdateGames();
     }
-    addChild(pChat);
-    connect(this, &LobbyMenu::sigUpdateGamesView, this, &LobbyMenu::updateGamesView, Qt::QueuedConnection);
-    connect(m_gamesview.get(), &ComplexTableView::sigItemClicked, this, &LobbyMenu::selectGame, Qt::QueuedConnection);
 }
 
 void LobbyMenu::requestUpdateGames()
 {
     switch (m_mode)
     {
-    case GameViewMode::OpenGames:
+    case GameEnums::GameViewMode_OpenGames:
     {
         requestServerGames();
         break;
     }
-    case GameViewMode::OwnGames:
+    case GameEnums::GameViewMode_OwnGames:
     {
         requestUserUpdateGames();
         break;
     }
-    case GameViewMode::ObserveGames:
+    case GameEnums::GameViewMode_ObserveGames:
     {
         requestObserverUpdateGames();
         break;
@@ -300,18 +202,10 @@ void LobbyMenu::requestObserverUpdateGames()
 
 void LobbyMenu::enableServerButtons(bool enable)
 {
-    m_pButtonGameObserve->setEnabled(enable);
-    m_pButtonGameJoin->setEnabled(enable);
-    m_pButtonHostOnServer->setEnabled(enable);
-    m_pButtonSwapOpenGamesMode->setEnabled(enable);
-    m_pButtonSwapOwnGamesMode->setEnabled(enable);
-    m_pButtonSwapObserveGamesMode->setEnabled(enable);
-    m_pButtonUpdateGamesMode->setEnabled(enable);
-    m_pEndStepButton->setEnabled(enable);
-    m_pNextStepButton->setEnabled(enable);
-    m_pPreviousStepButton->setEnabled(enable);
-    m_pStartStepButton->setEnabled(enable);
-    m_pOtherButton->setEnabled(enable);
+    for (const auto & id : SERVER_CONTROL_IDS)
+    {
+        setObjectEnabled(id, enable);
+    }
 }
 
 void LobbyMenu::leaveServer()
@@ -359,7 +253,7 @@ void LobbyMenu::joinGame()
     }
     if (m_currentGame.getUuid() != 0)
     {
-        if ((m_mode == GameViewMode::OwnGames || m_currentGame.hasOpenPlayers()))
+        if ((m_mode == GameEnums::GameViewMode_OwnGames || m_currentGame.hasOpenPlayers()))
         {
             if (m_currentGame.getLocked())
             {
@@ -558,14 +452,14 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         else if (messageType == NetworkCommands::SERVERGAMEDATA)
         {
             if (m_loggedIn &&
-                (m_mode == GameViewMode::OpenGames || m_mode == GameViewMode::ObserveGames))
+                (m_mode ==  GameEnums::GameViewMode_OpenGames || m_mode == GameEnums::GameViewMode_ObserveGames))
             {
                 updateGameData(objData);
             }
         }
         else if (messageType == NetworkCommands::SERVERUSERGAMEDATA)
         {
-            if (m_loggedIn && m_mode == GameViewMode::OwnGames)
+            if (m_loggedIn && m_mode == GameEnums::GameViewMode_OwnGames)
             {
                 updateGameData(objData);
             }
@@ -717,7 +611,10 @@ void LobbyMenu::updateGameData(const QJsonObject &objData)
         gameData.fromJson(game.toObject());
         m_games.append(gameData);
     }
-    m_matchViewInfo->setText(QString::number(m_gameIndex) + " / " + QString::number(m_gameIndex + games.size()));
+    if (m_matchViewInfo != nullptr)
+    {
+        m_matchViewInfo->setText(QString::number(m_gameIndex) + " / " + QString::number(m_gameIndex + games.size()));
+    }
     emit sigUpdateGamesView();
 }
 
@@ -735,6 +632,10 @@ void LobbyMenu::joinSlaveGame(const QJsonObject &objData)
 
 void LobbyMenu::updateGamesView()
 {
+    if (m_gamesview == nullptr)
+    {
+        return;
+    }
     const auto &widths = m_gamesview->getWidths();
     ComplexTableView::Items items;
     qint64 uuid = m_currentGame.getUuid();
@@ -786,7 +687,7 @@ void LobbyMenu::updateGamesView()
 
 void LobbyMenu::selectGame()
 {
-    if (m_gamesview->getCurrentItem() >= 0)
+    if (m_gamesview != nullptr && m_gamesview->getCurrentItem() >= 0)
     {
         m_currentGame = *m_gamesview->getDataItem<NetworkGameData>(m_gamesview->getCurrentItem());
         if (m_lastSelectedItem == m_gamesview->getCurrentItem())
@@ -863,7 +764,10 @@ void LobbyMenu::onLogout()
     m_loggedIn = false;
     m_games.clear();
     m_currentGame = NetworkGameData();
-    m_gamesview->setItems(ComplexTableView::Items());
+    if (m_gamesview != nullptr)
+    {
+        m_gamesview->setItems(ComplexTableView::Items());
+    }
 }
 
 void LobbyMenu::onEnter()
