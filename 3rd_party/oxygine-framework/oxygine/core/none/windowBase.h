@@ -50,6 +50,7 @@ namespace oxygine
         virtual void mouseMoveEvent(QMouseEvent *event) = 0;
         virtual void touchEvent(QTouchEvent *event) = 0;
         virtual QObject* focusObject() const = 0;
+        void focusObjectChanged(QObject *object){}
 
         bool beginRendering();
     protected:
