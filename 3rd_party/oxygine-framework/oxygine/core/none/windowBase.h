@@ -32,6 +32,9 @@ namespace oxygine
         {
             return m_renderer;
         }
+        void focusObjectChanged(QObject *object)
+        {            
+        }
     public slots:
         virtual void launchGame() = 0;
         void update();
@@ -50,7 +53,6 @@ namespace oxygine
         virtual void mouseMoveEvent(QMouseEvent *event) = 0;
         virtual void touchEvent(QTouchEvent *event) = 0;
         virtual QObject* focusObject() const = 0;
-        void focusObjectChanged(QObject *object){}
 
         bool beginRendering();
     protected:
