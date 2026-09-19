@@ -10,6 +10,8 @@
 #include <QNetworkInterface>
 #include <QSslConfiguration>
 
+#include <memory>
+
 #include "coreengine/gameconsole.h"
 
 class Serializable;
@@ -84,11 +86,17 @@ public:
 
     static void attachKeys(QSslConfiguration & sslConfiguration);
 
-    static QSslConfiguration getSslConfiguration()
+    static QSslConfiguration getClientSslConfiguration()
     {
         QSslConfiguration sslConfiguration;
         sslConfiguration.setPeerVerifyMode(QSslSocket::VerifyNone);
         sslConfiguration.setProtocol(QSsl::SslProtocol::SecureProtocols);
+        return sslConfiguration;
+    }
+
+    static QSslConfiguration getServerSslConfiguration()
+    {
+        QSslConfiguration sslConfiguration = getClientSslConfiguration();
         attachKeys(sslConfiguration);
         return sslConfiguration;
     }

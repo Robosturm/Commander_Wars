@@ -21,7 +21,10 @@ NetworkInterface::NetworkInterface(QObject* pParent)
     Interpreter::setCppOwnerShip(this);
     connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
     connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);
-    CONSOLE_PRINT(QString("Running with openssl version: ") + OpenSSL_version(OPENSSL_FULL_VERSION_STRING), GameConsole::eDEBUG);
+    CONSOLE_PRINT(QString("Linked OpenSSL version: ") + OpenSSL_version(OPENSSL_FULL_VERSION_STRING), GameConsole::eDEBUG);
+    CONSOLE_PRINT(QString("Qt TLS backend: ") + QSslSocket::activeBackend() +
+                  ", runtime: " + QSslSocket::sslLibraryVersionString() +
+                  ", build: " + QSslSocket::sslLibraryBuildVersionString(), GameConsole::eDEBUG);
 }
 
 NetworkInterface::~NetworkInterface()

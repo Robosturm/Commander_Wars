@@ -31,7 +31,7 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
     {
 
         m_pTCPServer[0] = MemoryManagement::createNamedQObject<SslServer>("SslServer", this);
-        m_pTCPServer[0]->setSslConfiguration(getSslConfiguration());
+        m_pTCPServer[0]->setSslConfiguration(getServerSslConfiguration());
         connect(m_pTCPServer[0].get(), &QSslServer::errorOccurred, this, &TCPServer::displaySocketError);
         if (primaryAdress.isEmpty())
         {
@@ -45,7 +45,7 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
         if (!secondaryAdress.isEmpty())
         {
             m_pTCPServer[1] = MemoryManagement::createNamedQObject<SslServer>("SslServer", this);
-            m_pTCPServer[1]->setSslConfiguration(getSslConfiguration());
+            m_pTCPServer[1]->setSslConfiguration(getServerSslConfiguration());
             m_pTCPServer[1]->listen(QHostAddress(secondaryAdress), port);
             connect(m_pTCPServer[1].get(), &QTcpServer::pendingConnectionAvailable, this, &TCPServer::onConnect, Qt::QueuedConnection);
             connect(m_pTCPServer[1].get(), &QSslServer::errorOccurred, this, &TCPServer::displaySocketError);

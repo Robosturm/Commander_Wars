@@ -57,7 +57,7 @@ void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdres
     connect(this, &TCPClient::sigDisconnectClient, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
     connect(this, &TCPClient::sigDisconnectTCP, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);    
-    m_pSocket->setSslConfiguration(getSslConfiguration());
+    m_pSocket->setSslConfiguration(getClientSslConfiguration());
     m_pSocket->connectToHostEncrypted(address, port);
     
     // Start RX-Task
