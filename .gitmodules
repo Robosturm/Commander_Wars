@@ -4,3 +4,15 @@
 [submodule "android_openssl"]
 	path = android_openssl
 	url = https://github.com/KDAB/android_openssl.git
+[submodule "3rd_party/libogg"]
+	path = 3rd_party/libogg
+	url = https://github.com/gcp/libogg.git
+[submodule "3rd_party/libopusfile"]
+	path = 3rd_party/libopusfile
+	url = https://github.com/xiph/opusfile.git
+[submodule "3rd_party/portaudio"]
+	path = 3rd_party/portaudio
+	url = https://github.com/PortAudio/portaudio.git
+[submodule "3rd_party/libopus"]
+	path = 3rd_party/libopus
+	url = https://github.com/xiph/opus.git
