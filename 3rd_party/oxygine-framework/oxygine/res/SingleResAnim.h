@@ -14,9 +14,9 @@ using spSingleResAnim = std::shared_ptr<SingleResAnim>;
     public:
         explicit SingleResAnim();
         virtual ~SingleResAnim();
-        virtual void init(const QString & file, qint32 columns, qint32 rows, float scaleFactor) override;
-        virtual void init(QImage & image, qint32 columns, qint32 rows, float scaleFactor,
-                          bool clamp2Edge = true, quint32 linearFilter = 0) override;
+        void init(const QString & file, qint32 columns, qint32 rows, float scaleFactor) override;
+        void init(QImage & image, qint32 columns, qint32 rows, float scaleFactor,
+                          bool clamp2Edge = true, quint32 linearFilter = 0, bool convertImg = true) override;
         spTexture getTexture() const;
 
     protected:

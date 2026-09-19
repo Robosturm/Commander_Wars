@@ -861,11 +861,7 @@ void SpriteCreator::preProcessMask(QImage & mask, const QImage & overlay, qint32
 
 void SpriteCreator::convertToRgba(QImage & input)
 {
-    // formats without an alpha channel (e.g. opaque jpg backgrounds) can never have alpha == 0 pixels,
-    // so the expensive per pixel zeroing pass below can be skipped entirely for them.
     const bool hadAlphaChannel = input.hasAlphaChannel();
-    // QImage::convertToFormat uses Qt's optimized (often SIMD accelerated) conversion routines
-    // instead of the previous per pixel QColor based loop, which was orders of magnitude slower.
     QImage output = input.convertToFormat(QImage::Format_RGBA8888);
     if (hadAlphaChannel)
     {

@@ -61,9 +61,12 @@ namespace oxygine
     }
 
     void ResAnim::init(QImage & img,  qint32 columns, qint32 rows, float scaleFactor,
-                       bool clamp2Edge, quint32 linearFilter)
+                       bool clamp2Edge, quint32 linearFilter, bool convertImg)
     {
-        SpriteCreator::convertToRgba(img);
+        if (convertImg)
+        {
+            SpriteCreator::convertToRgba(img);
+        }
         m_scaleFactor = scaleFactor;
         spTexture texture = VideoDriver::instance->createTexture();
         texture->init(img);

@@ -12,6 +12,8 @@
 #include "coreengine/settings.h"
 #include "coreengine/virtualpaths.h"
 
+#include "spritingsupport/spritecreator.h"
+
 namespace oxygine
 {
     void ResAtlasGeneric::_unload()
@@ -44,8 +46,6 @@ namespace oxygine
         loadBase(node);
         std::vector<QString> loadedPaths;
         std::vector<PendingImage> pending;
-        // Pass 1: walk the (not thread safe) DOM tree and collect all image jobs to run.
-        // Actual image decoding is deferred to pass 2 so it can happen concurrently.
         while (true)
         {
             QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
@@ -125,16 +125,15 @@ namespace oxygine
                 }
             }
             item.linearFilter = linearFilter;
-            // kick off the (potentially expensive) image decode on a worker thread right away
             item.future = std::async(std::launch::async, [imgFilePath]()
             {
-                return QImage(imgFilePath);
+                QImage img(imgFilePath);
+                SpriteCreator::convertToRgba(img);
+                return std::move(img);
             });
             pending.push_back(std::move(item));
         }
 
-        // Pass 2: collect the decoded images (already running concurrently since pass 1)
-        // and create the GL textures on the calling (render) thread.
         std::vector<spResAnim> anims;
         for (auto & item : pending)
         {
@@ -147,7 +146,7 @@ namespace oxygine
             CONSOLE_PRINT("Loading sprite: " + item.path, GameConsole::eDEBUG);
             spResAnim ra = MemoryManagement::create<ResAnim>(this);
             ra->setResPath(item.path);
-            ra->init(img, item.columns, item.rows, item.scaleFactor, m_clamp2edge, item.linearFilter);
+            ra->init(img, item.columns, item.rows, item.scaleFactor, m_clamp2edge, item.linearFilter, false);
             ra->setParent(this);
             init_resAnim(ra, item.file, item.node);
             // add loaded res anim

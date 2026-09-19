@@ -30,10 +30,12 @@ void SingleResAnim::init(const QString & file, qint32 columns, qint32 rows, floa
 }
 
 void SingleResAnim::init(QImage & image, qint32 columns, qint32 rows, float scaleFactor,
-                         bool clamp2Edge, quint32 linearFilter)
+                         bool clamp2Edge, quint32 linearFilter, bool convertImg)
 {
-
-    SpriteCreator::convertToRgba(image);
+    if (convertImg)
+    {
+        SpriteCreator::convertToRgba(image);
+    }
     m_scaleFactor = scaleFactor;
     m_frames.clear();
     m_texture.reset();

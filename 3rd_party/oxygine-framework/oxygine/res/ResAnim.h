@@ -22,7 +22,7 @@ namespace oxygine
 
         virtual void init(const QString & file, qint32 columns, qint32 rows, float scaleFactor);
         virtual void init(QImage & image, qint32 columns, qint32 rows, float scaleFactor,
-                          bool clamp2Edge = true, quint32 linearFilter = 0);
+                          bool clamp2Edge = true, quint32 linearFilter = 0, bool convertImg = true);
         void init(qint32 columns, float scaleFactor, float appliedScale = 1);
         /**creates animation frames from Texture*/
         void init(spTexture & texture, const QSize& originalSize, qint32 columns, qint32 rows, float scaleFactor);
