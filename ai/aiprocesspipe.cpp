@@ -76,27 +76,34 @@ void AiProcessPipe::spawnSubProcess()
 {
     if (Settings::getInstance()->getSpawnAiProcess())
     {
-        bool conntected = m_pActiveConnection->getConnectedSockets().length() > 0;
-        if (conntected)
+        if (m_pActiveConnection == nullptr)
         {
-            CONSOLE_PRINT("AI subprocess already connected", GameConsole::eDEBUG);
-            onQuitGame();
+            CONSOLE_PRINT("AI-Pipe server isn't running - not spawning an ai subprocess", GameConsole::eERROR);
         }
         else
-        {   
-            m_aiSubProcess = MemoryManagement::createNamedQObject<QProcess>("QProcess");
-            const char* const prefix = "--";
-            const QString program = QCoreApplication::applicationFilePath();
-            QStringList args({QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
-                              QString(prefix) + CommandLineParser::ARG_NOAUDIO,
-                              QString(prefix) + CommandLineParser::ARG_MODS,
-                              Settings::getInstance()->getConfigString(Settings::getInstance()->getActiveMods()),
-                              QString(prefix) + CommandLineParser::ARG_SPAWNAIPROCESS,
-                              "0",
-                              QString(prefix) + CommandLineParser::ARG_AISLAVE});
-            CONSOLE_PRINT("Launching ai subprocess: " + program + " " +  args.join(" "), GameConsole::eDEBUG);
-            m_aiSubProcess->setObjectName("AiSubprocess");
-            m_aiSubProcess->start(program, args);
+        {
+            bool conntected = m_pActiveConnection->getConnectedSockets().length() > 0;
+            if (conntected)
+            {
+                CONSOLE_PRINT("AI subprocess already connected", GameConsole::eDEBUG);
+                onQuitGame();
+            }
+            else
+            {   
+                m_aiSubProcess = MemoryManagement::createNamedQObject<QProcess>("QProcess");
+                const char* const prefix = "--";
+                const QString program = QCoreApplication::applicationFilePath();
+                QStringList args({QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
+                                  QString(prefix) + CommandLineParser::ARG_NOAUDIO,
+                                  QString(prefix) + CommandLineParser::ARG_MODS,
+                                  Settings::getInstance()->getConfigString(Settings::getInstance()->getActiveMods()),
+                                  QString(prefix) + CommandLineParser::ARG_SPAWNAIPROCESS,
+                                  "0",
+                                  QString(prefix) + CommandLineParser::ARG_AISLAVE});
+                CONSOLE_PRINT("Launching ai subprocess: " + program + " " +  args.join(" "), GameConsole::eDEBUG);
+                m_aiSubProcess->setObjectName("AiSubprocess");
+                m_aiSubProcess->start(program, args);
+            }
         }
     }
 }

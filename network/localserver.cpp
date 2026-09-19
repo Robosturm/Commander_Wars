@@ -20,7 +20,15 @@ LocalServer::~LocalServer()
 void LocalServer::connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress, bool sendAll)
 {
     m_pTCPServer = MemoryManagement::create<QLocalServer>(this);
-    m_pTCPServer->listen(primaryAdress);
+    if (!m_pTCPServer->listen(primaryAdress))
+    {
+        CONSOLE_PRINT("Local Server failed to listen on " + primaryAdress + ": " + m_pTCPServer->errorString() + ". Removing a possibly stale server and retrying.", GameConsole::eLogLevels::eWARNING);
+        QLocalServer::removeServer(primaryAdress);
+        if (!m_pTCPServer->listen(primaryAdress))
+        {
+            CONSOLE_PRINT("Local Server failed to listen on " + primaryAdress + ": " + m_pTCPServer->errorString(), GameConsole::eLogLevels::eFATAL);
+        }
+    }
     connect(m_pTCPServer.get(), &QLocalServer::newConnection, this, &LocalServer::onConnect, Qt::QueuedConnection);
     connect(this, &LocalServer::sigDisconnectClient, this, &LocalServer::disconnectClient, Qt::QueuedConnection);
     connect(this, &LocalServer::sigDisconnectTCP, this, &LocalServer::disconnectTCP, Qt::QueuedConnection);
@@ -45,6 +53,7 @@ void LocalServer::disconnectTCP()
         m_pTXTasks.removeAt(0);
         m_pTCPSockets.removeAt(0);
     }
+    m_SocketIDs.clear();
     if (m_pTCPServer != nullptr)
     {
         m_pTCPServer->close();
@@ -69,6 +78,7 @@ void LocalServer::disconnectClient(quint64 socketID)
             m_pRXTasks.removeAt(i);
             m_pTXTasks.removeAt(i);
             m_pTCPSockets.removeAt(i);
+            m_SocketIDs.removeAt(i);
             emit sigDisconnected(socketID);
             break;
         }
@@ -83,6 +93,7 @@ void LocalServer::onConnect()
         m_pTCPSockets.append(nextSocket);
         connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
         m_idCounter++;
+        m_SocketIDs.append(m_idCounter);
         // Start RX-Task
         spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket, m_idCounter, this, true);
         m_pRXTasks.append(pRXTask);
