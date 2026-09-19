@@ -246,6 +246,18 @@ PaError Pa_StopStream(PaStream* stream)
     return (result == AAUDIO_OK) ? paNoError : paUnanticipatedHostError;
 }
 
+PaError Pa_IsStreamStopped(PaStream* stream)
+{
+    auto* paStream = static_cast<PaAndroidStream*>(stream);
+    if (paStream == nullptr || paStream->aaudioStream == nullptr)
+    {
+        return paBadStreamPtr;
+    }
+    aaudio_stream_state_t state = AAudioStream_getState(paStream->aaudioStream);
+    return (state == AAUDIO_STREAM_STATE_STOPPED || state == AAUDIO_STREAM_STATE_STOPPING ||
+            state == AAUDIO_STREAM_STATE_CLOSED || state == AAUDIO_STREAM_STATE_DISCONNECTED) ? 1 : 0;
+}
+
 PaError Pa_CloseStream(PaStream* stream)
 {
     auto* paStream = static_cast<PaAndroidStream*>(stream);
