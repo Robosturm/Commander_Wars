@@ -15,8 +15,8 @@ TextInput::TextInput()
 #ifdef GRAPHICSUPPORT
     m_lineEdit = MemoryManagement::create<EventTextEdit>();
     connect(m_lineEdit.get(), &EventTextEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
-    connect(this, &TextInput::sigSetText, m_lineEdit.get(), &EventTextEdit::setPlainText, Qt::BlockingQueuedConnection);
-    connect(this, &TextInput::sigSetReadonlyToEdit, m_lineEdit.get(), &EventTextEdit::setEditableKeys, Qt::BlockingQueuedConnection);
+    connect(this, &TextInput::sigSetText, m_lineEdit.get(), &EventTextEdit::setPlainText, Qt::QueuedConnection);
+    connect(this, &TextInput::sigSetReadonlyToEdit, m_lineEdit.get(), &EventTextEdit::setEditableKeys, Qt::QueuedConnection);
 #endif
     m_toggle.start();
 }
@@ -72,7 +72,11 @@ QString TextInput::getCurrentText() const
 
 void TextInput::setCurrentText(const QString text)
 {
-    if (m_lineEdit)
+    if (m_lineEdit->thread() != QThread::currentThread())
+    {
+        emit sigSetText(text);
+    }
+    else if (m_lineEdit)
     {
         m_lineEdit->setPlainText(text);
     }

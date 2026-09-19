@@ -454,6 +454,7 @@ void EditorSelection::createPlayerSelection()
 
 void EditorSelection::changeSelectedPlayer(qint32 player)
 {    
+    Mainapp::getInstance()->pauseRendering();
     // update buildings
     m_currentPlayerIdx = player;
     if (player < 0)
@@ -494,10 +495,12 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
             m_Units.at(i2)->setOwner(m_Players.at(player + 1)->getOwner());
         }
     }    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void EditorSelection::updateSelectedPlayer()
 {
+    Mainapp::getInstance()->pauseRendering();
     if (m_playerStartIndex >= m_Players.size() - calcMaxPlayerSelection())
     {
         m_playerStartIndex = m_Players.size() - calcMaxPlayerSelection();
@@ -519,6 +522,7 @@ void EditorSelection::updateSelectedPlayer()
             m_Players[i]->setPosition(40 + (m_Players[i]->getScaledWidth() + 5)  * (i - m_playerStartIndex), 40);
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 qint32 EditorSelection::calcMaxPlayerSelection()
@@ -611,6 +615,7 @@ qint32 EditorSelection::getActivePalette() const
 
 void EditorSelection::updateTerrainView()
 {    
+    Mainapp::getInstance()->pauseRendering();
     hideSelection();
     constexpr qint32 dropDownHeight = 40;
     m_PlacementSelectionClip->setPosition(10, 50 + dropDownHeight);
@@ -629,10 +634,12 @@ void EditorSelection::updateTerrainView()
     m_PlacementSelectionClip->updateDragBounds();
     slotSelectTerrain(0);
     m_pButtonTop->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - m_pButtonTop->getScaledWidth() / 2, 15 + dropDownHeight);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void EditorSelection::updateBuildingView()
-{    
+{
+    Mainapp::getInstance()->pauseRendering();
     hideSelection();
     m_pButtonTop->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - m_pButtonTop->getScaledWidth() / 2, 15);
     m_PlacementSelectionClip->setPosition(10, 50);
@@ -650,10 +657,12 @@ void EditorSelection::updateBuildingView()
     m_PlacementActor->setY(-GameMap::getImageSize());
     m_PlacementSelectionClip->updateDragBounds();
     slotSelectBuilding(0);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void EditorSelection::updateUnitView()
-{    
+{
+    Mainapp::getInstance()->pauseRendering();
     hideSelection();
     m_pButtonTop->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - m_pButtonTop->getScaledWidth() / 2, 15);
     m_PlacementSelectionClip->setPosition(10, 50);
@@ -672,6 +681,7 @@ void EditorSelection::updateUnitView()
     m_PlacementSelectionClip->updateDragBounds();
     slotSelectUnit(0);
     m_pButtonTop->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - m_pButtonTop->getScaledWidth() / 2, 15);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void EditorSelection::hideSelection()
@@ -704,9 +714,11 @@ void EditorSelection::hideSelection()
 
 void EditorSelection::initSelection()
 {
+    Mainapp::getInstance()->pauseRendering();
     initBuildingSection();
     initTerrainSection();
     initUnitSelection();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void EditorSelection::initBuildingSection()

@@ -1741,6 +1741,10 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         pLoadingScreen->show();
     }
+    else
+    {
+        Mainapp::getInstance()->pauseRendering();
+    }
     if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading Players"), 5);
@@ -1890,6 +1894,10 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     if (showLoadingScreen)
     {
         pLoadingScreen->hide();
+    }
+    else
+    {
+        Mainapp::getInstance()->continueRendering();
     }
     CONSOLE_PRINT("GameMap loaded", GameConsole::eDEBUG);
 }
