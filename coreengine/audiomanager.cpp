@@ -129,6 +129,7 @@ void AudioManager::initAudio()
                 {
                     SlotPlayRandom();
                 }
+                checkAudioDeviceChanged();
             });
             m_pollTimer.start();
 
@@ -146,6 +147,7 @@ bool AudioManager::openStream(const QString& deviceName)
 {
 #ifdef AUDIOSUPPORT
     CONSOLE_PRINT_MODULE("AudioManager::openStream for device: " + deviceName, GameConsole::eDEBUG, GameConsole::eAudio); 
+    m_currentDeviceName = deviceName;
     if (m_paStream)
     {
         Pa_StopStream(m_paStream);
@@ -181,6 +183,7 @@ bool AudioManager::openStream(const QString& deviceName)
         CONSOLE_PRINT_MODULE("No PortAudio output device found", GameConsole::eERROR, GameConsole::eAudio);
         return false;
     }
+    m_lastDefaultDevice = Pa_GetDefaultOutputDevice();
 
     const PaDeviceInfo* devInfo = Pa_GetDeviceInfo(targetDevice);
     if (devInfo)
@@ -206,7 +209,7 @@ bool AudioManager::openStream(const QString& deviceName)
         &outParams,
         m_sampleRate,
         paFramesPerBufferUnspecified,
-        paNoFlag,
+        paPrimeOutputBuffersUsingStreamCallback, // avoids playing uninitialized buffer contents (crackling) on stream start
         &AudioManager::paCallback,
         this
     );
@@ -537,6 +540,25 @@ void AudioManager::SlotChangeAudioDevice(const QVariant value)
     }
 #endif
 }
+
+void AudioManager::checkAudioDeviceChanged()
+{
+#ifdef AUDIOSUPPORT
+    if (!m_noAudio && Mainapp::getInstance()->isAudioThread())
+    {
+        bool streamBroken = (m_paStream == nullptr) || (Pa_IsStreamStopped(m_paStream) == 1);
+        bool usingDefaultDevice = (m_currentDeviceName == Settings::DEFAULT_AUDIODEVICE || m_currentDeviceName.isEmpty());
+        PaDeviceIndex currentDefault = Pa_GetDefaultOutputDevice();
+        bool defaultChanged = usingDefaultDevice && (currentDefault != paNoDevice) && (currentDefault != m_lastDefaultDevice);
+        if (streamBroken || defaultChanged)
+        {
+            CONSOLE_PRINT_MODULE("Audio device changed or stream stopped unexpectedly, reopening stream", GameConsole::eDEBUG, GameConsole::eAudio);
+            openStream(m_currentDeviceName);
+        }
+    }
+#endif
+}
+
 
 void AudioManager::clearMusicPositions()
 {

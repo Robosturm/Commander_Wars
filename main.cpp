@@ -28,6 +28,7 @@ int main(qint32 argc, char* argv[])
         qWarning("Failed to set QV4_JIT_CALL_THRESHOLD or QV4_GC_TIMELIMIT environment variable");
     }
 
+
 #ifdef GRAPHICSUPPORT
     QApplication app(argc, argv);
 #else
@@ -36,6 +37,10 @@ int main(qint32 argc, char* argv[])
     GlobalUtils::setup();
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(GameVersion().toString());
+    // PulseAudio/PipeWire otherwise default to the executable name (e.g. "commander_wars") in the volume mixer
+    const QByteArray appName = QCoreApplication::applicationName().toUtf8();
+    qputenv("PULSE_PROP_application.name", appName);
+    qputenv("PULSE_PROP_application.icon_name", QByteArrayLiteral("commander_wars"));
     QThread::currentThread()->setPriority(QThread::Priority::HighPriority);
     Mainapp window;
     window.setTitle("Commander Wars");

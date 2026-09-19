@@ -210,6 +210,8 @@ protected:
     void fillSoundCache(qint32 count, QString folder, QString file);
     void loadMediaForFile(QString filePath, qint32 position = 0);
     bool openStream(const QString& deviceName);
+    // reopens the stream if the default output device changed or the stream died unexpectedly
+    void checkAudioDeviceChanged();
 
 #ifdef AUDIOSUPPORT
     static int paCallback(const void* inputBuffer, void* outputBuffer,
@@ -264,6 +266,8 @@ private:
     PaStream* m_paStream{nullptr};
     qint32 m_sampleRate{44100};
     std::mutex m_audioMutex;
+    QString m_currentDeviceName;
+    PaDeviceIndex m_lastDefaultDevice{paNoDevice};
 
     SoundVoice m_soundVoices[MAX_PARALLEL_SOUNDS];
     qint64 m_voiceCounter{0};
