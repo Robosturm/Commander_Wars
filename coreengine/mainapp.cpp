@@ -50,7 +50,6 @@ Mainapp::Mainapp()
     QThread::currentThread()->setObjectName("Renderthread");
     MemoryManagement::getInstance().moveToThread(QThread::currentThread());
     m_networkThread = MemoryManagement::createNamedQObject<QThread>("QThread");
-    m_aiSubProcess = MemoryManagement::createNamedQObject<QProcess>("QProcess");
 #ifdef AUDIOSUPPORT
     if (m_useAudioThread)
     {
@@ -78,7 +77,7 @@ Mainapp::~Mainapp()
 void Mainapp::shutdown()
 {
     pauseRendering();
-    m_aiSubProcess->kill();
+    m_aiProcessPipe.reset();
     emit m_renderer.sigQuit();
     if (BuildingSpriteManager::created())
     {
@@ -406,21 +405,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
                 {
                     m_gamepad.updateState();
                 }
-                if (Settings::getInstance()->getSpawnAiProcess())
-                {
-                    const char* const prefix = "--";
-                    const QString program = QCoreApplication::applicationFilePath();
-                    QStringList args({QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
-                                      QString(prefix) + CommandLineParser::ARG_NOAUDIO,
-                                      QString(prefix) + CommandLineParser::ARG_MODS,
-                                      Settings::getInstance()->getConfigString(Settings::getInstance()->getActiveMods()),
-                                      QString(prefix) + CommandLineParser::ARG_SPAWNAIPROCESS,
-                                      "0",
-                                      QString(prefix) + CommandLineParser::ARG_AISLAVE});
-                    CONSOLE_PRINT("Launching ai subprocess: " + program + " " +  args.join(" "), GameConsole::eDEBUG);
-                    m_aiSubProcess->setObjectName("AiSubprocess");
-                    m_aiSubProcess->start(program, args);
-                }               
+                m_aiProcessPipe->spawnSubProcess();     
                 if (m_slave && m_initScript.isEmpty())
                 {
                     emit m_workerObject->sigStartSlaveGame();
@@ -886,7 +871,6 @@ void Mainapp::onQuit()
 {
     const qint64 waitTime = 120;
     QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
-    m_aiProcessPipe.reset();
 #ifdef AUDIOSUPPORT
     if (m_AudioManager.get() != nullptr)
     {

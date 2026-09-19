@@ -6,7 +6,6 @@
 #include <QThread>
 #include <QCoreApplication>
 #include <mutex>
-#include <QProcess>
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
@@ -31,7 +30,6 @@ using spNetworkInterface = std::shared_ptr<NetworkInterface>;
 class AiProcessPipe;
 using spAiProcessPipe = std::shared_ptr<AiProcessPipe>;
 class Minimap;
-using spQProcess = std::shared_ptr<QProcess>;
 
 class Mainapp final : public oxygine::GameWindow
 {
@@ -113,10 +111,6 @@ public:
      */
     static QString qsTr(const char* const text);
 
-    static QProcess & GetAiSubProcess()
-    {
-        return *(getInstance()->m_aiSubProcess.get());
-    }
     QObject* focusObject() const override;
     /**
      * @brief qsTr
@@ -260,7 +254,6 @@ private:
     std::mutex m_crashMutex;
     spQThread m_networkThread;
     spQThread m_audioThread;
-    spQProcess m_aiSubProcess;
     spWorkerObject m_workerObject;
     spAudioManager m_AudioManager;
     spAiProcessPipe m_aiProcessPipe;

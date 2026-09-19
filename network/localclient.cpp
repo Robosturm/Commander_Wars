@@ -38,11 +38,12 @@ void LocalClient::connectTCP(QString primaryAdress, quint16 port, QString second
     // start TX-Task
     m_pTXTask = MemoryManagement::create<TxTask>(m_pSocket.get(), 0, this, sendAll);
     connect(this, &LocalClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
-    CONSOLE_PRINT("Local Client is running to " + primaryAdress, GameConsole::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Local Client is running to " + primaryAdress, GameConsole::eLogLevels::eDEBUG);    
+    m_pSocket->connectToServer(primaryAdress);
     do
     {
-        m_pSocket->connectToServer(primaryAdress);
-    } while (!m_pSocket->waitForConnected(10000));
+        CONSOLE_PRINT("Waiting for Local Client to connect to " + primaryAdress, GameConsole::eLogLevels::eDEBUG);
+    } while (!m_pSocket->waitForConnected());
     CONSOLE_PRINT("Local Client is connected to " + primaryAdress, GameConsole::eLogLevels::eDEBUG);
 }
 

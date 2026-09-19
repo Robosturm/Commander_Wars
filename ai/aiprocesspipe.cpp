@@ -38,6 +38,10 @@ AiProcessPipe::AiProcessPipe()
 
 AiProcessPipe::~AiProcessPipe()
 {
+    if (m_aiSubProcess)
+    {
+        m_aiSubProcess->kill();
+    }
     if (Settings::getInstance()->getAiSlave())
     {
         m_animationSkipper.restoreAnimationSettings();
@@ -46,7 +50,7 @@ AiProcessPipe::~AiProcessPipe()
 
 void AiProcessPipe::startPipe()
 {
-    QString pipeName = PIPENAME + Settings::getInstance()->getPipeUuid();
+    QString pipeName = QString(PIPENAME) + "_" + Settings::getInstance()->getPipeUuid();
     if (Settings::getInstance()->getAiSlave())
     {
         m_animationSkipper.startSeeking();
@@ -63,7 +67,37 @@ void AiProcessPipe::startPipe()
         CONSOLE_PRINT("Starting AI-Pipe with name " + pipeName, GameConsole::eDEBUG);
         connect(m_pActiveConnection, &NetworkInterface::sigConnected, this, &AiProcessPipe::onConnected, Qt::QueuedConnection);
         connect(m_pActiveConnection, &NetworkInterface::recieveData, this, &AiProcessPipe::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
+        connect(m_pActiveConnection, &NetworkInterface::sigDisconnected, this, &AiProcessPipe::disconnected, Qt::QueuedConnection);
         m_pActiveConnection->connectTCP(pipeName, 0, "");
+    }
+}
+
+void AiProcessPipe::spawnSubProcess()
+{
+    if (Settings::getInstance()->getSpawnAiProcess())
+    {
+        bool conntected = m_pActiveConnection->getConnectedSockets().length() > 0;
+        if (conntected)
+        {
+            CONSOLE_PRINT("AI subprocess already connected", GameConsole::eDEBUG);
+            onQuitGame();
+        }
+        else
+        {   
+            m_aiSubProcess = MemoryManagement::createNamedQObject<QProcess>("QProcess");
+            const char* const prefix = "--";
+            const QString program = QCoreApplication::applicationFilePath();
+            QStringList args({QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
+                              QString(prefix) + CommandLineParser::ARG_NOAUDIO,
+                              QString(prefix) + CommandLineParser::ARG_MODS,
+                              Settings::getInstance()->getConfigString(Settings::getInstance()->getActiveMods()),
+                              QString(prefix) + CommandLineParser::ARG_SPAWNAIPROCESS,
+                              "0",
+                              QString(prefix) + CommandLineParser::ARG_AISLAVE});
+            CONSOLE_PRINT("Launching ai subprocess: " + program + " " +  args.join(" "), GameConsole::eDEBUG);
+            m_aiSubProcess->setObjectName("AiSubprocess");
+            m_aiSubProcess->start(program, args);
+        }
     }
 }
 
@@ -84,6 +118,12 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         Settings::getInstance()->getSpawnAiProcess() &&
         !Settings::getInstance()->getAiSlave())
     {
+        if (m_pipeState == PipeState::Ingame ||
+            m_pipeState == PipeState::PreparingGame)
+        {
+            CONSOLE_PRINT("AI-Pipe found a stale game session - forcing a reset", GameConsole::eWARNING);
+            onQuitGame();
+        }
         CONSOLE_PRINT("AI-Pipe waiting for ready", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         while (m_pipeState != PipeState::Ready)
@@ -247,14 +287,7 @@ void AiProcessPipe::onNewAction(QDataStream & stream)
         if (pMenu.get() != nullptr &&
             !pMenu->getActionRunning())
         {
-            spGameAction pAction = m_ActionBuffer.front();
-            if (pAction->getSyncCounter() == pMenu->getSyncCounter() + 1)
-            {
-                m_ActionBuffer.pop_front();
-                CONSOLE_PRINT("AI-Pipe emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
-                              " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
-                emit sigPerformAction(pAction, true);
-            }
+            performNextBufferedAction(pMenu.get());
         }
     }
 }
@@ -262,7 +295,18 @@ void AiProcessPipe::onNewAction(QDataStream & stream)
 void AiProcessPipe::onStartGame(QDataStream & stream)
 {
     CONSOLE_PRINT("AI-Pipe launching game on slave", GameConsole::eDEBUG);
-    m_ActionBuffer.clear();
+    {
+        std::lock_guard<std::mutex> locker(m_ActionMutex);
+        spGameMenue pOldMenu = std::static_pointer_cast<GameMenue>(m_pMenu.lock());
+        if (pOldMenu.get() != nullptr)
+        {
+            CONSOLE_PRINT("AI-Pipe received a new game while a previous one was still active - cleaning it up first", GameConsole::eWARNING);
+            pOldMenu->exitGame();
+        }
+        m_pMenu.reset();
+        m_pMap = nullptr;
+        m_ActionBuffer.clear();
+    }
     quint32 seed = 0;
     stream >> seed;
     CONSOLE_PRINT("Using seed " + QString::number(seed), GameConsole::eDEBUG);
@@ -331,17 +375,35 @@ void AiProcessPipe::nextAction()
         if (pMenu.get() != nullptr &&
             !pMenu->getActionRunning())
         {
-            if (m_ActionBuffer.size() > 0)
-            {
-                spGameAction pAction = m_ActionBuffer.front();
-                if (pAction->getSyncCounter() == pMenu->getSyncCounter() + 1)
-                {
-                    m_ActionBuffer.pop_front();
-                    CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
-                                  " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
-                    emit sigPerformAction(pAction, true);
-                }
-            }
+            performNextBufferedAction(pMenu.get());
+        }
+    }
+}
+
+void AiProcessPipe::performNextBufferedAction(GameMenue* pMenu)
+{
+    while (!m_ActionBuffer.empty() &&
+           m_ActionBuffer.front()->getSyncCounter() <= pMenu->getSyncCounter())
+    {
+        CONSOLE_PRINT("AI-Pipe discarding stale action " + m_ActionBuffer.front()->getActionID() +
+                      " with sync counter " + QString::number(m_ActionBuffer.front()->getSyncCounter()), GameConsole::eWARNING);
+        m_ActionBuffer.pop_front();
+    }
+    if (!m_ActionBuffer.empty())
+    {
+        spGameAction pAction = m_ActionBuffer.front();
+        if (pAction->getSyncCounter() == pMenu->getSyncCounter() + 1)
+        {
+            m_ActionBuffer.pop_front();
+            CONSOLE_PRINT("AI-Pipe emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
+                          " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
+            emit sigPerformAction(pAction, true);
+        }
+        else if (m_ActionBuffer.size() > MaxBufferedActions)
+        {
+            CONSOLE_PRINT("AI-Pipe action buffer exceeded its limit waiting for sync counter " +
+                          QString::number(pMenu->getSyncCounter() + 1) + ", clearing buffer", GameConsole::eERROR);
+            m_ActionBuffer.clear();
         }
     }
 }
@@ -355,4 +417,9 @@ void AiProcessPipe::disconnected(quint64 socket)
 {
     CONSOLE_PRINT("AI-Pipe broken", GameConsole::eDEBUG);
     m_pipeState = PipeState::Disconnected;
+    if (Settings::getInstance()->getAiSlave())
+    {
+        CONSOLE_PRINT("AI-Pipe disconnected while running as AI slave, quitting application.", GameConsole::eERROR);
+        emit Mainapp::getInstance()->sigQuit(0);
+    }
 }

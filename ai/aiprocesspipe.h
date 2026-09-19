@@ -2,6 +2,7 @@
 #define AIPROCESSPIPE_H
 
 #include <QObject>
+#include <QProcess>
 
 #include "network/localclient.h"
 #include "network/localserver.h"
@@ -14,6 +15,7 @@ class GameMenue;
 using spGameMenue = std::shared_ptr<GameMenue>;
 class AiProcessPipe;
 using spAiProcessPipe = std::shared_ptr<AiProcessPipe>;
+using spQProcess = std::shared_ptr<QProcess>;
 
 class AiProcessPipe final : public QObject
 {
@@ -34,7 +36,7 @@ public:
     void onQuitGame();
     void quit();
     PipeState getPipeState() const;
-
+    void spawnSubProcess();
 
 signals:
     void sigStartPipe();
@@ -55,7 +57,9 @@ private:
     void onStartGame(QDataStream & stream);
     void pipeReady();
     void quitGame();
+    void performNextBufferedAction(GameMenue* pMenu);
 private:
+    static constexpr qint32 MaxBufferedActions{200};
     NetworkInterface * m_pActiveConnection{nullptr};
     spLocalServer m_pServer{nullptr};
     spLocalClient m_pClient{nullptr};
@@ -65,6 +69,7 @@ private:
     std::mutex m_ActionMutex;
     GameMap* m_pMap{nullptr};
     std::weak_ptr<oxygine::EventDispatcher> m_pMenu;
+    spQProcess m_aiSubProcess;
 };
 
 #endif // AIPROCESSPIPE_H
