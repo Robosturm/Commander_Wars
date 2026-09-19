@@ -213,7 +213,29 @@ if (AUDIOSUPPORT)
     set(INSTALL_DOCS OFF CACHE BOOL "" FORCE)
     set(INSTALL_PKG_CONFIG_MODULE OFF CACHE BOOL "" FORCE)
     set(INSTALL_CMAKE_PACKAGE_MODULE OFF CACHE BOOL "" FORCE)
-    add_subdirectory(3rd_party/libogg EXCLUDE_FROM_ALL)
+    set(INCLUDE_INTTYPES_H 1)
+    set(INCLUDE_STDINT_H 1)
+    set(INCLUDE_SYS_TYPES_H 1)
+    set(SIZE16 int16_t)
+    set(USIZE16 uint16_t)
+    set(SIZE32 int32_t)
+    set(USIZE32 uint32_t)
+    set(SIZE64 int64_t)
+    set(USIZE64 uint64_t)
+    set(OGG_GENERATED_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/3rd_party/libogg/include")
+    file(MAKE_DIRECTORY "${OGG_GENERATED_INCLUDE_DIR}/ogg")
+    configure_file(
+        3rd_party/libogg/include/ogg/config_types.h.in
+        "${OGG_GENERATED_INCLUDE_DIR}/ogg/config_types.h"
+    )
+    add_library(ogg STATIC
+        3rd_party/libogg/src/bitwise.c
+        3rd_party/libogg/src/framing.c
+    )
+    target_include_directories(ogg PUBLIC
+        3rd_party/libogg/include
+        "${OGG_GENERATED_INCLUDE_DIR}"
+    )
 
     set(OPUS_BUILD_SHARED_LIBRARY OFF CACHE BOOL "Build Opus static" FORCE)
     set(OPUS_BUILD_TESTING OFF CACHE BOOL "" FORCE)
