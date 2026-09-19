@@ -36,4 +36,3 @@ var ANIMATION_BUILDER = function(map)
         return this;
     };
 };
-// GameConsole.print("Finished animation_builder.js", 1);

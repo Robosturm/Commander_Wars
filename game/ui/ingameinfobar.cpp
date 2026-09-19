@@ -80,12 +80,16 @@ IngameInfoBar::IngameInfoBar(GameMenue *pMenu, GameMap *pMap)
 
 void IngameInfoBar::updatePlayerInfo()
 {
-    Mainapp::getInstance()->pauseRendering();
-    Interpreter * pInterpreter = Interpreter::getInstance();
-    QJSValueList args({m_jsThis,
-                       JsThis::getJsThis(m_pMap)});
-    pInterpreter->doFunction("IngameInfoBar", "updatePlayerInfo", args);
-    Mainapp::getInstance()->continueRendering();
+    auto* pMainapp = Mainapp::getInstance();
+    if (!pMainapp->getNoUi())
+    {
+        pMainapp->pauseRendering();
+        Interpreter * pInterpreter = Interpreter::getInstance();
+        QJSValueList args({m_jsThis,
+                           JsThis::getJsThis(m_pMap)});
+        pInterpreter->doFunction("IngameInfoBar", "updatePlayerInfo", args);
+        pMainapp->continueRendering();
+    }
 }
 
 void IngameInfoBar::updateMinimap()
@@ -111,16 +115,20 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
     {
         if (m_LastX != x || m_LastY != y || update)
         {
-            m_newX = x;
-            m_newY = y;
-            if (!m_pMap->onMap(m_LastX, m_LastY))
+            auto* pMainapp = Mainapp::getInstance();
+            if (!pMainapp->getNoUi())
             {
-                updateTerrainInfoInternal();
-            }
-            else
-            {
-                m_debounceTimer.setSingleShot(true);
-                m_debounceTimer.start(250);
+                m_newX = x;
+                m_newY = y;
+                if (!m_pMap->onMap(m_LastX, m_LastY))
+                {
+                    updateTerrainInfoInternal();
+                }
+                else
+                {
+                    m_debounceTimer.setSingleShot(true);
+                    m_debounceTimer.start(250);
+                }
             }
         }
         else

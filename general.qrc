@@ -1784,6 +1784,7 @@
         <file>resources/scripts/general/weapon.js</file>
         <file>resources/scripts/general/weather.js</file>
         <file>resources/scripts/general/wikipage.js</file>
+        <file>resources/scripts/general/animation_builder.js</file>
         <file>resources/scripts/movementtables/move_air.js</file>
         <file>resources/scripts/movementtables/move_boat.js</file>
         <file>resources/scripts/movementtables/move_crawler.js</file>
