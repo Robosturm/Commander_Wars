@@ -1,158 +1,158 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/music/cos/adam.ogg</file>
-        <file>resources/music/cos/adder.ogg</file>
-        <file>resources/music/cos/aira.ogg</file>
-        <file>resources/music/cos/alexander.ogg</file>
-        <file>resources/music/cos/alexis.ogg</file>
-        <file>resources/music/cos/amy.ogg</file>
-        <file>resources/music/cos/andy.ogg</file>
-        <file>resources/music/cos/beast.ogg</file>
-        <file>resources/music/cos/bh_power.ogg</file>
-        <file>resources/music/cos/bh_superpower.ogg</file>
-        <file>resources/music/cos/bh_tagpower.ogg</file>
-        <file>resources/music/cos/brenner.ogg</file>
-        <file>resources/music/cos/carmen.ogg</file>
-        <file>resources/music/cos/carrie.ogg</file>
-        <file>resources/music/cos/cassidy.ogg</file>
-        <file>resources/music/cos/caulder.ogg</file>
-        <file>resources/music/cos/colin.ogg</file>
-        <file>resources/music/cos/conrad.ogg</file>
-        <file>resources/music/cos/drake.ogg</file>
-        <file>resources/music/cos/eagle.ogg</file>
-        <file>resources/music/cos/epoch.ogg</file>
-        <file>resources/music/cos/flak.ogg</file>
-        <file>resources/music/cos/forsythe.ogg</file>
-        <file>resources/music/cos/gage.ogg</file>
-        <file>resources/music/cos/graves.ogg</file>
-        <file>resources/music/cos/greyfield.ogg</file>
-        <file>resources/music/cos/grimm.ogg</file>
-        <file>resources/music/cos/grit.ogg</file>
-        <file>resources/music/cos/hawke.ogg</file>
-        <file>resources/music/cos/ik-486-b7.ogg</file>
-        <file>resources/music/cos/isabella.ogg</file>
-        <file>resources/music/cos/jake.ogg</file>
-        <file>resources/music/cos/javier.ogg</file>
-        <file>resources/music/cos/jess.ogg</file>
-        <file>resources/music/cos/joey.ogg</file>
-        <file>resources/music/cos/jugger.ogg</file>
-        <file>resources/music/cos/julia.ogg</file>
-        <file>resources/music/cos/kanbei.ogg</file>
-        <file>resources/music/cos/kindle.ogg</file>
-        <file>resources/music/cos/koal.ogg</file>
-        <file>resources/music/cos/koshi.ogg</file>
-        <file>resources/music/cos/lash.ogg</file>
-        <file>resources/music/cos/lin.ogg</file>
-        <file>resources/music/cos/mary.ogg</file>
-        <file>resources/music/cos/max.ogg</file>
-        <file>resources/music/cos/meiyo.ogg</file>
-        <file>resources/music/cos/melanthe.ogg</file>
-        <file>resources/music/cos/mina.ogg</file>
-        <file>resources/music/cos/minamoto.ogg</file>
-        <file>resources/music/cos/nana.ogg</file>
-        <file>resources/music/cos/napoleon.ogg</file>
-        <file>resources/music/cos/nell.ogg</file>
-        <file>resources/music/cos/olaf.ogg</file>
-        <file>resources/music/cos/ozzy.ogg</file>
-        <file>resources/music/cos/penny.ogg</file>
-        <file>resources/music/cos/peter.ogg</file>
-        <file>resources/music/cos/power.ogg</file>
-        <file>resources/music/cos/power_awdc.ogg</file>
-        <file>resources/music/cos/power_ids_dc.ogg</file>
-        <file>resources/music/cos/rachel.ogg</file>
-        <file>resources/music/cos/rattigan.ogg</file>
-        <file>resources/music/cos/roboandy.ogg</file>
-        <file>resources/music/cos/robosturm.ogg</file>
-        <file>resources/music/cos/sabaki.ogg</file>
-        <file>resources/music/cos/sami.ogg</file>
-        <file>resources/music/cos/sanjuro.ogg</file>
-        <file>resources/music/cos/sasha.ogg</file>
-        <file>resources/music/cos/sensei.ogg</file>
-        <file>resources/music/cos/smitan.ogg</file>
-        <file>resources/music/cos/sonja.ogg</file>
-        <file>resources/music/cos/sophie.ogg</file>
-        <file>resources/music/cos/sturm.ogg</file>
-        <file>resources/music/cos/superpower.ogg</file>
-        <file>resources/music/cos/tabitha.ogg</file>
-        <file>resources/music/cos/tagpower.ogg</file>
-        <file>resources/music/cos/tasha.ogg</file>
-        <file>resources/music/cos/varlot.ogg</file>
-        <file>resources/music/cos/von_bolt.ogg</file>
-        <file>resources/music/cos/walter.ogg</file>
-        <file>resources/music/cos/waylon.ogg</file>
-        <file>resources/music/cos/will.ogg</file>
-        <file>resources/music/cos/xavier.ogg</file>
-        <file>resources/music/cos/yukio.ogg</file>
-        <file>resources/music/cos/zandra.ogg</file>
-        <file>resources/music/credits_options/credits+1.ogg</file>
-        <file>resources/music/credits_options/credits+2.ogg</file>
-        <file>resources/music/credits_options/credits+3.ogg</file>
-        <file>resources/music/credits_options/credits+4.ogg</file>
-        <file>resources/music/hauptmenue/Hauptmenue.ogg</file>
-        <file>resources/music/hauptmenue/Hauptmenue+1.ogg</file>
-        <file>resources/music/mapeditor/mapeditor+0.ogg</file>
-        <file>resources/music/mapeditor/mapeditor+1.ogg</file>
-        <file>resources/music/mapeditor/mapeditor+2.ogg</file>
-        <file>resources/music/mapselection/mapselection+0.ogg</file>
-        <file>resources/music/mapselection/mapselection+1.ogg</file>
-        <file>resources/music/mapselection/mapselection+2.ogg</file>
-        <file>resources/music/multiplayer/multiplayer+0.ogg</file>
-        <file>resources/music/multiplayer/multiplayer+1.ogg</file>
-        <file>resources/music/multiplayer/multiplayer+2.ogg</file>
-        <file>resources/music/shop/hachi.ogg</file>
-        <file>resources/music/victorymenue/victory+0.ogg</file>
-        <file>resources/music/victorymenue/victory+1.ogg</file>
-        <file>resources/music/cos/amber_corona+0.ogg</file>
-        <file>resources/music/cos/amber_corona+1.ogg</file>
-        <file>resources/music/cos/black_hole+0.ogg</file>
-        <file>resources/music/cos/black_hole+1.ogg</file>
-        <file>resources/music/cos/blue_moon+0.ogg</file>
-        <file>resources/music/cos/blue_moon+1.ogg</file>
-        <file>resources/music/cos/bolt_guard+0.ogg</file>
-        <file>resources/music/cos/bolt_guard+1.ogg</file>
-        <file>resources/music/cos/brown_desert+0.ogg</file>
-        <file>resources/music/cos/brown_desert+1.ogg</file>
-        <file>resources/music/cos/dark_matter+0.ogg</file>
-        <file>resources/music/cos/dark_matter+1.ogg</file>
-        <file>resources/music/cos/golden_sun+0.ogg</file>
-        <file>resources/music/cos/golden_sun+1.ogg</file>
-        <file>resources/music/cos/green_earth+0.ogg</file>
-        <file>resources/music/cos/green_earth+1.ogg</file>
-        <file>resources/music/cos/metal_army.ogg</file>
-        <file>resources/music/cos/orange_star+0.ogg</file>
-        <file>resources/music/cos/orange_star+1.ogg</file>
-        <file>resources/music/cos/pink_frontier.ogg</file>
-        <file>resources/music/cos/teal_isles+0.ogg</file>
-        <file>resources/music/cos/teal_isles+1.ogg</file>
-        <file>resources/music/cos/yellow_comet+0.ogg</file>
-        <file>resources/music/cos/yellow_comet+1.ogg</file>
-        <file>resources/music/hauptmenue/Hauptmenue+2.ogg</file>
-        <file>resources/music/mapselection/mapselection+3.ogg</file>
-        <file>resources/music/mapselection/mapselection+4.ogg</file>
-        <file>resources/music/mapselection/mapselection+5.ogg</file>
-        <file>resources/music/mapselection/mapselection+6.ogg</file>
-        <file>resources/music/mapselection/mapselection+7.ogg</file>
-        <file>resources/music/mapselection/mapselection+8.ogg</file>
-        <file>resources/music/multiplayer/multiplayer+3.ogg</file>
-        <file>resources/music/multiplayer/multiplayer+4.ogg</file>
-        <file>resources/music/multiplayer/multiplayer+5.ogg</file>
-        <file>resources/music/multiplayer/multiplayer+6.ogg</file>
-        <file>resources/music/multiplayer/multiplayer+7.ogg</file>
-        <file>resources/music/multiplayer/multiplayer+8.ogg</file>
-        <file>resources/music/victorymenue/victory+10.ogg</file>
-        <file>resources/music/victorymenue/victory+11.ogg</file>
-        <file>resources/music/victorymenue/victory+2.ogg</file>
-        <file>resources/music/victorymenue/victory+3.ogg</file>
-        <file>resources/music/victorymenue/victory+4.ogg</file>
-        <file>resources/music/victorymenue/victory+5.ogg</file>
-        <file>resources/music/victorymenue/victory+6.ogg</file>
-        <file>resources/music/victorymenue/victory+7.ogg</file>
-        <file>resources/music/victorymenue/victory+8.ogg</file>
-        <file>resources/music/victorymenue/victory+9.ogg</file>
-        <file>resources/music/cos/davis.ogg</file>
-        <file>resources/music/generatorMenu/generatormenu+0.ogg</file>
-        <file>resources/music/generatorMenu/generatormenu+1.ogg</file>
-        <file>resources/music/generatorMenu/generatormenu+2.ogg</file>
-        <file>resources/music/cos/no_co.ogg</file>
+        <file compress="0">resources/music/cos/adam.ogg</file>
+        <file compress="0">resources/music/cos/adder.ogg</file>
+        <file compress="0">resources/music/cos/aira.ogg</file>
+        <file compress="0">resources/music/cos/alexander.ogg</file>
+        <file compress="0">resources/music/cos/alexis.ogg</file>
+        <file compress="0">resources/music/cos/amy.ogg</file>
+        <file compress="0">resources/music/cos/andy.ogg</file>
+        <file compress="0">resources/music/cos/beast.ogg</file>
+        <file compress="0">resources/music/cos/bh_power.ogg</file>
+        <file compress="0">resources/music/cos/bh_superpower.ogg</file>
+        <file compress="0">resources/music/cos/bh_tagpower.ogg</file>
+        <file compress="0">resources/music/cos/brenner.ogg</file>
+        <file compress="0">resources/music/cos/carmen.ogg</file>
+        <file compress="0">resources/music/cos/carrie.ogg</file>
+        <file compress="0">resources/music/cos/cassidy.ogg</file>
+        <file compress="0">resources/music/cos/caulder.ogg</file>
+        <file compress="0">resources/music/cos/colin.ogg</file>
+        <file compress="0">resources/music/cos/conrad.ogg</file>
+        <file compress="0">resources/music/cos/drake.ogg</file>
+        <file compress="0">resources/music/cos/eagle.ogg</file>
+        <file compress="0">resources/music/cos/epoch.ogg</file>
+        <file compress="0">resources/music/cos/flak.ogg</file>
+        <file compress="0">resources/music/cos/forsythe.ogg</file>
+        <file compress="0">resources/music/cos/gage.ogg</file>
+        <file compress="0">resources/music/cos/graves.ogg</file>
+        <file compress="0">resources/music/cos/greyfield.ogg</file>
+        <file compress="0">resources/music/cos/grimm.ogg</file>
+        <file compress="0">resources/music/cos/grit.ogg</file>
+        <file compress="0">resources/music/cos/hawke.ogg</file>
+        <file compress="0">resources/music/cos/ik-486-b7.ogg</file>
+        <file compress="0">resources/music/cos/isabella.ogg</file>
+        <file compress="0">resources/music/cos/jake.ogg</file>
+        <file compress="0">resources/music/cos/javier.ogg</file>
+        <file compress="0">resources/music/cos/jess.ogg</file>
+        <file compress="0">resources/music/cos/joey.ogg</file>
+        <file compress="0">resources/music/cos/jugger.ogg</file>
+        <file compress="0">resources/music/cos/julia.ogg</file>
+        <file compress="0">resources/music/cos/kanbei.ogg</file>
+        <file compress="0">resources/music/cos/kindle.ogg</file>
+        <file compress="0">resources/music/cos/koal.ogg</file>
+        <file compress="0">resources/music/cos/koshi.ogg</file>
+        <file compress="0">resources/music/cos/lash.ogg</file>
+        <file compress="0">resources/music/cos/lin.ogg</file>
+        <file compress="0">resources/music/cos/mary.ogg</file>
+        <file compress="0">resources/music/cos/max.ogg</file>
+        <file compress="0">resources/music/cos/meiyo.ogg</file>
+        <file compress="0">resources/music/cos/melanthe.ogg</file>
+        <file compress="0">resources/music/cos/mina.ogg</file>
+        <file compress="0">resources/music/cos/minamoto.ogg</file>
+        <file compress="0">resources/music/cos/nana.ogg</file>
+        <file compress="0">resources/music/cos/napoleon.ogg</file>
+        <file compress="0">resources/music/cos/nell.ogg</file>
+        <file compress="0">resources/music/cos/olaf.ogg</file>
+        <file compress="0">resources/music/cos/ozzy.ogg</file>
+        <file compress="0">resources/music/cos/penny.ogg</file>
+        <file compress="0">resources/music/cos/peter.ogg</file>
+        <file compress="0">resources/music/cos/power.ogg</file>
+        <file compress="0">resources/music/cos/power_awdc.ogg</file>
+        <file compress="0">resources/music/cos/power_ids_dc.ogg</file>
+        <file compress="0">resources/music/cos/rachel.ogg</file>
+        <file compress="0">resources/music/cos/rattigan.ogg</file>
+        <file compress="0">resources/music/cos/roboandy.ogg</file>
+        <file compress="0">resources/music/cos/robosturm.ogg</file>
+        <file compress="0">resources/music/cos/sabaki.ogg</file>
+        <file compress="0">resources/music/cos/sami.ogg</file>
+        <file compress="0">resources/music/cos/sanjuro.ogg</file>
+        <file compress="0">resources/music/cos/sasha.ogg</file>
+        <file compress="0">resources/music/cos/sensei.ogg</file>
+        <file compress="0">resources/music/cos/smitan.ogg</file>
+        <file compress="0">resources/music/cos/sonja.ogg</file>
+        <file compress="0">resources/music/cos/sophie.ogg</file>
+        <file compress="0">resources/music/cos/sturm.ogg</file>
+        <file compress="0">resources/music/cos/superpower.ogg</file>
+        <file compress="0">resources/music/cos/tabitha.ogg</file>
+        <file compress="0">resources/music/cos/tagpower.ogg</file>
+        <file compress="0">resources/music/cos/tasha.ogg</file>
+        <file compress="0">resources/music/cos/varlot.ogg</file>
+        <file compress="0">resources/music/cos/von_bolt.ogg</file>
+        <file compress="0">resources/music/cos/walter.ogg</file>
+        <file compress="0">resources/music/cos/waylon.ogg</file>
+        <file compress="0">resources/music/cos/will.ogg</file>
+        <file compress="0">resources/music/cos/xavier.ogg</file>
+        <file compress="0">resources/music/cos/yukio.ogg</file>
+        <file compress="0">resources/music/cos/zandra.ogg</file>
+        <file compress="0">resources/music/credits_options/credits+1.ogg</file>
+        <file compress="0">resources/music/credits_options/credits+2.ogg</file>
+        <file compress="0">resources/music/credits_options/credits+3.ogg</file>
+        <file compress="0">resources/music/credits_options/credits+4.ogg</file>
+        <file compress="0">resources/music/hauptmenue/Hauptmenue.ogg</file>
+        <file compress="0">resources/music/hauptmenue/Hauptmenue+1.ogg</file>
+        <file compress="0">resources/music/mapeditor/mapeditor+0.ogg</file>
+        <file compress="0">resources/music/mapeditor/mapeditor+1.ogg</file>
+        <file compress="0">resources/music/mapeditor/mapeditor+2.ogg</file>
+        <file compress="0">resources/music/mapselection/mapselection+0.ogg</file>
+        <file compress="0">resources/music/mapselection/mapselection+1.ogg</file>
+        <file compress="0">resources/music/mapselection/mapselection+2.ogg</file>
+        <file compress="0">resources/music/multiplayer/multiplayer+0.ogg</file>
+        <file compress="0">resources/music/multiplayer/multiplayer+1.ogg</file>
+        <file compress="0">resources/music/multiplayer/multiplayer+2.ogg</file>
+        <file compress="0">resources/music/shop/hachi.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+0.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+1.ogg</file>
+        <file compress="0">resources/music/cos/amber_corona+0.ogg</file>
+        <file compress="0">resources/music/cos/amber_corona+1.ogg</file>
+        <file compress="0">resources/music/cos/black_hole+0.ogg</file>
+        <file compress="0">resources/music/cos/black_hole+1.ogg</file>
+        <file compress="0">resources/music/cos/blue_moon+0.ogg</file>
+        <file compress="0">resources/music/cos/blue_moon+1.ogg</file>
+        <file compress="0">resources/music/cos/bolt_guard+0.ogg</file>
+        <file compress="0">resources/music/cos/bolt_guard+1.ogg</file>
+        <file compress="0">resources/music/cos/brown_desert+0.ogg</file>
+        <file compress="0">resources/music/cos/brown_desert+1.ogg</file>
+        <file compress="0">resources/music/cos/dark_matter+0.ogg</file>
+        <file compress="0">resources/music/cos/dark_matter+1.ogg</file>
+        <file compress="0">resources/music/cos/golden_sun+0.ogg</file>
+        <file compress="0">resources/music/cos/golden_sun+1.ogg</file>
+        <file compress="0">resources/music/cos/green_earth+0.ogg</file>
+        <file compress="0">resources/music/cos/green_earth+1.ogg</file>
+        <file compress="0">resources/music/cos/metal_army.ogg</file>
+        <file compress="0">resources/music/cos/orange_star+0.ogg</file>
+        <file compress="0">resources/music/cos/orange_star+1.ogg</file>
+        <file compress="0">resources/music/cos/pink_frontier.ogg</file>
+        <file compress="0">resources/music/cos/teal_isles+0.ogg</file>
+        <file compress="0">resources/music/cos/teal_isles+1.ogg</file>
+        <file compress="0">resources/music/cos/yellow_comet+0.ogg</file>
+        <file compress="0">resources/music/cos/yellow_comet+1.ogg</file>
+        <file compress="0">resources/music/hauptmenue/Hauptmenue+2.ogg</file>
+        <file compress="0">resources/music/mapselection/mapselection+3.ogg</file>
+        <file compress="0">resources/music/mapselection/mapselection+4.ogg</file>
+        <file compress="0">resources/music/mapselection/mapselection+5.ogg</file>
+        <file compress="0">resources/music/mapselection/mapselection+6.ogg</file>
+        <file compress="0">resources/music/mapselection/mapselection+7.ogg</file>
+        <file compress="0">resources/music/mapselection/mapselection+8.ogg</file>
+        <file compress="0">resources/music/multiplayer/multiplayer+3.ogg</file>
+        <file compress="0">resources/music/multiplayer/multiplayer+4.ogg</file>
+        <file compress="0">resources/music/multiplayer/multiplayer+5.ogg</file>
+        <file compress="0">resources/music/multiplayer/multiplayer+6.ogg</file>
+        <file compress="0">resources/music/multiplayer/multiplayer+7.ogg</file>
+        <file compress="0">resources/music/multiplayer/multiplayer+8.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+10.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+11.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+2.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+3.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+4.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+5.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+6.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+7.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+8.ogg</file>
+        <file compress="0">resources/music/victorymenue/victory+9.ogg</file>
+        <file compress="0">resources/music/cos/davis.ogg</file>
+        <file compress="0">resources/music/generatorMenu/generatormenu+0.ogg</file>
+        <file compress="0">resources/music/generatorMenu/generatormenu+1.ogg</file>
+        <file compress="0">resources/music/generatorMenu/generatormenu+2.ogg</file>
+        <file compress="0">resources/music/cos/no_co.ogg</file>
     </qresource>
 </RCC>

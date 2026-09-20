@@ -353,54 +353,54 @@
         <file>maps/advance_wars_2_campaign.camp/Toy Box.map</file>
         <file>maps/advance_wars_2_campaign.camp/two week test.js</file>
         <file>maps/advance_wars_2_campaign.camp/Two Week Test.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/a_single_life_isabell.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_airport.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_base.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_beach.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_bunker_closed.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_bunker_open.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_camp_night_outside.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_desert.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_desert_rock.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_dust_general.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_dust_road.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_factory.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flower_field.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flowers.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flowers2.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flowers3.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_forest_dust.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_forest_night.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_glorious_tent_inside.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_great_owl.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_great_owl_out.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_high_tech_base.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ids.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ids_clones.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ids_family.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_isabella.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_lin.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_missile_impact.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_mountain.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_general.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_night.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_road.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_ruins.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_parking_lot.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_road_night.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ruins_dust_general.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ruins_night.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_snow.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_snow_mountain.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_tech_labor.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_tent_inside.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_town.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_wasteland.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/brenners_death.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_meteors.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_ruins.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_will.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_world.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/a_single_life_isabell.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_airport.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_base.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_beach.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_bunker_closed.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_bunker_open.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_camp_night_outside.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_desert.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_desert_rock.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_dust_general.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_dust_road.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_factory.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flower_field.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flowers.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flowers2.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flowers3.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_forest_dust.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_forest_night.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_glorious_tent_inside.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_great_owl.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_great_owl_out.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_high_tech_base.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ids.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ids_clones.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ids_family.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_isabella.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_lin.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_missile_impact.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_mountain.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_general.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_night.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_road.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_ruins.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_parking_lot.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_road_night.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ruins_dust_general.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ruins_night.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_snow.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_snow_mountain.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_tech_labor.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_tent_inside.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_town.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_wasteland.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/brenners_death.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_meteors.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_ruins.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_will.png</file>
+        <file compress="0">maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_world.png</file>
         <file>maps/advance_wars_day_of_ruin_campaign.camp/A Hero's Farewell.map</file>
         <file>maps/advance_wars_day_of_ruin_campaign.camp/A Kind of Home.map</file>
         <file>maps/advance_wars_day_of_ruin_campaign.camp/A new Threat.map</file>
@@ -512,7 +512,7 @@
         <file>maps/AWBW_Global_League/Titans Rise.map</file>
         <file>maps/AWBW_Global_League/Truth Is.map</file>
         <file>maps/AWBW_Global_League/Unstable Fusion.map</file>
-        <file>maps/commander_wars.camp/alphaLand.png</file>
+        <file compress="0">maps/commander_wars.camp/alphaLand.png</file>
         <file>maps/commander_wars.camp/oilInTheDesert.js</file>
         <file>maps/commander_wars.camp/oilInTheDesert.map</file>
         <file>maps/geographical_maps/AFRIKA 1914.map</file>
@@ -870,37 +870,37 @@
         <file>mods/aw_co/scripts/cos/co_yukio.js</file>
         <file>mods/aw_co/scripts/cos/co_zandra.js</file>
         <file>mods/aw_co/mod.txt</file>
-        <file>mods/aw_styled_icons/images/game/arrow+unit.png</file>
+        <file compress="0">mods/aw_styled_icons/images/game/arrow+unit.png</file>
         <file>mods/aw_styled_icons/images/game/res.xml</file>
-        <file>mods/aw_styled_icons/images/units/icons/1.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/2.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/3.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/4.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/5.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/6.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/7.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/8.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/9.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/ammo.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/ammo1.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/ammoA.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/capture.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/co0.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/co1.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/defensive.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/dive.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/fuel.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/general.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/hold.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/hp+hidden.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/lieutenant.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/material.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/material1.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/normal.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/offensive.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/transport+hidden.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/transport.png</file>
-        <file>mods/aw_styled_icons/images/units/icons/veteran.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/1.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/2.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/3.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/4.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/5.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/6.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/7.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/8.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/9.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/ammo.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/ammo1.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/ammoA.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/capture.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/co0.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/co1.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/defensive.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/dive.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/fuel.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/general.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/hold.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/hp+hidden.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/lieutenant.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/material.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/material1.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/normal.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/offensive.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/transport+hidden.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/transport.png</file>
+        <file compress="0">mods/aw_styled_icons/images/units/icons/veteran.png</file>
         <file>mods/aw_styled_icons/images/units/res.xml</file>
         <file>mods/aw_styled_icons/mod.txt</file>
         <file>mods/awdc_co/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js</file>
@@ -985,36 +985,36 @@
         <file>mods/awdc_co/scripts/cos/co_yukio.js</file>
         <file>mods/awdc_co/scripts/cos/co_zandra.js</file>
         <file>mods/awdc_co/mod.txt</file>
-        <file>mods/awdc_image/images/building/airport+mask.png</file>
-        <file>mods/awdc_image/images/building/airport+neutral.png</file>
-        <file>mods/awdc_image/images/building/airport.png</file>
-        <file>mods/awdc_image/images/building/factory+mask.png</file>
-        <file>mods/awdc_image/images/building/factory+neutral.png</file>
-        <file>mods/awdc_image/images/building/factory.png</file>
-        <file>mods/awdc_image/images/building/harbour+mask.png</file>
-        <file>mods/awdc_image/images/building/harbour+neutral.png</file>
-        <file>mods/awdc_image/images/building/harbour.png</file>
-        <file>mods/awdc_image/images/building/mine+mask.png</file>
-        <file>mods/awdc_image/images/building/mine+neutral.png</file>
-        <file>mods/awdc_image/images/building/mine.png</file>
-        <file>mods/awdc_image/images/building/radar+mask.png</file>
-        <file>mods/awdc_image/images/building/radar+neutral.png</file>
-        <file>mods/awdc_image/images/building/radar.png</file>
+        <file compress="0">mods/awdc_image/images/building/airport+mask.png</file>
+        <file compress="0">mods/awdc_image/images/building/airport+neutral.png</file>
+        <file compress="0">mods/awdc_image/images/building/airport.png</file>
+        <file compress="0">mods/awdc_image/images/building/factory+mask.png</file>
+        <file compress="0">mods/awdc_image/images/building/factory+neutral.png</file>
+        <file compress="0">mods/awdc_image/images/building/factory.png</file>
+        <file compress="0">mods/awdc_image/images/building/harbour+mask.png</file>
+        <file compress="0">mods/awdc_image/images/building/harbour+neutral.png</file>
+        <file compress="0">mods/awdc_image/images/building/harbour.png</file>
+        <file compress="0">mods/awdc_image/images/building/mine+mask.png</file>
+        <file compress="0">mods/awdc_image/images/building/mine+neutral.png</file>
+        <file compress="0">mods/awdc_image/images/building/mine.png</file>
+        <file compress="0">mods/awdc_image/images/building/radar+mask.png</file>
+        <file compress="0">mods/awdc_image/images/building/radar+neutral.png</file>
+        <file compress="0">mods/awdc_image/images/building/radar.png</file>
         <file>mods/awdc_image/images/building/res.xml</file>
-        <file>mods/awdc_image/images/building/silo+rocket.png</file>
-        <file>mods/awdc_image/images/building/silo.png</file>
-        <file>mods/awdc_image/images/building/temporary_airport+mask.png</file>
-        <file>mods/awdc_image/images/building/temporary_airport+neutral.png</file>
-        <file>mods/awdc_image/images/building/temporary_airport.png</file>
-        <file>mods/awdc_image/images/building/temporary_harbour+mask.png</file>
-        <file>mods/awdc_image/images/building/temporary_harbour+neutral.png</file>
-        <file>mods/awdc_image/images/building/temporary_harbour.png</file>
-        <file>mods/awdc_image/images/building/tower+mask.png</file>
-        <file>mods/awdc_image/images/building/tower+neutral.png</file>
-        <file>mods/awdc_image/images/building/tower.png</file>
-        <file>mods/awdc_image/images/building/town+mask.png</file>
-        <file>mods/awdc_image/images/building/town+neutral.png</file>
-        <file>mods/awdc_image/images/building/town.png</file>
+        <file compress="0">mods/awdc_image/images/building/silo+rocket.png</file>
+        <file compress="0">mods/awdc_image/images/building/silo.png</file>
+        <file compress="0">mods/awdc_image/images/building/temporary_airport+mask.png</file>
+        <file compress="0">mods/awdc_image/images/building/temporary_airport+neutral.png</file>
+        <file compress="0">mods/awdc_image/images/building/temporary_airport.png</file>
+        <file compress="0">mods/awdc_image/images/building/temporary_harbour+mask.png</file>
+        <file compress="0">mods/awdc_image/images/building/temporary_harbour+neutral.png</file>
+        <file compress="0">mods/awdc_image/images/building/temporary_harbour.png</file>
+        <file compress="0">mods/awdc_image/images/building/tower+mask.png</file>
+        <file compress="0">mods/awdc_image/images/building/tower+neutral.png</file>
+        <file compress="0">mods/awdc_image/images/building/tower.png</file>
+        <file compress="0">mods/awdc_image/images/building/town+mask.png</file>
+        <file compress="0">mods/awdc_image/images/building/town+neutral.png</file>
+        <file compress="0">mods/awdc_image/images/building/town.png</file>
         <file>mods/awdc_image/mod.txt</file>
         <file>mods/awdc_terrain/scripts/building/silo.js</file>
         <file>mods/awdc_terrain/scripts/building/silo_rocket.js</file>
@@ -1177,7 +1177,7 @@
         <file>mods/awds_co/scripts/cos/co_xavier.js</file>
         <file>mods/awds_co/scripts/cos/co_yukio.js</file>
         <file>mods/awds_co/scripts/cos/co_zandra.js</file>
-        <file>mods/awds_co/aw_dualstrike.png</file>
+        <file compress="0">mods/awds_co/aw_dualstrike.png</file>
         <file>mods/awds_co/mod.txt</file>
         <file>mods/awds_unit/scripts/actions/ACTION_EXPLODE.js</file>
         <file>mods/awds_unit/scripts/movementtables/move_boat.js</file>
