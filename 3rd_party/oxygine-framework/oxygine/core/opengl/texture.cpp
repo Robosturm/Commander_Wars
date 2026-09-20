@@ -36,7 +36,6 @@ void Texture::setLinearFilter(quint32 filter)
     gl->glBindTexture(GL_TEXTURE_2D, (GLuint) m_id);
     gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
     gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
-    gl->glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 void Texture::setClamp2Edge(bool clamp2edge)
@@ -100,6 +99,6 @@ void Texture::init(const QImage & image)
     m_image = image;
     GameWindow* window = oxygine::GameWindow::getWindow();
     auto * gl = window->context()->extraFunctions();
-    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_image.width(), m_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_image.bits());
+    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_image.width(), m_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_image.constBits());
 }
 }

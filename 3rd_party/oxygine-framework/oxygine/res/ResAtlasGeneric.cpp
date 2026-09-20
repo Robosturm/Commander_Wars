@@ -1,4 +1,8 @@
+#include <QBuffer>
 #include <QCoreApplication>
+#include <QElapsedTimer>
+#include <QImageReader>
+#include <QSet>
 #include <QVariant>
 #include <QFile>
 
@@ -56,9 +60,11 @@ namespace oxygine
     void ResAtlasGeneric::loadAtlas(CreateResourceContext& context)
     {
         m_current = 0;
+        QElapsedTimer atlasTimer;
+        atlasTimer.start();
         QDomElement node = context.m_walker.getNode();
         loadBase(node);
-        std::vector<QString> loadedPaths;
+        QSet<QString> loadedPaths;
         std::vector<PendingImage> pending;
         while (true)
         {
@@ -85,27 +91,18 @@ namespace oxygine
                 continue;
             }
             QString path = walker.getPath("file");
-            bool found = false;
-            for (const auto& usedPath : loadedPaths)
-            {
-                if (usedPath == path)
-                {
-                    found = true;
-                    break;
-                }
-            }
-            if (found)
+            if (loadedPaths.contains(path))
             {
                 CONSOLE_PRINT("Duplicate entry found. " + path, GameConsole::eERROR);
                 continue;
             }
             QString imgFilePath = VirtualPaths::find(path);
-            if (!QFile::exists(imgFilePath))
+            if (imgFilePath.isEmpty())
             {
                 CONSOLE_PRINT("Invalid item found. " + path, GameConsole::eERROR);
                 continue;
             }
-            loadedPaths.push_back(path);
+            loadedPaths.insert(path);
 
             PendingImage item;
             item.file = file;
@@ -147,10 +144,18 @@ namespace oxygine
         std::vector<std::future<QImage>> futures(pending.size());
         auto scheduleDecode = [&futures, &pending](std::size_t index)
         {
-            const QString filePath = pending[index].filePath;
-            futures[index] = std::async(std::launch::async, [filePath]()
+            QByteArray encoded;
+            QFile file(pending[index].filePath);
+            if (file.open(QIODevice::ReadOnly))
             {
-                QImage img(filePath);
+                encoded = file.readAll();
+            }
+            futures[index] = std::async(std::launch::async, [encoded = std::move(encoded)]() mutable
+            {
+                QBuffer buffer(&encoded);
+                buffer.open(QIODevice::ReadOnly);
+                QImageReader reader(&buffer);
+                QImage img = reader.read();
                 SpriteCreator::convertToRgba(img);
                 return img;
             });
@@ -173,6 +178,7 @@ namespace oxygine
                 scheduleDecode(nextToSchedule);
                 ++nextToSchedule;
             }
+            QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
             if (img.width() == 0 || img.height() == 0)
             {
                 CONSOLE_PRINT("Image is not valid " + item.path, GameConsole::eWARNING);
@@ -188,6 +194,8 @@ namespace oxygine
             context.m_resources->add(ra);
             anims.push_back(ra);
         }
+        CONSOLE_PRINT("Loaded atlas " + context.m_xml_name + " with " + QString::number(anims.size()) +
+                      " sprites in " + QString::number(atlasTimer.elapsed()) + " ms", GameConsole::eINFO);
     }
 }
 
