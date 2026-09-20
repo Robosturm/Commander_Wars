@@ -227,8 +227,6 @@ namespace oxygine
         const std::size_t maxInFlight = getMaxInFlightDecodes();
         DecodePool decodePool(maxInFlight);
         std::vector<std::future<QImage>> futures(pending.size());
-        // the bytes are read on this thread on purpose, a shipped build resolves to ":/" and Qt's
-        // QRC lookup is guarded by a process wide lock
         auto scheduleDecode = [&futures, &pending, &decodePool](std::size_t index)
         {
             QByteArray encoded;
