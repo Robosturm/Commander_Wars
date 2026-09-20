@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QKeyEvent>
 #include <mutex>
+#include <atomic>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
@@ -288,8 +289,7 @@ private:
     static qint32 m_outputSize;
     static bool m_developerMode;
     static std::mutex m_datalocker;
-    static std::mutex messageOutputMutex;
-    static bool m_messageLogging;
+    static std::atomic<bool> m_messageLogging;
     oxygine::spSprite m_pBackgroundsprite;
     oxygine::spTextField m_text;
     oxygine::spTextField m_editTextfield;

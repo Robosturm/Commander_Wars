@@ -7,7 +7,6 @@
 #include <QFontMetrics>
 #include <QMetaMethod>
 #include <QMetaObject>
-#include <QScopedValueRollback>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
@@ -33,14 +32,13 @@ bool GameConsole::m_show = false;
 bool GameConsole::m_toggled = false;
 bool GameConsole::m_developerMode = false;
 bool GameConsole::m_outputChanged = false;
-bool GameConsole::m_messageLogging = false;
+std::atomic<bool> GameConsole::m_messageLogging = false;
 std::vector<QString> GameConsole::m_output;
 spConsole GameConsole::m_pConsole{nullptr};
 qint32 GameConsole::m_curlastmsgpos = 0;
 std::vector<QString> GameConsole::m_lastmsgs;
 qint32 GameConsole::m_outputSize = 100;
 std::mutex GameConsole::m_datalocker;
-std::mutex GameConsole::messageOutputMutex;
 // Console Libary
 const char* const GameConsole::functions[] =
 {
@@ -243,7 +241,6 @@ void GameConsole::print(const QString & message, qint8 logLevel)
 
 void GameConsole::printOnIngameConsole(const QString & message)
 {
-    std::lock_guard<std::mutex> locker(m_datalocker);
     QString msg = message;
     msg.replace("&", "&amp;");
     m_output.push_back(msg);
@@ -275,51 +272,54 @@ void GameConsole::update(const oxygine::UpdateState& us)
     if(m_show)
     {
 #ifdef GRAPHICSUPPORT
-        std::lock_guard<std::mutex> locker(m_datalocker);
-        if (m_outputChanged)
+        if (m_datalocker.try_lock())
         {
-            qint32 screenheight = oxygine::Stage::getStage()->getHeight();
-            auto font = FontManager::getFont("console16");
-            QFontMetrics metrics(font.font);
-            qint32 lineHeight = metrics.height();
-            qint32 textWidth = m_text->getWidth();
-            qint32 maxHeight = screenheight - lineHeight * 3;
-            // create output text
-            QString drawText;
-            qint32 i = m_output.size() - 1;
-            qint32 currentHeight = 0;
-            while (i >= 0 && currentHeight < maxHeight)
+            if (m_outputChanged)
             {
-                QString testDrawText = ("> " + m_output[i] + "\n") + drawText;
-                // measure the actual wrapped height instead of just counting '\n', since long lines wrap in the multiline text field
-                QString plainText = testDrawText;
-                plainText.replace("&amp;", "&");
-                qint32 nextHeight = metrics.boundingRect(QRect(0, 0, textWidth, INT_MAX), Qt::TextWordWrap, plainText).height();
-                if (nextHeight > maxHeight)
+                qint32 screenheight = oxygine::Stage::getStage()->getHeight();
+                auto font = FontManager::getFont("console16");
+                QFontMetrics metrics(font.font);
+                qint32 lineHeight = metrics.height();
+                qint32 textWidth = m_text->getWidth();
+                qint32 maxHeight = screenheight - lineHeight * 3;
+                // create output text
+                QString drawText;
+                qint32 i = m_output.size() - 1;
+                qint32 currentHeight = 0;
+                while (i >= 0 && currentHeight < maxHeight)
                 {
-                    break;
+                    QString testDrawText = ("> " + m_output[i] + "\n") + drawText;
+                    // measure the actual wrapped height instead of just counting '\n', since long lines wrap in the multiline text field
+                    QString plainText = testDrawText;
+                    plainText.replace("&amp;", "&");
+                    qint32 nextHeight = metrics.boundingRect(QRect(0, 0, textWidth, INT_MAX), Qt::TextWordWrap, plainText).height();
+                    if (nextHeight > maxHeight)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        drawText = testDrawText;
+                        currentHeight = nextHeight;
+                    }
+                    --i;
                 }
-                else
-                {
-                    drawText = testDrawText;
-                    currentHeight = nextHeight;
-                }
-                --i;
+                m_text->setHtmlText(drawText);
+                m_editTextfield->setY(currentHeight + m_text->getY());
+                m_outputChanged = false;
             }
-            m_text->setHtmlText(drawText);
-            m_editTextfield->setY(currentHeight + m_text->getY());
-            m_outputChanged = false;
-        }
-        if (m_focused)
-        {
-            // create blinking cursor position
-            QString lineText = "> </r>" +  getDrawText(getCurrentText());
-            m_editTextfield->setHtmlText("<r>" + lineText);
-        }
-        else
-        {
-            QString lineText = "> Click the console to regain focus";
-            m_editTextfield->setHtmlText(lineText);
+            if (m_focused)
+            {
+                // create blinking cursor position
+                QString lineText = "> </r>" +  getDrawText(getCurrentText());
+                m_editTextfield->setHtmlText("<r>" + lineText);
+            }
+            else
+            {
+                QString lineText = "> Click the console to regain focus";
+                m_editTextfield->setHtmlText(lineText);
+            }
+            m_datalocker.unlock();
         }
 #endif
     }
@@ -632,10 +632,10 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
     }
     else
     {
-        QScopedValueRollback scope(m_messageLogging, true);
+        std::lock_guard<std::mutex> locker(m_datalocker);
+        m_messageLogging = true;
         static QFile file;
         static QTextStream stream(&file);
-        std::lock_guard<std::mutex> lock(messageOutputMutex);
         if (!file.isOpen())
         {
             QString date = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
@@ -749,5 +749,6 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
                 }
                 break;
         }
+        m_messageLogging = false;
     }
 }

@@ -861,26 +861,6 @@ void SpriteCreator::preProcessMask(QImage & mask, const QImage & overlay, qint32
 
 void SpriteCreator::convertToRgba(QImage & input)
 {
-    const bool hadAlphaChannel = input.hasAlphaChannel();
     QImage output = input.convertToFormat(QImage::Format_RGBA8888);
-    if (hadAlphaChannel)
-    {
-        const qint32 width = output.width();
-        const qint32 height = output.height();
-        for (qint32 y = 0; y < height; ++y)
-        {
-            quint8* scanLine = output.scanLine(y);
-            for (qint32 x = 0; x < width; ++x)
-            {
-                quint8* pixel = scanLine + x * 4;
-                if (pixel[3] == 0)
-                {
-                    pixel[0] = 0;
-                    pixel[1] = 0;
-                    pixel[2] = 0;
-                }
-            }
-        }
-    }
     input = output;
 }
