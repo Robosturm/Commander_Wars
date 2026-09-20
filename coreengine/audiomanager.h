@@ -268,6 +268,8 @@ private:
     std::mutex m_audioMutex;
     QString m_currentDeviceName;
     PaDeviceIndex m_lastDefaultDevice{paNoDevice};
+    qint32 m_deviceCheckTicks{0};
+    qint32 m_failedReopenAttempts{0};
 
     SoundVoice m_soundVoices[MAX_PARALLEL_SOUNDS];
     qint64 m_voiceCounter{0};

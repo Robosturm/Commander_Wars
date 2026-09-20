@@ -21,6 +21,13 @@
 #include <cmath>
 #include <limits>
 
+namespace
+{
+    /** poll timer ticks between two device checks, the timer itself runs at 50 ms for track ends */
+    constexpr qint32 DEVICE_CHECK_TICK_INTERVAL = 200;
+    constexpr qint32 MAX_FAILED_REOPEN_ATTEMPTS = 5;
+}
+
 SoundData::SoundData()
 {
 #ifdef GRAPHICSUPPORT
@@ -129,7 +136,12 @@ void AudioManager::initAudio()
                 {
                     SlotPlayRandom();
                 }
-                checkAudioDeviceChanged();
+                ++m_deviceCheckTicks;
+                if (m_deviceCheckTicks >= DEVICE_CHECK_TICK_INTERVAL)
+                {
+                    m_deviceCheckTicks = 0;
+                    checkAudioDeviceChanged();
+                }
             });
             m_pollTimer.start();
 
@@ -536,6 +548,7 @@ void AudioManager::SlotChangeAudioDevice(const QVariant value)
     {
         QString deviceName = value.toString();
         CONSOLE_PRINT_MODULE("Changing to audio device: " + deviceName, GameConsole::eDEBUG, GameConsole::eAudio);
+        m_failedReopenAttempts = 0;
         openStream(deviceName);
     }
 #endif
@@ -546,6 +559,10 @@ void AudioManager::checkAudioDeviceChanged()
 #ifdef AUDIOSUPPORT
     if (!m_noAudio && Mainapp::getInstance()->isAudioThread())
     {
+        if (m_failedReopenAttempts >= MAX_FAILED_REOPEN_ATTEMPTS)
+        {
+            return;
+        }
         bool streamBroken = (m_paStream == nullptr) || (Pa_IsStreamStopped(m_paStream) == 1);
         bool usingDefaultDevice = (m_currentDeviceName == Settings::DEFAULT_AUDIODEVICE || m_currentDeviceName.isEmpty());
         PaDeviceIndex currentDefault = Pa_GetDefaultOutputDevice();
@@ -553,7 +570,20 @@ void AudioManager::checkAudioDeviceChanged()
         if (streamBroken || defaultChanged)
         {
             CONSOLE_PRINT_MODULE("Audio device changed or stream stopped unexpectedly, reopening stream", GameConsole::eDEBUG, GameConsole::eAudio);
-            openStream(m_currentDeviceName);
+            if (openStream(m_currentDeviceName))
+            {
+                m_failedReopenAttempts = 0;
+            }
+            else
+            {
+                ++m_failedReopenAttempts;
+                m_lastDefaultDevice = currentDefault;
+                if (m_failedReopenAttempts >= MAX_FAILED_REOPEN_ATTEMPTS)
+                {
+                    CONSOLE_PRINT_MODULE("Giving up reopening the audio stream after " + QString::number(m_failedReopenAttempts) +
+                                         " attempts. Audio stays disabled until the device is changed.", GameConsole::eWARNING, GameConsole::eAudio);
+                }
+            }
         }
     }
 #endif
