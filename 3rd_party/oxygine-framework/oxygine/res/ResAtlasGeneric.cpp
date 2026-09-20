@@ -1,19 +1,18 @@
 #include <QBuffer>
 #include <QCoreApplication>
 #include <QElapsedTimer>
+#include <QFuture>
 #include <QImageReader>
+#include <QPromise>
+#include <QRunnable>
 #include <QSet>
+#include <QThread>
+#include <QThreadPool>
 #include <QVariant>
 #include <QFile>
 
 #include <algorithm>
-#include <condition_variable>
-#include <deque>
-#include <functional>
-#include <future>
-#include <memory>
-#include <mutex>
-#include <thread>
+#include <utility>
 #include <vector>
 
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.h"
@@ -55,89 +54,41 @@ namespace oxygine
          * every one of them at once keeps every decoded RGBA image alive at the same time (the
          * background atlas alone is ~350 MB decompressed).
          */
-        std::size_t getMaxInFlightDecodes()
+        qint32 getMaxInFlightDecodes()
         {
-            const unsigned int cores = std::thread::hardware_concurrency();
-            return std::clamp<std::size_t>(cores, 2, 8);
+            const qint32 cores = QThread::idealThreadCount();
+            return std::clamp(cores, 2, 8);
         }
 
         /**
-         * @brief Decodes images on a fixed set of threads that are started once per atlas.
-         * std::async is deliberately not used here: it dispatches every single task through the
+         * @brief Decodes one image on a QThreadPool worker.
+         * std::async is deliberately not used for this: it dispatches every single task through the
          * platform thread pool, which on Windows added roughly two seconds of latency per image
-         * regardless of the image size.
+         * regardless of the image size. QThreadPool reuses its own workers instead.
          */
-        class DecodePool final
+        class ImageDecodeRunnable final : public QRunnable
         {
         public:
-            explicit DecodePool(std::size_t threadCount)
+            ImageDecodeRunnable(QByteArray encoded, QPromise<QImage> promise)
+                : m_encoded(std::move(encoded)),
+                  m_promise(std::move(promise))
             {
-                m_threads.reserve(threadCount);
-                for (std::size_t i = 0; i < threadCount; ++i)
-                {
-                    m_threads.emplace_back([this](){ workerLoop(); });
-                }
             }
-            ~DecodePool()
-            {
-                {
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    m_stop = true;
-                }
-                m_condition.notify_all();
-                for (auto & thread : m_threads)
-                {
-                    thread.join();
-                }
-            }
-            DecodePool(const DecodePool&) = delete;
-            DecodePool& operator=(const DecodePool&) = delete;
 
-            std::future<QImage> submit(QByteArray encoded)
+            void run() override
             {
-                auto task = std::make_shared<std::packaged_task<QImage()>>([encoded = std::move(encoded)]() mutable
-                {
-                    QBuffer buffer(&encoded);
-                    buffer.open(QIODevice::ReadOnly);
-                    QImageReader reader(&buffer);
-                    QImage img = reader.read();
-                    SpriteCreator::convertToRgba(img);
-                    return img;
-                });
-                std::future<QImage> result = task->get_future();
-                {
-                    std::lock_guard<std::mutex> lock(m_mutex);
-                    m_queue.push_back([task](){ (*task)(); });
-                }
-                m_condition.notify_one();
-                return result;
+                QBuffer buffer(&m_encoded);
+                buffer.open(QIODevice::ReadOnly);
+                QImageReader reader(&buffer);
+                QImage img = reader.read();
+                SpriteCreator::convertToRgba(img);
+                m_promise.addResult(img);
+                m_promise.finish();
             }
 
         private:
-            void workerLoop()
-            {
-                while (true)
-                {
-                    std::function<void()> job;
-                    {
-                        std::unique_lock<std::mutex> lock(m_mutex);
-                        m_condition.wait(lock, [this](){ return m_stop || !m_queue.empty(); });
-                        if (m_queue.empty())
-                        {
-                            return;
-                        }
-                        job = std::move(m_queue.front());
-                        m_queue.pop_front();
-                    }
-                    job();
-                }
-            }
-
-            std::vector<std::thread> m_threads;
-            std::deque<std::function<void()>> m_queue;
-            std::mutex m_mutex;
-            std::condition_variable m_condition;
-            bool m_stop{false};
+            QByteArray m_encoded;
+            QPromise<QImage> m_promise;
         };
     }
 
@@ -224,9 +175,11 @@ namespace oxygine
             pending.push_back(std::move(item));
         }
 
-        const std::size_t maxInFlight = getMaxInFlightDecodes();
-        DecodePool decodePool(maxInFlight);
-        std::vector<std::future<QImage>> futures(pending.size());
+        const qint32 maxInFlight = getMaxInFlightDecodes();
+        QThreadPool decodePool;
+        decodePool.setMaxThreadCount(maxInFlight);
+        decodePool.setExpiryTimeout(-1);
+        std::vector<QFuture<QImage>> futures(pending.size());
         auto scheduleDecode = [&futures, &pending, &decodePool](std::size_t index)
         {
             QByteArray encoded;
@@ -235,9 +188,12 @@ namespace oxygine
             {
                 encoded = file.readAll();
             }
-            futures[index] = decodePool.submit(std::move(encoded));
+            QPromise<QImage> promise;
+            futures[index] = promise.future();
+            promise.start();
+            decodePool.start(new ImageDecodeRunnable(std::move(encoded), std::move(promise)));
         };
-        std::size_t nextToSchedule = std::min(maxInFlight, pending.size());
+        std::size_t nextToSchedule = std::min(static_cast<std::size_t>(maxInFlight), pending.size());
         for (std::size_t i = 0; i < nextToSchedule; ++i)
         {
             scheduleDecode(i);
@@ -253,9 +209,10 @@ namespace oxygine
         {
             auto & item = pending[i];
             sectionTimer.start();
-            QImage img = futures[i].get();
+            futures[i].waitForFinished();
+            QImage img = futures[i].resultCount() > 0 ? futures[i].result() : QImage();
             decodeWaitMs += sectionTimer.elapsed();
-            futures[i] = std::future<QImage>();
+            futures[i] = QFuture<QImage>();
             if (nextToSchedule < pending.size())
             {
                 scheduleDecode(nextToSchedule);
