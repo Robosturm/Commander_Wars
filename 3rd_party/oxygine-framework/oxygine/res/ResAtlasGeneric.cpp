@@ -2,7 +2,9 @@
 #include <QVariant>
 #include <QFile>
 
+#include <algorithm>
 #include <future>
+#include <thread>
 #include <vector>
 
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.h"
@@ -30,13 +32,25 @@ namespace oxygine
         {
             QString file;
             QString path;
+            QString filePath;
             QDomElement node;
             qint32 columns{1};
             qint32 rows{1};
             float scaleFactor{1.0f};
             quint32 linearFilter{0};
-            std::future<QImage> future;
         };
+
+        /**
+         * @brief Number of images decoded in parallel.
+         * This must stay bounded: an atlas can declare over 1300 images and launching a decode for
+         * every one of them at once creates that many OS threads and keeps every decoded RGBA image
+         * alive at the same time (the background atlas alone is ~350 MB decompressed).
+         */
+        std::size_t getMaxInFlightDecodes()
+        {
+            const unsigned int cores = std::thread::hardware_concurrency();
+            return std::clamp<std::size_t>(cores, 2, 8);
+        }
     }
 
     void ResAtlasGeneric::loadAtlas(CreateResourceContext& context)
@@ -125,19 +139,40 @@ namespace oxygine
                 }
             }
             item.linearFilter = linearFilter;
-            item.future = std::async(std::launch::async, [imgFilePath]()
-            {
-                QImage img(imgFilePath);
-                SpriteCreator::convertToRgba(img);
-                return std::move(img);
-            });
+            item.filePath = imgFilePath;
             pending.push_back(std::move(item));
         }
 
-        std::vector<spResAnim> anims;
-        for (auto & item : pending)
+        const std::size_t maxInFlight = getMaxInFlightDecodes();
+        std::vector<std::future<QImage>> futures(pending.size());
+        auto scheduleDecode = [&futures, &pending](std::size_t index)
         {
-            QImage img = item.future.get();
+            const QString filePath = pending[index].filePath;
+            futures[index] = std::async(std::launch::async, [filePath]()
+            {
+                QImage img(filePath);
+                SpriteCreator::convertToRgba(img);
+                return img;
+            });
+        };
+        std::size_t nextToSchedule = std::min(maxInFlight, pending.size());
+        for (std::size_t i = 0; i < nextToSchedule; ++i)
+        {
+            scheduleDecode(i);
+        }
+
+        std::vector<spResAnim> anims;
+        anims.reserve(pending.size());
+        for (std::size_t i = 0; i < pending.size(); ++i)
+        {
+            auto & item = pending[i];
+            QImage img = futures[i].get();
+            futures[i] = std::future<QImage>();
+            if (nextToSchedule < pending.size())
+            {
+                scheduleDecode(nextToSchedule);
+                ++nextToSchedule;
+            }
             if (img.width() == 0 || img.height() == 0)
             {
                 CONSOLE_PRINT("Image is not valid " + item.path, GameConsole::eWARNING);
