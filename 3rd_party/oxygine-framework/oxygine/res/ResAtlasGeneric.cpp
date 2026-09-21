@@ -1,5 +1,4 @@
 #include <QBuffer>
-#include <QCoreApplication>
 #include <QElapsedTimer>
 #include <QFuture>
 #include <QImageReader>
@@ -103,7 +102,6 @@ namespace oxygine
         std::vector<PendingImage> pending;
         while (true)
         {
-            QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
             XmlWalker walker = context.m_walker.next();
             if (walker.empty())
             {
@@ -203,7 +201,6 @@ namespace oxygine
         anims.reserve(pending.size());
         qint64 decodeWaitMs = 0;
         qint64 uploadMs = 0;
-        qint64 eventsMs = 0;
         QElapsedTimer sectionTimer;
         for (std::size_t i = 0; i < pending.size(); ++i)
         {
@@ -218,9 +215,6 @@ namespace oxygine
                 scheduleDecode(nextToSchedule);
                 ++nextToSchedule;
             }
-            sectionTimer.start();
-            QCoreApplication::processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 5);
-            eventsMs += sectionTimer.elapsed();
             if (img.width() == 0 || img.height() == 0)
             {
                 CONSOLE_PRINT("Image is not valid " + item.path, GameConsole::eWARNING);
@@ -241,8 +235,7 @@ namespace oxygine
         CONSOLE_PRINT("Loaded atlas " + context.m_xml_name + " with " + QString::number(anims.size()) +
                       " sprites in " + QString::number(atlasTimer.elapsed()) + " ms" +
                       " (decode wait " + QString::number(decodeWaitMs) + " ms" +
-                      ", gpu upload " + QString::number(uploadMs) + " ms" +
-                      ", events " + QString::number(eventsMs) + " ms)", GameConsole::eINFO);
+                      ", gpu upload " + QString::number(uploadMs) + " ms)", GameConsole::eINFO);
     }
 }
 
