@@ -469,6 +469,7 @@ void OptionMenue::selectMods(qint32 item)
 
 void OptionMenue::updateModCheckboxes()
 {
+    Mainapp::getInstance()->pauseRendering();
     const auto availableMods = Settings::getInstance()->getAvailableMods();
     const auto mods = Settings::getInstance()->getActiveMods();
     for (auto & checkbox : m_ModCheckboxes)
@@ -539,10 +540,12 @@ void OptionMenue::updateModCheckboxes()
         ++i;
     }
     updateModSelection();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void OptionMenue::updateModFilter(QString tag)
 {
+    Mainapp::getInstance()->pauseRendering();
     const auto mods = Settings::getInstance()->getAvailableMods();
     qint32 visibleCounter = 0;
     for (qint32 i = 0; i < m_ModBoxes.size(); ++i)
@@ -573,6 +576,7 @@ void OptionMenue::updateModFilter(QString tag)
         }
     }
     m_pMods->setContentHeigth(50 + visibleCounter * 50);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void OptionMenue::restart()
