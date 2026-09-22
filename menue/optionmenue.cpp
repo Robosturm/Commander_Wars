@@ -379,6 +379,7 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
                               QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,
                               bool isComsetic, QStringList modTags, QString thumbnail)
 {
+    Mainapp::getInstance()->pauseRendering();
     for (qint32 i2 = 0; i2 < m_ModBoxes.size(); i2++)
     {
         m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
@@ -443,6 +444,7 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
     m_ModDescriptionText->setHeight(m_ModDescriptionText->getTextRect().height());
     m_ModDescriptionText->setY(y);
     m_pModDescription->setContentHeigth(y + m_ModDescriptionText->getTextRect().height() + 40);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void OptionMenue::selectMods(qint32 item)
