@@ -1858,7 +1858,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
         qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
         qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu);
-        qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu);
+        qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu, DropDownmenuBase::DEFAULT_HEIGHT);
         qint32 spriteSize = getIntValue(getAttribute(childs, attrSpriteSize), id, loopIdx, pMenu);
         QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs, attrOnEvent);
