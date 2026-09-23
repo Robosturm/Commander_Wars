@@ -19,6 +19,7 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
 #ifdef GRAPHICSUPPORT
     setObjectName("COSelectionDialog");
 #endif
+    Mainapp::getInstance()->pauseRendering();
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
@@ -69,6 +70,7 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
     connect(this, &COSelectionDialog::canceled, this, &COSelectionDialog::remove, Qt::QueuedConnection);
     connect(this, &COSelectionDialog::sigFinished, this, &COSelectionDialog::remove, Qt::QueuedConnection);
     filterAndSortCoIds(coids);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void COSelectionDialog::filterAndSortCoIds(const QStringList & coids)
