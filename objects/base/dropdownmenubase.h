@@ -19,7 +19,8 @@ class DropDownmenuBase : public Tooltip
 {
     Q_OBJECT
 public:
-    explicit DropDownmenuBase(qint32 width, qint32 itemcount, qint32 height = 40);
+    static constexpr qint32 DEFAULT_HEIGHT = 40;
+    explicit DropDownmenuBase(qint32 width, qint32 itemcount, qint32 height = DEFAULT_HEIGHT);
     virtual ~DropDownmenuBase() = default;
     /**
      * @brief setEnabled
