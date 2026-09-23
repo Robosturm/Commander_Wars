@@ -111,12 +111,12 @@ void GameMap::importAWByWebMap(const QVector<QVector<quint32>> & mapIDs, QVector
                 {
                     if (info.id == "BRIDGE1")
                     {
-                        replaceTerrain("SEA", x, y, false, false, false);
-                        replaceTerrain(info.id, x, y, true, false, false);
+                        replaceTerrain("SEA", x, y, false, false, false, "", true, true, true);
+                        replaceTerrain(info.id, x, y, true, false, false, "", true, true, true);
                     }
                     else
                     {
-                        replaceTerrain(info.id, x, y, false, false, false);
+                        replaceTerrain(info.id, x, y, false, false, false, "", true, true, true);
 
                     }
                 }

@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getDefaultPalette = function()
     {
-        return "palette_clear+aw2";
+        return "palette_clear";
     };
     this.baseTerrainId = "PLAINS";
     this.loadBaseSprite = function(terrain, map)
