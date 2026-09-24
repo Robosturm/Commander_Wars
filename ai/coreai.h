@@ -361,7 +361,7 @@ public:
      * @param targets
      * @return
      */
-    TargetedUnitPathFindingSystem* createTargetedPfs(Unit* pUnit, const QVector<QVector3D> & targets);
+    Q_INVOKABLE TargetedUnitPathFindingSystem* createTargetedPfs(Unit* pUnit, const QVector<QVector3D> & targets);
 
 signals:
     /**
