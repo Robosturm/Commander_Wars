@@ -753,6 +753,7 @@ void LobbyMenu::requestPassword()
 
 void LobbyMenu::onLogin()
 {
+    
     enableServerButtons(true);
     m_loggedIn = true;
     requestServerGames();

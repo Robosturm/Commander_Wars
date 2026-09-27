@@ -791,6 +791,7 @@ void Mainapp::actAsSlave()
     Settings::getInstance()->setServer(false);
     Settings::getInstance()->setUsername("Server");
     m_slaveClient = MemoryManagement::create<TCPClient>(nullptr);
+    connect(m_slaveClient.get(), &TCPClient::sigDisconnected, this, &Mainapp::quit);
     m_slaveClient->moveToThread(getInstance()->getNetworkThread());
     CONSOLE_PRINT("Running as slave with name : " + Settings::getInstance()->getSlaveServerName(), GameConsole::eDEBUG);
 }
@@ -798,6 +799,10 @@ void Mainapp::actAsSlave()
 void Mainapp::setSlaveClient(spNetworkInterface & client)
 {
     m_slaveClient = client;
+    if (m_slaveClient.get() != nullptr)
+    {
+        connect(m_slaveClient.get(), &TCPClient::sigDisconnected, this, &Mainapp::quit);
+    }
 }
 
 void Mainapp::onActiveChanged()

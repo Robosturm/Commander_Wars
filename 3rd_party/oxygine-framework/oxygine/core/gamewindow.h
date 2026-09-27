@@ -137,7 +137,7 @@ protected slots:
 
     void quitApp();
     virtual void onQuit() = 0;
-    void quit(qint32 exitCode);
+    void quit(qint32 exitCode = 0);
     void showKeyboard(bool visible);
 
 protected:

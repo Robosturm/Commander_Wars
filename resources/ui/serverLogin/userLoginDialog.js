@@ -115,7 +115,6 @@ var UserLoginDialog =
         var passwordVariable = variables.createVariable("password");
         var password =  passwordVariable.readDataString();
         var menu = userLogin.getBaseMenu();
-        UserLoginDialog.changeEnableForItems(false);
         menu.loginToServerAccount(password);
         settings.setServerPassword(password);
     },    
@@ -132,36 +131,32 @@ var UserLoginDialog =
             {
                 userLogin.showMessageBox(qsTr("Logged onto the server."));
             }
+            UserLoginDialog.changeEnableForItems(false);
             menu.onLogin();
         }
         else if (errorCode === GameEnums.LoginError_WrongPassword)
         {
-            settings.setServerPassword("");
             userLogin.showMessageBox(qsTr("Your password isn't correct."));
             UserLoginDialog.changeEnableForItems(true);
         }
         else if (errorCode === GameEnums.LoginError_AccountDoesntExist)
         {
-            settings.setServerPassword("");
             userLogin.showMessageBox(qsTr("No account with your username was found."));
             UserLoginDialog.changeEnableForItems(true);
         }
         else if (errorCode === GameEnums.LoginError_PasswordOutdated)
         {
-            settings.setServerPassword("");
             menu.setServerRequestNewPassword(true);
             userLogin.createDialog("changePassword", "ui/serverLogin/changePasswordDialog.xml", menu);
             userLogin.exit();
         }
         else if (errorCode === GameEnums.LoginError_LoginLockedDueToTooManyFailedAttempts)
         {
-            settings.setServerPassword("");
             userLogin.showMessageBox(qsTr("Your account is locked due to too many failed login attempts. Please try again later."));
             UserLoginDialog.changeEnableForItems(true);
         }
         else
         {
-            settings.setServerPassword("");
             userLogin.showMessageBox(qsTr("Unknown error happened."));
             UserLoginDialog.changeEnableForItems(true);
         }
