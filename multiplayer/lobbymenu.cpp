@@ -1,7 +1,6 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
-#include <QRegularExpression>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -753,7 +752,7 @@ void LobbyMenu::requestPassword()
 
 void LobbyMenu::onLogin()
 {
-    
+
     enableServerButtons(true);
     m_loggedIn = true;
     requestServerGames();
@@ -834,23 +833,12 @@ void LobbyMenu::setServerRequestNewPassword(bool newServerRequestNewPassword)
 
 bool LobbyMenu::isValidEmailAdress(const QString emailAdress)
 {
-    static const QRegularExpression regex("(?:[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+)*|\""
-                                          "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]"
-                                          "|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-zA-Z0-9]"
-                                          "(?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|"
-                                          "\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]"
-                                          "|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:"
-                                          "[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\"
-                                          "[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
-    auto match = regex.match(emailAdress);
-    return match.hasMatch() && match.capturedLength() == emailAdress.length();
+    return MainServer::isValidEmailAdress(emailAdress);
 }
 
 bool LobbyMenu::isValidPassword(const QString password)
 {
-    static const QRegularExpression regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
-    auto match = regex.match(password);
-    return match.hasMatch();
+    return MainServer::isValidPassword(password);
 }
 
 void LobbyMenu::createServerAccount(const QString passwordString, const QString emailAdress)

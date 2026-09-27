@@ -241,6 +241,8 @@ public:
      * @return
      */
     static QSqlQuery getAccountInfo(QSqlDatabase & database, const QString & username, bool & success);
+    static bool isValidEmailAdress(const QString emailAdress);
+    static bool isValidPassword(const QString password);
     /**
      * @brief resetAccountPassword
      * @param socketId

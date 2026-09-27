@@ -402,6 +402,7 @@ public:
         LoginError_2faSetupExpired,
         LoginError_LoginLockedDueToTooManyFailedAttempts,
         LoginError_2faLockedDueToTooManyFailedAttempts,
+        LoginError_InvalidEmailAdress,
     };
     Q_ENUM(LoginError)
 

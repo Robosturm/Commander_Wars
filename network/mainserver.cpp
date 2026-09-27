@@ -8,6 +8,8 @@
 #include <QSqlQuery>
 #include <QDateTime>
 #include <QTextStream>
+#include <QUrl>
+#include <QRegularExpression>
 
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
@@ -1443,6 +1445,57 @@ bool MainServer::getNextFreeSlaveAddress(QString &address, quint16 &port, QStrin
     return success;
 }
 
+bool MainServer::isValidEmailAdress(const QString emailAdress)
+{
+    // practical RFC 5321/5322 subset: dot-atom local part and a DNS host name (no quoted strings, comments or IP literals)
+    static const QRegularExpression localPartRegex(QRegularExpression::anchoredPattern(
+        "[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*"));
+    static const QRegularExpression labelRegex(QRegularExpression::anchoredPattern(
+        "[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?"));
+    static const QRegularExpression topLevelRegex(QRegularExpression::anchoredPattern(
+        "[A-Za-z]{2,63}|xn--[A-Za-z0-9-]{1,59}"));
+    constexpr qint32 MAX_ADDRESS_LENGTH = 254;
+    constexpr qint32 MAX_LOCAL_PART_LENGTH = 64;
+    constexpr qint32 MAX_DOMAIN_LENGTH = 253;
+
+    const qint32 atPos = emailAdress.lastIndexOf(QLatin1Char('@'));
+    if (atPos <= 0 || atPos == emailAdress.length() - 1)
+    {
+        return false;
+    }
+    const QString localPart = emailAdress.left(atPos);
+    // internationalized domains are converted to punycode, invalid ones yield an empty string
+    const QString domain = QString::fromLatin1(QUrl::toAce(emailAdress.mid(atPos + 1)));
+    if (localPart.length() > MAX_LOCAL_PART_LENGTH ||
+        domain.isEmpty() ||
+        domain.length() > MAX_DOMAIN_LENGTH ||
+        localPart.length() + 1 + domain.length() > MAX_ADDRESS_LENGTH ||
+        !localPartRegex.match(localPart).hasMatch())
+    {
+        return false;
+    }
+    const QStringList labels = domain.split(QLatin1Char('.'));
+    if (labels.size() < 2 || !topLevelRegex.match(labels.constLast()).hasMatch())
+    {
+        return false;
+    }
+    for (const auto & label : labels)
+    {
+        if (!labelRegex.match(label).hasMatch())
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool MainServer::isValidPassword(const QString password)
+{
+    static const QRegularExpression regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+    auto match = regex.match(password);
+    return match.hasMatch();
+}
+
 void MainServer::createAccount(qint64 socketId, const QJsonObject &objData)
 {
     QByteArray password = GlobalUtils::toByteArray(objData.value(JsonKeys::JSONKEY_PASSWORD).toArray());
@@ -1452,7 +1505,11 @@ void MainServer::createAccount(qint64 socketId, const QJsonObject &objData)
     bool success = false;
     QSqlQuery query = getAccountInfo(*m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
-    if (!query.first() && success)
+    if (!isValidEmailAdress(mailAdress))
+    {
+        result = GameEnums::LoginError_InvalidEmailAdress;
+    }
+    else if (!query.first() && success)
     {
         auto hexPassword = password.toHex();
         QString dateTime = QDateTime::currentDateTimeUtc().toString();

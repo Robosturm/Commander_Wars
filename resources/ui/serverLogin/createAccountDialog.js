@@ -111,6 +111,11 @@ var CreateAccountDialog =
             createAccount.showMessageBox(qsTr("An account with the current username exists already. Please change your username in the options menu."));
             CreateAccountDialog.changeEnableForItems(true);
         }
+        else if (errorCode === GameEnums.LoginError_InvalidEmailAdress)
+        {
+            createAccount.showMessageBox(qsTr("You entered an invalid email address."));
+            CreateAccountDialog.changeEnableForItems(true);
+        }
         else
         {
             createAccount.showMessageBox(qsTr("Unknown error happened while creating the new account. No account was created."));
