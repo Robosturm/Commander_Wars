@@ -36,6 +36,7 @@ namespace oxygine
         void sigRestartAllTweens(oxygine::spActor actor);
         void sigSyncAllTweens(oxygine::spActor actor, oxygine::timeMS syncTime);
         void sigAddChild(oxygine::spActor parent, oxygine::spActor actor);
+        void sigAsyncAddChild(oxygine::spActor parent, oxygine::spActor actor);
         void sigRemoveChild(oxygine::spActor parent, oxygine::spActor actor);
         void sigDetachAndRemove(oxygine::spActor actor);
         void sigDetach(oxygine::spActor actor);

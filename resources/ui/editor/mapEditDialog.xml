@@ -140,7 +140,7 @@
                 <width>250</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The height of the map.")</tooltip>
                 <startValue>mapEdit.getMapHeight()</startValue>
-                <infinite>1</infinite>
+                <infinite>0</infinite>
                 <min>1</min>
                 <max>999</max>
                 <onEvent>mapEdit.setMapHeight(input)</onEvent>

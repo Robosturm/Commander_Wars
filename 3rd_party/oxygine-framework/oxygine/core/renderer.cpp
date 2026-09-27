@@ -33,7 +33,6 @@ void Renderer::connectSignals()
     {
         conntectionType = Qt::AutoConnection;
     }
-    connect(this, &Renderer::sigLoadResources, this, &Renderer::asyncLoadResources, Qt::QueuedConnection);
     connect(this, &Renderer::sigSyncLoadResources, this, &Renderer::loadResources, conntectionType);
     connect(this, &Renderer::sigStart, this, &Renderer::start, conntectionType);
     connect(this, &Renderer::sigResize, this, &Renderer::resize, conntectionType);
@@ -45,7 +44,7 @@ void Renderer::connectSignals()
     connect(this, &Renderer::sigSetColorTable, this, &Renderer::setColorTable, conntectionType);
     connect(this, &Renderer::sigRestartAllTweens, this, &Renderer::restartAllTweens, conntectionType);
     connect(this, &Renderer::sigSyncAllTweens, this, &Renderer::syncAllTweens, conntectionType);
-    connect(this, &Renderer::sigAddChild, this, &Renderer::addChild, conntectionType);
+    connect(this, &Renderer::sigAddChild, this, &Renderer::addChild, conntectionType);    
     connect(this, &Renderer::sigRemoveChild, this, &Renderer::removeChild, conntectionType);
     connect(this, &Renderer::sigSetPriority, this, &Renderer::setPriority, conntectionType);
     connect(this, &Renderer::sigAddTween, this, &Renderer::addTween, conntectionType);
@@ -58,6 +57,9 @@ void Renderer::connectSignals()
     connect(this, &Renderer::sigDetachAndRemove, this, &Renderer::detachAndRemove, conntectionType);
     connect(this, &Renderer::sigDetach, this, &Renderer::detach, conntectionType);
     connect(this, &Renderer::sigQuit, this, &Renderer::quit, conntectionType);
+    // asynchronous connections
+    connect(this, &Renderer::sigAsyncAddChild, this, &Renderer::addChild, Qt::QueuedConnection);
+    connect(this, &Renderer::sigLoadResources, this, &Renderer::asyncLoadResources, Qt::QueuedConnection);
 }
 
 void Renderer::asyncLoadResources(qint32 step)
