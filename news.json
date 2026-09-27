@@ -124,7 +124,7 @@
         "           <QrCode>",
         "               <Id>QrCodeBox</Id>",
         "               <x>settings.getStageWidth() / 2 - 100</x>",
-        "               <y>10</y>",
+        "               <y>lastY + lastHeight + 30</y>",
         "               <content>https://github.com/Robosturm/Commander_Wars/wiki/Beta-Release-39</content>",
         "           </QrCode>",
         "           <Label>",
