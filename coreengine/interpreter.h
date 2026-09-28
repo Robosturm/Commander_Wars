@@ -95,10 +95,7 @@ public slots:
         exitJsCall();
         if (ret.isError())
         {
-            QString error = ret.toString() + " in File: " +
-                            ret.property("fileName").toString() + " at Line: " +
-                            ret.property("lineNumber").toString();
-            printError(error);
+            printError(ret);
         }
         return ret;
     }
@@ -117,10 +114,7 @@ public slots:
                 exitJsCall();
                 if (ret.isError())
                 {
-                    QString error = ret.toString() + " in File: " +
-                                    ret.property("fileName").toString() + " at Line: " +
-                                    ret.property("lineNumber").toString();
-                    printError(error);
+                    printError(ret);
                 }
             }
         }
@@ -222,6 +216,7 @@ private:
         }
     }
     void printError(const QString & msg);
+    void printError(const QJSValue & value);
 private:
     static spInterpreter m_pInstance;
     static QString m_runtimeData;

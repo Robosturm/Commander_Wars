@@ -169,10 +169,7 @@ bool Interpreter::openScript(const QString & script, bool setup)
         QJSValue value = evaluate(contents, scriptName);
         if (value.isError())
         {
-            QString error = value.toString() + " in File:" + script + " in File: " +
-                            value.property("fileName").toString() + " at Line: " +
-                            value.property("lineNumber").toString();
-            CONSOLE_PRINT(error, GameConsole::eERROR);
+            printError(value);
         }
         else
         {
@@ -191,10 +188,7 @@ bool Interpreter::loadScript(const QString & content, const QString & script)
     QJSValue value = evaluate(content, scriptName);
     if (value.isError())
     {
-        QString error = value.toString() + " in script " + script + " in File: " +
-                        value.property("fileName").toString() + " at Line: " +
-                        value.property("lineNumber").toString();
-        CONSOLE_PRINT(error, GameConsole::eERROR);
+        printError(value);
     }
     else
     {
@@ -211,9 +205,19 @@ QJSValue Interpreter::doString(const QString & task)
     exitJsCall();
     if (value.isError())
     {
-        CONSOLE_PRINT(value.toString(), GameConsole::eERROR);
+        printError(value);
     }
     return value;
+}
+
+void Interpreter::printError(const QJSValue & value)
+{
+    QString error = "";
+    error += value.toString() + " in File: " +
+             value.property("fileName").toString() + " at Line: " +
+             value.property("lineNumber").toString();
+    error += "\nStack:\n" + value.property("stack").toString() + "\n";
+    printError(error);
 }
 
 void Interpreter::pushInt(const QString & name, qint32 value)
