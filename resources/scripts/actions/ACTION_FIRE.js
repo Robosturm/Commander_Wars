@@ -299,14 +299,12 @@ var Constructor = function()
             damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive, luckDamage, attacker.getMap());
             if (fastInaccurate === false)
             {
-                var damageContext = {weapon: attackerWeapon, hp: attackerHp, baseDamage: baseDamage,
+                var damageContext = {weapon: attackerWeapon, hp: attackerHp, baseHp: attackerBaseHp, baseDamage: baseDamage,
                                      offensive: offensive, defensive: defensive, luckDamage: luckDamage};
                 damage += attacker.getTrueDamage(action, damage, attackerPosition, attackerBaseHp,
                                                  defender, defenderPosition, isDefender, luckMode, damageContext);
-                damage -= defender.getDamageReduction(action, damage, attacker, attackerPosition, attackerBaseHp,
-                                                      defenderPosition, isDefender, luckMode);
-                damage -= ACTION_FIRE.predictSupportDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
-                                                                    defenderPosition, defender, luckMode);
+                damage = ACTION_FIRE.getReducedDamage(action, damage, attacker, attackerPosition, attackerBaseHp,
+                                                       defender, defenderPosition, isDefender, luckMode);
             }
             // avoid healing through negativ damage caused by misfortune or other stuff
             if (damage <= 0.0)
@@ -323,6 +321,16 @@ var Constructor = function()
         return Global[damageContext.weapon].calculateDamage(damageContext.hp, damageContext.baseDamage,
                                                             damageContext.offensive, damageContext.defensive,
                                                             luckDamage, map);
+    };
+
+    this.getReducedDamage = function(action, damage, attacker, attackerPosition, attackerBaseHp,
+                                     defender, defenderPosition, isDefender, luckMode)
+    {
+        damage -= defender.getDamageReduction(action, damage, attacker, attackerPosition, attackerBaseHp,
+                                              defenderPosition, isDefender, luckMode);
+        damage -= ACTION_FIRE.predictSupportDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
+                                                            defenderPosition, defender, luckMode);
+        return damage;
     };
 
     this.predictSupportDamageReduction = function(damage, attacker, attackerPosition, attackerBaseHp,
