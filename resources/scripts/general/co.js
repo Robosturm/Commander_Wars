@@ -226,7 +226,7 @@ var CO =
     },
     activatePower : null,
 
-    activateSuperpower : function(co, map)
+    activateSuperpower : function(co, powerMode, map)
     {
     },
     activateSuperpower : null,
