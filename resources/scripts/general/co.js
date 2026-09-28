@@ -311,8 +311,8 @@ var CO =
         return "OS";
     },
 
-    starFundsCost = 10000,
-    starHpCost = 10.0,
+    starFundsCost : 10000,
+    starHpCost : 10.0,
     getStarGain : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
     {
         var gamerules = map.getGameRules();
