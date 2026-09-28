@@ -36,7 +36,6 @@ var CO =
         }
         return value;
     },
-    getCoGroupModifier : null,
 
     loadCOMusic : function(co, map)
     {
