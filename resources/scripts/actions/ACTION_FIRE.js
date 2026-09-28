@@ -239,8 +239,11 @@ var Constructor = function()
                 {
                     var luck = ACTION_FIRE.getDefaultLuck(attacker) + attacker.getBonusLuck(attackerPosition);
                     var misfortune = attacker.getBonusMisfortune(attackerPosition);
-                    // only roll if we have valid luck misfortune pair
-                    if (luck > -misfortune)
+                    if (luck === -misfortune)
+                    {
+                        luckDamage = luck;
+                    }
+                    else if (luck > -misfortune)
                     {
                         if (luckMode === GameEnums.LuckDamageMode_On)
                         {
