@@ -70,6 +70,7 @@ public:
 private:
     bool m_abortOnCostExceed{true};
     std::vector<QVector3D> & m_Targets;
+    std::vector<qint32> m_remainingCosts;
     std::vector<FinishNodeInfo> m_FinishNodes;
     std::vector<std::vector<std::tuple<qint32, bool>>>* m_pMoveCostMap;
     qint32 m_endCosts{-1};

@@ -5,6 +5,7 @@
 TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, std::vector<QVector3D>& targets, std::vector<std::vector<std::tuple<qint32, bool>>>* pMoveCostMap, qint32 maxTargets)
     : UnitPathFindingSystem(pMap, pUnit),
       m_Targets(targets),
+      m_remainingCosts(m_width * m_height, infinite),
       m_pMoveCostMap(pMoveCostMap)
 {
 #ifdef GRAPHICSUPPORT
@@ -36,23 +37,33 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit
 
 qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)
 {
-    qint32 minCost = -1;
-    if (!m_abortOnCostExceed || currentCost <= m_Movepoints)
+    if (m_abortOnCostExceed && currentCost > m_Movepoints)
     {
-        for (auto & target : m_Targets)
+        return -1;
+    }
+    const qint32 index = getIndex(x, y);
+    if (x >= 0 && x < m_width && y >= 0 && y < m_height && m_remainingCosts[index] != infinite)
+    {
+        return m_remainingCosts[index];
+    }
+    qint32 minCost = -1;
+    for (auto & target : m_Targets)
+    {
+        qint32 cost = static_cast<qint32>(qAbs(static_cast<qint32>(target.x()) - x) +
+                                          qAbs(static_cast<qint32>(target.y()) - y)) * target.z() +
+                      static_cast<qint32>(m_pUnit->getBaseMovementPoints() * (target.z() - 1.0));
+        if (cost < minCost)
         {
-            qint32 cost = static_cast<qint32>(qAbs(static_cast<qint32>(target.x()) - x) +
-                                              qAbs(static_cast<qint32>(target.y()) - y)) * target.z() +
-                          static_cast<qint32>(m_pUnit->getBaseMovementPoints() * (target.z() - 1.0));
-            if (cost < minCost)
-            {
-                minCost = cost;
-            }
-            else if (minCost < 0)
-            {
-                minCost = cost;
-            }
+            minCost = cost;
         }
+        else if (minCost < 0)
+        {
+            minCost = cost;
+        }
+    }
+    if (x >= 0 && x < m_width && y >= 0 && y < m_height)
+    {
+        m_remainingCosts[index] = minCost;
     }
     return minCost;
 }

@@ -208,7 +208,7 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
 #ifdef AUDIOSUPPORT
             if (m_useAudioThread)
             {
-                m_audioThread->start(QThread::Priority::NormalPriority);
+                m_audioThread->start(QThread::Priority::HighPriority);
                 m_AudioManager->moveToThread(m_audioThread.get());
             }
             m_AudioManager->initAudio();

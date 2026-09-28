@@ -27,8 +27,9 @@ struct SoundData : public QObject
     QUrl cacheUrl;
     QString m_filePath;
     qint32 m_maxUseCount{0};
-    qint32 m_currentUseCount{0};
-    std::vector<float> m_samples; // Interleaved stereo float PCM
+    /** shared between the audio thread and the PortAudio callback */
+    std::atomic<qint32> m_currentUseCount{0};
+    std::vector<float> m_samples; // Interleaved stereo float PCM, fully decoded in ram
     qint64 m_totalFrames{0};
     SoundData();
 };
@@ -212,6 +213,9 @@ protected:
     bool openStream(const QString& deviceName);
     // reopens the stream if the default output device changed or the stream died unexpectedly
     void checkAudioDeviceChanged();
+    // reopens the stream if the callback didn't run for a while e.g. after the process was suspended by a debugger
+    void checkStreamStalled();
+    void cacheCurrentMusicPosition();
 
 #ifdef AUDIOSUPPORT
     static int paCallback(const void* inputBuffer, void* outputBuffer,
@@ -219,6 +223,9 @@ protected:
                           const PaStreamCallbackTimeInfo* timeInfo,
                           PaStreamCallbackFlags statusFlags,
                           void* userData);
+    bool mixMusic(float* out, qint64 frames, float totalVolume);
+    bool mixSounds(float* out, qint64 frames, float totalVolume);
+    static qint64 monotonicMs();
 #endif
 
 private:
@@ -239,13 +246,15 @@ private:
 #ifdef AUDIOSUPPORT
     struct SoundVoice
     {
+        /** guards the playback state below, the callback skips voices it can't lock */
+        std::mutex mutex;
         spSoundData soundData;
         qint64 currentFrame{0};
         qint32 remainingLoops{1};
-        qint32 delayFrames{0};
-        qint32 remainingDurationFrames{-1};
+        qint64 delayFrames{0};
+        qint64 remainingDurationFrames{-1};
         float volume{1.0f};
-        bool active{false};
+        std::atomic<bool> active{false};
         qint64 age{0};
     };
 
@@ -256,16 +265,17 @@ private:
         qint64 totalFrames{0};
         qint64 loopStartFrame{0};
         qint64 loopEndFrame{0};
-        bool isPlaying{false};
+        std::atomic<bool> isPlaying{false};
         float volume{1.0f};
         QString currentFile;
-        qint32 currentMediaIndex{-1};
-        qint32 nextMediaIndex{-1};
+        std::atomic<qint32> currentMediaIndex{-1};
+        std::atomic<qint32> nextMediaIndex{-1};
     };
 
     PaStream* m_paStream{nullptr};
     qint32 m_sampleRate{44100};
-    std::mutex m_audioMutex;
+    /** guards the music buffer, only locked while the buffer is read or swapped */
+    std::mutex m_musicMutex;
     QString m_currentDeviceName;
     PaDeviceIndex m_lastDefaultDevice{paNoDevice};
     qint32 m_deviceCheckTicks{0};
@@ -276,12 +286,15 @@ private:
 
     MusicState m_musicState;
     std::atomic<bool> m_trackEndedFlag{false};
+    std::atomic<qint64> m_lastCallbackTimeMs{0};
+    std::atomic<qint64> m_fadeInFramesRemaining{0};
+    qint64 m_fadeInFramesTotal{0};
     QTimer m_pollTimer;
 
-    float m_musicVolume{1.0f};
-    float m_soundVolume{1.0f};
-    float m_totalVolume{1.0f};
-    bool m_isMuted{false};
+    std::atomic<float> m_musicVolume{1.0f};
+    std::atomic<float> m_soundVolume{1.0f};
+    std::atomic<float> m_totalVolume{1.0f};
+    std::atomic<bool> m_isMuted{false};
 
     QVector<PlaylistData> m_PlayListdata;
     QMap<QString, spSoundData> m_soundCaches;
@@ -290,7 +303,7 @@ private:
 
     bool m_loadBaseGameFolders{true};
     bool m_noAudio{false};
-    bool m_internalMuted{false};
+    std::atomic<bool> m_internalMuted{false};
 };
 
 Q_DECLARE_INTERFACE(AudioManager, "AudioManager");

@@ -18,6 +18,7 @@
 #include <QDomDocument>
 
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <limits>
 
@@ -26,6 +27,26 @@ namespace
     /** poll timer ticks between two device checks, the timer itself runs at 50 ms for track ends */
     constexpr qint32 DEVICE_CHECK_TICK_INTERVAL = 200;
     constexpr qint32 MAX_FAILED_REOPEN_ATTEMPTS = 5;
+    /** if the callback didn't run for this long the stream is considered dead, e.g. after a debugger suspended the process */
+    constexpr qint64 STREAM_STALL_TIMEOUT_MS = 500;
+    /** short ramp after (re)opening a stream to avoid clicks */
+    constexpr qint64 FADE_IN_MS = 20;
+    /** lower bound for the output buffer latency, the device "low latency" values are prone to underruns (crackling) */
+    constexpr double MIN_OUTPUT_LATENCY_S = 0.08;
+    /** samples above this level are compressed smoothly instead of being hard clipped */
+    constexpr float SOFT_CLIP_THRESHOLD = 0.8f;
+
+    inline float softClip(float x)
+    {
+        const float absX = std::fabs(x);
+        if (absX <= SOFT_CLIP_THRESHOLD)
+        {
+            return x;
+        }
+        constexpr float range = 1.0f - SOFT_CLIP_THRESHOLD;
+        const float compressed = SOFT_CLIP_THRESHOLD + range * std::tanh((absX - SOFT_CLIP_THRESHOLD) / range);
+        return std::copysign(compressed, x);
+    }
 }
 
 SoundData::SoundData()
@@ -84,6 +105,7 @@ void AudioManager::stopAudio()
     {
         CONSOLE_PRINT_MODULE("Stopping audio", GameConsole::eDEBUG, GameConsole::eAudio);
         m_pollTimer.stop();
+        m_lastCallbackTimeMs.store(0, std::memory_order_relaxed);
         if (m_paStream)
         {
             Pa_StopStream(m_paStream);
@@ -136,6 +158,7 @@ void AudioManager::initAudio()
                 {
                     SlotPlayRandom();
                 }
+                checkStreamStalled();
                 ++m_deviceCheckTicks;
                 if (m_deviceCheckTicks >= DEVICE_CHECK_TICK_INTERVAL)
                 {
@@ -212,7 +235,7 @@ bool AudioManager::openStream(const QString& deviceName)
     outParams.device = targetDevice;
     outParams.channelCount = 2;
     outParams.sampleFormat = paFloat32;
-    outParams.suggestedLatency = devInfo ? devInfo->defaultLowOutputLatency : 0.050;
+    outParams.suggestedLatency = devInfo ? std::max(devInfo->defaultHighOutputLatency, MIN_OUTPUT_LATENCY_S) : MIN_OUTPUT_LATENCY_S;
     outParams.hostApiSpecificStreamInfo = nullptr;
 
     PaError err = Pa_OpenStream(
@@ -238,6 +261,9 @@ bool AudioManager::openStream(const QString& deviceName)
         CONSOLE_PRINT_MODULE("Pa_StartStream failed: " + QString::fromUtf8(Pa_GetErrorText(err)), GameConsole::eERROR, GameConsole::eAudio);
         return false;
     }
+    m_fadeInFramesTotal = (FADE_IN_MS * m_sampleRate) / 1000;
+    m_fadeInFramesRemaining.store(m_fadeInFramesTotal, std::memory_order_relaxed);
+    m_lastCallbackTimeMs.store(monotonicMs(), std::memory_order_relaxed);
 
     return true;
 #else
@@ -247,6 +273,154 @@ bool AudioManager::openStream(const QString& deviceName)
 }
 
 #ifdef AUDIOSUPPORT
+qint64 AudioManager::monotonicMs()
+{
+    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+}
+
+bool AudioManager::mixMusic(float* out, qint64 frames, float totalVolume)
+{
+    if (!m_musicState.isPlaying.load(std::memory_order_relaxed))
+    {
+        return false;
+    }
+    std::unique_lock<std::mutex> lock(m_musicMutex, std::try_to_lock);
+    if (!lock.owns_lock())
+    {
+        return false;
+    }
+    auto & ms = m_musicState;
+    if (!ms.isPlaying.load(std::memory_order_relaxed) || ms.samples.empty() || ms.totalFrames <= 0)
+    {
+        return false;
+    }
+    const float musicVol = ms.volume * m_musicVolume.load(std::memory_order_relaxed) * totalVolume;
+    const float * samples = ms.samples.data();
+    const qint64 endFrame = (ms.loopEndFrame > 0 && ms.loopEndFrame < ms.totalFrames) ? ms.loopEndFrame : ms.totalFrames;
+    const qint64 startFrame = (ms.loopStartFrame >= 0 && ms.loopStartFrame < endFrame) ? ms.loopStartFrame : 0;
+    qint64 written = 0;
+    bool mixed = false;
+    while (written < frames)
+    {
+        if (ms.currentFrame >= endFrame || ms.currentFrame < 0)
+        {
+            const qint32 current = ms.currentMediaIndex.load(std::memory_order_relaxed);
+            const qint32 next = ms.nextMediaIndex.load(std::memory_order_relaxed);
+            if (current == next || next < 0)
+            {
+                ms.currentFrame = startFrame;
+            }
+            else
+            {
+                ms.isPlaying.store(false, std::memory_order_relaxed);
+                m_trackEndedFlag.store(true, std::memory_order_relaxed);
+                break;
+            }
+        }
+        const qint64 chunk = std::min(frames - written, endFrame - ms.currentFrame);
+        const float * src = samples + ms.currentFrame * 2;
+        float * dst = out + written * 2;
+        for (qint64 i = 0; i < chunk * 2; ++i)
+        {
+            dst[i] += src[i] * musicVol;
+        }
+        ms.currentFrame += chunk;
+        written += chunk;
+        mixed = true;
+    }
+    return mixed;
+}
+
+bool AudioManager::mixSounds(float* out, qint64 frames, float totalVolume)
+{
+    const float sfxBaseVol = m_soundVolume.load(std::memory_order_relaxed) * totalVolume;
+    bool mixed = false;
+    for (qint32 v = 0; v < MAX_PARALLEL_SOUNDS; ++v)
+    {
+        auto & voice = m_soundVoices[v];
+        if (!voice.active.load(std::memory_order_acquire))
+        {
+            continue;
+        }
+        // a voice that is currently being modified is skipped instead of stalling the whole mix
+        std::unique_lock<std::mutex> lock(voice.mutex, std::try_to_lock);
+        if (!lock.owns_lock() || !voice.active.load(std::memory_order_relaxed) || voice.soundData == nullptr)
+        {
+            continue;
+        }
+        const SoundData & data = *voice.soundData;
+        const qint64 totalFrames = data.m_totalFrames;
+        if (totalFrames <= 0 || data.m_samples.empty())
+        {
+            continue;
+        }
+
+        qint64 written = 0;
+        if (voice.delayFrames > 0)
+        {
+            const qint64 skipped = std::min(voice.delayFrames, frames);
+            voice.delayFrames -= skipped;
+            written = skipped;
+        }
+        const float voiceVol = voice.volume * sfxBaseVol;
+        const float * samples = data.m_samples.data();
+        bool finished = false;
+        while (written < frames)
+        {
+            if (voice.currentFrame >= totalFrames)
+            {
+                if (voice.remainingLoops > 1)
+                {
+                    --voice.remainingLoops;
+                    voice.currentFrame = 0;
+                }
+                else if (voice.remainingLoops < 0)
+                {
+                    voice.currentFrame = 0;
+                }
+                else
+                {
+                    finished = true;
+                    break;
+                }
+            }
+            qint64 chunk = std::min(frames - written, totalFrames - voice.currentFrame);
+            if (voice.remainingDurationFrames > 0)
+            {
+                chunk = std::min(chunk, voice.remainingDurationFrames);
+            }
+            const float * src = samples + voice.currentFrame * 2;
+            float * dst = out + written * 2;
+            for (qint64 i = 0; i < chunk * 2; ++i)
+            {
+                dst[i] += src[i] * voiceVol;
+            }
+            voice.currentFrame += chunk;
+            written += chunk;
+            mixed = true;
+            if (voice.remainingDurationFrames > 0)
+            {
+                voice.remainingDurationFrames -= chunk;
+                if (voice.remainingDurationFrames <= 0)
+                {
+                    finished = true;
+                    break;
+                }
+            }
+        }
+        if (finished)
+        {
+            voice.active.store(false, std::memory_order_release);
+            auto & useCount = voice.soundData->m_currentUseCount;
+            qint32 current = useCount.load(std::memory_order_relaxed);
+            while (current > 0 && !useCount.compare_exchange_weak(current, current - 1, std::memory_order_relaxed))
+            {
+            }
+        }
+    }
+    return mixed;
+}
+
 int AudioManager::paCallback(const void* inputBuffer, void* outputBuffer,
                              unsigned long framesPerBuffer,
                              const PaStreamCallbackTimeInfo* timeInfo,
@@ -258,142 +432,48 @@ int AudioManager::paCallback(const void* inputBuffer, void* outputBuffer,
     Q_UNUSED(statusFlags);
     auto* self = static_cast<AudioManager*>(userData);
     float* out = static_cast<float*>(outputBuffer);
-    if (!out)
+    if (out == nullptr)
     {
         return paContinue;
     }
+    const qint64 frames = static_cast<qint64>(framesPerBuffer);
+    std::fill(out, out + frames * 2, 0.0f);
+    self->m_lastCallbackTimeMs.store(monotonicMs(), std::memory_order_relaxed);
 
-    std::fill(out, out + framesPerBuffer * 2, 0.0f);
-
-    std::unique_lock<std::mutex> lock(self->m_audioMutex, std::try_to_lock);
-    if (!lock.owns_lock())
+    if (self->m_isMuted.load(std::memory_order_relaxed) || self->m_internalMuted.load(std::memory_order_relaxed))
     {
         return paContinue;
     }
-
-    if (self->m_isMuted || self->m_internalMuted)
-    {
-        return paContinue;
-    }
-
-    float totalVol = self->m_totalVolume;
+    const float totalVol = self->m_totalVolume.load(std::memory_order_relaxed);
     if (totalVol <= 0.0f)
     {
         return paContinue;
     }
 
-    // Mix music
-    if (self->m_musicState.isPlaying && !self->m_musicState.samples.empty())
+    bool mixed = self->mixMusic(out, frames, totalVol);
+    mixed = self->mixSounds(out, frames, totalVol) || mixed;
+    if (!mixed)
     {
-        float musicVol = self->m_musicState.volume * self->m_musicVolume * totalVol;
-        auto& ms = self->m_musicState;
-
-        for (unsigned long i = 0; i < framesPerBuffer; ++i)
-        {
-            if (ms.loopEndFrame > 0 && ms.currentFrame >= ms.loopEndFrame)
-            {
-                if (ms.currentMediaIndex == ms.nextMediaIndex || ms.nextMediaIndex < 0)
-                {
-                    ms.currentFrame = ms.loopStartFrame;
-                }
-                else
-                {
-                    ms.isPlaying = false;
-                    self->m_trackEndedFlag.store(true, std::memory_order_relaxed);
-                    break;
-                }
-            }
-            else if (ms.currentFrame >= ms.totalFrames)
-            {
-                if (ms.currentMediaIndex == ms.nextMediaIndex)
-                {
-                    ms.currentFrame = ms.loopStartFrame;
-                }
-                else
-                {
-                    ms.isPlaying = false;
-                    self->m_trackEndedFlag.store(true, std::memory_order_relaxed);
-                    break;
-                }
-            }
-
-            if (ms.currentFrame < ms.totalFrames)
-            {
-                out[i * 2 + 0] += ms.samples[ms.currentFrame * 2 + 0] * musicVol;
-                out[i * 2 + 1] += ms.samples[ms.currentFrame * 2 + 1] * musicVol;
-                ms.currentFrame++;
-            }
-        }
+        return paContinue;
     }
 
-    // Mix sound effects
-    float sfxBaseVol = self->m_soundVolume * totalVol;
-    for (qint32 v = 0; v < MAX_PARALLEL_SOUNDS; ++v)
+    qint64 fadeIn = self->m_fadeInFramesRemaining.load(std::memory_order_relaxed);
+    if (fadeIn > 0)
     {
-        auto& voice = self->m_soundVoices[v];
-        if (!voice.active || !voice.soundData || voice.soundData->m_samples.empty() || voice.soundData->m_totalFrames <= 0)
+        const float fadeTotal = static_cast<float>(self->m_fadeInFramesTotal);
+        const qint64 fadeFrames = std::min(fadeIn, frames);
+        for (qint64 i = 0; i < fadeFrames; ++i)
         {
-            continue;
+            const float gain = 1.0f - static_cast<float>(fadeIn - i) / fadeTotal;
+            out[i * 2 + 0] *= gain;
+            out[i * 2 + 1] *= gain;
         }
-
-        float voiceVol = voice.volume * sfxBaseVol;
-        const auto& samples = voice.soundData->m_samples;
-        qint64 totalFrames = voice.soundData->m_totalFrames;
-
-        for (unsigned long i = 0; i < framesPerBuffer; ++i)
-        {
-            if (voice.delayFrames > 0)
-            {
-                voice.delayFrames--;
-                continue;
-            }
-
-            if (voice.remainingDurationFrames > 0)
-            {
-                voice.remainingDurationFrames--;
-                if (voice.remainingDurationFrames == 0)
-                {
-                    voice.active = false;
-                    if (voice.soundData->m_currentUseCount > 0)
-                    {
-                        voice.soundData->m_currentUseCount--;
-                    }
-                    break;
-                }
-            }
-
-            if (voice.currentFrame >= totalFrames)
-            {
-                if (voice.remainingLoops > 1)
-                {
-                    voice.remainingLoops--;
-                    voice.currentFrame = 0;
-                }
-                else if (voice.remainingLoops < 0)
-                {
-                    voice.currentFrame = 0;
-                }
-                else
-                {
-                    voice.active = false;
-                    if (voice.soundData->m_currentUseCount > 0)
-                    {
-                        voice.soundData->m_currentUseCount--;
-                    }
-                    break;
-                }
-            }
-
-            out[i * 2 + 0] += samples[voice.currentFrame * 2 + 0] * voiceVol;
-            out[i * 2 + 1] += samples[voice.currentFrame * 2 + 1] * voiceVol;
-            voice.currentFrame++;
-        }
+        self->m_fadeInFramesRemaining.store(fadeIn - fadeFrames, std::memory_order_relaxed);
     }
 
-    // Clamp output buffer to [-1.0f, 1.0f]
-    for (unsigned long i = 0; i < framesPerBuffer * 2; ++i)
+    for (qint64 i = 0; i < frames * 2; ++i)
     {
-        out[i] = std::clamp(out[i], -1.0f, 1.0f);
+        out[i] = softClip(out[i]);
     }
 
     return paContinue;
@@ -590,6 +670,35 @@ void AudioManager::checkAudioDeviceChanged()
 }
 
 
+void AudioManager::checkStreamStalled()
+{
+#ifdef AUDIOSUPPORT
+    if (!m_noAudio && m_paStream != nullptr)
+    {
+        const qint64 lastCallback = m_lastCallbackTimeMs.load(std::memory_order_relaxed);
+        if (lastCallback > 0 && monotonicMs() - lastCallback > STREAM_STALL_TIMEOUT_MS)
+        {
+            CONSOLE_PRINT_MODULE("Audio callback stalled, reopening the stream", GameConsole::eDEBUG, GameConsole::eAudio);
+            m_lastCallbackTimeMs.store(monotonicMs(), std::memory_order_relaxed);
+            openStream(m_currentDeviceName);
+        }
+    }
+#endif
+}
+
+void AudioManager::cacheCurrentMusicPosition()
+{
+#ifdef AUDIOSUPPORT
+    std::lock_guard<std::mutex> lock(m_musicMutex);
+    if (!m_musicState.currentFile.isEmpty())
+    {
+        const qint32 currentPosMs = (m_sampleRate > 0) ? static_cast<qint32>((m_musicState.currentFrame * 1000) / m_sampleRate) : 0;
+        m_musicPlayPositionCache[m_musicState.currentFile] = currentPosMs;
+        m_musicState.currentFile = "";
+    }
+#endif
+}
+
 void AudioManager::clearMusicPositions()
 {
     emit sigClearMusicPositions();
@@ -620,7 +729,7 @@ void AudioManager::setVolume(qint32 value)
 qint32 AudioManager::getVolume()
 {
 #ifdef AUDIOSUPPORT
-    return static_cast<qint32>(m_musicVolume * 100.0f);
+    return static_cast<qint32>(m_musicVolume.load(std::memory_order_relaxed) * 100.0f);
 #else
     return 0;
 #endif
@@ -681,20 +790,20 @@ void AudioManager::SlotClearPlayList()
     if (!m_noAudio)
     {
         CONSOLE_PRINT_MODULE("AudioThread::SlotClearPlayList() start clearing", GameConsole::eDEBUG, GameConsole::eAudio);
-        std::lock_guard<std::mutex> lock(m_audioMutex);
-        if (!m_musicState.currentFile.isEmpty())
+        cacheCurrentMusicPosition();
+        std::vector<float> oldSamples;
         {
-            qint32 currentPosMs = (m_sampleRate > 0) ? static_cast<qint32>((m_musicState.currentFrame * 1000) / m_sampleRate) : 0;
-            m_musicPlayPositionCache[m_musicState.currentFile] = currentPosMs;
-            m_musicState.currentFile = "";
+            std::lock_guard<std::mutex> lock(m_musicMutex);
+            m_musicState.samples.swap(oldSamples);
+            m_musicState.currentFrame = 0;
+            m_musicState.totalFrames = 0;
+            m_musicState.loopStartFrame = 0;
+            m_musicState.loopEndFrame = 0;
+            m_musicState.isPlaying.store(false, std::memory_order_relaxed);
+            m_musicState.currentMediaIndex.store(-1, std::memory_order_relaxed);
+            m_musicState.nextMediaIndex.store(-1, std::memory_order_relaxed);
         }
         m_PlayListdata.clear();
-        m_musicState.samples.clear();
-        m_musicState.currentFrame = 0;
-        m_musicState.totalFrames = 0;
-        m_musicState.isPlaying = false;
-        m_musicState.currentMediaIndex = -1;
-        m_musicState.nextMediaIndex = -1;
         CONSOLE_PRINT_MODULE("AudioThread::SlotClearPlayList() playlist cleared", GameConsole::eDEBUG, GameConsole::eAudio);
     }
 #endif
@@ -708,15 +817,10 @@ void AudioManager::SlotPlayMusic(qint32 file)
         if (file >= 0 && file < m_PlayListdata.size())
         {
             CONSOLE_PRINT_MODULE("Starting music for player: " + m_PlayListdata[file].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
-            if (!m_musicState.currentFile.isEmpty())
-            {
-                qint32 currentPosMs = (m_sampleRate > 0) ? static_cast<qint32>((m_musicState.currentFrame * 1000) / m_sampleRate) : 0;
-                m_musicPlayPositionCache[m_musicState.currentFile] = currentPosMs;
-                m_musicState.currentFile = "";
-            }
-            m_musicState.isPlaying = false;
-            m_musicState.currentMediaIndex = file;
-            m_musicState.nextMediaIndex = -1;
+            cacheCurrentMusicPosition();
+            m_musicState.isPlaying.store(false, std::memory_order_relaxed);
+            m_musicState.currentMediaIndex.store(file, std::memory_order_relaxed);
+            m_musicState.nextMediaIndex.store(-1, std::memory_order_relaxed);
             loadMediaForFile(m_PlayListdata[file].m_file);
         }
         else
@@ -743,15 +847,10 @@ void AudioManager::SlotContinueMusic(QString file, qint32 position)
                 if (m_PlayListdata[i].m_file.endsWith(file))
                 {
                     CONSOLE_PRINT_MODULE("Continue music for player: " + file, GameConsole::eDEBUG, GameConsole::eAudio);
-                    if (!m_musicState.currentFile.isEmpty())
-                    {
-                        qint32 currentPosMs = (m_sampleRate > 0) ? static_cast<qint32>((m_musicState.currentFrame * 1000) / m_sampleRate) : 0;
-                        m_musicPlayPositionCache[m_musicState.currentFile] = currentPosMs;
-                        m_musicState.currentFile = "";
-                    }
-                    m_musicState.isPlaying = false;
-                    m_musicState.currentMediaIndex = i;
-                    m_musicState.nextMediaIndex = -1;
+                    cacheCurrentMusicPosition();
+                    m_musicState.isPlaying.store(false, std::memory_order_relaxed);
+                    m_musicState.currentMediaIndex.store(i, std::memory_order_relaxed);
+                    m_musicState.nextMediaIndex.store(-1, std::memory_order_relaxed);
                     if (position < 0)
                     {
                         position = m_musicPlayPositionCache[m_PlayListdata[i].m_file];
@@ -781,27 +880,29 @@ void AudioManager::loadMediaForFile(QString filePath, qint32 position)
             DecodedAudio decoded = AudioDecoder::decode(data, filePath, m_sampleRate);
             if (decoded.isValid())
             {
-                std::lock_guard<std::mutex> lock(m_audioMutex);
-                m_musicState.samples = std::move(decoded.samples);
-                m_musicState.totalFrames = decoded.totalFrames;
-                m_musicState.currentFile = filePath;
-
-                qint32 curIdx = m_musicState.currentMediaIndex;
+                const qint32 curIdx = m_musicState.currentMediaIndex.load(std::memory_order_relaxed);
+                qint64 loopStartFrame = 0;
+                qint64 loopEndFrame = decoded.totalFrames;
                 if (curIdx >= 0 && curIdx < m_PlayListdata.size())
                 {
-                    qint64 startMs = m_PlayListdata[curIdx].m_startpointMs;
-                    qint64 endMs = m_PlayListdata[curIdx].m_endpointMs;
-                    m_musicState.loopStartFrame = (startMs > 0) ? (startMs * m_sampleRate) / 1000 : 0;
-                    m_musicState.loopEndFrame = (endMs > 0) ? (endMs * m_sampleRate) / 1000 : decoded.totalFrames;
+                    const qint64 startMs = m_PlayListdata[curIdx].m_startpointMs;
+                    const qint64 endMs = m_PlayListdata[curIdx].m_endpointMs;
+                    loopStartFrame = (startMs > 0) ? (startMs * m_sampleRate) / 1000 : 0;
+                    loopEndFrame = (endMs > 0) ? (endMs * m_sampleRate) / 1000 : decoded.totalFrames;
                 }
-                else
+                // the old buffer is released after unlocking to keep the callback lock as short as possible
+                std::vector<float> oldSamples;
                 {
-                    m_musicState.loopStartFrame = 0;
-                    m_musicState.loopEndFrame = decoded.totalFrames;
+                    std::lock_guard<std::mutex> lock(m_musicMutex);
+                    m_musicState.samples.swap(oldSamples);
+                    m_musicState.samples = std::move(decoded.samples);
+                    m_musicState.totalFrames = decoded.totalFrames;
+                    m_musicState.currentFile = filePath;
+                    m_musicState.loopStartFrame = loopStartFrame;
+                    m_musicState.loopEndFrame = loopEndFrame;
+                    m_musicState.currentFrame = (position > 0) ? (static_cast<qint64>(position) * m_sampleRate) / 1000 : 0;
+                    m_musicState.isPlaying.store(true, std::memory_order_relaxed);
                 }
-
-                m_musicState.currentFrame = (position > 0) ? (static_cast<qint64>(position) * m_sampleRate) / 1000 : 0;
-                m_musicState.isPlaying = true;
             }
             else
             {
@@ -822,43 +923,51 @@ void AudioManager::SlotPlayRandom()
     if (!m_noAudio && !Settings::getInstance()->getMuted())
     {
         CONSOLE_PRINT_MODULE("AudioThread::SlotPlayRandom", GameConsole::eDEBUG, GameConsole::eAudio);
-        qint32 size = m_PlayListdata.size();
+        const qint32 size = m_PlayListdata.size();
         if (size > 0)
         {
-            if (m_musicState.nextMediaIndex < 0 || m_musicState.nextMediaIndex >= size)
+            const qint32 nextIndex = m_musicState.nextMediaIndex.load(std::memory_order_relaxed);
+            if (nextIndex < 0 || nextIndex >= size)
             {
-                m_musicState.isPlaying = false;
-                m_musicState.currentMediaIndex = GlobalUtils::randIntBase(0, size - 1);
-                loadMediaForFile(m_PlayListdata[m_musicState.currentMediaIndex].m_file);
-                CONSOLE_PRINT_MODULE("Buffering music for player: " + m_PlayListdata[m_musicState.currentMediaIndex].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
+                m_musicState.isPlaying.store(false, std::memory_order_relaxed);
+                m_musicState.currentMediaIndex.store(GlobalUtils::randIntBase(0, size - 1), std::memory_order_relaxed);
+                const QString & musicFile = m_PlayListdata[m_musicState.currentMediaIndex.load(std::memory_order_relaxed)].m_file;
+                loadMediaForFile(musicFile);
+                CONSOLE_PRINT_MODULE("Buffering music for player: " + musicFile, GameConsole::eDEBUG, GameConsole::eAudio);
             }
-            else if (m_musicState.currentMediaIndex == m_musicState.nextMediaIndex)
+            else if (m_musicState.currentMediaIndex.load(std::memory_order_relaxed) == nextIndex)
             {
-                qint32 loopPos = m_PlayListdata[m_musicState.currentMediaIndex].m_startpointMs;
+                const qint32 currentIndex = m_musicState.currentMediaIndex.load(std::memory_order_relaxed);
+                qint32 loopPos = m_PlayListdata[currentIndex].m_startpointMs;
                 if (loopPos < 0)
                 {
                     loopPos = 0;
                 }
-                if (!m_musicState.isPlaying || m_musicState.samples.empty())
+                bool needsReload = true;
+                if (m_musicState.isPlaying.load(std::memory_order_relaxed))
                 {
-                    loadMediaForFile(m_PlayListdata[m_musicState.currentMediaIndex].m_file, loopPos);
+                    std::lock_guard<std::mutex> lock(m_musicMutex);
+                    if (!m_musicState.samples.empty())
+                    {
+                        m_musicState.currentFrame = (static_cast<qint64>(loopPos) * m_sampleRate) / 1000;
+                        needsReload = false;
+                    }
                 }
-                else
+                if (needsReload)
                 {
-                    std::lock_guard<std::mutex> lock(m_audioMutex);
-                    m_musicState.currentFrame = (static_cast<qint64>(loopPos) * m_sampleRate) / 1000;
-                    m_musicState.isPlaying = true;
+                    loadMediaForFile(m_PlayListdata[currentIndex].m_file, loopPos);
                 }
-                CONSOLE_PRINT_MODULE("Seeking music for player: " + m_PlayListdata[m_musicState.currentMediaIndex].m_file + " to " + QString::number(loopPos), GameConsole::eDEBUG, GameConsole::eAudio);
+                CONSOLE_PRINT_MODULE("Seeking music for player: " + m_PlayListdata[currentIndex].m_file + " to " + QString::number(loopPos), GameConsole::eDEBUG, GameConsole::eAudio);
             }
             else
             {
-                m_musicState.isPlaying = false;
-                m_musicState.currentMediaIndex = m_musicState.nextMediaIndex;
-                loadMediaForFile(m_PlayListdata[m_musicState.currentMediaIndex].m_file);
-                CONSOLE_PRINT_MODULE("Buffering music for player: " + m_PlayListdata[m_musicState.currentMediaIndex].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
+                m_musicState.isPlaying.store(false, std::memory_order_relaxed);
+                m_musicState.currentMediaIndex.store(nextIndex, std::memory_order_relaxed);
+                const QString & musicFile = m_PlayListdata[nextIndex].m_file;
+                loadMediaForFile(musicFile);
+                CONSOLE_PRINT_MODULE("Buffering music for player: " + musicFile, GameConsole::eDEBUG, GameConsole::eAudio);
             }
-            m_musicState.nextMediaIndex = GlobalUtils::randIntBase(0, size - 1);
+            m_musicState.nextMediaIndex.store(GlobalUtils::randIntBase(0, size - 1), std::memory_order_relaxed);
         }
         else
         {
@@ -873,13 +982,13 @@ void AudioManager::SlotSetVolume(qint32 value)
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        std::lock_guard<std::mutex> lock(m_audioMutex);
-        m_totalVolume = qPow(static_cast<float>(Settings::getInstance()->getTotalVolume()) / 100.0f, 2);
-        m_musicVolume = qPow(static_cast<float>(value) / 100.0f, 2);
-        m_soundVolume = qPow(static_cast<float>(Settings::getInstance()->getSoundVolume()) / 100.0f, 2);
-        m_isMuted = Settings::getInstance()->getMuted();
+        m_totalVolume.store(qPow(static_cast<float>(Settings::getInstance()->getTotalVolume()) / 100.0f, 2), std::memory_order_relaxed);
+        m_musicVolume.store(qPow(static_cast<float>(value) / 100.0f, 2), std::memory_order_relaxed);
+        m_soundVolume.store(qPow(static_cast<float>(Settings::getInstance()->getSoundVolume()) / 100.0f, 2), std::memory_order_relaxed);
+        m_isMuted.store(Settings::getInstance()->getMuted(), std::memory_order_relaxed);
 
-        CONSOLE_PRINT_MODULE("Setting volume to : music=" + QString::number(m_musicVolume) + " total=" + QString::number(m_totalVolume), GameConsole::eDEBUG, GameConsole::eAudio);
+        CONSOLE_PRINT_MODULE("Setting volume to : music=" + QString::number(m_musicVolume.load(std::memory_order_relaxed)) +
+                             " total=" + QString::number(m_totalVolume.load(std::memory_order_relaxed)), GameConsole::eDEBUG, GameConsole::eAudio);
     }
 #endif
 }
@@ -888,10 +997,7 @@ void AudioManager::slotSetMuteInternal(bool value)
 {
     if (Settings::getInstance()->getMuteOnFcousedLost())
     {
-#ifdef AUDIOSUPPORT
-        std::lock_guard<std::mutex> lock(m_audioMutex);
-        m_internalMuted = value;
-#endif
+        m_internalMuted.store(value, std::memory_order_relaxed);
     }
 }
 
@@ -1004,75 +1110,74 @@ void AudioManager::SlotCheckMusicEnded(qint64 duration)
 void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float volume, bool stopOldestSound, qint32 duration)
 {
 #ifdef AUDIOSUPPORT
-    if (Settings::getInstance()->getMuted() || m_noAudio || m_internalMuted)
+    if (Settings::getInstance()->getMuted() || m_noAudio || m_internalMuted.load(std::memory_order_relaxed))
     {
         return;
     }
-    if (m_soundCaches.contains(file))
+    const auto it = m_soundCaches.constFind(file);
+    if (it == m_soundCaches.constEnd())
     {
-        auto & soundCache = m_soundCaches[file];
-        if (soundCache->m_samples.empty())
+        CONSOLE_PRINT("Unable to locate sound: " + file, GameConsole::eDEBUG);
+        return;
+    }
+    const spSoundData & soundCache = it.value();
+    if (soundCache->m_samples.empty())
+    {
+        return;
+    }
+
+    if (soundCache->m_currentUseCount.load(std::memory_order_relaxed) >= soundCache->m_maxUseCount)
+    {
+        if (!stopOldestSound)
         {
             return;
         }
-
-        std::lock_guard<std::mutex> lock(m_audioMutex);
-        if (soundCache->m_currentUseCount >= soundCache->m_maxUseCount)
-        {
-            if (stopOldestSound)
-            {
-                qint32 oldestIdx = -1;
-                qint64 oldestAge = std::numeric_limits<qint64>::max();
-                for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
-                {
-                    if (m_soundVoices[i].active && m_soundVoices[i].soundData == soundCache)
-                    {
-                        if (m_soundVoices[i].age < oldestAge)
-                        {
-                            oldestAge = m_soundVoices[i].age;
-                            oldestIdx = i;
-                        }
-                    }
-                }
-                if (oldestIdx >= 0)
-                {
-                    m_soundVoices[oldestIdx].active = false;
-                    soundCache->m_currentUseCount--;
-                }
-            }
-            else
-            {
-                return;
-            }
-        }
-
-        qint32 slot = -1;
+        qint32 oldestIdx = -1;
+        qint64 oldestAge = std::numeric_limits<qint64>::max();
         for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
         {
-            if (!m_soundVoices[i].active)
+            auto & voice = m_soundVoices[i];
+            std::lock_guard<std::mutex> lock(voice.mutex);
+            if (voice.active.load(std::memory_order_relaxed) && voice.soundData == soundCache && voice.age < oldestAge)
             {
-                slot = i;
-                break;
+                oldestAge = voice.age;
+                oldestIdx = i;
             }
         }
-
-        if (slot >= 0)
+        if (oldestIdx < 0)
         {
-            auto& voice = m_soundVoices[slot];
-            voice.soundData = soundCache;
-            voice.currentFrame = 0;
-            voice.remainingLoops = loops;
-            voice.delayFrames = (delay > 0) ? static_cast<qint32>((static_cast<qint64>(delay) * m_sampleRate) / 1000) : 0;
-            voice.remainingDurationFrames = (duration > 0) ? static_cast<qint32>((static_cast<qint64>(duration) * m_sampleRate) / 1000) : -1;
-            voice.volume = volume;
-            voice.age = ++m_voiceCounter;
-            voice.active = true;
-            soundCache->m_currentUseCount++;
+            return;
+        }
+        auto & oldestVoice = m_soundVoices[oldestIdx];
+        std::lock_guard<std::mutex> lock(oldestVoice.mutex);
+        if (oldestVoice.active.exchange(false, std::memory_order_acq_rel))
+        {
+            soundCache->m_currentUseCount.fetch_sub(1, std::memory_order_relaxed);
         }
     }
-    else
+
+    for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
     {
-        CONSOLE_PRINT("Unable to locate sound: " + file, GameConsole::eDEBUG);
+        auto & voice = m_soundVoices[i];
+        if (voice.active.load(std::memory_order_acquire))
+        {
+            continue;
+        }
+        std::lock_guard<std::mutex> lock(voice.mutex);
+        if (voice.active.load(std::memory_order_relaxed))
+        {
+            continue;
+        }
+        voice.soundData = soundCache;
+        voice.currentFrame = 0;
+        voice.remainingLoops = loops;
+        voice.delayFrames = (delay > 0) ? (static_cast<qint64>(delay) * m_sampleRate) / 1000 : 0;
+        voice.remainingDurationFrames = (duration > 0) ? (static_cast<qint64>(duration) * m_sampleRate) / 1000 : -1;
+        voice.volume = volume;
+        voice.age = ++m_voiceCounter;
+        soundCache->m_currentUseCount.fetch_add(1, std::memory_order_relaxed);
+        voice.active.store(true, std::memory_order_release);
+        break;
     }
 #endif
 }
@@ -1081,14 +1186,15 @@ void AudioManager::SlotStopAllSounds()
 {
 #ifdef AUDIOSUPPORT
     CONSOLE_PRINT_MODULE("Stopping all sounds", GameConsole::eDEBUG, GameConsole::eAudio);
-    std::lock_guard<std::mutex> lock(m_audioMutex);
     for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
     {
-        m_soundVoices[i].active = false;
+        auto & voice = m_soundVoices[i];
+        std::lock_guard<std::mutex> lock(voice.mutex);
+        voice.active.store(false, std::memory_order_release);
     }
     for (auto & soundCache : m_soundCaches)
     {
-        soundCache->m_currentUseCount = 0;
+        soundCache->m_currentUseCount.store(0, std::memory_order_relaxed);
     }
 #endif
 }
@@ -1096,19 +1202,21 @@ void AudioManager::SlotStopAllSounds()
 void AudioManager::SlotStopSound(QString file)
 {
 #ifdef AUDIOSUPPORT
-    if (m_soundCaches.contains(file))
+    const auto it = m_soundCaches.constFind(file);
+    if (it != m_soundCaches.constEnd())
     {
         CONSOLE_PRINT_MODULE("Stopping sound " + file, GameConsole::eDEBUG, GameConsole::eAudio);
-        std::lock_guard<std::mutex> lock(m_audioMutex);
-        auto & soundCache = m_soundCaches[file];
+        const spSoundData & soundCache = it.value();
         for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
         {
-            if (m_soundVoices[i].active && m_soundVoices[i].soundData == soundCache)
+            auto & voice = m_soundVoices[i];
+            std::lock_guard<std::mutex> lock(voice.mutex);
+            if (voice.soundData == soundCache)
             {
-                m_soundVoices[i].active = false;
+                voice.active.store(false, std::memory_order_release);
             }
         }
-        soundCache->m_currentUseCount = 0;
+        soundCache->m_currentUseCount.store(0, std::memory_order_relaxed);
     }
 #endif
 }

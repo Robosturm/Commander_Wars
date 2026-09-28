@@ -41,7 +41,7 @@ int main(qint32 argc, char* argv[])
     const QByteArray appName = QCoreApplication::applicationName().toUtf8();
     qputenv("PULSE_PROP_application.name", appName);
     qputenv("PULSE_PROP_application.icon_name", QByteArrayLiteral("commander_wars"));
-    QThread::currentThread()->setPriority(QThread::Priority::HighPriority);
+    QThread::currentThread()->setPriority(QThread::Priority::NormalPriority);
     Mainapp window;
     window.setTitle("Commander Wars");
     {
