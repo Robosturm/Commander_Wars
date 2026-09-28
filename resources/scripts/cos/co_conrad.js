@@ -165,7 +165,7 @@ var Constructor = function()
             if (map === null ||
                 (map !== null && map.getGameRules().getCoGlobalD2D()) ||
                  co.getPowerMode() > GameEnums.PowerMode_Off ||
-                 co.inCORange(Qt.point(defPosX, defPosY), defender))
+                 co.inCORange(Qt.point(posX, posY), unit))
             {
                 return -ACTION_FIRE.getDefaultLuck(unit);
             }
@@ -196,7 +196,7 @@ var Constructor = function()
             if (map === null ||
                 (map !== null && map.getGameRules().getCoGlobalD2D()) ||
                  co.getPowerMode() > GameEnums.PowerMode_Off ||
-                 co.inCORange(Qt.point(defPosX, defPosY), defender))
+                 co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
             {
                 return attackerBaseHp / 2;
             }
