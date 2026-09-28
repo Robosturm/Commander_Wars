@@ -872,18 +872,9 @@ public:
      */
     Q_INVOKABLE qreal getDamageReduction(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
                                          QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
-    /**
-     * @brief getTrueDamage
-     * @param damage
-     * @param position
-     * @param attackerBaseHp
-     * @param pDefender
-     * @param defPosition
-     * @param isDefender
-     * @return
-     */
     Q_INVOKABLE qreal getTrueDamage(GameAction* pAction, qreal damage, QPoint position, qint32 attackerBaseHp,
-                                    Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
+                                    Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode,
+                                    const QJSValue & damageContext = QJSValue());
     /**
      * @brief canCounterAttack
      * @param pAction

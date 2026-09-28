@@ -174,7 +174,7 @@ var Constructor = function()
     };
 
     this.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
+                                  defender, defPosX, defPosY, isDefender, action, luckmode, map, damageContext = null)
     {
         if (CO.isActive(co))
         {
@@ -187,7 +187,7 @@ var Constructor = function()
                     var variables = co.getVariables();
                     var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
                     var bonusDamage = dmgModVar.readDataFloat();
-                    return bonusDamage + attackerBaseHp / 2;
+                    return bonusDamage + CO_CONRAD.getAverageLuckDamage(damage, attacker, attackerBaseHp, damageContext, map);
                 case GameEnums.PowerMode_Power:
                 default:
                     break;
@@ -198,10 +198,21 @@ var Constructor = function()
                  co.getPowerMode() > GameEnums.PowerMode_Off ||
                  co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
             {
-                return attackerBaseHp / 2;
+                return CO_CONRAD.getAverageLuckDamage(damage, attacker, attackerBaseHp, damageContext, map);
             }
         }
         return 0;
+    };
+
+    this.getAverageLuckDamage = function(damage, attacker, attackerBaseHp, damageContext, map)
+    {
+        if (damageContext === null)
+        {
+            // Preserve calls from action overrides that do not supply weapon context.
+            return attackerBaseHp / 2;
+        }
+        var luckDamage = damageContext.luckDamage + ACTION_FIRE.getDefaultLuck(attacker) / 2;
+        return ACTION_FIRE.calcDamageWithLuck(damageContext, luckDamage, map) - damage;
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
@@ -296,7 +307,7 @@ var Constructor = function()
         }
 
         var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
-               qsTr("\nGlobal Effect: \nConrad's units gain +%0% firepower when attacking an enemy unit for each of his own units that can see it, which includes enhanced vision from terrain. His units always deal average luck damage and their counterattacks are %1% weaker.") +
+               qsTr("\nGlobal Effect: \nConrad's units gain +%0% firepower when attacking an enemy unit for each of his own units that can see it, which includes enhanced vision from terrain. His units always deal average base luck damage. Luck modifiers from skills or other COs still apply. Their counterattacks are %1% weaker.") +
                qsTr("\n\nCO Zone Effect: \nConrad's units gain +%3% firepower and +%4% defence. They also gain an additional +%2% firepower when attacking an enemy unit for each of his own units that can see it, which includes enhanced vision from terrain.");
         text = replaceTextArgs(text, [values[0], values[1], CO_CONRAD.d2dCoZoneVisionMultiplier, CO_CONRAD.d2dCoZoneOffBonus, CO_CONRAD.d2dCoZoneDefBonus]);
         return text;

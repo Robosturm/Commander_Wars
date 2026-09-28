@@ -125,7 +125,7 @@ var CO =
     canCounterAttack : null,
 
     getTrueDamage : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                             defender, defPosX, defPosY, isDefender, action, luckMode, map)
+                             defender, defPosX, defPosY, isDefender, action, luckMode, map, damageContext = null)
     {
         return 0;
     },

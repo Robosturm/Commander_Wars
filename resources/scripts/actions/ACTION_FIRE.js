@@ -299,8 +299,10 @@ var Constructor = function()
             damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive, luckDamage, attacker.getMap());
             if (fastInaccurate === false)
             {
+                var damageContext = {weapon: attackerWeapon, hp: attackerHp, baseDamage: baseDamage,
+                                     offensive: offensive, defensive: defensive, luckDamage: luckDamage};
                 damage += attacker.getTrueDamage(action, damage, attackerPosition, attackerBaseHp,
-                                                 defender, defenderPosition, isDefender, luckMode);
+                                                 defender, defenderPosition, isDefender, luckMode, damageContext);
                 damage -= defender.getDamageReduction(action, damage, attacker, attackerPosition, attackerBaseHp,
                                                       defenderPosition, isDefender, luckMode);
                 damage -= ACTION_FIRE.predictSupportDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
@@ -314,6 +316,13 @@ var Constructor = function()
             attacker.setVirtualHpValue(virtualHp);
         }
         return damage;
+    };
+
+    this.calcDamageWithLuck = function(damageContext, luckDamage, map)
+    {
+        return Global[damageContext.weapon].calculateDamage(damageContext.hp, damageContext.baseDamage,
+                                                            damageContext.offensive, damageContext.defensive,
+                                                            luckDamage, map);
     };
 
     this.predictSupportDamageReduction = function(damage, attacker, attackerPosition, attackerBaseHp,
