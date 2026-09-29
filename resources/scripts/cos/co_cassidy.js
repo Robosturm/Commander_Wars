@@ -83,14 +83,14 @@ var Constructor = function()
     this.superPowerBonus = 80;
 
     this.powerBonus = 60;
-    this.powerOffBonus = 10;
+    this.powerOffBonus = 30;
     this.powerDefBonus = 10;
 
-    this.d2dOffBonus = 30;
+    this.d2dOffBonus = 10;
 
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
-    this.d2dCoZoneBonus = 50;
+    this.d2dCoZoneBonus = 40;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -100,7 +100,7 @@ var Constructor = function()
             var getsBonus = false;
             if (defender !== null)
             {
-                getsBonus = attacker.getHp() >= defender.getHp();
+                getsBonus = globals.roundUp(attacker.getVirtualHp()) >= globals.roundUp(defender.getVirtualHp());
             }
             switch (co.getPowerMode())
             {
@@ -177,7 +177,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Cassidy's ruthlessness rubs off on her troops. Units show no mercy to enemy units equal to or below their own strength.");
+        return qsTr("Cassidy's ruthlessness rubs off on her troops. Units show no mercy to enemy units with equal or lower displayed HP.");
     };
     this.getLongCODescription = function(co, map)
     {
@@ -188,15 +188,15 @@ var Constructor = function()
             values = [CO_CASSIDY.d2dOffBonus];
         }
 
-        var text = qsTr("\nGlobal Effect: \nCassidy's units gain +%0% firepower when attacking units with equal or less health.") +
-                qsTr("\n\nCO Zone Effect: \nCassidy's units gain +%1% firepower when attacking units with equal or less health and +%2% firepower otherwise. Her units gain +%3% defence.");
+        var text = qsTr("\nGlobal Effect: \nCassidy's units gain +%0% firepower when attacking units with equal or lower displayed HP.") +
+                qsTr("\n\nCO Zone Effect: \nCassidy's units gain +%1% firepower when attacking units with equal or lower displayed HP and +%2% firepower otherwise. Her units gain +%3% defence.");
         text = replaceTextArgs(text, [values[0], CO_CASSIDY.d2dCoZoneBonus, CO_CASSIDY.d2dCoZoneOffBonus, CO_CASSIDY.d2dCoZoneDefBonus]);
         return text;
 
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Cassidy's units gain +%0% firepower when attacking units with equal or less health and +%1% firepower otherwise. Her units gain +%2% defence.");
+        var text = qsTr("Cassidy's units gain +%0% firepower when attacking units with equal or lower displayed HP and +%1% firepower otherwise. Her units gain +%2% defence.");
         text = replaceTextArgs(text, [CO_CASSIDY.powerBonus, CO_CASSIDY.powerOffBonus, CO_CASSIDY.powerDefBonus]);
         return text;
     };
@@ -206,7 +206,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("All enemy units suffer -%0 HP of damage. Cassidy's units gain +%1% firepower when attacking units with equal or less health and +%2% firepower otherwise. Her units gain +%3% defence.");
+        var text = qsTr("All enemy units suffer -%0 HP of damage. Cassidy's units gain +%1% firepower when attacking units with equal or lower displayed HP and +%2% firepower otherwise. Her units gain +%3% defence.");
         text = replaceTextArgs(text, [CO_CASSIDY.superPowerDamage, CO_CASSIDY.superPowerBonus, CO_CASSIDY.powerOffBonus, CO_CASSIDY.powerDefBonus]);
         return text;
     };
