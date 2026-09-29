@@ -239,8 +239,11 @@ var Constructor = function()
                 {
                     var luck = ACTION_FIRE.getDefaultLuck(attacker) + attacker.getBonusLuck(attackerPosition);
                     var misfortune = attacker.getBonusMisfortune(attackerPosition);
-                    // only roll if we have valid luck misfortune pair
-                    if (luck > -misfortune)
+                    if (luck === -misfortune)
+                    {
+                        luckDamage = luck;
+                    }
+                    else if (luck > -misfortune)
                     {
                         if (luckMode === GameEnums.LuckDamageMode_On)
                         {
@@ -296,12 +299,12 @@ var Constructor = function()
             damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive, luckDamage, attacker.getMap());
             if (fastInaccurate === false)
             {
+                var damageContext = {weapon: attackerWeapon, hp: attackerHp, baseHp: attackerBaseHp, baseDamage: baseDamage,
+                                     offensive: offensive, defensive: defensive, luckDamage: luckDamage};
                 damage += attacker.getTrueDamage(action, damage, attackerPosition, attackerBaseHp,
-                                                 defender, defenderPosition, isDefender, luckMode);
-                damage -= defender.getDamageReduction(action, damage, attacker, attackerPosition, attackerBaseHp,
-                                                      defenderPosition, isDefender, luckMode);
-                damage -= ACTION_FIRE.predictSupportDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
-                                                                    defenderPosition, defender, luckMode);
+                                                 defender, defenderPosition, isDefender, luckMode, damageContext);
+                damage = ACTION_FIRE.getReducedDamage(action, damage, attacker, attackerPosition, attackerBaseHp,
+                                                       defender, defenderPosition, isDefender, luckMode);
             }
             // avoid healing through negativ damage caused by misfortune or other stuff
             if (damage <= 0.0)
@@ -310,6 +313,23 @@ var Constructor = function()
             }
             attacker.setVirtualHpValue(virtualHp);
         }
+        return damage;
+    };
+
+    this.calcDamageWithLuck = function(damageContext, luckDamage, map)
+    {
+        return Global[damageContext.weapon].calculateDamage(damageContext.hp, damageContext.baseDamage,
+                                                            damageContext.offensive, damageContext.defensive,
+                                                            luckDamage, map);
+    };
+
+    this.getReducedDamage = function(action, damage, attacker, attackerPosition, attackerBaseHp,
+                                     defender, defenderPosition, isDefender, luckMode)
+    {
+        damage -= defender.getDamageReduction(action, damage, attacker, attackerPosition, attackerBaseHp,
+                                              defenderPosition, isDefender, luckMode);
+        damage -= ACTION_FIRE.predictSupportDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
+                                                            defenderPosition, defender, luckMode);
         return damage;
     };
 

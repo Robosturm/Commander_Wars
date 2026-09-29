@@ -1542,20 +1542,21 @@ qreal Unit::getDamageReduction(GameAction* pAction, qreal damage, Unit* pAttacke
 }
 
 qreal Unit::getTrueDamage(GameAction* pAction, qreal damage, QPoint position, qint32 attackerBaseHp,
-                          Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
+                          Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode,
+                          const QJSValue & damageContext)
 {
     qreal bonus = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         bonus += pCO->getTrueDamage(pAction, damage, this, position, attackerBaseHp,
-                                    pDefender, defPosition, isDefender, luckMode);
+                                    pDefender, defPosition, isDefender, luckMode, damageContext);
     }
     pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         bonus += pCO->getTrueDamage(pAction, damage, this, position, attackerBaseHp,
-                                    pDefender, defPosition, isDefender, luckMode);
+                                    pDefender, defPosition, isDefender, luckMode, damageContext);
     }
     return bonus;
 }
