@@ -295,7 +295,7 @@ var Constructor = function()
         // Battle actions serialize damage as an integer before applying it to HP.
         if (Math.floor(reducedDamage) >= defender.getHp() * CO_ADAM.damagePerHp)
         {
-            return maxDamage - damage;
+            return ACTION_FIRE.getLuckDamageBonus(damageContext, damage, maxDamage);
         }
         return 0;
     };
