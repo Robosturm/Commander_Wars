@@ -75,6 +75,7 @@ target_link_libraries(commander_wars_tests PUBLIC
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     # the rc file resolves its icon relative to the build working directory
     # (matching the main windows pipeline's layout), so mirror the icon there
+    file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/../distribution/res/icons")
     file(COPY_FILE "${COW_ROOT_DIR}/distribution/res/icons/icoclient_windows.ico"
          "${CMAKE_BINARY_DIR}/../distribution/res/icons/icoclient_windows.ico" ONLY_IF_DIFFERENT)
     set(WIN_TEST_ICON ${COW_ROOT_DIR}/distribution/res/ICON.rc)

@@ -1117,6 +1117,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 
 void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("HumanPlayerInput::createSimpleZInformation " + QString::number(pData->singleValue) , GameConsole::eDEBUG);
     if (m_ZInformationLabel.get() != nullptr)
     {
@@ -1186,6 +1187,7 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
         m_pMap->addChild(m_ZInformationLabel);
         zoomChanged(m_pMap->getZoom());
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 bool HumanPlayerInput::inputAllowed()
@@ -1219,6 +1221,7 @@ void HumanPlayerInput::nextTurn()
 
 void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
 {
+    Mainapp::getInstance()->pauseRendering();
     if (m_ZInformationLabel.get() != nullptr)
     {
         m_ZInformationLabel->detachAndRemove();
@@ -1319,6 +1322,7 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
     m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
     m_pMap->addChild(m_ZInformationLabel);
     zoomChanged(m_pMap->getZoom());
+    Mainapp::getInstance()->continueRendering();
 }
 
 bool HumanPlayerInput::getLeftClickEnabled() const
@@ -1345,6 +1349,7 @@ void HumanPlayerInput::zoomChanged(float zoom)
 
 void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
 {
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("HumanPlayerInput::createCursorPath", GameConsole::eDEBUG);
     auto points = m_ArrowPoints;
     QPoint lastPoint = QPoint(-1, -1);
@@ -1411,6 +1416,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
             createArrow(m_ArrowPoints);
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 QStringList HumanPlayerInput::getEmptyActionList()
