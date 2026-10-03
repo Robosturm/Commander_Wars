@@ -15,8 +15,7 @@ var Constructor = function()
     {
         var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, GameEnums.PowerMode_Power, map);
 
-        var invasion = ["ARTILLERY", "FLAK", "LIGHT_TANK", "FLAK", "LIGHT_TANK"];
-        CO_YUKIO.spawnUnits(co, 0.4, invasion, dialogBuilder, map);
+        CO_YUKIO.spawnUnits(co, CO_YUKIO.powerSpawnProportion, CO_YUKIO.powerSpawnList, dialogBuilder, map);
 
         dialogBuilder.displayAnimation();
     };
@@ -26,15 +25,14 @@ var Constructor = function()
         
         var dialogBuilder = new DIALOG_ANIMATION_BUILDER(co, powerMode, map);
 
-        var invasion = ["HEAVY_TANK", "FLAK", "LIGHT_TANK", "ARTILLERY", "LIGHT_TANK", "K_HELI", "K_HELI"];
-        CO_YUKIO.spawnUnits(co, 0.7, invasion, dialogBuilder, map);
+        CO_YUKIO.spawnUnits(co, CO_YUKIO.superPowerSpawnProportion, CO_YUKIO.superPowerSpawnList, dialogBuilder, map);
 
-        CO_YUKIO.yukioDamage(co, CO_YUKIO.superPowerBombDamage, dialogBuilder, map);
+        CO_YUKIO.yukioDamage(co, CO_YUKIO.superPowerBombDamage, CO_YUKIO.superPowerBombProportion, dialogBuilder, map);
 
         dialogBuilder.displayAnimation();
     };
 
-    this.yukioDamage = function(co, value, parentBuilder, map)
+    this.yukioDamage = function(co, value, proportion, parentBuilder, map)
     {
         var player = co.getOwner();
         var playerCounter = map.getPlayerCount();
@@ -48,7 +46,7 @@ var Constructor = function()
 
                 var units = enemyPlayer.getUnits();
                 units.randomize();
-                var size = units.size() / 2;
+                var size = units.size() * proportion;
                 for (i = 0; i < size; i++)
                 {
                     var unit = units.at(i);
@@ -133,8 +131,13 @@ var Constructor = function()
         return "DM";
     };
 
+    this.superPowerSpawnList = ["HEAVY_TANK", "FLAK", "LIGHT_TANK", "ARTILLERY", "LIGHT_TANK", "K_HELI", "K_HELI"];
+    this.superPowerSpawnProportion = 0.7;
     this.superPowerBombDamage = 4;
+    this.superPowerBombProportion = 0.5;
 
+    this.powerSpawnList = ["ARTILLERY", "FLAK", "LIGHT_TANK", "FLAK", "LIGHT_TANK"];
+    this.powerSpawnProportion = 0.4;
     this.powerTrueDamageBonus = 40;
     this.powerTrueDefenseBonus = 40;
     this.powerMinTrueDamage = 10
@@ -311,10 +314,50 @@ var Constructor = function()
                                       CO_YUKIO.d2dCoZoneTrueDefenseBonus, CO_YUKIO.d2dCoZoneTrueDamageBonus/10, CO_YUKIO.d2dCoZoneMinTrueDamage/10, CO_YUKIO.d2dCoZoneOffBonus, CO_YUKIO.d2dCoZoneDefBonus]);
         return text;
     };
+
+    this.createUnitNamesString = function(ids, singleStart, start, sep, beforeEnd)
+    {
+        var uniqueIDs = [];
+        var unitNames = [];
+        for (var i = 0; i < ids.length; i++)
+        {
+            if (!uniqueIDs.includes(ids[i]))
+            {
+                uniqueIDs.push(ids[i]);
+                unitNames.push(Global[ids[i]].getName());
+            }
+        }
+        var formatString = "";
+        if (unitNames.length == 0)
+        {
+            formatString = singleStart + "%0"
+        }
+        else
+        {
+            formatString = start;
+            for (var i = 0; i < unitNames.length; i++)
+            {
+                if (i < unitNames.length - 1)
+                {
+                    formatString += "%" + i + sep;
+                }
+                else
+                {
+                    formatString += beforeEnd + "%" + i;
+                }
+            }
+        }
+        formatString = qsTr(formatString);
+        return replaceTextArgs(formatString, unitNames);
+    };
+
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("A small army deploys to fight for Yukio. A random 40% of his unoccupied cities will randomly deploy either a Light Tank, Anti Air, or Artillery, ready to move. \nEnemy attacks deal -%0% damage to Yukio's units. If an attack from Yukio's units would deal at least %1 HP damage, they deal an additional defense-ignoring -%2 HP of damage. Yukio's units also gain +%3% firepower and +%4% defense.");
-		text = replaceTextArgs(text, [CO_YUKIO.powerTrueDefenseBonus, CO_YUKIO.powerMinTrueDamage/10, CO_YUKIO.powerTrueDamageBonus/10,
+        var unitNameText = CO_YUKIO.createUnitNamesString(CO_YUKIO.powerSpawnList, qsTr("deploy a "), qsTr("randomly deploy either a "), qsTr(", "), qsTr("or "));
+        var text = qsTr("A small army deploys to fight for Yukio. A random %0% of his unoccupied cities will %1, ready to move.") + 
+                    qsTr("\nEnemy attacks deal -%2% damage to Yukio's units. If an attack from Yukio's units would deal at least %3 HP damage, they deal an additional defense-ignoring -%4 HP of damage. Yukio's units also gain +%5% firepower and +%6% defense.");
+		text = replaceTextArgs(text, [CO_YUKIO.powerSpawnProportion * 100, unitNameText,
+                                      CO_YUKIO.powerTrueDefenseBonus, CO_YUKIO.powerMinTrueDamage/10, CO_YUKIO.powerTrueDamageBonus/10,
                                       CO_YUKIO.powerOffBonus, CO_YUKIO.powerDefBonus]);
         return text;
     };
@@ -324,8 +367,13 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-         var text =  qsTr("A large army deploys to fight for Yukio. A random 70% of his unoccupied cities will randomly deploy either a Light Tank, Anti Air, Artillery, Heavy Tank, or Battle Copter, ready to move. In order to support the invasion, a bombardment is launched dealing -%0 HP of damage to a random 50% of all enemies. \nEnemy attacks deal -%1% damage to Yukio's units. If an attack from Yukio's units would deal at least %2 HP damage, they deal an additional defense-ignoring -%3 HP of damage. Yukio's units also gain +%4% firepower and +%5% defense.");
-        text = replaceTextArgs(text, [CO_YUKIO.superPowerBombDamage, CO_YUKIO.powerTrueDefenseBonus, CO_YUKIO.powerMinTrueDamage/10, CO_YUKIO.powerTrueDamageBonus/10,
+        var unitNameText = CO_YUKIO.createUnitNamesString(CO_YUKIO.superPowerSpawnList, qsTr("deploy a "), qsTr("randomly deploy either a "), qsTr(", "), qsTr("or "));
+        var text = qsTr("A large army deploys to fight for Yukio. A random %0% of his unoccupied cities will %1, ready to move.") + 
+                    qsTr(" In order to support the invasion, a bombardment is launched dealing -%2 HP of damage to a random %3% of all enemies.") + 
+                    qsTr("\nEnemy attacks deal -%4% damage to Yukio's units. If an attack from Yukio's units would deal at least %5 HP damage, they deal an additional defense-ignoring -%6 HP of damage. Yukio's units also gain +%7% firepower and +%8% defense.");
+        text = replaceTextArgs(text, [CO_YUKIO.superPowerSpawnProportion * 100, unitNameText,
+                                      CO_YUKIO.superPowerBombDamage, CO_YUKIO.superPowerBombProportion * 100,
+                                      CO_YUKIO.powerTrueDefenseBonus, CO_YUKIO.powerMinTrueDamage/10, CO_YUKIO.powerTrueDamageBonus/10,
                                       CO_YUKIO.powerOffBonus, CO_YUKIO.powerDefBonus]);
         return text;
     };
