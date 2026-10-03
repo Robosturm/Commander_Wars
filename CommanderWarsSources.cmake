@@ -8,59 +8,6 @@
 #     DEFAULTAIPIPE and friends (matching the root project's option defaults)
 
 ###################################################################################
-# Set up some compiler and linking options
-###################################################################################
-
-if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj -g ${CMAKE_CXX_FLAGS}")
-        set(CMAKE_C_FLAGS "-Wa,-mbig-obj -g ${CMAKE_C_FLAGS}")
-        add_definitions(-DWIN32_LEAN_AND_MEAN)
-    endif()
-elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    if ("${ANDROID_ABI}" STREQUAL armeabi-v7a)
-        set(CMAKE_C_FLAGS "-Wno-implicit-function-declaration ${CMAKE_C_FLAGS}")
-        add_link_options("-long-plt")
-    endif()
-elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-    set(CMAKE_C_FLAGS "-Wno-implicit-function-declaration ${CMAKE_C_FLAGS}")
-elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-    set(CMAKE_CXX_FLAGS "-rdynamic ${CMAKE_CXX_FLAGS}")
-
-    # Add sanitizers for Linux/GCC
-    if(ENABLE_UBSAN)
-        message("Enabling Undefined Behavior Sanitizer (UBSan)")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=undefined")
-        add_link_options("-fsanitize=undefined")
-    endif()
-
-    if(ENABLE_VALGRIND)
-        message("Enabling Valgrind instrumentation")
-        # Valgrind requires debug symbols and typically no optimization for better diagnostics
-        if(NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-            message(WARNING "Valgrind works best with Debug builds. Consider setting CMAKE_BUILD_TYPE=Debug")
-        endif()
-        set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
-        set(CMAKE_C_FLAGS "-g ${CMAKE_C_FLAGS}")
-        add_definitions(-DVALGRIND_ENABLED)
-        # Valgrind and ASAN conflict, so disable ASAN if Valgrind is enabled
-        if(ENABLE_ASAN)
-            message(STATUS "Disabling Address Sanitizer (ASAN) because Valgrind is enabled")
-            set(ENABLE_ASAN OFF)
-        endif()
-    elseif(ENABLE_ASAN)
-        message("Enabling Address Sanitizer (ASan)")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
-        add_link_options("-fsanitize=address")
-    endif()
-else()
-    message(FATAL_ERROR "Unsupported OS found")
-endif()
-
-###################################################################################
 # OpenSsl
 ###################################################################################
 
@@ -285,6 +232,62 @@ add_definitions(
     -DCOW_BUILD_NAME="${COW_BUILD_NAME}"
     -DUPDATE_FILE="${UPDATE_FILE}"
 )
+
+###################################################################################
+# Set up some compiler and linking options
+# NOTE: keep this block AFTER the audio section: the portaudio subdirectory is
+# added above and must NOT inherit WIN32_LEAN_AND_MEAN (its DirectSound backend
+# needs mmsystem.h types like WAVEFORMATEX that the define hides on MinGW).
+###################################################################################
+
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj -g ${CMAKE_CXX_FLAGS}")
+        set(CMAKE_C_FLAGS "-Wa,-mbig-obj -g ${CMAKE_C_FLAGS}")
+        add_definitions(-DWIN32_LEAN_AND_MEAN)
+    endif()
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    if ("${ANDROID_ABI}" STREQUAL armeabi-v7a)
+        set(CMAKE_C_FLAGS "-Wno-implicit-function-declaration ${CMAKE_C_FLAGS}")
+        add_link_options("-long-plt")
+    endif()
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    set(CMAKE_C_FLAGS "-Wno-implicit-function-declaration ${CMAKE_C_FLAGS}")
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+    set(CMAKE_CXX_FLAGS "-rdynamic ${CMAKE_CXX_FLAGS}")
+
+    # Add sanitizers for Linux/GCC
+    if(ENABLE_UBSAN)
+        message("Enabling Undefined Behavior Sanitizer (UBSan)")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=undefined")
+        add_link_options("-fsanitize=undefined")
+    endif()
+
+    if(ENABLE_VALGRIND)
+        message("Enabling Valgrind instrumentation")
+        # Valgrind requires debug symbols and typically no optimization for better diagnostics
+        if(NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+            message(WARNING "Valgrind works best with Debug builds. Consider setting CMAKE_BUILD_TYPE=Debug")
+        endif()
+        set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
+        set(CMAKE_C_FLAGS "-g ${CMAKE_C_FLAGS}")
+        add_definitions(-DVALGRIND_ENABLED)
+        # Valgrind and ASAN conflict, so disable ASAN if Valgrind is enabled
+        if(ENABLE_ASAN)
+            message(STATUS "Disabling Address Sanitizer (ASAN) because Valgrind is enabled")
+            set(ENABLE_ASAN OFF)
+        endif()
+    elseif(ENABLE_ASAN)
+        message("Enabling Address Sanitizer (ASan)")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
+        add_link_options("-fsanitize=address")
+    endif()
+else()
+    message(FATAL_ERROR "Unsupported OS found")
+endif()
 
 ###################################################################################
 # start oxygine stuff -> qoxygine
