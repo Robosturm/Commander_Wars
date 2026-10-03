@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <memory>
 
 #include <QtTest>
@@ -83,20 +84,35 @@ private:
 
 void OxygineLifetimeTests::initTestCase()
 {
+    // step markers make a startup hang on a runner locatable from the log
+    auto step = [](const char* text)
+    {
+        std::printf("[test-init] %s\n", text);
+        std::fflush(stdout);
+    };
+    step("application name");
     QCoreApplication::setApplicationName("Commander Wars Tests");
+    step("game console");
     GameConsole::getInstance();
+    step("memory management");
     MemoryManagement::getInstance().moveToThread(QThread::currentThread());
+    step("meta types");
     MetaTypeRegister::registerInterfaceData();
     // default settings (1024x800, scale 1.0, ui enabled) are sufficient for the tests;
     // Settings::setup() is intentionally not called since it requires the full Mainapp.
+    step("settings");
     Settings::getInstance();
     // the tests validate the queued actor mutation path drained by Stage::updateStage()
     // (same behavior as the production "SyncActorEvents=false" setting); the engine
     // default true applies mutations synchronously via the render thread instead.
     oxygine::EventDispatcher::setSyncEvents(false);
+    step("window creation");
     m_window = std::make_unique<TestGameWindow>();
+    step("render thread");
     m_window->startRenderThread();
+    step("launch");
     m_window->launch();
+    step("init done");
     QVERIFY(oxygine::Stage::getStage().get() != nullptr);
 }
 

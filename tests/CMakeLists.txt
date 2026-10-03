@@ -96,5 +96,8 @@ add_test(NAME oxygine_lifetime
     WORKING_DIRECTORY ${COW_ROOT_DIR}
 )
 # the test harness never shows a window or creates a GL context, so it runs
-# headless on every platform
-set_tests_properties(oxygine_lifetime PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+# headless on every platform; the timeout keeps a wedged runner from stalling
+set_tests_properties(oxygine_lifetime PROPERTIES
+    ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+    TIMEOUT 120
+)
