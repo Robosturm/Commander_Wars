@@ -51,6 +51,7 @@ jobs:
           target: 'desktop'
           version: ${{env.QT_Version}}
           arch: ${{matrix.qtArch}}
+          modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
           tools: '${{matrix.qtTools}}'

@@ -60,6 +60,7 @@ add_executable(commander_wars_tests
     ${Commander_Wars_OpenNN_SRCS}
     ${Commander_Wars_UPDATE_SRCS}
     ${Commander_Wars_AUDIO_SRCS}
+    ${WIN_TEST_ICON}
 )
 
 if (PRECOMPILED_HEADERS)
@@ -72,6 +73,9 @@ target_link_libraries(commander_wars_tests PUBLIC
     )
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    # the rc file uses a source-dir-relative icon path, so the tests project
+    # needs its own copy instead of reusing distribution/res/ICON.rc
+    set(WIN_TEST_ICON ICON_TESTS.rc)
     target_link_libraries(commander_wars_tests PUBLIC
         # special linking of libs for windows
         Dbghelp
