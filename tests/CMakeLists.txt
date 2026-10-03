@@ -73,9 +73,8 @@ target_link_libraries(commander_wars_tests PUBLIC
     )
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    # the rc file uses a source-dir-relative icon path, so the tests project
-    # needs its own copy instead of reusing distribution/res/ICON.rc
-    set(WIN_TEST_ICON ICON_TESTS.rc)
+    # COW_ROOT_DIR is substituted into the rc by rc.exe's preprocessor
+    set(WIN_TEST_ICON ${COW_ROOT_DIR}/distribution/res/ICON.rc)
     target_link_libraries(commander_wars_tests PUBLIC
         # special linking of libs for windows
         Dbghelp
