@@ -49,6 +49,29 @@ include_directories(${COW_ROOT_DIR})
 # shared source lists, compile definitions and link libraries
 include(${COW_ROOT_DIR}/CommanderWarsSources.cmake)
 
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    # the runner's Qt is not on the default PATH, so the test exe cannot start
+    # without the Qt runtime DLLs next to it (Windows shows a modal missing-DLL
+    # dialog that stalls a headless runner forever). Deploy them like the main
+    # build does via windeployqt.
+    get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
+    get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
+    find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+    if (WINDEPLOYQT_EXECUTABLE)
+        add_custom_command(TARGET commander_wars_tests POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
+                "$<TARGET_FILE:commander_wars_tests>"
+                --libdir "$<TARGET_FILE_DIR:commander_wars_tests>"
+                --plugindir "$<TARGET_FILE_DIR:commander_wars_tests>"
+                --no-quick-import
+                --no-translations
+            COMMENT "Deploying Qt runtime for tests..."
+        )
+    else()
+        message(WARNING "windeployqt not found - the test exe may not start on windows without Qt DLLs on PATH")
+    endif()
+endif()
+
 add_executable(commander_wars_tests
     testgamewindow.h
     testgamewindow.cpp
