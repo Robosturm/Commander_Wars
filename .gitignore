@@ -4,7 +4,9 @@
 # Temporary build files
 /build
 /build_android
+/build_tests
 /*.cmake
+!CommanderWarsSources.cmake
 cmake-kits.json
 CMakePresets.json
 settings.json

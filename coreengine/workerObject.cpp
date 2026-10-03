@@ -44,10 +44,6 @@
 
 #include "ui_reader/uifactory.h"
 
-#ifdef COW_BUILD_TESTING
-#include "tests/oxygine_lifetime/oxyginelifetimetests.h"
-#endif
-
 WorkerObject::WorkerObject()
 {
 #ifdef GRAPHICSUPPORT
@@ -231,19 +227,7 @@ void WorkerObject::start()
 
 void WorkerObject::showMainwindow()
 {
-#ifdef COW_BUILD_TESTING
-    if (qEnvironmentVariableIsSet("COW_OXYGINE_SELFTEST"))
-    {
-        Mainapp::getInstance()->setRendering(false);
-        qint32 failures = OxygineLifetimeTests::runAll();
-        Mainapp::getInstance()->setRendering(true);
-        QMetaObject::invokeMethod(QCoreApplication::instance(), [failures]()
-        {
-            QCoreApplication::exit(failures == 0 ? 0 : 1);
-        }, Qt::QueuedConnection);
-        return;
-    }
-#endif
+
     CONSOLE_PRINT("WorkerThread::showMainwindow", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->threadProcessEvents();
