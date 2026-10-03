@@ -14,7 +14,10 @@ jobs:
         include:
           - buildTarget: ubuntu
             os: ubuntu-latest
-            qtArch: 'gcc_64'
+            # empty arch lets aqt pick the default (gcc_64); passing it explicitly
+            # makes install-qt-action fail in its listing step on the ubuntu runner
+            qtArch: ''
+            qtDir: 'gcc_64'
             qtTools: ''
             installerCommands1: 'sudo apt-get update'
             installerCommands2: 'sudo apt-get install -y libxcb-cursor0 libgl1-mesa-dri libegl1 libopengl0'
@@ -22,6 +25,7 @@ jobs:
           - buildTarget: windows
             os: windows-latest
             qtArch: 'win64_mingw'
+            qtDir: 'mingw_64'
             qtTools: 'tools_mingw1310'
             installerCommands1: choco install openssl --force -y --install-arguments="'/DIR=C:/openSsl/'"
             installerCommands2: ''
@@ -29,6 +33,7 @@ jobs:
           - buildTarget: macos
             os: macos-15
             qtArch: 'clang_64'
+            qtDir: 'clang_64'
             qtTools: ''
             installerCommands1: ''
             installerCommands2: ''
@@ -69,8 +74,8 @@ jobs:
         -S "${{github.workspace}}/source/tests" \
         -B "${{github.workspace}}/build_tests" \
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
-        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtArch}}/" \
-        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtArch}}/lib/cmake/Qt6/ \
+        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtDir}}/" \
+        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtDir}}/lib/cmake/Qt6/ \
         ${{matrix.cmakeOptions}}
 
     - name: Build tests
