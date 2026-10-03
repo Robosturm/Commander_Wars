@@ -73,7 +73,8 @@ target_link_libraries(commander_wars_tests PUBLIC
     )
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    # COW_ROOT_DIR is substituted into the rc by rc.exe's preprocessor
+    # COW_WORKSPACE_ROOT is substituted into the rc by rc.exe's preprocessor
+    set(COW_WORKSPACE_ROOT "${COW_ROOT_DIR}")
     set(WIN_TEST_ICON ${COW_ROOT_DIR}/distribution/res/ICON.rc)
     target_link_libraries(commander_wars_tests PUBLIC
         # special linking of libs for windows

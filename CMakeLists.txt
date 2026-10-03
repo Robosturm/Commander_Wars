@@ -221,6 +221,9 @@ if (GRAPHICSUPPORT)
 else()
     SET(WIN_ICON distribution/res/ICON_SERVER.rc)
 endif()
+# rc.exe substitutes ${COW_WORKSPACE_ROOT} when compiling the icon resource;
+# it points at the checkout root so the icon is found from any build directory
+set(COW_WORKSPACE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}")
 
 qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     main.cpp

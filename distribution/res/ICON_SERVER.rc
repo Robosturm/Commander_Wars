@@ -1,1 +1,1 @@
-IDI_ICON1               ICON    DISCARDABLE     "${COW_ROOT_DIR}/distribution/res/icons/icoserver_windows.ico"
+IDI_ICON1               ICON    DISCARDABLE     "${COW_WORKSPACE_ROOT}/distribution/res/icons/icoserver_windows.ico"
