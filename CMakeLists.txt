@@ -218,19 +218,8 @@ add_custom_target(Test SOURCES
 
 if (GRAPHICSUPPORT)
     SET(WIN_ICON distribution/res/ICON.rc)
-    SET(WIN_ICON_FILE "icons/icoclient_windows.ico")
 else()
     SET(WIN_ICON distribution/res/ICON_SERVER.rc)
-    SET(WIN_ICON_FILE "icons/icoserver_windows.ico")
-endif()
-if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    # windres resolves the icon path relative to the build working directory,
-    # which differs between pipelines, so generate an rc with an absolute path
-    # (backslashes, escaped, for the windres preprocessor)
-    file(TO_NATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distribution/res/${WIN_ICON_FILE}" COW_ICON_PATH)
-    string(REPLACE "\\" "\\\\" COW_ICON_PATH "${COW_ICON_PATH}")
-    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/${WIN_ICON}" "${CMAKE_CURRENT_BINARY_DIR}/generated_icon.rc" @ONLY)
-    SET(WIN_ICON "${CMAKE_CURRENT_BINARY_DIR}/generated_icon.rc")
 endif()
 
 qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION

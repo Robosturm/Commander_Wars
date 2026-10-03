@@ -73,12 +73,11 @@ target_link_libraries(commander_wars_tests PUBLIC
     )
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    # windres resolves the icon path relative to the build working directory,
-    # so generate an rc with an absolute path like the root project does
-    file(TO_NATIVE_PATH "${COW_ROOT_DIR}/distribution/res/icons/icoclient_windows.ico" COW_ICON_PATH)
-    string(REPLACE "\\" "\\\\" COW_ICON_PATH "${COW_ICON_PATH}")
-    configure_file("${COW_ROOT_DIR}/distribution/res/ICON.rc" "${CMAKE_CURRENT_BINARY_DIR}/generated_icon.rc" @ONLY)
-    set(WIN_TEST_ICON "${CMAKE_CURRENT_BINARY_DIR}/generated_icon.rc")
+    # the rc file resolves its icon relative to the build working directory
+    # (matching the main windows pipeline's layout), so mirror the icon there
+    file(COPY_FILE "${COW_ROOT_DIR}/distribution/res/icons/icoclient_windows.ico"
+         "${CMAKE_BINARY_DIR}/../distribution/res/icons/icoclient_windows.ico" ONLY_IF_DIFFERENT)
+    set(WIN_TEST_ICON ${COW_ROOT_DIR}/distribution/res/ICON.rc)
     target_link_libraries(commander_wars_tests PUBLIC
         # special linking of libs for windows
         Dbghelp
