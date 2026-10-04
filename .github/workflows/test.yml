@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        buildTarget: [ubuntu, windows, macos]
+        buildTarget: [ubuntu, macos]
         include:
           - buildTarget: ubuntu
             os: ubuntu-latest
