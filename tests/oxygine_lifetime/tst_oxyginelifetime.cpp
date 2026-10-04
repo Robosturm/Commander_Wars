@@ -1,5 +1,8 @@
+#include <chrono>
 #include <cstdio>
+#include <cstdlib>
 #include <memory>
+#include <thread>
 
 #include <QtTest>
 
@@ -18,7 +21,6 @@
 #include "3rd_party/oxygine-framework/oxygine/Event.h"
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 
-#include "coreengine/gameconsole.h"
 #include "coreengine/memorymanagement.h"
 #include "coreengine/metatyperegister.h"
 #include "coreengine/settings.h"
@@ -90,10 +92,25 @@ void OxygineLifetimeTests::initTestCase()
         std::printf("[test-init] %s\n", text);
         std::fflush(stdout);
     };
+    // hard watchdog: a wedged windows runner must not stall the job; if init or
+    // the tests block for more than 90s (ctest grants 120s), force an exit so
+    // the step output so far stays visible in the log. Runs on its own thread
+    // because a hang blocks the main thread's event loop, so a QTimer would
+    // never fire.
+    step("watchdog");
+    std::thread([]()
+    {
+        std::this_thread::sleep_for(std::chrono::seconds(90));
+        std::printf("[test-init] watchdog fired, aborting\n");
+        std::fflush(stdout);
+        _exit(3);
+    }).detach();
     step("application name");
     QCoreApplication::setApplicationName("Commander Wars Tests");
-    step("game console");
-    GameConsole::getInstance();
+    // NOTE: do NOT create the GameConsole instance here. getSpInstance() installs
+    // GameConsole::messageOutput as the Qt message handler, which redirects all
+    // qDebug/qWarning/QTest output into the in-memory console buffer instead of
+    // stdout - the test log would stay empty and CI shows nothing.
     step("memory management");
     MemoryManagement::getInstance().moveToThread(QThread::currentThread());
     step("meta types");
