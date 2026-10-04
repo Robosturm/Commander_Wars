@@ -103,7 +103,7 @@ void OxygineLifetimeTests::initTestCase()
         std::this_thread::sleep_for(std::chrono::seconds(90));
         std::printf("[test-init] watchdog fired, aborting\n");
         std::fflush(stdout);
-        _exit(3);
+        std::_Exit(3);
     }).detach();
     step("application name");
     QCoreApplication::setApplicationName("Commander Wars Tests");

@@ -81,10 +81,22 @@ jobs:
     - name: Build tests
       run: cmake --build '${{github.workspace}}/build_tests' -j4
 
+    # windows: put Qt's bin dir on PATH so the test exe resolves its DLLs even if
+    # windeployqt missed something, and log the deployed runtime for diagnosis
+    - name: Prepare windows test runtime
+      if: matrix.buildTarget == 'windows'
+      working-directory: '${{github.workspace}}/build_tests'
+      run: |
+        echo "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtDir}}/bin" >> "$GITHUB_PATH"
+        echo "Deployed test dir contents:"
+        ls -la tests/ || true
+        echo "Deployed platforms:"
+        ls -la tests/platforms/ || true
+
     # the test harness never shows a window or creates a GL context, so it runs
     # headless with the offscreen platform plugin on every runner
     - name: Run tests
       working-directory: '${{github.workspace}}/build_tests'
       env:
         QT_QPA_PLATFORM: offscreen
-      run: ctest --output-on-failure
+      run: ctest --output-on-failure -V
