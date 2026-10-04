@@ -51,6 +51,21 @@
                 <y>lastY + lastHeight + 10</y>
                 <content>https://discord.com/invite/ZqExNgm</content>
             </QrCode>
+            <Textbox>
+                <x>settings.getStageWidth() / 2 - 350</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>700</width>
+                <tooltip>https://www.commanderwars.com/wiki/Main_Page</tooltip>
+                <startValue>https://www.commanderwars.com/wiki/Main_Page</startValue>
+                <onEvent></onEvent>
+                <readonly>true</readonly>
+            </Textbox>
+            <QrCode>
+                <Id>QrCodeBox</Id>
+                <x>settings.getStageWidth() / 2 - 100</x>
+                <y>lastY + lastHeight + 10</y>
+                <content>https://www.commanderwars.com/wiki/Main_Page</content>
+            </QrCode>
         </childs>
     </Panel>  
 </ui>

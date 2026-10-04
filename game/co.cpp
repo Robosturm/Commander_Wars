@@ -1278,7 +1278,8 @@ qreal CO::getDamageReduction(GameAction* pAction, qreal damage, Unit* pAttacker,
 }
 
 qreal CO::getTrueDamage(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
-                        Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
+                        Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode,
+                        const QJSValue & damageContext)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTrueDamage";
@@ -1294,7 +1295,8 @@ qreal CO::getTrueDamage(GameAction* pAction, qreal damage, Unit* pAttacker, QPoi
                           isDefender,
                           JsThis::getJsThis(pAction),
                           luckMode,
-                          GameMap::getMapJsThis(m_pMap)});
+                          GameMap::getMapJsThis(m_pMap),
+                          damageContext});
     qreal ergValue = 0.0;
     for (const auto & perk : std::as_const(m_perkList))
     {
