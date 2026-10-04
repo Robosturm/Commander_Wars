@@ -88,21 +88,24 @@ jobs:
       working-directory: '${{github.workspace}}/build_tests'
       run: |
         echo "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtDir}}/bin" >> "$GITHUB_PATH"
-        echo "Deployed test dir contents:"
-        ls -la tests/ || true
+        echo "Deployed build_tests dir contents:"
+        ls -la . || true
         echo "Deployed platforms:"
-        ls -la tests/platforms/ || true
+        ls -la platforms/ || true
 
     # windows diagnosis: run the exe directly (not via ctest) so any loader/
     # platform error surfaces, and dump which DLLs it resolves
     - name: Diagnose windows test exe
       if: matrix.buildTarget == 'windows'
-      working-directory: '${{github.workspace}}/build_tests/tests'
+      working-directory: '${{github.workspace}}/build_tests'
       run: |
+        EXE=$(find . -name 'commander_wars_tests.exe' | head -1)
+        echo "Found exe: $EXE"
+        ls -la "$(dirname "$EXE")"
         echo "=== ldd-style import check ==="
-        "$GITHUB_WORKSPACE/qt/Qt/${{env.QT_Version}}/${{matrix.qtDir}}/bin/objdump.exe" -p ./commander_wars_tests.exe | grep -i "DLL Name" || true
+        "$GITHUB_WORKSPACE/qt/Qt/${{env.QT_Version}}/${{matrix.qtDir}}/bin/objdump.exe" -p "$EXE" | grep -i "DLL Name" || true
         echo "=== direct run ==="
-        QT_QPA_PLATFORM=offscreen QT_DEBUG_PLUGINS=1 timeout 30 ./commander_wars_tests.exe; echo "exit code: $?"
+        QT_QPA_PLATFORM=offscreen QT_DEBUG_PLUGINS=1 timeout 30 "$EXE"; echo "exit code: $?"
 
     # the test harness never shows a window or creates a GL context, so it runs
     # headless with the offscreen platform plugin on every runner
