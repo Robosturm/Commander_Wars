@@ -101,11 +101,13 @@ jobs:
       run: |
         EXE=$(find . -name 'commander_wars_tests.exe' | head -1)
         echo "Found exe: $EXE"
-        ls -la "$(dirname "$EXE")"
-        echo "=== ldd-style import check ==="
-        "$GITHUB_WORKSPACE/qt/Qt/${{env.QT_Version}}/${{matrix.qtDir}}/bin/objdump.exe" -p "$EXE" | grep -i "DLL Name" || true
-        echo "=== direct run ==="
-        QT_QPA_PLATFORM=offscreen QT_DEBUG_PLUGINS=1 timeout 30 "$EXE"; echo "exit code: $?"
+        echo "=== direct run (offscreen, software GL) ==="
+        QT_QPA_PLATFORM=offscreen QT_DEBUG_PLUGINS=1 QT_OPENGL=software timeout 40 "$EXE"; echo "exit code: $?"
+        echo "=== direct run (minimal platform) ==="
+        QT_QPA_PLATFORM=minimal timeout 40 "$EXE"; echo "exit code: $?"
+        OBJDUMP=$(which objdump 2>/dev/null || echo "${{github.workspace}}/qt/Qt/Tools/mingw1310_64/bin/objdump.exe")
+        echo "=== DLL imports (via $OBJDUMP) ==="
+        "$OBJDUMP" -p "$EXE" 2>/dev/null | grep -i "DLL Name" || echo "objdump unavailable"
 
     # the test harness never shows a window or creates a GL context, so it runs
     # headless with the offscreen platform plugin on every runner
