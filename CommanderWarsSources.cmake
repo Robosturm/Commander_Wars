@@ -42,6 +42,21 @@ else()
         OpenSSL::SSL
         OpenSSL::Crypto
     )
+    # newer distro builds of the static libcrypto pull in extra dependencies
+    # (jitterentropy, zlib, zstd, dl, pthread); ask pkg-config for the complete
+    # static link line instead of guessing them one by one
+    if (OPENSSL_USE_STATIC_LIBS AND UNIX AND NOT APPLE)
+        find_package(PkgConfig QUIET)
+        if (PkgConfig_FOUND)
+            pkg_check_modules(OPENSSL_PC QUIET openssl)
+        endif()
+        if (OPENSSL_PC_STATIC_LDFLAGS)
+            set(OPENSSL_EXTRA_LIBS ${OPENSSL_PC_STATIC_LDFLAGS})
+            # ssl/crypto themselves are covered by the imported targets above
+            list(REMOVE_ITEM OPENSSL_EXTRA_LIBS "-lssl" "-lcrypto")
+            list(APPEND OPENSSL_LIBS ${OPENSSL_EXTRA_LIBS})
+        endif()
+    endif()
 endif()
 
 ###################################################################################
