@@ -265,33 +265,51 @@ var Constructor = function()
         return 0;
     };
 
+    this.damagePerHp = 10;
+    this.legacyFinishingDamage = 100;
+
     this.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
+                                  defender, defPosX, defPosY, isDefender, action, luckmode, map, damageContext = null)
     {
-        if (CO.isActive(co))
+        if (!CO.isActive(co) || defender === null || attacker === null)
         {
-            // check for luck finish if  the attacker is in co range or a power mode is active
-            if (defender !== null && attacker !== null &&
-                ((co.inCORange(Qt.point(atkPosX, atkPosY), attacker) && !isDefender) ||
-                 (co.inCORange(Qt.point(defPosX, defPosY), defender) && isDefender) ||
-                  co.getPowerMode() > GameEnums.PowerMode_Off))
-            {
-                // check for finishing blow return absurd amount of true damage if luck is enough
-                if (isDefender)
-                {
-                    if (defender.getHp() - damage / 10.0 - attackerBaseHp / 10.0 <= 0)
-                    {
-                        return 100;
-                    }
-                }
-                else
-                {
-                    if (defender.getHp() - damage / 10.0  - attacker.getHpRounded() / 10.0 <= 0)
-                    {
-                        return 100;
-                    }
-                }
-            }
+            return 0;
+        }
+        var attackerPosition = Qt.point(atkPosX, atkPosY);
+        if (!co.inCORange(attackerPosition, attacker) && co.getPowerMode() <= GameEnums.PowerMode_Off)
+        {
+            return 0;
+        }
+        if (damageContext === null)
+        {
+            // Preserve calls from action overrides that do not supply weapon context.
+            return CO_ADAM.getLegacyFinishingDamage(damage, attacker, attackerBaseHp, defender, isDefender);
+        }
+        var maxDamage = ACTION_FIRE.calcDamageWithLuck(damageContext, ACTION_FIRE.getDefaultLuck(attacker), map);
+        if (maxDamage <= damage)
+        {
+            return 0;
+        }
+        var reducedDamage = ACTION_FIRE.getReducedDamage(action, maxDamage, attacker, attackerPosition, damageContext.baseHp,
+                                                          defender, Qt.point(defPosX, defPosY), isDefender, GameEnums.LuckDamageMode_Min);
+        // Battle actions serialize damage as an integer before applying it to HP.
+        if (Math.floor(reducedDamage) >= defender.getHp() * CO_ADAM.damagePerHp)
+        {
+            return ACTION_FIRE.getLuckDamageBonus(damageContext, damage, maxDamage);
+        }
+        return 0;
+    };
+
+    this.getLegacyFinishingDamage = function(damage, attacker, attackerBaseHp, defender, isDefender)
+    {
+        var hp = attackerBaseHp;
+        if (!isDefender)
+        {
+            hp = attacker.getHpRounded();
+        }
+        if (defender.getHp() - damage / CO_ADAM.damagePerHp - hp / CO_ADAM.damagePerHp <= 0)
+        {
+            return CO_ADAM.legacyFinishingDamage;
         }
         return 0;
     };
@@ -317,7 +335,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Adam can take advantage of max luck rolls, but only if the enemy unit could be destroyed by one. However, his units lose even more firepower the less HP they have.");
+        return qsTr("Adam can take advantage of maximum base luck rolls, excluding luck modifiers from skills or other COs, but only if it would destroy the enemy unit even through maximum defensive luck. However, his units lose even more firepower the less HP they have.");
     };
     this.getLongCODescription = function(co, map)
     {
@@ -328,7 +346,7 @@ var Constructor = function()
             values = [CO_ADAM.d2dPowerMalus, CO_ADAM.d2dDefDestroyedBonus];
         }
         var text = qsTr("\nGlobal Effect: \nAdam's units lose %0% more firepower per lost HP. His units gain a one-turn %1% defence boost by killing an enemy unit.") +
-                   qsTr("\n\nCO Zone Effect: \nAdam's attacking units instantly kill an enemy unit if a max luck roll would kill them. His units gain +%2% firepower and +%3% defence.");
+                   qsTr("\n\nCO Zone Effect: \nAdam's units deal at least maximum base luck damage if that would destroy the enemy unit even through maximum defensive luck. This check excludes luck modifiers from skills or other COs. His units gain +%2% firepower and +%3% defence.");
 
         text = replaceTextArgs(text, [values[0], values[1], CO_ADAM.d2dCoZoneOffBonus, CO_ADAM.d2dCoZoneDefBonus]);
         return text;
