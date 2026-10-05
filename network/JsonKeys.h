@@ -76,6 +76,7 @@ namespace JsonKeys
     const char* const JSONKEY_SIGNEDUP = "signedUp";
     const char* const JSONKEY_PLAYERID = "playerId";
     const char* const JSONKEY_SIGNUPCHANGEALLOWED = "signUpChangeAllowed";
+    const char* const JSONKEY_AUTOMATCHSTATE = "autoMatchState";
     const char* const JSONKEY_MMR = "mmr";
     const char* const JSONKEY_RESULT = "result";
     const char* const JSONKEY_REPLAYFILE = "replayFile";

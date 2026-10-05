@@ -62,6 +62,8 @@ public:
     Q_INVOKABLE void showContactingServer();
     Q_INVOKABLE void requestPlayersFromServer(const QString & searchFilter);
     Q_INVOKABLE void requestPlayerStats(const QString & player);
+    void requestAutoMatchSignUp(const QString &matchId, qint32 minGames, qint32 maxGames);
+    void requestAutoMatchWithdraw(const QString &matchId);
     Q_INVOKABLE void uploadMap(const  QString & selectedFilePath);
     Q_INVOKABLE void setGameViewMode(qint32 mode);
     Q_INVOKABLE void onShowOtherDialog();
@@ -75,6 +77,7 @@ signals:
     void sigSearchedPlayersReceived(const QStringList & foundPlayers);
     void sigReceivedPlayerStats(const QJsonObject & objData);
     void sigRequestShowAutoMatches(const QJsonObject & objData);
+    void sigAutoMatchActionResult(const QJsonObject &objData);
     void sigReceivedAvailableMaps(const QJsonObject & objData);
     void sigReceivedAvailableRecords(const QJsonObject & objData);
     void sigOnDownloadedResponse(bool success);

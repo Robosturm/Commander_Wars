@@ -49,6 +49,7 @@ public:
         eUiFactory   = 1 << 7,
         eKeepAlive   = 1 << 8,
         eGamepad     = 1 << 9,
+        eAutoMatch   = 1 << 10,
     };
     Q_ENUM(eModules)
 
@@ -78,6 +79,7 @@ public:
     static void draw();
     static void messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
     static void messageOutput(const QMessageLogContext &context, const QString &msg, eLogLevels logLevel);
+    static void autoMatchLog(const QString &matchId, const QString &message, eLogLevels logLevel);
     void init();
     void release();
 

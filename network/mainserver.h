@@ -5,6 +5,7 @@
 #include <QSqlDatabase>
 #include <QProcess>
 #include <QJsonArray>
+#include <QHash>
 
 #include "network/tcpserver.h"
 #include "network/networkgamedata.h"
@@ -152,6 +153,8 @@ public:
     {
         return *m_serverData;
     }
+    void createMatchData(const QString &match);
+    QString getAuthenticatedUsername(quint64 socketId) const;
     /**
      * @brief sqlQueryFailed
      * @param query
@@ -437,6 +440,10 @@ private:
      * @param objData
      */
     void onRequestServerAutoMatchInfo(quint64 socketID, const QJsonObject & objData);
+    void onRequestAutoMatchSignUp(quint64 socketID, const QJsonObject &objData);
+    void onRequestAutoMatchWithdraw(quint64 socketID, const QJsonObject &objData);
+    void sendAutoMatchActionResult(quint64 socketID, const QString &matchId, bool success,
+                                   const QString &message);
     void onRequestPlayersFromServer(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief parseSlaveAddressOptions
@@ -461,11 +468,6 @@ private:
      * @param doc
      */
     void loginToAccount(qint64 socketId, const QJsonObject & objData);
-    /**
-     * @brief createMatchData
-     * @param match
-     */
-    void createMatchData(const QString & match);
     /**
      * @brief checkPassword
      * @param database
@@ -559,6 +561,7 @@ private:
      * @brief m_freeAddresses addresses of slaves that have been used and are now free again
      */
     QVector<SlaveAddress> m_freeAddresses;
+    QHash<quint64, QString> m_authenticatedUsers;
 
     MatchMakingCoordinator m_matchMakingCoordinator;
     MapFileServer m_mapFileServer;

@@ -17,6 +17,14 @@ class AutoMatchMaker : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
+    enum class State : qint32
+    {
+        InCreation,
+        SignUp,
+        ActiveWithSignUp,
+        ActiveWithNoSignUp
+    };
+
     explicit AutoMatchMaker(const QString & matchId, MainServer * mainServer);
     /**
      * @brief onNewMatchResultData
@@ -27,7 +35,7 @@ public:
      * @brief onNewPlayerData
      * @param objData
      */
-    void onNewPlayerData(const QJsonObject & objData);
+    bool onNewPlayerData(const QJsonObject & objData);
     /**
      * @brief serializeObject
      * @param stream
@@ -44,7 +52,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 2;
+        return 3;
     }
     /**
      * @brief playerJoined
@@ -61,6 +69,8 @@ public:
      * @param newRunning
      */
     void setRunning(bool newRunning);
+    Q_INVOKABLE QString getState() const;
+    void updateStateFromScript();
     /**
      * @brief getActiveMatch
      * @return
@@ -80,9 +90,14 @@ public:
      */
     QJsonObject getBracketGraphInfo();
     Q_INVOKABLE bool getSignedUp(const QString  playerId);
-    Q_INVOKABLE void createNewGame(const QStringList players, const QStringList modList);
+    Q_INVOKABLE bool withdrawPlayer(const QString &playerId);
+    Q_INVOKABLE QStringList getSignedUpPlayers();
+    Q_INVOKABLE bool createNewGame(const QStringList players, const QStringList modList);
+    void createGamesPeriodic();
     Q_INVOKABLE QString getMatchId() const;
     Q_INVOKABLE void updateMmr(const QString player1, const QString player2, qint32 maxEloChange, GameEnums::GameResult gameResultForPlayer1);
+    Q_INVOKABLE void updateMmrAgainstRating(const QString &player, qint32 opponentMmr,
+                                            qint32 maxEloChange, GameEnums::GameResult result);
     Q_INVOKABLE bool setMmr(const QString player, qint32 mmr);
     Q_INVOKABLE qint32 getMmr(const QString player);
     Q_INVOKABLE bool setMatchHistoryData(const QString player, QString historyData);
@@ -138,6 +153,7 @@ private:
     ScriptVariables m_Variables;
     bool m_running{false};
     bool m_activeMatch{false};
+    State m_state{State::SignUp};
     qint32 m_notActiveCounter{0};
 };
 

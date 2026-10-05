@@ -1186,6 +1186,16 @@ void GameRules::setMatchType(const QString & newMatchType)
     m_matchType = newMatchType;
 }
 
+bool GameRules::getAutoMatch() const
+{
+    return m_autoMatch;
+}
+
+void GameRules::setAutoMatch(bool value)
+{
+    m_autoMatch = value;
+}
+
 qint32 GameRules::getMaxPerkCount() const
 {
     return m_maxPerkCount;
@@ -1592,15 +1602,17 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
     {
         pStream << m_multiplayerObserver;
         pStream << m_maxPerkCount;
-        if (Mainapp::getSlave())
+        if (Mainapp::getSlave() || m_autoMatch)
         {
             pStream << m_matchType;
+            pStream << m_autoMatch;
         }
         else
         {
             // don't save match type on clients
             QString dummy;
             pStream << dummy; 
+            pStream << false;
         }
         pStream << m_mapPalette;
     }
@@ -1952,6 +1964,10 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 24)
     {
         pStream >> m_matchType;
+    }
+    if (version > 34)
+    {
+        pStream >> m_autoMatch;
     }
     if (version > 25)
     {

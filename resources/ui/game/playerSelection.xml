@@ -50,7 +50,7 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Allows you to change several values for all players.")</tooltip>
                 <onEvent>currentMenu.createSubUi("ui/game/allAdvancedPlayerChanges.xml", currentMenu)</onEvent>
-                <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignEnabled(currentMenu)</enabled>
+                <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignEnabled(currentMenu) &amp;&amp; !currentMenu.getIsAutoMatch()</enabled>
             </Button>
             <if condition="!(currentMenu.getIsCampaign() || currentMenu.hasNetworkInterface())">
                 <Label>
@@ -181,6 +181,7 @@
                     <startValue>0</startValue>
                     <items>currentMenu.getAiNames()</items>
                     <onEvent>currentMenu.selectAI(loopIdx)</onEvent>
+                    <enabled>!currentMenu.getIsAutoMatch()</enabled>
                 </DropDownMenu>
                 <DropDownMenu>
                     <Id>"Team_" + loopIdx</Id>
@@ -191,7 +192,7 @@
                     <startValue>currentMenu.getMap().getPlayer(loopIdx).getTeam()</startValue>
                     <items>currentMenu.getTeamNames()</items>
                     <onEvent>currentMenu.playerTeamChanged(input, loopIdx)</onEvent>
-                    <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignEnabled(currentMenu)</enabled>
+                    <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignEnabled(currentMenu) &amp;&amp; !currentMenu.getIsAutoMatch()</enabled>
                 </DropDownMenu>
                 <Button>
                     <x>lastX + lastWidth + 10</x>
@@ -200,6 +201,7 @@
                     <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
                     <tooltip>QT_TRANSLATE_NOOP("GAME","Allows you to change several values for this player.")</tooltip>
                     <onEvent>PlayerSelection.storeCurrentPlayer(loopIdx);currentMenu.createSubUi("ui/game/advancedPlayerChanges.xml", currentMenu)</onEvent>
+                    <enabled>!currentMenu.getIsAutoMatch()</enabled>
                 </Button>
                 <if condition="currentMenu.hasNetworkInterface()">
                     <Checkbox>

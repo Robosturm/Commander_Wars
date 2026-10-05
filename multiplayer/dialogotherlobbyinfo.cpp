@@ -5,6 +5,7 @@
 #include "multiplayer/lobbymenu.h"
 #include "multiplayer/dialogselectdownloadmap.h"
 #include "multiplayer/dialogselectdownloadrecord.h"
+#include "multiplayer/dialogAutoMatches.h"
 
 #include "ui_reader/uifactory.h"
 
@@ -88,5 +89,6 @@ void DialogOtherLobbyInfo::showDownloadReplay()
 
 void DialogOtherLobbyInfo::receivedShowAutoMatches(const QJsonObject & objData)
 {
-
+    spDialogAutoMatches dialog = MemoryManagement::create<DialogAutoMatches>(m_pLobbyMenu, objData);
+    addChild(dialog);
 }

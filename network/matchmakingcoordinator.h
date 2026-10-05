@@ -4,6 +4,7 @@
 
 
 #include <QObject>
+#include <QMap>
 #include "network/automatchmaker.h"
 
 class MainServer;
@@ -67,6 +68,7 @@ private:
      * @brief removeMatches
      */
     void removeMatches();
+    bool storeMatchResult(const QString &matchId, const QJsonObject &objData);
     /**
      * 
     */
@@ -76,6 +78,8 @@ private:
      * @brief m_autoMatchMakers
      */
     QMap<QString, spAutoMatchMaker> m_autoMatchMakers;
+    QMap<QString, QString> m_scriptPaths;
+    QMap<QString, qint64> m_scriptModifiedTimes;
     MainServer* m_mainServer{nullptr};
 };
 

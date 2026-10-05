@@ -4,6 +4,7 @@
 #include <qlogging.h>
 #include <QLoggingCategory>
 #include <QDateTime>
+#include <QFile>
 #include <QFontMetrics>
 #include <QMetaMethod>
 #include <QMetaObject>
@@ -622,6 +623,36 @@ void GameConsole::messageOutput(const QMessageLogContext &context, const QString
         type = logLevelToQtMsgType[logLevel];
     }
     messageOutput(type, context, msg);
+}
+
+void GameConsole::autoMatchLog(const QString &matchId, const QString &message, eLogLevels logLevel)
+{
+    static std::mutex autoMatchLogMutex;
+    std::lock_guard<std::mutex> locker(autoMatchLogMutex);
+
+    QString safeMatchId = matchId;
+    for (QChar &character : safeMatchId)
+    {
+        if (!character.isLetterOrNumber() && character != '_' && character != '-')
+        {
+            character = '_';
+        }
+    }
+    const QString date = QDateTime::currentDateTime().toString("yyyy-MM-dd");
+    QFile file(Settings::getInstance()->getUserPath() +
+               "automatch-" + safeMatchId + "-" + date + ".log");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+    {
+        QTextStream stream(&file);
+        stream << QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss")
+               << " [" << logLevel << "] " << message << Qt::endl;
+    }
+    else
+    {
+        std::cerr << "Failed to open auto match log " << file.fileName().toStdString()
+                  << ": " << file.errorString().toStdString() << std::endl;
+    }
+    messageOutput(QMessageLogContext(), "[AutoMatch " + matchId + "] " + message, logLevel);
 }
 
 void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)

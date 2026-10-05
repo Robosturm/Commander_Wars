@@ -124,3 +124,12 @@ set_tests_properties(oxygine_lifetime PROPERTIES
     ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
     TIMEOUT 120
 )
+
+add_executable(matchmaking_tests
+    matchmaking/tst_elocalculator.cpp
+    ${COW_ROOT_DIR}/network/elocalculator.cpp
+    ${COW_ROOT_DIR}/network/elocalculator.h
+)
+target_include_directories(matchmaking_tests PRIVATE ${COW_ROOT_DIR})
+target_link_libraries(matchmaking_tests PRIVATE Qt6::Core Qt6::Test)
+add_test(NAME matchmaking_elo COMMAND matchmaking_tests)

@@ -6,6 +6,8 @@
 
 #include <QDirIterator>
 #include <QJsonArray>
+#include <QDateTime>
+#include <QJsonDocument>
 
 MatchMakingCoordinator::MatchMakingCoordinator(MainServer *parent)
     : QObject{parent},
@@ -52,6 +54,11 @@ void MatchMakingCoordinator::onSlaveInfoGameResult(quint64 socketID, const QJson
     updatePlayerMatchData(objData);
     if (!matchType.isEmpty())
     {
+        if (!storeMatchResult(matchType, objData))
+        {
+            GameConsole::autoMatchLog(matchType, "Failed to persist completed match result",
+                                      GameConsole::eERROR);
+        }
         if (m_autoMatchMakers.contains(matchType))
         {
             m_autoMatchMakers[matchType]->onNewMatchResultData(objData);
@@ -62,6 +69,18 @@ void MatchMakingCoordinator::onSlaveInfoGameResult(quint64 socketID, const QJson
         }
     }
     m_mainServer->despawnSlave(socketID);
+}
+
+bool MatchMakingCoordinator::storeMatchResult(const QString &matchId, const QJsonObject &objData)
+{
+    QSqlQuery query(m_mainServer->getDatabase());
+    query.prepare("INSERT INTO autoMatchResults (matchId, gameId, createdAt, resultJson) "
+                  "VALUES (?, ?, ?, ?);");
+    query.addBindValue(matchId);
+    query.addBindValue(objData.value(JsonKeys::JSONKEY_REPLAYFILE).toString());
+    query.addBindValue(QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs));
+    query.addBindValue(QString::fromUtf8(QJsonDocument(objData).toJson(QJsonDocument::Compact)));
+    return query.exec() && !MainServer::sqlQueryFailed(query);
 }
 
 void MatchMakingCoordinator::fixPlayerTable(const QString &player)
@@ -182,20 +201,21 @@ void MatchMakingCoordinator::getMatchMakingData(const QString &playerId, QJsonOb
         bool isInMatch = match->getSignedUp(playerId);
         QJsonObject matchInfo;
         matchInfo.insert(JsonKeys::JSONKEY_NAME, match->getName());
-        matchInfo.insert(JsonKeys::JSONKEY_NAME, match->getDescription());
+        matchInfo.insert(JsonKeys::JSONKEY_DESCRIPTION, match->getDescription());
         matchInfo.insert(JsonKeys::JSONKEY_AUTOMATCHID, match->getMatchId());
         matchInfo.insert(JsonKeys::JSONKEY_SIGNEDUP, isInMatch);
         matchInfo.insert(JsonKeys::JSONKEY_SIGNUPCHANGEALLOWED, match->getIsSignUpChangeAllowed());
+        matchInfo.insert(JsonKeys::JSONKEY_AUTOMATCHSTATE, match->getState());
         matchInfo.insert(JsonKeys::JSONKEY_MMR, match->getMmr(playerId));
         matchInfo.insert(JsonKeys::JSONKEY_BRACKETGRAPHINFO, match->getBracketGraphInfo());
 
         if (match->getRunning())
         {
-            preparingAutoMatches.append(matchInfo);
+            runningAutoMatches.append(matchInfo);
         }
         else
         {
-            runningAutoMatches.append(matchInfo);
+            preparingAutoMatches.append(matchInfo);
         }
     }
     objData.insert(JsonKeys::JSONKEY_PREPARINGAUTOMATCHES, preparingAutoMatches);
@@ -212,6 +232,10 @@ void MatchMakingCoordinator::periodicTasks()
     loadAutomatches(path, false);
     path = "server/runningAutoMatches";
     loadAutomatches(path, true);
+    for (auto &match : m_autoMatchMakers)
+    {
+        match->createGamesPeriodic();
+    }
     removeMatches();
 }
 
@@ -227,37 +251,67 @@ void MatchMakingCoordinator::loadAutomatches(QString &path, bool running)
         QString id = dirIter.fileInfo().fileName().split(".").at(0).toUpper();
         if (m_autoMatchMakers.contains(id))
         {
+            const QString filePath = dirIter.fileInfo().filePath();
+            const qint64 modifiedTime = dirIter.fileInfo().lastModified().toMSecsSinceEpoch();
+            if (m_scriptPaths.value(id) != filePath ||
+                m_scriptModifiedTimes.value(id, -1) != modifiedTime)
+            {
+                if (pInterpreter->openScript(filePath, false))
+                {
+                    m_scriptPaths[id] = filePath;
+                    m_scriptModifiedTimes[id] = modifiedTime;
+                }
+                else
+                {
+                    CONSOLE_PRINT("Failed to reload auto match script " + filePath +
+                                  "; retaining the previous loaded script", GameConsole::eERROR);
+                    GameConsole::autoMatchLog(id, "Failed to reload script " + filePath +
+                                              "; retaining the previous script", GameConsole::eERROR);
+                }
+            }
             m_autoMatchMakers[id]->setRunning(running);
             m_autoMatchMakers[id]->setActiveMatch(true);
+            m_autoMatchMakers[id]->updateStateFromScript();
         }
         else
         {
             QString filePath = dirIter.fileInfo().filePath();
-            pInterpreter->openScript(filePath, true);
+            if (!pInterpreter->openScript(filePath, true))
+            {
+                CONSOLE_PRINT("Failed to load auto match script " + filePath, GameConsole::eERROR);
+                GameConsole::autoMatchLog(id, "Failed to load script " + filePath, GameConsole::eERROR);
+                continue;
+            }
             m_autoMatchMakers[id] = MemoryManagement::create<AutoMatchMaker>(id, m_mainServer);
             m_autoMatchMakers[id]->setRunning(running);
             m_autoMatchMakers[id]->setActiveMatch(true);
+            m_scriptPaths[id] = filePath;
+            m_scriptModifiedTimes[id] = dirIter.fileInfo().lastModified().toMSecsSinceEpoch();
+            m_autoMatchMakers[id]->updateStateFromScript();
         }
+        m_mainServer->createMatchData(id);
     }
 }
 
 void MatchMakingCoordinator::removeMatches()
 {
-    bool removed = true;
-    while (removed)
+    constexpr qint32 MAX_INACTIVE_COUNT = 2 * 30;
+    auto it = m_autoMatchMakers.begin();
+    while (it != m_autoMatchMakers.end())
     {
-        removed = false;
-        for (auto &match : m_autoMatchMakers)
+        auto &match = it.value();
+        if (!match->getActiveMatch())
         {
-            if (!match->getActiveMatch())
+            match->increaseNotActiveCounter();
+            if (match->getNotActiveCounter() > MAX_INACTIVE_COUNT)
             {
-                constexpr qint32 MAX_INACTIVE_COUNT = 2 * 30;
-                match->increaseNotActiveCounter();
-                if (match->getNotActiveCounter() > MAX_INACTIVE_COUNT)
-                {
-                    m_autoMatchMakers.remove(match->getMatchId());
-                }
+                const QString matchId = it.key();
+                it = m_autoMatchMakers.erase(it);
+                m_scriptPaths.remove(matchId);
+                m_scriptModifiedTimes.remove(matchId);
+                continue;
             }
         }
+        ++it;
     }
 }

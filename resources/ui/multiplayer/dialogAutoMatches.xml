@@ -1,3 +1,73 @@
 <?xml version="1.0"?>
 <ui>
+    <Label>
+        <x>20</x>
+        <y>10</y>
+        <width>settings.getStageWidth() - 40</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Automatic matches")</text>
+        <font>"main"</font>
+        <fontSize>36</fontSize>
+    </Label>
+    <Label>
+        <x>20</x>
+        <y>60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Minimum concurrent games")</text>
+        <font>"main"</font>
+        <fontSize>20</fontSize>
+    </Label>
+    <Spinbox>
+        <Id>MinGames</Id>
+        <x>210</x>
+        <y>55</y>
+        <width>120</width>
+        <min>0</min>
+        <max>20</max>
+        <startValue>1</startValue>
+        <spinSpeed>1</spinSpeed>
+    </Spinbox>
+    <Label>
+        <x>350</x>
+        <y>60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Maximum concurrent games")</text>
+        <font>"main"</font>
+        <fontSize>20</fontSize>
+    </Label>
+    <Spinbox>
+        <Id>MaxGames</Id>
+        <x>540</x>
+        <y>55</y>
+        <width>120</width>
+        <min>0</min>
+        <max>20</max>
+        <startValue>3</startValue>
+        <spinSpeed>1</spinSpeed>
+    </Spinbox>
+    <loop count="currentMenu.getMatchCount()">
+        <Label>
+            <x>20</x>
+            <y>115 + loopIdx * 145</y>
+            <width>settings.getStageWidth() - 260</width>
+            <text>currentMenu.getMatchName(loopIdx) + " [" + currentMenu.getMatchState(loopIdx) + "] - " + currentMenu.getMatchMmr(loopIdx) + "\n" + currentMenu.getMatchDescription(loopIdx)</text>
+            <font>"main"</font>
+            <fontSize>22</fontSize>
+        </Label>
+        <Button>
+            <x>settings.getStageWidth() - 220</x>
+            <y>115 + loopIdx * 145</y>
+            <width>190</width>
+            <text>currentMenu.isMatchSignedUp(loopIdx) ? QT_TRANSLATE_NOOP("GAME","Withdraw") : QT_TRANSLATE_NOOP("GAME","Sign up")</text>
+            <enabled>currentMenu.isMatchActionAllowed(loopIdx)</enabled>
+            <onEvent>currentMenu.isMatchSignedUp(loopIdx) ? currentMenu.withdraw(loopIdx) : currentMenu.signUp(loopIdx)</onEvent>
+        </Button>
+        <Label>
+            <x>20</x>
+            <y>165 + loopIdx * 145</y>
+            <width>settings.getStageWidth() - 40</width>
+            <text>currentMenu.getMatchBracketInfo(loopIdx)</text>
+            <font>"main"</font>
+            <fontSize>14</fontSize>
+        </Label>
+    </loop>
 </ui>

@@ -524,6 +524,10 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             receivedShowAutoMatches(objData);
         }
+        else if (messageType == NetworkCommands::SERVERAUTOMATCHACTIONRESULT)
+        {
+            emit sigAutoMatchActionResult(objData);
+        }
         else if (messageType == NetworkCommands::MAPUPLOADRESPONSE)
         {
             onMapUploadResponse(objData);
@@ -1015,6 +1019,24 @@ void LobbyMenu::requestShowAutoMatches()
         QJsonDocument doc(data);
         emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
+}
+
+void LobbyMenu::requestAutoMatchSignUp(const QString &matchId, qint32 minGames, qint32 maxGames)
+{
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::REQUESTAUTOMATCHSIGNUP);
+    data.insert(JsonKeys::JSONKEY_AUTOMATCHID, matchId);
+    data.insert(JsonKeys::JSONKEY_MINMATCHGAMES, minGames);
+    data.insert(JsonKeys::JSONKEY_MAXMATCHGAMES, maxGames);
+    sendCommandToServer(data);
+}
+
+void LobbyMenu::requestAutoMatchWithdraw(const QString &matchId)
+{
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::REQUESTAUTOMATCHWITHDRAW);
+    data.insert(JsonKeys::JSONKEY_AUTOMATCHID, matchId);
+    sendCommandToServer(data);
 }
 
 void LobbyMenu::onShowOtherDialog()

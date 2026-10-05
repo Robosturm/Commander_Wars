@@ -191,8 +191,19 @@ MainServer::~MainServer()
 
 void MainServer::startDatabase()
 {
-    // create primary table for user data
     QSqlQuery query(*m_serverData);
+    query.exec("CREATE TABLE if not exists autoMatchResults ("
+               "resultId INTEGER PRIMARY KEY AUTOINCREMENT, "
+               "matchId TEXT NOT NULL, "
+               "gameId TEXT, "
+               "createdAt TEXT NOT NULL, "
+               "resultJson TEXT NOT NULL)");
+    if (sqlQueryFailed(query))
+    {
+        CONSOLE_PRINT("Unable to create auto match results table: " +
+                      m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+    }
+    // create primary table for user data
     query.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
                SQL_USERNAME + " TEXT PRIMARY KEY, " +
                SQL_PASSWORD + " TEXT, " +
@@ -399,6 +410,14 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         else if (messageType == NetworkCommands::SERVERREQUESTAUTOMATCHINFO)
         {
             onRequestServerAutoMatchInfo(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::REQUESTAUTOMATCHSIGNUP)
+        {
+            onRequestAutoMatchSignUp(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::REQUESTAUTOMATCHWITHDRAW)
+        {
+            onRequestAutoMatchWithdraw(socketID, objData);
         }
         else if (messageType == NetworkCommands::SERVERREQUESTUSERNAMES)
         {
@@ -686,9 +705,76 @@ void MainServer::onRequestServerAutoMatchInfo(quint64 socketId, const QJsonObjec
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    m_matchMakingCoordinator.getMatchMakingData(objData.value(JsonKeys::JSONKEY_PLAYERID).toString(), data);
+    Q_UNUSED(objData);
+    m_matchMakingCoordinator.getMatchMakingData(getAuthenticatedUsername(socketId), data);
     QJsonDocument doc(data);
     emit m_pGameServer->sig_sendData(socketId, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void MainServer::onRequestAutoMatchSignUp(quint64 socketId, const QJsonObject &objData)
+{
+    QString matchId = objData.value(JsonKeys::JSONKEY_AUTOMATCHID).toString().toUpper();
+    QString username = getAuthenticatedUsername(socketId);
+    AutoMatchMaker *matchMaker = m_matchMakingCoordinator.getAutoMatchMaker(matchId);
+    bool success = false;
+    QString message;
+    if (username.isEmpty())
+    {
+        message = "You must be logged in to sign up.";
+    }
+    else if (matchMaker == nullptr)
+    {
+        message = "The selected matchmaker is unavailable.";
+    }
+    else
+    {
+        QJsonObject signupData;
+        signupData.insert(JsonKeys::JSONKEY_USERNAME, username);
+        signupData.insert(JsonKeys::JSONKEY_MINMATCHGAMES,
+                          objData.value(JsonKeys::JSONKEY_MINMATCHGAMES));
+        signupData.insert(JsonKeys::JSONKEY_MAXMATCHGAMES,
+                          objData.value(JsonKeys::JSONKEY_MAXMATCHGAMES));
+        success = matchMaker->onNewPlayerData(signupData);
+        message = success ? "Successfully signed up." : "Sign-up was rejected; check the matchmaker state and game limits.";
+    }
+    sendAutoMatchActionResult(socketId, matchId, success, message);
+}
+
+void MainServer::onRequestAutoMatchWithdraw(quint64 socketID, const QJsonObject &objData)
+{
+    QString matchId = objData.value(JsonKeys::JSONKEY_AUTOMATCHID).toString().toUpper();
+    QString username = getAuthenticatedUsername(socketID);
+    AutoMatchMaker *matchMaker = m_matchMakingCoordinator.getAutoMatchMaker(matchId);
+    bool success = false;
+    QString message;
+    if (username.isEmpty())
+    {
+        message = "You must be logged in to withdraw.";
+    }
+    else if (matchMaker == nullptr)
+    {
+        message = "The selected matchmaker is unavailable.";
+    }
+    else
+    {
+        success = matchMaker->withdrawPlayer(username);
+        message = success ? "Successfully withdrew." :
+                             "Withdrawal was rejected; a running game may need to finish first.";
+    }
+    sendAutoMatchActionResult(socketID, matchId, success, message);
+}
+
+void MainServer::sendAutoMatchActionResult(quint64 socketID, const QString &matchId, bool success,
+                                           const QString &message)
+{
+    QJsonObject response;
+    response.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERAUTOMATCHACTIONRESULT);
+    response.insert(JsonKeys::JSONKEY_AUTOMATCHID, matchId);
+    response.insert(JsonKeys::JSONKEY_RESULT, success);
+    response.insert(JsonKeys::JSONKEY_DESCRIPTION, message);
+    QJsonDocument document(response);
+    emit m_pGameServer->sig_sendData(socketID, document.toJson(QJsonDocument::Compact),
+                                     NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::despawnSlave(quint64 socketID)
@@ -1087,7 +1173,13 @@ void MainServer::slotStartRemoteGame(QString initScript, QString id)
 
 void MainServer::disconnected(qint64 socketId)
 {
+    m_authenticatedUsers.remove(static_cast<quint64>(socketId));
     m_twoFactorAuthenticatorServer.disconnectClient(socketId);
+}
+
+QString MainServer::getAuthenticatedUsername(quint64 socketId) const
+{
+    return m_authenticatedUsers.value(socketId);
 }
 
 void MainServer::spawnSlaveGame(QDataStream &stream, quint64 socketID, QByteArray &data, QString initScript, QString id)
@@ -1616,6 +1708,7 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonObject &objData)
     if (result == GameEnums::LoginError_None)
     {
         // mark client as logged in
+        m_authenticatedUsers.insert(static_cast<quint64>(socketId), username);
         emit m_pGameServer->sigSetIsActive(socketId, true);
     }
     QString command = QString(NetworkCommands::SERVERRESPONSLOGINACCOUNT);

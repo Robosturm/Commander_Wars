@@ -37,6 +37,8 @@ public:
     void hidePlayerSelection();
     virtual void showPlayerSelection(bool relaunchedLobby = false);
     Q_INVOKABLE PlayerSelection* getPlayerSelection() const;
+    Q_INVOKABLE GameMap* getCurrentMap() const;
+    Q_INVOKABLE bool assignPlayerToUser(qint32 playerIdx, const QString &username, qint32 team);
 signals:
     void sigButtonBack();
     void sigButtonNext();
@@ -117,4 +119,3 @@ protected:
 Q_DECLARE_INTERFACE(MapSelectionMapsMenue, "MapSelectionMapsMenue");
 
 #endif // MAPSELECTIONMENUE_H
-

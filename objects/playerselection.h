@@ -63,7 +63,7 @@ public:
      * @param value
      */
     void setSaveGame(bool value);
-    void setMap(GameMap *newPMap);
+    Q_INVOKABLE void setMap(GameMap *newPMap);
     /**
      * @brief sendOpenPlayerCount
      */
@@ -128,11 +128,13 @@ public:
     Q_INVOKABLE void setPlayerAiName(qint32 player, QString name);
     Q_INVOKABLE GameEnums::AiTypes getPlayerAiType(qint32 player);
     Q_INVOKABLE bool getIsServerGame() const;
+    Q_INVOKABLE bool getIsAutoMatch() const;
     Q_INVOKABLE void setIsServerGame(bool isServerGame);
     Q_INVOKABLE bool getIsCampaign() const;
     Q_INVOKABLE bool getIsArmyCustomizationAllowed();
     Q_INVOKABLE void updateCOData(qint32 playerIdx);
     Q_INVOKABLE bool getReady(qint32 playerIdx);
+    Q_INVOKABLE bool assignPlayerToUser(qint32 playerIdx, const QString &username, qint32 team);
     Q_INVOKABLE bool getPlayerReady();
     Q_INVOKABLE void setPlayerReady(bool value);
     Q_INVOKABLE QStringList getDefaultAiNames() const;

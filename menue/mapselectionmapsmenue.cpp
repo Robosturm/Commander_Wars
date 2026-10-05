@@ -588,6 +588,22 @@ PlayerSelection* MapSelectionMapsMenue::getPlayerSelection() const
     return m_pPlayerSelection.get();
 }
 
+GameMap* MapSelectionMapsMenue::getCurrentMap() const
+{
+    return m_pMapSelectionView->getCurrentMap().get();
+}
+
+bool MapSelectionMapsMenue::assignPlayerToUser(qint32 playerIdx, const QString &username, qint32 team)
+{
+    GameMap *map = getCurrentMap();
+    if (map == nullptr)
+    {
+        return false;
+    }
+    m_pPlayerSelection->setMap(map);
+    return m_pPlayerSelection->assignPlayerToUser(playerIdx, username, team);
+}
+
 void MapSelectionMapsMenue::onEnter()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

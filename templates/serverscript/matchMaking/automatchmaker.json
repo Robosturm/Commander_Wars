@@ -1,12 +1,17 @@
 {
-    "name" : "My auto mach",
+    "name" : "My auto match",
     "description" : "My auto match description",
+    "state" : "SignUp",
     "isSignUpChangeAllowed" : true,
     "maxMmrChange" : 30,
     "searchRangeSteps" : 150,
     "matchHistory" : 10,
     "startMmr" : 750,
     "maps" : [],
-    "rule" : "",
+    "teams" : [],
+    "aiType" : 2,
+    "aiWhenNoOpponent" : false,
+    "aiMmr" : 750,
+    "ruleFile" : "",
     "mods" : []
 }

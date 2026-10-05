@@ -296,7 +296,9 @@ bool PlayerSelection::hasNetworkInterface() const
 
 bool PlayerSelection::getIsServerNetworkInterface() const
 {
-    return m_pNetworkInterface.get() != nullptr && m_pNetworkInterface->getIsServer() || m_isServerGame;
+    const bool isManagedAutoMatch = getIsAutoMatch();
+    return (m_pNetworkInterface.get() != nullptr && m_pNetworkInterface->getIsServer()) ||
+           (m_isServerGame && !isManagedAutoMatch);
 }
 
 bool PlayerSelection::getIsObserverNetworkInterface() const
@@ -347,6 +349,7 @@ bool PlayerSelection::canModifyPlayer(qint32 player) const
     {
         return false;
     }
+
     if (m_pNetworkInterface.get() == nullptr ||
         getIsServerNetworkInterface())
     {
@@ -361,6 +364,11 @@ bool PlayerSelection::canModifyPlayer(qint32 player) const
        CONSOLE_PRINT("Ignoring unauthorized modification of " + QString::number(player) + " from socket " + QString::number(socketID), GameConsole::eERROR);
     }
     return canModify;
+}
+
+bool PlayerSelection::getIsAutoMatch() const
+{
+    return m_pMap != nullptr && m_pMap->getGameRules()->getAutoMatch();
 }
 
 bool PlayerSelection::senderOwnsPlayer(quint64 socketID, qint32 player) const
@@ -1507,7 +1515,7 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
             return;
         }
         bool validMessage = true;
-        if (!m_isServerGame)
+        if (!m_isServerGame || getIsAutoMatch())
         {
             if ((m_pNetworkInterface->getIsServer()) &&
                 (messageType == NetworkCommands::CODATA ||
@@ -1528,6 +1536,13 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
                     validMessage = false;
                 }
                 stream.device()->seek(playerPosition);
+            }
+            else if (getIsAutoMatch() && m_pNetworkInterface->getIsServer() &&
+                     messageType == NetworkCommands::PLAYERDATA)
+            {
+                CONSOLE_PRINT("Ignoring player-wide settings update in an automatically managed match.",
+                              GameConsole::eWARNING);
+                validMessage = false;
             }
         }
         if (validMessage)
@@ -1873,6 +1888,17 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream &stream)
         bool serverRequest = false;
         stream >> serverRequest;
         GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
+        const bool isAutoMatch = getIsAutoMatch();
+        if (isAutoMatch && eAiType != GameEnums::AiTypes_Human)
+        {
+            QByteArray accessDenied;
+            QDataStream sendStream(&accessDenied, QIODevice::WriteOnly);
+            sendStream.setVersion(QDataStream::Version::Qt_6_5);
+            sendStream << QString(NetworkCommands::PLAYERACCESSDENIED);
+            emit m_pNetworkInterface->sig_sendData(socketID, accessDenied,
+                                                    NetworkInterface::NetworkSerives::Multiplayer, false);
+            return;
+        }
         CONSOLE_PRINT("Requesting player " + QString::number(player) + " for username " + username + " as ai " + QString::number(eAiType) + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
         bool rejoin = false;
         if (player < 0)
@@ -1889,7 +1915,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream &stream)
                     remoteChangePlayerOwner(socketID, username, i, eAiType);
                     rejoin = true;
                 }
-                else if (Mainapp::getSlave() &&
+                else if (!isAutoMatch && Mainapp::getSlave() &&
                          pPlayer->getSocketId() == 0 &&
                          pPlayer->getBaseGameInput() != nullptr &&
                          pPlayer->getControlType() > GameEnums::AiTypes::AiTypes_Human &&
@@ -1940,7 +1966,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream &stream)
             if (!alreadyInGame && player >= 0 && player < m_pMap->getPlayerCount())
             {
                 auto *pPlayer = m_pMap->getPlayer(player);
-                bool allowed = serverRequest || joinAllowed(socketID, username, eAiType);
+                bool allowed = !isAutoMatch && (serverRequest || joinAllowed(socketID, username, eAiType));
                 bool isOpen = isOpenPlayer(player);
                 // opening a player is always valid changing to an human with an open player is also valid
                 if (allowed &&
@@ -2127,6 +2153,17 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream &stream)
         stream >> aiType;
         stream >> setup;
         CONSOLE_PRINT("Remote change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " in setup " + QString::number(setup), GameConsole::eDEBUG);
+        if (getIsAutoMatch() && m_pNetworkInterface->getIsServer() && clientRequest &&
+            (aiType != GameEnums::AiTypes_Human || !senderOwnsPlayer(socketId, player)))
+        {
+            CONSOLE_PRINT("Ignoring player control change in an automatically managed match.",
+                          GameConsole::eWARNING);
+            if (player >= 0 && player < m_playerSockets.size())
+            {
+                sendPlayerState(socketId, player);
+            }
+            return;
+        }
         if (socket != m_pNetworkInterface->getSocketID() ||
             aiType != GameEnums::AiTypes::AiTypes_ProxyAi)
         {
@@ -2715,6 +2752,23 @@ void PlayerSelection::setPlayerReady(bool value)
             }
         }
     }
+}
+
+bool PlayerSelection::assignPlayerToUser(qint32 playerIdx, const QString &username, qint32 team)
+{
+    if (m_pMap == nullptr || username.isEmpty() || team < 0)
+    {
+        return false;
+    }
+    Player *player = m_pMap->getPlayer(playerIdx);
+    if (player == nullptr)
+    {
+        return false;
+    }
+    player->setControlType(GameEnums::AiTypes_Human);
+    player->setPlayerNameId(username);
+    player->setTeam(team);
+    return true;
 }
 
 bool PlayerSelection::getPlayerReady()

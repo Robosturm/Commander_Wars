@@ -155,6 +155,8 @@ public:
      * @param newMatchType
      */
     Q_INVOKABLE void setMatchType(const QString & newMatchType);
+    Q_INVOKABLE bool getAutoMatch() const;
+    Q_INVOKABLE void setAutoMatch(bool value);
     /**
      * @brief reset
      */
@@ -686,7 +688,7 @@ private:
 
 private:
     static constexpr qint32 AI_BEHAVIOR_SERIALIZATION_VERSION = 33;
-    static constexpr qint32 SERIALIZATION_VERSION = 34;
+    static constexpr qint32 SERIALIZATION_VERSION = 35;
 
     QVector<spGameRule> m_GameRules;
     // victory conditions
@@ -762,6 +764,7 @@ private:
     qint32 m_multiplayerObserver{0};
     QVector<quint64> m_observerList;
     QString m_matchType;
+    bool m_autoMatch{false};
 
     struct
     {
