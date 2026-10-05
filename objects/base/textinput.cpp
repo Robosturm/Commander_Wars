@@ -72,13 +72,16 @@ QString TextInput::getCurrentText() const
 
 void TextInput::setCurrentText(const QString text)
 {
-    if (m_lineEdit->thread() != QThread::currentThread())
+    if (m_lineEdit)
     {
-        emit sigSetText(text);
-    }
-    else if (m_lineEdit)
-    {
-        m_lineEdit->setPlainText(text);
+        if (m_lineEdit->thread() != QThread::currentThread())
+        {
+            emit sigSetText(text);
+        }
+        else
+        {
+            m_lineEdit->setPlainText(text);
+        }
     }
 }
 
