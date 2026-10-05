@@ -25,6 +25,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogRandomMap");
 #endif
+    Mainapp::getInstance()->pauseRendering();
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
@@ -309,6 +310,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     connect(this, &DialogRandomMap::sigCancel, this, &DialogRandomMap::remove, Qt::QueuedConnection);
     connect(this, &DialogRandomMap::sigClose, this, &DialogRandomMap::remove, Qt::QueuedConnection);
     connect(this, &DialogRandomMap::sigFinish, this, &DialogRandomMap::finished, Qt::QueuedConnection);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void DialogRandomMap::checkIfGenerationIsAllowed()
@@ -396,16 +398,19 @@ void DialogRandomMap::remove()
 
 void DialogRandomMap::showGeneratorSelection()
 {    
+    Mainapp::getInstance()->pauseRendering();
     QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getInstance()->getUserPath() + "data/randomMaps";
     spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
 {
+    Mainapp::getInstance()->pauseRendering();
     filename =  GlobalUtils::makePathRelative(filename);
     m_GeneratorFile->setCurrentText(filename);
     QFile file(filename);
@@ -483,12 +488,12 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
         }
         playerChanged(0);
     }
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void DialogRandomMap::playerChanged(qreal)
 {
-    
+    Mainapp::getInstance()->pauseRendering();    
     if (m_OwnerDistribution.get())
     {
         m_OwnerDistribution->detachAndRemove();
@@ -508,10 +513,12 @@ void DialogRandomMap::playerChanged(qreal)
     m_OwnerDistribution->setPosition(30, m_OwnerDistributionLabel->getY() + 10 + m_OwnerDistributionLabel->getHeight());
     m_pPanel->addItem(m_OwnerDistribution);
     createUnitChances();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void DialogRandomMap::createUnitChances()
 {
+    Mainapp::getInstance()->pauseRendering();
     if (m_unitDistribution.get())
     {
         m_unitDistribution->detachAndRemove();
@@ -558,4 +565,5 @@ void DialogRandomMap::createUnitChances()
     m_UnitChances->setPosition(LABEL_X, m_UnitChanceLabel->getY() + 10 + m_UnitChanceLabel->getHeight());
     m_pPanel->addItem(m_UnitChances);
     m_pPanel->setContentHeigth(m_UnitChances->getY() + 40 * (m_UnitIDs.size() + 2));
+    Mainapp::getInstance()->continueRendering();
 }
