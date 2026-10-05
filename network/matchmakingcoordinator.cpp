@@ -3,11 +3,13 @@
 #include "network/JsonKeys.h"
 
 #include "coreengine/interpreter.h"
+#include "coreengine/globalutils.h"
 
 #include <QDirIterator>
 #include <QJsonArray>
 #include <QDateTime>
 #include <QJsonDocument>
+#include <QSqlError>
 
 MatchMakingCoordinator::MatchMakingCoordinator(MainServer *parent)
     : QObject{parent},
@@ -73,6 +75,13 @@ void MatchMakingCoordinator::onSlaveInfoGameResult(quint64 socketID, const QJson
 
 bool MatchMakingCoordinator::storeMatchResult(const QString &matchId, const QJsonObject &objData)
 {
+    auto &database = m_mainServer->getDatabase();
+    if (!database.transaction())
+    {
+        GameConsole::autoMatchLog(matchId, "Could not begin result persistence transaction: " +
+                                  database.lastError().text(), GameConsole::eERROR);
+        return false;
+    }
     QSqlQuery query(m_mainServer->getDatabase());
     query.prepare("INSERT INTO autoMatchResults (matchId, gameId, createdAt, resultJson) "
                   "VALUES (?, ?, ?, ?);");
@@ -80,7 +89,134 @@ bool MatchMakingCoordinator::storeMatchResult(const QString &matchId, const QJso
     query.addBindValue(objData.value(JsonKeys::JSONKEY_REPLAYFILE).toString());
     query.addBindValue(QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs));
     query.addBindValue(QString::fromUtf8(QJsonDocument(objData).toJson(QJsonDocument::Compact)));
-    return query.exec() && !MainServer::sqlQueryFailed(query);
+    if (!query.exec() || MainServer::sqlQueryFailed(query))
+    {
+        database.rollback();
+        return false;
+    }
+
+    QStringList players;
+    const QJsonArray resultInfo = objData.value(JsonKeys::JSONKEY_GAMERESULTARRAY).toArray();
+    for (const auto &entry : resultInfo)
+    {
+        const QString player = entry.toObject().value(JsonKeys::JSONKEY_PLAYER).toString();
+        if (!player.isEmpty() && !players.contains(player))
+        {
+            players.append(player);
+        }
+    }
+    const QString timestamp = QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs);
+    for (qsizetype i = 0; i < players.size(); ++i)
+    {
+        for (qsizetype j = i + 1; j < players.size(); ++j)
+        {
+            QString playerA = players[i];
+            QString playerB = players[j];
+            if (playerB < playerA)
+            {
+                std::swap(playerA, playerB);
+            }
+            QSqlQuery pairQuery(database);
+            pairQuery.prepare("INSERT INTO autoMatchPairHistory(matchId, playerA, playerB, lastPlayed, playCount) "
+                              "VALUES(?, ?, ?, ?, 1) "
+                              "ON CONFLICT(matchId, playerA, playerB) DO UPDATE SET "
+                              "lastPlayed = excluded.lastPlayed, playCount = playCount + 1");
+            pairQuery.addBindValue(matchId);
+            pairQuery.addBindValue(playerA);
+            pairQuery.addBindValue(playerB);
+            pairQuery.addBindValue(timestamp);
+            if (!pairQuery.exec() || MainServer::sqlQueryFailed(pairQuery))
+            {
+                database.rollback();
+                GameConsole::autoMatchLog(matchId, "Could not persist opponent history: " +
+                                          pairQuery.lastError().text(), GameConsole::eERROR);
+                return false;
+            }
+        }
+    }
+    if (!database.commit())
+    {
+        database.rollback();
+        GameConsole::autoMatchLog(matchId, "Could not commit match result transaction: " +
+                                  database.lastError().text(), GameConsole::eERROR);
+        return false;
+    }
+    return true;
+}
+
+void MatchMakingCoordinator::releaseExpiredAutoMatchPlayers(const QString &matchId,
+                                                             const QStringList &players)
+{
+    AutoMatchMaker *matchMaker = getAutoMatchMaker(matchId);
+    const QString safeTable = MainServer::SQL_TABLE_MATCH_DATA + GlobalUtils::toHash512(matchId);
+    auto &database = m_mainServer->getDatabase();
+    if (!database.transaction())
+    {
+        GameConsole::autoMatchLog(matchId, "Could not begin player reservation cleanup: " +
+                                  database.lastError().text(), GameConsole::eERROR);
+        return;
+    }
+    bool success = true;
+    for (const QString &player : players)
+    {
+        if (player.isEmpty())
+        {
+            continue;
+        }
+        const qint32 running = matchMaker != nullptr
+                                   ? matchMaker->getRunningGames(player)
+                                   : [&database, &safeTable, &player]()
+                                     {
+                                         QSqlQuery query(database);
+                                         query.prepare("SELECT " + QString(MainServer::SQL_RUNNINGGAMES) +
+                                                       " FROM " + safeTable + " WHERE " +
+                                                       MainServer::SQL_USERNAME + " = ?");
+                                         query.addBindValue(player);
+                                         if (!query.exec() || MainServer::sqlQueryFailed(query) || !query.first())
+                                         {
+                                             return -1;
+                                         }
+                                         return query.value(0).toInt();
+                                     }();
+        if (running < 0)
+        {
+            success = false;
+            break;
+        }
+        if (running > 0)
+        {
+            bool updated = false;
+            if (matchMaker != nullptr)
+            {
+                updated = matchMaker->setRunningGames(player, running - 1);
+            }
+            else
+            {
+                QSqlQuery query(database);
+                query.prepare("UPDATE " + safeTable + " SET " +
+                              MainServer::SQL_RUNNINGGAMES + " = ? WHERE " +
+                              MainServer::SQL_USERNAME + " = ?");
+                query.addBindValue(running - 1);
+                query.addBindValue(player);
+                updated = query.exec() && !MainServer::sqlQueryFailed(query) &&
+                          query.numRowsAffected() == 1;
+            }
+            if (!updated)
+            {
+                success = false;
+                break;
+            }
+        }
+    }
+    if (!success || !database.commit())
+    {
+        database.rollback();
+        GameConsole::autoMatchLog(matchId, "Failed to release reservations for an expired suspended match",
+                                  GameConsole::eERROR);
+        return;
+    }
+    GameConsole::autoMatchLog(matchId, "Released player reservations for an expired suspended match",
+                              GameConsole::eWARNING);
 }
 
 void MatchMakingCoordinator::fixPlayerTable(const QString &player)

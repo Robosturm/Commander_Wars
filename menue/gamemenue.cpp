@@ -1452,6 +1452,20 @@ bool GameMenue::doDespawnSlave()
             }
         }
         data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
+        if (m_pMap->getGameRules()->getAutoMatch())
+        {
+            data.insert(JsonKeys::JSONKEY_AUTOMATCHID, m_pMap->getGameRules()->getMatchType());
+            QJsonArray autoMatchPlayers;
+            for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+            {
+                const Player *player = m_pMap->getPlayer(i);
+                if (player != nullptr && player->getControlType() == GameEnums::AiTypes_Human)
+                {
+                    autoMatchPlayers.append(player->getPlayerNameId());
+                }
+            }
+            data.insert(JsonKeys::JSONKEY_AUTOMATCHPLAYERS, autoMatchPlayers);
+        }
         QJsonDocument doc(data);
         CONSOLE_PRINT("Sending command " + command + " to server", GameConsole::eDEBUG);
         emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);

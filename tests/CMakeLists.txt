@@ -133,3 +133,13 @@ add_executable(matchmaking_tests
 target_include_directories(matchmaking_tests PRIVATE ${COW_ROOT_DIR})
 target_link_libraries(matchmaking_tests PRIVATE Qt6::Core Qt6::Test)
 add_test(NAME matchmaking_elo COMMAND matchmaking_tests)
+
+add_executable(tournament_bracket_tests
+    matchmaking/tst_tournamentbracket.cpp
+    ${COW_ROOT_DIR}/network/tournamentbracket.cpp
+    ${COW_ROOT_DIR}/network/tournamentbracket.h
+)
+target_include_directories(tournament_bracket_tests PRIVATE ${COW_ROOT_DIR})
+target_link_libraries(tournament_bracket_tests PRIVATE Qt6::Core Qt6::Test)
+add_test(NAME matchmaking_tournament_bracket COMMAND tournament_bracket_tests)
+set_tests_properties(matchmaking_tournament_bracket PROPERTIES TIMEOUT 30)

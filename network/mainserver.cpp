@@ -192,16 +192,106 @@ MainServer::~MainServer()
 void MainServer::startDatabase()
 {
     QSqlQuery query(*m_serverData);
-    query.exec("CREATE TABLE if not exists autoMatchResults ("
-               "resultId INTEGER PRIMARY KEY AUTOINCREMENT, "
-               "matchId TEXT NOT NULL, "
-               "gameId TEXT, "
-               "createdAt TEXT NOT NULL, "
-               "resultJson TEXT NOT NULL)");
-    if (sqlQueryFailed(query))
+    if (!query.exec("CREATE TABLE IF NOT EXISTS autoMatchSchemaVersion ("
+                    "version INTEGER NOT NULL)") || sqlQueryFailed(query))
     {
-        CONSOLE_PRINT("Unable to create auto match results table: " +
-                      m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+        CONSOLE_PRINT("Unable to create auto match schema version table: " +
+                      query.lastError().text(), GameConsole::eERROR);
+    }
+    else
+    {
+        QSqlQuery versionQuery(*m_serverData);
+        if (!versionQuery.exec("SELECT version FROM autoMatchSchemaVersion LIMIT 1") ||
+            sqlQueryFailed(versionQuery))
+        {
+            CONSOLE_PRINT("Unable to read auto match schema version: " +
+                          versionQuery.lastError().text(), GameConsole::eERROR);
+        }
+        else
+        {
+            qint32 version = 0;
+            const bool hasVersion = versionQuery.next();
+            if (hasVersion)
+            {
+                version = versionQuery.value(0).toInt();
+            }
+            else
+            {
+                QSqlQuery insertVersion(*m_serverData);
+                if (!insertVersion.exec("INSERT INTO autoMatchSchemaVersion(version) VALUES(0)") ||
+                    sqlQueryFailed(insertVersion))
+                {
+                    CONSOLE_PRINT("Unable to initialize auto match schema version: " +
+                                  insertVersion.lastError().text(), GameConsole::eERROR);
+                    version = -1;
+                }
+            }
+            while (version >= 0 && version < 2)
+            {
+                const qint32 targetVersion = version + 1;
+                if (!m_serverData->transaction())
+                {
+                    CONSOLE_PRINT("Unable to begin auto match schema migration: " +
+                                  m_serverData->lastError().text(), GameConsole::eERROR);
+                    break;
+                }
+                QStringList migration;
+                if (targetVersion == 1)
+                {
+                    migration << "CREATE TABLE IF NOT EXISTS autoMatchResults ("
+                                 "resultId INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                 "matchId TEXT NOT NULL, gameId TEXT, createdAt TEXT NOT NULL, "
+                                 "resultJson TEXT NOT NULL)"
+                              << "CREATE TABLE IF NOT EXISTS autoMatchPairHistory ("
+                                 "matchId TEXT NOT NULL, playerA TEXT NOT NULL, playerB TEXT NOT NULL, "
+                                 "lastPlayed TEXT NOT NULL, playCount INTEGER NOT NULL DEFAULT 1, "
+                                 "PRIMARY KEY(matchId, playerA, playerB))";
+                }
+                else
+                {
+                    migration << "CREATE TABLE IF NOT EXISTS tournaments ("
+                                 "tournamentId TEXT PRIMARY KEY, matchId TEXT NOT NULL, state TEXT NOT NULL, "
+                                 "bracketJson TEXT NOT NULL, createdAt TEXT NOT NULL, finishedAt TEXT)"
+                              << "CREATE TABLE IF NOT EXISTS tournamentResults ("
+                                 "tournamentId TEXT NOT NULL, username TEXT NOT NULL, placement INTEGER NOT NULL, "
+                                 "PRIMARY KEY(tournamentId, username))"
+                              << "CREATE TABLE IF NOT EXISTS tournamentWins ("
+                                 "matchId TEXT NOT NULL, username TEXT NOT NULL, wins INTEGER NOT NULL DEFAULT 0, "
+                                 "PRIMARY KEY(matchId, username))";
+                }
+                bool migrationSucceeded = true;
+                for (const QString &statement : std::as_const(migration))
+                {
+                    QSqlQuery migrationQuery(*m_serverData);
+                    if (!migrationQuery.exec(statement) || sqlQueryFailed(migrationQuery))
+                    {
+                        CONSOLE_PRINT("Auto match schema migration " + QString::number(targetVersion) +
+                                      " failed: " + migrationQuery.lastError().text(), GameConsole::eERROR);
+                        migrationSucceeded = false;
+                        break;
+                    }
+                }
+                if (migrationSucceeded)
+                {
+                    QSqlQuery updateVersion(*m_serverData);
+                    updateVersion.prepare("UPDATE autoMatchSchemaVersion SET version = ?");
+                    updateVersion.addBindValue(targetVersion);
+                    migrationSucceeded = updateVersion.exec() && !sqlQueryFailed(updateVersion);
+                }
+                if (!migrationSucceeded || !m_serverData->commit())
+                {
+                    m_serverData->rollback();
+                    if (migrationSucceeded)
+                    {
+                        CONSOLE_PRINT("Unable to commit auto match schema migration " +
+                                      QString::number(targetVersion) + ": " +
+                                      m_serverData->lastError().text(), GameConsole::eERROR);
+                    }
+                    break;
+                }
+                version = targetVersion;
+            }
+        }
     }
     // create primary table for user data
     query.exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
@@ -681,6 +771,15 @@ void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject &objD
         SuspendedSlaveInfo slaveInfo;
         slaveInfo.savefile = objData.value(JsonKeys::JSONKEY_SAVEFILE).toString();
         slaveInfo.game.fromJson(objData);
+        slaveInfo.autoMatchId = objData.value(JsonKeys::JSONKEY_AUTOMATCHID).toString();
+        const QJsonArray autoMatchPlayers = objData.value(JsonKeys::JSONKEY_AUTOMATCHPLAYERS).toArray();
+        for (const auto &player : autoMatchPlayers)
+        {
+            if (player.isString() && !player.toString().isEmpty())
+            {
+                slaveInfo.autoMatchPlayers.append(player.toString());
+            }
+        }
         slaveInfo.runningGame = runningGame;
         slaveInfo.despawnTime.start();
         setUuidForGame(slaveInfo.game);
@@ -691,6 +790,15 @@ void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject &objD
         SuspendedSlaveInfo slaveInfo;
         slaveInfo.savefile = objData.value(JsonKeys::JSONKEY_SAVEFILE).toString();
         slaveInfo.game.fromJson(objData);
+        slaveInfo.autoMatchId = objData.value(JsonKeys::JSONKEY_AUTOMATCHID).toString();
+        const QJsonArray autoMatchPlayers = objData.value(JsonKeys::JSONKEY_AUTOMATCHPLAYERS).toArray();
+        for (const auto &player : autoMatchPlayers)
+        {
+            if (player.isString() && !player.toString().isEmpty())
+            {
+                slaveInfo.autoMatchPlayers.append(player.toString());
+            }
+        }
         slaveInfo.runningGame = runningGame;
         slaveInfo.despawnTime.start();
         setUuidForGame(slaveInfo.game);
@@ -899,7 +1007,11 @@ void MainServer::onRequestServerVersion(quint64 socketId, const QJsonObject &obj
 
 void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject &objData)
 {
-    QString username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
+    QString username = getAuthenticatedUsername(socketId);
+    if (username.isEmpty())
+    {
+        username = objData.value(JsonKeys::JSONKEY_USERNAME).toString();
+    }
     QString command = QString(NetworkCommands::SERVERUSERGAMEDATA);
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data;
@@ -915,7 +1027,7 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject &objData
         if (game->game.get() != nullptr)
         {
             auto &data = game->game->getData();
-            if (data.getPlayerNames().contains(username))
+            if (data.getPlayerNames().contains(username) && isAutoMatchVisibleToUser(data, socketId))
             {
                 if (i < count)
                 {
@@ -930,7 +1042,7 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject &objData
     for (qint32 index = start; index < m_runningSlaves.size(); ++index)
     {
         auto &game = m_runningSlaves[index];
-        if (game.game.getPlayerNames().contains(username))
+        if (game.game.getPlayerNames().contains(username) && isAutoMatchVisibleToUser(game.game, socketId))
         {
             if (i < count)
             {
@@ -944,7 +1056,7 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject &objData
     for (qint32 index = start; index < m_runningLobbies.size(); ++index)
     {
         auto &game = m_runningLobbies[index];
-        if (game.game.getPlayerNames().contains(username))
+        if (game.game.getPlayerNames().contains(username) && isAutoMatchVisibleToUser(game.game, socketId))
         {
             if (i < count)
             {
@@ -979,6 +1091,10 @@ void MainServer::onRequestObservegames(quint64 socketId, const QJsonObject &objD
         if (game->game.get() != nullptr &&
             game->game->getData().getObservers() < game->game->getData().getMaxObservers())
         {
+            if (!isAutoMatchVisibleToUser(game->game->getData(), socketId))
+            {
+                continue;
+            }
             if (i < count)
             {
                 QJsonObject obj = game->game->getData().toJson();
@@ -991,7 +1107,8 @@ void MainServer::onRequestObservegames(quint64 socketId, const QJsonObject &objD
     for (qint32 index = start; index < m_runningLobbies.size(); ++index)
     {
         auto &game = m_runningLobbies[index];
-        if (game.game.getObservers() < game.game.getMaxObservers())
+        if (game.game.getObservers() < game.game.getMaxObservers() &&
+            isAutoMatchVisibleToUser(game.game, socketId))
         {
             if (i < count)
             {
@@ -1025,7 +1142,8 @@ void MainServer::onRequestGameData(quint64 socketId, const QJsonObject &objData)
         auto &game = m_games[index];
         if (game->game.get() != nullptr &&
             game->game->getSlaveRunning() &&
-            !game->game->getData().getLaunched())
+            !game->game->getData().getLaunched() &&
+            isAutoMatchVisibleToUser(game->game->getData(), socketId))
         {
             if (i < count)
             {
@@ -1038,14 +1156,17 @@ void MainServer::onRequestGameData(quint64 socketId, const QJsonObject &objData)
     }
     for (qint32 index = start; index < m_runningLobbies.size(); ++index)
     {
-        if (i < count)
+        const auto &game = m_runningLobbies[index];
+        if (isAutoMatchVisibleToUser(game.game, socketId))
         {
-            auto &game = m_runningLobbies[index];
-            QJsonObject obj = game.game.toJson();
-            games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
-            ++i;
+            if (i < count)
+            {
+                QJsonObject obj = game.game.toJson();
+                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                ++i;
+            }
+            ++totalCount;
         }
-        ++totalCount;
     }
     data.insert(JsonKeys::JSONKEY_GAMES, games);
     data.insert(JsonKeys::JSONKEY_MATCHCOUNT, totalCount);
@@ -1105,7 +1226,8 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject &objData)
         // only send valid game data to clients
         if (internGame->game.get() != nullptr &&
             internGame->game->getServerName() == slaveName &&
-            internGame->game->getSlaveRunning())
+            internGame->game->getSlaveRunning() &&
+            isAutoMatchVisibleToUser(internGame->game->getData(), socketID))
         {
             // send data
             QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
@@ -1147,6 +1269,12 @@ bool MainServer::tryJoinSuspendedGame(quint64 socketID, const QString &slave, QV
     {
         if (game.game.getSlaveName() == slave)
         {
+            const QString username = getAuthenticatedUsername(socketID);
+            if (!game.autoMatchId.isEmpty() &&
+                (username.isEmpty() || !game.autoMatchPlayers.contains(username)))
+            {
+                return false;
+            }
             game.pendingSockets.append(socketID);
             if (!game.relaunched)
             {
@@ -1157,6 +1285,16 @@ bool MainServer::tryJoinSuspendedGame(quint64 socketID, const QString &slave, QV
         }
     }
     return found;
+}
+
+bool MainServer::isAutoMatchVisibleToUser(const NetworkGameData &game, quint64 socketID) const
+{
+    if (game.getAutoMatchId().isEmpty())
+    {
+        return true;
+    }
+    const QString username = getAuthenticatedUsername(socketID);
+    return !username.isEmpty() && game.getAutoMatchPlayers().contains(username);
 }
 
 void MainServer::startRemoteGame(const QString initScript, const QString id)
@@ -1432,6 +1570,11 @@ void MainServer::cleanUpSuspendedGames(QVector<SuspendedSlaveInfo> &games)
         if (game.despawnTime.hasExpired(ms.count()))
         {
             CONSOLE_PRINT("Removing game with savefile " + game.savefile + " from suspended game list.", GameConsole::eDEBUG);
+            if (!game.autoMatchId.isEmpty())
+            {
+                m_matchMakingCoordinator.releaseExpiredAutoMatchPlayers(game.autoMatchId,
+                                                                        game.autoMatchPlayers);
+            }
             QFile::remove(game.savefile);
             games.removeAt(i);
         }
@@ -2171,6 +2314,8 @@ void MainServer::SuspendedSlaveInfo::serializeObject(QDataStream &stream) const
     auto obj = game.toJson();
     QJsonDocument doc(obj);
     Filesupport::writeByteArray(stream, doc.toJson(QJsonDocument::Compact));
+    stream << autoMatchId;
+    stream << autoMatchPlayers;
 }
 
 void MainServer::SuspendedSlaveInfo::deserializeObject(QDataStream &stream)
@@ -2185,4 +2330,14 @@ void MainServer::SuspendedSlaveInfo::deserializeObject(QDataStream &stream)
     QJsonDocument doc = QJsonDocument::fromJson(data);
     QJsonObject objData = doc.object();
     game.fromJson(objData);
+    if (version >= 2)
+    {
+        stream >> autoMatchId;
+        stream >> autoMatchPlayers;
+    }
+    else
+    {
+        autoMatchId = game.getAutoMatchId();
+        autoMatchPlayers = game.getAutoMatchPlayers();
+    }
 }

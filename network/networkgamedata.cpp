@@ -70,6 +70,11 @@ QJsonObject NetworkGameData::toJson() const
     obj.insert(JsonKeys::JSONKEY_MINIMAPDATA, QString::fromLocal8Bit(m_minimapData));
     obj.insert(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT, m_observers);
     obj.insert(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT, m_maxObservers);
+    if (!m_autoMatchId.isEmpty())
+    {
+        obj.insert(JsonKeys::JSONKEY_AUTOMATCHID, m_autoMatchId);
+        obj.insert(JsonKeys::JSONKEY_AUTOMATCHPLAYERS, QJsonArray::fromStringList(m_autoMatchPlayers));
+    }
     return obj;
 }
 
@@ -109,6 +114,16 @@ void NetworkGameData::fromJson(const QJsonObject & obj)
     m_minimapData = obj.value(JsonKeys::JSONKEY_MINIMAPDATA).toString().toLocal8Bit();
     m_observers = obj.value(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT).toInt();
     m_maxObservers = obj.value(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT).toInt();
+    m_autoMatchId = obj.value(JsonKeys::JSONKEY_AUTOMATCHID).toString();
+    m_autoMatchPlayers.clear();
+    const QJsonArray autoMatchPlayers = obj.value(JsonKeys::JSONKEY_AUTOMATCHPLAYERS).toArray();
+    for (const auto &player : autoMatchPlayers)
+    {
+        if (player.isString() && !player.toString().isEmpty())
+        {
+            m_autoMatchPlayers.append(player.toString());
+        }
+    }
 }
 
 QString NetworkGameData::getMapName() const
@@ -279,6 +294,26 @@ const GameVersion &  NetworkGameData::getGameVersion() const
 void NetworkGameData::setGameVersion(const GameVersion & newGameVersion)
 {
     m_gameVersion = newGameVersion;
+}
+
+const QString &NetworkGameData::getAutoMatchId() const
+{
+    return m_autoMatchId;
+}
+
+void NetworkGameData::setAutoMatchId(const QString &newAutoMatchId)
+{
+    m_autoMatchId = newAutoMatchId;
+}
+
+const QStringList &NetworkGameData::getAutoMatchPlayers() const
+{
+    return m_autoMatchPlayers;
+}
+
+void NetworkGameData::setAutoMatchPlayers(const QStringList &newAutoMatchPlayers)
+{
+    m_autoMatchPlayers = newAutoMatchPlayers;
 }
 
 const QString &NetworkGameData::getSlaveSecondaryAddress() const

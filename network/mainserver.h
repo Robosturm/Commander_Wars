@@ -51,6 +51,8 @@ class MainServer final : public QObject, public FileSerializable
         bool relaunched{false};
         bool runningGame{false};
         QString currentPlayer;
+        QString autoMatchId;
+        QStringList autoMatchPlayers;
         QVector<quint64> pendingSockets;
         QString savefile;
         NetworkGameData game;
@@ -71,7 +73,7 @@ class MainServer final : public QObject, public FileSerializable
          */
         virtual qint32 getVersion() const override
         {
-            return 1;
+            return 2;
         }
     };
 
@@ -358,6 +360,7 @@ private:
      * @return
      */
     bool tryJoinSuspendedGame(quint64 socketID, const QString & slave, QVector<SuspendedSlaveInfo> & games);
+    bool isAutoMatchVisibleToUser(const NetworkGameData &game, quint64 socketID) const;
     /**
      * @brief spawnSlave starts a new slave game on the server
      * @param initScript

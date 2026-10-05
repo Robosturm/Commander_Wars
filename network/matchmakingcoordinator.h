@@ -63,6 +63,7 @@ public slots:
      * @param objData
      */
     void getMatchMakingData(const QString & playerId, QJsonObject & objData);
+    void releaseExpiredAutoMatchPlayers(const QString &matchId, const QStringList &players);
 private:
     /**
      * @brief removeMatches

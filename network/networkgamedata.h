@@ -85,6 +85,10 @@ public:
 
     const GameVersion & getGameVersion() const;
     void setGameVersion(const GameVersion & newGameVersion);
+    const QString &getAutoMatchId() const;
+    void setAutoMatchId(const QString &newAutoMatchId);
+    const QStringList &getAutoMatchPlayers() const;
+    void setAutoMatchPlayers(const QStringList &newAutoMatchPlayers);
 
 private:
     qint32 m_players{0};
@@ -107,6 +111,8 @@ private:
     QByteArray m_minimapData;
     qint32 m_observers{0};
     qint32 m_maxObservers{0};
+    QString m_autoMatchId;
+    QStringList m_autoMatchPlayers;
 };
 
 #endif // NETWORKGAMEDATA_H

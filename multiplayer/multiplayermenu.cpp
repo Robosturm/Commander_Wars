@@ -258,6 +258,20 @@ QJsonDocument Multiplayermenu::doSaveLobbyState(const QString & saveFile, const 
     data.insert(JsonKeys::JSONKEY_VERSION_REVISION, gameVersion.getRevision());
     data.insert(JsonKeys::JSONKEY_VERSION_SUFIX, gameVersion.getSufix());
     data.insert(JsonKeys::JSONKEY_USERNAMES, m_pPlayerSelection->getUserNames());
+    if (pMap->getGameRules()->getAutoMatch())
+    {
+        data.insert(JsonKeys::JSONKEY_AUTOMATCHID, pMap->getGameRules()->getMatchType());
+        QJsonArray autoMatchPlayers;
+        for (qint32 i = 0; i < pMap->getPlayerCount(); ++i)
+        {
+            const Player *player = pMap->getPlayer(i);
+            if (player != nullptr && player->getControlType() == GameEnums::AiTypes_Human)
+            {
+                autoMatchPlayers.append(player->getPlayerNameId());
+            }
+        }
+        data.insert(JsonKeys::JSONKEY_AUTOMATCHPLAYERS, autoMatchPlayers);
+    }
     return QJsonDocument(data);
 }
 
