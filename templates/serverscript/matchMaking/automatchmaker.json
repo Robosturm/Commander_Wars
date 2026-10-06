@@ -5,6 +5,7 @@
     "isSignUpChangeAllowed" : true,
     "maxMmrChange" : 30,
     "searchRangeSteps" : 150,
+    "matchVarianceCandidates" : 3,
     "matchHistory" : 10,
     "startMmr" : 750,
     "maps" : [],

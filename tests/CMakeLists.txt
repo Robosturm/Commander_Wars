@@ -138,6 +138,8 @@ add_executable(tournament_bracket_tests
     matchmaking/tst_tournamentbracket.cpp
     ${COW_ROOT_DIR}/network/tournamentbracket.cpp
     ${COW_ROOT_DIR}/network/tournamentbracket.h
+    ${COW_ROOT_DIR}/network/tournamentbracketcontroller.cpp
+    ${COW_ROOT_DIR}/network/tournamentbracketcontroller.h
 )
 target_include_directories(tournament_bracket_tests PRIVATE ${COW_ROOT_DIR})
 target_link_libraries(tournament_bracket_tests PRIVATE Qt6::Core Qt6::Test)

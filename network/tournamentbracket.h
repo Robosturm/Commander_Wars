@@ -40,6 +40,8 @@ public:
     // Seeds are descending by rating, preserving input order for ties.
     // Third place requires at least four entrants. Failure leaves state unchanged.
     bool setup(const QVector<Entrant> &entrants, bool thirdPlace, QString &error);
+    // Uses input order as the seed order while retaining each entrant's actual rating.
+    bool setupSeededOrder(const QVector<Entrant> &entrants, bool thirdPlace, QString &error);
     bool reportResult(int matchId, const QString &winnerName, QString &error);
 
     const QVector<Entrant> &entrants() const { return m_entrants; }
@@ -58,6 +60,8 @@ public:
     static std::optional<TournamentBracket> fromJson(const QJsonObject &json, QString &error);
 
 private:
+    bool setupInternal(const QVector<Entrant> &entrants, bool thirdPlace,
+                       bool sortByRating, QString &error);
     void progress();
     int loser(const Match &match) const;
 
@@ -66,4 +70,5 @@ private:
     int m_roundCount{0};
     int m_bracketSize{0};
     bool m_thirdPlace{false};
+    bool m_seedOrderProvided{false};
 };

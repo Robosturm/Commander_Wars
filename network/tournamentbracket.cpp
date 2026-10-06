@@ -28,6 +28,17 @@ bool readInteger(const QJsonValue &value, int &result)
 
 bool TournamentBracket::setup(const QVector<Entrant> &entrants, bool thirdPlace, QString &error)
 {
+    return setupInternal(entrants, thirdPlace, true, error);
+}
+
+bool TournamentBracket::setupSeededOrder(const QVector<Entrant> &entrants, bool thirdPlace, QString &error)
+{
+    return setupInternal(entrants, thirdPlace, false, error);
+}
+
+bool TournamentBracket::setupInternal(const QVector<Entrant> &entrants, bool thirdPlace,
+                                      bool sortByRating, QString &error)
+{
     error.clear();
     if (entrants.size() < 2 || entrants.size() > std::numeric_limits<int>::max() / 2)
     {
@@ -52,9 +63,13 @@ bool TournamentBracket::setup(const QVector<Entrant> &entrants, bool thirdPlace,
 
     TournamentBracket bracket;
     bracket.m_entrants = entrants;
-    std::stable_sort(bracket.m_entrants.begin(), bracket.m_entrants.end(),
-                     [](const Entrant &left, const Entrant &right) { return left.rating > right.rating; });
+    if (sortByRating)
+    {
+        std::stable_sort(bracket.m_entrants.begin(), bracket.m_entrants.end(),
+                         [](const Entrant &left, const Entrant &right) { return left.rating > right.rating; });
+    }
     bracket.m_thirdPlace = thirdPlace;
+    bracket.m_seedOrderProvided = !sortByRating;
     bracket.m_bracketSize = 1;
     while (bracket.m_bracketSize < entrants.size())
     {
@@ -266,9 +281,10 @@ QJsonObject TournamentBracket::toJson() const
                                       {QStringLiteral("winner"), m_entrants[match.winner].name}});
         }
     }
-    return {{QStringLiteral("version"), 1},
+    return {{QStringLiteral("version"), 2},
             {QStringLiteral("entrants"), entrants},
             {QStringLiteral("thirdPlace"), m_thirdPlace},
+            {QStringLiteral("seedOrderProvided"), m_seedOrderProvided},
             {QStringLiteral("results"), results}};
 }
 
@@ -276,10 +292,11 @@ std::optional<TournamentBracket> TournamentBracket::fromJson(const QJsonObject &
 {
     error.clear();
     int version = 0;
-    if (!readInteger(json.value(QStringLiteral("version")), version) || version != 1 ||
+    if (!readInteger(json.value(QStringLiteral("version")), version) || (version != 1 && version != 2) ||
         !json.value(QStringLiteral("entrants")).isArray() ||
         !json.value(QStringLiteral("thirdPlace")).isBool() ||
-        !json.value(QStringLiteral("results")).isArray())
+        !json.value(QStringLiteral("results")).isArray() ||
+        (version == 2 && !json.value(QStringLiteral("seedOrderProvided")).isBool()))
     {
         error = QStringLiteral("Invalid bracket schema or unsupported version.");
         return std::nullopt;
@@ -299,7 +316,15 @@ std::optional<TournamentBracket> TournamentBracket::fromJson(const QJsonObject &
         entrants.append({object.value(QStringLiteral("name")).toString(), rating});
     }
     TournamentBracket bracket;
-    if (!bracket.setup(entrants, json.value(QStringLiteral("thirdPlace")).toBool(), error))
+    const bool seedOrderProvided = version == 2 &&
+                                   json.value(QStringLiteral("seedOrderProvided")).toBool();
+    const bool setupSucceeded = seedOrderProvided
+                                    ? bracket.setupSeededOrder(entrants,
+                                                              json.value(QStringLiteral("thirdPlace")).toBool(),
+                                                              error)
+                                    : bracket.setup(entrants, json.value(QStringLiteral("thirdPlace")).toBool(),
+                                                    error);
+    if (!setupSucceeded)
     {
         return std::nullopt;
     }

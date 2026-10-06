@@ -1,0 +1,24 @@
+{
+    "name": "Tournament template",
+    "description": "Script-managed seeded knockout tournaments with optional third-place matches.",
+    "state": "SignUp",
+    "isSignUpChangeAllowed": true,
+    "startMmr": 750,
+    "maxMmrChange": 30,
+    "minimumEntrants": 8,
+    "maxEntrantsPerTournament": 16,
+    "maxConcurrentTournaments": 5,
+    "thirdPlaceMatch": false,
+    "mapPoolsByRound": [
+        [
+            {
+                "folder": "maps",
+                "filename": "configure-this.map"
+            }
+        ]
+    ],
+    "ruleFile": "",
+    "teams": [],
+    "aiType": 2,
+    "mods": []
+}

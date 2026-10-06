@@ -105,7 +105,26 @@ var AUTOMATCHMAKER =
             return;
         }
         var candidates = autoMatchMaker.getSignedUpPlayers();
+        candidates.sort(function(left, right)
+        {
+            var leftUnmet = Math.max(0, autoMatchMaker.getMinGames(left) -
+                                     autoMatchMaker.getRunningGames(left));
+            var rightUnmet = Math.max(0, autoMatchMaker.getMinGames(right) -
+                                      autoMatchMaker.getRunningGames(right));
+            if (leftUnmet !== rightUnmet)
+            {
+                return rightUnmet - leftUnmet;
+            }
+            return autoMatchMaker.getRunningGames(left) - autoMatchMaker.getRunningGames(right);
+        });
         var matchedThisPass = {};
+        var matchVariance = config.matchVarianceCandidates === undefined ?
+                            3 : config.matchVarianceCandidates;
+        if (typeof matchVariance !== "number" || !isFinite(matchVariance) ||
+            Math.floor(matchVariance) !== matchVariance || matchVariance < 1)
+        {
+            throw new Error("matchVarianceCandidates must be a positive integer");
+        }
         for (var i = 0; i < candidates.length; ++i)
         {
             var player = candidates[i];
@@ -120,12 +139,17 @@ var AUTOMATCHMAKER =
                 return Math.abs(autoMatchMaker.getMmr(left) - playerMmr) -
                        Math.abs(autoMatchMaker.getMmr(right) - playerMmr);
             });
-            var history = [];
-            var historyData = autoMatchMaker.getMatchHistoryData(player);
-            if (historyData)
+            opponents = opponents.slice(0, matchVariance);
+            for (var opponentIndex = opponents.length - 1; opponentIndex > 0; --opponentIndex)
             {
-                history = JSON.parse(historyData);
+                var swapIndex = Math.floor(Math.random() * (opponentIndex + 1));
+                var swap = opponents[opponentIndex];
+                opponents[opponentIndex] = opponents[swapIndex];
+                opponents[swapIndex] = swap;
             }
+            var maxHistory = config.matchHistory === undefined ?
+                             10 : Math.max(0, config.matchHistory);
+            var history = autoMatchMaker.getRecentOpponents(player, maxHistory);
             for (var j = 0; j < opponents.length; ++j)
             {
                 var opponent = opponents[j];
@@ -137,15 +161,6 @@ var AUTOMATCHMAKER =
                 {
                     matchedThisPass[player] = true;
                     matchedThisPass[opponent] = true;
-                    var maxHistory = config.matchHistory === undefined ?
-                                     10 : Math.max(0, config.matchHistory);
-                    history.unshift(opponent);
-                    history = history.slice(0, maxHistory);
-                    autoMatchMaker.setMatchHistoryData(player, JSON.stringify(history));
-                    var opponentHistoryData = autoMatchMaker.getMatchHistoryData(opponent);
-                    var opponentHistory = opponentHistoryData ? JSON.parse(opponentHistoryData) : [];
-                    opponentHistory.unshift(player);
-                    autoMatchMaker.setMatchHistoryData(opponent, JSON.stringify(opponentHistory.slice(0, maxHistory)));
                     break;
                 }
             }

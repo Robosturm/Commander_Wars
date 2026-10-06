@@ -2,8 +2,11 @@
 #include <QJsonValueRef>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QDateTime>
 #include <QFile>
+#include <QHash>
 #include <QSqlError>
+#include <QVariant>
 #include <cmath>
 #include <limits>
 
@@ -11,6 +14,7 @@
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
 #include "network/elocalculator.h"
+#include "network/tournamentbracketcontroller.h"
 
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
@@ -115,11 +119,22 @@ QStringList AutoMatchMaker::getSignedUpPlayers()
                                   query.lastError().text(), GameConsole::eERROR);
         return players;
     }
+
     while (query.next())
     {
         players.append(query.value(MainServer::SQL_USERNAME).toString());
     }
     return players;
+}
+
+TournamentBracketController *AutoMatchMaker::createTournamentBracket()
+{
+    if (m_tournamentBracketController == nullptr)
+    {
+        m_tournamentBracketController = new TournamentBracketController(this);
+        Interpreter::setCppOwnerShip(m_tournamentBracketController);
+    }
+    return m_tournamentBracketController;
 }
 
 void AutoMatchMaker::createGamesPeriodic()
@@ -333,6 +348,42 @@ QString AutoMatchMaker::getMatchHistoryData(const QString player)
         return query.value(MainServer::SQL_MATCHHISTORY).toString();
     }
     return "";
+}
+
+QStringList AutoMatchMaker::getRecentOpponents(const QString &player, qint32 limit)
+{
+    QStringList opponents;
+    if (player.isEmpty() || limit <= 0)
+    {
+        return opponents;
+    }
+
+    auto &database = m_mainServer.getDatabase();
+    QSqlQuery query(database);
+    query.prepare("SELECT CASE WHEN playerA = ? THEN playerB ELSE playerA END "
+                  "FROM autoMatchPairHistory "
+                  "WHERE matchId = ? AND (playerA = ? OR playerB = ?) "
+                  "ORDER BY lastPlayed DESC, playCount DESC LIMIT ?");
+    query.addBindValue(player);
+    query.addBindValue(m_matchId);
+    query.addBindValue(player);
+    query.addBindValue(player);
+    query.addBindValue(limit);
+    if (!query.exec() || MainServer::sqlQueryFailed(query))
+    {
+        GameConsole::autoMatchLog(m_matchId, "Failed to load recent opponent history for " + player +
+                                  ": " + query.lastError().text(), GameConsole::eERROR);
+        return opponents;
+    }
+    while (query.next())
+    {
+        const QString opponent = query.value(0).toString();
+        if (!opponent.isEmpty() && !opponents.contains(opponent))
+        {
+            opponents.append(opponent);
+        }
+    }
+    return opponents;
 }
 
 QString AutoMatchMaker::getMatchMetaData(const QString player)
@@ -822,6 +873,178 @@ QJsonObject AutoMatchMaker::getBracketGraphInfo()
         graphInfo = QJsonDocument::fromJson(erg.toString().toLocal8Bit()).object();
     }
     return graphInfo;
+}
+
+bool AutoMatchMaker::recordTournamentResults(const QString &tournamentId, const QString &placementsJson)
+{
+    QJsonParseError parseError;
+    const QJsonDocument document = QJsonDocument::fromJson(placementsJson.toUtf8(), &parseError);
+    if (tournamentId.isEmpty() || parseError.error != QJsonParseError::NoError ||
+        !document.isArray() || document.array().isEmpty())
+    {
+        GameConsole::autoMatchLog(m_matchId, "Rejected malformed tournament placements for " + tournamentId,
+                                  GameConsole::eERROR);
+        return false;
+    }
+
+    QHash<QString, qint32> placements;
+    qint32 winnerCount = 0;
+    for (const QJsonValue &value : document.array())
+    {
+        const QJsonObject placement = value.toObject();
+        const QString player = placement.value(QStringLiteral("name")).toString();
+        const QJsonValue placeValue = placement.value(QStringLiteral("place"));
+        const double placeNumber = placeValue.toDouble(-1);
+        if (!value.isObject() || player.trimmed().isEmpty() ||
+            !placeValue.isDouble() || !std::isfinite(placeNumber) ||
+            std::floor(placeNumber) != placeNumber || placeNumber < 1 ||
+            placeNumber > std::numeric_limits<qint32>::max() || placements.contains(player))
+        {
+            GameConsole::autoMatchLog(m_matchId, "Rejected invalid tournament placement data for " + tournamentId,
+                                      GameConsole::eERROR);
+            return false;
+        }
+        const qint32 place = static_cast<qint32>(placeNumber);
+        placements.insert(player, place);
+        winnerCount += place == 1 ? 1 : 0;
+    }
+    if (winnerCount != 1)
+    {
+        GameConsole::autoMatchLog(m_matchId, "Tournament placements must contain exactly one winner for " +
+                                  tournamentId, GameConsole::eERROR);
+        return false;
+    }
+
+    auto &database = m_mainServer.getDatabase();
+    if (!database.transaction())
+    {
+        GameConsole::autoMatchLog(m_matchId, "Could not begin tournament result transaction: " +
+                                  database.lastError().text(), GameConsole::eERROR);
+        return false;
+    }
+    QSqlQuery existingQuery(database);
+    existingQuery.prepare("SELECT COUNT(*) FROM tournamentResults WHERE tournamentId = ?");
+    existingQuery.addBindValue(tournamentId);
+    if (!existingQuery.exec() || MainServer::sqlQueryFailed(existingQuery) || !existingQuery.first())
+    {
+        database.rollback();
+        GameConsole::autoMatchLog(m_matchId, "Could not check existing tournament results: " +
+                                  existingQuery.lastError().text(), GameConsole::eERROR);
+        return false;
+    }
+    if (existingQuery.value(0).toInt() > 0)
+    {
+        database.rollback();
+        return true;
+    }
+
+    for (auto it = placements.cbegin(); it != placements.cend(); ++it)
+    {
+        QSqlQuery insertQuery(database);
+        insertQuery.prepare("INSERT INTO tournamentResults(tournamentId, username, placement) VALUES(?, ?, ?)");
+        insertQuery.addBindValue(tournamentId);
+        insertQuery.addBindValue(it.key());
+        insertQuery.addBindValue(it.value());
+        if (!insertQuery.exec() || MainServer::sqlQueryFailed(insertQuery))
+        {
+            database.rollback();
+            GameConsole::autoMatchLog(m_matchId, "Could not persist tournament placement: " +
+                                      insertQuery.lastError().text(), GameConsole::eERROR);
+            return false;
+        }
+        if (it.value() == 1)
+        {
+            QSqlQuery winnerQuery(database);
+            winnerQuery.prepare("INSERT INTO tournamentWins(matchId, username, wins) VALUES(?, ?, 1) "
+                                "ON CONFLICT(matchId, username) DO UPDATE SET wins = wins + 1");
+            winnerQuery.addBindValue(m_matchId);
+            winnerQuery.addBindValue(it.key());
+            if (!winnerQuery.exec() || MainServer::sqlQueryFailed(winnerQuery))
+            {
+                database.rollback();
+                GameConsole::autoMatchLog(m_matchId, "Could not update tournament wins: " +
+                                          winnerQuery.lastError().text(), GameConsole::eERROR);
+                return false;
+            }
+        }
+    }
+    if (!database.commit())
+    {
+        database.rollback();
+        GameConsole::autoMatchLog(m_matchId, "Could not commit tournament results: " +
+                                  database.lastError().text(), GameConsole::eERROR);
+        return false;
+    }
+    return true;
+}
+
+QString AutoMatchMaker::getTournamentRecords()
+{
+    QJsonArray records;
+    QSqlQuery query(m_mainServer.getDatabase());
+    query.prepare("SELECT bracketJson FROM tournaments WHERE matchId = ? ORDER BY createdAt, tournamentId");
+    query.addBindValue(m_matchId);
+    if (!query.exec() || MainServer::sqlQueryFailed(query))
+    {
+        const QString error = query.lastError().text();
+        GameConsole::autoMatchLog(m_matchId, "Failed to load persisted tournament state: " + error,
+                                  GameConsole::eERROR);
+        return QString::fromUtf8(QJsonDocument(QJsonObject{
+            {QStringLiteral("ok"), false},
+            {QStringLiteral("error"), error}}).toJson(QJsonDocument::Compact));
+    }
+    while (query.next())
+    {
+        QJsonParseError parseError;
+        const QJsonDocument record = QJsonDocument::fromJson(query.value(0).toString().toUtf8(), &parseError);
+        if (parseError.error != QJsonParseError::NoError || !record.isObject())
+        {
+            const QString error = QStringLiteral("Persisted tournament state contains invalid JSON.");
+            GameConsole::autoMatchLog(m_matchId, error, GameConsole::eERROR);
+            return QString::fromUtf8(QJsonDocument(QJsonObject{
+                {QStringLiteral("ok"), false},
+                {QStringLiteral("error"), error}}).toJson(QJsonDocument::Compact));
+        }
+        records.append(record.object());
+    }
+    return QString::fromUtf8(QJsonDocument(QJsonObject{
+        {QStringLiteral("ok"), true},
+        {QStringLiteral("records"), records}}).toJson(QJsonDocument::Compact));
+}
+
+bool AutoMatchMaker::saveTournamentRecord(const QString &tournamentId,
+                                          const QString &tournamentJson, bool complete)
+{
+    QJsonParseError parseError;
+    const QJsonDocument document = QJsonDocument::fromJson(tournamentJson.toUtf8(), &parseError);
+    if (tournamentId.isEmpty() || parseError.error != QJsonParseError::NoError ||
+        !document.isObject() ||
+        document.object().value(QStringLiteral("id")).toString() != tournamentId)
+    {
+        GameConsole::autoMatchLog(m_matchId, "Rejected invalid state for tournament " + tournamentId,
+                                  GameConsole::eERROR);
+        return false;
+    }
+    QSqlQuery query(m_mainServer.getDatabase());
+    query.prepare("INSERT INTO tournaments(tournamentId, matchId, state, bracketJson, createdAt, finishedAt) "
+                  "VALUES(?, ?, ?, ?, ?, ?) "
+                  "ON CONFLICT(tournamentId) DO UPDATE SET "
+                  "state = excluded.state, bracketJson = excluded.bracketJson, "
+                  "finishedAt = excluded.finishedAt");
+    query.addBindValue(tournamentId);
+    query.addBindValue(m_matchId);
+    query.addBindValue(complete ? QStringLiteral("complete") : QStringLiteral("active"));
+    query.addBindValue(tournamentJson);
+    const QString now = QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs);
+    query.addBindValue(now);
+    query.addBindValue(complete ? QVariant(now) : QVariant());
+    if (!query.exec() || MainServer::sqlQueryFailed(query))
+    {
+        GameConsole::autoMatchLog(m_matchId, "Failed to persist state for tournament " + tournamentId +
+                                  ": " + query.lastError().text(), GameConsole::eERROR);
+        return false;
+    }
+    return true;
 }
 
 QString AutoMatchMaker::readDataFromJson(const QString & filePath)

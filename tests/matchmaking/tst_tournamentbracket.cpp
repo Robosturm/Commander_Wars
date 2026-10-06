@@ -5,6 +5,7 @@
 #include <QSet>
 
 #include "network/tournamentbracket.h"
+#include "network/tournamentbracketcontroller.h"
 
 class TournamentBracketTest final : public QObject
 {
@@ -57,6 +58,28 @@ private slots:
         QCOMPARE(bracket.matches()[2].round, 1);
         QCOMPARE(bracket.matches()[2].slot, 0);
         QVERIFY(!bracket.matches()[2].completed);
+    }
+
+    void explicitSeedOrderPreservesRatings()
+    {
+        TournamentBracket bracket;
+        QString error;
+        const QVector<TournamentBracket::Entrant> players{
+            {QStringLiteral("Top"), 2000}, {QStringLiteral("Second"), 1900},
+            {QStringLiteral("RandomLow2"), 500}, {QStringLiteral("RandomLow1"), 900}};
+        QVERIFY2(bracket.setupSeededOrder(players, false, error), qPrintable(error));
+        QCOMPARE(bracket.entrants()[0].name, QStringLiteral("Top"));
+        QCOMPARE(bracket.entrants()[1].name, QStringLiteral("Second"));
+        QCOMPARE(bracket.entrants()[2].name, QStringLiteral("RandomLow2"));
+        QCOMPARE(bracket.entrants()[2].rating, 500);
+        QCOMPARE(bracket.matches()[0].player1, 0);
+        QCOMPARE(bracket.matches()[0].player2, 3);
+        QCOMPARE(bracket.matches()[1].player1, 1);
+        QCOMPARE(bracket.matches()[1].player2, 2);
+        const auto restored = TournamentBracket::fromJson(bracket.toJson(), error);
+        QVERIFY2(restored.has_value(), qPrintable(error));
+        QCOMPARE(restored->entrants()[2].name, QStringLiteral("RandomLow2"));
+        QCOMPARE(restored->matches()[1].player2, 2);
     }
 
     void byesAndPendingFeeders()
@@ -328,15 +351,16 @@ private slots:
         QVERIFY(bracket.setup(entrants(3), false, error));
         const auto valid = bracket.toJson();
         QVector<QJsonObject> invalid;
-        invalid.append({});
+        invalid.append(QJsonObject{});
         for (const auto &key : {QStringLiteral("version"), QStringLiteral("entrants"),
-                                QStringLiteral("thirdPlace"), QStringLiteral("results")})
+                                QStringLiteral("thirdPlace"), QStringLiteral("seedOrderProvided"),
+                                QStringLiteral("results")})
         {
             auto json = valid;
             json.remove(key);
             invalid.append(json);
         }
-        for (const auto &version : {QJsonValue(2), QJsonValue(1.5), QJsonValue("1")})
+        for (const auto &version : {QJsonValue(3), QJsonValue(1.5), QJsonValue("1")})
         {
             auto json = valid;
             json.insert(QStringLiteral("version"), version);
@@ -385,6 +409,52 @@ private slots:
         }
         QVERIFY(TournamentBracket::fromJson(valid, error).has_value());
         QVERIFY(error.isEmpty());
+        auto versionOne = valid;
+        versionOne.insert(QStringLiteral("version"), 1);
+        versionOne.remove(QStringLiteral("seedOrderProvided"));
+        QVERIFY(TournamentBracket::fromJson(versionOne, error).has_value());
+        QVERIFY(error.isEmpty());
+    }
+
+    void scriptControllerRoundTrip()
+    {
+        TournamentBracketController controller;
+        QVERIFY(controller.setup({QStringLiteral("A"), QStringLiteral("B"),
+                                  QStringLiteral("C"), QStringLiteral("D")},
+                                 {2000, 1800, 1600, 1400}, true));
+        QVERIFY(controller.getLastError().isEmpty());
+        auto ready = QJsonDocument::fromJson(controller.readyMatchesJson().toUtf8()).array();
+        QCOMPARE(ready.size(), 2);
+        const auto first = ready[0].toObject();
+        QVERIFY(controller.reportResult(first.value(QStringLiteral("matchId")).toInt(),
+                                        first.value(QStringLiteral("player1")).toString()));
+        QVERIFY(controller.getLastError().isEmpty());
+
+        TournamentBracketController restored;
+        QVERIFY(restored.load(controller.save()));
+        QVERIFY(restored.getLastError().isEmpty());
+        QCOMPARE(restored.readyMatchesJson(), controller.readyMatchesJson());
+        QCOMPARE(restored.placementsJson(), controller.placementsJson());
+        const QString originalState = restored.save();
+        QVERIFY(!restored.setup({QStringLiteral("Bad")}, {QVariant(1.5)}, false));
+        QVERIFY(!restored.getLastError().isEmpty());
+        QCOMPARE(restored.save(), originalState);
+        QVERIFY(!restored.load(QStringLiteral("{")));
+        QVERIFY(!restored.getLastError().isEmpty());
+    }
+
+    void scriptControllerSupportsExplicitSeedOrder()
+    {
+        TournamentBracketController controller;
+        QVERIFY(controller.setupSeededOrder(
+            {QStringLiteral("Top"), QStringLiteral("Second"), QStringLiteral("RandomLow"),
+             QStringLiteral("Low")},
+            {2000, 1900, 100, 50}, false));
+        const auto ready = QJsonDocument::fromJson(controller.readyMatchesJson().toUtf8()).array();
+        QCOMPARE(ready.size(), 2);
+        const auto match = ready.first().toObject();
+        QCOMPARE(match.value(QStringLiteral("player1")).toString(), QStringLiteral("Top"));
+        QCOMPARE(match.value(QStringLiteral("player2")).toString(), QStringLiteral("Low"));
     }
 };
 

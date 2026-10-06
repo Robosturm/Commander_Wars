@@ -11,6 +11,7 @@
 
 class MainServer;
 class AutoMatchMaker;
+class TournamentBracketController;
 using spAutoMatchMaker = std::shared_ptr<AutoMatchMaker>;
 
 class AutoMatchMaker : public QObject, public FileSerializable
@@ -90,9 +91,15 @@ public:
      */
     QJsonObject getBracketGraphInfo();
     Q_INVOKABLE bool getSignedUp(const QString  playerId);
+    Q_INVOKABLE bool recordTournamentResults(const QString &tournamentId,
+                                              const QString &placementsJson);
+    Q_INVOKABLE QString getTournamentRecords();
+    Q_INVOKABLE bool saveTournamentRecord(const QString &tournamentId,
+                                           const QString &tournamentJson, bool complete);
     Q_INVOKABLE bool withdrawPlayer(const QString &playerId);
     Q_INVOKABLE QStringList getSignedUpPlayers();
     Q_INVOKABLE bool createNewGame(const QStringList players, const QStringList modList);
+    Q_INVOKABLE TournamentBracketController *createTournamentBracket();
     void createGamesPeriodic();
     Q_INVOKABLE QString getMatchId() const;
     Q_INVOKABLE void updateMmr(const QString player1, const QString player2, qint32 maxEloChange, GameEnums::GameResult gameResultForPlayer1);
@@ -102,6 +109,7 @@ public:
     Q_INVOKABLE qint32 getMmr(const QString player);
     Q_INVOKABLE bool setMatchHistoryData(const QString player, QString historyData);
     Q_INVOKABLE QString getMatchHistoryData(const QString player);
+    Q_INVOKABLE QStringList getRecentOpponents(const QString &player, qint32 limit);
     Q_INVOKABLE bool setMatchMetaData(const QString player, QString metaData);
     Q_INVOKABLE QString getMatchMetaData(const QString player);
     Q_INVOKABLE QStringList getOpponentsForPlayer(const QString player, qint32 mmrSearchStepRange);
@@ -155,6 +163,7 @@ private:
     bool m_activeMatch{false};
     State m_state{State::SignUp};
     qint32 m_notActiveCounter{0};
+    TournamentBracketController *m_tournamentBracketController{nullptr};
 };
 
 Q_DECLARE_INTERFACE(AutoMatchMaker, "AutoMatchMaker");
