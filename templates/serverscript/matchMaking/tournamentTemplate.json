@@ -1,6 +1,6 @@
 {
     "name": "Tournament template",
-    "description": "Script-managed seeded knockout tournaments with optional third-place matches.",
+    "description": "Script-managed round-robin group stages and seeded knockout tournaments.",
     "state": "SignUp",
     "isSignUpChangeAllowed": true,
     "startMmr": 750,
@@ -9,6 +9,11 @@
     "maxEntrantsPerTournament": 16,
     "maxConcurrentTournaments": 5,
     "thirdPlaceMatch": false,
+    "groupStage": {
+        "enabled": false,
+        "groupSize": 4,
+        "advanceCount": 2
+    },
     "mapPoolsByRound": [
         [
             {

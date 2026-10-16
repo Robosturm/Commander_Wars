@@ -703,6 +703,7 @@ set(Commander_Wars_SRCS
     ${COW_ROOT_DIR}/network/elocalculator.h ${COW_ROOT_DIR}/network/elocalculator.cpp
     ${COW_ROOT_DIR}/network/tournamentbracket.h ${COW_ROOT_DIR}/network/tournamentbracket.cpp
     ${COW_ROOT_DIR}/network/tournamentbracketcontroller.h ${COW_ROOT_DIR}/network/tournamentbracketcontroller.cpp
+    ${COW_ROOT_DIR}/network/tournamentgroupstage.h ${COW_ROOT_DIR}/network/tournamentgroupstage.cpp
     ${COW_ROOT_DIR}/network/networkgame.cpp ${COW_ROOT_DIR}/network/networkgame.h
     ${COW_ROOT_DIR}/network/matchmakingcoordinator.h ${COW_ROOT_DIR}/network/matchmakingcoordinator.cpp
     ${COW_ROOT_DIR}/network/mapfileserver.h ${COW_ROOT_DIR}/network/mapfileserver.cpp

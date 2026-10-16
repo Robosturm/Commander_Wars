@@ -63,11 +63,65 @@ add_executable(commander_wars_tests
     ${WIN_TEST_ICON}
 )
 
+add_executable(commander_wars_elocalculator_tests
+    matchmaking/tst_elocalculator.cpp
+    ${Commander_Wars_OXYGINE_SRCS}
+    ${Commander_Wars_SRCS}
+    ${Commander_Wars_OS_SRCS}
+    ${Commander_Wars_SmtpClient_SRCS}
+    ${Commander_Wars_OpenNN_SRCS}
+    ${Commander_Wars_UPDATE_SRCS}
+    ${Commander_Wars_AUDIO_SRCS}
+    ${WIN_TEST_ICON}
+)
+
+add_executable(commander_wars_tournamentbracket_tests
+    matchmaking/tst_tournamentbracket.cpp
+    ${Commander_Wars_OXYGINE_SRCS}
+    ${Commander_Wars_SRCS}
+    ${Commander_Wars_OS_SRCS}
+    ${Commander_Wars_SmtpClient_SRCS}
+    ${Commander_Wars_OpenNN_SRCS}
+    ${Commander_Wars_UPDATE_SRCS}
+    ${Commander_Wars_AUDIO_SRCS}
+    ${WIN_TEST_ICON}
+)
+
+add_executable(commander_wars_tournamentgroupstage_tests
+    matchmaking/tst_tournamentgroupstage.cpp
+    ${Commander_Wars_OXYGINE_SRCS}
+    ${Commander_Wars_SRCS}
+    ${Commander_Wars_OS_SRCS}
+    ${Commander_Wars_SmtpClient_SRCS}
+    ${Commander_Wars_OpenNN_SRCS}
+    ${Commander_Wars_UPDATE_SRCS}
+    ${Commander_Wars_AUDIO_SRCS}
+    ${WIN_TEST_ICON}
+)
+
 if (PRECOMPILED_HEADERS)
     cow_setup_precompiled_headers(commander_wars_tests)
+    cow_setup_precompiled_headers(commander_wars_elocalculator_tests)
+    cow_setup_precompiled_headers(commander_wars_tournamentbracket_tests)
+    cow_setup_precompiled_headers(commander_wars_tournamentgroupstage_tests)
 endif()
 
 target_link_libraries(commander_wars_tests PUBLIC
+    ${QT_LIBRARIES}
+    Qt6::Test
+    )
+
+target_link_libraries(commander_wars_elocalculator_tests PUBLIC
+    ${QT_LIBRARIES}
+    Qt6::Test
+    )
+
+target_link_libraries(commander_wars_tournamentbracket_tests PUBLIC
+    ${QT_LIBRARIES}
+    Qt6::Test
+    )
+
+target_link_libraries(commander_wars_tournamentgroupstage_tests PUBLIC
     ${QT_LIBRARIES}
     Qt6::Test
     )
@@ -118,30 +172,33 @@ add_test(NAME oxygine_lifetime
     COMMAND commander_wars_tests
     WORKING_DIRECTORY ${COW_ROOT_DIR}
 )
+add_test(NAME elo_calculator
+    COMMAND commander_wars_elocalculator_tests
+    WORKING_DIRECTORY ${COW_ROOT_DIR}
+)
+add_test(NAME tournament_bracket
+    COMMAND commander_wars_tournamentbracket_tests
+    WORKING_DIRECTORY ${COW_ROOT_DIR}
+)
+add_test(NAME tournament_groupstage
+    COMMAND commander_wars_tournamentgroupstage_tests
+    WORKING_DIRECTORY ${COW_ROOT_DIR}
+)
 # the test harness never shows a window or creates a GL context, so it runs
 # headless on every platform; the timeout keeps a wedged runner from stalling
 set_tests_properties(oxygine_lifetime PROPERTIES
     ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
     TIMEOUT 120
 )
-
-add_executable(matchmaking_tests
-    matchmaking/tst_elocalculator.cpp
-    ${COW_ROOT_DIR}/network/elocalculator.cpp
-    ${COW_ROOT_DIR}/network/elocalculator.h
+set_tests_properties(elo_calculator PROPERTIES
+    ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+    TIMEOUT 120
 )
-target_include_directories(matchmaking_tests PRIVATE ${COW_ROOT_DIR})
-target_link_libraries(matchmaking_tests PRIVATE Qt6::Core Qt6::Test)
-add_test(NAME matchmaking_elo COMMAND matchmaking_tests)
-
-add_executable(tournament_bracket_tests
-    matchmaking/tst_tournamentbracket.cpp
-    ${COW_ROOT_DIR}/network/tournamentbracket.cpp
-    ${COW_ROOT_DIR}/network/tournamentbracket.h
-    ${COW_ROOT_DIR}/network/tournamentbracketcontroller.cpp
-    ${COW_ROOT_DIR}/network/tournamentbracketcontroller.h
+set_tests_properties(tournament_bracket PROPERTIES
+    ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+    TIMEOUT 120
 )
-target_include_directories(tournament_bracket_tests PRIVATE ${COW_ROOT_DIR})
-target_link_libraries(tournament_bracket_tests PRIVATE Qt6::Core Qt6::Test)
-add_test(NAME matchmaking_tournament_bracket COMMAND tournament_bracket_tests)
-set_tests_properties(matchmaking_tournament_bracket PROPERTIES TIMEOUT 30)
+set_tests_properties(tournament_groupstage PROPERTIES
+    ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+    TIMEOUT 120
+)

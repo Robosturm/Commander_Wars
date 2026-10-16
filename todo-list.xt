@@ -7,3 +7,14 @@ Qt 6.11
 Autho enhancement
 matchmaking 
 
+sudo dmesg | grep -i -E "apparmor|audit|vive" | tail -n 20
+
+
+https://www.google.com/search?q=googl&client=ubuntu-sn&hs=gEu&sca_esv=9cb68e6e5745f165&channel=fs&sxsrf=APpeQnvgyYreWsJWrZZE4H_OHUCnJHm-wA%3A1791469661329&fbs=ABfTbFUyxjQn9bne4DuflY2dNqqKupTsDwp6RXwpQFJxPysO9IZ-OcP6xq64A4yNP8lBdpbTupudBqidne2pweOCd3nKfqn6uS_Gge1dCYX0Ms3qGsMNXmb74m-lLxkHoaJpatWR_E9rM8U216_FCBt3UIuJg8mmmj_iBydLNAHjsg3OjGr2pqkfpIaLayx7usdCgVt3V6oN&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwjiyKbG0KqXAxV_RfEDHQngNx0Q2J8OegQIERAD&biw=5079&bih=1261&dpr=1&mstk=AUtExfBAfq2VruDRkjxlV9HeJ9sar_kFGTWWKAyf-tMwy92_1k4NOyt5U9U21gmkEGYxc7zJ_6hT3LEX7CZgTirCPM-mx2Tz0SYFYKDJ0H6zrS77XQIpBQGxmTDdJkMsEhb5aIWR95d_mCFVKhA6mPblSr-8op1qHbU3Zf0&csuir=1&udm=50
+https://www.google.com/search?q=googl&client=ubuntu-sn&hs=gEu&sca_esv=9cb68e6e5745f165&channel=fs&sxsrf=APpeQnvgyYreWsJWrZZE4H_OHUCnJHm-wA%3A1791469661329&fbs=ABfTbFUyxjQn9bne4DuflY2dNqqKupTsDwp6RXwpQFJxPysO9IZ-OcP6xq64A4yNP8lBdpbTupudBqidne2pweOCd3nKfqn6uS_Gge1dCYX0Ms3qGsMNXmb74m-lLxkHoaJpatWR_E9rM8U216_FCBt3UIuJg8mmmj_iBydLNAHjsg3OjGr2pqkfpIaLayx7usdCgVt3V6oN&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwjiyKbG0KqXAxV_RfEDHQngNx0Q2J8OegQIERAD&biw=5079&bih=1261&dpr=1&mstk=AUtExfA06sSDHtkGfdDgGTq8d7ly_voJQSuA1yh5sDOkLvGhN24pohNHfPkyT4vLvsbURhiJ536C1VaaA14Cp6xFMPlYroALbl4KrQo1vpYfDBggse5Z0VCznIuZfFlEE3itIXNWrX16rhkJMdDQ7g4iYE9X4Dxw1s4HjdY&csuir=1&udm=50
+
+
+sudo nano /etc/modprobe.d/uvcvideo.conf
+
+v4l2-ctl --device=/dev/video6 --set-fmt-video=width=640,height=480,pixelformat=MJPG
+sudo dmesg -w

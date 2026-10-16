@@ -34,13 +34,16 @@ var AUTOMATCHMAKER =
                 {
                     throw new Error("Persisted tournament record is incomplete");
                 }
-                tournament.players.forEach(function(player)
+                if (!tournament.complete)
                 {
-                    if (processedPlayers.indexOf(player) < 0)
+                    tournament.players.forEach(function(player)
                     {
-                        processedPlayers.push(player);
-                    }
-                });
+                        if (processedPlayers.indexOf(player) < 0)
+                        {
+                            processedPlayers.push(player);
+                        }
+                    });
+                }
             });
             return {
                 nextId: tournaments.length + 1,
@@ -55,6 +58,25 @@ var AUTOMATCHMAKER =
             {
                 throw new Error("Invalid persisted tournament state");
             }
+            state.processedPlayers = [];
+            state.tournaments.forEach(function(tournament)
+            {
+                if (!tournament || !Array.isArray(tournament.players) ||
+                    !Array.isArray(tournament.pending) || typeof tournament.complete !== "boolean")
+                {
+                    throw new Error("Persisted tournament state contains an incomplete tournament");
+                }
+                if (!tournament.complete)
+                {
+                    tournament.players.forEach(function(player)
+                    {
+                        if (state.processedPlayers.indexOf(player) < 0)
+                        {
+                            state.processedPlayers.push(player);
+                        }
+                    });
+                }
+            });
             return state;
         }
         catch (error)
@@ -167,7 +189,19 @@ var AUTOMATCHMAKER =
         var names = ordered.map(function(player) { return player.name; });
         var ratings = ordered.map(function(player) { return player.rating; });
         var bracket = autoMatchMaker.createTournamentBracket();
-        if (!bracket.setupSeededOrder(names, ratings, !!config.thirdPlaceMatch))
+        var useGroups = config.groupStage && config.groupStage.enabled;
+        var groupStage = "";
+        if (useGroups)
+        {
+            if (!bracket.setupGroupStage(names, ratings,
+                                         Math.max(2, config.groupStage.groupSize || 4),
+                                         Math.max(1, config.groupStage.advanceCount || 2)))
+            {
+                throw new Error("Unable to create tournament groups: " + bracket.getLastError());
+            }
+            groupStage = bracket.saveGroupStage();
+        }
+        else if (!bracket.setupSeededOrder(names, ratings, !!config.thirdPlaceMatch))
         {
             throw new Error("Unable to create tournament bracket: " + bracket.getLastError());
         }
@@ -176,7 +210,9 @@ var AUTOMATCHMAKER =
             id: tournamentId,
             players: names,
             pending: [],
-            bracket: bracket.save(),
+            stage: useGroups ? "groups" : "knockout",
+            groupStage: groupStage,
+            bracket: useGroups ? "" : bracket.save(),
             complete: false
         });
         for (var p = 0; p < names.length; ++p)
@@ -218,16 +254,31 @@ var AUTOMATCHMAKER =
             {
                 return;
             }
-            if (!bracket.load(tournament.bracket))
+            var inGroups = tournament.stage === "groups";
+            var ready;
+            if (inGroups)
             {
-                throw new Error("Unable to load tournament " + tournament.id + ": " + bracket.getLastError());
+                if (!bracket.loadGroupStage(tournament.groupStage))
+                {
+                    throw new Error("Unable to load groups for tournament " + tournament.id +
+                                    ": " + bracket.getLastError());
+                }
+                ready = JSON.parse(bracket.readyGroupMatchesJson());
             }
-            var ready = JSON.parse(bracket.readyMatchesJson());
+            else
+            {
+                if (!bracket.load(tournament.bracket))
+                {
+                    throw new Error("Unable to load tournament " + tournament.id + ": " + bracket.getLastError());
+                }
+                ready = JSON.parse(bracket.readyMatchesJson());
+            }
             ready.forEach(function(match)
             {
                 var alreadyPending = tournament.pending.some(function(item)
                 {
-                    return item.matchId === match.matchId;
+                    return (item.type || "knockout") === (inGroups ? "group" : "knockout") &&
+                           item.matchId === match.matchId;
                 });
                 if (alreadyPending)
                 {
@@ -237,10 +288,21 @@ var AUTOMATCHMAKER =
                 var players = [match.player1, match.player2];
                 if (autoMatchMaker.createNewGame(players, config.mods || []))
                 {
-                    tournament.pending.push({ matchId: match.matchId, players: players });
+                    tournament.pending.push({
+                        type: inGroups ? "group" : "knockout",
+                        matchId: match.matchId,
+                        players: players
+                    });
                 }
             });
-            tournament.bracket = bracket.save();
+            if (inGroups)
+            {
+                tournament.groupStage = bracket.saveGroupStage();
+            }
+            else
+            {
+                tournament.bracket = bracket.save();
+            }
         });
         AUTOMATCHMAKER.saveStateData(autoMatchMaker, state);
     },
@@ -258,7 +320,8 @@ var AUTOMATCHMAKER =
             }
             var pendingIndex = tournament.pending.findIndex(function(item)
             {
-                return item.players.length === 2 &&
+                return (item.type || "knockout") === (tournament.stage === "groups" ? "group" : "knockout") &&
+                       item.players.length === 2 &&
                        usernames.indexOf(item.players[0]) >= 0 &&
                        usernames.indexOf(item.players[1]) >= 0;
             });
@@ -267,48 +330,116 @@ var AUTOMATCHMAKER =
                 return;
             }
             var pending = tournament.pending[pendingIndex];
-            if (!bracket.load(tournament.bracket))
-            {
-                throw new Error("Unable to load tournament " + tournament.id + ": " + bracket.getLastError());
-            }
             var firstResult = results[usernames.indexOf(pending.players[0])];
             var secondResult = results[usernames.indexOf(pending.players[1])];
-            var winner;
-            if (firstResult === 2)
+            if (pending.type === "group")
             {
-                winner = pending.players[0];
-            }
-            else if (secondResult === 2)
-            {
-                winner = pending.players[1];
+                if (!bracket.loadGroupStage(tournament.groupStage))
+                {
+                    throw new Error("Unable to load groups for tournament " + tournament.id +
+                                    ": " + bracket.getLastError());
+                }
+                if (!bracket.reportGroupResult(pending.matchId, firstResult, secondResult))
+                {
+                    throw new Error("Unable to apply group result to tournament " + tournament.id +
+                                    ": " + bracket.getLastError());
+                }
+                tournament.groupStage = bracket.saveGroupStage();
+                if (bracket.isGroupStageComplete())
+                {
+                    var qualifiers = JSON.parse(bracket.groupStageAdvancersJson());
+                    qualifiers.sort(function(left, right) { return right.rating - left.rating; });
+                    var seededCount = Math.ceil(qualifiers.length / 2);
+                    var seededQualifiers = qualifiers.slice(0, seededCount);
+                    var unseededQualifiers = qualifiers.slice(seededCount);
+                    for (var i = unseededQualifiers.length - 1; i > 0; --i)
+                    {
+                        var j = Math.floor(Math.random() * (i + 1));
+                        var swap = unseededQualifiers[i];
+                        unseededQualifiers[i] = unseededQualifiers[j];
+                        unseededQualifiers[j] = swap;
+                    }
+                    qualifiers = seededQualifiers.concat(unseededQualifiers);
+                    if (!bracket.setupSeededOrder(
+                        qualifiers.map(function(player) { return player.name; }),
+                        qualifiers.map(function(player) { return player.rating; }),
+                        !!config.thirdPlaceMatch))
+                    {
+                        throw new Error("Unable to create knockout bracket for tournament " + tournament.id +
+                                        ": " + bracket.getLastError());
+                    }
+                    tournament.bracket = bracket.save();
+                    tournament.stage = "knockout";
+                }
             }
             else
             {
-                winner = autoMatchMaker.getMmr(pending.players[0]) >=
-                         autoMatchMaker.getMmr(pending.players[1]) ?
-                         pending.players[0] : pending.players[1];
+                if (!bracket.load(tournament.bracket))
+                {
+                    throw new Error("Unable to load tournament " + tournament.id + ": " + bracket.getLastError());
+                }
+                var winner;
+                if (firstResult === 2)
+                {
+                    winner = pending.players[0];
+                }
+                else if (secondResult === 2)
+                {
+                    winner = pending.players[1];
+                }
+                else
+                {
+                    winner = autoMatchMaker.getMmr(pending.players[0]) >=
+                             autoMatchMaker.getMmr(pending.players[1]) ?
+                             pending.players[0] : pending.players[1];
+                }
+                if (!bracket.reportResult(pending.matchId, winner))
+                {
+                    throw new Error("Unable to apply result to tournament " + tournament.id +
+                                    ": " + bracket.getLastError());
+                }
+                tournament.bracket = bracket.save();
+                if (bracket.isComplete())
+                {
+                    tournament.complete = true;
+                    var placements = JSON.parse(bracket.placementsJson());
+                    if (tournament.groupStage)
+                    {
+                        if (!bracket.loadGroupStage(tournament.groupStage))
+                        {
+                            throw new Error("Unable to load completed groups for tournament " + tournament.id +
+                                            ": " + bracket.getLastError());
+                        }
+                        var advancementCount = Math.max(1, config.groupStage.advanceCount || 2);
+                        var placedPlayers = placements.map(function(placement) { return placement.name; });
+                        var lastKnockoutPlace = placements.reduce(function(lastPlace, placement)
+                        {
+                            return Math.max(lastPlace, placement.place);
+                        }, 0);
+                        JSON.parse(bracket.groupStageStandingsJson()).forEach(function(standing)
+                        {
+                            if (placedPlayers.indexOf(standing.name) < 0)
+                            {
+                                placements.push({
+                                    name: standing.name,
+                                    rating: standing.rating,
+                                    place: lastKnockoutPlace + standing.place - advancementCount
+                                });
+                            }
+                        });
+                    }
+                    if (!autoMatchMaker.recordTournamentResults(tournament.id, JSON.stringify(placements)))
+                    {
+                        throw new Error("Unable to persist final placements for tournament " + tournament.id);
+                    }
+                }
             }
             if (usernames.length === 2 && results.length === 2)
             {
                 autoMatchMaker.updateMmr(pending.players[0], pending.players[1],
-                                         config.maxMmrChange,
-                                         results[usernames.indexOf(pending.players[0])]);
-            }
-            if (!bracket.reportResult(pending.matchId, winner))
-            {
-                throw new Error("Unable to apply result to tournament " + tournament.id +
-                                ": " + bracket.getLastError());
+                                         config.maxMmrChange, firstResult);
             }
             tournament.pending.splice(pendingIndex, 1);
-            tournament.bracket = bracket.save();
-            if (bracket.isComplete())
-            {
-                tournament.complete = true;
-                if (!autoMatchMaker.recordTournamentResults(tournament.id, bracket.placementsJson()))
-                {
-                    throw new Error("Unable to persist final placements for tournament " + tournament.id);
-                }
-            }
         });
         AUTOMATCHMAKER.saveStateData(autoMatchMaker, state);
     },
@@ -339,7 +470,9 @@ var AUTOMATCHMAKER =
                 return {
                     id: tournament.id,
                     complete: tournament.complete,
-                    bracket: JSON.parse(tournament.bracket)
+                    stage: tournament.stage || "knockout",
+                    groupStage: tournament.groupStage ? JSON.parse(tournament.groupStage) : null,
+                    bracket: tournament.bracket ? JSON.parse(tournament.bracket) : null
                 };
             })
         });
