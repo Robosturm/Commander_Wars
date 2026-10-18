@@ -54,6 +54,7 @@ namespace oxygine
         virtual void touchEvent(QTouchEvent *event) = 0;
         virtual QObject* focusObject() const
         {
+            return nullptr;
         }
 
         bool beginRendering();

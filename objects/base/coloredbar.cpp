@@ -11,7 +11,7 @@ ColoredBar::ColoredBar(qint32 width, qint32 height, const QString & backSpriteId
     if (pAnim != nullptr)
     {
         m_background->setScaleX(static_cast<float>(width) / static_cast<float>(pAnim->getWidth()));
-        m_background->setScaleX(static_cast<float>(height) / static_cast<float>(pAnim->getHeight()));
+        m_background->setScaleY(static_cast<float>(height) / static_cast<float>(pAnim->getHeight()));
     }
     addChild(m_background);
     m_leftBar = MemoryManagement::create<oxygine::ColorRectSprite>();
@@ -24,7 +24,7 @@ ColoredBar::ColoredBar(qint32 width, qint32 height, const QString & backSpriteId
     if (pAnim != nullptr)
     {
         m_foreground->setScaleX(static_cast<float>(width) / static_cast<float>(pAnim->getWidth()));
-        m_foreground->setScaleX(static_cast<float>(height) / static_cast<float>(pAnim->getHeight()));
+        m_foreground->setScaleY(static_cast<float>(height) / static_cast<float>(pAnim->getHeight()));
     }
     addChild(m_foreground);
     m_label = MemoryManagement::create<Label>(width - 5);
