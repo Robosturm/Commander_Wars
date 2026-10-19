@@ -104,7 +104,7 @@ void RxTask::handleGatewayData(quint64 socketID, QByteArray data)
     {
         emit m_pIF->sigConnected(objData.value(JsonKeys::JSONKEY_SOCKETID).toInteger());
     }
-    else if (messageType == NetworkCommands::GATEWAYCLIENTCONNECTED)
+    else if (messageType == NetworkCommands::GATEWAYCLIENTDISCONNECTED)
     {
         emit m_pIF->sigDisconnected(objData.value(JsonKeys::JSONKEY_SOCKETID).toInteger());
     }
