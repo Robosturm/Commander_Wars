@@ -1275,7 +1275,10 @@ void GameMenue::disconnected(quint64 socketID)
     if (m_pNetworkInterface.get() != nullptr)
     {
         CONSOLE_PRINT("Handling player GameMenue::disconnect()", GameConsole::eDEBUG);
-        bool showDisconnect = !m_pNetworkInterface->getIsServer();
+        // a gateway host is told about its clients and its own relay connection on the same signal
+        bool hostConnectionLost = !m_pNetworkInterface->getIsServer() ||
+                                  socketID == m_pNetworkInterface->getSocketID();
+        bool showDisconnect = hostConnectionLost;
         auto & observer = m_pMap->getGameRules()->getObserverList();
         bool observerDisconnect = observer.contains(socketID);
         if (observerDisconnect)
@@ -1287,7 +1290,7 @@ void GameMenue::disconnected(quint64 socketID)
         {
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioManager()->playSound("disconnect.wav");
-            if (!m_pNetworkInterface->getIsServer())
+            if (hostConnectionLost)
             {
                 for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
                 {
