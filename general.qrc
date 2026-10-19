@@ -1312,6 +1312,11 @@
         <file>mods/cow_triangle_weapons/scripts/weapons/weapon_torpedo.js</file>
         <file>mods/cow_triangle_weapons/scripts/weapons/weapon_vulcan_cannon.js</file>
         <file>mods/cow_triangle_weapons/mod.txt</file>
+        <file>mods/debug_menu/scripts/actions/ACTION_DEBUG_MENU.js</file>
+        <file>mods/debug_menu/scripts/general/debug_menu_install.js</file>
+        <file>mods/debug_menu/scripts/general/debug_menu_registry.js</file>
+        <file>mods/debug_menu/scripts/mapstart.js</file>
+        <file>mods/debug_menu/mod.txt</file>
         <file>mods/map_creator/scripts/movementtables/move_air.js</file>
         <file>mods/map_creator/scripts/movementtables/move_boat.js</file>
         <file>mods/map_creator/scripts/movementtables/move_crawler.js</file>
