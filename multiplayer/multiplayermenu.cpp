@@ -2353,9 +2353,10 @@ void Multiplayermenu::disconnected(quint64 socket)
             startDespawnTimer();
         }
     }
-    else if (m_networkMode == NetworkMode::Host && m_local)
+    else if (m_networkMode == NetworkMode::Host && m_local &&
+             socket != m_pNetworkInterface->getSocketID())
     {
-        // do nothing
+        // a client left, a gateway host losing its own relay connection falls through and leaves
     }
     else
     {

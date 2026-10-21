@@ -798,10 +798,6 @@ void Mainapp::actAsSlave()
 void Mainapp::setSlaveClient(spNetworkInterface & client)
 {
     m_slaveClient = client;
-    if (m_slaveClient.get() != nullptr)
-    {
-        connect(m_slaveClient.get(), &TCPClient::sigDisconnected, this, &Mainapp::quit);
-    }
 }
 
 void Mainapp::onActiveChanged()
