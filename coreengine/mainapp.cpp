@@ -383,7 +383,6 @@ void Mainapp::nextStartUpStep(GameEnums::StartupPhase step)
         }
         case GameEnums::StartupPhase::StartupPhase_LoadingScripts:
         {
-            automaticNextStep = true;
             m_networkThread->start(QThread::Priority::NormalPriority);
             m_workerLaunched = true;
             emit m_workerObject->sigStart();
