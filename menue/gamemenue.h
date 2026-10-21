@@ -517,6 +517,8 @@ protected:
      */
     void loadingAiPipe();
     void sendDrawVoteResult(bool result);
+    QVector<quint64> getClientSockets();
+    void startGameIfClientsReady();
 protected:
     spPlayerInfo m_pPlayerinfo;
     spIngameInfoBar m_IngameInfoBar;
@@ -533,6 +535,7 @@ protected:
     // multiplayer data
     QVector<quint64> m_PlayerSockets;
     QVector<quint64> m_ReadySockets;
+    bool m_waitingForClientInit{false};
     spNetworkInterface m_pNetworkInterface;
     bool m_Multiplayer{false};
     QElapsedTimer m_slaveDespawnElapseTimer;

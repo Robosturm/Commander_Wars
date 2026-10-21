@@ -108,7 +108,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
         if (!startDirectly)
         {
             if (m_pNetworkInterface->getIsServer() &&
-                m_pNetworkInterface->getConnectedSockets().length() == 0)
+                getClientSockets().isEmpty())
             {
                 CONSOLE_PRINT("GameMenue starting game directly cause it's a relaunched game with no clients connected.", GameConsole::eDEBUG);
                connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
@@ -130,6 +130,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
                 else
                 {
                     CONSOLE_PRINT("Closing connection dialog on start game signal", GameConsole::eDEBUG);
+                    m_waitingForClientInit = m_pNetworkInterface->getIsServer();
                     connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
                     connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
                 }
@@ -244,40 +245,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 stream >> socket;
                 CONSOLE_PRINT("socket game ready " + QString::number(socket), GameConsole::eDEBUG);
                 m_ReadySockets.append(socket);
-                QVector<quint64> sockets;
-                if (dynamic_cast<TCPServer*>(m_pNetworkInterface.get()))
-                {
-                    sockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
-                }
-                bool ready = true;
-                for (qint32 i = 0; i < sockets.size(); i++)
-                {
-                    if (!m_ReadySockets.contains(sockets[i]))
-                    {
-                        ready = false;
-                        CONSOLE_PRINT("Still waiting for socket game " + QString::number(sockets[i]), GameConsole::eDEBUG);
-                    }
-                    else
-                    {
-                        CONSOLE_PRINT("Socket ready: " + QString::number(sockets[i]), GameConsole::eDEBUG);
-                    }
-                }
-                if (ready)
-                {
-                    CONSOLE_PRINT("All players are ready starting game", GameConsole::eDEBUG);
-                    QString command = QString(NetworkCommands::STARTGAME);
-                    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
-                    QByteArray sendData;
-                    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-                    sendStream.setVersion(QDataStream::Version::Qt_6_5);
-                    sendStream << command;
-                    quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
-                    GlobalUtils::seed(seed);
-                    GlobalUtils::setUseSeed(true);
-                    sendStream << seed;
-                    emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
-                    emit sigGameStarted();
-                }
+                startGameIfClientsReady();
             }
         }
         else if (messageType == NetworkCommands::STARTGAME)
@@ -879,6 +847,68 @@ void GameMenue::joinAsObserver(QDataStream & stream, quint64 socketID)
     }
 }
 
+void GameMenue::startGameIfClientsReady()
+{
+    // a second STARTGAME would reseed clients mid game
+    if (!m_waitingForClientInit)
+    {
+        return;
+    }
+    QVector<quint64> sockets = getClientSockets();
+    bool ready = true;
+    for (qint32 i = 0; i < sockets.size(); i++)
+    {
+        if (!m_ReadySockets.contains(sockets[i]))
+        {
+            ready = false;
+            CONSOLE_PRINT("Still waiting for socket game " + QString::number(sockets[i]), GameConsole::eDEBUG);
+        }
+        else
+        {
+            CONSOLE_PRINT("Socket ready: " + QString::number(sockets[i]), GameConsole::eDEBUG);
+        }
+    }
+    if (ready)
+    {
+        CONSOLE_PRINT("All players are ready starting game", GameConsole::eDEBUG);
+        m_waitingForClientInit = false;
+        QString command = QString(NetworkCommands::STARTGAME);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
+        sendStream << command;
+        quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+        GlobalUtils::seed(seed);
+        GlobalUtils::setUseSeed(true);
+        sendStream << seed;
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        emit sigGameStarted();
+    }
+}
+
+QVector<quint64> GameMenue::getClientSockets()
+{
+    if (!m_pMap->getGameRules()->getGatewayHosting())
+    {
+        return m_pNetworkInterface->getConnectedSockets();
+    }
+    // a gateway host's clients live on the relay, so only their player and observer slots identify them
+    QVector<quint64> sockets = m_pMap->getGameRules()->getObserverList();
+    const quint64 ownSocket = m_pNetworkInterface->getSocketID();
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    {
+        const quint64 playerSocket = m_pMap->getPlayer(i)->getSocketId();
+        if (playerSocket != 0 &&
+            playerSocket != ownSocket &&
+            !sockets.contains(playerSocket))
+        {
+            sockets.append(playerSocket);
+        }
+    }
+    return sockets;
+}
+
 void GameMenue::startGameSync(quint64 socketID)
 {
     auto & multiplayerSyncData = m_actionPerformer.getSyncData();
@@ -1275,7 +1305,10 @@ void GameMenue::disconnected(quint64 socketID)
     if (m_pNetworkInterface.get() != nullptr)
     {
         CONSOLE_PRINT("Handling player GameMenue::disconnect()", GameConsole::eDEBUG);
-        bool showDisconnect = !m_pNetworkInterface->getIsServer();
+        // a gateway host is told about its clients and its own relay connection on the same signal
+        bool hostConnectionLost = !m_pNetworkInterface->getIsServer() ||
+                                  socketID == m_pNetworkInterface->getSocketID();
+        bool showDisconnect = hostConnectionLost;
         auto & observer = m_pMap->getGameRules()->getObserverList();
         bool observerDisconnect = observer.contains(socketID);
         if (observerDisconnect)
@@ -1287,7 +1320,7 @@ void GameMenue::disconnected(quint64 socketID)
         {
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioManager()->playSound("disconnect.wav");
-            if (!m_pNetworkInterface->getIsServer())
+            if (hostConnectionLost)
             {
                 for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
                 {
@@ -1334,6 +1367,11 @@ void GameMenue::disconnected(quint64 socketID)
                     addChild(pDialogMessageBox);
                 }
             }
+        }
+        if (!hostConnectionLost)
+        {
+            // a client lost before its CLIENTINITGAME must not block the start until the dialog times out
+            startGameIfClientsReady();
         }
         sendOpenPlayerCount();
         sendOnlineInfo();
