@@ -149,8 +149,8 @@ endif()
 # General version information (android packaging)
 ###################################################################################
 
-set(COW_ANDROID_VERSION_NAME "0.40.0-main")
-set(COW_ANDROID_VERSION_CODE "72")
+set(COW_ANDROID_VERSION_NAME "0.40.1-main")
+set(COW_ANDROID_VERSION_CODE "73")
 
 ###################################################################################
 # Shared sources, libs and flags (also used by the tests project)
