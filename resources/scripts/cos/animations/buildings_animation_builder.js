@@ -22,7 +22,7 @@ var BUILDINGS_ANIMATION_BUILDER = function(buildings, map)
             this.buildings.randomize();
         }
         var soundIndex = 0;
-        var lastAnimation = null;
+        var lastAnimation = parentAnimation;
         var lastDelay = 0;
         var delays = [];
         for (var i = 0; i < this.buildings.size(); i++)
@@ -69,7 +69,7 @@ var BUILDINGS_ANIMATION_BUILDER = function(buildings, map)
                         counter = 0;
                     }
                 }
-                if (totalDelay > lastDelay)
+                if (totalDelay >= lastDelay)
                 {
                     lastAnimation = animation;
                     lastDelay = totalDelay;

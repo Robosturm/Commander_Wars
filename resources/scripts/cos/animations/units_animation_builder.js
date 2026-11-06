@@ -22,7 +22,7 @@ var UNITS_ANIMATION_BUILDER = function(units, map)
             this.units.randomize();
         }
         var soundIndex = 0;
-        var lastAnimation = null;
+        var lastAnimation = parentAnimation;
         var lastDelay = 0;
         var delays = [];
         for (var i = 0; i < this.units.size(); i++)
@@ -69,7 +69,7 @@ var UNITS_ANIMATION_BUILDER = function(units, map)
                         counter = 0;
                     }
                 }
-                if (totalDelay > lastDelay)
+                if (totalDelay >= lastDelay)
                 {
                     lastAnimation = animation;
                     lastDelay = totalDelay;
