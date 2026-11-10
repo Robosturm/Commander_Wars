@@ -472,10 +472,10 @@ protected slots:
      * @param socketID
      */
     void removeSyncSocket(quint64 socketID);
-    /**
-     * @brief playerJoinedFinished
-     */
-    void playerJoinedFinished();
+    void playerReceivedGameState(quint64 socketID);
+    // a player that drops during a join sync can no longer acknowledge it
+    void skipSyncForOfflinePlayers();
+    void playerJoinedFinished(QDataStream & stream);
     /**
      * @brief updateTimer
      */
