@@ -14,7 +14,7 @@
                 <width>LobbyMenu.ModeButtonWidth</width>
                 <text>QT_TRANSLATE_NOOP("GAME","My games")</text>
                 <enabled>false</enabled>
-                <onEvent>currentMenu.setGameViewMode(GameViewMode_OwnGames)</onEvent>
+                <onEvent>currentMenu.setGameViewMode(GameEnums.GameViewMode_OwnGames)</onEvent>
             </Button>
             <Button>
                 <x>LobbyMenu.getSmallModeX(1)</x>
@@ -23,7 +23,7 @@
                 <width>LobbyMenu.ModeButtonWidth</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Open games")</text>
                 <enabled>false</enabled>
-                <onEvent>currentMenu.setGameViewMode(GameViewMode_OpenGames)</onEvent>
+                <onEvent>currentMenu.setGameViewMode(GameEnums.GameViewMode_OpenGames)</onEvent>
             </Button>
             <Button>
                 <x>LobbyMenu.getSmallModeX(2)</x>
@@ -32,7 +32,7 @@
                 <width>LobbyMenu.ModeButtonWidth</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Observable")</text>
                 <enabled>false</enabled>
-                <onEvent>currentMenu.setGameViewMode(GameViewMode_ObserveGames)</onEvent>
+                <onEvent>currentMenu.setGameViewMode(GameEnums.GameViewMode_ObserveGames)</onEvent>
             </Button>
             <Button>
                 <x>LobbyMenu.getSmallModeX(3)</x>
