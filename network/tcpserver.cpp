@@ -134,6 +134,7 @@ void TCPServer::onConnect()
                 connect(this, &TCPServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
                 spTCPClient pClient = MemoryManagement::create<TCPClient>(this, pRXTask, pTXTask, nextSocket, m_idCounter);
                 connect(pClient.get(), &TCPClient::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
+                connect(pClient.get(), &TCPClient::sigDisconnectClient, this, &TCPServer::sigDisconnectClient, Qt::QueuedConnection);
 
                 quint64 socket = pClient->getSocketID();
                 connect(nextSocket.get(), &QTcpSocket::disconnected, this, [this, socket]()

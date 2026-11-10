@@ -188,7 +188,15 @@ void TCPClient::startKeepAliveHandling()
 void TCPClient::keepAliveTimeout()
 {
     CONSOLE_PRINT_MODULE("Keep alive timeout. Disconnecting" + QString::number(m_socketID), GameConsole::eLogLevels::eDEBUG, GameConsole::eKeepAlive);
-    disconnectTCP();
+    if (m_onServer)
+    {
+        // the owning server has to drop the client so the slot is freed and everyone is told
+        emit sigDisconnectClient(m_socketID);
+    }
+    else
+    {
+        disconnectTCP();
+    }
 }
 
 void TCPClient::keepAlive()
