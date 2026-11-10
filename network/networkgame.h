@@ -82,6 +82,8 @@ public:
      * @brief startCloseTimer
      */
     void startCloseTimer();
+    void startLaunchTimer();
+    bool getLaunchPending() const;
     const QString &getSlaveRespawnFile() const;
     void setSlaveRespawnFile(const QString &newSlaveRespawnFile);
     void onSlaveRelaunched();
@@ -111,17 +113,20 @@ public slots:
      * @brief closeTimerExpired
      */
     void closeTimerExpired();
+    void launchTimerExpired();
 private:
     QByteArray m_dataBuffer;
     quint64 m_hostingSocket;
     QString m_serverName;
     bool m_slaveRunning{false};
+    bool m_launchPending{false};
     bool m_closing{false};
     bool m_runningGame{false};
     NetworkGameData m_data;
     QString m_id;
     QString m_slaveRespawnFile;
     QTimer m_closeTimer;
+    QTimer m_launchTimer;
 };
 
 Q_DECLARE_INTERFACE(NetworkGame, "NetworkGame");

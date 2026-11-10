@@ -473,6 +473,13 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Failed to launch game on server cause no more game slots are available."));
             addChild(pDialogMessageBox);
         }
+        else if (messageType == NetworkCommands::SERVERGAMELAUNCHFAILED)
+        {
+            emit sigServerResponded();
+            spDialogMessageBox pDialogMessageBox;
+            pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("The server failed to launch the game."));
+            addChild(pDialogMessageBox);
+        }
         else if (messageType == NetworkCommands::SERVERGAMENOLONGERAVAILABLE)
         {
             emit sigServerResponded();

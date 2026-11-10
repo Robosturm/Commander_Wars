@@ -13,15 +13,20 @@
 
 #include "game/gamemap.h"
 
+// matches how long the hosting client waits for the launch
+static constexpr std::chrono::minutes LAUNCH_TIMEOUT(5);
+
 NetworkGame::NetworkGame(QObject* pParent, const QString & serverName)
     : QObject(pParent),
       m_closeTimer(pParent),
+      m_launchTimer(pParent),
       m_serverName(serverName)
 
 {
     Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Creating NetworkGame " + m_serverName, GameConsole::eDEBUG);
     connect(&m_closeTimer, &QTimer::timeout, this, &NetworkGame::closeTimerExpired, Qt::QueuedConnection);
+    connect(&m_launchTimer, &QTimer::timeout, this, &NetworkGame::launchTimerExpired, Qt::QueuedConnection);
 }
 
 NetworkGame::~NetworkGame()
@@ -41,6 +46,27 @@ void NetworkGame::closeTimerExpired()
 {
     if (m_data.getPlayers() == 0)
     {
+        closeGame();
+    }
+}
+
+void NetworkGame::startLaunchTimer()
+{
+    m_launchPending = true;
+    m_launchTimer.setSingleShot(true);
+    m_launchTimer.start(LAUNCH_TIMEOUT);
+}
+
+bool NetworkGame::getLaunchPending() const
+{
+    return m_launchPending;
+}
+
+void NetworkGame::launchTimerExpired()
+{
+    if (m_launchPending)
+    {
+        CONSOLE_PRINT("Slave game " + m_serverName + " didn't get ready in time and gets closed.", GameConsole::eERROR);
         closeGame();
     }
 }
@@ -69,6 +95,7 @@ void NetworkGame::slaveRunning(const QJsonObject & objData, spTCPServer & pGameS
 {
     if (!m_slaveRunning)
     {
+        m_launchPending = false;
         if (objData.contains(JsonKeys::JSONKEY_DESCRIPTION) &&
             objData.contains(JsonKeys::JSONKEY_HASPASSWORD))
         {
@@ -147,6 +174,7 @@ void NetworkGame::setId(QString & id)
 void NetworkGame::onSlaveRelaunched()
 {
     m_slaveRunning = true;
+    m_launchPending = false;
     if (m_runningGame)
     {
         m_data.setLaunched(true);
@@ -228,7 +256,15 @@ void NetworkGame::processFinished(int value, QProcess::ExitStatus)
 
 void NetworkGame::errorOccurred(QProcess::ProcessError error)
 {
-    CONSOLE_PRINT("Networkgame error in game " + m_serverName + " with code " + QString::number(error), GameConsole::eDEBUG);
+    if (error == QProcess::FailedToStart)
+    {
+        CONSOLE_PRINT("Networkgame failed to start slave process for game " + m_serverName, GameConsole::eERROR);
+        closeGame();
+    }
+    else
+    {
+        CONSOLE_PRINT("Networkgame error in game " + m_serverName + " with code " + QString::number(error), GameConsole::eDEBUG);
+    }
 }
 
 void NetworkGame::closeGame()
