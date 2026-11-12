@@ -277,11 +277,11 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else if (messageType == NetworkCommands::RECEIVEDCURRENTGAMESTATE)
         {
-            removePlayerFromSyncWaitList(socketID);
+            playerReceivedGameState(socketID);
         }
         else if (messageType == NetworkCommands::PLAYERJOINEDFINISHED)
         {
-            playerJoinedFinished();
+            playerJoinedFinished(stream);
         }
         else if (messageType == NetworkCommands::REQUESTPLAYERCONTROLLEDINFO)
         {
@@ -1161,6 +1161,38 @@ void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint
     sendOnlineInfo();
 }
 
+void GameMenue::playerReceivedGameState(quint64 socketID)
+{
+    auto & multiplayerSyncData = m_actionPerformer.getSyncData();
+    for (const auto & socketInfo : std::as_const(multiplayerSyncData.m_connectingSocketInfos))
+    {
+        if (socketInfo.m_socketId == socketID)
+        {
+            multiplayerSyncData.m_playerJoined = true;
+        }
+    }
+    removePlayerFromSyncWaitList(socketID);
+}
+
+void GameMenue::skipSyncForOfflinePlayers()
+{
+    auto & multiplayerSyncData = m_actionPerformer.getSyncData();
+    if (m_pNetworkInterface.get() != nullptr &&
+        m_pNetworkInterface->getIsServer() &&
+        multiplayerSyncData.m_waitingForSyncFinished &&
+        !multiplayerSyncData.m_connectingSocketInfos.isEmpty())
+    {
+        for (qint32 i = 0; i < m_pMap->getPlayerCount() && i < multiplayerSyncData.m_lockedPlayers.size(); ++i)
+        {
+            if (m_pMap->getPlayer(i)->getSocketId() == 0)
+            {
+                multiplayerSyncData.m_lockedPlayers[i] = true;
+            }
+        }
+        syncPointReached();
+    }
+}
+
 void GameMenue::removePlayerFromSyncWaitList(quint64 socketID)
 {
     if (m_pNetworkInterface.get() != nullptr &&
@@ -1188,8 +1220,9 @@ void GameMenue::removeSyncSocket(quint64 socketID)
     }
 }
 
-void GameMenue::playerJoinedFinished()
+void GameMenue::playerJoinedFinished(QDataStream & stream)
 {
+    stream >> m_actionPerformer.getSyncData().m_playerJoined;
     sendOpenPlayerCount();
     sendOnlineInfo();
     emit sigSyncFinished();
@@ -1243,8 +1276,13 @@ void GameMenue::continueAfterSyncGame()
         multiplayerSyncData.m_connectingSocketInfos.size() <= 0 &&
         multiplayerSyncData.m_waitingForSyncFinished)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->getAudioManager()->playSound("connect.wav");
+        const bool playerJoined = multiplayerSyncData.m_playerJoined;
+        multiplayerSyncData.m_playerJoined = false;
+        if (playerJoined)
+        {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->getAudioManager()->playSound("connect.wav");
+        }
         multiplayerSyncData.m_waitingForSyncFinished = false;
         if (m_pNetworkInterface->getIsServer())
         {
@@ -1253,6 +1291,7 @@ void GameMenue::continueAfterSyncGame()
             QDataStream sendStream(&sendData, QIODevice::WriteOnly);
             sendStream.setVersion(QDataStream::Version::Qt_6_5);
             sendStream << command;
+            sendStream << playerJoined;
             CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
             emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
             // the host never receives its own broadcast, so close its waiting dialog here
@@ -1376,6 +1415,7 @@ void GameMenue::disconnected(quint64 socketID)
         sendOpenPlayerCount();
         sendOnlineInfo();
         removePlayerFromSyncWaitList(socketID);
+        skipSyncForOfflinePlayers();
     }
 }
 

@@ -1412,6 +1412,7 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo &slaveInfo)
         connect(game->game.get(), &NetworkGame::sigClose, this, &MainServer::closeGame, Qt::QueuedConnection);
         CONSOLE_PRINT("Starting suspended slave process: " + program + " " + args.join(" "), GameConsole::eDEBUG);
         game->process->start(program, args);
+        game->game->startLaunchTimer();
         game->slaveName = slaveName;
         m_games.append(game);
         slaveInfo.game.setSlaveName(slaveName);
@@ -1498,6 +1499,11 @@ void MainServer::spawnSlave(const QString &initScript, const QStringList &mods, 
         game->game->setId(id);
         CONSOLE_PRINT("Starting slave process: " + program + " " + args.join(" "), GameConsole::eDEBUG);
         game->process->start(program, args);
+        // games without a hosting client never report ready
+        if (socketID != 0)
+        {
+            game->game->startLaunchTimer();
+        }
         game->slaveName = slaveName;
         m_games.append(game);
     }
@@ -1609,6 +1615,10 @@ void MainServer::closeGame(NetworkGame *pGame)
     auto *game = getInternGame(slaveName, &index);
     if (game != nullptr)
     {
+        if (game->game->getLaunchPending())
+        {
+            informHostAboutFailedLaunch(*game->game);
+        }
         SlaveAddress freeAddress;
         freeAddress.address = game->game->getData().getSlaveAddress();
         freeAddress.secondaryAddress = game->game->getData().getSlaveSecondaryAddress();
@@ -1624,6 +1634,43 @@ void MainServer::closeGame(NetworkGame *pGame)
             game->game.reset();
         }
         m_games.removeAt(index);
+    }
+}
+
+void MainServer::informHostAboutFailedLaunch(const NetworkGame &game)
+{
+    CONSOLE_PRINT("Slave game " + game.getServerName() + " was closed before it was ready.", GameConsole::eERROR);
+    QVector<quint64> waitingSockets({game.getHostingSocket()});
+    resetFailedRelaunch(m_runningSlaves, game.getServerName(), waitingSockets);
+    resetFailedRelaunch(m_runningLobbies, game.getServerName(), waitingSockets);
+    QString command = QString(NetworkCommands::SERVERGAMELAUNCHFAILED);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QJsonDocument doc(data);
+    for (const auto socket : std::as_const(waitingSockets))
+    {
+        emit m_pGameServer->sig_sendData(socket, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+}
+
+void MainServer::resetFailedRelaunch(QVector<SuspendedSlaveInfo> &games, const QString &slaveName, QVector<quint64> &waitingSockets)
+{
+    for (auto &game : games)
+    {
+        if (game.relaunched && game.game.getSlaveName() == slaveName)
+        {
+            for (const auto socket : std::as_const(game.pendingSockets))
+            {
+                if (!waitingSockets.contains(socket))
+                {
+                    waitingSockets.append(socket);
+                }
+            }
+            game.pendingSockets.clear();
+            // lets the next join request try the relaunch again
+            game.relaunched = false;
+        }
     }
 }
 

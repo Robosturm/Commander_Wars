@@ -23,6 +23,7 @@ public:
     struct SyncData
     {
         bool m_waitingForSyncFinished{false};
+        bool m_playerJoined{false};
         spGameAction m_postSyncAction{nullptr};
         QVector<bool> m_lockedPlayers;
         QVector<ConnectingInfo> m_connectingSocketInfos;

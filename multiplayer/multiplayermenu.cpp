@@ -638,6 +638,18 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
         }
+        else if (messageType == NetworkCommands::SERVERGAMELAUNCHFAILED)
+        {
+            if (m_pDialogConnecting != nullptr)
+            {
+                m_pDialogConnecting->cancel();
+                m_pDialogConnecting.reset();
+            }
+            spDialogMessageBox pDialogMessageBox;
+            pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("The server failed to launch the game."));
+            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
+            addChild(pDialogMessageBox);
+        }
         else if (messageType == NetworkCommands::REQUESTLOGINDDATA)
         {
             sendLoginData(socketID, objData);

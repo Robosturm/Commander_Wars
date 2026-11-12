@@ -300,6 +300,7 @@ namespace NetworkCommands
      * @brief SERVERNOGAMESLOTSAVAILABLE
      */
     const char* const SERVERNOGAMESLOTSAVAILABLE = "SERVERNOGAMESLOTSAVAILABLE";
+    const char* const SERVERGAMELAUNCHFAILED = "SERVERGAMELAUNCHFAILED";
     /**
      * @brief SERVERREQUESTUSERGAMES
      */

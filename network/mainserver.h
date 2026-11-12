@@ -513,6 +513,8 @@ private:
     explicit MainServer();
     static spMainServer m_pInstance;
     InternNetworkGame * getInternGame(const QString & slaveName, qint32 * index = nullptr);
+    void informHostAboutFailedLaunch(const NetworkGame & game);
+    void resetFailedRelaunch(QVector<SuspendedSlaveInfo> & games, const QString & slaveName, QVector<quint64> & waitingSockets);
 private:
     /**
      *  TCP-Server used for clients to connect to the server
