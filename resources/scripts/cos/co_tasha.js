@@ -162,7 +162,7 @@ var Constructor = function()
                     return CO_TASHA.powerBaseDefBonus;
                 }
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     if (defender.getUnitType() === GameEnums.UnitType_Air)
                     {
